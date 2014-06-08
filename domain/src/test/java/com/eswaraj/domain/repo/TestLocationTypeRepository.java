@@ -122,4 +122,21 @@ public class TestLocationTypeRepository extends BaseNeo4jEswarajTest {
 		assertLocationTypeEquals(countryLocationType, dbCountryLocationType, true);
 	}
 	
+	/**
+	 * A simple test to create a Country sLocationType and state LocationType and get it back by getRootLocationTypeByDataClient
+	 */
+	@Test
+	public void test07_getRootLocationTypeByDataClient(){
+		final String countryName = "Country";
+		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
+		LocationType countryLocationType = createLocationType(locationTypeRepository, countryName, null, dataClient);
+		final String stateName = "Country";
+		LocationType stateLocationType = createLocationType(locationTypeRepository, stateName, countryLocationType, dataClient);
+
+		LocationType dbCountryLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient.getName());
+		
+		assertNotNull(dbCountryLocationType);
+		assertLocationTypeEquals(countryLocationType, dbCountryLocationType, true);
+	}
+	
 }

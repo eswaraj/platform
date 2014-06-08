@@ -12,7 +12,9 @@ import com.eswaraj.domain.nodes.DataClient;
  */
 public interface DataClientRepository extends GraphRepository<DataClient>{
 	
-	@Query("start dataClient=node:DataClient(name={0}) return dataClient")
+	//@Query("start dataClient=node:DataClient(name={0}) return dataClient")
+	//@Query("MATCH (n:DataClient { name: {0}}) RETURN n")
+	@Query("MATCH (n) where n.name={0} RETURN n")
     public DataClient getDataClientByName(String name);
 	
 }
