@@ -44,11 +44,12 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		return location;
 	}
 	
-	protected LocationType createLocationType(LocationTypeRepository locationTypeRepository, String name, LocationType parentLocationType, DataClient dataClient){
+	protected LocationType createLocationType(LocationTypeRepository locationTypeRepository, String name, LocationType parentLocationType, DataClient dataClient, boolean root){
 		LocationType locationType = new LocationType();
 		locationType.setName(name);
 		locationType.setParentLocationType(parentLocationType);
 		locationType.setDataClient(dataClient);
+		locationType.setRoot(root);
 		locationType = locationTypeRepository.save(locationType);
 		return locationType;
 	}

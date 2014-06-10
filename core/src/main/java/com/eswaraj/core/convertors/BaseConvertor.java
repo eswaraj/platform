@@ -42,6 +42,9 @@ public abstract class BaseConvertor<DbType, WebType> {
 	protected abstract WebType convertBeanInternal(DbType dbDto) throws ApplicationException;
 	
 	public List<WebType> convertBeanList(Collection<DbType> dbTypeCollection) throws ApplicationException{
+		if(dbTypeCollection == null){
+			return new ArrayList<WebType>();
+		}
 		List<WebType> webTypeList = new ArrayList<>();
 		for(DbType oneDbType:dbTypeCollection){
 			webTypeList.add(convertBean(oneDbType));

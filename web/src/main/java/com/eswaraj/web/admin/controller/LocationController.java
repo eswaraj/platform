@@ -54,6 +54,11 @@ public class LocationController {
 		LocationTypeJsonDto locationTypeJsonDto = locationService.getLocationTypes("beingIgnored");
 		return locationTypeJsonDto;
 	}
+	@RequestMapping(value = "/ajax/locationtype/getchild/{parentLocationTypeId}", method = RequestMethod.GET)
+	public @ResponseBody List<LocationTypeDto> getLocationTypeChildren(ModelAndView mv, @PathVariable Long parentLocationTypeId) throws ApplicationException {
+		List<LocationTypeDto> childLocationType = locationService.getChildLocationsTypeOfParent(parentLocationTypeId);
+		return childLocationType;
+	}
 	@RequestMapping(value = "/ajax/locationtype/save", method = RequestMethod.POST)
 	public @ResponseBody LocationTypeDto saveLocationTypes(ModelAndView mv, @RequestBody LocationTypeDto locationTypeDto) throws ApplicationException {
 		locationTypeDto = locationService.saveLocationType(locationTypeDto);

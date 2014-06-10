@@ -36,7 +36,7 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 	@Test
 	public void test01_LocationRepository(){
 		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
-		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient);
+		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient, true);
 		final String countryName = randomAlphaString(10);
 		
 		Location countryLocation = createLocation(locationRepository, countryName, countryLocationType, null);
@@ -53,7 +53,7 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 	@Test
 	public void test02_LocationRepository(){
 		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
-		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient);
+		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient, true);
 		final String countryName = randomAlphaString(10);
 		
 		
@@ -71,7 +71,7 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 	@Test(expected=ValidationException.class)
 	public void test03_LocationRepository(){
 		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
-		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient);
+		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient, true);
 		final String countryName = null;
 		createLocation(locationRepository, countryName, countryLocationType, null);
 	}
@@ -82,7 +82,7 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 	@Test(expected=ValidationException.class)
 	public void test04_LocationRepository(){
 		DataClient dataClient = null;
-		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient);
+		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient, true);
 		final String countryName = null;
 		createLocation(locationRepository, countryName, countryLocationType, null);
 	}
@@ -104,7 +104,7 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 	@Test
 	public void test06_getRootLocationByLocationType(){
 		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
-		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient);
+		LocationType countryLocationType = createLocationType(locationTypeRepository, "Country", null, dataClient, true);
 		final String countryName = randomAlphaString(10);
 		
 		Location countryLocation = createLocation(locationRepository, countryName, countryLocationType, null);

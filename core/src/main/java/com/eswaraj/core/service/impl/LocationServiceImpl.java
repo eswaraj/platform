@@ -147,6 +147,7 @@ public class LocationServiceImpl implements LocationService {
 			locationType = new LocationType();
 			locationType.setName(indiaEswarajRootLocationTypeName);
 			locationType.setDataClient(dataClient);
+			locationType.setRoot(true);
 			locationType = locationTypeRepository.save(locationType);
 		}
 		return locationType;
@@ -166,17 +167,7 @@ public class LocationServiceImpl implements LocationService {
 	}
 	@Override
 	public LocationTypeDto saveLocationType(LocationTypeDto locationTypeDto) throws ApplicationException {
-		LocationType locationType = locationTypeConvertor.convert(locationTypeDto);
-		//get the data Client, right now its hard coded for eswaraj-India, in future we will get it from client
-		DataClient dataClient = getOrCreateDataClientIndiaEswaraj();
-		locationType.setDataClient(dataClient);
-		if(locationType.getId() == null){
-			//means we are trying to create new location type
-			checkIfRootLocationAlreadyExists(locationType, dataClient);
-		}
-		locationType = locationTypeRepository.save(locationType);
-		
-		return locationTypeConvertor.convertBean(locationType);
+		return saveRootLocationType(locationTypeDto, false);
 	}
 
 	@Override
@@ -200,6 +191,35 @@ public class LocationServiceImpl implements LocationService {
 		DataClient dataClient = getOrCreateDataClientIndiaEswaraj();
 		Collection<LocationType> locationTypes = locationTypeRepository.getAllLocationTypeOfDataClient(dataClient.getId());
 		return locationTypeJsonConvertor.convertToJsonBean(locationTypes);
+	}
+	@Override
+	public List<LocationTypeDto> getChildLocationsTypeOfParent(Long parentLocationTypeId) throws ApplicationException {
+		LocationType parentLocationType = locationTypeRepository.findOne(parentLocationTypeId);
+		/*
+		if(locationType == null){
+			return null;
+		}*/
+		Collection<LocationType> locationTypes = locationTypeRepository.findLocationTypeByParentLocation(parentLocationType);
+		return locationTypeConvertor.convertBeanList(locationTypes);
+	}
+	public LocationTypeDto saveRootLocationType(LocationTypeDto locationTypeDto, boolean isRoot) throws ApplicationException {
+		LocationType locationType = locationTypeConvertor.convert(locationTypeDto);
+		//get the data Client, right now its hard coded for eswaraj-India, in future we will get it from client
+		DataClient dataClient = getOrCreateDataClientIndiaEswaraj();
+		locationType.setDataClient(dataClient);
+		if(locationType.getId() == null){
+			//means we are trying to create new location type
+			checkIfRootLocationAlreadyExists(locationType, dataClient);
+		}
+		locationType.setRoot(isRoot);
+		locationType = locationTypeRepository.save(locationType);
+		
+		return locationTypeConvertor.convertBean(locationType);
+	}
+	@Override
+	public LocationTypeDto saveRootLocationType(LocationTypeDto locationTypeDto) throws ApplicationException {
+		
+		return saveRootLocationType(locationTypeDto, true);
 	}
 
 }

@@ -22,6 +22,12 @@ public class LocationTypeValidator extends BaseValidator<LocationType>{
 		if(locationType.getParentLocationType() == null && locationType.getDataClient() ==null){
 			throw new ValidationException("To create a root location type you must provide DataClient");
 		}
+		if(locationType.isRoot() && locationType.getParentLocationType() != null){
+			throw new ValidationException("A root location type can not have a parent location type");
+		}
+		if(!locationType.isRoot() && locationType.getParentLocationType() == null){
+			throw new ValidationException("A non root location type must have a parent location type");
+		}
 	}
 
 	public void validateBeforeDelete(LocationType locationType) throws ValidationException {

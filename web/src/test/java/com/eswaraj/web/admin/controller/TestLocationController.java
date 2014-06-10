@@ -28,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.eswaraj.base.BaseEswarajMockitoTest;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
+import com.eswaraj.web.dto.LocationTypeDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,6 +46,8 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	private MockMvc mockMvc;
 	
 	private final String saveLocationUrl = "/ajax/location/save";
+	
+	private final String getChildLocationTypeUrl = "/ajax/locationtype/getchild/";
 
 	@Before
 	public void setup() {
@@ -125,6 +128,35 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 
 		checkLocation(result, locationAfterSave, parentLocationId, locationTypeId);
 	}
+	
+	/**
+	 * get ROOT LocationType and its children and then retrieve child locations
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test03_saveLocationType() throws Exception {
+
+
+		// create Test expectation data
+		Long parentLocationTypeId = randomLong();
+		LocationTypeDto oneChildLocation = createOneLocationType(parentLocationTypeId);
+		List<LocationTypeDto> childLocationType = new ArrayList<>();
+		childLocationType.add(oneChildLocation);
+
+		// Set Mock expectation
+		when(locationService.getChildLocationsTypeOfParent(parentLocationTypeId)).thenReturn(childLocationType);
+
+		// Run test
+		String getChildLocationTypeUrlFinal = getChildLocationTypeUrl + parentLocationTypeId;
+		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
+		ResultActions result = this.mockMvc.perform(get(getChildLocationTypeUrlFinal).accept(expectedMediaType));
+		result.andExpect(status().isOk());
+		result.andExpect(content().contentType("application/json;charset=UTF-8"));
+
+		checkLocationTypeArray(result, childLocationType, parentLocationTypeId);
+	}
 
 	private void checkLocationArray(ResultActions result, List<LocationDto> locations, Long parentLocationId, Long locationTypeId) throws Exception {
 		LocationDto locationDto;
@@ -178,6 +210,44 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 
 		return locationDto;
 	}
+	
+	private LocationTypeDto createOneLocationType(Long parentLocationTypeId) {
+		Long firstLocationId = randomLong();
+		String firstLocationName = randomAlphaString(30);
+
+		LocationTypeDto locationTypeDto = new LocationTypeDto();
+		locationTypeDto.setId(firstLocationId);
+		locationTypeDto.setName(firstLocationName);
+		locationTypeDto.setParentLocationTypeId(parentLocationTypeId);
+		return locationTypeDto;
+	}
+	
+	private void checkLocationType(ResultActions result, LocationDto locationDto, Long parentLocationId, Long locationTypeId) throws Exception {
+		result.andExpect(jsonPath("$.name").value(locationDto.getName()));
+		result.andExpect(jsonPath("$.id").value(locationDto.getId()));
+		result.andExpect(jsonPath("$.lattitude").value(locationDto.getLattitude()));
+		result.andExpect(jsonPath("$.longitude").value(locationDto.getLongitude()));
+		result.andExpect(jsonPath("$.locationTypeId").value(locationTypeId));
+		// For country Parent Id must Not be null and must be equal to parametr
+		// we passed to url
+		if (parentLocationId == null) {
+			result.andExpect(jsonPath("$.parentLocationId").doesNotExist());
+		} else {
+			result.andExpect(jsonPath("$.parentLocationId").value(parentLocationId));
+		}
+	}
+	private void checkLocationTypeArray(ResultActions result, List<LocationTypeDto> locations, Long parentLocationId) throws Exception {
+		LocationTypeDto locationTypeDto;
+		int sizeOfArray = locations.size();
+		result.andExpect(jsonPath("$", hasSize(sizeOfArray)));
+		for (int i = 0; i < sizeOfArray; i++) {
+			locationTypeDto = locations.get(i);
+			result.andExpect(jsonPath("$[" + i + "].name").value(locationTypeDto.getName()));
+			result.andExpect(jsonPath("$[" + i + "].id").value(locationTypeDto.getId()));
+			result.andExpect(jsonPath("$[" + i + "].parentLocationTypeId").value(locationTypeDto.getParentLocationTypeId()));
+		}
+	}
+
 
 	private LocationDto copyOneLocation(LocationDto sourceLocation) {
 		LocationDto locationDto = new LocationDto();

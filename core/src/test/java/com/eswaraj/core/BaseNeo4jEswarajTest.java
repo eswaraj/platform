@@ -58,9 +58,14 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		location.setParentLocationTypeId(parentLocationTypeId);
 		return location;
 	}
-	protected LocationTypeDto createAndSaveLocationType(LocationService locationService, String name, Long parentLocationTypeId) throws ApplicationException{
+	protected LocationTypeDto createAndSaveLocationType(LocationService locationService, String name, Long parentLocationTypeId, boolean root) throws ApplicationException{
 		LocationTypeDto locationTypeDto = createLocationType(name, parentLocationTypeId);
-		locationTypeDto = locationService.saveLocationType(locationTypeDto);
+		if(root){
+			locationTypeDto = locationService.saveRootLocationType(locationTypeDto);
+		}else{
+			locationTypeDto = locationService.saveLocationType(locationTypeDto);	
+		}
+		
 		return locationTypeDto;
 	}
 	/**

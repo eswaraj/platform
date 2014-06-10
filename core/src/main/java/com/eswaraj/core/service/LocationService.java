@@ -22,11 +22,15 @@ public interface LocationService {
 	
 	LocationTypeDto saveLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;
 	
+	LocationTypeDto saveRootLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;
+	
 	LocationTypeJsonDto getLocationTypes(String clientName) throws ApplicationException;
 	
 	//LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException;
 	
 	LocationDto getRootLocationForSwarajIndia() throws ApplicationException;
+	
+	List<LocationTypeDto> getChildLocationsTypeOfParent(Long parentLocationTypeId) throws ApplicationException;
 	
 	/**
 	 * We are passing the file service from outside as its not possible to inject FileService for testing on proxy implemention
