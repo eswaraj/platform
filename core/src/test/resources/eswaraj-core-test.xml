@@ -38,4 +38,10 @@
 
 
 	<tx:annotation-driven />
+	
+	<!-- Enviornment related beans -->
+	<beans profile="jenkins" >
+	    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
+	    </bean>    
+	</beans>
 </beans>

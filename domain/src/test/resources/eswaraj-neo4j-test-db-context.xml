@@ -13,7 +13,6 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
         http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
 
-	<neo4j:repositories base-package="com.eswaraj.domain.nodes.different" />
 	<beans profile="jenkins">
 		<neo4j:config storeDirectory="/tmp/graph.db" />
 	</beans>
@@ -22,9 +21,7 @@
 		<neo4j:config graphDatabaseService="graphDatabaseService" />
 		<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
 			<constructor-arg index="0" value="http://localhost:7474/db/data" />
-
 		</bean>
-
 	</beans>
 
 

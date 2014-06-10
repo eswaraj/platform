@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 
-@Component
-@Profile("prod")
 public class NetworkFileServiceImpl implements FileService {
 
 	@Override

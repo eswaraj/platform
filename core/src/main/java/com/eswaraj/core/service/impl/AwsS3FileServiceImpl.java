@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 
-@Component
-@Profile("dev-aws")
 public class AwsS3FileServiceImpl implements FileService {
 
 	@Override
