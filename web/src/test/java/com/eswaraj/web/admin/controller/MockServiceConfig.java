@@ -4,6 +4,7 @@ import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
@@ -24,5 +25,10 @@ public class MockServiceConfig {
 	@Bean
 	public FileService fileService() {
 		return Mockito.mock(FileService.class);
+	}
+	
+	@Bean
+	public AppService appService() {
+		return Mockito.mock(AppService.class);
 	}
 }

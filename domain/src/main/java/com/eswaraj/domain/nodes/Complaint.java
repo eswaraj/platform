@@ -1,6 +1,5 @@
 package com.eswaraj.domain.nodes;
 
-import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Fetch;

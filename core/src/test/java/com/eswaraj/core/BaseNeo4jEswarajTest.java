@@ -13,6 +13,7 @@ import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 
@@ -88,6 +89,25 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 			assertEquals(expectedLocation.getId(), actualLocation.getId());	
 		}
 		assertEquals(expectedLocation.getName(), actualLocation.getName());
+	}
+
+	protected void assertEqualCategories(CategoryDto expectedCategory, CategoryDto actualCategory, boolean checkId){
+		if(checkId){
+			assertEquals(expectedCategory.getId(), actualCategory.getId());	
+		}
+		assertEquals(expectedCategory.getName(), actualCategory.getName());
+		assertEquals(expectedCategory.getDescription(), actualCategory.getDescription());
+		assertEquals(expectedCategory.getParentCategoryId(), actualCategory.getParentCategoryId());
+		assertEquals(expectedCategory.isRoot(), actualCategory.isRoot());
+	}
+	
+	protected CategoryDto createCategory(String categoryName, String description, boolean isRoot, Long parentCategoryId){
+		CategoryDto categoryDto = new CategoryDto();
+		categoryDto.setName(categoryName);
+		categoryDto.setDescription(description);
+		categoryDto.setRoot(isRoot);
+		categoryDto.setParentCategoryId(parentCategoryId);
+		return categoryDto;
 	}
 
 

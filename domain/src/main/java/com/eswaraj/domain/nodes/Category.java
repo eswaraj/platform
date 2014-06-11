@@ -18,6 +18,7 @@ public class Category extends BaseNode{
 	private String description;
 	@RelatedTo(type="BELONGS_TO")
     private Category parentCategory;
+	private boolean root;
 	    
     public Category() {}
     public Category(String name) {
@@ -43,9 +44,15 @@ public class Category extends BaseNode{
 		this.parentCategory = parentCategory;
 	}
 	
+	public boolean isRoot() {
+		return root;
+	}
+	public void setRoot(boolean root) {
+		this.root = root;
+	}
 	@Override
 	public String toString() {
-		return "Category [Name=" + name + ", description=" + description + ", parentCategory=" + parentCategory + "]";
+		return "Category [name=" + name + ", description=" + description + ", parentCategory=" + parentCategory + ", root=" + root + ", id=" + id + "]";
 	}
 	
 }
