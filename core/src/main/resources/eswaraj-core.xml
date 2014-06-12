@@ -35,4 +35,8 @@
 	    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
 	    </bean>    
 	</beans>
+	<beans profile="dev" >
+	    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
+	    </bean>    
+	</beans>
 </beans>

@@ -119,7 +119,7 @@ public class TestLocationTypeRepository extends BaseNeo4jEswarajTest {
 	public void test06_getLocationTypeByNameAndDataClientType(){
 		final String countryName = "Country";
 		final boolean isRoot = true;
-		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(randomInteger(32)));
+		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(32));
 		LocationType countryLocationType = createLocationType(locationTypeRepository, countryName, null, dataClient, isRoot);
 		LocationType dbCountryLocationType = locationTypeRepository.getLocationTypeByNameAndDataClientType("Country", dataClient);
 		
