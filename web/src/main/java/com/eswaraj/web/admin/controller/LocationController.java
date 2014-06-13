@@ -61,7 +61,18 @@ public class LocationController extends BaseController{
 	}
 	@RequestMapping(value = "/ajax/locationtype/save", method = RequestMethod.POST)
 	public @ResponseBody LocationTypeDto saveLocationTypes(ModelAndView mv, @RequestBody LocationTypeDto locationTypeDto) throws ApplicationException {
-		locationTypeDto = locationService.saveLocationType(locationTypeDto);
+		logger.info("saving Location Type : "+locationTypeDto);
+		System.out.println("saving Location Type : "+locationTypeDto);
+		try{
+			locationTypeDto = locationService.saveLocationType(locationTypeDto);	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			logger.error("Error", ex);
+		}finally{
+			logger.info("All done");
+			System.out.println("All done");
+		}
+		
 		return locationTypeDto;
 	}
 
