@@ -61,23 +61,11 @@ public class LocationController extends BaseController{
 	}
 	@RequestMapping(value = "/ajax/locationtype/save", method = RequestMethod.POST)
 	public @ResponseBody LocationTypeDto saveLocationTypes(ModelAndView mv, @RequestBody LocationTypeDto locationTypeDto) throws ApplicationException {
-		logger.info("saving Location Type : "+locationTypeDto);
-		System.out.println("saving Location Type : "+locationTypeDto);
-		try{
-			if(locationTypeDto.getParentLocationTypeId() == null){
-				locationTypeDto = locationService.saveRootLocationType(locationTypeDto);	
-			}else{
-				locationTypeDto = locationService.saveLocationType(locationTypeDto);
-			}
-				
-		}catch(Exception ex){
-			ex.printStackTrace();
-			logger.error("Error", ex);
-		}finally{
-			logger.info("All done");
-			System.out.println("All done");
+		if(locationTypeDto.getParentLocationTypeId() == null){
+			locationTypeDto = locationService.saveRootLocationType(locationTypeDto);	
+		}else{
+			locationTypeDto = locationService.saveLocationType(locationTypeDto);
 		}
-		
 		return locationTypeDto;
 	}
 
