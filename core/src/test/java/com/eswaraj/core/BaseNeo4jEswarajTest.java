@@ -77,7 +77,7 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	}
 	
 	protected void assertEqualLocations(LocationDto expectedLocation, LocationDto actualLocation){
-		assertEquals(expectedLocation.getLattitude(), actualLocation.getLattitude());
+		assertEquals(expectedLocation.getLatitude(), actualLocation.getLatitude());
 		assertEquals(expectedLocation.getLongitude(), actualLocation.getLongitude());
 		assertEquals(expectedLocation.getLocationTypeId(), actualLocation.getLocationTypeId());
 		assertEquals(expectedLocation.getParentLocationId(), actualLocation.getParentLocationId());

@@ -7,7 +7,7 @@ public class LocationDto extends BaseDto {
 	private String name;
 	private Long parentLocationId;
 	private Long locationTypeId;
-	private Double lattitude;
+	private Double latitude;
 	private Double longitude;
 	
 	public String getName() {
@@ -22,11 +22,11 @@ public class LocationDto extends BaseDto {
 	public void setParentLocationId(Long parentLocationId) {
 		this.parentLocationId = parentLocationId;
 	}
-	public Double getLattitude() {
-		return lattitude;
+	public Double getLatitude() {
+		return latitude;
 	}
-	public void setLattitude(Double lattitude) {
-		this.lattitude = lattitude;
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 	public Double getLongitude() {
 		return longitude;
@@ -42,14 +42,14 @@ public class LocationDto extends BaseDto {
 	}
 	@Override
 	public String toString() {
-		return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", lattitude=" + lattitude
+		return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", latitude=" + latitude
 				+ ", longitude=" + longitude + ", getId()=" + getId() + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((lattitude == null) ? 0 : lattitude.hashCode());
+		result = prime * result + ((latitude == null) ? 0 : latitude.hashCode());
 		result = prime * result + ((locationTypeId == null) ? 0 : locationTypeId.hashCode());
 		result = prime * result + ((longitude == null) ? 0 : longitude.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -65,10 +65,10 @@ public class LocationDto extends BaseDto {
 		if (getClass() != obj.getClass())
 			return false;
 		LocationDto other = (LocationDto) obj;
-		if (lattitude == null) {
-			if (other.lattitude != null)
+		if (latitude == null) {
+			if (other.latitude != null)
 				return false;
-		} else if (!lattitude.equals(other.lattitude))
+		} else if (!latitude.equals(other.latitude))
 			return false;
 		if (locationTypeId == null) {
 			if (other.locationTypeId != null)

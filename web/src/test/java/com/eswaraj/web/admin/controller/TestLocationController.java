@@ -166,7 +166,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 			locationDto = locations.get(i);
 			result.andExpect(jsonPath("$[" + i + "].name").value(locationDto.getName()));
 			result.andExpect(jsonPath("$[" + i + "].id").value(locationDto.getId()));
-			result.andExpect(jsonPath("$[" + i + "].lattitude").value(locationDto.getLattitude()));
+			result.andExpect(jsonPath("$[" + i + "].latitude").value(locationDto.getLatitude()));
 			result.andExpect(jsonPath("$[" + i + "].longitude").value(locationDto.getLongitude()));
 			result.andExpect(jsonPath("$[" + i + "].locationTypeId").value(locationTypeId));
 			// For country Parent Id must Not be null and must be equal to
@@ -182,7 +182,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	private void checkLocation(ResultActions result, LocationDto locationDto, Long parentLocationId, Long locationTypeId) throws Exception {
 		result.andExpect(jsonPath("$.name").value(locationDto.getName()));
 		result.andExpect(jsonPath("$.id").value(locationDto.getId()));
-		result.andExpect(jsonPath("$.lattitude").value(locationDto.getLattitude()));
+		result.andExpect(jsonPath("$.latitude").value(locationDto.getLatitude()));
 		result.andExpect(jsonPath("$.longitude").value(locationDto.getLongitude()));
 		result.andExpect(jsonPath("$.locationTypeId").value(locationTypeId));
 		// For country Parent Id must Not be null and must be equal to parametr
@@ -197,13 +197,13 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	private LocationDto createOneLocation(Long parentLocationId, Long locationTypeId) {
 		Long firstLocationId = randomLong();
 		String firstLocationName = randomAlphaString(30);
-		Double firstLocationLattitude = randomDouble(180);
+		Double firstLocationLatitude = randomDouble(180);
 		Double rootLocationLongitude = randomDouble(180);
 
 		LocationDto locationDto = new LocationDto();
 		locationDto.setId(firstLocationId);
 		locationDto.setName(firstLocationName);
-		locationDto.setLattitude(firstLocationLattitude);
+		locationDto.setLatitude(firstLocationLatitude);
 		locationDto.setLongitude(rootLocationLongitude);
 		locationDto.setLocationTypeId(locationTypeId);
 		locationDto.setParentLocationId(parentLocationId);
@@ -225,7 +225,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	private void checkLocationType(ResultActions result, LocationDto locationDto, Long parentLocationId, Long locationTypeId) throws Exception {
 		result.andExpect(jsonPath("$.name").value(locationDto.getName()));
 		result.andExpect(jsonPath("$.id").value(locationDto.getId()));
-		result.andExpect(jsonPath("$.lattitude").value(locationDto.getLattitude()));
+		result.andExpect(jsonPath("$.latitude").value(locationDto.getLatitude()));
 		result.andExpect(jsonPath("$.longitude").value(locationDto.getLongitude()));
 		result.andExpect(jsonPath("$.locationTypeId").value(locationTypeId));
 		// For country Parent Id must Not be null and must be equal to parametr
@@ -253,7 +253,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		LocationDto locationDto = new LocationDto();
 		locationDto.setId(sourceLocation.getId());
 		locationDto.setName(sourceLocation.getName());
-		locationDto.setLattitude(sourceLocation.getLattitude());
+		locationDto.setLatitude(sourceLocation.getLatitude());
 		locationDto.setLongitude(sourceLocation.getLongitude());
 		locationDto.setLocationTypeId(sourceLocation.getLocationTypeId());
 		locationDto.setParentLocationId(sourceLocation.getParentLocationId());

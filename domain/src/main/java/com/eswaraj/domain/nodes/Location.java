@@ -24,7 +24,7 @@ public class Location extends BaseNode {
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
-	private Double lattitude;
+	private Double latitude;
 	
 	private Double longitude;
 
@@ -52,14 +52,6 @@ public class Location extends BaseNode {
 		this.parentLocation = parentLocation;
 	}
 
-	public Double getLattitude() {
-		return lattitude;
-	}
-
-	public void setLattitude(Double lattitude) {
-		this.lattitude = lattitude;
-	}
-
 	public Double getLongitude() {
 		return longitude;
 	}
@@ -68,9 +60,18 @@ public class Location extends BaseNode {
 		this.longitude = longitude;
 	}
 
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
 	@Override
 	public String toString() {
-		return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", getId()=" + getId() + "]";
+		return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", id=" + id + "]";
 	}
 
 	
