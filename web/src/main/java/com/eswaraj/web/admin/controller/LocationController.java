@@ -64,7 +64,12 @@ public class LocationController extends BaseController{
 		logger.info("saving Location Type : "+locationTypeDto);
 		System.out.println("saving Location Type : "+locationTypeDto);
 		try{
-			locationTypeDto = locationService.saveLocationType(locationTypeDto);	
+			if(locationTypeDto.getParentLocationTypeId() == null){
+				locationTypeDto = locationService.saveRootLocationType(locationTypeDto);	
+			}else{
+				locationTypeDto = locationService.saveLocationType(locationTypeDto);
+			}
+				
 		}catch(Exception ex){
 			ex.printStackTrace();
 			logger.error("Error", ex);
