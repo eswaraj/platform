@@ -14,14 +14,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.eswaraj.core.BaseNeo4jEswarajTest;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-core-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 
 	@Autowired private AppService appService;
+	@Autowired private LocationService locationService;
 
 	/**
 	 * Create a category and then get it by getcategory Service
@@ -171,6 +175,184 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 			allDbRootCategories = appService.getAllChildCategoryOfParentCategory(oneRootCategory.getId());
 			assertEquals(totalChildPerRootnode , allDbRootCategories.size());
 		}
+	}
+	/**
+	 * Create a PoliticaBodyType and then get it by getPoliticalBodyTypeById Service
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test09_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		PoliticalBodyTypeDto savedPoliticalBodyType = appService.savePoliticalBodyType(politicalBodyTypeDto);
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, savedPoliticalBodyType, false);
+		
+		PoliticalBodyTypeDto dbPoliticalBodyType = appService.getPoliticalBodyTypeById(savedPoliticalBodyType.getId());
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, dbPoliticalBodyType, false);
+		assertEqualPoliticalBodyTypes(savedPoliticalBodyType, dbPoliticalBodyType, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with Short Name as null
+	 * it should throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test10_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = null;
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		appService.savePoliticalBodyType(politicalBodyTypeDto);//Should throw validationException
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with Short Name as empty i.e. ""
+	 * it should throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test11_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = "";
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		appService.savePoliticalBodyType(politicalBodyTypeDto);//Should throw validationException
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with Name as null
+	 * it should throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test12_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = null;
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		appService.savePoliticalBodyType(politicalBodyTypeDto);//Should throw validationException
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with Name as empty i.e. ""
+	 * it should throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test13_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = "";
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		appService.savePoliticalBodyType(politicalBodyTypeDto);//Should throw validationException
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with LocationTypeId as null
+	 * it should throw ApplicationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test14_savePoliticalBody() throws ApplicationException{
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		final Long locationTypeId = null;
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationTypeId);
+		appService.savePoliticalBodyType(politicalBodyTypeDto);//Should throw validationException
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with unknown LocationTypeId i.e. that LocationType do no exists
+	 * it should throw ApplicationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test15_savePoliticalBody() throws ApplicationException{
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = randomAlphaString(128);
+		final Long locationTypeId = randomPositiveLong();
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationTypeId);
+		appService.savePoliticalBodyType(politicalBodyTypeDto);//Should throw validationException
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with description as null
+	 * it shud work fine
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test16_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = null;
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		PoliticalBodyTypeDto savedPoliticalBodyType = appService.savePoliticalBodyType(politicalBodyTypeDto);
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, savedPoliticalBodyType, false);
+		
+		PoliticalBodyTypeDto dbPoliticalBodyType = appService.getPoliticalBodyTypeById(savedPoliticalBodyType.getId());
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, dbPoliticalBodyType, false);
+		assertEqualPoliticalBodyTypes(savedPoliticalBodyType, dbPoliticalBodyType, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType with description as empty i.e. ""
+	 * it shud work fine
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test17_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = "";
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		PoliticalBodyTypeDto savedPoliticalBodyType = appService.savePoliticalBodyType(politicalBodyTypeDto);
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, savedPoliticalBodyType, false);
+		
+		PoliticalBodyTypeDto dbPoliticalBodyType = appService.getPoliticalBodyTypeById(savedPoliticalBodyType.getId());
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, dbPoliticalBodyType, false);
+		assertEqualPoliticalBodyTypes(savedPoliticalBodyType, dbPoliticalBodyType, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType and get it back with 
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test18_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		final String politicalBodyTypeShortName = randomAlphaString(3);
+		final String politicalBodyTypeName = randomAlphaString(16);
+		final String politicalBodyTypeDescription = "";
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(politicalBodyTypeShortName,politicalBodyTypeName,  politicalBodyTypeDescription, locationType.getId());
+		PoliticalBodyTypeDto savedPoliticalBodyType = appService.savePoliticalBodyType(politicalBodyTypeDto);
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, savedPoliticalBodyType, false);
+		
+		List<PoliticalBodyTypeDto> dbPoliticalBodyTypes = appService.getAllPoliticalBodyTypes();
+		assertEquals(1, dbPoliticalBodyTypes.size());
+		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, dbPoliticalBodyTypes.get(0), false);
+		assertEqualPoliticalBodyTypes(savedPoliticalBodyType, dbPoliticalBodyTypes.get(0), true);
+		
 	}
 	
 }

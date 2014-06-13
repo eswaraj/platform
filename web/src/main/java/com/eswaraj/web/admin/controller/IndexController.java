@@ -1,7 +1,5 @@
 package com.eswaraj.web.admin.controller;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +15,6 @@ public class IndexController {
 
 	@Autowired
 	private LocationService locationService;
-	
-	public IndexController(){
-		System.out.println("Constructor Index Controller created");
-	}
-	
-	@PostConstruct
-	public void init(){
-		System.out.println("Index Controller created");
-	}
 	
 	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
 	public ModelAndView showIndexPage(ModelAndView mv) {

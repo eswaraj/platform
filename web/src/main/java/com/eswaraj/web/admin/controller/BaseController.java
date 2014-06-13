@@ -2,14 +2,19 @@ package com.eswaraj.web.admin.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.ErrorMessageDto;
 
 public class BaseController {
+
+	@Autowired
+	protected AppService appService;
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	 @ExceptionHandler(ApplicationException.class)

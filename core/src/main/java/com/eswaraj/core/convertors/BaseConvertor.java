@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -42,6 +43,17 @@ public abstract class BaseConvertor<DbType, WebType> {
 	protected abstract WebType convertBeanInternal(DbType dbDto) throws ApplicationException;
 	
 	public List<WebType> convertBeanList(Collection<DbType> dbTypeCollection) throws ApplicationException{
+		if(dbTypeCollection == null){
+			return new ArrayList<WebType>();
+		}
+		List<WebType> webTypeList = new ArrayList<>();
+		for(DbType oneDbType:dbTypeCollection){
+			webTypeList.add(convertBean(oneDbType));
+		}
+		return webTypeList;
+	}
+	
+	public List<WebType> convertBeanList(EndResult<DbType> dbTypeCollection) throws ApplicationException{
 		if(dbTypeCollection == null){
 			return new ArrayList<WebType>();
 		}

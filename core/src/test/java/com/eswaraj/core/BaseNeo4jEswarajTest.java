@@ -16,6 +16,7 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 
@@ -109,6 +110,24 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		categoryDto.setParentCategoryId(parentCategoryId);
 		return categoryDto;
 	}
-
+	
+	protected PoliticalBodyTypeDto createPoliticalBodyType(String shortName, String name, String description, Long locationTypeId){
+		PoliticalBodyTypeDto politicalBodyTypeDto = new PoliticalBodyTypeDto();
+		politicalBodyTypeDto.setName(name);
+		politicalBodyTypeDto.setShortName(shortName);
+		politicalBodyTypeDto.setDescription(description);
+		politicalBodyTypeDto.setLocationTypeId(locationTypeId);
+		return politicalBodyTypeDto;
+	}
+	protected void assertEqualPoliticalBodyTypes(PoliticalBodyTypeDto expectedCategory, PoliticalBodyTypeDto actualCategory, boolean checkId){
+		if(checkId){
+			assertEquals(expectedCategory.getId(), actualCategory.getId());	
+		}
+		assertEquals(expectedCategory.getName(), actualCategory.getName());
+		assertEquals(expectedCategory.getDescription(), actualCategory.getDescription());
+		assertEquals(expectedCategory.getShortName(), actualCategory.getShortName());
+		assertEquals(expectedCategory.getLocationTypeId(), actualCategory.getLocationTypeId());
+	}
+	
 
 }

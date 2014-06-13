@@ -1,20 +1,17 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.web.dto;
 
-import org.springframework.data.neo4j.annotation.NodeEntity;
-
-import com.eswaraj.domain.base.BaseNode;
 
 /**
  * Represents type of the political body
  * @author ravi
  * @data Jun 13, 2014
  */
-@NodeEntity
-public class PoliticalBodyType extends BaseNode{
+public class PoliticalBodyTypeDto extends BaseDto{
+	private static final long serialVersionUID = 1L;
 	private String shortName;
 	private String name;
 	private String description;
-	private LocationType locationType;
+	private Long locationTypeId;
 	
 	public String getShortName() {
 		return shortName;
@@ -34,15 +31,16 @@ public class PoliticalBodyType extends BaseNode{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public LocationType getLocationType() {
-		return locationType;
+	public Long getLocationTypeId() {
+		return locationTypeId;
 	}
-	public void setLocationType(LocationType locationType) {
-		this.locationType = locationType;
+	public void setLocationTypeId(Long locationTypeId) {
+		this.locationTypeId = locationTypeId;
 	}
 	@Override
 	public String toString() {
-		return "PoliticalBodyType [shortName=" + shortName + ", name=" + name + ", description=" + description + ", locationType=" + locationType + ", id="
-				+ id + "]";
+		return "PoliticalBodyTypeDto [shortName=" + shortName + ", name=" + name + ", description=" + description + ", locationTypeId=" + locationTypeId
+				+ ", id=" + id + "]";
 	}
+	
 }

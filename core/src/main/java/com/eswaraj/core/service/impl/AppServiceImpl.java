@@ -4,15 +4,20 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.core.convertors.CategoryConvertor;
+import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 @Component
 @Transactional
@@ -22,6 +27,10 @@ public class AppServiceImpl implements AppService {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private CategoryConvertor categoryConvertor;
+	@Autowired
+	private PoliticalBodyTypeRepository politicalBodyTypeRepository;
+	@Autowired
+	private PoliticalBodyTypeConvertor politicalBodyTypeConvertor;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -50,6 +59,25 @@ public class AppServiceImpl implements AppService {
 		}
 		Collection<Category> rootCategories = categoryRepository.findAllChildCategoryOfParentCategory(parentCategory);
 		return categoryConvertor.convertBeanList(rootCategories);
+	}
+
+	@Override
+	public PoliticalBodyTypeDto savePoliticalBodyType(PoliticalBodyTypeDto politicalBodyTypeDto) throws ApplicationException {
+		PoliticalBodyType politicalBodyType = politicalBodyTypeConvertor.convert(politicalBodyTypeDto);
+		politicalBodyType = politicalBodyTypeRepository.save(politicalBodyType);
+		return politicalBodyTypeConvertor.convertBean(politicalBodyType);
+	}
+
+	@Override
+	public PoliticalBodyTypeDto getPoliticalBodyTypeById(Long politicalBodyTypeId) throws ApplicationException {
+		PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(politicalBodyTypeId);
+		return politicalBodyTypeConvertor.convertBean(politicalBodyType);
+	}
+
+	@Override
+	public List<PoliticalBodyTypeDto> getAllPoliticalBodyTypes() throws ApplicationException {
+		EndResult<PoliticalBodyType> allPoliticalBodyTypesFromDb = politicalBodyTypeRepository.findAll();
+		return politicalBodyTypeConvertor.convertBeanList(allPoliticalBodyTypesFromDb);
 	}
 
 }
