@@ -21,7 +21,7 @@ import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
 
 @Controller
-public class LocationController {
+public class LocationController extends BaseController{
 
 	@Autowired
 	private LocationService locationService;
