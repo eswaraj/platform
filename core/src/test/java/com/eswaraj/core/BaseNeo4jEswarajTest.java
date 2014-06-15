@@ -16,6 +16,7 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
@@ -129,5 +130,16 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		assertEquals(expectedCategory.getLocationTypeId(), actualCategory.getLocationTypeId());
 	}
 	
+	protected PartyDto createParty(String name){
+		PartyDto partyDto = new PartyDto();
+		partyDto.setName(name);
+		return partyDto;
+	}
+	protected void assertEqualParties(PartyDto expectedParty, PartyDto actualParty, boolean checkId){
+		if(checkId){
+			assertEquals(expectedParty.getId(), actualParty.getId());	
+		}
+		assertEquals(expectedParty.getName(), actualParty.getName());
+	}
 
 }

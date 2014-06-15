@@ -18,6 +18,7 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-core-test.xml" })
@@ -353,6 +354,53 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 		assertEqualPoliticalBodyTypes(politicalBodyTypeDto, dbPoliticalBodyTypes.get(0), false);
 		assertEqualPoliticalBodyTypes(savedPoliticalBodyType, dbPoliticalBodyTypes.get(0), true);
 		
+	}
+	/**
+	 * Create one party and get it back by getPartyById
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test19_saveParty() throws ApplicationException{
+		PartyDto partyDto = createParty(randomAlphaString(16));
+		PartyDto savedPartyDto = appService.saveParty(partyDto);
+		assertEqualParties(partyDto, savedPartyDto, false);
+		
+		PartyDto dbPartyDto = appService.getPartyById(savedPartyDto.getId());
+		assertEqualParties(partyDto, dbPartyDto, false);
+		assertEqualParties(savedPartyDto, dbPartyDto, false);
+	}
+	
+	/**
+	 * create a party with name as null, it shud throw Validation Exception
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test20_saveParty() throws ApplicationException{
+		PartyDto partyDto = createParty(null);
+		appService.saveParty(partyDto);//This hsould throw exception
+	}
+	/**
+	 * create N parties and get them back by getAllParties
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test21_saveParty() throws ApplicationException{
+		int totalParties = randomInteger(20);
+		List<PartyDto> allPartiesToBeCreated = new ArrayList<>(totalParties);
+		List<PartyDto> allPartiesCreated = new ArrayList<>(totalParties);
+		PartyDto partyDto;
+		PartyDto savedPartyDto;
+		for(int i=0;i<totalParties;i++){
+			partyDto = createParty(randomAlphaString(16));
+			allPartiesToBeCreated.add(partyDto);
+			savedPartyDto = appService.saveParty(partyDto);
+			allPartiesCreated.add(savedPartyDto);
+			assertEqualParties(partyDto, savedPartyDto, false);
+		}
+		
+		
+		List<PartyDto> dbPartyDtos = appService.getAllPoliticalParties();
+		assertEquals(totalParties, dbPartyDtos.size());
 	}
 	
 }

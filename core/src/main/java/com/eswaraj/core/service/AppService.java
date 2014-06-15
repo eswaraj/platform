@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 public interface AppService {
@@ -23,4 +24,11 @@ public interface AppService {
 	PoliticalBodyTypeDto getPoliticalBodyTypeById(Long politicalBodyTypeId) throws ApplicationException;
 	
 	List<PoliticalBodyTypeDto> getAllPoliticalBodyTypes() throws ApplicationException;
+	
+	//Party APis
+	PartyDto saveParty(PartyDto partyDto) throws ApplicationException;
+	
+	PartyDto getPartyById(Long partyId) throws ApplicationException;
+	
+	List<PartyDto> getAllPoliticalParties() throws ApplicationException;
 }

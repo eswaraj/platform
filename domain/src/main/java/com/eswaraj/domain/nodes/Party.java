@@ -15,18 +15,11 @@ import com.eswaraj.domain.base.BaseNode;
 public class Party extends BaseNode {
 
 	private String name;
-	private boolean inPower;
 	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public boolean isInPower() {
-		return inPower;
-	}
-	public void setInPower(boolean inPower) {
-		this.inPower = inPower;
 	}
 }
