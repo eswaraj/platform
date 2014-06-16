@@ -27,7 +27,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.eswaraj.base.BaseEswarajMockitoTest;
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

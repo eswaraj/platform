@@ -21,7 +21,7 @@ import com.eswaraj.web.dto.CategoryDto;
  *
  */
 @Controller
-public class CategoryController {
+public class CategoryController extends BaseController{
 
 	@Autowired
 	private AppService appService;

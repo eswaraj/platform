@@ -15,6 +15,7 @@ public class BaseTest {
 
 	private static final String ALPHA_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final String ALPHA_NUMERIC_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final String NUMERIC_CHARS = "0123456789";
 	private static final String HEX_CHARS = "ABCDEF0123456789";
 	private static final String SINGLE_LINE_STRING_CHARS = ALPHA_NUMERIC_CHARS + " `~!@#$%^&*()_+-=[]{}\\|;:'\",./<>?";
 	private static final String MULTI_LINE_STRING_CHARS = SINGLE_LINE_STRING_CHARS + "\n";
@@ -151,6 +152,14 @@ public class BaseTest {
 	public static String randomAlphaNumericString(int len) {
 	    return randomString(ALPHA_NUMERIC_CHARS, len);
 	}
+	
+	/**
+	 * Generate a random string consisting of digits
+	 */
+	public static String randomNumericString(int len) {
+	    return randomString(NUMERIC_CHARS, len);
+	}
+	
 
 	/**
 	 * Generate a random string consisting of letters and/or digits

@@ -2,8 +2,10 @@ package com.eswaraj.domain.repo;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import org.junit.Ignore;
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Person;
-import com.eswaraj.domain.validator.exception.ValidationException;
-import com.google.gdata.data.contacts.Gender;
-import com.google.gdata.data.contacts.Gender.Value;
 
 /**
  * Test for Person repository
@@ -25,65 +24,64 @@ import com.google.gdata.data.contacts.Gender.Value;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@Ignore
-public class TestPersonRepository {
+public class TestPersonRepository extends BaseNeo4jEswarajTest{
 
 	@Autowired PersonRepository personRespository;
 	
+	/**
+	 * Test to save Person with minimum required field(name and Email)
+	 */
 	@Test
-	public void shouldSavePerson() {
+	public void test01_savePerson() {
 		Person person = new Person();
-		person.setName("Foo Bar");
-		person.setEmail("foo@bar.com");
-		person.setGender(new Gender(Value.MALE));
+		person.setName(randomAlphaString(16));
+		person.setEmail(randomEmailAddress());
 		person = personRespository.save(person);
-		Person expectedPerson = personRespository.getPersonById(person.getId());
-		assertEquals(expectedPerson.getName(), person.getName());
-		assertEquals(expectedPerson.getGender(), person.getGender());
-		assertEquals(expectedPerson.getEmail(), person.getEmail());
+		assertNotNull(person);
+		assertNotNull(person.getId());
+	}
+	/**
+	 * Test to save Person with minimum required field(name and Email) + a Phone Number
+	 */
+	@Test
+	public void test02_savePerson() {
+		Person person = new Person();
+		person.setName(randomAlphaString(16));
+		person.setEmail(randomEmailAddress());
+		
+		person.setMobileNumber1("8901550000");
+		
+		person = personRespository.save(person);
+		assertNotNull(person);
+		assertNotNull(person.getId());
+		assertNotNull(person.getMobileNumber1());
+	}
+	
+	@Test 
+	public void test03_searchByName(){
+		//dontDeleteDbObjects();
+		Person person = new Person();
+		String name="Ravi Sharma";
+		person.setName(name);
+		person = personRespository.save(person);
+		
+		Collection<Person> searchResult = personRespository.searchPersonByName("name:*avi*");
+		System.out.println("searchResult="+searchResult);
+		assertEquals(1, searchResult.size());
+		
+		searchResult = personRespository.searchPersonByName("name:*AXCFS*");
+		System.out.println("searchResult="+searchResult);
+		assertEquals(0, searchResult.size());
+		
+		searchResult = personRespository.searchPersonByName("name:Ravi*");
+		System.out.println("searchResult="+searchResult);
+		assertEquals(1, searchResult.size());
+		
+		searchResult = personRespository.searchPersonByName("name:*ma");
+		System.out.println("searchResult="+searchResult);
+		assertEquals(1, searchResult.size());
+		
 	}
 
-	@Test(expected=ValidationException.class)
-	public void shouldCheckEmptyPersonName() {
-		Person person = new Person();
-		person = personRespository.save(person);
-	}
 	
-	@Test(expected=ValidationException.class)
-	public void shouldCheckNullLocation() {
-		Person person = new Person();
-		person.setName("foo bar");
-		person = personRespository.save(person);
-	}
-	
-	@Test(expected=ValidationException.class)
-	public void shouldCheckEmptyEmail() {
-		Person person = new Person();
-		person.setName("foo bar");
-		person = personRespository.save(person);
-	}
-	
-	@Test(expected=ValidationException.class)
-	public void shouldCheckNameLength() {
-		Person person = new Person();
-		person.setEmail("foo@bar.com");
-		person.setName("f");
-		person = personRespository.save(person);
-	}
-	
-	@Test(expected=ValidationException.class)
-	public void shouldCheckValidCharacters_InName() {
-		Person person = new Person();
-		person.setEmail("foo@bar.com");
-		person.setName("Ff12 hhh h");
-		person = personRespository.save(person);
-	}
-	
-	@Test(expected=ValidationException.class)
-	public void shouldCheckValidCharacters_InEmail() {
-		Person person = new Person();
-		person.setEmail("foo@bar");
-		person.setName("Ff hhh");
-		person = personRespository.save(person);
-	}
 }

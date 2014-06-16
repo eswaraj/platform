@@ -1,6 +1,8 @@
 package com.eswaraj.core;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,10 +15,12 @@ import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.PartyDto;
+import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
@@ -141,5 +145,63 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		}
 		assertEquals(expectedParty.getName(), actualParty.getName());
 	}
+	
+	protected PersonDto createPerson(String name, String email, String biodata, Date dob, String gender, String landlineNumber1, 
+			String landlineNumber2,String mobileNumber1, String mobileNumber2, AddressDto personAddress){
+		PersonDto personDto = new PersonDto();
+		personDto.setName(name);
+		personDto.setEmail(email);
+		personDto.setBiodata(biodata);
+		personDto.setDob(dob);
+		personDto.setGender(gender);
+		personDto.setLandlineNumber1(landlineNumber1);
+		personDto.setLandlineNumber2(landlineNumber2);
+		personDto.setMobileNumber1(mobileNumber1);
+		personDto.setMobileNumber2(mobileNumber2);
+		personDto.setPersonAddress(personAddress);
+		return personDto;
+	}
+	
+	protected void assertEqualPersons(PersonDto expectedPerson, PersonDto actualPerson, boolean checkId){
+		if(checkId){
+			assertEquals(expectedPerson.getId(), actualPerson.getId());	
+		}
+		assertEquals(expectedPerson.getName(), actualPerson.getName());
+		assertEquals(expectedPerson.getBiodata(), actualPerson.getBiodata());
+		assertEquals(expectedPerson.getDob(), actualPerson.getDob());
+		assertEquals(expectedPerson.getEmail(), actualPerson.getEmail());
+		assertEquals(expectedPerson.getGender(), actualPerson.getGender());
+		assertEquals(expectedPerson.getLandlineNumber1(), actualPerson.getLandlineNumber1());
+		assertEquals(expectedPerson.getLandlineNumber2(), actualPerson.getLandlineNumber2());
+		assertEquals(expectedPerson.getMobileNumber1(), actualPerson.getMobileNumber1());
+		assertEquals(expectedPerson.getMobileNumber2(), actualPerson.getMobileNumber2());
+		
+		if(expectedPerson.getPersonAddress() == null && actualPerson.getPersonAddress() != null){
+			fail("Person Address do not match, expected null but found not null "+ actualPerson.getPersonAddress());
+		}
+		if(expectedPerson.getPersonAddress() != null && actualPerson.getPersonAddress() == null){
+			fail("Person Address do not match, expected Not null but found null ");
+		}
+		if(expectedPerson.getPersonAddress() != null && actualPerson.getPersonAddress() != null){
+			assertEqualAddresses(expectedPerson.getPersonAddress(), actualPerson.getPersonAddress(), checkId);
+		}
+	}
+	
+	protected void assertEqualAddresses(AddressDto expectedAddress, AddressDto actualAddress, boolean checkId){
+		if(checkId){
+			assertEquals(expectedAddress.getId(), actualAddress.getId());	
+		}
+		assertEquals(expectedAddress.getCityId(), actualAddress.getCityId());
+		assertEquals(expectedAddress.getCountryId(), actualAddress.getCountryId());
+		assertEquals(expectedAddress.getDistrictId(), actualAddress.getDistrictId());
+		assertEquals(expectedAddress.getLine1(), actualAddress.getLine1());
+		assertEquals(expectedAddress.getLine2(), actualAddress.getLine2());
+		assertEquals(expectedAddress.getLine3(), actualAddress.getLine3());
+		assertEquals(expectedAddress.getPostalCode(), actualAddress.getPostalCode());
+		assertEquals(expectedAddress.getStateId(), actualAddress.getStateId());
+		assertEquals(expectedAddress.getVillageId(), actualAddress.getVillageId());
+		assertEquals(expectedAddress.getWardId(), actualAddress.getWardId());
+	}
+	
 
 }

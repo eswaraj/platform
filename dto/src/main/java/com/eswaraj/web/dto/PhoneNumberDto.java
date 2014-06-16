@@ -1,21 +1,15 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.web.dto;
 
-import java.io.Serializable;
-
-import com.eswaraj.domain.base.BaseNode;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 
-public class PhoneNumber extends BaseNode implements Serializable{
+@NodeEntity
+public class PhoneNumberDto extends BaseDto{
 
 	private static final long serialVersionUID = 1L;
 	private String countryCode;
 	private String stdCode;
 	private String phoneNumber;
-	private PhoneType phoneType;
-	
-	public static enum PhoneType{
-		Landline, Mobile
-	}
 	
 	public String getCountryCode() {
 		return countryCode;
@@ -34,12 +28,6 @@ public class PhoneNumber extends BaseNode implements Serializable{
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-	public PhoneType getPhoneType() {
-		return phoneType;
-	}
-	public void setPhoneType(PhoneType phoneType) {
-		this.phoneType = phoneType;
 	}
 	@Override
 	public String toString() {

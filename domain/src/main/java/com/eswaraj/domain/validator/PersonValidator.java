@@ -17,10 +17,13 @@ public class PersonValidator extends BaseValidator<Person>{
 
 	public void validateBeforeSave(Person person) throws ValidationException {
 		checkIfEmpty("Name", person.getName(),"Persons name can not be Null or Empty");
-		checkIfEmpty("Email", person.getEmail(),"Person's email cannot be empty or null");
-		checkLength(person.getName(), "Person name should be of length 2 and 10", 2, 10);
+		//checkIfEmpty("Email", person.getEmail(),"Person's email cannot be empty or null");
+		checkLength(person.getName(), "Person name should be of length between 2 and 64", 2, 64);
 		checkAcceptedCharacters(person.getName(), "Person's name can only contain alphabets", ValidCharacters.NAME);
-		checkAcceptedCharacters(person.getEmail(), "Invalid email", ValidCharacters.EMAIL);
+		if(person.getEmail() != null){
+			checkAcceptedCharacters(person.getEmail(), "Invalid email", ValidCharacters.EMAIL);	
+		}
+		
 	}
 
 	public void validateBeforeDelete(Person person) throws ValidationException {

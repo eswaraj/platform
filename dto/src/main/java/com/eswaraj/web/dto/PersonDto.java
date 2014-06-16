@@ -1,12 +1,6 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.web.dto;
 
 import java.util.Date;
-
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.support.index.IndexType;
-
-import com.eswaraj.domain.base.BaseNode;
 
 /**
  * Person making or resolving the complaint
@@ -14,10 +8,9 @@ import com.eswaraj.domain.base.BaseNode;
  * @date Jan 18, 2014
  *
  */
-@NodeEntity
-public class Person extends BaseNode {
+public class PersonDto extends BaseDto {
 
-	@Indexed(indexName="PersonNameFt", indexType=IndexType.FULLTEXT)
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String biodata;
 	private Date dob;
@@ -27,7 +20,7 @@ public class Person extends BaseNode {
 	private String landlineNumber2;
 	private String mobileNumber1;
 	private String mobileNumber2;
-	private Address address;
+	private AddressDto personAddress;
 	public String getName() {
 		return name;
 	}
@@ -82,19 +75,18 @@ public class Person extends BaseNode {
 	public void setMobileNumber2(String mobileNumber2) {
 		this.mobileNumber2 = mobileNumber2;
 	}
-	public Address getAddress() {
-		return address;
+	public AddressDto getPersonAddress() {
+		return personAddress;
 	}
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setPersonAddress(AddressDto personAddress) {
+		this.personAddress = personAddress;
 	}
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="
+		return "PersonDto [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="
 				+ landlineNumber1 + ", \nlandlineNumber2=" + landlineNumber2 + ", \nmobileNumber1=" + mobileNumber1 + ", \nmobileNumber2=" + mobileNumber2
-				+ ", \naddress=" + address + ", \nid=" + id + "]";
+				+ ", \npersonAddress=" + personAddress + ", \nid=" + id + "]";
 	}
 	
 	
-
 }

@@ -184,18 +184,12 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 * Simple Test to save Location where parent do not exists
 	 * @throws ApplicationException
 	 */
-	@Test
+	@Test(expected=ApplicationException.class)
 	public void test10_saveLocation() throws ApplicationException{
 		String locationName = "India";
 		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null, true);
-		LocationDto location = createLocation(locationName, countryLocationTypeDto, null);
-		
-		/*
-		LocationDto savedLocation = locationService.saveLocation(location);
-		
-		LocationDto dbLocation = locationService.getLocationByNameAndType(locationName, countryLocationTypeDto);
-		assertEqualLocations(savedLocation, dbLocation);
-		*/
+		LocationDto location = createLocation(locationName, countryLocationTypeDto, randomPositiveLong());
+		locationService.saveLocation(location);
 	}
 	
 	/**
@@ -385,9 +379,5 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 				assertEqualLocationTypes(pcLocationTypeDto, oneLocationTypeDto, true);		
 			}
 		}
-		
 	}
-	
-	
-	
 }
