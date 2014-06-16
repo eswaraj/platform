@@ -8,6 +8,7 @@ import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.core.service.PersonService;
 
 @Configuration
 public class MockServiceConfig {
@@ -30,5 +31,10 @@ public class MockServiceConfig {
 	@Bean
 	public AppService appService() {
 		return Mockito.mock(AppService.class);
+	}
+	
+	@Bean
+	public PersonService personService() {
+		return Mockito.mock(PersonService.class);
 	}
 }
