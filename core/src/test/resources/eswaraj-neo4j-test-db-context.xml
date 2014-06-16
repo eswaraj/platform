@@ -15,7 +15,7 @@
 	<neo4j:repositories base-package="com.eswaraj.domain.nodes.different" />
 
 	<beans profile="jenkins">
-		<neo4j:config storeDirectory="/tmp/graph.db" />
+		<neo4j:config storeDirectory="tmp/graph.db" />
 	</beans>
 	<beans profile="local">
 		<neo4j:config graphDatabaseService="graphDatabaseService" />
