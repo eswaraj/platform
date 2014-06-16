@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.neo4j.cypher.MissingIndexException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -133,7 +135,15 @@ public class LocationServiceImpl implements LocationService {
 	}
 	
 	private DataClient getOrCreateDataClientIndiaEswaraj(){
-		DataClient dataClient = dataClientRepository.getDataClientByName(indiaEswarajClientName);
+		DataClient dataClient = null;
+		try{
+			dataClient = dataClientRepository.getDataClientByName(indiaEswarajClientName);
+			
+		}catch(MissingIndexException|InvalidDataAccessResourceUsageException mie){
+			//for first time this exception gets thrown as we havent created a single node of type DataClient.
+			//just catch it and ignore it
+			dataClient = null;
+		}
 		if(dataClient == null){
 			dataClient = new DataClient();
 			dataClient.setName(indiaEswarajClientName);
