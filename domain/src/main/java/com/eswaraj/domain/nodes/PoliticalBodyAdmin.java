@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -12,6 +13,7 @@ import com.eswaraj.domain.base.BaseNode;
  * @date Jun 14, 2014
  *
  */
+@NodeEntity
 public class PoliticalBodyAdmin extends BaseNode {
 	
 	@RelatedTo(type="OF_TYPE")
@@ -56,6 +58,12 @@ public class PoliticalBodyAdmin extends BaseNode {
 	}
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+	public Party getParty() {
+		return party;
+	}
+	public void setParty(Party party) {
+		this.party = party;
 	}
 	public Address getOfficeAddress() {
 		return officeAddress;
@@ -117,5 +125,6 @@ public class PoliticalBodyAdmin extends BaseNode {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
+	
+	
 }

@@ -117,6 +117,13 @@ public class PoliticalBodyAdminDto extends BaseDto {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	@Override
+	public String toString() {
+		return "PoliticalBodyAdminDto [politicalBodyTypeId=" + politicalBodyTypeId + ", \nlocationId=" + locationId + ", \npersonId=" + personId
+				+ ", \npartyId=" + partyId + ", \nofficeAddressDto=" + officeAddressDto + ", \nhomeAddressDto=" + homeAddressDto + ", \nemail=" + email
+				+ ", \nlandLine1=" + landLine1 + ", \nlandLine2=" + landLine2 + ", \nmobile1=" + mobile1 + ", \nmobile2=" + mobile2 + ", \nstartDate="
+				+ startDate + ", \nendDate=" + endDate + ", \nactive=" + active + ", \nid=" + id + "]";
+	}
 	
 
 }

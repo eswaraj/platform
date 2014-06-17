@@ -14,13 +14,16 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.core.service.PersonService;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PersonDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
@@ -57,6 +60,11 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 			location.setLocationTypeId(locationTypeDto.getId());	
 		}
 		location.setParentLocationId(parentLocationId);
+		return location;
+	}
+	protected LocationDto createAndSaveLocation(LocationService locationService,String name, LocationTypeDto locationTypeDto, Long parentLocationId) throws ApplicationException{
+		LocationDto location = createLocation(name, locationTypeDto, parentLocationId);
+		location = locationService.saveLocation(location);
 		return location;
 	}
 	protected LocationTypeDto createLocationType(String name, Long parentLocationTypeId){
@@ -124,6 +132,16 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		politicalBodyTypeDto.setLocationTypeId(locationTypeId);
 		return politicalBodyTypeDto;
 	}
+	protected PoliticalBodyTypeDto createAndSavePoliticalBodyType(AppService appService, String shortName, String name, String description, Long locationTypeId) throws ApplicationException{
+		PoliticalBodyTypeDto politicalBodyTypeDto = new PoliticalBodyTypeDto();
+		politicalBodyTypeDto.setName(name);
+		politicalBodyTypeDto.setShortName(shortName);
+		politicalBodyTypeDto.setDescription(description);
+		politicalBodyTypeDto.setLocationTypeId(locationTypeId);
+		
+		politicalBodyTypeDto = appService.savePoliticalBodyType(politicalBodyTypeDto);
+		return politicalBodyTypeDto;
+	}
 	protected void assertEqualPoliticalBodyTypes(PoliticalBodyTypeDto expectedCategory, PoliticalBodyTypeDto actualCategory, boolean checkId){
 		if(checkId){
 			assertEquals(expectedCategory.getId(), actualCategory.getId());	
@@ -139,6 +157,12 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		partyDto.setName(name);
 		return partyDto;
 	}
+	protected PartyDto createAndSaveParty(AppService appService, String name) throws ApplicationException{
+		PartyDto partyDto = new PartyDto();
+		partyDto.setName(name);
+		partyDto = appService.saveParty(partyDto);
+		return partyDto;
+	}
 	protected void assertEqualParties(PartyDto expectedParty, PartyDto actualParty, boolean checkId){
 		if(checkId){
 			assertEquals(expectedParty.getId(), actualParty.getId());	
@@ -146,12 +170,12 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		assertEquals(expectedParty.getName(), actualParty.getName());
 	}
 	
-	protected PersonDto createPerson(String name, String email, String biodata, Date dob, String gender, String landlineNumber1, 
+	protected PersonDto createPerson(String name, String email, String bioData, Date dob, String gender, String landlineNumber1, 
 			String landlineNumber2,String mobileNumber1, String mobileNumber2, AddressDto personAddress){
 		PersonDto personDto = new PersonDto();
 		personDto.setName(name);
 		personDto.setEmail(email);
-		personDto.setBiodata(biodata);
+		personDto.setBiodata(bioData);
 		personDto.setDob(dob);
 		personDto.setGender(gender);
 		personDto.setLandlineNumber1(landlineNumber1);
@@ -161,7 +185,51 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		personDto.setPersonAddress(personAddress);
 		return personDto;
 	}
-	
+	protected PersonDto createRandomPerson(){
+		String name = randomAlphaString(16);
+		String email = randomEmailAddress();
+		String bioData = randomAlphaString(1024);
+		Date dob = randomDateInPast();
+		String gender = randomAlphaString(4);
+		String landlineNumber1 = randomNumericString(10);
+		String landlineNumber2 = randomNumericString(10);
+		String mobileNumber1 = randomNumericString(10);
+		String mobileNumber2 = randomNumericString(10);
+
+		AddressDto personAddress = createRandomAddress();
+		return createPerson(name, email, bioData, dob, gender, landlineNumber1, landlineNumber2, mobileNumber1, mobileNumber2, personAddress);
+	}
+	protected PersonDto createAndSaveRandomPerson(PersonService personService) throws ApplicationException{
+		String name = randomAlphaString(16);
+		String email = randomEmailAddress();
+		String bioData = randomAlphaString(1024);
+		Date dob = randomDateInPast();
+		String gender = randomAlphaString(4);
+		String landlineNumber1 = randomNumericString(10);
+		String landlineNumber2 = randomNumericString(10);
+		String mobileNumber1 = randomNumericString(10);
+		String mobileNumber2 = randomNumericString(10);
+
+		AddressDto personAddress = createRandomAddress();
+		PersonDto person = createPerson(name, email, bioData, dob, gender, landlineNumber1, landlineNumber2, mobileNumber1, mobileNumber2, personAddress);
+		return personService.savePerson(person);
+	}
+	protected AddressDto createAddress(String line1, String line2, String line3, String postalCode){
+		AddressDto address = new AddressDto();
+		address.setLine1(line1);
+		address.setLine2(line2);
+		address.setLine3(line3);
+		address.setPostalCode(postalCode);
+		return address;
+	}
+	protected AddressDto createRandomAddress(){
+		String line1 = randomAlphaString(16);
+		String line2 = randomAlphaString(16);
+		String line3 = randomAlphaString(16);
+		String postalCode = randomNumericString(6);
+		return createAddress(line1, line2, line3, postalCode);
+	}
+
 	protected void assertEqualPersons(PersonDto expectedPerson, PersonDto actualPerson, boolean checkId){
 		if(checkId){
 			assertEquals(expectedPerson.getId(), actualPerson.getId());	
@@ -202,6 +270,56 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		assertEquals(expectedAddress.getVillageId(), actualAddress.getVillageId());
 		assertEquals(expectedAddress.getWardId(), actualAddress.getWardId());
 	}
+	
+	protected PoliticalBodyAdminDto createPoliticalBodyAdminDto(boolean active,String email,Date startDate, Date endDate, AddressDto homeAddressDto, AddressDto officeAddressDto,
+			String landLine1, String landLine2, String mobile1, String mobile2, LocationDto location, PartyDto party, PersonDto person, PoliticalBodyTypeDto politicalBodyType){
+		PoliticalBodyAdminDto politicalBodyAdminDto = new PoliticalBodyAdminDto();
+		politicalBodyAdminDto.setActive(active);
+		politicalBodyAdminDto.setEmail(email);
+		politicalBodyAdminDto.setEndDate(endDate);
+		politicalBodyAdminDto.setStartDate(startDate);
+		politicalBodyAdminDto.setHomeAddressDto(homeAddressDto);
+		politicalBodyAdminDto.setOfficeAddressDto(officeAddressDto);
+		politicalBodyAdminDto.setLandLine1(landLine1);
+		politicalBodyAdminDto.setLandLine2(landLine2);
+		if(location != null){
+			politicalBodyAdminDto.setLocationId(location.getId());	
+		}
+		politicalBodyAdminDto.setMobile1(mobile1);
+		politicalBodyAdminDto.setMobile2(mobile2);
+		if(party!= null){
+			politicalBodyAdminDto.setPartyId(party.getId());	
+		}
+		if(person != null){
+			politicalBodyAdminDto.setPersonId(person.getId());	
+		}
+		if(politicalBodyType != null){
+			politicalBodyAdminDto.setPoliticalBodyTypeId(politicalBodyType.getId());	
+		}
+		return politicalBodyAdminDto;
+	}
+	
+	protected void assertEqualPoliticalBodyAdmin(PoliticalBodyAdminDto expectedPoliticalBodyAdmin, PoliticalBodyAdminDto actualPoliticalBodyAdmin, boolean checkId){
+		if(checkId){
+			assertEquals(expectedPoliticalBodyAdmin.getId(), actualPoliticalBodyAdmin.getId());	
+		}
+		assertEquals(expectedPoliticalBodyAdmin.getEmail(), actualPoliticalBodyAdmin.getEmail());
+		assertEquals(expectedPoliticalBodyAdmin.getEndDate(), actualPoliticalBodyAdmin.getEndDate());
+		assertEqualAddresses(expectedPoliticalBodyAdmin.getHomeAddressDto(), actualPoliticalBodyAdmin.getHomeAddressDto(), checkId);
+		assertEqualAddresses(expectedPoliticalBodyAdmin.getOfficeAddressDto(), actualPoliticalBodyAdmin.getOfficeAddressDto(), checkId);
+		assertEquals(expectedPoliticalBodyAdmin.getLandLine1(), actualPoliticalBodyAdmin.getLandLine1());
+		assertEquals(expectedPoliticalBodyAdmin.getLandLine2(), actualPoliticalBodyAdmin.getLandLine2());
+		assertEquals(expectedPoliticalBodyAdmin.getLocationId(), actualPoliticalBodyAdmin.getLocationId());
+		assertEquals(expectedPoliticalBodyAdmin.getMobile1(), actualPoliticalBodyAdmin.getMobile1());
+		assertEquals(expectedPoliticalBodyAdmin.getMobile2(), actualPoliticalBodyAdmin.getMobile2());
+		assertEquals(expectedPoliticalBodyAdmin.getPartyId(), actualPoliticalBodyAdmin.getPartyId());
+		assertEquals(expectedPoliticalBodyAdmin.getPersonId(), actualPoliticalBodyAdmin.getPersonId());
+		assertEquals(expectedPoliticalBodyAdmin.getPoliticalBodyTypeId(), actualPoliticalBodyAdmin.getPoliticalBodyTypeId());
+		assertEquals(expectedPoliticalBodyAdmin.getStartDate(), actualPoliticalBodyAdmin.getStartDate());
+		
+	}
+	
+	
 	
 
 }

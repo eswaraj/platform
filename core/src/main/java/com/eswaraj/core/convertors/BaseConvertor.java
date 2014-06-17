@@ -27,6 +27,19 @@ public abstract class BaseConvertor<DbType, WebType> {
 		
 		return dbObject;
 	}
+	protected <AnyType> AnyType getObjectIfExists(Long nodeId, String objectName, GraphRepository<AnyType> repository) throws ApplicationException{
+		AnyType dbObject = null;
+		if(nodeId == null || nodeId <= 0){
+			return dbObject;
+		}else{
+			dbObject = repository.findOne(nodeId);
+			if(dbObject == null){
+				throw new ApplicationException("No such " + objectName + " exists[id="+ nodeId +"]");
+			}
+		}
+		
+		return dbObject;
+	}
 	public DbType convert(WebType webDto) throws ApplicationException{
 		return convertInternal(webDto);
 	}

@@ -2,6 +2,8 @@ package com.eswaraj.base;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -144,6 +146,65 @@ public class BaseTest {
 	 */
 	public static String randomAlphaString(int len) {
 	    return randomString(ALPHA_CHARS, len);
+	}
+	
+	/**
+	 * Next Day after
+	 */
+	public static Date nextDayAfter(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, 1);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * Generate a random Date in Past
+	 */
+	public static Date randomDateInPast() {
+	    return randomDateBefore(new Date());
+	}
+	/**
+	 * Generate a random Date before given date
+	 */
+	public static Date randomDateBefore(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.YEAR, 0 - randomInteger(50));
+		calendar.add(Calendar.MONTH, 0 - randomInteger(12));
+		calendar.add(Calendar.DATE, 0 - randomInteger(28));
+		calendar.add(Calendar.HOUR, 0 - randomInteger(12));
+		calendar.add(Calendar.MINUTE, 0 - randomInteger(60));
+		calendar.add(Calendar.SECOND, 0 - randomInteger(60));
+	    return calendar.getTime();
+	}
+	/**
+	 * Generate a random Date in Future
+	 */
+	public static Date randomDateInFuture() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.YEAR, randomInteger(50));
+		calendar.add(Calendar.MONTH, randomInteger(12));
+		calendar.add(Calendar.DATE, randomInteger(28));
+		calendar.add(Calendar.HOUR, randomInteger(12));
+		calendar.add(Calendar.MINUTE, randomInteger(60));
+		calendar.add(Calendar.SECOND, randomInteger(60));
+	    return calendar.getTime();
+	}
+	
+	/**
+	 * Generate a random Date after given date
+	 */
+	public static Date randomDateAfter(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.YEAR, randomInteger(50));
+		calendar.add(Calendar.MONTH, randomInteger(12));
+		calendar.add(Calendar.DATE, randomInteger(28));
+		calendar.add(Calendar.HOUR, randomInteger(12));
+		calendar.add(Calendar.MINUTE, randomInteger(60));
+		calendar.add(Calendar.SECOND, randomInteger(60));
+	    return calendar.getTime();
 	}
 
 	/**
@@ -312,6 +373,15 @@ public class BaseTest {
 	    } while (group.contains(value));
 	    group.add(value); // track that we've used this value
 	    return value;
+	}
+	/**
+	 * Generate a random boolean value
+	 */
+	public static boolean randomBoolean() {
+		if(randomInteger() % 2 == 0){
+			return true;
+		}
+		return false;
 	}
 
 	/**

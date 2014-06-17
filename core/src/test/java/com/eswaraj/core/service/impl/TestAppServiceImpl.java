@@ -1,8 +1,9 @@
 package com.eswaraj.core.service.impl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -15,10 +16,15 @@ import com.eswaraj.core.BaseNeo4jEswarajTest;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.core.service.PersonService;
 import com.eswaraj.domain.validator.exception.ValidationException;
+import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.PartyDto;
+import com.eswaraj.web.dto.PersonDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-core-test.xml" })
@@ -27,6 +33,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 
 	@Autowired private AppService appService;
 	@Autowired private LocationService locationService;
+	@Autowired private PersonService personService;
 
 	/**
 	 * Create a category and then get it by getcategory Service
@@ -182,7 +189,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test
-	public void test09_savePoliticalBody() throws ApplicationException{
+	public void test09_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = randomAlphaString(16);
@@ -203,7 +210,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test(expected=ValidationException.class)
-	public void test10_savePoliticalBody() throws ApplicationException{
+	public void test10_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = null;
 		final String politicalBodyTypeName = randomAlphaString(16);
@@ -219,7 +226,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test(expected=ValidationException.class)
-	public void test11_savePoliticalBody() throws ApplicationException{
+	public void test11_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = "";
 		final String politicalBodyTypeName = randomAlphaString(16);
@@ -235,7 +242,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test(expected=ValidationException.class)
-	public void test12_savePoliticalBody() throws ApplicationException{
+	public void test12_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = null;
@@ -251,7 +258,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test(expected=ValidationException.class)
-	public void test13_savePoliticalBody() throws ApplicationException{
+	public void test13_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = "";
@@ -267,7 +274,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test(expected=ValidationException.class)
-	public void test14_savePoliticalBody() throws ApplicationException{
+	public void test14_savePoliticalBodyType() throws ApplicationException{
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = randomAlphaString(16);
 		final String politicalBodyTypeDescription = randomAlphaString(128);
@@ -283,7 +290,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test(expected=ApplicationException.class)
-	public void test15_savePoliticalBody() throws ApplicationException{
+	public void test15_savePoliticalBodyType() throws ApplicationException{
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = randomAlphaString(16);
 		final String politicalBodyTypeDescription = randomAlphaString(128);
@@ -299,7 +306,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test
-	public void test16_savePoliticalBody() throws ApplicationException{
+	public void test16_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = randomAlphaString(16);
@@ -320,7 +327,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test
-	public void test17_savePoliticalBody() throws ApplicationException{
+	public void test17_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = randomAlphaString(16);
@@ -340,7 +347,7 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test
-	public void test18_savePoliticalBody() throws ApplicationException{
+	public void test18_savePoliticalBodyType() throws ApplicationException{
 		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
 		final String politicalBodyTypeShortName = randomAlphaString(3);
 		final String politicalBodyTypeName = randomAlphaString(16);
@@ -402,5 +409,541 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 		List<PartyDto> dbPartyDtos = appService.getAllPoliticalParties();
 		assertEquals(totalParties, dbPartyDtos.size());
 	}
+	
+	/**
+	 * Create a PoliticaBodyType and get it back with getPoliticalBodyById 
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test12_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = randomDateAfter(startDate);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType when End Date is null
+	 * it shud save and work fine 
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test13_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = null;
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType when End Date is before start Date
+	 * it shud throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test14_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = randomDateBefore(startDate);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType when location is null
+	 * it shud throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test15_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = null;
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = randomDateAfter(startDate);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	
+	/**
+	 * Create a PoliticaBodyType when political Body Type is null
+	 * it shud throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test16_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = null;
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = randomDateAfter(startDate);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType when political party is null
+	 * it shud throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test17_savePoliticalBody() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = null;//createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = randomDateAfter(startDate);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType when Person is null
+	 * it shud work fine
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test18_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = null;//createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = randomDateInPast();
+		Date endDate = randomDateAfter(startDate);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create a PoliticaBodyType when startDate is null
+	 * it shud throw ValidationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ValidationException.class)
+	public void test19_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate = null;
+		Date endDate = null;
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto = createPoliticalBodyAdminDto(active, email, startDate, endDate, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
+		
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, savedPoliticalBodyAdminDto, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto, dbPoliticalBodyAdminDto, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto, dbPoliticalBodyAdminDto, true);
+		
+	}
+	
+	/**
+	 * Create one PoliticaBodyType as Active and then create anothEr one as active then first one shud become inactive
+	 * it shud work fine
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test20_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = null;//createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate1 = randomDateInPast();
+		Date endDate1 = randomDateAfter(startDate1);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto1 = createPoliticalBodyAdminDto(active, email, startDate1, endDate1, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto1 = appService.savePoliticalBodyAdmin(politicalBodyAdminDto1);
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, savedPoliticalBodyAdminDto1, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto1 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto1.getId());
+		assertTrue(dbPoliticalBodyAdminDto1.isActive());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, dbPoliticalBodyAdminDto1, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto1, dbPoliticalBodyAdminDto1, true);
+
+		
+		
+		Date startDate2 = nextDayAfter(endDate1);
+		Date endDate2 = randomDateAfter(startDate2);
+
+		PoliticalBodyAdminDto politicalBodyAdminDto2 = createPoliticalBodyAdminDto(active, email, startDate2, endDate2, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto2 = appService.savePoliticalBodyAdmin(politicalBodyAdminDto2);
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto2, savedPoliticalBodyAdminDto2, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto2 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto2.getId());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto2, dbPoliticalBodyAdminDto2, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto2, dbPoliticalBodyAdminDto2, true);
+		
+		dbPoliticalBodyAdminDto1 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto1.getId());
+		assertFalse(dbPoliticalBodyAdminDto1.isActive());
+		assertTrue(dbPoliticalBodyAdminDto2.isActive());
+		
+	}
+	
+	/**
+	 * Create one PoliticaBodyType and then create anothEr one , both has null end Date
+	 * it shud throw ApplicationException as dates are overlapped
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test21_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = null;//createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate1 = randomDateInPast();
+		Date endDate1 = null;
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto1 = createPoliticalBodyAdminDto(active, email, startDate1, endDate1, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto1 = appService.savePoliticalBodyAdmin(politicalBodyAdminDto1);
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, savedPoliticalBodyAdminDto1, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto1 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto1.getId());
+		assertTrue(dbPoliticalBodyAdminDto1.isActive());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, dbPoliticalBodyAdminDto1, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto1, dbPoliticalBodyAdminDto1, true);
+
+		
+		
+		Date startDate2 = nextDayAfter(startDate1);
+		Date endDate2 = null;
+
+		PoliticalBodyAdminDto politicalBodyAdminDto2 = createPoliticalBodyAdminDto(active, email, startDate2, endDate2, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+
+		appService.savePoliticalBodyAdmin(politicalBodyAdminDto2);// this should thow applicationException
+		
+	}
+	
+	/**
+	 * Create one PoliticaBodyType and then create another one , both has Non null end Date but dates overlap
+	 * it shud throw ApplicationException as dates are overlapped
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test22_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = null;//createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate1 = randomDateInPast();
+		Date endDate1 = randomDateAfter(startDate1);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto1 = createPoliticalBodyAdminDto(active, email, startDate1, endDate1, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto1 = appService.savePoliticalBodyAdmin(politicalBodyAdminDto1);
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, savedPoliticalBodyAdminDto1, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto1 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto1.getId());
+		assertTrue(dbPoliticalBodyAdminDto1.isActive());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, dbPoliticalBodyAdminDto1, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto1, dbPoliticalBodyAdminDto1, true);
+
+		
+		
+		Date startDate2 = nextDayAfter(startDate1);
+		Date endDate2 = randomDateAfter(endDate1);
+
+		PoliticalBodyAdminDto politicalBodyAdminDto2 = createPoliticalBodyAdminDto(active, email, startDate2, endDate2, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+
+		appService.savePoliticalBodyAdmin(politicalBodyAdminDto2);// this should thow applicationException
+		
+	}
+	
+	/**
+	 * Create one PoliticaBodyType and then create another one , one has Non null end Date other has null endDate and dates overlap
+	 * it shud throw ApplicationException as dates are overlapped
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test23_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = null;//createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate1 = randomDateInPast();
+		Date endDate1 = null;
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto1 = createPoliticalBodyAdminDto(active, email, startDate1, endDate1, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto1 = appService.savePoliticalBodyAdmin(politicalBodyAdminDto1);
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, savedPoliticalBodyAdminDto1, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto1 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto1.getId());
+		assertTrue(dbPoliticalBodyAdminDto1.isActive());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, dbPoliticalBodyAdminDto1, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto1, dbPoliticalBodyAdminDto1, true);
+
+		
+		
+		Date startDate2 = randomDateBefore(startDate1);
+		Date endDate2 = randomDateAfter(startDate1);
+
+		PoliticalBodyAdminDto politicalBodyAdminDto2 = createPoliticalBodyAdminDto(active, email, startDate2, endDate2, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+
+		appService.savePoliticalBodyAdmin(politicalBodyAdminDto2);// this should thow applicationException
+		
+	}
+	
+	/**
+	 * Create one PoliticaBodyType and then create another one , one has Null end Date other has Non null endDate and dates overlap
+	 * it shud throw ApplicationException as dates are overlapped
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test24_savePoliticalBodyAdmin() throws ApplicationException{
+		LocationTypeDto locationType = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto location = createAndSaveLocation(locationService, randomAlphaString(16), locationType, null);
+		PoliticalBodyTypeDto politicalBodyType = createAndSavePoliticalBodyType(appService, randomAlphaString(3),randomAlphaString(16),  randomAlphaString(256), locationType.getId());
+		PartyDto party = createAndSaveParty(appService, randomAlphaString(16));
+		PersonDto person = null;//createAndSaveRandomPerson(personService);
+		
+		boolean active = true;
+		String email = randomEmailAddress();
+		Date startDate1 = randomDateInPast();
+		Date endDate1 = randomDateAfter(startDate1);
+		AddressDto homeAddressDto = createRandomAddress();
+		AddressDto officeAddressDto = createRandomAddress();
+		String landLine1 = randomNumericString(10);
+		String landLine2 = randomNumericString(10);
+		String mobile1 = randomNumericString(10);
+		String mobile2 = randomNumericString(10);
+		
+		PoliticalBodyAdminDto politicalBodyAdminDto1 = createPoliticalBodyAdminDto(active, email, startDate1, endDate1, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+		PoliticalBodyAdminDto savedPoliticalBodyAdminDto1 = appService.savePoliticalBodyAdmin(politicalBodyAdminDto1);
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, savedPoliticalBodyAdminDto1, false);
+		
+		PoliticalBodyAdminDto dbPoliticalBodyAdminDto1 = appService.getPoliticalBodyAdminById(savedPoliticalBodyAdminDto1.getId());
+		assertTrue(dbPoliticalBodyAdminDto1.isActive());
+		assertEqualPoliticalBodyAdmin(politicalBodyAdminDto1, dbPoliticalBodyAdminDto1, false);
+		assertEqualPoliticalBodyAdmin(savedPoliticalBodyAdminDto1, dbPoliticalBodyAdminDto1, true);
+
+		
+		
+		Date startDate2 = nextDayAfter(startDate1);
+		Date endDate2 = null;
+
+		PoliticalBodyAdminDto politicalBodyAdminDto2 = createPoliticalBodyAdminDto(active, email, startDate2, endDate2, homeAddressDto, officeAddressDto,
+				landLine1, landLine2, mobile1, mobile2, location, party, person, politicalBodyType);
+
+		appService.savePoliticalBodyAdmin(politicalBodyAdminDto2);// this should thow applicationException
+		
+	}
+	
 	
 }

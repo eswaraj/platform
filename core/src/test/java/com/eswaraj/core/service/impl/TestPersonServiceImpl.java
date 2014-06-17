@@ -146,9 +146,9 @@ public class TestPersonServiceImpl extends BaseNeo4jEswarajTest {
 		String landlineNumber2 = randomNumericString(10);
 		String mobileNumber1 = randomNumericString(10); 
 		String mobileNumber2 = randomNumericString(10);
-		AddressDto personAddress = new AddressDto();
-		personAddress.setLine1(randomAlphaString(30));
-		personAddress.setPostalCode(randomNumericString(6));
+		
+		AddressDto personAddress = createAddress(randomAlphaString(16), randomAlphaString(10), randomAlphaString(6), randomNumericString(6));
+		
 		PersonDto personDto = createPerson(name, email, bioData, dob, gender, landlineNumber1, landlineNumber2, mobileNumber1, mobileNumber2, personAddress);
 		PersonDto savedPersonDto = personService.savePerson(personDto);
 		
