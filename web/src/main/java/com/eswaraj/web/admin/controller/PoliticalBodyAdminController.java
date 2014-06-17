@@ -18,15 +18,15 @@ import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 public class PoliticalBodyAdminController extends BaseController {
 
 	
-	@RequestMapping(value = "/ajax/pbadmin/get/{locationId}", method = RequestMethod.GET)
-	public @ResponseBody List<PoliticalBodyAdminDto> getPoliticalBodyAdmins(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-		List<PoliticalBodyAdminDto> politicalBodyAdmins = appService.getAllPoliticalBodyAdminByLocationId(locationId);
+	@RequestMapping(value = "/ajax/pbadmin/get/{locationId}/{pbTypeId}", method = RequestMethod.GET)
+	public @ResponseBody List<PoliticalBodyAdminDto> getPoliticalBodyAdmins(ModelAndView mv, @PathVariable Long locationId,@PathVariable Long pbTypeId) throws ApplicationException {
+		List<PoliticalBodyAdminDto> politicalBodyAdmins = appService.getAllPoliticalBodyAdminByLocationId(locationId, pbTypeId);
 		return politicalBodyAdmins;
 	}
 	
-	@RequestMapping(value = "/ajax/pbadmin/getcurrent/{locationId}", method = RequestMethod.GET)
-	public @ResponseBody PoliticalBodyAdminDto getCurrentPoliticalBodyAdminOfLocation(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-		PoliticalBodyAdminDto politicalBodyAdminDto = appService.getCurrentPoliticalBodyAdminByLocationId(locationId);
+	@RequestMapping(value = "/ajax/pbadmin/getcurrent/{locationId}/{pbTypeId}", method = RequestMethod.GET)
+	public @ResponseBody PoliticalBodyAdminDto getCurrentPoliticalBodyAdminOfLocation(ModelAndView mv, @PathVariable Long locationId,@PathVariable Long pbTypeId) throws ApplicationException {
+		PoliticalBodyAdminDto politicalBodyAdminDto = appService.getCurrentPoliticalBodyAdminByLocationId(locationId, pbTypeId);
 		return politicalBodyAdminDto;
 	}
 

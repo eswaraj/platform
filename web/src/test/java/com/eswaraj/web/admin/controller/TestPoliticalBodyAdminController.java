@@ -55,17 +55,18 @@ public class TestPoliticalBodyAdminController extends BaseControllerTest {
 	public void test01_getAllPoliticalBodyAdminsOfLocation() throws Exception {
 		// create Test expectation data
 		long locationId = randomPositiveLong();
+		long pbTypeId = randomPositiveLong();
 		int totalPoliticalBodyAdmins = randomInteger(100);
 		List<PoliticalBodyAdminDto> allPoliticalBodyAdmins = new ArrayList<>(totalPoliticalBodyAdmins);
 		for(int i=0;i<totalPoliticalBodyAdmins;i++ ){
 			allPoliticalBodyAdmins.add(createOnePoliticalBodyAdminDto());
 		}
 		// Set Mock expectation
-		when(appService.getAllPoliticalBodyAdminByLocationId(locationId)).thenReturn(allPoliticalBodyAdmins);
+		when(appService.getAllPoliticalBodyAdminByLocationId(locationId, pbTypeId)).thenReturn(allPoliticalBodyAdmins);
 
 		// Run test
 		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
-		ResultActions result = this.mockMvc.perform(get(getAllPoliticalBodyAdminsOfLocationUrl+locationId).accept(expectedMediaType));
+		ResultActions result = this.mockMvc.perform(get(getAllPoliticalBodyAdminsOfLocationUrl+locationId+"/"+pbTypeId).accept(expectedMediaType));
 		result.andExpect(status().isOk());
 		// System.out.println("Content = "+content().);
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));
@@ -78,13 +79,14 @@ public class TestPoliticalBodyAdminController extends BaseControllerTest {
 	public void test02_getAllPoliticalLocationTypes() throws Exception {
 		// create Test expectation data
 		long locationId = randomPositiveLong();
+		long pbTypeId = randomPositiveLong();
 		PoliticalBodyAdminDto currentPoliticalBodyAdminDto = createOnePoliticalBodyAdminDto();
 		// Set Mock expectation
-		when(appService.getCurrentPoliticalBodyAdminByLocationId(locationId)).thenReturn(currentPoliticalBodyAdminDto);
+		when(appService.getCurrentPoliticalBodyAdminByLocationId(locationId, pbTypeId)).thenReturn(currentPoliticalBodyAdminDto);
 
 		// Run test
 		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
-		ResultActions result = this.mockMvc.perform(get(getCurrentPoliticalBodyAdminsOfLocationUrl+locationId).accept(expectedMediaType));
+		ResultActions result = this.mockMvc.perform(get(getCurrentPoliticalBodyAdminsOfLocationUrl+locationId+"/"+pbTypeId).accept(expectedMediaType));
 		result.andExpect(status().isOk());
 		// System.out.println("Content = "+content().);
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));

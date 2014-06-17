@@ -1,5 +1,7 @@
 package com.eswaraj.domain.repo;
 
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
@@ -8,9 +10,14 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
+import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 
@@ -44,6 +51,38 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		return location;
 	}
 	
+	protected PoliticalBodyType createPoliticalBodyType(PoliticalBodyTypeRepository politicalBodyTypeRepository, String name, String shortName, String description, LocationType locationType){
+		PoliticalBodyType politicalBodyType = new PoliticalBodyType();
+		politicalBodyType.setDescription(description);
+		politicalBodyType.setLocationType(locationType);
+		politicalBodyType.setName(name);
+		politicalBodyType.setShortName(shortName);
+		politicalBodyType = politicalBodyTypeRepository.save(politicalBodyType);
+		return politicalBodyType;
+	}
+	
+	protected PoliticalBodyAdmin createPoliticalBodyAdmin(PoliticalBodyAdminRepository politicalBodyAdminRepository, boolean active, String email, 
+			Date startDate, Date endDate, Address homeAddress, Address officeAddress, String landLine1, String landLine2,Location location,
+			String mobile1, String mobile2, Party party, Person person, PoliticalBodyType politicalBodyType){
+		PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
+		politicalBodyAdmin.setActive(active);
+		politicalBodyAdmin.setEmail(email);
+		politicalBodyAdmin.setStartDate(startDate);
+		politicalBodyAdmin.setEndDate(endDate);
+		politicalBodyAdmin.setHomeAddress(homeAddress);
+		politicalBodyAdmin.setOfficeAddress(officeAddress);
+		politicalBodyAdmin.setLandLine1(landLine1);
+		politicalBodyAdmin.setLandLine2(landLine2);
+		politicalBodyAdmin.setLocation(location);
+		politicalBodyAdmin.setMobile1(mobile1);
+		politicalBodyAdmin.setMobile2(mobile2);
+		politicalBodyAdmin.setParty(party);
+		politicalBodyAdmin.setPerson(person);
+		politicalBodyAdmin.setPoliticalBodyType(politicalBodyType);
+		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
+		return politicalBodyAdmin;
+	}
+	
 	protected LocationType createLocationType(LocationTypeRepository locationTypeRepository, String name, LocationType parentLocationType, DataClient dataClient, boolean root){
 		LocationType locationType = new LocationType();
 		locationType.setName(name);
@@ -59,6 +98,22 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		dataClient = dataClientRepository.save(dataClient);
 		return dataClient;
 	}
+	
+	protected Party createParty(PartyRepository partyRepository, String name, String shortName){
+		Party party = new Party();
+		party.setName(name);
+		party.setShortName(shortName);
+		party = partyRepository.save(party);
+		return party;
+	}
+	
+	protected Person createPerson(PersonRepository personRepository, String name){
+		Person person = new Person();
+		person.setName(name);
+		person = personRepository.save(person);
+		return person;
+	}
+
 
 	protected void assertLocationTypeEquals(LocationType expected, LocationType actual, boolean compareId){
 		if(compareId){
@@ -73,4 +128,48 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		assertEquals(expected.getName(), actual.getName());
 	}
 
+	protected void assertLocationEquals(Location expected, Location actual, boolean compareId){
+		if(compareId){
+			assertEquals(expected.getId(), actual.getId());
+		}
+		assertEquals(expected.getName(), actual.getName());
+	}
+	protected void assertLocationEquals(Party expected, Party actual, boolean compareId){
+		if(compareId){
+			assertEquals(expected.getId(), actual.getId());
+		}
+		assertEquals(expected.getName(), actual.getName());
+		assertEquals(expected.getShortName(), actual.getShortName());
+	}
+	protected void assertAddressEquals(Address expected, Address actual, boolean compareId){
+		if(compareId){
+			assertEquals(expected.getId(), actual.getId());
+		}
+		assertEquals(expected.getLine1(), actual.getLine1());
+		assertEquals(expected.getLine2(), actual.getLine2());
+		assertEquals(expected.getLine3(), actual.getLine3());
+	}
+	
+	protected void assertPoliticalBodyAdminEquals(PoliticalBodyAdmin expected, PoliticalBodyAdmin actual, boolean compareId){
+		if(compareId){
+			assertEquals(expected.getId(), actual.getId());
+		}
+		assertEquals(expected.getEmail(), actual.getEmail());
+		assertEquals(expected.getEndDate(), actual.getEndDate());
+		assertEquals(expected.getLandLine1(), actual.getLandLine1());
+		assertEquals(expected.getLandLine2(), actual.getLandLine2());
+		assertEquals(expected.getMobile1(), actual.getMobile1());
+		assertEquals(expected.getLocation().getId(), actual.getLocation().getId());
+		assertEquals(expected.getMobile1(), actual.getMobile1());
+		assertEquals(expected.getMobile2(), actual.getMobile2());
+		assertEquals(expected.getStartDate(), actual.getStartDate());
+		assertEquals(expected.getParty().getId(), actual.getParty().getId());
+		assertEquals(expected.getPerson().getId(), actual.getPerson().getId());
+		assertEquals(expected.getPoliticalBodyType().getId(), actual.getPoliticalBodyType().getId());
+		
+		assertEquals(expected, actual);
+		assertEquals(expected, actual);
+		assertEquals(expected, actual);
+		
+	}
 }

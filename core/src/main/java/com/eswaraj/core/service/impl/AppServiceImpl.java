@@ -128,8 +128,8 @@ public class AppServiceImpl implements AppService {
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);	
 	}
 	private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException{
-		if(politicalBodyAdmin.getLocation() != null){
-			Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation = politicalBodyAdminRepository.getAllPoliticalAdminByLocation(politicalBodyAdmin.getLocation());
+		if(politicalBodyAdmin.getLocation() != null && politicalBodyAdmin.getPoliticalBodyType() != null){
+			Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(politicalBodyAdmin.getLocation(), politicalBodyAdmin.getPoliticalBodyType());
 			adjustActivePoliticalAdminForLocation(politicalBodyAdmin, allPoliticalBodyAdminsForLocation);
 			checkForDateOverlap(politicalBodyAdmin, allPoliticalBodyAdminsForLocation);
 		}
@@ -195,16 +195,18 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public PoliticalBodyAdminDto getCurrentPoliticalBodyAdminByLocationId(Long locationId) throws ApplicationException {
+	public PoliticalBodyAdminDto getCurrentPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException {
 		Location location = locationRepository.findOne(locationId);
-		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocation(location);
+		PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(pbTypeId);
+		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);
 	}
 
 	@Override
-	public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId) throws ApplicationException {
+	public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException {
 		Location location = locationRepository.findOne(locationId);
-		Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminByLocation(location);
+		PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(pbTypeId);
+		Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
 	}
 
