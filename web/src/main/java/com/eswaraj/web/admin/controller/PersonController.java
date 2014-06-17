@@ -26,7 +26,7 @@ public class PersonController extends BaseController{
 	@Autowired
 	private PersonService personService;
 	
-	@RequestMapping(value = "/ajax/person/search/{searchParam}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ajax/person/search/name/{searchParam}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<PersonDto> getAllParties(ModelAndView mv, @PathVariable String searchParam) throws ApplicationException {
 		return personService.searchPersonWithName(searchParam);
