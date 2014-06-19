@@ -28,8 +28,14 @@ public class PersonController extends BaseController{
 	
 	@RequestMapping(value = "/ajax/person/search/name/{searchParam}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<PersonDto> getAllParties(ModelAndView mv, @PathVariable String searchParam) throws ApplicationException {
+	public List<PersonDto> searchPersonByName(ModelAndView mv, @PathVariable String searchParam) throws ApplicationException {
 		return personService.searchPersonWithName(searchParam);
+	}
+
+	@RequestMapping(value = "/ajax/person/get/{personId}", method = RequestMethod.GET)
+	@ResponseBody
+	public PersonDto getPersonByid(ModelAndView mv, @PathVariable Long personId) throws ApplicationException {
+		return personService.getPersonById(personId);
 	}
 
 	@RequestMapping(value = "/ajax/person/save", method = RequestMethod.POST)
