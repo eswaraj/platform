@@ -28,7 +28,7 @@ import com.eswaraj.domain.validator.exception.ValidationException;
 @Transactional
 @Ignore
 public class TestComplaintReposityory {
-
+/*
 	@Autowired ComplaintRepository complaintRepository;
 	@Autowired LocationRepository locationRepository;
 	@Autowired CategoryRepository categoryRepository;
@@ -132,4 +132,5 @@ public class TestComplaintReposityory {
 		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
 		assertEquals(expectedComplaint.getStatus().getMode(), Mode.PENDING);
 	}
+	*/
 }

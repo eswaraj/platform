@@ -19,6 +19,7 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.PersonService;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.PartyDto;
@@ -123,6 +124,65 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		categoryDto.setParentCategoryId(parentCategoryId);
 		return categoryDto;
 	}
+	/**
+	 * Create a Random Category 
+	 * @param isRoot - true If you want to make this as root category
+	 * @param parentCategoryId - if isRoot is false then you must provide an existing categoryId here
+	 * @return
+	 */
+	protected CategoryDto createRandomCateory(boolean isRoot, Long parentCategoryId){
+		String categoryName = randomAlphaString(16);
+		String description = randomAlphaString(16);
+		return createCategory(categoryName, description, isRoot, parentCategoryId);
+	}
+	protected CategoryDto createAndSaveRandomCateory(AppService appService, boolean isRoot, Long parentCategoryId) throws ApplicationException{
+		CategoryDto categoryDto = createRandomCateory(isRoot, parentCategoryId);
+		return appService.saveCategory(categoryDto);
+	}
+
+	
+	protected ExecutiveBodyDto createExecutiveBody(String name, AddressDto addressDto, Long boundaryId, CategoryDto categoryDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody){
+		ExecutiveBodyDto executiveBodyDto = new ExecutiveBodyDto();
+		executiveBodyDto.setName(name);
+		executiveBodyDto.setAddressDto(addressDto);
+		executiveBodyDto.setBoundaryId(boundaryId);
+		if(categoryDto != null){
+			executiveBodyDto.setCategoryId(categoryDto.getId());	
+		}
+		if(parentExecutiveBody != null){
+			executiveBodyDto.setParentExecutiveBodyId(parentExecutiveBody.getId());	
+		}
+		executiveBodyDto.setRoot(isRoot);
+		return executiveBodyDto;
+	}
+	protected ExecutiveBodyDto createAndSaveExecutiveBody(AppService appService, String name, AddressDto addressDto, Long boundaryId, 
+			CategoryDto categoryDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody) throws ApplicationException{
+		ExecutiveBodyDto executiveBodyDto = new ExecutiveBodyDto();
+		executiveBodyDto.setName(name);
+		executiveBodyDto.setAddressDto(addressDto);
+		executiveBodyDto.setBoundaryId(boundaryId);
+		if(categoryDto != null){
+			executiveBodyDto.setCategoryId(categoryDto.getId());	
+		}
+		if(parentExecutiveBody != null){
+			executiveBodyDto.setParentExecutiveBodyId(parentExecutiveBody.getId());	
+		}
+		executiveBodyDto.setRoot(isRoot);
+		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
+		return executiveBodyDto;
+	}
+	protected void assertEqualExecutiveBodies(ExecutiveBodyDto expectedExecutiveBody, ExecutiveBodyDto actualExecutiveBodyDto, boolean checkId){
+		if(checkId){
+			assertEquals(expectedExecutiveBody.getId(), actualExecutiveBodyDto.getId());	
+		}
+		assertEquals(expectedExecutiveBody.getName(), actualExecutiveBodyDto.getName());
+		assertEquals(expectedExecutiveBody.getBoundaryId(), actualExecutiveBodyDto.getBoundaryId());
+		assertEquals(expectedExecutiveBody.getCategoryId(), actualExecutiveBodyDto.getCategoryId());
+		assertEquals(expectedExecutiveBody.isRoot(), actualExecutiveBodyDto.isRoot());
+		assertEquals(expectedExecutiveBody.getParentExecutiveBodyId(), actualExecutiveBodyDto.getParentExecutiveBodyId());
+		assertEqualAddresses(expectedExecutiveBody.getAddressDto(), actualExecutiveBodyDto.getAddressDto(), checkId);
+	}
+
 	
 	protected PoliticalBodyTypeDto createPoliticalBodyType(String shortName, String name, String description, Long locationTypeId){
 		PoliticalBodyTypeDto politicalBodyTypeDto = new PoliticalBodyTypeDto();
@@ -229,7 +289,6 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		String postalCode = randomNumericString(6);
 		return createAddress(line1, line2, line3, postalCode);
 	}
-
 	protected void assertEqualPersons(PersonDto expectedPerson, PersonDto actualPerson, boolean checkId){
 		if(checkId){
 			assertEquals(expectedPerson.getId(), actualPerson.getId());	

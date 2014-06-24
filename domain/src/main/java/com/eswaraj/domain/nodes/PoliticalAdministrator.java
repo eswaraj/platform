@@ -10,7 +10,7 @@ import com.eswaraj.domain.nodes.relationships.PoliticalBodyAdministrator;
  * @date Jan 18, 2014
  *
  */
-public class PoliticalAdministrator extends Administrator {
+public class PoliticalAdministrator {
 	
 	@RelatedTo(type="MEMBER_OF")
 	private PoliticalBody politicalBody;

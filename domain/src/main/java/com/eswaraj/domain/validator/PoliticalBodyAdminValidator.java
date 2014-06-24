@@ -24,6 +24,19 @@ public class PoliticalBodyAdminValidator extends BaseValidator<PoliticalBodyAdmi
 				throw new ValidationException("End Date can not be before Start Date");
 			}
 		}
+		/*
+		if(politicalBodyAdmin.isActive()){
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 59);
+			calendar.set(Calendar.MILLISECOND, 999);
+			Date today = calendar.getTime();
+			if(politicalBodyAdmin.getStartDate().after(today)){
+				throw new ValidationException("End Date can not be before Start Date");
+			}
+		}
+		*/
 	}
 
 	public void validateBeforeDelete(PoliticalBodyAdmin politicalBodyAdmin) throws ValidationException {

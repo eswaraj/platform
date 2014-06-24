@@ -1,11 +1,11 @@
 package com.eswaraj.domain.repo;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import com.eswaraj.domain.nodes.ExecutiveAdministrator;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.ExecutiveBody;
 
 /**
@@ -15,10 +15,16 @@ import com.eswaraj.domain.nodes.ExecutiveBody;
  */
 public interface ExecutiveBodyRepository extends GraphRepository<ExecutiveBody>{
 	
-	public ExecutiveBody getById(Long id);
-	
+	/*
 	@Query("start executiveBody=node({0})" +
 			"match (executiveBody)<-[:WORKS_FOR]-(executiveAdministrator) return executiveAdministrator")
 	public Set<ExecutiveAdministrator> findAdministrators(ExecutiveBody executiveBody);
+	*/
+	@Query("start executiveBody=node({0}) match (executiveBody)<-[:BELONGS_TO]-(childExecutiveBodies) return childExecutiveBodies")
+	public Collection<ExecutiveBody> getChildExecutiveBodiesByParent(ExecutiveBody executiveBody);
+	
+	@Query("start category=node({0}) match (category)<-[:UNDER]-(executiveBodies) return executiveBodies")
+	public Collection<ExecutiveBody> getAllRootExecutiveBodyOfCategory(Category category);
 
+	
 }

@@ -1,14 +1,8 @@
-package com.eswaraj.domain.nodes;import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
+package com.eswaraj.domain.nodes;import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.division.Boundary;
-import com.eswaraj.domain.nodes.relationships.ExecutiveBodyAdministrator;
 
 /**
  * Represents an executive body like Water Department or Fire Department
@@ -23,14 +17,11 @@ public class ExecutiveBody extends BaseNode {
 	private String name;
 	private Address address;
 	private Boundary boundary;
-	
-	@RelatedToVia(type="WORKS_FOR", direction=Direction.INCOMING)
-	private Collection<ExecutiveBodyAdministrator> employees;
-	
-	{
-		employees = new HashSet<>();
-	}
-	
+	@RelatedTo(type="UNDER")
+    private Category category;
+	@RelatedTo(type="BELONGS_TO")
+    private ExecutiveBody parentExecutiveBody;
+	private boolean root;
 	public String getName() {
 		return name;
 	}
@@ -49,16 +40,28 @@ public class ExecutiveBody extends BaseNode {
 	public void setBoundary(Boundary boundary) {
 		this.boundary = boundary;
 	}
-	public Iterable<ExecutiveBodyAdministrator> getEmployees() {
-		return employees;
+	public Category getCategory() {
+		return category;
 	}
-	public void setEmployees(Set<ExecutiveBodyAdministrator> employees) {
-		this.employees = employees;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	
-	public ExecutiveBodyAdministrator employs(ExecutiveAdministrator executiveAdministrator, Post post) {
-		ExecutiveBodyAdministrator executiveBodyAdministrator = new ExecutiveBodyAdministrator(this, executiveAdministrator, post);
-		employees.add(executiveBodyAdministrator);
-		return executiveBodyAdministrator;
+	public ExecutiveBody getParentExecutiveBody() {
+		return parentExecutiveBody;
 	}
+	public void setParentExecutiveBody(ExecutiveBody parentExecutiveBody) {
+		this.parentExecutiveBody = parentExecutiveBody;
+	}
+	public boolean isRoot() {
+		return root;
+	}
+	public void setRoot(boolean root) {
+		this.root = root;
+	}
+	@Override
+	public String toString() {
+		return "ExecutiveBody [name=" + name + ", address=" + address + ", boundary=" + boundary + ", category=" + category + ", parentExecutiveBody="
+				+ parentExecutiveBody + ", root=" + root + ", id=" + id + "]";
+	}
+
 }

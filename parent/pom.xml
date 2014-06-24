@@ -23,6 +23,7 @@
 		<spring.social.version>1.0.3.RELEASE</spring.social.version>
 		<social-google-version>1.0.0.M3</social-google-version>
 		<neo4j.version>1.9.7</neo4j.version>
+		<!-- <spring.data.version>2.3.2.RELEASE</spring.data.version> -->
 		<spring.data.version>2.3.2.RELEASE</spring.data.version>
 		<jmock.version>2.6.0</jmock.version>
 		<org.aspectj.version>1.8.0</org.aspectj.version>

@@ -2,14 +2,13 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
-import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.eswaraj.domain.base.BaseNode;
-import com.eswaraj.domain.nodes.Status.Mode;
 import com.eswaraj.domain.nodes.division.GeoPoint;
 
 /**
@@ -21,9 +20,9 @@ import com.eswaraj.domain.nodes.division.GeoPoint;
 @NodeEntity
 public class Complaint extends BaseNode {
 
+	@Indexed(indexType=IndexType.FULLTEXT)
 	private String title;
 	private String description;
-	@Indexed
 	@RelatedTo(type="IS_AT")
 	private GeoPoint geoPoint;
 	@RelatedTo(type="BELONGS_TO")
@@ -31,22 +30,15 @@ public class Complaint extends BaseNode {
 	@RelatedToVia(type="LODGED_BY")
 	private Person person;
 	@RelatedToVia(type="SERVED_BY")
-	private ExecutiveAdministrator administrator;
-	@RelatedTo(type="IS_IN")
-	@Fetch
-	private Status status;
+	private ExecutiveBodyAdmin executiveBodyAdmin;
+	private String status;
 	@RelatedTo(type="ENDORSED_BY", elementClass=Person.class)
 	private Set<Person> endorsements;
-	@RelatedTo(type="SERVED_BY", elementClass=Administrator.class)
+	@RelatedTo(type="SERVED_BY")
 	private Set<PoliticalAdministrator> servants;
 	private Set<Photo> photos;
 	private Set<Video> videos;
 	
-	public Complaint(){}
-	public Complaint(String title) {
-		this.title = title;
-		this.status = new Status(Mode.PENDING);
-	}
 	public String getTitle() {
 		return title;
 	}
@@ -77,16 +69,16 @@ public class Complaint extends BaseNode {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public ExecutiveAdministrator getAdministrator() {
-		return administrator;
+	public ExecutiveBodyAdmin getExecutiveBodyAdmin() {
+		return executiveBodyAdmin;
 	}
-	public void setAdministrator(ExecutiveAdministrator administrator) {
-		this.administrator = administrator;
+	public void setExecutiveBodyAdmin(ExecutiveBodyAdmin executiveBodyAdmin) {
+		this.executiveBodyAdmin = executiveBodyAdmin;
 	}
-	public Status getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(Status status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public Set<Person> getEndorsements() {
@@ -113,4 +105,7 @@ public class Complaint extends BaseNode {
 	public void setVideos(Set<Video> videos) {
 		this.videos = videos;
 	}
+	
+	
+	
 }

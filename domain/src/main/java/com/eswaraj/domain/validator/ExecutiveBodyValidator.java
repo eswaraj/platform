@@ -15,7 +15,15 @@ public class ExecutiveBodyValidator extends BaseValidator<ExecutiveBody>{
 	}
 
 	public void validateBeforeSave(ExecutiveBody executiveBody) throws ValidationException {
-		
+		if(executiveBody.isRoot() && executiveBody.getParentExecutiveBody() != null){
+			throw new ValidationException("You can not have a parent Executive Body for a ROOT executive body");
+		}
+		if(!executiveBody.isRoot() && executiveBody.getParentExecutiveBody() == null){
+			throw new ValidationException("You must have a parent Executive Body for a NON-ROOT executive body");
+		}
+		if(executiveBody.getCategory() == null){
+			throw new ValidationException("You must have a category attached to Executive Body");
+		}
 	}
 
 	public void validateBeforeDelete(ExecutiveBody executiveBody) throws ValidationException {

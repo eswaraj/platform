@@ -10,22 +10,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.core.convertors.CategoryConvertor;
+import com.eswaraj.core.convertors.ExecutiveBodyConvertor;
 import com.eswaraj.core.convertors.PartyConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyAdminConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.ExecutiveBodyRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
@@ -52,6 +56,10 @@ public class AppServiceImpl implements AppService {
 	private PoliticalBodyAdminConvertor politicalBodyAdminConvertor;
 	@Autowired
 	private LocationRepository locationRepository;
+	@Autowired
+	private ExecutiveBodyRepository executiveBodyRepository;
+	@Autowired
+	private ExecutiveBodyConvertor executiveBodyConvertor;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -208,6 +216,33 @@ public class AppServiceImpl implements AppService {
 		PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(pbTypeId);
 		Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
+	}
+
+	@Override
+	public ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException {
+		ExecutiveBody executiveBody = executiveBodyConvertor.convert(executiveBodyDto);
+		executiveBody = executiveBodyRepository.save(executiveBody);
+		return executiveBodyConvertor.convertBean(executiveBody);
+	}
+
+	@Override
+	public ExecutiveBodyDto getExecutiveBodyById(Long executiveBodyId) throws ApplicationException {
+		ExecutiveBody executiveBody = executiveBodyRepository.findOne(executiveBodyId);
+		return executiveBodyConvertor.convertBean(executiveBody);
+	}
+
+	@Override
+	public List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException {
+		ExecutiveBody parentExecutiveBody = executiveBodyRepository.findOne(parentExecutiveBodyId);
+		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getChildExecutiveBodiesByParent(parentExecutiveBody);
+		return executiveBodyConvertor.convertBeanList(allChildExecutiveBodies);
+	}
+
+	@Override
+	public List<ExecutiveBodyDto> getAllRootExecutiveBodyOfCategory(Long categoryId) throws ApplicationException {
+		Category category = categoryRepository.findOne(categoryId);
+		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getAllRootExecutiveBodyOfCategory(category);
+		return executiveBodyConvertor.convertBeanList(allChildExecutiveBodies);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
@@ -42,4 +43,13 @@ public interface AppService {
 	PoliticalBodyAdminDto getCurrentPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
 	List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
+	
+	//Executive Body APIs
+	ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException;
+	
+	ExecutiveBodyDto getExecutiveBodyById(Long executiveBodyId) throws ApplicationException;
+	
+	List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException;
+	
+	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfCategory(Long categoryId) throws ApplicationException;
 }
