@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -138,7 +139,8 @@ public class TestPoliticalBodyAdminController extends BaseControllerTest {
 			result.andExpect(jsonPath("$[" + i + "].partyId").value(politicalBodyAdminDto.getPartyId()));
 			result.andExpect(jsonPath("$[" + i + "].personId").value(politicalBodyAdminDto.getPersonId()));
 			result.andExpect(jsonPath("$[" + i + "].politicalBodyTypeId").value(politicalBodyAdminDto.getPoliticalBodyTypeId()));
-			result.andExpect(jsonPath("$[" + i + "].startDate").value(politicalBodyAdminDto.getStartDate().getTime()));
+			result.andExpect(jsonPath("$[" + i + "].startDate").value(new IsEqual<Long>(politicalBodyAdminDto.getStartDate().getTime())));
+			
 		}
 	}
 

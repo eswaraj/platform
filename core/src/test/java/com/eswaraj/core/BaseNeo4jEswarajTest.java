@@ -1,6 +1,7 @@
 package com.eswaraj.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Date;
 
@@ -19,7 +20,10 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.PersonService;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.DepartmentDto;
+import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
+import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.PartyDto;
@@ -141,13 +145,13 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	}
 
 	
-	protected ExecutiveBodyDto createExecutiveBody(String name, AddressDto addressDto, Long boundaryId, CategoryDto categoryDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody){
+	protected ExecutiveBodyDto createExecutiveBody(String name, AddressDto addressDto, Long boundaryId, DepartmentDto departmentDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody){
 		ExecutiveBodyDto executiveBodyDto = new ExecutiveBodyDto();
 		executiveBodyDto.setName(name);
 		executiveBodyDto.setAddressDto(addressDto);
 		executiveBodyDto.setBoundaryId(boundaryId);
-		if(categoryDto != null){
-			executiveBodyDto.setCategoryId(categoryDto.getId());	
+		if(departmentDto != null){
+			executiveBodyDto.setDepartmentId(departmentDto.getId());	
 		}
 		if(parentExecutiveBody != null){
 			executiveBodyDto.setParentExecutiveBodyId(parentExecutiveBody.getId());	
@@ -156,18 +160,8 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		return executiveBodyDto;
 	}
 	protected ExecutiveBodyDto createAndSaveExecutiveBody(AppService appService, String name, AddressDto addressDto, Long boundaryId, 
-			CategoryDto categoryDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody) throws ApplicationException{
-		ExecutiveBodyDto executiveBodyDto = new ExecutiveBodyDto();
-		executiveBodyDto.setName(name);
-		executiveBodyDto.setAddressDto(addressDto);
-		executiveBodyDto.setBoundaryId(boundaryId);
-		if(categoryDto != null){
-			executiveBodyDto.setCategoryId(categoryDto.getId());	
-		}
-		if(parentExecutiveBody != null){
-			executiveBodyDto.setParentExecutiveBodyId(parentExecutiveBody.getId());	
-		}
-		executiveBodyDto.setRoot(isRoot);
+			DepartmentDto departmentDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody) throws ApplicationException{
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, departmentDto, isRoot, parentExecutiveBody);
 		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		return executiveBodyDto;
 	}
@@ -177,7 +171,7 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		}
 		assertEquals(expectedExecutiveBody.getName(), actualExecutiveBodyDto.getName());
 		assertEquals(expectedExecutiveBody.getBoundaryId(), actualExecutiveBodyDto.getBoundaryId());
-		assertEquals(expectedExecutiveBody.getCategoryId(), actualExecutiveBodyDto.getCategoryId());
+		assertEquals(expectedExecutiveBody.getDepartmentId(), actualExecutiveBodyDto.getDepartmentId());
 		assertEquals(expectedExecutiveBody.isRoot(), actualExecutiveBodyDto.isRoot());
 		assertEquals(expectedExecutiveBody.getParentExecutiveBodyId(), actualExecutiveBodyDto.getParentExecutiveBodyId());
 		assertEqualAddresses(expectedExecutiveBody.getAddressDto(), actualExecutiveBodyDto.getAddressDto(), checkId);
@@ -378,7 +372,86 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		
 	}
 	
+	protected ExecutiveBodyAdminDto createExecutiveBodyAdmin(ExecutiveBodyDto executiveBody, ExecutiveBodyAdminDto manager, 
+			PersonDto person,  ExecutivePostDto executivePost, Date startDate, Date endDate){
+		ExecutiveBodyAdminDto executiveBodyAdminDto = new ExecutiveBodyAdminDto();
+		if(executiveBody != null){
+			executiveBodyAdminDto.setExecutiveBodyId(executiveBody.getId());	
+		}
+		if(manager != null){
+			executiveBodyAdminDto.setManagerId(manager.getId());	
+		}
+		if(person != null){
+			executiveBodyAdminDto.setPersonId(person.getId());	
+		}
+		if(executivePost != null){
+			executiveBodyAdminDto.setPostId(executivePost.getId());	
+		}
+		executiveBodyAdminDto.setStartDate(startDate);
+		executiveBodyAdminDto.setEndDate(endDate);
+		return executiveBodyAdminDto;
+	}
 	
+	protected ExecutiveBodyAdminDto createAndSaveExecutiveBodyAdmin(AppService appService, ExecutiveBodyDto executiveBody, ExecutiveBodyAdminDto manager, 
+			PersonDto person,  ExecutivePostDto executivePost, Date startDate, Date endDate) throws ApplicationException{
+		ExecutiveBodyAdminDto executiveBodyAdmin = createExecutiveBodyAdmin(executiveBody, manager, person, executivePost, startDate, endDate);
+		return appService.saveExecutiveBodyAdmin(executiveBodyAdmin);
+	}
+	protected void assertEqualExecutiveBodyAdmin(ExecutiveBodyAdminDto expectedExecutiveBodyAdmin, ExecutiveBodyAdminDto actualExecutiveBodyAdmin, boolean checkId){
+		if(checkId){
+			assertEquals(expectedExecutiveBodyAdmin.getId(), actualExecutiveBodyAdmin.getId());	
+		}
+		assertEquals(expectedExecutiveBodyAdmin.getEndDate(), actualExecutiveBodyAdmin.getEndDate());
+		assertEquals(expectedExecutiveBodyAdmin.getExecutiveBodyId(), actualExecutiveBodyAdmin.getExecutiveBodyId());
+		assertEquals(expectedExecutiveBodyAdmin.getManagerId(), actualExecutiveBodyAdmin.getManagerId());
+		assertEquals(expectedExecutiveBodyAdmin.getPersonId(), actualExecutiveBodyAdmin.getPersonId());
+		assertEquals(expectedExecutiveBodyAdmin.getPostId(), actualExecutiveBodyAdmin.getPostId());
+		assertEquals(expectedExecutiveBodyAdmin.getPersonId(), actualExecutiveBodyAdmin.getPersonId());
+		assertEquals(expectedExecutiveBodyAdmin.getStartDate(), actualExecutiveBodyAdmin.getStartDate());
+		
+	}
 	
+	protected ExecutivePostDto createExecutivePost(DepartmentDto departmentDto, String shortTitle, String title, String description){
+		ExecutivePostDto executivePost = new ExecutivePostDto();
+		if(departmentDto != null){
+			executivePost.setDepartmentId(departmentDto.getId());	
+		}
+		executivePost.setDescription(description);
+		executivePost.setShortTitle(shortTitle);
+		executivePost.setTitle(title);
+		return executivePost;
+	}
+	
+	protected ExecutivePostDto createAndSaveExecutivePost(AppService appService, DepartmentDto departmentDto, String shortTitle, 
+			String title, String description) throws ApplicationException{
+		ExecutivePostDto executivePost = createExecutivePost(departmentDto, shortTitle, title, description);
+		return appService.saveExecutivePost(executivePost);
+	}
+	protected void assertEqualExecutivePost(ExecutivePostDto expectedExecutivePost, ExecutivePostDto actualExecutivePost, boolean checkId){
+		if(checkId){
+			assertEquals(expectedExecutivePost.getId(), actualExecutivePost.getId());	
+		}
+		assertEquals(expectedExecutivePost.getDescription(), actualExecutivePost.getDescription());
+		assertEquals(expectedExecutivePost.getDepartmentId(), actualExecutivePost.getDepartmentId());
+		assertEquals(expectedExecutivePost.getShortTitle(), actualExecutivePost.getShortTitle());
+		assertEquals(expectedExecutivePost.getTitle(), actualExecutivePost.getTitle());
+	}
+	
+	protected DepartmentDto createDepartment(String categoryName, String description, Long categoryId){
+		DepartmentDto departmentDto = new DepartmentDto();
+		departmentDto.setName(categoryName);
+		departmentDto.setDescription(description);
+		departmentDto.setCategoryId(categoryId);
+		return departmentDto;
+	}
+	protected DepartmentDto createRandomDepartment(Long categoryId){
+		String categoryName = randomAlphaString(16);
+		String description = randomAlphaString(16);
+		return createDepartment(categoryName, description, categoryId);
+	}
+	protected DepartmentDto createAndSaveRandomDepartment(AppService appService, Long categoryId) throws ApplicationException{
+		DepartmentDto departmentDto = createRandomDepartment(categoryId);
+		return appService.saveDepartment(departmentDto);
+	}
 
 }

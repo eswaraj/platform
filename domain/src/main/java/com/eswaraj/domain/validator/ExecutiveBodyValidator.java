@@ -21,8 +21,8 @@ public class ExecutiveBodyValidator extends BaseValidator<ExecutiveBody>{
 		if(!executiveBody.isRoot() && executiveBody.getParentExecutiveBody() == null){
 			throw new ValidationException("You must have a parent Executive Body for a NON-ROOT executive body");
 		}
-		if(executiveBody.getCategory() == null){
-			throw new ValidationException("You must have a category attached to Executive Body");
+		if(executiveBody.getDepartment() == null){
+			throw new ValidationException("You must have a department attached to Executive Body");
 		}
 	}
 

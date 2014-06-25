@@ -26,7 +26,7 @@ public class ExecutiveBodyAdmin extends BaseNode {
 	private Person person;
 
 	@RelatedTo(type="HAS")
-	private Post post;
+	private ExecutivePost post;
 	
 	private Date startDate;
 	private Date endDate;
@@ -48,10 +48,10 @@ public class ExecutiveBodyAdmin extends BaseNode {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public Post getPost() {
+	public ExecutivePost getPost() {
 		return post;
 	}
-	public void setPost(Post post) {
+	public void setPost(ExecutivePost post) {
 		this.post = post;
 	}
 	public Date getStartDate() {

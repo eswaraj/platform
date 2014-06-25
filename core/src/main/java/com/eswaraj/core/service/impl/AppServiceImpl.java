@@ -10,26 +10,38 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.core.convertors.CategoryConvertor;
+import com.eswaraj.core.convertors.DepartmentConvertor;
+import com.eswaraj.core.convertors.ExecutiveBodyAdminConvertor;
 import com.eswaraj.core.convertors.ExecutiveBodyConvertor;
+import com.eswaraj.core.convertors.ExecutivePostConvertor;
 import com.eswaraj.core.convertors.PartyConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyAdminConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.ExecutiveBody;
+import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
+import com.eswaraj.domain.nodes.ExecutivePost;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.DepartmentRepository;
+import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
 import com.eswaraj.domain.repo.ExecutiveBodyRepository;
+import com.eswaraj.domain.repo.ExecutivePostRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.DepartmentDto;
+import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
+import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
@@ -60,6 +72,18 @@ public class AppServiceImpl implements AppService {
 	private ExecutiveBodyRepository executiveBodyRepository;
 	@Autowired
 	private ExecutiveBodyConvertor executiveBodyConvertor;
+	@Autowired
+	private ExecutiveBodyAdminRepository executiveBodyAdminRepository;
+	@Autowired
+	private ExecutiveBodyAdminConvertor executiveBodyAdminConvertor;
+	@Autowired
+	private ExecutivePostRepository executivePostRepository;
+	@Autowired
+	private ExecutivePostConvertor executivePostConvertor;
+	@Autowired
+	private DepartmentRepository departmentRepository;
+	@Autowired
+	private DepartmentConvertor departmentConvertor;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -155,11 +179,6 @@ public class AppServiceImpl implements AppService {
 	}
 	
 	private boolean checkIfDatesAreOverlapped(Date startDate1, Date endDate1, Date startDate2, Date endDate2){
-		System.out.println("startDate1="+startDate1);
-		System.out.println("endDate1="+endDate1);
-		System.out.println("startDate2="+startDate2);
-		System.out.println("endDate2="+endDate2);
-		System.out.println("*****");
 		if(endDate1 == null && endDate2 == null){
 			return true;
 		}
@@ -239,10 +258,49 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public List<ExecutiveBodyDto> getAllRootExecutiveBodyOfCategory(Long categoryId) throws ApplicationException {
-		Category category = categoryRepository.findOne(categoryId);
-		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getAllRootExecutiveBodyOfCategory(category);
+	public List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long departmentId) throws ApplicationException {
+		Department department = departmentRepository.findOne(departmentId);
+		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getAllRootExecutiveBodyOfDepartment(department);
 		return executiveBodyConvertor.convertBeanList(allChildExecutiveBodies);
+	}
+
+	@Override
+	public ExecutiveBodyAdminDto saveExecutiveBodyAdmin(ExecutiveBodyAdminDto executiveBodyAdminDto) throws ApplicationException {
+		ExecutiveBodyAdmin executiveBodyAdmin = executiveBodyAdminConvertor.convert(executiveBodyAdminDto);
+		executiveBodyAdmin = executiveBodyAdminRepository.save(executiveBodyAdmin);
+		return executiveBodyAdminConvertor.convertBean(executiveBodyAdmin);
+	}
+
+	@Override
+	public ExecutiveBodyAdminDto getExecutiveBodyAdminById(Long executiveBodyAdminId) throws ApplicationException {
+		ExecutiveBodyAdmin executiveBodyAdmin = executiveBodyAdminRepository.findOne(executiveBodyAdminId);
+		return executiveBodyAdminConvertor.convertBean(executiveBodyAdmin);
+	}
+
+	@Override
+	public ExecutivePostDto saveExecutivePost(ExecutivePostDto executivePostDto) throws ApplicationException {
+		ExecutivePost executivePost = executivePostConvertor.convert(executivePostDto);
+		executivePost = executivePostRepository.save(executivePost);
+		return executivePostConvertor.convertBean(executivePost);
+	}
+
+	@Override
+	public ExecutivePostDto getExecutivePostById(Long executivePostId) throws ApplicationException {
+		ExecutivePost executivePost = executivePostRepository.findOne(executivePostId);
+		return executivePostConvertor.convertBean(executivePost);
+	}
+
+	@Override
+	public DepartmentDto saveDepartment(DepartmentDto departmentDto) throws ApplicationException {
+		Department department = departmentConvertor.convert(departmentDto);
+		department = departmentRepository.save(department);
+		return departmentConvertor.convertBean(department);
+	}
+
+	@Override
+	public DepartmentDto getDepartmentById(Long departmentId) throws ApplicationException {
+		Department department = departmentRepository.findOne(departmentId);
+		return departmentConvertor.convertBean(department);
 	}
 
 }

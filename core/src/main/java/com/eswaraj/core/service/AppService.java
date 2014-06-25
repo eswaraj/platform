@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.DepartmentDto;
+import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
+import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
@@ -51,5 +54,23 @@ public interface AppService {
 	
 	List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException;
 	
-	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfCategory(Long categoryId) throws ApplicationException;
+	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long categoryId) throws ApplicationException;
+	
+	//Executive Post Admin APIs
+	
+	ExecutivePostDto saveExecutivePost(ExecutivePostDto executivePostDto) throws ApplicationException;
+	
+	ExecutivePostDto getExecutivePostById(Long executivePostId) throws ApplicationException;
+	
+	//Executive Body Admin APIs
+	
+	ExecutiveBodyAdminDto saveExecutiveBodyAdmin(ExecutiveBodyAdminDto executiveBodyAdminDto) throws ApplicationException;
+	
+	ExecutiveBodyAdminDto getExecutiveBodyAdminById(Long executiveBodyAdminId) throws ApplicationException;
+	
+	// Department Admin APIs
+	
+	DepartmentDto saveDepartment(DepartmentDto departmentDto) throws ApplicationException;
+	
+	DepartmentDto getDepartmentById(Long departmentId) throws ApplicationException;
 }

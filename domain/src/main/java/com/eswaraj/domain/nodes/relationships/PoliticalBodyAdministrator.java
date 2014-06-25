@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.PoliticalAdministrator;
 import com.eswaraj.domain.nodes.PoliticalBody;
-import com.eswaraj.domain.nodes.Post;
+import com.eswaraj.domain.nodes.ExecutivePost;
 
 /**
  * Administrators working in a political body
@@ -20,10 +20,10 @@ public class PoliticalBodyAdministrator extends BaseRelationship {
 
 	@StartNode PoliticalBody politicalBody;
 	@EndNode PoliticalAdministrator politicalAdministrator;
-	private Post post;
+	private ExecutivePost post;
 	public PoliticalBodyAdministrator() {}
 	
-	public PoliticalBodyAdministrator(PoliticalBody executiveBody,PoliticalAdministrator politicalAdministrator, Post post) {
+	public PoliticalBodyAdministrator(PoliticalBody executiveBody,PoliticalAdministrator politicalAdministrator, ExecutivePost post) {
 		this.politicalBody = executiveBody;
 		this.politicalAdministrator = politicalAdministrator;
 		this.post = post;
@@ -46,11 +46,11 @@ public class PoliticalBodyAdministrator extends BaseRelationship {
 		this.politicalAdministrator = politicalAdministrator;
 	}
 
-	public Post getPost() {
+	public ExecutivePost getPost() {
 		return post;
 	}
 
-	public void setPost(Post post) {
+	public void setPost(ExecutivePost post) {
 		this.post = post;
 	}
 }

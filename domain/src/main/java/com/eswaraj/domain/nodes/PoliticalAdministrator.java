@@ -21,7 +21,7 @@ public class PoliticalAdministrator {
 	public void setPoliticalBody(PoliticalBody politicalBody) {
 		this.politicalBody = politicalBody;
 	}
-	public PoliticalBodyAdministrator memberOf(Post post) {
+	public PoliticalBodyAdministrator memberOf(ExecutivePost post) {
 		PoliticalBodyAdministrator politicalBodyAdministrator = new PoliticalBodyAdministrator(politicalBody, this , post);
 		return politicalBodyAdministrator;
 	}

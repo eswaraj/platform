@@ -1,5 +1,10 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import com.eswaraj.domain.base.BaseNode;
+
 
 /**
  * A executive department 
@@ -7,14 +12,15 @@ package com.eswaraj.domain.nodes;
  * @date Jan 18, 2014
  *
  */
-public class Department {
+@NodeEntity
+public class Department extends BaseNode{
 
 	
 	private String name;
 	private String description;
-	
-	public Department(){}
-	
+	@RelatedTo(type="UNDER")
+    private Category category;
+
 	public String getName() {
 		return name;
 	}
@@ -27,6 +33,14 @@ public class Department {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "Department [Name=" + name + ", description=" + description + "]";

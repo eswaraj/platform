@@ -15,7 +15,7 @@ public class ExecutiveBodyDto extends BaseDto {
 	private String name;
 	private AddressDto addressDto;
 	private Long boundaryId;
-    private Long categoryId;
+    private Long departmentId;
     private Long parentExecutiveBodyId;
 	private boolean root;
 	public String getName() {
@@ -36,11 +36,12 @@ public class ExecutiveBodyDto extends BaseDto {
 	public void setBoundaryId(Long boundaryId) {
 		this.boundaryId = boundaryId;
 	}
-	public Long getCategoryId() {
-		return categoryId;
+	
+	public Long getDepartmentId() {
+		return departmentId;
 	}
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 	public Long getParentExecutiveBodyId() {
 		return parentExecutiveBodyId;

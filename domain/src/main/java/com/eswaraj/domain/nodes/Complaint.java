@@ -35,7 +35,7 @@ public class Complaint extends BaseNode {
 	@RelatedTo(type="ENDORSED_BY", elementClass=Person.class)
 	private Set<Person> endorsements;
 	@RelatedTo(type="SERVED_BY")
-	private Set<PoliticalAdministrator> servants;
+	private Set<PoliticalBodyAdmin> servants;
 	private Set<Photo> photos;
 	private Set<Video> videos;
 	
@@ -87,10 +87,10 @@ public class Complaint extends BaseNode {
 	public void setEndorsements(Set<Person> endorsements) {
 		this.endorsements = endorsements;
 	}
-	public Set<PoliticalAdministrator> getServants() {
+	public Set<PoliticalBodyAdmin> getServants() {
 		return servants;
 	}
-	public void setServants(Set<PoliticalAdministrator> servants) {
+	public void setServants(Set<PoliticalBodyAdmin> servants) {
 		this.servants = servants;
 	}
 	public Set<Photo> getPhotos() {

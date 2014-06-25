@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.repo.AddressRepository;
@@ -89,12 +88,4 @@ public class PoliticalBodyAdminConvertor extends BaseConvertor<PoliticalBodyAdmi
 		return politicalBodyAdminDto;
 	}
 	
-	protected Long getNodeId(BaseNode baseNode){
-		if(baseNode == null){
-			return null;
-		}
-		return baseNode.getId();
-		
-	}
-
 }

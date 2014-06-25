@@ -135,7 +135,7 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	public void test06_saveLocation() throws ApplicationException{
 		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null, true);
 		LocationDto location = createLocation("India", countryLocationTypeDto, null);
-		location.setId(100L);
+		location.setId(randomPositiveLong());
 		locationService.saveLocation(location);
 	}
 	

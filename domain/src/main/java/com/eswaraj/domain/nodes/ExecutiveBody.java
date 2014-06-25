@@ -17,10 +17,10 @@ public class ExecutiveBody extends BaseNode {
 	private String name;
 	private Address address;
 	private Boundary boundary;
-	@RelatedTo(type="UNDER")
-    private Category category;
-	@RelatedTo(type="BELONGS_TO")
+	@RelatedTo(type="CHILD_OF")
     private ExecutiveBody parentExecutiveBody;
+	@RelatedTo(type="BELONGS_TO")
+    private Department department;
 	private boolean root;
 	public String getName() {
 		return name;
@@ -40,12 +40,6 @@ public class ExecutiveBody extends BaseNode {
 	public void setBoundary(Boundary boundary) {
 		this.boundary = boundary;
 	}
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
-	}
 	public ExecutiveBody getParentExecutiveBody() {
 		return parentExecutiveBody;
 	}
@@ -58,10 +52,16 @@ public class ExecutiveBody extends BaseNode {
 	public void setRoot(boolean root) {
 		this.root = root;
 	}
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 	@Override
 	public String toString() {
-		return "ExecutiveBody [name=" + name + ", address=" + address + ", boundary=" + boundary + ", category=" + category + ", parentExecutiveBody="
-				+ parentExecutiveBody + ", root=" + root + ", id=" + id + "]";
+		return "ExecutiveBody [name=" + name + ", address=" + address + ", boundary=" + boundary + ", parentExecutiveBody=" + parentExecutiveBody + ", root="
+				+ root + ", id=" + id + "]";
 	}
 
 }

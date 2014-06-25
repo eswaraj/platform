@@ -6,6 +6,4 @@ import com.eswaraj.domain.nodes.Department;
 
 public interface DepartmentRepository extends GraphRepository<Department>{
 
-	public Department getById(Long id);
-
 }

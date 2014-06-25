@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.web.dto.BaseDto;
 
 public abstract class BaseConvertor<DbType, WebType> {
@@ -76,4 +77,12 @@ public abstract class BaseConvertor<DbType, WebType> {
 		}
 		return webTypeList;
 	}
+	protected Long getNodeId(BaseNode baseNode){
+		if(baseNode == null){
+			return null;
+		}
+		return baseNode.getId();
+		
+	}
+
 }

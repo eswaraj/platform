@@ -18,6 +18,7 @@ import com.eswaraj.core.service.PersonService;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.DepartmentDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-core-test.xml" })
@@ -40,8 +41,9 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final boolean isRoot = true;
 		final ExecutiveBodyDto parentExecutiveBody = null;
 		CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createAndSaveRandomDepartment(appService, categoryDto.getId());
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, isRoot, parentExecutiveBody);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, isRoot, parentExecutiveBody);
 		ExecutiveBodyDto savedExecutiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		assertEqualExecutiveBodies(executiveBodyDto, savedExecutiveBodyDto, false);
 		
@@ -53,7 +55,7 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 	
 	
 	/**
-	 * Create a ExecutiveBody with category passed as null
+	 * Create a ExecutiveBody with department passed as null
 	 * It must throw ValidationException
 	 * @throws ApplicationException
 	 */
@@ -64,14 +66,14 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final Long boundaryId = null;
 		final boolean isRoot = true;
 		final ExecutiveBodyDto parentExecutiveBody = null;
-		final CategoryDto categoryDto = null;
+		final DepartmentDto department = null;
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, isRoot, parentExecutiveBody);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, isRoot, parentExecutiveBody);
 		appService.saveExecutiveBody(executiveBodyDto);//This call should throw validation exception
 		
 	}
 	/**
-	 * Create a ExecutiveBody with an unknown category, i.e. category Do not exists in database
+	 * Create a ExecutiveBody with an unknown department, i.e. department Do not exists in database
 	 * It should throw ApplicationException
 	 * @throws ApplicationException
 	 */
@@ -82,11 +84,12 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final Long boundaryId = null;
 		final boolean isRoot = true;
 		final ExecutiveBodyDto parentExecutiveBody = null;
-		final CategoryDto categoryDto = createRandomCateory(true, null);
-		//Above category hasn't been saved in database and will just assign any unknown Id to it
-		categoryDto.setId(randomPositiveLong());
+		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createRandomDepartment(categoryDto.getId());
+		//Above department hasn't been saved in database and will just assign any unknown Id to it
+		department.setId(randomPositiveLong());
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, isRoot, parentExecutiveBody);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, isRoot, parentExecutiveBody);
 		appService.saveExecutiveBody(executiveBodyDto);//This should throw ApplicationException
 		
 		
@@ -105,8 +108,9 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final boolean isRoot = false;
 		final ExecutiveBodyDto parentExecutiveBody = null;
 		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, isRoot, null);
+		final DepartmentDto department = createRandomDepartment(categoryDto.getId());
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, isRoot, parentExecutiveBody);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, isRoot, parentExecutiveBody);
 		appService.saveExecutiveBody(executiveBodyDto);//This should throw ValidationException
 	}
 	
@@ -121,11 +125,12 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final AddressDto addressDto = createRandomAddress();
 		final Long boundaryId = null;
 		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createRandomDepartment(categoryDto.getId());
 		
-		ExecutiveBodyDto parentExecutiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, true, null);
+		ExecutiveBodyDto parentExecutiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, true, null);
 		parentExecutiveBodyDto = appService.saveExecutiveBody(parentExecutiveBodyDto);
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, true, parentExecutiveBodyDto);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, true, parentExecutiveBodyDto);
 		appService.saveExecutiveBody(executiveBodyDto);//This should throw ValidationException
 	}
 	
@@ -139,11 +144,12 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final AddressDto addressDto = createRandomAddress();
 		final Long boundaryId = null;
 		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createAndSaveRandomDepartment(appService, categoryDto.getId());
 		
-		ExecutiveBodyDto parentExecutiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, true, null);
+		ExecutiveBodyDto parentExecutiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, true, null);
 		parentExecutiveBodyDto = appService.saveExecutiveBody(parentExecutiveBodyDto);
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, false, parentExecutiveBodyDto);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, false, parentExecutiveBodyDto);
 		ExecutiveBodyDto savedExecutiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		assertEqualExecutiveBodies(executiveBodyDto, savedExecutiveBodyDto, false);
 		
@@ -162,12 +168,13 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 		final AddressDto addressDto = createRandomAddress();
 		final Long boundaryId = null;
 		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createAndSaveRandomDepartment(appService, categoryDto.getId());
 		
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, true, null);
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, true, null);
 		ExecutiveBodyDto savedExecutiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		assertEqualExecutiveBodies(executiveBodyDto, savedExecutiveBodyDto, false);
 		
-		List<ExecutiveBodyDto> dbExecutiveBodyDto = appService.getAllRootExecutiveBodyOfCategory(categoryDto.getId());
+		List<ExecutiveBodyDto> dbExecutiveBodyDto = appService.getAllRootExecutiveBodyOfDepartment(department.getId());
 		assertEqualExecutiveBodies(executiveBodyDto, dbExecutiveBodyDto.get(0), false);
 		assertEqualExecutiveBodies(savedExecutiveBodyDto, dbExecutiveBodyDto.get(0), true);
 	}
@@ -181,19 +188,20 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 	public void test08_saveExecutiveBody() throws ApplicationException{
 		int totalRootExecutivBodies = randomInteger(20);
 		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createAndSaveRandomDepartment(appService, categoryDto.getId());
 		List<ExecutiveBodyDto> savedExecutiveBodyDtoList = new ArrayList<>(totalRootExecutivBodies);
 		for(int i=0;i<totalRootExecutivBodies;i++){
 			final String name = randomAlphaString(16);
 			final AddressDto addressDto = createRandomAddress();
 			final Long boundaryId = null;
 			
-			ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, true, null);
+			ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, true, null);
 			ExecutiveBodyDto savedExecutiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 			savedExecutiveBodyDtoList.add(savedExecutiveBodyDto);
 			assertEqualExecutiveBodies(executiveBodyDto, savedExecutiveBodyDto, false);
 		}
 		
-		List<ExecutiveBodyDto> dbExecutiveBodyDto = appService.getAllRootExecutiveBodyOfCategory(categoryDto.getId());
+		List<ExecutiveBodyDto> dbExecutiveBodyDto = appService.getAllRootExecutiveBodyOfDepartment(department.getId());
 		assertEquals(totalRootExecutivBodies, dbExecutiveBodyDto.size());
 		for(int i=0;i<totalRootExecutivBodies;i++){
 			assertEqualExecutiveBodies(savedExecutiveBodyDtoList.get(i), dbExecutiveBodyDto.get(i), true);
@@ -208,8 +216,9 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 	public void test09_saveExecutiveBody() throws ApplicationException{
 		int totalRootExecutivBodies = randomInteger(20);
 		final CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		final DepartmentDto department = createAndSaveRandomDepartment(appService, categoryDto.getId());
 		
-		ExecutiveBodyDto parentExecutiveBodyDto = createExecutiveBody(randomAlphaString(16), createRandomAddress(), null, categoryDto, true, null);
+		ExecutiveBodyDto parentExecutiveBodyDto = createExecutiveBody(randomAlphaString(16), createRandomAddress(), null, department, true, null);
 		parentExecutiveBodyDto = appService.saveExecutiveBody(parentExecutiveBodyDto);
 		List<ExecutiveBodyDto> savedExecutiveBodyDtoList = new ArrayList<>(totalRootExecutivBodies);
 		for(int i=0;i<totalRootExecutivBodies;i++){
@@ -217,7 +226,7 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 			final AddressDto addressDto = createRandomAddress();
 			final Long boundaryId = null;
 			
-			ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, categoryDto, false, parentExecutiveBodyDto);
+			ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, department, false, parentExecutiveBodyDto);
 			ExecutiveBodyDto savedExecutiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 			savedExecutiveBodyDtoList.add(savedExecutiveBodyDto);
 			assertEqualExecutiveBodies(executiveBodyDto, savedExecutiveBodyDto, false);
