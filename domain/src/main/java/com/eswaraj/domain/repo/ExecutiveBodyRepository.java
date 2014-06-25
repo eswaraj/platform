@@ -23,7 +23,7 @@ public interface ExecutiveBodyRepository extends GraphRepository<ExecutiveBody>{
 	@Query("start executiveBody=node({0}) match (executiveBody)<-[:CHILD_OF]-(childExecutiveBodies) return childExecutiveBodies")
 	public Collection<ExecutiveBody> getChildExecutiveBodiesByParent(ExecutiveBody executiveBody);
 	
-	@Query("start category=node({0}) match (category)<-[:BELONGS_TO]-(executiveBodies) return executiveBodies")
+	@Query("start department=node({0}) match (department)<-[:BELONGS_TO]-(executiveBodies) return executiveBodies")
 	public Collection<ExecutiveBody> getAllRootExecutiveBodyOfDepartment(Department department);
 
 	

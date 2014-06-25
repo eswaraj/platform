@@ -10,7 +10,6 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
-import com.eswaraj.domain.nodes.PoliticalBody;
 
 /**
  * Repo for location queries
@@ -22,10 +21,11 @@ public interface LocationRepository extends GraphRepository<Location>{
 	@Query("start location=node({0})" +
 			"match (location)<-[:SERVED_BY]-(executiveBody) return executiveBody")
 	public Set<ExecutiveBody> findExecutiveBodies(Location location);
-	
+	/*
 	@Query("start location=node({0}) " +
 			"match location<--politicalBody return politicalBody")
 	public Set<PoliticalBody> findPoliticalBodies(Location location);
+	*/
 	
 	@Query("start location=node:Location(name={0}) return location")
     public Location getLocationFromName(String name);

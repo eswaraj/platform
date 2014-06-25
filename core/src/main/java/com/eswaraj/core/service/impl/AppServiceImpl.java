@@ -278,6 +278,14 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
+	public List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(long executiveBodyId) throws ApplicationException {
+		ExecutiveBody executiveBody = executiveBodyRepository.findOne(executiveBodyId);
+		Collection<ExecutiveBodyAdmin> executiveBodyAdmins = executiveBodyAdminRepository.getAllAdminsOfExecutiveBody(executiveBody);
+		return executiveBodyAdminConvertor.convertBeanList(executiveBodyAdmins);
+	}
+
+	
+	@Override
 	public ExecutivePostDto saveExecutivePost(ExecutivePostDto executivePostDto) throws ApplicationException {
 		ExecutivePost executivePost = executivePostConvertor.convert(executivePostDto);
 		executivePost = executivePostRepository.save(executivePost);
@@ -303,4 +311,10 @@ public class AppServiceImpl implements AppService {
 		return departmentConvertor.convertBean(department);
 	}
 
+	@Override
+	public List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException {
+		Category category = categoryRepository.findOne(categoryId);
+		Collection<Department> departments = departmentRepository.getAllDepartmentsOfCategory(category);
+		return departmentConvertor.convertBeanList(departments);
+	}
 }

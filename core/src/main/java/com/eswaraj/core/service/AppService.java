@@ -54,7 +54,8 @@ public interface AppService {
 	
 	List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException;
 	
-	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long categoryId) throws ApplicationException;
+	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long departmentId) throws ApplicationException;
+	
 	
 	//Executive Post Admin APIs
 	
@@ -68,9 +69,13 @@ public interface AppService {
 	
 	ExecutiveBodyAdminDto getExecutiveBodyAdminById(Long executiveBodyAdminId) throws ApplicationException;
 	
+	List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(long executiveBodyId) throws ApplicationException;
+	
 	// Department Admin APIs
 	
 	DepartmentDto saveDepartment(DepartmentDto departmentDto) throws ApplicationException;
 	
 	DepartmentDto getDepartmentById(Long departmentId) throws ApplicationException;
+	
+	List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException;
 }
