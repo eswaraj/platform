@@ -348,6 +348,16 @@ public class BaseTest {
 	    return randomLong;
 	}
 	/**
+	 * Generate a random negative long value
+	 */
+	public static long randomNegativeLong() {
+		long randomLong = randomLong();
+		if(randomLong > 0){
+			randomLong = 0 - randomLong;
+		}
+	    return randomLong;
+	}
+	/**
 	 * Generate a random long value between 0 and max
 	 */
 	public static long randomLong(long max) {

@@ -139,7 +139,8 @@ public class TestPoliticalBodyAdminController extends BaseControllerTest {
 			result.andExpect(jsonPath("$[" + i + "].partyId").value(politicalBodyAdminDto.getPartyId()));
 			result.andExpect(jsonPath("$[" + i + "].personId").value(politicalBodyAdminDto.getPersonId()));
 			result.andExpect(jsonPath("$[" + i + "].politicalBodyTypeId").value(politicalBodyAdminDto.getPoliticalBodyTypeId()));
-			result.andExpect(jsonPath("$[" + i + "].startDate").value(new IsEqual<Long>(politicalBodyAdminDto.getStartDate().getTime())));
+			//result.andExpect(jsonPath("$[" + i + "].startDate", new IsEqual<>(equalArg)).value(new IsEqual<Long>(politicalBodyAdminDto.getStartDate().getTime())));
+			result.andExpect(jsonPath("$[" + i + "].startDate", new IsEqual<>(politicalBodyAdminDto.getStartDate().getTime())));
 			
 		}
 	}

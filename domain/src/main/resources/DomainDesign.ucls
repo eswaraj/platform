@@ -40,7 +40,7 @@
   </class>  
   <class id="5" language="java" name="com.eswaraj.domain.nodes.Person" project="eswaraj-domain" 
     file="/eswaraj-domain/src/main/java/com/eswaraj/domain/nodes/Person.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="219" width="159" x="1185" y="549"/>    
+    <position height="-1" width="-1" x="1258" y="631"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -59,7 +59,7 @@
   <class id="7" language="java" name="com.eswaraj.domain.nodes.LocationBoundaryFile" project="eswaraj-domain" 
     file="/eswaraj-domain/src/main/java/com/eswaraj/domain/nodes/LocationBoundaryFile.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="111" width="177" x="967" y="808"/>    
+    <position height="-1" width="-1" x="1511" y="867"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -86,7 +86,7 @@
   </class>  
   <class id="10" language="java" name="com.eswaraj.domain.nodes.LocationType" project="eswaraj-domain" 
     file="/eswaraj-domain/src/main/java/com/eswaraj/domain/nodes/LocationType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="93" width="136" x="757" y="1138"/>    
+    <position height="-1" width="-1" x="777" y="965"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -95,7 +95,7 @@
   </class>  
   <class id="11" language="java" name="com.eswaraj.domain.nodes.DataClient" project="eswaraj-domain" 
     file="/eswaraj-domain/src/main/java/com/eswaraj/domain/nodes/DataClient.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="75" width="136" x="757" y="1281"/>    
+    <position height="-1" width="-1" x="777" y="1099"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -191,7 +191,7 @@
   </enumeration>  
   <class id="21" language="java" name="com.eswaraj.domain.nodes.Party" project="eswaraj-domain" 
     file="/eswaraj-domain/src/main/java/com/eswaraj/domain/nodes/Party.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="93" width="136" x="967" y="549"/>    
+    <position height="-1" width="-1" x="1310" y="416"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -337,7 +337,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="73">    
-    <bendpoint x="1133" y="549"/>    
+    <bendpoint x="1002" y="678"/>    
     <end type="SOURCE" refId="15" navigable="false">      
       <attribute id="74" name="officeAddress"/>      
       <multiplicity id="75" minimum="0" maximum="1"/>    
@@ -395,7 +395,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="94">    
-    <bendpoint x="1154" y="549"/>    
+    <bendpoint x="1091" y="554"/>    
     <end type="SOURCE" refId="15" navigable="false">      
       <attribute id="95" name="homeAddress"/>      
       <multiplicity id="96" minimum="0" maximum="1"/>    

@@ -165,6 +165,19 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		return executiveBodyDto;
 	}
+	protected ExecutiveBodyDto createRandomExecutiveBody(DepartmentDto departmentDto, boolean isRoot, ExecutiveBodyDto parentExecutiveBody){
+		String name = randomAlphaString(16);
+		AddressDto addressDto = createRandomAddress();
+		Long boundaryId = null;
+		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, departmentDto, isRoot, parentExecutiveBody);
+		return executiveBodyDto;
+	}
+	protected ExecutiveBodyDto createAndSaveRandomExecutiveBody(AppService appService,DepartmentDto departmentDto,  boolean isRoot, 
+			ExecutiveBodyDto parentExecutiveBody) throws ApplicationException{
+		ExecutiveBodyDto executiveBodyDto = createRandomExecutiveBody(departmentDto, isRoot, parentExecutiveBody);
+		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
+		return executiveBodyDto;
+	}
 	protected void assertEqualExecutiveBodies(ExecutiveBodyDto expectedExecutiveBody, ExecutiveBodyDto actualExecutiveBodyDto, boolean checkId){
 		if(checkId){
 			assertEquals(expectedExecutiveBody.getId(), actualExecutiveBodyDto.getId());	
@@ -187,12 +200,19 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		return politicalBodyTypeDto;
 	}
 	protected PoliticalBodyTypeDto createAndSavePoliticalBodyType(AppService appService, String shortName, String name, String description, Long locationTypeId) throws ApplicationException{
-		PoliticalBodyTypeDto politicalBodyTypeDto = new PoliticalBodyTypeDto();
-		politicalBodyTypeDto.setName(name);
-		politicalBodyTypeDto.setShortName(shortName);
-		politicalBodyTypeDto.setDescription(description);
-		politicalBodyTypeDto.setLocationTypeId(locationTypeId);
-		
+		PoliticalBodyTypeDto politicalBodyTypeDto = createPoliticalBodyType(shortName, name, description, locationTypeId);
+		politicalBodyTypeDto = appService.savePoliticalBodyType(politicalBodyTypeDto);
+		return politicalBodyTypeDto;
+	}
+	
+	protected PoliticalBodyTypeDto createRandomPoliticalBodyType(Long locationTypeId){
+		String shortName = randomAlphaString(3);
+		String name = randomAlphaString(16);
+		String description = randomAlphaString(256);
+		return createPoliticalBodyType(shortName, name, description, locationTypeId);
+	}
+	protected PoliticalBodyTypeDto createAndSaveRandomPoliticalBodyType(AppService appService, Long locationTypeId) throws ApplicationException{
+		PoliticalBodyTypeDto politicalBodyTypeDto = createRandomPoliticalBodyType(locationTypeId);
 		politicalBodyTypeDto = appService.savePoliticalBodyType(politicalBodyTypeDto);
 		return politicalBodyTypeDto;
 	}
@@ -397,6 +417,7 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		ExecutiveBodyAdminDto executiveBodyAdmin = createExecutiveBodyAdmin(executiveBody, manager, person, executivePost, startDate, endDate);
 		return appService.saveExecutiveBodyAdmin(executiveBodyAdmin);
 	}
+	
 	protected void assertEqualExecutiveBodyAdmin(ExecutiveBodyAdminDto expectedExecutiveBodyAdmin, ExecutiveBodyAdminDto actualExecutiveBodyAdmin, boolean checkId){
 		if(checkId){
 			assertEquals(expectedExecutiveBodyAdmin.getId(), actualExecutiveBodyAdmin.getId());	
@@ -427,6 +448,18 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		ExecutivePostDto executivePost = createExecutivePost(departmentDto, shortTitle, title, description);
 		return appService.saveExecutivePost(executivePost);
 	}
+	protected ExecutivePostDto createRandomExecutivePost(DepartmentDto departmentDto){
+		String shortTitle = randomAlphaString(3);
+		String title = randomAlphaString(16);
+		String description = randomAlphaString(256);
+		ExecutivePostDto executivePost = createExecutivePost(departmentDto, shortTitle, title, description);
+		return executivePost;
+	}
+	
+	protected ExecutivePostDto createAndSaveRandomExecutivePost(AppService appService, DepartmentDto departmentDto) throws ApplicationException{
+		ExecutivePostDto executivePost = createRandomExecutivePost(departmentDto);
+		return appService.saveExecutivePost(executivePost);
+	}
 	protected void assertEqualExecutivePost(ExecutivePostDto expectedExecutivePost, ExecutivePostDto actualExecutivePost, boolean checkId){
 		if(checkId){
 			assertEquals(expectedExecutivePost.getId(), actualExecutivePost.getId());	
@@ -444,6 +477,13 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		departmentDto.setCategoryId(categoryId);
 		return departmentDto;
 	}
+	protected DepartmentDto createDepartment(String categoryName, String description, CategoryDto category){
+		Long categoryId = null;
+		if(category != null){
+			categoryId = category.getId();
+		}
+		return createDepartment(categoryName, description, categoryId);
+	}
 	protected DepartmentDto createRandomDepartment(Long categoryId){
 		String categoryName = randomAlphaString(16);
 		String description = randomAlphaString(16);
@@ -452,6 +492,14 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	protected DepartmentDto createAndSaveRandomDepartment(AppService appService, Long categoryId) throws ApplicationException{
 		DepartmentDto departmentDto = createRandomDepartment(categoryId);
 		return appService.saveDepartment(departmentDto);
+	}
+	protected void assertEqualDepartment(DepartmentDto expectedDepartment, DepartmentDto actualDepartment, boolean checkId){
+		if(checkId){
+			assertEquals(expectedDepartment.getId(), actualDepartment.getId());	
+		}
+		assertEquals(expectedDepartment.getDescription(), actualDepartment.getDescription());
+		assertEquals(expectedDepartment.getName(), actualDepartment.getName());
+		assertEquals(expectedDepartment.getCategoryId(), actualDepartment.getCategoryId());
 	}
 
 }

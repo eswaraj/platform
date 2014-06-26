@@ -16,7 +16,6 @@ public class ExecutivePostValidator extends BaseValidator<ExecutivePost>{
 
 	@Override
 	public void validateBeforeSave(ExecutivePost executivePost) throws ValidationException {
-		System.out.println("ExecutivePostValidator.validateBeforeSave");
 		checkIfEmpty("Title", executivePost.getTitle(),"ExecutivePost Title can not be Null or Empty");
 		checkIfNull("Department", executivePost.getDepartment(),"ExecutivePost Department can not be Null");
 	}

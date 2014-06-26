@@ -6,7 +6,6 @@ import com.google.gdata.util.common.base.StringUtil;
 public abstract class BaseValidator<T> {
 
 	public BaseValidator(Class<T> type, ValidationManager validationManager){
-		System.out.println("Registerning : "+type);
 		validationManager.registerValidator(type, this);
 	}
 	

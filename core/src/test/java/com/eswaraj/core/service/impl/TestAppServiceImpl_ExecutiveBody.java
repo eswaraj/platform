@@ -238,4 +238,47 @@ public class TestAppServiceImpl_ExecutiveBody extends BaseNeo4jEswarajTest{
 			assertEqualExecutiveBodies(savedExecutiveBodyDtoList.get(i), dbExecutiveBodyDto.get(i), true);
 		}
 	}
+	
+	/**
+	 * Call getAllRootExecutiveBodyOfDepartment with Department Id which do not exists in DB
+	 * It should throw exception
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test10_getAllRootExecutiveBodyOfDepartment() throws ApplicationException{
+		appService.getAllRootExecutiveBodyOfDepartment(randomPositiveLong());
+	}
+	
+	/**
+	 * Call getAllRootExecutiveBodyOfDepartment with Department Id as null
+	 * It should throw exception
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test11_getAllRootExecutiveBodyOfDepartment() throws ApplicationException{
+		appService.getAllRootExecutiveBodyOfDepartment(null);
+	}
+	
+	/**
+	 * Call getAllChildExecutiveBodyOfParent with ExecutiveBody Id which do not exists in DB
+	 * It should throw exception
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test12_getAllChildExecutiveBodyOfParent() throws ApplicationException{
+		appService.getAllChildExecutiveBodyOfParent(randomPositiveLong());
+	}
+	
+	/**
+	 * Call getAllChildExecutiveBodyOfParent with ExecutiveBody Id as null
+	 * It should throw exception
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test13_getAllChildExecutiveBodyOfParent() throws ApplicationException{
+		appService.getAllChildExecutiveBodyOfParent(null);
+	}
+	
+	
+	
 }

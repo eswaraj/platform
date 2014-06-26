@@ -15,8 +15,9 @@ public class DepartmentValidator extends BaseValidator<Department>{
 	}
 
 	@Override
-	public void validateBeforeSave(Department category) throws ValidationException {
-		checkIfEmpty("Name", category.getName(),"Department Name can not be Null or Empty");
+	public void validateBeforeSave(Department department) throws ValidationException {
+		checkIfEmpty("Name", department.getName(),"Department Name can not be Null or Empty");
+		checkIfNull("Category", department.getCategory(),"Department Category can not be Null or Empty");
 		
 	}
 

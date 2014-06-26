@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
+import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.web.dto.BaseDto;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
@@ -106,10 +108,7 @@ public class AppServiceImpl implements AppService {
 
 	@Override
 	public List<CategoryDto> getAllChildCategoryOfParentCategory(long parentCategoryId) throws ApplicationException {
-		Category parentCategory = categoryRepository.findOne(parentCategoryId);
-		if(parentCategory == null){
-			throw new ApplicationException("No such location exists [id="+parentCategoryId+"]");
-		}
+		Category parentCategory = getObjectIfExistsElseThrowExcetpion(parentCategoryId, "Parent Catgeory", categoryRepository);
 		Collection<Category> rootCategories = categoryRepository.findAllChildCategoryOfParentCategory(parentCategory);
 		return categoryConvertor.convertBeanList(rootCategories);
 	}
@@ -223,16 +222,16 @@ public class AppServiceImpl implements AppService {
 
 	@Override
 	public PoliticalBodyAdminDto getCurrentPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException {
-		Location location = locationRepository.findOne(locationId);
-		PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(pbTypeId);
+		Location location = getObjectIfExistsElseThrowExcetpion(locationId, "Location", locationRepository);
+		PoliticalBodyType politicalBodyType = getObjectIfExistsElseThrowExcetpion(pbTypeId, "PoliticalBodyType", politicalBodyTypeRepository);
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);
 	}
 
 	@Override
 	public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException {
-		Location location = locationRepository.findOne(locationId);
-		PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(pbTypeId);
+		Location location = getObjectIfExistsElseThrowExcetpion(locationId, "Location", locationRepository);
+		PoliticalBodyType politicalBodyType = getObjectIfExistsElseThrowExcetpion(pbTypeId, "PoliticalBodyType", politicalBodyTypeRepository);
 		Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
 	}
@@ -252,14 +251,14 @@ public class AppServiceImpl implements AppService {
 
 	@Override
 	public List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException {
-		ExecutiveBody parentExecutiveBody = executiveBodyRepository.findOne(parentExecutiveBodyId);
+		ExecutiveBody parentExecutiveBody = getObjectIfExistsElseThrowExcetpion(parentExecutiveBodyId, "Parent ExecutiveBody", executiveBodyRepository);
 		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getChildExecutiveBodiesByParent(parentExecutiveBody);
 		return executiveBodyConvertor.convertBeanList(allChildExecutiveBodies);
 	}
 
 	@Override
 	public List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long departmentId) throws ApplicationException {
-		Department department = departmentRepository.findOne(departmentId);
+		Department department = getObjectIfExistsElseThrowExcetpion(departmentId, "Department", departmentRepository);
 		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getAllRootExecutiveBodyOfDepartment(department);
 		return executiveBodyConvertor.convertBeanList(allChildExecutiveBodies);
 	}
@@ -278,12 +277,21 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(long executiveBodyId) throws ApplicationException {
-		ExecutiveBody executiveBody = executiveBodyRepository.findOne(executiveBodyId);
+	public List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(Long executiveBodyId) throws ApplicationException {
+		ExecutiveBody executiveBody = getObjectIfExistsElseThrowExcetpion(executiveBodyId, "ExecutiveBody", executiveBodyRepository);
 		Collection<ExecutiveBodyAdmin> executiveBodyAdmins = executiveBodyAdminRepository.getAllAdminsOfExecutiveBody(executiveBody);
 		return executiveBodyAdminConvertor.convertBeanList(executiveBodyAdmins);
 	}
-
+	protected <DbType> DbType getObjectIfExistsElseThrowExcetpion(Long id, String objectName, GraphRepository<DbType> repository) throws ApplicationException{
+		DbType dbObject = null;
+		if(id != null && id > 0){
+			dbObject = repository.findOne(id);
+		}
+		if(dbObject == null){
+			throw new ApplicationException("No such " + objectName + " exists[id="+ id +"]");
+		}
+		return dbObject;
+	}
 	
 	@Override
 	public ExecutivePostDto saveExecutivePost(ExecutivePostDto executivePostDto) throws ApplicationException {
@@ -313,7 +321,7 @@ public class AppServiceImpl implements AppService {
 
 	@Override
 	public List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException {
-		Category category = categoryRepository.findOne(categoryId);
+		Category category = getObjectIfExistsElseThrowExcetpion(categoryId, "Category", categoryRepository);
 		Collection<Department> departments = departmentRepository.getAllDepartmentsOfCategory(category);
 		return departmentConvertor.convertBeanList(departments);
 	}

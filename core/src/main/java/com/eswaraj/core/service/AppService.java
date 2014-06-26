@@ -69,7 +69,7 @@ public interface AppService {
 	
 	ExecutiveBodyAdminDto getExecutiveBodyAdminById(Long executiveBodyAdminId) throws ApplicationException;
 	
-	List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(long executiveBodyId) throws ApplicationException;
+	List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(Long executiveBodyId) throws ApplicationException;
 	
 	// Department Admin APIs
 	

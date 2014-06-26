@@ -944,6 +944,52 @@ public class TestAppServiceImpl extends BaseNeo4jEswarajTest{
 		appService.savePoliticalBodyAdmin(politicalBodyAdminDto2);// this should thow applicationException
 		
 	}
+	/**
+	 * Call getAllPoliticalBodyAdminByLocationId with a location Id which do not exists
+	 * It should throw ApplicationException
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test25_getAllPoliticalBodyAdminByLocationId() throws ApplicationException{
+		LocationTypeDto locationTypeDto = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createAndSaveRandomPoliticalBodyType(appService, locationTypeDto.getId());
+		appService.getAllPoliticalBodyAdminByLocationId(randomPositiveLong(), politicalBodyTypeDto.getId());
+	}
 	
+	/**
+	 * Call getAllPoliticalBodyAdminByLocationId with a Political Body Type Id which do not exists
+	 * It should throw ApplicationException
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test26_getAllPoliticalBodyAdminByLocationId() throws ApplicationException{
+		LocationTypeDto locationTypeDto = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto locationDto = createAndSaveLocation(locationService, randomAlphaString(16), locationTypeDto, null);
+		appService.getAllPoliticalBodyAdminByLocationId(locationDto.getId(), randomPositiveLong());
+	}
+	
+	/**
+	 * Call getCurrentPoliticalBodyAdminByLocationId with a location Id which do not exists
+	 * It should throw ApplicationException
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test27_getCurrentPoliticalBodyAdminByLocationId() throws ApplicationException{
+		LocationTypeDto locationTypeDto = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		PoliticalBodyTypeDto politicalBodyTypeDto = createAndSaveRandomPoliticalBodyType(appService, locationTypeDto.getId());
+		appService.getCurrentPoliticalBodyAdminByLocationId(randomPositiveLong(), politicalBodyTypeDto.getId());
+	}
+	
+	/**
+	 * Call getCurrentPoliticalBodyAdminByLocationId with a Political Body Type Id which do not exists
+	 * It should throw ApplicationException
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test28_getCurrentPoliticalBodyAdminByLocationId() throws ApplicationException{
+		LocationTypeDto locationTypeDto = createAndSaveLocationType(locationService, randomAlphaString(16), null, true);
+		LocationDto locationDto = createAndSaveLocation(locationService, randomAlphaString(16), locationTypeDto, null);
+		appService.getCurrentPoliticalBodyAdminByLocationId(locationDto.getId(), randomPositiveLong());
+	}
 	
 }

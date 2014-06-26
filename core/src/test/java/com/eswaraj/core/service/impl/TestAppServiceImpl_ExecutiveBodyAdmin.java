@@ -1,6 +1,13 @@
 package com.eswaraj.core.service.impl;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +19,6 @@ import com.eswaraj.core.BaseNeo4jEswarajTest;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
-import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryDto;
@@ -97,6 +103,74 @@ public class TestAppServiceImpl_ExecutiveBodyAdmin extends BaseNeo4jEswarajTest{
 		
 	}
 	
+	/**
+	 * Create few ExecutiveAdminBody Of ExecutiveBody and get them back with getAllExecutiveBodyAdminOfExecutiveBody
+	 * @throws ApplicationException 
+	 */
+	@Test
+	public void test04_getAllExecutiveBodyAdminOfExecutiveBody() throws ApplicationException{
+		int totalExecutiveBody = randomInteger(5);
+		Map<ExecutiveBodyDto, List<ExecutiveBodyAdminDto>> executiveBodyAndExecutiveBodyAdminMap = new LinkedHashMap<>();
+		CategoryDto categoryDto = createAndSaveRandomCateory(appService, true, null);
+		DepartmentDto departmentDto = createAndSaveRandomDepartment(appService, categoryDto.getId());
+		
+		for(int i=0;i<totalExecutiveBody;i++){
+			ExecutiveBodyDto executiveBodyDto = createAndSaveRandomExecutiveBody(appService, departmentDto, true, null);
+			ExecutivePostDto executivePost = createAndSaveRandomExecutivePost(appService, departmentDto);
+			PersonDto person = createAndSaveRandomPerson(personService);
+			int totalExecutiveBodyAdminUnderExecutiveBody = randomInteger(15);
+			executiveBodyAndExecutiveBodyAdminMap.put(executiveBodyDto, new ArrayList<ExecutiveBodyAdminDto>(totalExecutiveBodyAdminUnderExecutiveBody));
+			for(int j=0;j<totalExecutiveBodyAdminUnderExecutiveBody;j++){
+				ExecutiveBodyAdminDto executiveBodyAdmin = createExecutiveBodyAdmin(executiveBodyDto, null, person, executivePost, randomDateInPast(), randomDateInFuture());
+				executiveBodyAdmin = appService.saveExecutiveBodyAdmin(executiveBodyAdmin);
+				executiveBodyAndExecutiveBodyAdminMap.get(executiveBodyDto).add(executiveBodyAdmin);
+			}
+		}
+		
+		List<ExecutiveBodyAdminDto> departmetOfExecutiveBodyFromDb;
+		//check the data
+		for(Entry<ExecutiveBodyDto, List<ExecutiveBodyAdminDto>> oneEntry : executiveBodyAndExecutiveBodyAdminMap.entrySet()){
+			departmetOfExecutiveBodyFromDb = appService.getAllExecutiveBodyAdminOfExecutiveBody(oneEntry.getKey().getId());
+			assertEquals(oneEntry.getValue().size(), departmetOfExecutiveBodyFromDb.size());
+			assertEquals(oneEntry.getValue(), departmetOfExecutiveBodyFromDb);
+		}
+	}
+	
+	/**
+	 * call getAllExecutiveBodyAdminOfExecutiveBody with ExecutiveBody id which do not exists
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test05_getAllExecutiveBodyAdminOfExecutiveBody() throws ApplicationException{
+		appService.getAllExecutiveBodyAdminOfExecutiveBody(randomPositiveLong());
+	}
+	
+	/**
+	 * call getAllExecutiveBodyAdminOfExecutiveBody with ExecutiveBody id as null
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test06_getAllExecutiveBodyAdminOfExecutiveBody() throws ApplicationException{
+		appService.getAllExecutiveBodyAdminOfExecutiveBody(null);
+	}
+	
+	/**
+	 * call getAllExecutiveBodyAdminOfExecutiveBody with ExecutiveBody id as 0
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test07_getAllExecutiveBodyAdminOfExecutiveBody() throws ApplicationException{
+		appService.getAllExecutiveBodyAdminOfExecutiveBody(0L);
+	}
+	
+	/**
+	 * call getAllExecutiveBodyAdminOfExecutiveBody with ExecutiveBody id as -ve number
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test08_getAllExecutiveBodyAdminOfExecutiveBody() throws ApplicationException{
+		appService.getAllExecutiveBodyAdminOfExecutiveBody(randomNegativeLong());
+	}
 	
 	
 }
