@@ -41,6 +41,7 @@ public class TestComplaintReposityory {
 	public void shouldSaveComplaint() {
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
+		category.setRoot(true);
 		complaint.setCategory(category);
 		
 		Person person = new Person();
@@ -58,6 +59,7 @@ public class TestComplaintReposityory {
 	public void shouldGetComplaint_ByLocation() {
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
+		category.setRoot(true);
 		complaint.setCategory(category);
 		
 		Person person = new Person();
@@ -73,6 +75,7 @@ public class TestComplaintReposityory {
 	public void shouldGetComplaint_ByCategory() {
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
+		category.setRoot(true);
 		category = categoryRepository.save(category);
 		complaint.setCategory(category);
 		
@@ -122,6 +125,7 @@ public class TestComplaintReposityory {
 	public void shouldLodgeComplaint_AsPending() {
 		Complaint complaint = new Complaint("Test Complaint");
 		Category category = new Category("cat1");
+		category.setRoot(true);
 		complaint.setCategory(category);
 		
 		Person person = new Person();

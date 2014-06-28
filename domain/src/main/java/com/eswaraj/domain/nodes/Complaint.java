@@ -30,8 +30,8 @@ public class Complaint extends BaseNode {
 	private Person person;
 	@RelatedTo(type="SERVED_BY")
 	private ExecutiveBodyAdmin administrator;
-	@RelatedTo(type="IS_IN")
-	@Fetch
+//	@RelatedTo(type="IS_IN")
+//	@Fetch
 	private Status status;
 	@RelatedTo(type="ENDORSED_BY", elementClass=Person.class)
 	private Set<Person> endorsements;
