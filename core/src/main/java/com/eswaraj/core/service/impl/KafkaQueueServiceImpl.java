@@ -3,10 +3,7 @@ package com.eswaraj.core.service.impl;
 import java.io.Serializable;
 import java.util.Properties;
 
-import org.apache.commons.lang.SerializationUtils;
-
 import kafka.javaapi.producer.Producer;
-import kafka.message.Message;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 

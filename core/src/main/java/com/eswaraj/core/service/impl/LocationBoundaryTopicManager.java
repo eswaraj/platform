@@ -4,10 +4,12 @@ import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
+@Component
 public class LocationBoundaryTopicManager extends KafkaQueueServiceImpl<String, LocationBoundaryFileDto> {
 
 	private String locationTopic;
