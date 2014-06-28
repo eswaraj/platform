@@ -23,8 +23,7 @@
 		<spring.social.version>1.0.3.RELEASE</spring.social.version>
 		<social-google-version>1.0.0.M3</social-google-version>
 		<neo4j.version>1.9.7</neo4j.version>
-		<!-- <spring.data.version>2.3.2.RELEASE</spring.data.version> -->
-		<spring.data.version>2.3.2.RELEASE</spring.data.version>
+		<spring.data.neo4j.version>2.3.2.RELEASE</spring.data.neo4j.version>
 		<jmock.version>2.6.0</jmock.version>
 		<org.aspectj.version>1.8.0</org.aspectj.version>
 		<org.slf4j.version>1.7.7</org.slf4j.version>
@@ -150,7 +149,8 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-		<!-- Neo4j Dependecies -->
+		
+		<!-- Neo4j Dependencies -->
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j</artifactId>
@@ -159,12 +159,12 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j</artifactId>
-			<version>${spring.data.version}</version>
+			<version>${spring.data.neo4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j-rest</artifactId>
-			<version>${spring.data.version}</version>
+			<version>${spring.data.neo4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
