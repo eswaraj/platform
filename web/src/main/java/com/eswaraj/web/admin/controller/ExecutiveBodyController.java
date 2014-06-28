@@ -22,6 +22,12 @@ public class ExecutiveBodyController extends BaseController {
 		return executiveBodyDtos;
 	}
 	
+	@RequestMapping(value = "/ajax/eb/getchild/{executiveBodyId}", method = RequestMethod.GET)
+	public @ResponseBody List<ExecutiveBodyDto> getChildExecutiveBody(ModelAndView mv, @PathVariable Long executiveBodyId) throws ApplicationException {
+		List<ExecutiveBodyDto> executiveBodyDtos = appService.getAllChildExecutiveBodyOfParent(executiveBodyId);
+		return executiveBodyDtos;
+	}
+
 	@RequestMapping(value = "/ajax/eb/save", method = RequestMethod.POST)
 	public @ResponseBody ExecutiveBodyDto savePoliticalBodyTypes(ModelAndView mv, @RequestBody ExecutiveBodyDto executiveBodyDto) throws ApplicationException {
 		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);

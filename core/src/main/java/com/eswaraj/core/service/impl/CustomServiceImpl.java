@@ -9,7 +9,6 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
-import com.eswaraj.core.service.QueueService;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 @Component
@@ -22,7 +21,7 @@ public class CustomServiceImpl implements CustomService {
 	private FileService fileService;
 	
 	@Autowired
-	private QueueService queueService;
+	private LocationBoundaryTopicManager locationBoundaryTopicManager;
 	
 	
 	@Override
@@ -30,8 +29,8 @@ public class CustomServiceImpl implements CustomService {
 		
 		LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, inputStream, fileService);
         //Submit file to queue to be processed by backend
-		queueService.sendBoundaryfileMessage(locationBoundaryFileDto);
-
+		locationBoundaryTopicManager.sendBoundaryfileMessage(locationBoundaryFileDto);
+		
 	}
 
 }

@@ -30,6 +30,7 @@
 		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<javax.servlet.version>1.2</javax.servlet.version>
 		<jackson.version>2.2.3</jackson.version>
+		<kafka.client.version>0.8.1.1</kafka.client.version>
 	</properties>
 
 	<dependencies>
@@ -288,7 +289,12 @@
 				<artifactId>spring-test</artifactId>
 				<version>${org.springframework.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka_2.10</artifactId>
+				<version>${kafka.client.version}</version>
+			</dependency>
+						
 
 		</dependencies>
 	</dependencyManagement>
