@@ -28,7 +28,9 @@
 		<property name="searchSystemEnvironment" value="true" />
 		<property name="properties">
 			<util:properties>
-
+			    <!-- Dev machin property for test -->
+				<prop key="kafka_brokers">localhost:9080</prop>
+				<prop key="kafka_topic_location">location</prop>
 			</util:properties>
 		</property>
 	</bean>

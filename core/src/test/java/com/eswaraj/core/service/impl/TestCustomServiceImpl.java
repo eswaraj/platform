@@ -31,18 +31,18 @@ public class TestCustomServiceImpl extends BaseNeo4jEswarajTest{
 	public void test01_processLocationBoundaryFile() throws ApplicationException{
 		final LocationService locationService = mock(LocationService.class, "locationService");
 		final FileService fileService = mock(FileService.class, "fileService");
-		final LocationBoundaryTopicManager queueService = mock(LocationBoundaryTopicManager.class, "queueService");
+		final LocationBoundaryTopicManager locationBoundaryTopicManager = mock(LocationBoundaryTopicManager.class, "queueService");
 		final InputStream inputStream = mock(InputStream.class, "inputStream");
 		final LocationBoundaryFileDto locationBoundaryFileDto = new LocationBoundaryFileDto();
 		final long locationId = randomPositiveLong();
 		inject(customService, "locationService", locationService);
 		inject(customService, "fileService", fileService);
-		inject(customService, "queueService", queueService);
+		inject(customService, "locationBoundaryTopicManager", locationBoundaryTopicManager);
 		
 		expect(new Expectations() {{
             oneOf (locationService).createNewLocationBoundaryFile(locationId, inputStream, fileService);
             	will(returnValue(locationBoundaryFileDto));
-            oneOf (queueService).sendBoundaryfileMessage(locationBoundaryFileDto);
+            oneOf (locationBoundaryTopicManager).sendBoundaryfileMessage(locationBoundaryFileDto);
         }});
 		customService.processLocationBoundaryFile(locationId, inputStream);
 

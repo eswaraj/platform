@@ -9,7 +9,6 @@ import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 public class TestLocationBoundaryTopicManager {
 
-	@Test
 	public void TestLocationBoundaryTopicManagerAsMain() throws ApplicationException {
 		LocationBoundaryTopicManager locationBoundaryTopicManager = new LocationBoundaryTopicManager("localhost:9092", "test");
 		LocationBoundaryFileDto locationBoundaryFileDto = new LocationBoundaryFileDto();
