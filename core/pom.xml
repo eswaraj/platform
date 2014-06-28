@@ -12,6 +12,7 @@
 		<relativePath />
 	</parent>
 
+
 	<dependencies>
 		<!-- eswaraj -->
 
@@ -43,6 +44,10 @@
 		<dependency>
 			<groupId>com.google.gdata</groupId>
 			<artifactId>core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.10</artifactId>
 		</dependency>
 
 	</dependencies>

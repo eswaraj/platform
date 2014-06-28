@@ -3,6 +3,8 @@ package com.eswaraj.tasks.bolt;
 import java.io.FileReader;
 import java.util.Map;
 
+import org.apache.commons.lang.SerializationUtils;
+
 import au.com.bytecode.opencsv.CSVReader;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;

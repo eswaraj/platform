@@ -16,7 +16,7 @@ import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 @Controller
 public class ExecutiveBodyAdminController extends BaseController {
 
-	@RequestMapping(value = "/ajax/eba/getroot/{executiveBodyId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ajax/eba/getalladmins/{executiveBodyId}", method = RequestMethod.GET)
 	public @ResponseBody List<ExecutiveBodyAdminDto> getExecutiveBodyAdminOfExecutiveBody(ModelAndView mv, @PathVariable Long executiveBodyId) throws ApplicationException {
 		List<ExecutiveBodyAdminDto> executiveBodyAdminDtos = appService.getAllExecutiveBodyAdminOfExecutiveBody(executiveBodyId);
 		return executiveBodyAdminDtos;

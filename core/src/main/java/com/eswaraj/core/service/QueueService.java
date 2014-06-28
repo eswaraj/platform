@@ -1,9 +1,12 @@
 package com.eswaraj.core.service;
 
+import java.io.Serializable;
+
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
-public interface QueueService {
+public interface QueueService<KeyType,ValueType extends Serializable> {
 
-	void sendBoundaryfileMessage(LocationBoundaryFileDto locationBoundaryFileDto) throws ApplicationException;
+	void sendMessage(String topicName, ValueType value) throws ApplicationException;
+	
+	void sendMessage(String topicName, KeyType key, ValueType value) throws ApplicationException;
 }

@@ -14,7 +14,6 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
-import com.eswaraj.core.service.QueueService;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-core-test.xml" })
@@ -32,7 +31,7 @@ public class TestCustomServiceImpl extends BaseNeo4jEswarajTest{
 	public void test01_processLocationBoundaryFile() throws ApplicationException{
 		final LocationService locationService = mock(LocationService.class, "locationService");
 		final FileService fileService = mock(FileService.class, "fileService");
-		final QueueService queueService = mock(QueueService.class, "queueService");
+		final LocationBoundaryTopicManager queueService = mock(LocationBoundaryTopicManager.class, "queueService");
 		final InputStream inputStream = mock(InputStream.class, "inputStream");
 		final LocationBoundaryFileDto locationBoundaryFileDto = new LocationBoundaryFileDto();
 		final long locationId = randomPositiveLong();
