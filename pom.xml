@@ -21,5 +21,6 @@
 	    <module>core</module>
 	    <module>api</module>
 	    <module>web</module>
+            <module>cache</module>
 	</modules>
 </project>

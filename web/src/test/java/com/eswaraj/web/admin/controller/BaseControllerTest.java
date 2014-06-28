@@ -1,10 +1,13 @@
 package com.eswaraj.web.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.eswaraj.base.BaseEswarajMockitoTest;
 import com.eswaraj.web.dto.AddressDto;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,6 +65,20 @@ public class BaseControllerTest extends BaseEswarajMockitoTest{
 		politicalBodyAdminDto.setPersonId(personId);	
 		politicalBodyAdminDto.setPoliticalBodyTypeId(politicalBodyTypeId);	
 		return politicalBodyAdminDto;
+	}
+	protected ComplaintDto createComplaintDto() {
+		ComplaintDto complaintDto = new ComplaintDto();
+		complaintDto.setDescription(randomAlphaString(256));
+		complaintDto.setTitle(randomAlphaString(30));
+		return complaintDto;
+	}
+	
+	protected List<ComplaintDto> createComplaints(int count){
+		List<ComplaintDto> complaints = new ArrayList<>(count);
+		for(int i = 0; i < count; i++) {
+			complaints.add(createComplaintDto());
+		}
+		return complaints;
 	}
 	
 	public byte[] convertObjectToJsonBytes(Object object) throws IOException {

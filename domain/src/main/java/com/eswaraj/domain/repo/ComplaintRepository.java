@@ -18,9 +18,8 @@ import com.eswaraj.domain.nodes.Person;
  */
 public interface ComplaintRepository extends GraphRepository<Complaint>{
 
-	public Complaint getById(Long id);
-	
-	public Complaint getByCategory(Category category);
+	@Query("start category=node({0}) match (complaint)-[:BELONGS_TO]->(category) return complaint ") 
+	public List<Complaint> getByCategory(Category category);
 	
 	@Query("start person=node({0}) " +
 			"match (person)<-[:LODGED_BY]-(complaint) return complaint " + 

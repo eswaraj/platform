@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
-import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +37,6 @@ import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
-import com.eswaraj.web.dto.BaseDto;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
@@ -50,7 +48,7 @@ import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 
 @Component
 @Transactional
-public class AppServiceImpl implements AppService {
+public class AppServiceImpl extends BaseService implements AppService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -281,16 +279,6 @@ public class AppServiceImpl implements AppService {
 		ExecutiveBody executiveBody = getObjectIfExistsElseThrowExcetpion(executiveBodyId, "ExecutiveBody", executiveBodyRepository);
 		Collection<ExecutiveBodyAdmin> executiveBodyAdmins = executiveBodyAdminRepository.getAllAdminsOfExecutiveBody(executiveBody);
 		return executiveBodyAdminConvertor.convertBeanList(executiveBodyAdmins);
-	}
-	protected <DbType> DbType getObjectIfExistsElseThrowExcetpion(Long id, String objectName, GraphRepository<DbType> repository) throws ApplicationException{
-		DbType dbObject = null;
-		if(id != null && id > 0){
-			dbObject = repository.findOne(id);
-		}
-		if(dbObject == null){
-			throw new ApplicationException("No such " + objectName + " exists[id="+ id +"]");
-		}
-		return dbObject;
 	}
 	
 	@Override

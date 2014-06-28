@@ -2,6 +2,7 @@ package com.eswaraj.core.service;
 
 import java.util.List;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.ComplaintDto;
 
 /**
@@ -12,7 +13,11 @@ import com.eswaraj.web.dto.ComplaintDto;
 
 public interface ComplaintService {
 	
-	List<ComplaintDto> getPagedUserComplaints(String personId, int start, int end);
+	List<ComplaintDto> getPagedUserComplaints(Long personId, int start, int end) throws ApplicationException;
 	
-	ComplaintDto getUserComplaint(String complaintId);
+	List<ComplaintDto> getAllUserComplaints(Long personId) throws ApplicationException;
+	
+	ComplaintDto getComplaintById(Long complaintId) throws ApplicationException;
+	
+	ComplaintDto saveComplaint(ComplaintDto complaintDto) throws ApplicationException;
 }

@@ -19,18 +19,28 @@ import org.springframework.stereotype.Component;
 public class TestObjectContextManager {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private Set<Object> allDbSavedObjects = new HashSet<Object>();
+	//private Set<Object> allDbSavedObjects = new HashSet<Object>();
+	private ThreadLocal<Set<Object>> allDbSavedObjectsPerThread = new ThreadLocal<>();
 	
 	@Autowired Neo4jTemplate neo4jTemplate;
 	
 	private boolean dontDeleteForThisTest;
 	
+	private Set<Object> getDbSavedObjectSetForThread(){
+		Set<Object> allDbSavedObjects = allDbSavedObjectsPerThread.get();
+		if(allDbSavedObjects == null){
+			allDbSavedObjects = new HashSet<>();
+			allDbSavedObjectsPerThread.set(allDbSavedObjects);
+		}
+		return allDbSavedObjects;
+	}
 	public void addSavedObject(Object object){
 		logger.trace("Adding Object to test Context "+object);
-		allDbSavedObjects.add(object);
+		getDbSavedObjectSetForThread().add(object);
 	}
 	public void clearAllObjectsCreatdDuringTest(){
-		for(Object oneObject:allDbSavedObjects){
+		Set<Object> allDbSavedObjects = getDbSavedObjectSetForThread(); 
+		for(Object oneObject: allDbSavedObjects){
 			try{
 				logger.trace("Deleting : "+oneObject);
 				if(!dontDeleteForThisTest){
@@ -43,6 +53,7 @@ public class TestObjectContextManager {
 			}
 		}
 		allDbSavedObjects.clear();
+		allDbSavedObjectsPerThread.remove();
 		dontDeleteForThisTest = false;
 	}
 	public boolean isDontDeleteForThisTest() {

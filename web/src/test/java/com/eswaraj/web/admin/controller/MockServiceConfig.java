@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
@@ -36,5 +37,10 @@ public class MockServiceConfig {
 	@Bean
 	public PersonService personService() {
 		return Mockito.mock(PersonService.class);
+	}
+	
+	@Bean
+	public ComplaintService complaintService(){
+		return Mockito.mock(ComplaintService.class);
 	}
 }

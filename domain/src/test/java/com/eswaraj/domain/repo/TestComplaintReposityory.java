@@ -3,9 +3,7 @@ package com.eswaraj.domain.repo;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +27,7 @@ import com.eswaraj.domain.validator.exception.ValidationException;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class TestComplaintReposityory {
+public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 
 	@Autowired ComplaintRepository complaintRepository;
 	@Autowired LocationRepository locationRepository;
@@ -51,7 +49,7 @@ public class TestComplaintReposityory {
 		complaint.setPerson(person);
 		
 		complaint = complaintRepository.save(complaint);
-		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
+		Complaint expectedComplaint = complaintRepository.findOne(complaint.getId());
 		assertEquals(expectedComplaint.getTitle(), complaint.getTitle());
 	}
 	
@@ -73,8 +71,8 @@ public class TestComplaintReposityory {
 	
 	@Test
 	public void shouldGetComplaint_ByCategory() {
-		Complaint complaint = new Complaint("test complaint");
-		Category category = new Category("cat1");
+		Complaint complaint = new Complaint(randomAlphaString(16));
+		Category category = new Category(randomAlphaString(16));
 		category.setRoot(true);
 		category = categoryRepository.save(category);
 		complaint.setCategory(category);
@@ -88,9 +86,11 @@ public class TestComplaintReposityory {
 		complaint = complaintRepository.save(complaint);
 		
 		Category category1 = categoryRepository.getById(complaint.getCategory().getId());
-		Complaint expectedComplaint = complaintRepository.getByCategory(category1);
-		assertEquals(expectedComplaint.getCategory().getName(), complaint.getCategory().getName());
-		assertEquals(expectedComplaint.getCategory().getId(), complaint.getCategory().getId());
+		List<Complaint> expectedComplaint = complaintRepository.getByCategory(category1);
+		System.out.println("expectedComplaint="+expectedComplaint);
+		System.out.println("complaint="+complaint);
+		assertEquals(expectedComplaint.get(0).getCategory().getName(), complaint.getCategory().getName());
+		assertEquals(expectedComplaint.get(0).getCategory().getId(), complaint.getCategory().getId());
 	}
 	
 	@Test(expected=ValidationException.class)
@@ -135,7 +135,7 @@ public class TestComplaintReposityory {
 		complaint.setPerson(person);
 
 		complaint = complaintRepository.save(complaint);
-		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
+		Complaint expectedComplaint = complaintRepository.findOne(complaint.getId());
 		assertEquals(expectedComplaint.getStatus(), Complaint.Status.PENDING);
 	}
 	

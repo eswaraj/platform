@@ -2,13 +2,10 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
-import com.eswaraj.domain.nodes.division.GeoPoint;
 
 /**
  * Complaint made by a person
@@ -21,9 +18,8 @@ public class Complaint extends BaseNode {
 
 	private String title;
 	private String description;
-	@Indexed
-	@RelatedTo(type="IS_AT")
-	private GeoPoint geoPoint;
+	private double lattitude;
+	private double longitude;
 	@RelatedTo(type="BELONGS_TO")
 	private Category category;
 	@RelatedTo(type="LODGED_BY")
@@ -56,12 +52,6 @@ public class Complaint extends BaseNode {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public GeoPoint getGeoPoint() {
-		return geoPoint;
-	}
-	public void setGeoPoint(GeoPoint geoPoint) {
-		this.geoPoint = geoPoint;
 	}
 	public Category getCategory() {
 		return category;
@@ -135,4 +125,12 @@ public class Complaint extends BaseNode {
 			return description;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", category="
+				+ category + ", person=" + person + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements
+				+ ", servants=" + servants + ", photos=" + photos + ", videos=" + videos + ", id=" + id + "]";
+	}
+	
 }

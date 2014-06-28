@@ -1,6 +1,7 @@
 package com.eswaraj.web.dto;
 
 
+
 /**
  * DTO for a complaint that has been made by a user.
  * @author anuj
@@ -13,6 +14,8 @@ public class ComplaintDto extends BaseDto {
 	
 	private String title;
 	private String description;
+	private Long categoryId;
+	private Long personId;
 	public String getTitle() {
 		return title;
 	}
@@ -25,4 +28,17 @@ public class ComplaintDto extends BaseDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Long getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+	public Long getPersonId() {
+		return personId;
+	}
+	public void setPersonId(Long personId) {
+		this.personId = personId;
+	}
+	
 }
