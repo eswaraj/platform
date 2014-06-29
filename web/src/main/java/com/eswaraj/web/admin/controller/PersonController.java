@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,12 @@ public class PersonController extends BaseController{
 	@ResponseBody
 	public List<PersonDto> searchPersonByName(ModelAndView mv, @PathVariable String searchParam) throws ApplicationException {
 		return personService.searchPersonWithName(searchParam);
+	}
+
+	@RequestMapping(value = "/ajax/person/search/name", method = RequestMethod.GET)
+	@ResponseBody
+	public List<PersonDto> searchPersonByNameRequestParam(ModelAndView mv, @RequestParam("term") String term) throws ApplicationException {
+		return personService.searchPersonWithName(term);
 	}
 
 	@RequestMapping(value = "/ajax/person/get/{personId}", method = RequestMethod.GET)
