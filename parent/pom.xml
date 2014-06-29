@@ -14,7 +14,7 @@
 
 	<properties>
 		<eswaraj.version>1.0.0-SNAPSHOT</eswaraj.version>
-		<org.springframework.version>3.2.4.RELEASE</org.springframework.version>
+		<org.springframework.version>3.2.9.RELEASE</org.springframework.version>
 		<!-- <org.springframework.version>4.0.4.RELEASE</org.springframework.version>--> 
 		<org.hibernate.version>4.2.6.Final</org.hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,6 +25,7 @@
 		<neo4j.version>1.9.7</neo4j.version>
 		<spring.data.neo4j.version>2.3.2.RELEASE</spring.data.neo4j.version>
 		<jmock.version>2.6.0</jmock.version>
+		<junit.version>4.5</junit.version>
 		<org.aspectj.version>1.8.0</org.aspectj.version>
 		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<javax.servlet.version>1.2</javax.servlet.version>
@@ -33,12 +34,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- Core utilities used by other modules. Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -160,16 +155,77 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j</artifactId>
 			<version>${spring.data.neo4j.version}</version>
+			<exclusions>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-expression</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-aspects</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-context</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-beans</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-core</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-tx</artifactId>
+			    </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j-rest</artifactId>
 			<version>${spring.data.neo4j.version}</version>
+			<exclusions>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-expression</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-aspects</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-context</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-beans</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-core</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-aop</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.springframework</groupId>
+			        <artifactId>spring-tx</artifactId>
+			    </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jmock</groupId>
