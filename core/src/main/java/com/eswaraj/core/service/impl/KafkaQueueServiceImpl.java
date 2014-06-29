@@ -28,8 +28,13 @@ public abstract class KafkaQueueServiceImpl<KeyType,ValueType extends Serializab
 			props.put("partitioner.class", partitionerClass);	
 		}
 		props.put("request.required.acks", ack);
-		 
+		System.out.println("metadata.broker.list="+ kafkaBrokers);
+		System.out.println("serializer.class="+ serializerClass);
+		System.out.println("partitioner.class="+ partitionerClass);
+		System.out.println("request.required.acks="+ ack);
+		System.out.println("props="+ props);
 		producerConfig = new ProducerConfig(props);
+		
 		
 		producer = new Producer<KeyType,ValueType>(producerConfig);
 	}
