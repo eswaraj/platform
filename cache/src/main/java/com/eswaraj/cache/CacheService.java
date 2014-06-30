@@ -11,5 +11,7 @@ import java.io.Serializable;
 public interface CacheService <K,V extends Serializable> {
 	V get(K key);
 	
-	boolean set(V value);
+	void set(K key, V value);
+	
+	void delete(K key);
 }

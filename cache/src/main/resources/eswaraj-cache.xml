@@ -18,7 +18,10 @@
 
 	<!-- Jedis ConnectionFactory -->
 	<bean id='jedisConnectionFactory' class='org.springframework.data.redis.connection.jedis.JedisConnectionFactory' 
-	    p:host-name='${eswaraj.cache.redis.hostname}' p:port='${eswaraj.cache.redis.port}' p:use-pool='true' />
+	    p:host-name='${eswaraj.cache.redis.hostname}' 
+	    p:port='${eswaraj.cache.redis.port}' 
+	    p:use-pool='${eswaraj.cache.redis.usePool}' />
+
 
 	<!-- Spring Data Redis definitions -->
 	<bean id='redisTemplate' class='org.springframework.data.redis.core.RedisTemplate' p:connection-factory-ref='jedisConnectionFactory' />

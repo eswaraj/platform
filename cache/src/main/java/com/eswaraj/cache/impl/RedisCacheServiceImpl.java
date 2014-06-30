@@ -1,6 +1,10 @@
 package com.eswaraj.cache.impl;
 
 import java.io.Serializable;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+
 import com.eswaraj.cache.CacheService;
 
 /**
@@ -9,13 +13,29 @@ import com.eswaraj.cache.CacheService;
  * @data Jun 28, 2014
  */
 
-public class RedisCacheServiceImpl<K,V extends Serializable> implements CacheService<K, V> {
+public abstract class RedisCacheServiceImpl<K,V extends Serializable> implements CacheService<K, V> {
+	
+	@Autowired
+	protected RedisTemplate<K, V> template;
 
+	/**
+	 * set operation using key K and value V
+	 */
+	public void set(K key, V value) {
+		template.opsForValue().set(key, value);
+	}
+	
+	/**
+	 * get operation using key as K returns value V
+	 */
 	public V get(K key) {
-		return null;
+		return template.opsForValue().get(key);
 	}
 
-	public boolean set(V value) {
-		return false;
+	/**
+	 * delete operation using key as k
+	 */
+	public void delete(K key) {
+		template.opsForValue().getOperations().delete(key);
 	}
 }
