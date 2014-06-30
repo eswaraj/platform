@@ -4,6 +4,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.eswaraj.web.dto.ComplaintDto;
 
 @ContextConfiguration(locations={"classpath:eswaraj-cache.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
+@Ignore
 public class TestComplaintCache extends BaseCacheTest {
 
 	@Autowired ComplaintCache complaintCache;
