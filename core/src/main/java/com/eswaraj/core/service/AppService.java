@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
@@ -20,6 +21,13 @@ public interface AppService {
 	CategoryDto getCategoryById(long categoryId) throws ApplicationException;
 	
 	List<CategoryDto> getAllRootCategories() throws ApplicationException;
+	
+	/**
+	 * Service will be used from mobile
+	 * @return
+	 * @throws ApplicationException
+	 */
+	List<CategoryWithChildCategoryDto> getAllCategories() throws ApplicationException;
 	
 	List<CategoryDto> getAllChildCategoryOfParentCategory(long parentCategoryId) throws ApplicationException;
 

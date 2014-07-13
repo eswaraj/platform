@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 /**
  * @author ravi
@@ -45,5 +46,10 @@ public class CategoryController extends BaseController{
 		return categoryDto;
 	}
 
+	@RequestMapping(value = "/mobile/categories", method = RequestMethod.GET)
+	public @ResponseBody List<CategoryWithChildCategoryDto> getAllCategories(ModelAndView mv) throws ApplicationException {
+		List<CategoryWithChildCategoryDto> allCategories = appService.getAllCategories();
+		return allCategories;
+	}
 
 }

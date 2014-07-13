@@ -38,6 +38,7 @@ import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
@@ -109,6 +110,12 @@ public class AppServiceImpl extends BaseService implements AppService {
 		Category parentCategory = getObjectIfExistsElseThrowExcetpion(parentCategoryId, "Parent Catgeory", categoryRepository);
 		Collection<Category> rootCategories = categoryRepository.findAllChildCategoryOfParentCategory(parentCategory);
 		return categoryConvertor.convertBeanList(rootCategories);
+	}
+	
+	@Override
+	public List<CategoryWithChildCategoryDto> getAllCategories() throws ApplicationException {
+		Collection<Category> allCategories = categoryRepository.getAllCategories();
+		return null;
 	}
 
 	@Override
@@ -313,4 +320,5 @@ public class AppServiceImpl extends BaseService implements AppService {
 		Collection<Department> departments = departmentRepository.getAllDepartmentsOfCategory(category);
 		return departmentConvertor.convertBeanList(departments);
 	}
+
 }
