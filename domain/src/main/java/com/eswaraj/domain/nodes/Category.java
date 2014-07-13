@@ -18,6 +18,7 @@ public class Category extends BaseNode{
 	private String description;
 	@RelatedTo(type="BELONGS_TO")
     private Category parentCategory;
+	private String imageUrl;
 	private boolean root;
 	    
     public Category() {}
@@ -49,6 +50,12 @@ public class Category extends BaseNode{
 	}
 	public void setRoot(boolean root) {
 		this.root = root;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	@Override
 	public String toString() {
