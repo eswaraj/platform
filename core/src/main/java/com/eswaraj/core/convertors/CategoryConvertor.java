@@ -60,7 +60,7 @@ public class CategoryConvertor extends BaseConvertor<Category, CategoryDto> {
 		return categoryWithChildCategoryDto;
 	}
 	
-	public List<CategoryWithChildCategoryDto> convertCategiryWithChildren(Collection<Category> categories){
+	public List<CategoryWithChildCategoryDto> convertCategoryWithChildren(Collection<Category> categories){
 		List<CategoryWithChildCategoryDto> list = new ArrayList<>();
 		List<CategoryWithChildCategoryDto> tempList = new ArrayList<>();
 		Map<Long, List<CategoryWithChildCategoryDto>> childCategoryMap = new HashMap<>();
