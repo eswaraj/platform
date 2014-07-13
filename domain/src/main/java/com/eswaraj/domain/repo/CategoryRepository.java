@@ -14,6 +14,9 @@ public interface CategoryRepository extends GraphRepository<Category>{
 	@Query("START n=node(*) WHERE HAS(n.root) AND n.__type__ = 'com.eswaraj.domain.nodes.Category' and n.root = true RETURN n")
 	public Collection<Category> getAllRootCategories();
 	
+	@Query("START n=node(*) WHERE HAS(n.root) AND n.__type__ = 'com.eswaraj.domain.nodes.Category' RETURN n")
+	public Collection<Category> getAllCategories();
+
 	@Query("start category=node({0}) match (category)<-[:BELONGS_TO]-(childCategory) return childCategory")
     public Collection<Category> findAllChildCategoryOfParentCategory(Category category);
 

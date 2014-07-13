@@ -17,6 +17,7 @@ public class CategoryDto extends BaseDto{
 	private String description;
     private Long parentCategoryId;
     private boolean root;
+    private String imageUrl;
     
 	public String getName() {
 		return name;
@@ -41,6 +42,12 @@ public class CategoryDto extends BaseDto{
 	}
 	public void setRoot(boolean root) {
 		this.root = root;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	@Override
 	public String toString() {
