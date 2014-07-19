@@ -1,8 +1,9 @@
 package com.eswaraj.tasks.topology;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import storm.kafka.BrokerHosts;
 import storm.kafka.KafkaSpout;
@@ -10,15 +11,13 @@ import storm.kafka.SpoutConfig;
 import storm.kafka.StringScheme;
 import storm.kafka.ZkHosts;
 import backtype.storm.Config;
-import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.InvalidTopologyException;
+import backtype.storm.generated.StormTopology;
 import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
 
-import com.eswaraj.core.service.impl.ComplaintTopicManager;
-import com.eswaraj.tasks.bolt.ComplaintBolt;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.tasks.bolt.LoggerBolt;
+import com.eswaraj.tasks.bolt.SavedComplaintCounterBolt;
+import com.eswaraj.tasks.util.TopologyRunner;
 
 /**
  * @author anuj
@@ -26,99 +25,56 @@ import com.eswaraj.web.dto.ComplaintDto;
  */
 public class ComplaintTopology {
 
-	final static int MAX_ALLOWED_TO_RUN_MILLISECS = 1000 * 90 /* seconds */;
 
-	CountDownLatch topologyStartedLatch = new CountDownLatch(1);
+	public static final Logger LOG = LoggerFactory.getLogger(ComplaintTopology.class);
 
-	private static int STORM_KAFKA_FROM_READ_FROM_START = -2;
 	private static final String COMPLAINT_TOPIC_NAME = "savedComplaint";
-
-	private static final int SECOND = 1000;
-	private static List<ComplaintDto> complaints = new ArrayList<ComplaintDto>();
-
-	volatile static boolean finishedCollecting = false;
-
-	private ComplaintTopicManager complaintTopicManager = new ComplaintTopicManager("", COMPLAINT_TOPIC_NAME);
-	
 	private static final String ZK_HOST = "192.168.1.120";
-	private static final String NIMBUS_HOST = "192.168.1.120";
 
-	public static void recordRecievedMessage(ComplaintDto complaint) {
-		synchronized (ComplaintTopology.class) {
-			complaints.add(complaint);
-		}
+	private final BrokerHosts brokerHosts;
+
+	public ComplaintTopology(String kafkaZookeeper) {
+		brokerHosts = new ZkHosts(kafkaZookeeper);
 	}
 
-
-	public static void main(String[] args) {
-		ComplaintTopology topology = new ComplaintTopology();
-		topology.complaintTest();
-	}
-
-	private void complaintTest() {
-		ComplaintTestUtils.checkZkServer(ZK_HOST, 2181, 5 * SECOND);
-		try {
-			setupComplaintTestTopology(ZK_HOST);
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			ComplaintTestUtils.countDown(topologyStartedLatch);
-			awaitResults();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (AlreadyAliveException e1) {
-			e1.printStackTrace();
-		} catch (InvalidTopologyException e1) {
-			e1.printStackTrace();
-		}
-		verifyResults();
-	}
-
-
-
-	private void awaitResults() {
-		while (!finishedCollecting) {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println("after await");
-	}
-
-	private void verifyResults() {
-		synchronized (ComplaintTopology.class) {
-			for (ComplaintDto complaint : complaints) {
-				System.out.println("Complaint Saved: " + complaint.getTitle());
-			}
-		}
-	}
-
-	private void setupComplaintTestTopology(String zkHost) throws InterruptedException, AlreadyAliveException, InvalidTopologyException {
-		BrokerHosts brokerHosts = new ZkHosts(zkHost);
-		
-		TopologyBuilder builder = new TopologyBuilder();
+	public StormTopology buildTopology() {
 		SpoutConfig kafkaConfig = new SpoutConfig(brokerHosts, COMPLAINT_TOPIC_NAME, "", "complaint-test-storm");
 		kafkaConfig.scheme = new SchemeAsMultiScheme(new StringScheme());
-		
+		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout("kafka-spout",new KafkaSpout(kafkaConfig));
-		builder.setBolt("complaint-bolt", new ComplaintBolt()).shuffleGrouping("kafka-spout");
+		builder.setBolt("complaint-bolt", new LoggerBolt()).shuffleGrouping("kafka-spout");
+		builder.setBolt("complaint-counter-bolt", new SavedComplaintCounterBolt()).shuffleGrouping("kafka-spout");
+		return builder.createTopology();
+	}
 
-		//Configuration
+	public static void main(String[] args) throws Exception {
+		ComplaintTopology complaintTopology = new ComplaintTopology(ZK_HOST);
 		Config config = new Config();
-		config.setDebug(true);
-		config.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
-		config.put(Config.NIMBUS_HOST, NIMBUS_HOST);
-		
-		StormSubmitter.submitTopology("complaint-test", config, builder.createTopology());
+		config.put(Config.TOPOLOGY_TRIDENT_BATCH_EMIT_INTERVAL_MILLIS, 2000);
+		StormTopology stormTopology = complaintTopology.buildTopology();
+		if (args != null && args.length > 1) {
+			LOG.info("Submitting topology to remote cluster");
+			String name = args[1];
+			String nimbusHostIp = args[2];
+			int nimbusHostPort = Integer.valueOf(args[3]);
+			int stormZkPort = Integer.valueOf(args[4]);
+			int numWorkers = Integer.valueOf(args[5]);
+			int numParallel = Integer.valueOf(args[6]);
+			
+			config.setNumWorkers(numWorkers);
+			config.setMaxTaskParallelism(numParallel);
+			config.put(Config.NIMBUS_HOST, nimbusHostIp);
+			config.put(Config.NIMBUS_THRIFT_PORT, nimbusHostPort);
+			config.put(Config.STORM_ZOOKEEPER_PORT, stormZkPort);
+			config.put(Config.STORM_ZOOKEEPER_SERVERS, Arrays.asList(nimbusHostIp));
+			
+			TopologyRunner.runTopologyRemotely(stormTopology, name, config);
+		} else {
+			LOG.info("Submitting topology to local cluster");
+			config.setNumWorkers(2);
+			config.setMaxTaskParallelism(2);
+			
+			TopologyRunner.runTopologyLocally(stormTopology, "complaint-test-topology", config);
+		}
 	}
 }
