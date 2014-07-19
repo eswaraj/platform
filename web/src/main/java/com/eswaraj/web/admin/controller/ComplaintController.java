@@ -1,10 +1,11 @@
-package com.eswaraj.web.user.dashboard.controller;
+package com.eswaraj.web.admin.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,11 @@ public class ComplaintController {
 			return complaintService.getPagedUserComplaints(userId, start, end);	
 		}
 		
+	}
+	
+	@RequestMapping(value = "/mobile/complaint", method = RequestMethod.POST)
+	public @ResponseBody ComplaintDto saveComplaint(@RequestBody ComplaintDto complaintDto) throws ApplicationException {
+		return complaintService.saveComplaint(complaintDto);
 	}
 	/*
 	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)
