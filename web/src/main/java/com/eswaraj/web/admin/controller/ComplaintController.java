@@ -1,6 +1,11 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +45,34 @@ public class ComplaintController {
 	@RequestMapping(value = "/mobile/complaint", method = RequestMethod.POST)
 	public @ResponseBody ComplaintDto saveComplaint(@RequestBody ComplaintDto complaintDto) throws ApplicationException {
 		return complaintService.saveComplaint(complaintDto);
+	}
+	
+	@RequestMapping(value = "/mobile/complaints", method = RequestMethod.POST)
+	public @ResponseBody String saveComplaint(HttpServletRequest httpServletRequest) throws ApplicationException {
+		Enumeration<String> params = httpServletRequest.getParameterNames();
+		System.out.println("*** ALL PARAMETERS*****");
+		while(params.hasMoreElements()){
+			System.out.println(params.nextElement());
+		}
+		{
+			Enumeration<String> headers = httpServletRequest.getHeaderNames();
+			System.out.println("*** ALL HEADERS*****");
+			while(headers.hasMoreElements()){
+				System.out.println(headers.nextElement());
+			}
+			
+		}
+		try{
+			Collection<Part> parts = httpServletRequest.getParts();
+			System.out.println("*** ALL Parts*****");
+			for(Part onePart : parts){
+				System.out.println(onePart.getName() +" , "+onePart.getSize() +" , "+ onePart.getContentType() +" , "+onePart.getSubmittedFileName() +" , "+onePart.getInputStream());
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+
+		return "Done";
 	}
 	/*
 	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)
