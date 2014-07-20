@@ -40,5 +40,11 @@ public class ComplaintDto extends BaseDto {
 	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
+	@Override
+	public String toString() {
+		return "ComplaintDto [title=" + title + ", description=" + description
+				+ ", categoryId=" + categoryId + ", personId=" + personId
+				+ ", id=" + id + "]";
+	}
 	
 }

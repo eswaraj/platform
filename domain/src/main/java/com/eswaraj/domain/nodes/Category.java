@@ -20,6 +20,8 @@ public class Category extends BaseNode{
     private Category parentCategory;
 	private String imageUrl;
 	private boolean root;
+	private String headerImageUrl;
+	private String videoUrl;
 	    
     public Category() {}
     public Category(String name) {
@@ -57,9 +59,25 @@ public class Category extends BaseNode{
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	public String getHeaderImageUrl() {
+		return headerImageUrl;
+	}
+	public void setHeaderImageUrl(String headerImageUrl) {
+		this.headerImageUrl = headerImageUrl;
+	}
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
 	@Override
 	public String toString() {
-		return "Category [name=" + name + ", description=" + description + ", parentCategory=" + parentCategory + ", root=" + root + ", id=" + id + "]";
+		return "Category [name=" + name + ", description=" + description
+				+ ", parentCategory=" + parentCategory + ", imageUrl="
+				+ imageUrl + ", root=" + root + ", headerImageUrl="
+				+ headerImageUrl + ", videoUrl=" + videoUrl + ", id=" + id
+				+ "]";
 	}
 	
 }

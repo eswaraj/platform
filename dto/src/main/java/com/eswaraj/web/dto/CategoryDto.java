@@ -18,7 +18,9 @@ public class CategoryDto extends BaseDto{
     private Long parentCategoryId;
     private boolean root;
     private String imageUrl;
-    
+	private String headerImageUrl;
+	private String videoUrl;
+
 	public String getName() {
 		return name;
 	}
@@ -49,9 +51,25 @@ public class CategoryDto extends BaseDto{
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	public String getHeaderImageUrl() {
+		return headerImageUrl;
+	}
+	public void setHeaderImageUrl(String headerImageUrl) {
+		this.headerImageUrl = headerImageUrl;
+	}
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
 	@Override
 	public String toString() {
-		return "CategoryDto [name=" + name + ", description=" + description + ", parentCategoryId=" + parentCategoryId + ", root=" + root + ", id=" + id + "]";
+		return "CategoryDto [name=" + name + ", description=" + description
+				+ ", parentCategoryId=" + parentCategoryId + ", root=" + root
+				+ ", imageUrl=" + imageUrl + ", headerImageUrl="
+				+ headerImageUrl + ", videoUrl=" + videoUrl + ", id=" + id
+				+ "]";
 	}
 	    
     

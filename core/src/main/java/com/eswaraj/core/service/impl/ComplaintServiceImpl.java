@@ -47,6 +47,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
 	@Override
 	public ComplaintDto saveComplaint(ComplaintDto complaintDto) throws ApplicationException {
+		System.out.println("Saving Complaint "+ complaintDto);
 		Complaint complaint = complaintConvertor.convert(complaintDto);
 		complaint = complaintRepository.save(complaint);
 		return complaintConvertor.convertBean(complaint);
