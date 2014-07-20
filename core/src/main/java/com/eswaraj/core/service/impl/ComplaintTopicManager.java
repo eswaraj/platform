@@ -22,7 +22,7 @@ public class ComplaintTopicManager extends KafkaQueueServiceImpl<String, Complai
 	private String complaintTopic;
 	
 	@Autowired
-	public ComplaintTopicManager(@Value("${kafka_brokers}") String kafkaBrokers, @Value("${kafka_topic_complaint}") String complaintTopic){
+	public ComplaintTopicManager(@Value("${kafka_brokers}") String kafkaBrokers, @Value("${kafka_topic_complaint:savedComplaint}") String complaintTopic){
 		super(kafkaBrokers);
 		this.complaintTopic = complaintTopic;
 	}
