@@ -55,8 +55,6 @@
 			<beans:bean class="com.eswaraj.web.controller.MaskFormatAnnotationFormatterFactory" />
 		</beans:property>
 	</beans:bean>
-	<!-- Only needed because we require fileupload in the org.springframework.samples.mvc.fileupload package -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<task:annotation-driven />
 	<!-- Imports user-defined @Controller beans that process client requests -->
