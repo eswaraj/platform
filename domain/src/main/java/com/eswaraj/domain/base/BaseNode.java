@@ -12,6 +12,7 @@ public class BaseNode {
 	protected Date dateModified;
 	protected Long creatorId;
 	protected Long modifierId;
+	protected String externalId;
 	
 	public Long getId() {
 		return id;
@@ -43,10 +44,18 @@ public class BaseNode {
 	public void setModifierId(Long modifierId) {
 		this.modifierId = modifierId;
 	}
+	public String getExternalId() {
+		return externalId;
+	}
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
 	@Override
 	public String toString() {
-		return "BaseNode [id=" + id + ", dateCreated=" + dateCreated + ", dateModified=" + dateModified + ", creatorId=" + creatorId + ", modifierId="
-				+ modifierId + "]";
+		return "BaseNode [id=" + id + ", dateCreated=" + dateCreated
+				+ ", dateModified=" + dateModified + ", creatorId=" + creatorId
+				+ ", modifierId=" + modifierId + ", externalId=" + externalId
+				+ "]";
 	}
 	@Override
 	public int hashCode() {

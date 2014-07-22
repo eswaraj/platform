@@ -11,8 +11,8 @@ import com.eswaraj.core.service.FileService;
 public class NetworkFileServiceImpl implements FileService {
 
 	@Override
-	public void saveFile(String fileDir, String fileName, InputStream inputStream) throws ApplicationException {
-
+	public String saveFile(String fileDir, String fileName, InputStream inputStream) throws ApplicationException {
+		return "Not implemented yet";
 	}
 
 }

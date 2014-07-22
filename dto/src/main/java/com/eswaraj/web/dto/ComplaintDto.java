@@ -1,5 +1,7 @@
 package com.eswaraj.web.dto;
 
+import java.util.List;
+
 
 
 /**
@@ -16,6 +18,10 @@ public class ComplaintDto extends BaseDto {
 	private String description;
 	private Long categoryId;
 	private Long personId;
+	private double lattitude;
+	private double longitude;
+	private List<PhotoDto> images;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -40,10 +46,29 @@ public class ComplaintDto extends BaseDto {
 	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
+	public double getLattitude() {
+		return lattitude;
+	}
+	public void setLattitude(double lattitude) {
+		this.lattitude = lattitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	public List<PhotoDto> getImages() {
+		return images;
+	}
+	public void setImages(List<PhotoDto> images) {
+		this.images = images;
+	}
 	@Override
 	public String toString() {
 		return "ComplaintDto [title=" + title + ", description=" + description
 				+ ", categoryId=" + categoryId + ", personId=" + personId
+				+ ", lattitude=" + lattitude + ", longitude=" + longitude
 				+ ", id=" + id + "]";
 	}
 	

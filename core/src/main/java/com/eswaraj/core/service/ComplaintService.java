@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.PhotoDto;
+import com.eswaraj.web.dto.SaveComplaintRequestDto;
 
 /**
  * Complaint service for complaint related calls
@@ -19,5 +21,7 @@ public interface ComplaintService {
 	
 	ComplaintDto getComplaintById(Long complaintId) throws ApplicationException;
 	
-	ComplaintDto saveComplaint(ComplaintDto complaintDto) throws ApplicationException;
+	ComplaintDto saveComplaint(SaveComplaintRequestDto complaintDto) throws ApplicationException;
+	
+	PhotoDto addPhotoToComplaint(Long complaintId, PhotoDto photoDto) throws ApplicationException;
 }

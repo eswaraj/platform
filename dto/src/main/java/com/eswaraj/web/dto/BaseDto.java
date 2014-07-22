@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class BaseDto implements Serializable {
 
 	protected Long id;
+	protected String externalId;
 
 	public Long getId() {
 		return id;
@@ -12,6 +13,14 @@ public class BaseDto implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getExternalId() {
+		return externalId;
+	}
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
 	}
 
 	@Override

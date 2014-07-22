@@ -12,7 +12,7 @@ import com.eswaraj.core.service.FileService;
 public class LocalFileServiceImpl implements FileService {
 
 	@Override
-	public void saveFile(String fileDir, String fileName, InputStream inputStream) throws ApplicationException {
+	public String saveFile(String fileDir, String fileName, InputStream inputStream) throws ApplicationException {
 		Path path = Paths.get(fileDir, fileName);
 		try {
 			if(!fileDir.endsWith("/")){
@@ -22,6 +22,7 @@ public class LocalFileServiceImpl implements FileService {
 		} catch (IOException e) {
 			throw new ApplicationException("Unable to copy file to "+path.toString(),e);
 		}
+		return "";
 	}
 
 }
