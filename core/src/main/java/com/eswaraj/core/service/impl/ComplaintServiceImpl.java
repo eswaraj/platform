@@ -160,7 +160,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 
 	@Override
-	public List<ComplaintDto> getPagedUserComplaints(String deviceId,
+	public List<ComplaintDto> getPagedDeviceComplaints(String deviceId,
 			int start, int end) throws ApplicationException {
 		Person person = getPersonByDeviceId(deviceId, "Android");
 		List<Complaint> personComplaints = complaintRepository.getPagedComplaintsLodgedByPerson(person, start, end); 

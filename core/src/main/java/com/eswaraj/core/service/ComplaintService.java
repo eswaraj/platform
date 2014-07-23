@@ -19,7 +19,7 @@ public interface ComplaintService {
 	
 	List<ComplaintDto> getAllUserComplaints(Long personId) throws ApplicationException;
 	
-	List<ComplaintDto> getPagedUserComplaints(String deviceId, int start, int end) throws ApplicationException;
+	List<ComplaintDto> getPagedDeviceComplaints(String deviceId, int start, int end) throws ApplicationException;
 	
 	List<ComplaintDto> getAllDeviceComplaints(String deviceId) throws ApplicationException;
 
