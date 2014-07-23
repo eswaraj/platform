@@ -56,8 +56,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	private UserRepository userRepository;
 
 	@Override
-	public List<ComplaintDto> getPagedUserComplaints(Long personId, int start, int end) throws ApplicationException{
-		Person person = getObjectIfExistsElseThrowExcetpion(personId, "Person", personRepository);
+	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
+		User user = getObjectIfExistsElseThrowExcetpion(userId, "User", userRepository);
+		Person person = getObjectIfExistsElseThrowExcetpion(user.getPerson().getId(), "Person", personRepository);
 		List<Complaint> personComplaints = complaintRepository.getPagedComplaintsLodgedByPerson(person, start, end); 
 		return complaintConvertor.convertBeanList(personComplaints);
 	}
@@ -91,32 +92,35 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 			}
 		}
 		if(!StringUtils.isEmpty(saveComplaintRequestDto.getDeviceId())){
-			Device device = getDevice(saveComplaintRequestDto.getDeviceId());
-			if(device == null){
-				//create Person , User and Device
-				Person person = new Person();
-				person.setName("anonymous");
-				person.setExternalId(UUID.randomUUID().toString());
-				person = personRepository.save(person);
-				
-				
-				User user = new User();
-				user.setExternalId(UUID.randomUUID().toString());
-				user.setPerson(person);
-				user = userRepository.save(user);
-				
-				device = new Device();
-				device.setDeviceId(saveComplaintRequestDto.getDeviceId());
-				device.setDeviceType(DeviceType.valueOf(saveComplaintRequestDto.getDeviceTypeRef()));
-				device.setUser(user);
-				return person;
-			}else{
-				User user = userRepository.findOne(device.getUser().getId());
-				Person person = personRepository.findOne(user.getPerson().getId());
-				return person;
-			}
+			return getPersonByDeviceId(saveComplaintRequestDto.getDeviceId(), saveComplaintRequestDto.getDeviceTypeRef());
 		}
 		throw new ApplicationException("Unbale to find/create a person");
+	}
+	private Person getPersonByDeviceId(String deviceId, String deviceTypeRef){
+		Device device = getDevice(deviceId);
+		if(device == null){
+			//create Person , User and Device
+			Person person = new Person();
+			person.setName("anonymous");
+			person.setExternalId(UUID.randomUUID().toString());
+			person = personRepository.save(person);
+			
+			
+			User user = new User();
+			user.setExternalId(UUID.randomUUID().toString());
+			user.setPerson(person);
+			user = userRepository.save(user);
+			
+			device = new Device();
+			device.setDeviceId(deviceId);
+			device.setDeviceType(DeviceType.valueOf(deviceTypeRef));
+			device.setUser(user);
+			return person;
+		}else{
+			User user = userRepository.findOne(device.getUser().getId());
+			Person person = personRepository.findOne(user.getPerson().getId());
+			return person;
+		}
 	}
 	private Device getDevice(String deviceId){
 		try{
@@ -136,8 +140,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 
 	@Override
-	public List<ComplaintDto> getAllUserComplaints(Long personId) throws ApplicationException {
-		Person person = getObjectIfExistsElseThrowExcetpion(personId, "Person", personRepository);
+	public List<ComplaintDto> getAllUserComplaints(Long userId) throws ApplicationException {
+		User user = getObjectIfExistsElseThrowExcetpion(userId, "User", userRepository);
+		Person person = getObjectIfExistsElseThrowExcetpion(user.getPerson().getId(), "Person", personRepository);
 		List<Complaint> personComplaints = complaintRepository.getAllComplaintsLodgedByPerson(person); 
 		return complaintConvertor.convertBeanList(personComplaints);
 	}
@@ -152,5 +157,21 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 		}
 		complaint.getPhotos().add(photo);
 		return photoConvertor.convertBean(photo);
+	}
+
+	@Override
+	public List<ComplaintDto> getPagedUserComplaints(String deviceId,
+			int start, int end) throws ApplicationException {
+		Person person = getPersonByDeviceId(deviceId, "Android");
+		List<Complaint> personComplaints = complaintRepository.getPagedComplaintsLodgedByPerson(person, start, end); 
+		return complaintConvertor.convertBeanList(personComplaints);
+	}
+
+	@Override
+	public List<ComplaintDto> getAllDeviceComplaints(String deviceId)
+			throws ApplicationException {
+		Person person = getPersonByDeviceId(deviceId, "Android");
+		List<Complaint> personComplaints = complaintRepository.getAllComplaintsLodgedByPerson(person); 
+		return complaintConvertor.convertBeanList(personComplaints);
 	}
 }
