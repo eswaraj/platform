@@ -32,7 +32,7 @@
 	    </bean>    
 	</beans>
 	<beans profile="prod" >
-	    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
+	    <bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
 	    </bean>    
 	</beans>
 	<beans profile="dev" >
