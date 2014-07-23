@@ -115,6 +115,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 			device.setDeviceId(deviceId);
 			device.setDeviceType(DeviceType.valueOf(deviceTypeRef));
 			device.setUser(user);
+			device = deviceRepository.save(device);
 			return person;
 		}else{
 			User user = userRepository.findOne(device.getUser().getId());
