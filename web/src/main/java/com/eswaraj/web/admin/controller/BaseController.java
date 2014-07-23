@@ -33,4 +33,12 @@ public class BaseController {
 		 errorMessageDto.setMessage(validationException.getMessage());
 	    return errorMessageDto;
 	  }
+	 @ExceptionHandler(Exception.class)
+	 @ResponseBody
+	  public ErrorMessageDto AnyOtherError(Exception exception) {
+		 logger.error("Internal Exception : ", exception);
+		 ErrorMessageDto errorMessageDto = new ErrorMessageDto();
+		 errorMessageDto.setMessage(exception.getMessage());
+	    return errorMessageDto;
+	  }
 }

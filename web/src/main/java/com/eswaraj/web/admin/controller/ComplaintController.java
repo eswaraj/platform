@@ -58,6 +58,7 @@ public class ComplaintController extends BaseController{
 	
 	@RequestMapping(value = "/mobile/complaint", method = RequestMethod.POST)
 	public @ResponseBody ComplaintDto saveComplaint(HttpServletRequest httpServletRequest) throws ApplicationException, IOException, ServletException {
+		
 		printInfo(httpServletRequest);
 		Part saveComplaintRequestPart = httpServletRequest.getPart("SaveComplaintRequest");
 		StringWriter writer = new StringWriter();
