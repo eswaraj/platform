@@ -41,4 +41,11 @@ public class SaveComplaintRequestDto extends ComplaintDto {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		return "SaveComplaintRequestDto [deviceId=" + deviceId + ", userId="
+				+ userId + ", deviceTypeRef=" + deviceTypeRef + ", name="
+				+ name + ", toString()=" + super.toString() + "]";
+	}
+	
 }

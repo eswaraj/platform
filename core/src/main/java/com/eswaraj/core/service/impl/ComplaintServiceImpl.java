@@ -80,6 +80,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 	
 	private Person getPerson(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException{
+		System.out.println("Get/Create Person");
 		if(!StringUtils.isEmpty(saveComplaintRequestDto.getUserId())){
 			User user = userRepository.getUserByUserExternalId(saveComplaintRequestDto.getUserId());
 			if(user == null){
@@ -119,10 +120,16 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 	private Device getDevice(String deviceId){
 		try{
+			System.out.println("Searching Device For "+ deviceId);
 			Device device = deviceRepository.getDeviceByDeviceId(deviceId);
 			return device;
 		}catch(MissingIndexException mie){
+			System.out.println("Exception occured mie");
 			mie.printStackTrace();
+			return null;
+		}catch(Exception ex){
+			System.out.println("Exception occured ex");
+			ex.printStackTrace();
 			return null;
 		}
 		
