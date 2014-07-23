@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
+import org.neo4j.cypher.MissingIndexException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,7 +90,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 			}
 		}
 		if(!StringUtils.isEmpty(saveComplaintRequestDto.getDeviceId())){
-			Device device = deviceRepository.getDeviceByDeviceId(saveComplaintRequestDto.getDeviceId());
+			Device device = getDevice(saveComplaintRequestDto.getDeviceId());
 			if(device == null){
 				//create Person , User and Device
 				Person person = new Person();
@@ -115,6 +116,16 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 			}
 		}
 		throw new ApplicationException("Unbale to find/create a person");
+	}
+	private Device getDevice(String deviceId){
+		try{
+			Device device = deviceRepository.getDeviceByDeviceId(deviceId);
+			return device;
+		}catch(MissingIndexException mie){
+			mie.printStackTrace();
+			return null;
+		}
+		
 	}
 
 	@Override
