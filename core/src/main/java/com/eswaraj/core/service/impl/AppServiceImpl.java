@@ -114,7 +114,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 	
 	@Override
 	public List<CategoryWithChildCategoryDto> getAllCategories() throws ApplicationException {
-		Collection<Category> allCategories = categoryRepository.getAllCategories();
+		EndResult<Category> allCategories = categoryRepository.findAll();
 		return categoryConvertor.convertCategoryWithChildren(allCategories);
 	}
 
