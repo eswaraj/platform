@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ public class CategoryConvertor extends BaseConvertor<Category, CategoryDto> {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	private Logger Logger = LoggerFactory.getLogger(this.getClass());
 	
 
 	@Override
@@ -70,6 +74,7 @@ public class CategoryConvertor extends BaseConvertor<Category, CategoryDto> {
 		
 		for(Category oneCategory : categories){
 			oneCategoryWithChildCategoryDto = convertBeanWithChild(oneCategory);
+			System.out.println("oneCategoryWithChildCategoryDto="+oneCategoryWithChildCategoryDto);
 			tempList.add(oneCategoryWithChildCategoryDto);
 			if(oneCategoryWithChildCategoryDto.isRoot()){
 				//If its root add to main list too
@@ -89,6 +94,10 @@ public class CategoryConvertor extends BaseConvertor<Category, CategoryDto> {
 		for(CategoryWithChildCategoryDto oneCategoryWithChildCategory : tempList){
 			childCategoryList = childCategoryMap.get(oneCategoryWithChildCategory.getId());
 			oneCategoryWithChildCategory.setChildCategories(childCategoryList);
+		}
+		System.out.println("*****Final List*****");
+		for(CategoryWithChildCategoryDto oneCategoryWithChildCategory : list){
+			System.out.println("Root category="+oneCategoryWithChildCategory);
 		}
 		return list;
 	}
