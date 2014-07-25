@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	
+	<context:component-scan base-package="com.eswaraj.tasks.topology" />
+	
+	<import resource="classpath:eswaraj-core.xml" />
+	<bean class="com.eswaraj.tasks.topology.SpringEswarajTopology">
+	    <property name="name">Eswaraj</property>
+	    <property name="nimbusHostIp">192.168.0.2</property>
+	    <property name="nimbusHostPort">3000</property>
+	    <property name="stormZkPort">1000</property>
+	    <property name="numWorkers">2</property>
+	    <property name="numParallel">2</property>
+	    <property name="kafkaZookeeper">192.168.0.2</property>
+	</bean>
+</beans>

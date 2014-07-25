@@ -2,7 +2,6 @@ package com.eswaraj.tasks.producer;
 
 import java.io.IOException;
 
-import kafka.message.Message;
 import kafka.serializer.Decoder;
 import kafka.serializer.Encoder;
 import kafka.utils.VerifiableProperties;
