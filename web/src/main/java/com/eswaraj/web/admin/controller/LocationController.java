@@ -2,6 +2,11 @@ package com.eswaraj.web.admin.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
@@ -86,4 +95,78 @@ public class LocationController extends BaseController{
 		locationDto = locationService.saveLocation(locationDto);
 		return locationDto;
 	}
+	
+	
+	@RequestMapping(value = "/ajax/location/{locationId}/upload", method = RequestMethod.GET)
+	public @ResponseBody String uploadLocationBoundaryFile(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
+		try{
+			System.out.println("locationId="+locationId);
+			String imageHttpUrl = "";
+			Part uploadedImagePart = httpServletRequest.getPart("file");
+			if(uploadedImagePart != null){
+				//String directory = awsDirectoryForComplaintPhoto+"/" + complaintDto.getId();
+				//String fileName = getFileName(uploadedImagePart.getSubmittedFileName());
+				//imageHttpUrl = fileService.saveFile(directory, fileName, uploadedImagePart.getInputStream());
+				//PhotoDto photoDto = new PhotoDto();
+				//photoDto.setOrgUrl(imageHttpUrl);
+				//complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(uploadedImagePart.getInputStream());
+				doc.getDocumentElement().normalize();
+				System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				
+				NodeList nList = doc.getElementsByTagName("SimpleData");
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+					 
+					Node nNode = nList.item(temp);
+			 
+					System.out.println("\nCurrent Element :" + nNode.getNodeName());
+			 
+					System.out.println("nNode.getNodeType : " + nNode.getNodeType());
+					System.out.println("nNode.getAttributes : " + nNode.getAttributes());
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+			 
+						Element eElement = (Element) nNode;
+						System.out.println("Name : " + eElement.getAttribute("name"));
+						System.out.println("NodeValue : " + eElement.getNodeValue());
+						System.out.println("getTextContent : " + eElement.getTextContent());
+						System.out.println("getAttributes : " + eElement.getAttributes());
+			 
+					}
+				}
+				
+				System.out.println("\n*********Coordinates********");
+				NodeList coordinateList = doc.getElementsByTagName("coordinates");
+				for (int temp = 0; temp < coordinateList.getLength(); temp++) {
+					 
+					Node nNode = coordinateList.item(temp);
+			 
+					System.out.println("\nCurrent Element :" + nNode.getNodeName());
+					System.out.println("nNode.getAttributes : " + nNode.getAttributes());
+			 
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+			 
+						Element eElement = (Element) nNode;
+			 
+						System.out.println("NodeValue : " + eElement.getNodeValue());
+						System.out.println("getTextContent : " + eElement.getTextContent());
+						System.out.println("getAttributes : " + eElement.getAttributes());
+			 
+					}
+				}
+				
+			}
+		}catch(Exception ex){
+			throw new ApplicationException(ex);
+		}
+		
+		return "All Good";
+		
+	}
+	/* TODO This function nee to move into strom cluster */
+	private void compteAndSaveInRedis(){
+		
+	}
+
 }
