@@ -1,6 +1,7 @@
 package com.eswaraj.web.admin.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,6 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
@@ -111,6 +111,14 @@ public class LocationController extends BaseController{
 	public @ResponseBody String uploadLocationBoundaryFile(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
 		try{
 			System.out.println("locationId="+locationId);
+            Collection<Part> parts = httpServletRequest.getParts();
+            for (Part onePart : parts) {
+                System.out.println("getContentType = " + onePart.getContentType());
+                System.out.println("getName = " + onePart.getName());
+                System.out.println("getSize = " + onePart.getSize());
+                System.out.println("getSubmittedFileName = " + onePart.getSubmittedFileName());
+                System.out.println("getHeaderNames = " + onePart.getHeaderNames());
+            }
 			Part uploadedImagePart = httpServletRequest.getPart("file");
 			if(uploadedImagePart == null){
 				throw new ApplicationException("Please choose a file");
