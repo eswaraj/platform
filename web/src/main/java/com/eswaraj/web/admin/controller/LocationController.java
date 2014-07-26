@@ -1,5 +1,6 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +26,9 @@ import org.w3c.dom.NodeList;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
+import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
@@ -37,6 +41,12 @@ public class LocationController extends BaseController{
 	
 	@Autowired
 	private CustomService customService;
+	
+	@Autowired
+	private FileService fileService;
+	
+	@Autowired
+	private RedisTemplate<String, List<Long>> redisTemplate;
 	
 	@RequestMapping(value = "/locations", method = RequestMethod.GET)
 	public ModelAndView showIndexsPages(ModelAndView mv) {
@@ -97,66 +107,65 @@ public class LocationController extends BaseController{
 	}
 	
 	
-	@RequestMapping(value = "/ajax/location/{locationId}/upload", method = RequestMethod.GET)
+    @RequestMapping(value = "/ajax/location/{locationId}/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadLocationBoundaryFile(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
 		try{
 			System.out.println("locationId="+locationId);
-			String imageHttpUrl = "";
 			Part uploadedImagePart = httpServletRequest.getPart("file");
-			if(uploadedImagePart != null){
-				//String directory = awsDirectoryForComplaintPhoto+"/" + complaintDto.getId();
-				//String fileName = getFileName(uploadedImagePart.getSubmittedFileName());
-				//imageHttpUrl = fileService.saveFile(directory, fileName, uploadedImagePart.getInputStream());
-				//PhotoDto photoDto = new PhotoDto();
-				//photoDto.setOrgUrl(imageHttpUrl);
-				//complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(uploadedImagePart.getInputStream());
-				doc.getDocumentElement().normalize();
-				System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-				
-				NodeList nList = doc.getElementsByTagName("SimpleData");
-				for (int temp = 0; temp < nList.getLength(); temp++) {
-					 
-					Node nNode = nList.item(temp);
-			 
-					System.out.println("\nCurrent Element :" + nNode.getNodeName());
-			 
-					System.out.println("nNode.getNodeType : " + nNode.getNodeType());
-					System.out.println("nNode.getAttributes : " + nNode.getAttributes());
-					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-			 
-						Element eElement = (Element) nNode;
-						System.out.println("Name : " + eElement.getAttribute("name"));
-						System.out.println("NodeValue : " + eElement.getNodeValue());
-						System.out.println("getTextContent : " + eElement.getTextContent());
-						System.out.println("getAttributes : " + eElement.getAttributes());
-			 
-					}
-				}
-				
-				System.out.println("\n*********Coordinates********");
-				NodeList coordinateList = doc.getElementsByTagName("coordinates");
-				for (int temp = 0; temp < coordinateList.getLength(); temp++) {
-					 
-					Node nNode = coordinateList.item(temp);
-			 
-					System.out.println("\nCurrent Element :" + nNode.getNodeName());
-					System.out.println("nNode.getAttributes : " + nNode.getAttributes());
-			 
-					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-			 
-						Element eElement = (Element) nNode;
-			 
-						System.out.println("NodeValue : " + eElement.getNodeValue());
-						System.out.println("getTextContent : " + eElement.getTextContent());
-						System.out.println("getAttributes : " + eElement.getAttributes());
-			 
-					}
-				}
-				
+			if(uploadedImagePart == null){
+				throw new ApplicationException("Please choose a file");
 			}
+			LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+			//TODO send the file to Kafka
+			
+			//photoDto.setOrgUrl(imageHttpUrl);
+			//complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(uploadedImagePart.getInputStream());
+			doc.getDocumentElement().normalize();
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			
+			NodeList nList = doc.getElementsByTagName("SimpleData");
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				 
+				Node nNode = nList.item(temp);
+		 
+				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+		 
+				System.out.println("nNode.getNodeType : " + nNode.getNodeType());
+				System.out.println("nNode.getAttributes : " + nNode.getAttributes());
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+		 
+					Element eElement = (Element) nNode;
+					System.out.println("Name : " + eElement.getAttribute("name"));
+					System.out.println("NodeValue : " + eElement.getNodeValue());
+					System.out.println("getTextContent : " + eElement.getTextContent());
+					System.out.println("getAttributes : " + eElement.getAttributes());
+		 
+				}
+			}
+			
+			System.out.println("\n*********Coordinates********");
+			NodeList coordinateList = doc.getElementsByTagName("coordinates");
+			for (int temp = 0; temp < coordinateList.getLength(); temp++) {
+				 
+				Node nNode = coordinateList.item(temp);
+		 
+				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				System.out.println("nNode.getAttributes : " + nNode.getAttributes());
+		 
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+		 
+					Element eElement = (Element) nNode;
+		 
+					System.out.println("NodeValue : " + eElement.getNodeValue());
+					System.out.println("getTextContent : " + eElement.getTextContent());
+					System.out.println("getAttributes : " + eElement.getAttributes());
+		 
+				}
+			}
+				
 		}catch(Exception ex){
 			throw new ApplicationException(ex);
 		}
@@ -165,8 +174,23 @@ public class LocationController extends BaseController{
 		
 	}
 	/* TODO This function nee to move into strom cluster */
-	private void compteAndSaveInRedis(){
+	private void computeAndSaveInRedis(String allCoordinates, Long locationId){
+		String[] coordinates = allCoordinates.split(" ");
+		String[] longLat;
+		List<Long> locationList = new ArrayList<Long>();
+		locationList.add(locationId);
+		for(String oneCorrdinate : coordinates){
+			longLat = oneCorrdinate.split(",");
+			redisTemplate.opsForValue().set(buildKey(longLat[0], longLat[1]), locationList);	
+		}
 		
+	}
+	private String buildKey(String longitude, String lattitude){
+		Double longi = Double.parseDouble(longitude);
+		Double lati = Double.parseDouble(lattitude);
+		Long iLong = (long)((longi * 10000));
+		Long iLati = (long)((lati * 10000));
+		return iLong +"."+iLati;
 	}
 
 }
