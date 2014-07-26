@@ -115,7 +115,7 @@ public class LocationController extends BaseController{
 			if(uploadedImagePart == null){
 				throw new ApplicationException("Please choose a file");
 			}
-			LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+			//LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
 			//TODO send the file to Kafka
 			
 			//photoDto.setOrgUrl(imageHttpUrl);
