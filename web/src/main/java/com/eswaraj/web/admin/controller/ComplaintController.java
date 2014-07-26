@@ -5,7 +5,6 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -90,9 +89,6 @@ public class ComplaintController extends BaseController{
 			photoDto.setOrgUrl(imageHttpUrl);
 			complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
 		}
-	}
-	private String getFileName(String submittedFileName){
-		return UUID.randomUUID().toString() + submittedFileName.substring(submittedFileName.lastIndexOf("."));
 	}
 	private void printInfo(HttpServletRequest httpServletRequest){
 		Enumeration<String> params = httpServletRequest.getParameterNames();

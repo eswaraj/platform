@@ -8,21 +8,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang.SerializationUtils;
-
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
-
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+
+import org.apache.commons.lang.SerializationUtils;
+
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.IRichSpout;
-import backtype.storm.topology.OutputFieldsDeclarer;
 
-public class LocationSpout implements IRichSpout {
+import com.eswaraj.tasks.topology.EswarajBaseSpout;
+import com.eswaraj.web.dto.LocationBoundaryFileDto;
+
+public class LocationSpout extends EswarajBaseSpout {
 
 	private static final long serialVersionUID = 1L;
 
@@ -97,11 +97,6 @@ public class LocationSpout implements IRichSpout {
 
 	}
 
-	@Override
-	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public Map<String, Object> getComponentConfiguration() {

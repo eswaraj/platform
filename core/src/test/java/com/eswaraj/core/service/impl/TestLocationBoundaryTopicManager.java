@@ -19,7 +19,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 public class TestLocationBoundaryTopicManager {
-
+    /*
 	public void TestLocationBoundaryTopicManagerAsMain() throws ApplicationException, InterruptedException {
 		LocationBoundaryTopicManager locationBoundaryTopicManager = new LocationBoundaryTopicManager("localhost:9092", "test");
 		LocationBoundaryFileDto locationBoundaryFileDto = new LocationBoundaryFileDto();
@@ -55,7 +55,7 @@ public class TestLocationBoundaryTopicManager {
             System.out.println("locationBoundaryFileDto2="+locationBoundaryFileDto2);
         }
 	}
-	
+	*/
 	private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId)    {
 	    Properties props = new Properties();
 	    props.put("zookeeper.connect", a_zookeeper);

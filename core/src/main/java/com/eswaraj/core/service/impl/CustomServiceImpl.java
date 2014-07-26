@@ -29,7 +29,7 @@ public class CustomServiceImpl implements CustomService {
 		
 		LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, inputStream, fileService);
         //Submit file to queue to be processed by backend
-		locationBoundaryTopicManager.sendBoundaryfileMessage(locationBoundaryFileDto);
+        locationBoundaryTopicManager.sendBoundaryfileMessage(locationBoundaryFileDto);
 		
 	}
 

@@ -20,7 +20,7 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 @Component
-public class SaveCategoryBolt implements IRichBolt{
+public class ComplaintMapAggregatorBolt implements IRichBolt{
 
 	@Autowired
 	private AppService appService;
@@ -38,8 +38,6 @@ public class SaveCategoryBolt implements IRichBolt{
 	@Override
 	public void execute(Tuple input) {
 		try{
-			List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
-			//TODO write these categories to Redis
 		}catch(Exception ex){
 			collector.fail(input);
 		}

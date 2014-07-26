@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.ComplaintDto;
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 /**
  * 
@@ -17,10 +16,11 @@ import com.eswaraj.web.dto.LocationBoundaryFileDto;
  */
 
 @Component
-public class ComplaintTopicManager extends KafkaQueueServiceImpl<String, ComplaintDto> {
+public class ComplaintTopicManager {// extends KafkaQueueServiceImpl<String,
+                                    // ComplaintDto> {
 
 	private String complaintTopic;
-	
+	/*
 	@Autowired
 	public ComplaintTopicManager(@Value("${kafka_brokers}") String kafkaBrokers, @Value("${kafka_topic_complaint:savedComplaint}") String complaintTopic){
 		super(kafkaBrokers);
@@ -35,4 +35,5 @@ public class ComplaintTopicManager extends KafkaQueueServiceImpl<String, Complai
 	public void sendComplaintMessage(ComplaintDto complaint) throws ApplicationException {
 		sendMessage(complaintTopic, complaint);
 	}
+	*/
 }

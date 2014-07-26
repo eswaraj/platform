@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +59,9 @@ public class LocationServiceImpl implements LocationService {
 	@Autowired
 	private DataClientRepository dataClientRepository;
 	
-	private String baseDirectoryForlocationFiles = "/tmp";
+    @Value("${aws_s3_directory_for_location_files:locations}")
+	private String awsDirectoryForLocationFiles;
+
 	private String indiaEswarajClientName = "Eswaraj-India";
 	private String indiaEswarajRootLocationTypeName = "Country";
 	
@@ -108,12 +111,12 @@ public class LocationServiceImpl implements LocationService {
 		String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
 		String fileName = UUID.randomUUID().toString()+"_"+currenttime;
         //save file to a storage
-		fileService.saveFile(baseDirectoryForlocationFiles, fileName, inputStream);
+		String httpPath = fileService.saveFile(awsDirectoryForLocationFiles, fileName, inputStream);
 
 		//create LocationBoudaryFile
 		LocationBoundaryFile locationBoundaryFile = new LocationBoundaryFile();
 		locationBoundaryFile.setLocation(location);
-		locationBoundaryFile.setFileNameAndPath(baseDirectoryForlocationFiles + fileName);
+		locationBoundaryFile.setFileNameAndPath(httpPath);
 		locationBoundaryFile.setStatus("Pending");
 		locationBoundaryFile.setUploadDate(new Date());
 		
