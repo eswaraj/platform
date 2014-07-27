@@ -51,7 +51,8 @@ import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 @Transactional
 public class AppServiceImpl extends BaseService implements AppService {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private CategoryConvertor categoryConvertor;

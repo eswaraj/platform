@@ -1,5 +1,6 @@
 package com.eswaraj.core.convertors;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,10 +12,12 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.web.dto.BaseDto;
 
-public abstract class BaseConvertor<DbType, WebType> {
+public abstract class BaseConvertor<DbType, WebType> implements Serializable {
 
 
-	protected DbType getObjectIfExists(BaseDto dto, String objectName, GraphRepository<DbType> repository) throws ApplicationException{
+    private static final long serialVersionUID = 1L;
+
+    protected DbType getObjectIfExists(BaseDto dto, String objectName, GraphRepository<DbType> repository) throws ApplicationException {
 		DbType dbObject = null;
 		if(dto.getId() == null || dto.getId() <= 0){
 			dto.setId(null);

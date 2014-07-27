@@ -1,28 +1,19 @@
 package com.eswaraj.tasks.bolt;
 
-import java.io.FileReader;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.SerializationUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import au.com.bytecode.opencsv.CSVReader;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.IRichBolt;
-import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
+import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 @Component
-public class SaveCategoryBolt implements IRichBolt{
+public class SaveCategoryBolt extends EswarajBaseBolt {
 
-	@Autowired
 	private AppService appService;
 	/**
 	 * 
@@ -37,8 +28,9 @@ public class SaveCategoryBolt implements IRichBolt{
 
 	@Override
 	public void execute(Tuple input) {
+        logInfo("Message Received " + input);
 		try{
-			List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
+			//List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
 			//TODO write these categories to Redis
 		}catch(Exception ex){
 			collector.fail(input);
@@ -47,12 +39,6 @@ public class SaveCategoryBolt implements IRichBolt{
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		// TODO Auto-generated method stub
 		
 	}

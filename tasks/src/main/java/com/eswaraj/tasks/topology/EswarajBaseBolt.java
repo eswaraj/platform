@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import backtype.storm.task.OutputCollector;
@@ -26,7 +25,6 @@ public abstract class EswarajBaseBolt extends BaseRichBolt {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     public EswarajBaseBolt() {}
 
-    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     protected OutputCollector outputCollector;

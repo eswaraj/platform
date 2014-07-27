@@ -18,18 +18,40 @@
 
 		<property name="spoutConfigs">
 	        <list>
+	            <!-- 
 	            <ref bean="TestSpoutBean" />
+	             -->
+	            <ref bean="CatageoryChangeSpoutBean" />
 	        </list>
         </property>
         <property name="boltConfigs">
             <list>
+                <!-- 
                 <ref bean="TestBoltBean" />
                 <ref bean="TestBoltBean2"/>
+                 -->
+                <ref bean="CatageoryChangeBoltBean"/>
+                
             </list>
         </property>
 	</bean>
 
-
+    <bean id="CatageoryChangeSpoutBean" class="com.eswaraj.tasks.spout.CatageoryChangeSpout">
+        <property name="componentId" value="CatageoryChangeSpout" />
+        <property name="outputStream" value="CatageoryChangeStream" />
+        <property name="deleteMessageOnFail" value="true" />
+        <property name="defaultWaitTime" value="20" /><!-- In seconds -->
+        <property name="maxNumberOfMessages" value="1" />
+    </bean>
+    <bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
+        <property name="componentId" value="CatageoryChangeBolt" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="CatageoryChangeSpout" value="CatageoryChangeStream" />
+            </map>
+        </property>
+    </bean>
+	
 	<bean id="TestSpoutBean" class="com.eswaraj.tasks.spout.TestSpout">
         <property name="componentId" value="TestSpout" />
         <property name="outputStream" value="TestStream" />
