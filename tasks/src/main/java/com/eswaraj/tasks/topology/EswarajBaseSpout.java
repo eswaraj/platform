@@ -49,6 +49,7 @@ public abstract class EswarajBaseSpout extends BaseRichSpout {
 	}
 
     protected void writeToStream(List<Object> tuple) {
+        logInfo("Writing To Stream " + outputStream);
 		collector.emit(outputStream, tuple);
 	}
 

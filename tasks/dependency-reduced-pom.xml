@@ -42,6 +42,7 @@
                 <excludes>
                   <exclude>org.apache.storm:storm</exclude>
                   <exclude>org.apache.storm:storm-core</exclude>
+                  <exclude>org.slf4j:slf4j-log4j12</exclude>
                 </excludes>
               </artifactSet>
             </configuration>

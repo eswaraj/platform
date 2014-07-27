@@ -32,9 +32,11 @@ public class SaveCategoryBolt extends EswarajBaseBolt {
 		try{
 			//List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
 			//TODO write these categories to Redis
+            collector.ack(input);
 		}catch(Exception ex){
 			collector.fail(input);
 		}
+
 	}
 
 	@Override

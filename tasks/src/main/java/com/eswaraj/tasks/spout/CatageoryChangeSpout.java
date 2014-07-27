@@ -11,6 +11,7 @@ public class CatageoryChangeSpout extends EswarajAwsSqsBaseSpout {
     @Override
     public void nextTuple() {
         String message = getMessage();
+        logInfo("Mesage Recieved in Spout :  " + message);
         if (message != null) {
             writeToStream(new Values(message));
         }
