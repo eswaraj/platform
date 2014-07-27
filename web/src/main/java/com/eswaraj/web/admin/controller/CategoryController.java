@@ -3,6 +3,7 @@ package com.eswaraj.web.admin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.util.AwsQueueProducer;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.google.gson.JsonObject;
 
 /**
  * @author ravi
@@ -27,7 +30,13 @@ public class CategoryController extends BaseController{
 	@Autowired
 	private AppService appService;
 	
-	@RequestMapping(value = "/ajax/categories/getroot", method = RequestMethod.GET)
+    @Autowired
+    private AwsQueueProducer awsQueueProducer;
+
+    @Value("${aws_category_queue_name}")
+    private String categoryQueue;
+
+    @RequestMapping(value = "/ajax/categories/getroot", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CategoryDto> getAllRootCategories(ModelAndView mv) throws ApplicationException {
 		return appService.getAllRootCategories();
@@ -43,6 +52,10 @@ public class CategoryController extends BaseController{
 	@RequestMapping(value = "/ajax/categories/save", method = RequestMethod.POST)
 	public @ResponseBody CategoryDto saveLocationTypes(ModelAndView mv, @RequestBody CategoryDto categoryDto) throws ApplicationException {
 		categoryDto = appService.saveCategory(categoryDto);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("Message", "Category Updated");
+        jsonObject.addProperty("CategoryId", categoryDto.getId());
+        awsQueueProducer.sendMessage(categoryQueue, jsonObject.toString());
 		return categoryDto;
 	}
 

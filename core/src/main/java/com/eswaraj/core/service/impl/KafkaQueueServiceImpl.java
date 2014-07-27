@@ -17,8 +17,11 @@ public abstract class KafkaQueueServiceImpl<KeyType,ValueType extends Serializab
 	private ProducerConfig producerConfig;
 	
 	public KafkaQueueServiceImpl(String kafkaBrokers){
-		this(kafkaBrokers, "com.eswaraj.core.util.MySerializer", "1", "com.eswaraj.core.util.SimplePartitioner");
-		//this(kafkaBrokers, "kafka.serializer.DefaultEncoder", "1", "kafka.producer.DefaultPartitioner ");
+		//this(kafkaBrokers, "com.eswaraj.core.util.MySerializer", "1", "com.eswaraj.core.util.SimplePartitioner");
+        //this(kafkaBrokers, "kafka.serializer.DefaultEncoder", "1", "kafka.producer.DefaultPartitioner");
+        this(kafkaBrokers, "kafka.serializer.StringEncoder", "1", "kafka.producer.DefaultPartitioner");
+        // kafka.producer.ByteArrayPartitioner.
+        
 		
 		
 	}
@@ -37,7 +40,6 @@ public abstract class KafkaQueueServiceImpl<KeyType,ValueType extends Serializab
 		System.out.println("request.required.acks="+ ack);
 		System.out.println("props="+ props);
 		producerConfig = new ProducerConfig(props);
-		
 		
 		producer = new Producer<KeyType,ValueType>(producerConfig);
 	}

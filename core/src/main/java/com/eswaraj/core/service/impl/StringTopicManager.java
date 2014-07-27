@@ -7,14 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
 @Component
-public class LocationBoundaryTopicManager extends KafkaQueueServiceImpl<String, LocationBoundaryFileDto> {
+public class StringTopicManager extends KafkaQueueServiceImpl<String, String> {
 
 	private String locationTopic;
 	@Autowired
-	public LocationBoundaryTopicManager(@Value("${kafka_brokers}") String kafkaBrokers, @Value("${kafka_topic_location}") String locationTopic){
+	public StringTopicManager(@Value("${kafka_brokers}") String kafkaBrokers, @Value("${kafka_topic_location}") String locationTopic){
 		super(kafkaBrokers);
 		this.locationTopic = locationTopic;
 	}
@@ -24,7 +23,8 @@ public class LocationBoundaryTopicManager extends KafkaQueueServiceImpl<String, 
 	public void preDestroy(){
 		super.preDestroy();
 	}
-	public void sendBoundaryfileMessage(LocationBoundaryFileDto locationBoundaryFileDto) throws ApplicationException {
-		sendMessage(locationTopic, locationBoundaryFileDto);
+
+    public void sendBoundaryfileMessage(String message) throws ApplicationException {
+        sendMessage(locationTopic, message);
 	}
 }

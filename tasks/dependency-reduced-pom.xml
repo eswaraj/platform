@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.eswaraj.tasks</groupId>
   <artifactId>eswaraj-tasks</artifactId>
-  <name>tasks</name>
+  <name>Eswaraj-Tasks</name>
   <version>1.0.0-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <build>

@@ -1,14 +1,10 @@
 package com.eswaraj.tasks.bolt;
 
-import java.io.FileReader;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import au.com.bytecode.opencsv.CSVReader;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.IRichBolt;
@@ -16,9 +12,15 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.LocationBoundaryFileDto;
 
+/**
+ * This bolt will put the Complaint on location rectangle as per lat long It
+ * will increase the counter of that rectangle also it will add this complaint
+ * id to list of complaints of that rectangle
+ * 
+ * @author Ravi
+ *
+ */
 @Component
 public class ComplaintMapAggregatorBolt implements IRichBolt{
 
