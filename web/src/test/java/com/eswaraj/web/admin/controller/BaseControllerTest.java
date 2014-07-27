@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
 import com.eswaraj.base.BaseEswarajMockitoTest;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.ComplaintDto;
@@ -14,9 +18,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BaseControllerTest extends BaseEswarajMockitoTest{
 
+    @Autowired
+    private ApplicationContext applicationContext;
 	public BaseControllerTest() {
 		// TODO Auto-generated constructor stub
 	}
+
+    @Before
+    public void init() {
+        String[] profiles = applicationContext.getEnvironment().getActiveProfiles();
+        System.out.println("All Active Spring Profiles are for the test are: ");
+        if (profiles != null) {
+            for (String oneProfile : profiles) {
+                System.out.println("        " + oneProfile);
+            }
+        }
+    }
 
 	protected AddressDto createAddress(String line1, String line2, String line3, String postalCode){
 		AddressDto address = new AddressDto();

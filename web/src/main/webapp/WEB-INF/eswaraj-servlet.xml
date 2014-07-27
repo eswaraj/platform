@@ -67,7 +67,6 @@
 	<beans:beans profile="prod,tomcat">
 		<beans:import resource="controllers.xml" />
 		<beans:import resource="eswaraj-neo4j-db-context.xml" />
-
 	</beans:beans>
 
 

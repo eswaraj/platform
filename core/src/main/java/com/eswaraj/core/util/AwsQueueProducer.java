@@ -15,18 +15,19 @@ import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 @Component
-public class AwsQueueProducer {
+public class AwsQueueProducer implements QueueProducer {
 
 	private AmazonSQS sqs;
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @Autowired
     public AwsQueueProducer(@Value("${aws_region}") String regions, @Value("${aws_access_key}") String accessKey, @Value("${aws_access_secret}") String secretKey) {
         this(Regions.valueOf(regions), accessKey, secretKey);
 	}
 
-    public AwsQueueProducer(Regions regions, String accessKey, String secretKey) {
+    private AwsQueueProducer(Regions regions, String accessKey, String secretKey) {
 		AWSCredentials awsCredentials;
 		awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 		sqs = new AmazonSQSClient(awsCredentials);
@@ -35,6 +36,10 @@ public class AwsQueueProducer {
 
 	}
 
+    /* (non-Javadoc)
+     * @see com.eswaraj.core.util.QueueProducer#sendMessage(java.lang.String, java.lang.String)
+     */
+    @Override
     public void sendMessage(String queueName, String messageBody) {
         SendMessageRequest sendMessageRequest = new SendMessageRequest(queueName, messageBody);
         sqs.sendMessage(sendMessageRequest);

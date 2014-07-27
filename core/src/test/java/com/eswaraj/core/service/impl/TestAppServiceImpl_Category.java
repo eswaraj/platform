@@ -33,6 +33,7 @@ public class TestAppServiceImpl_Category extends BaseNeo4jEswarajTest{
 	 */
 	@Test
 	public void test01_saveCategory() throws ApplicationException{
+
 		final String categoryName = randomAlphaString(16);
 		final String categoryDescription = randomAlphaString(128);
 		CategoryDto categoryDto = createCategory(categoryName, categoryDescription, true, null);

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 import com.eswaraj.base.BaseEswarajTest;
@@ -38,9 +39,18 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 
 	@Autowired
 	private GraphDatabaseService graphDatabaseService;
+    @Autowired
+    private ApplicationContext context;
 	
 	@Before
 	public void init(){
+        String[] profiles = context.getEnvironment().getActiveProfiles();
+        System.out.println("All Active Spring Profiles are for the test are: ");
+        if (profiles != null) {
+            for (String oneProfile : profiles) {
+                System.out.println("        " + oneProfile);
+            }
+        }
 	}
 
 	@After

@@ -10,6 +10,7 @@ import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.PersonService;
+import com.eswaraj.core.util.AwsQueueProducer;
 
 @Configuration
 public class MockServiceConfig {
@@ -43,4 +44,9 @@ public class MockServiceConfig {
 	public ComplaintService complaintService(){
 		return Mockito.mock(ComplaintService.class);
 	}
+
+    @Bean
+    public AwsQueueProducer awsQueueProducer() {
+        return Mockito.mock(AwsQueueProducer.class);
+    }
 }
