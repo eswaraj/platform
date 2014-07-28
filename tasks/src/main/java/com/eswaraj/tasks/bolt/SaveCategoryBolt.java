@@ -2,6 +2,12 @@ package com.eswaraj.tasks.bolt;
 
 import java.util.Map;
 
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.rest.graphdb.RestGraphDatabase;
+import org.springframework.data.neo4j.core.GraphDatabase;
+import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Component;
 
 import backtype.storm.task.OutputCollector;
@@ -24,11 +30,20 @@ public class SaveCategoryBolt extends EswarajBaseBolt {
 	@Override
 	public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
 		this.collector = collector;
+        try {
+            GraphDatabase graphDatabase = new SpringRestGraphDatabase("");
+            GraphDatabaseService graphDatabaseService = new RestGraphDatabase("");
+            Node ode= graphDatabaseService.getNodeById(123L);
+
+            Neo4jTemplate neo4jTemplate = new Neo4jTemplate(graphDatabaseService);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 	}
 
 	@Override
 	public void execute(Tuple input) {
-        logInfo("Message Received " + input);
+        logInfo("Message Received " + input + ", " + appService);
 		try{
 			//List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
 			//TODO write these categories to Redis

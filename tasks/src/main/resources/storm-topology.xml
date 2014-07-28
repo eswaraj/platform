@@ -18,19 +18,14 @@
 
 		<property name="spoutConfigs">
 	        <list>
-	            <!-- 
-	            <ref bean="TestSpoutBean" />
-	             -->
 	            <ref bean="CatageoryChangeSpoutBean" />
+	            <ref bean="LocationFileUploadSpoutBean" />
 	        </list>
         </property>
         <property name="boltConfigs">
             <list>
-                <!-- 
-                <ref bean="TestBoltBean" />
-                <ref bean="TestBoltBean2"/>
-                 -->
                 <ref bean="CatageoryChangeBoltBean"/>
+                <ref bean="LcaotionFileProcessorBoltBean"/>
                 
             </list>
         </property>
@@ -43,6 +38,15 @@
         <property name="defaultWaitTime" value="20" /><!-- In seconds -->
         <property name="maxNumberOfMessages" value="1" />
     </bean>
+    <bean id="LocationFileUploadSpoutBean" class="com.eswaraj.tasks.spout.LocationFileUploadSpout">
+        <property name="componentId" value="LocationFileUploadSpout" />
+        <property name="outputStream" value="LocationFileUploadStream" />
+        <property name="deleteMessageOnFail" value="true" />
+        <property name="defaultWaitTime" value="20" /><!-- In seconds -->
+        <property name="maxNumberOfMessages" value="1" />
+    </bean>
+    
+    
     <bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
         <property name="componentId" value="CatageoryChangeBolt" />
         <property name="sourceComponentStreams">
@@ -51,7 +55,15 @@
             </map>
         </property>
     </bean>
-	
+    <bean id="LcaotionFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LcaotionFileProcessorBolt">
+        <property name="componentId" value="LcaotionFileProcessorBolt" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="LocationFileUploadSpout" value="LocationFileUploadStream" />
+            </map>
+        </property>
+    </bean>
+    	
 	<bean id="TestSpoutBean" class="com.eswaraj.tasks.spout.TestSpout">
         <property name="componentId" value="TestSpout" />
         <property name="outputStream" value="TestStream" />

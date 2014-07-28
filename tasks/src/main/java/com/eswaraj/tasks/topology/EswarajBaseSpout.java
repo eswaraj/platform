@@ -39,9 +39,13 @@ public abstract class EswarajBaseSpout extends BaseRichSpout {
     @Override
     public final void declareOutputFields(OutputFieldsDeclarer declarer) {
         if (outputStream != null) {
-            Fields fields = new Fields("Test");
+            Fields fields = new Fields(getFields());
             declarer.declareStream(getOutputStream(), fields);
         }
+    }
+
+    protected String[] getFields() {
+        return new String[] { "Test" };
     }
 
 	public void setOutputStream(String outputStream) {

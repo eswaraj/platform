@@ -21,20 +21,23 @@ public abstract class EswarajAwsSqsBaseSpout extends EswarajBaseSpout {
 
     private static final long serialVersionUID = 1L;
 
-    @Value("${aws_category_queue_name}")
-    private String awsQueueName;
     @Value("${aws_access_key}")
     private String accessKey;
     @Value("${aws_access_secret}")
     private String secretKey;
     @Value("${aws_region}")
     private String region;
+    private String awsQueueName;
 
     private boolean deleteMessageOnFail = true;
     private int defaultWaitTime = 20;
     private int maxNumberOfMessages = 1;
     private AmazonSQSClient sqs;
     ReceiveMessageRequest receiveMessageRequest;
+
+    public EswarajAwsSqsBaseSpout(String awsQueueName) {
+        this.awsQueueName = awsQueueName;
+    }
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {

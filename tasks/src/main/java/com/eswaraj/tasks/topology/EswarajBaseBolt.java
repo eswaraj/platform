@@ -62,6 +62,10 @@ public abstract class EswarajBaseBolt extends BaseRichBolt {
         logger.error(message);
     }
 
+    protected void logError(String message, Exception ex) {
+        logger.error(message, ex);
+    }
+
     public String getOutputStream() {
         return outputStream;
     }
