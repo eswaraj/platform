@@ -45,7 +45,8 @@ public class ComplaintProducer {
 				producer.send(data);
 				Thread.sleep(100);
 			}
-			break;
+			//break;
+			Thread.sleep(10000);
 		}
 	}
 }
