@@ -23,6 +23,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
             jedisConnectionFactory.setHostName("cache.vyaut5.0001.usw2.cache.amazonaws.com");
             jedisConnectionFactory.setPort(6379);
+            jedisConnectionFactory.setUsePool(true);
             jedisConnectionFactory.afterPropertiesSet();
 
             RedisTemplate<String, Set<Long>> template = new RedisTemplate<>();
