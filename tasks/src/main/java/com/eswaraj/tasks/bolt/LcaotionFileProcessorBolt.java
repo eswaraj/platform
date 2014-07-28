@@ -35,11 +35,19 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             String[] locationPoints = message.split(" ");
             String[] latLong;
             String redisKey;
-            Set<Long> redisData;
             for (String oneLocationPoint : locationPoints) {
                 latLong = oneLocationPoint.split(",");
                 redisKey = locationKeyService.buildLocationKey(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]));
                 System.out.println("Will save key " + redisKey + " in database");
+                Set<Long> existingData = template.opsForSet().members(redisKey);
+                if (existingData != null) {
+                    System.out.println("Existings values");
+                    for (Long oneLocation : existingData) {
+                        System.out.println("   Location Id : " + oneLocation);
+                    }
+                } else {
+                    System.out.println("No Existings values");
+                }
                 template.opsForSet().add(redisKey, locationId);
             }
         } catch (Exception ex) {
