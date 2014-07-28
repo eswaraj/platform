@@ -1,6 +1,5 @@
 package com.eswaraj.tasks.bolt;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -26,7 +25,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             jedisConnectionFactory.setUsePool(true);
             jedisConnectionFactory.afterPropertiesSet();
 
-            RedisTemplate<String, Set<Long>> template = new RedisTemplate<>();
+            RedisTemplate<String, Long> template = new RedisTemplate<>();
             template.setConnectionFactory(jedisConnectionFactory);
             template.afterPropertiesSet();
 
@@ -41,13 +40,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
                 latLong = oneLocationPoint.split(",");
                 redisKey = locationKeyService.buildLocationKey(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]));
                 System.out.println("Will save key " + redisKey + " in database");
-                redisData = template.opsForValue().get(redisKey);
-                System.out.println("Existing Value = " + redisData);
-                if (redisData == null) {
-                    redisData = new HashSet<>();
-                }
-                redisData.add(locationId);
-                template.opsForValue().set(redisKey, redisData);
+                template.opsForSet().add(redisKey, locationId);
             }
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);

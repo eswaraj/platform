@@ -17,7 +17,7 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     private DecimalFormat decimalFormat;
 
     public LocationkeyServiceImpl() {
-        decimalFormat = new DecimalFormat("#.###");
+        decimalFormat = new DecimalFormat("#.000");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
     }
