@@ -100,17 +100,17 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
     private void processOnePoint(Path2D myPolygon, Point2D onePoint, RedisTemplate<String, Long> template, Long locationId) throws ApplicationException {
         if (myPolygon.contains(onePoint)) {
             String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
-            System.out.println("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is inside area Will save key " + redisKey + " in database");
+            logInfo("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is inside area Will save key " + redisKey + " in database");
             Set<Long> existingData = template.opsForSet().members(redisKey);
             if (existingData != null) {
-                System.out.println("Existings values");
+                logInfo("Existings values");
                 for (Long oneLocation : existingData) {
-                    System.out.println("   Location Id : " + oneLocation);
+                    logInfo("   Location Id : " + oneLocation);
                 }
             }
             template.opsForSet().add(redisKey, locationId);
         } else {
-            System.out.println("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is outside area and will not save");
+            logInfo("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is outside area and will not save");
         }
     }
 
