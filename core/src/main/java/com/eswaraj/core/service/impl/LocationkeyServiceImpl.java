@@ -43,10 +43,13 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
         bottomRightLong.round(bottomRightMc);
         BigDecimal addedValue = new BigDecimal(.001);
         Point2D onePoint;
+        int i=0;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude.add(addedValue)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude.add(addedValue)) {
                 onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
                 allPoints.add(onePoint);
+                i++;
+                System.out.println("Created " + i + " points " + onePoint);
             }
         }
         return allPoints;
