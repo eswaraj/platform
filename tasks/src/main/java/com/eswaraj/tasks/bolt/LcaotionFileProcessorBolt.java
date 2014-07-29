@@ -3,7 +3,8 @@ package com.eswaraj.tasks.bolt;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
-import java.util.List;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Set;
 
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import backtype.storm.tuple.Tuple;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
@@ -66,28 +68,51 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
                 myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
             }
             myPolygon.closePath();
-            List<Point2D> allPoints = locationKeyService.getAllPointsBetweenRectangle(topLeftLat, topLeftLong, bottomRightLat, bottomRightLong);
-            for (Point2D onePoint : allPoints) {
-                if (myPolygon.contains(onePoint)) {
-                    redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
-                    System.out.println("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is inside area Will save key " + redisKey + " in database");
-                    Set<Long> existingData = template.opsForSet().members(redisKey);
-                    if (existingData != null) {
-                        System.out.println("Existings values");
-                        for (Long oneLocation : existingData) {
-                            System.out.println("   Location Id : " + oneLocation);
-                        }
-                    }
-                    template.opsForSet().add(redisKey, locationId);
-                } else {
-                    System.out.println("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is outside area and will not save");
+            //List<Point2D> allPoints = locationKeyService.getAllPointsBetweenRectangle(topLeftLat, topLeftLong, bottomRightLat, bottomRightLong);
+            MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
+            topLeftLat.round(topLeftMc);
+            topLeftLong.round(topLeftMc);
+            MathContext bottomRightMc = new MathContext(3, RoundingMode.UP);
+            bottomRightLat.round(bottomRightMc);
+            bottomRightLong.round(bottomRightMc);
+            BigDecimal addedValue = new BigDecimal(.001);
+            Point2D onePoint;
+            int i=0;
+            for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude.add(addedValue)) {
+                for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude.add(addedValue)) {
+                    onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
+                    i++;
+                    logInfo("Created " + i + " points " + onePoint);
+                    processOnePoint(myPolygon, onePoint, template, locationId);
                 }
             }
+            /*
+             * for (Point2D onePoint : allPoints) {
+             * 
+             * }
+             */
 
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
         }
 
+    }
+
+    private void processOnePoint(Path2D myPolygon, Point2D onePoint, RedisTemplate<String, Long> template, Long locationId) throws ApplicationException {
+        if (myPolygon.contains(onePoint)) {
+            String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
+            System.out.println("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is inside area Will save key " + redisKey + " in database");
+            Set<Long> existingData = template.opsForSet().members(redisKey);
+            if (existingData != null) {
+                System.out.println("Existings values");
+                for (Long oneLocation : existingData) {
+                    System.out.println("   Location Id : " + oneLocation);
+                }
+            }
+            template.opsForSet().add(redisKey, locationId);
+        } else {
+            System.out.println("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is outside area and will not save");
+        }
     }
 
 }

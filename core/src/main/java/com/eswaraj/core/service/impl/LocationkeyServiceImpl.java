@@ -49,7 +49,6 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
                 onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
                 allPoints.add(onePoint);
                 i++;
-                System.out.println("Created " + i + " points " + onePoint);
             }
         }
         return allPoints;
