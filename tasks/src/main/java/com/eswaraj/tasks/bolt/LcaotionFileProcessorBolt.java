@@ -51,6 +51,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
                 oneLong = new BigDecimal(latLong[1]);
                 if (first) {
                     myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
+                    first = false;
                 } else {
                     myPolygon.lineTo(oneLat.doubleValue(), oneLong.doubleValue());
                 }
