@@ -40,7 +40,6 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             logInfo("Recived = " + getComponentId() + " " + message);
             String[] locationPoints = message.split(" ");
             String[] latLong;
-            String redisKey;
             Path2D myPolygon = new Path2D.Double();
 
             BigDecimal topLeftLat = new BigDecimal(180);
@@ -86,11 +85,11 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
                     processOnePoint(myPolygon, onePoint, template, locationId);
                 }
             }
-            /*
-             * for (Point2D onePoint : allPoints) {
-             * 
-             * }
-             */
+
+            logInfo("topLeftLat = " + topLeftLat);
+            logInfo("topLeftLong = " + topLeftLong);
+            logInfo("bottomRightLat = " + bottomRightLat);
+            logInfo("bottomRightLong = " + bottomRightLong);
 
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
