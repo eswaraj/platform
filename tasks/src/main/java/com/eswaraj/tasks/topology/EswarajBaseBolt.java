@@ -52,6 +52,7 @@ public abstract class EswarajBaseBolt extends BaseRichBolt {
 
     protected void logInfo(String message) {
         logger.info(message);
+        System.out.println(message);
     }
 
     protected void logWarning(String message) {
