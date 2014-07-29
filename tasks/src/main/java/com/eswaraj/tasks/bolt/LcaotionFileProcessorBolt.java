@@ -1,5 +1,6 @@
 package com.eswaraj.tasks.bolt;
 
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
@@ -42,38 +43,27 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             String[] latLong;
             Path2D myPolygon = new Path2D.Double();
 
-            BigDecimal topLeftLat = new BigDecimal(180);
-            BigDecimal topLeftLong = new BigDecimal(180);
-            BigDecimal bottomRightLat = new BigDecimal(-180);
-            BigDecimal bottomRightLong = new BigDecimal(-180);
-            
             BigDecimal oneLat, oneLong;
+            boolean first = true;
             for (String oneLocationPoint : locationPoints) {
                 latLong = oneLocationPoint.split(",");
                 oneLat = new BigDecimal(latLong[0]);
                 oneLong = new BigDecimal(latLong[1]);
-                if (oneLat.compareTo(topLeftLat) < 0) {
-                    topLeftLat = oneLat;
+                if (first) {
+                    myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
+                } else {
+                    myPolygon.lineTo(oneLat.doubleValue(), oneLong.doubleValue());
                 }
-                if (oneLong.compareTo(topLeftLong) < 0) {
-                    topLeftLong = oneLong;
-                }
-                if (oneLat.compareTo(bottomRightLat) > 0) {
-                    bottomRightLat = oneLat;
-                }
-                if (oneLong.compareTo(bottomRightLong) > 0) {
-                    bottomRightLong = oneLong;
-                }
-                myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
+
             }
             myPolygon.closePath();
-            //List<Point2D> allPoints = locationKeyService.getAllPointsBetweenRectangle(topLeftLat, topLeftLong, bottomRightLat, bottomRightLong);
+            Rectangle coveringRectangle = myPolygon.getBounds();
             MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
-            topLeftLat.round(topLeftMc);
-            topLeftLong.round(topLeftMc);
+            BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc);
+            BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc);
             MathContext bottomRightMc = new MathContext(3, RoundingMode.UP);
-            bottomRightLat.round(bottomRightMc);
-            bottomRightLong.round(bottomRightMc);
+            BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc);
+            BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc);
             BigDecimal addedValue = new BigDecimal(.001);
             Point2D onePoint;
             int i=0;
