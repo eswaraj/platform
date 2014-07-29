@@ -77,8 +77,8 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             BigDecimal addedValue = new BigDecimal(.001);
             Point2D onePoint;
             int i=0;
-            for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude.add(addedValue)) {
-                for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude.add(addedValue)) {
+            for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
+                for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
                     onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
                     i++;
                     logInfo("Created " + i + " points " + onePoint);
