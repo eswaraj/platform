@@ -39,8 +39,9 @@
 	</beans:bean>
 
 	<!-- Redis related -->
-	<beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" />
-
+	<beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
+	    p:host-name="cache.vyaut5.0001.usw2.cache.amazonaws.com" p:port="6379" 
+	    />
 	<!-- redis template definition -->
 	<beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connection-factory-ref="jedisConnFactory" />
 

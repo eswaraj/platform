@@ -2,7 +2,9 @@ package com.eswaraj.web.admin.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -28,6 +30,7 @@ import org.w3c.dom.NodeList;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
+import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
@@ -46,8 +49,11 @@ public class LocationController extends BaseController{
 	private FileService fileService;
 	
 	@Autowired
-	private RedisTemplate<String, List<Long>> redisTemplate;
+    private RedisTemplate<String, Long> redisTemplate;
 	
+    @Autowired
+    private LocationKeyService LocationKeyService;
+
 	@RequestMapping(value = "/locations", method = RequestMethod.GET)
 	public ModelAndView showIndexsPages(ModelAndView mv) {
 		mv.setViewName("locationManager");
@@ -94,6 +100,20 @@ public class LocationController extends BaseController{
 		return locationDto;
 	}
 	
+    @RequestMapping(value = "/ajax/location/getpoint", method = RequestMethod.GET)
+    public @ResponseBody List<Long> getLocationAtPoint(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
+        System.out.println("Lat = " + Double.parseDouble(httpServletRequest.getParameter("lat")));
+        System.out.println("Long = " + Double.parseDouble(httpServletRequest.getParameter("long")));
+        String redisKey = LocationKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
+        System.out.println("Redis Key = " + redisKey);
+        Set<Long> locations = redisTemplate.opsForSet().members(redisKey);
+        if (locations == null || locations.isEmpty()) {
+            locations = new HashSet<>();
+            locations.add(-100L);
+        }
+        return new ArrayList<>(locations);
+    }
+
 	@RequestMapping(value = "/ajax/location/getchild/{parentId}", method = RequestMethod.GET)
 	public @ResponseBody List<LocationDto> getChildLocationNode(ModelAndView mv, @PathVariable Long parentId) throws ApplicationException {
 		List<LocationDto> locationDtos = locationService.getChildLocationsOfParent(parentId);
@@ -180,25 +200,6 @@ public class LocationController extends BaseController{
 		
 		return "All Good";
 		
-	}
-	/* TODO This function nee to move into strom cluster */
-	private void computeAndSaveInRedis(String allCoordinates, Long locationId){
-		String[] coordinates = allCoordinates.split(" ");
-		String[] longLat;
-		List<Long> locationList = new ArrayList<Long>();
-		locationList.add(locationId);
-		for(String oneCorrdinate : coordinates){
-			longLat = oneCorrdinate.split(",");
-			redisTemplate.opsForValue().set(buildKey(longLat[0], longLat[1]), locationList);	
-		}
-		
-	}
-	private String buildKey(String longitude, String lattitude){
-		Double longi = Double.parseDouble(longitude);
-		Double lati = Double.parseDouble(lattitude);
-		Long iLong = (long)((longi * 10000));
-		Long iLati = (long)((lati * 10000));
-		return iLong +"."+iLati;
 	}
 
 }
