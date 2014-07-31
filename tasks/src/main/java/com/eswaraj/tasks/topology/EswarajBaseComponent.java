@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class EswarajBaseComponent {
 
     private GraphDatabaseService graphDatabaseService;
-    private Neo4jTemplate neo4jTemplate = new Neo4jTemplate(graphDatabaseService);
+    private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
 
     protected void initializeDbService(String dbUrl) {
