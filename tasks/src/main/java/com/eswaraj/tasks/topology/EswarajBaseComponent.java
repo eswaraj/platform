@@ -43,9 +43,10 @@ public class EswarajBaseComponent {
         Transaction trx = graphDatabaseService.beginTx();
         Node node = null;
         try {
-            node = graphDatabaseService.getNodeById(845);
+            node = graphDatabaseService.getNodeById(id);
         } catch (NotFoundException nfe) {
             // Don't do anything
+            nfe.printStackTrace();
         } finally {
             trx.finish();
         }
