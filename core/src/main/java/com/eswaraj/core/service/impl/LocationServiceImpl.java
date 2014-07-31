@@ -150,9 +150,9 @@ public class LocationServiceImpl implements LocationService {
         jsonObject.addProperty("newLocationBoundaryFileId", locationBoundaryFile.getId());
         jsonObject.addProperty("locationId", location.getId());
 
-        logger.info("Sending message {} to queue {}", jsonObject.getAsString(), awsLocationQueueName);
+        logger.info("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
 
-        awsQueueProducer.sendMessage(awsLocationQueueName, jsonObject.getAsString());
+        awsQueueProducer.sendMessage(awsLocationQueueName, jsonObject.toString());
 
 		return locationBoundaryFileConvertor.convertBean(locationBoundaryFile);
 	}
