@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
 
@@ -18,10 +19,12 @@ public class LocationBoundaryFile extends BaseNode {
 
 	@Indexed
 	private String fileNameAndPath;
+    @RelatedTo(type = "FOR")
 	private Location location;
 	private Date uploadDate;
 	private String status;
-	
+    private boolean active;
+
 	public String getFileNameAndPath() {
 		return fileNameAndPath;
 	}
@@ -46,6 +49,14 @@ public class LocationBoundaryFile extends BaseNode {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 	
 	
 }

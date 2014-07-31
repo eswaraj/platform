@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
@@ -20,6 +22,7 @@ import com.eswaraj.core.convertors.LocationTypeJsonConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.core.util.AwsQueueProducer;
 import com.eswaraj.core.util.DateTimeUtil;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
@@ -35,6 +38,7 @@ import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
+import com.google.gson.JsonObject;
 
 @Component
 @Transactional
@@ -58,13 +62,19 @@ public class LocationServiceImpl implements LocationService {
 	private LocationTypeJsonConvertor locationTypeJsonConvertor;
 	@Autowired
 	private DataClientRepository dataClientRepository;
+    @Autowired
+    private AwsQueueProducer awsQueueProducer;
 	
     @Value("${aws_s3_directory_for_location_files:locations}")
 	private String awsDirectoryForLocationFiles;
 
+    @Value("${aws_location_file_queue_name}")
+    private String awsLocationQueueName;
+
 	private String indiaEswarajClientName = "Eswaraj-India";
 	private String indiaEswarajRootLocationTypeName = "Country";
 	
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public LocationDto saveLocation(LocationDto locationDto)  throws ApplicationException{
@@ -108,10 +118,20 @@ public class LocationServiceImpl implements LocationService {
 		if(location == null){
 			throw new ApplicationException("No such location exists[id="+locationId+"]");
 		}
-		String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
-		String fileName = UUID.randomUUID().toString()+"_"+currenttime;
+        LocationBoundaryFile existingLocationBoundayrFile = locationBoundaryFileRepository.getActiveLocationBoundaryFile(location);
+        String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
+        if (existingLocationBoundayrFile != null) {
+            if (existingLocationBoundayrFile.getStatus().equals("Pending")) {
+                throw new ApplicationException("Another file is being processed you can not upload new file until the previous file is processed");
+            }
+            existingLocationBoundayrFile.setActive(false);
+            existingLocationBoundayrFile = locationBoundaryFileRepository.save(existingLocationBoundayrFile);
+        }
+        String fileDir = awsDirectoryForLocationFiles+"/" +location.getId(); 
+        String fileName = UUID.randomUUID().toString() + "_" + currenttime + ".kml";
+        logger.info("saving file {}", fileName);
         //save file to a storage
-		String httpPath = fileService.saveFile(awsDirectoryForLocationFiles, fileName, inputStream);
+        String httpPath = fileService.saveFile(fileDir, fileName, inputStream);
 
 		//create LocationBoudaryFile
 		LocationBoundaryFile locationBoundaryFile = new LocationBoundaryFile();
@@ -119,8 +139,20 @@ public class LocationServiceImpl implements LocationService {
 		locationBoundaryFile.setFileNameAndPath(httpPath);
 		locationBoundaryFile.setStatus("Pending");
 		locationBoundaryFile.setUploadDate(new Date());
+        locationBoundaryFile.setActive(true);
 		
 		locationBoundaryFile = locationBoundaryFileRepository.save(locationBoundaryFile);
+
+        JsonObject jsonObject = new JsonObject();
+        if (existingLocationBoundayrFile != null) {
+            jsonObject.addProperty("oldLocationBoundaryFileId", existingLocationBoundayrFile.getId());
+        }
+        jsonObject.addProperty("newLocationBoundaryFileId", locationBoundaryFile.getId());
+        jsonObject.addProperty("locationId", location.getId());
+
+        logger.info("Sending message {} to queue {}", jsonObject.getAsString(), awsLocationQueueName);
+
+        awsQueueProducer.sendMessage(awsLocationQueueName, jsonObject.getAsString());
 
 		return locationBoundaryFileConvertor.convertBean(locationBoundaryFile);
 	}

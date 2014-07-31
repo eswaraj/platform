@@ -4,12 +4,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Fields;
 
 /**
@@ -19,13 +18,11 @@ import backtype.storm.tuple.Fields;
  * @data Jul 25, 2014
  */
 
-public abstract class EswarajBaseBolt extends BaseRichBolt {
+public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IRichBolt {
 
 	private static final long serialVersionUID = 1L;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     public EswarajBaseBolt() {}
-
-    private RedisTemplate<String, Object> redisTemplate;
 
     protected OutputCollector outputCollector;
     protected String outputStream;
@@ -36,6 +33,8 @@ public abstract class EswarajBaseBolt extends BaseRichBolt {
     @Override
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.outputCollector = collector;
+        initializeRedisService("cache.vyaut5.0001.usw2.cache.amazonaws.com", 6379);
+        initializeDbService("http://ip-172-31-47-87.us-west-2.compute.internal:7474/db/data");
     }
 
     public final void saveToRedis(String key, Object object) {
@@ -48,6 +47,16 @@ public abstract class EswarajBaseBolt extends BaseRichBolt {
         if (outputStream != null) {
             declarer.declareStream(outputStream, new Fields("Test"));
         }
+    }
+
+    @Override
+    public void cleanup() {
+
+    }
+
+    @Override
+    public Map<String, Object> getComponentConfiguration() {
+        return null;
     }
 
     protected void logInfo(String message) {
@@ -90,5 +99,6 @@ public abstract class EswarajBaseBolt extends BaseRichBolt {
     public void setSourceComponentStreams(Map<String, String> sourceComponentStreams) {
         this.sourceComponentStreams = sourceComponentStreams;
     }
+
 
 }
