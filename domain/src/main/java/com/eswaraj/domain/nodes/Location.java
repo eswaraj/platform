@@ -24,6 +24,8 @@ public class Location extends BaseNode {
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
+    private String boundaryFile;
+
 	private Double latitude;
 	
 	private Double longitude;
@@ -168,7 +170,15 @@ public class Location extends BaseNode {
 		this.totalFemaleWorkingPopulation = totalFemaleWorkingPopulation;
 	}
 
-	@Override
+    public String getBoundaryFile() {
+        return boundaryFile;
+    }
+
+    public void setBoundaryFile(String boundaryFile) {
+        this.boundaryFile = boundaryFile;
+    }
+
+    @Override
 	public String toString() {
 		return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", id=" + id + "]";

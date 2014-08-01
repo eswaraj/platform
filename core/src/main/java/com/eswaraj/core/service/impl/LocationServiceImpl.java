@@ -143,6 +143,9 @@ public class LocationServiceImpl implements LocationService {
 		
 		locationBoundaryFile = locationBoundaryFileRepository.save(locationBoundaryFile);
 
+        // Updaye Locaion Object with KMl file
+        location.setBoundaryFile(httpPath);
+
         JsonObject jsonObject = new JsonObject();
         if (existingLocationBoundayrFile != null) {
             jsonObject.addProperty("oldLocationBoundaryFileId", existingLocationBoundayrFile.getId());
