@@ -10,6 +10,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -37,6 +38,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
 
     @Override
     public void execute(Tuple input) {
+        Date startTime = new Date();
         try {
             // Read the incoming Message
             String message = input.getString(0);
@@ -72,14 +74,50 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
 
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
+        } finally {
+            Date endTime = new Date();
+            logInfo("Total time taken to process file " + ((endTime.getTime() - startTime.getTime()) / 1000) + " seconds");
         }
 
     }
 
+
     private void processBoundaryFile(Long locationId, Long boundaryFileId, boolean add) throws ApplicationException {
         org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
+        try {
+            String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
+            logInfo("Getting Location file from " + s3HttpUrl);
+            URL url = new URL(s3HttpUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream is = urlConnection.getInputStream();
 
-        Path2D myPolygon = readBoundary((String) dbLocationFileNode.getProperty("fileNameAndPath"));
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(is);
+            doc.getDocumentElement().normalize();
+
+            NodeList coordinateList = doc.getElementsByTagName("coordinates");
+            String coordinates = null;
+            for (int temp = 0; temp < coordinateList.getLength(); temp++) {
+                Node nNode = coordinateList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    coordinates = eElement.getTextContent();
+                    processCoordinates(coordinates, locationId, add);
+                }
+            }
+        } catch (IOException ioe) {
+            throw new ApplicationException(ioe);
+        } catch (ParserConfigurationException pce) {
+            throw new ApplicationException(pce);
+        } catch (SAXException se) {
+            throw new ApplicationException(se);
+        }
+    }
+
+    private void processCoordinates(String coordinates, Long locationId, boolean add) throws ApplicationException {
+
+        Path2D myPolygon = createPolygon(coordinates);
         Rectangle coveringRectangle = myPolygon.getBounds();
         MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
         BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc);
