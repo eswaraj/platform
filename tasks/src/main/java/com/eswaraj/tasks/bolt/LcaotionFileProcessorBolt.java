@@ -67,11 +67,6 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             template.setConnectionFactory(jedisConnectionFactory);
             template.afterPropertiesSet();
             */
-
-
-            
-
-
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {

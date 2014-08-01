@@ -19,7 +19,12 @@
 		<async-supported>true</async-supported> </filter> <filter-mapping> <filter-name>csrfFilter</filter-name> 
 		<url-pattern>/*</url-pattern> </filter-mapping> -->
 	<!-- Processes application requests -->
-
+    <multipart-config>
+      <!-- 52MB max -->
+      <max-file-size>5242880</max-file-size>
+      <max-request-size>5242880</max-request-size>
+      <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
 	<filter>
 		<display-name>springMultipartFilter</display-name>
 		<filter-name>springMultipartFilter</filter-name>
