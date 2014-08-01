@@ -118,6 +118,7 @@ public class LocationServiceImpl implements LocationService {
 		if(location == null){
 			throw new ApplicationException("No such location exists[id="+locationId+"]");
 		}
+        System.out.println("createNewLocationBoundaryFile Started");
         LocationBoundaryFile existingLocationBoundayrFile = locationBoundaryFileRepository.getActiveLocationBoundaryFile(location);
         String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
         if (existingLocationBoundayrFile != null) {
@@ -132,7 +133,7 @@ public class LocationServiceImpl implements LocationService {
         logger.info("saving file {}", fileName);
         //save file to a storage
         String httpPath = fileService.saveFile(fileDir, fileName, inputStream);
-
+        System.out.println("httpPath Saved = " + httpPath);
 		//create LocationBoudaryFile
 		LocationBoundaryFile locationBoundaryFile = new LocationBoundaryFile();
 		locationBoundaryFile.setLocation(location);
@@ -142,9 +143,10 @@ public class LocationServiceImpl implements LocationService {
         locationBoundaryFile.setActive(true);
 		
 		locationBoundaryFile = locationBoundaryFileRepository.save(locationBoundaryFile);
-
+        System.out.println("locationBoundaryFile Saved = " + locationBoundaryFile);
         // Updaye Locaion Object with KMl file
         location.setBoundaryFile(httpPath);
+        location = locationRepository.save(location);
 
         JsonObject jsonObject = new JsonObject();
         if (existingLocationBoundayrFile != null) {
@@ -154,6 +156,7 @@ public class LocationServiceImpl implements LocationService {
         jsonObject.addProperty("locationId", location.getId());
 
         logger.info("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
+        System.out.println("Sending message " + jsonObject.toString() + " to queue " + awsLocationQueueName);
 
         awsQueueProducer.sendMessage(awsLocationQueueName, jsonObject.toString());
 

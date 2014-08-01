@@ -57,6 +57,11 @@ public class LocationBoundaryFile extends BaseNode {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "LocationBoundaryFile [fileNameAndPath=" + fileNameAndPath + ", location=" + location + ", uploadDate=" + uploadDate + ", status=" + status + ", active=" + active + ", id=" + id + "]";
+    }
 	
 	
 }
