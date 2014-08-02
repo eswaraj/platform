@@ -18,7 +18,7 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
             message = getQueueService().receiveLocationFileUploadMessage();
             if (message != null) {
                 logInfo("Mesage Recieved in Spout :  " + message);
-                writeToStream(new Values(message, 1L));
+                writeToStream(new Values(message));
             }
         } catch (ApplicationException e) {
             logError("Unable to receive Location File message from AWS Quque", e);
