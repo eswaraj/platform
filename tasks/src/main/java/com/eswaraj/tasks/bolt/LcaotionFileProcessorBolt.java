@@ -244,7 +244,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
         } else {
             totalPointsMissed.incrementAndGet();
         }
-        if (totalPointsProcessed.get() % 1000 == 0) {
+        if ((totalPointsProcessed.get() + totalPointsMissed.get()) % 10000 == 0) {
             logInfo("Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }
     }
