@@ -18,10 +18,14 @@
 	<context:component-scan base-package="com.eswaraj.core.service.impl" />
 	<context:component-scan base-package="com.eswaraj.core.convertors" />
 	<context:component-scan base-package="com.eswaraj.core.util" />
+	<context:component-scan base-package="com.eswaraj.queue.service.aws.impl" />
 	
 	<!-- Do not enter db url or user name/password here, in Prod and test end these will be injected from Env in ur local env, you can define these as enviornment variables -->
 	<tx:annotation-driven />
-	
+
+    <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton" >
+    </bean>    
+		
 	<!-- All Enviornment related beans are defined here and we dont use @Component in class
 		same way in eswaraj-core-test.xml we have defined test related beans 
 	-->

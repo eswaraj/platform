@@ -1,5 +1,6 @@
 package com.eswaraj.tasks.topology;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -33,8 +34,9 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     @Override
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.outputCollector = collector;
-        initializeRedisService("cache.vyaut5.0001.usw2.cache.amazonaws.com", 6379);
-        initializeDbService("http://ip-172-31-47-87.us-west-2.compute.internal:7474/db/data");
+        super.init();
+        //initializeRedisService("cache.vyaut5.0001.usw2.cache.amazonaws.com", 6379);
+        //initializeDbService("http://ip-172-31-47-87.us-west-2.compute.internal:7474/db/data");
     }
 
     public final void saveToRedis(String key, Object object) {
@@ -45,13 +47,33 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     public final void declareOutputFields(OutputFieldsDeclarer declarer) {
         logInfo("outputStream = " + outputStream);
         if (outputStream != null) {
-            declarer.declareStream(outputStream, new Fields("Test"));
+            declarer.declareStream(outputStream, new Fields(getFields()));
         }
+    }
+
+    protected String[] getFields() {
+        return new String[] { "Default" };
+    }
+
+    @Override
+    protected void writeToStream(List<Object> tuple) {
+        logInfo("Writing To Stream " + outputStream);
+        outputCollector.emit(outputStream, tuple);
+    }
+
+    @Override
+    protected void writeToTaskStream(int taskId, List<Object> tuple) {
+        outputCollector.emitDirect(taskId, outputStream, tuple);
+    }
+
+    @Override
+    protected void writeToTaskStream(int taskId, List<Object> tuple, Object messageId) {
+        outputCollector.emitDirect(taskId, outputStream, tuple);
     }
 
     @Override
     public void cleanup() {
-
+        super.destroy();
     }
 
     @Override

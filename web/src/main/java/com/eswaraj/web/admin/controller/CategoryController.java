@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.core.util.AwsQueueProducer;
+import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.gson.JsonObject;
@@ -31,7 +31,7 @@ public class CategoryController extends BaseController{
 	private AppService appService;
 	
     @Autowired
-    private AwsQueueProducer awsQueueProducer;
+    private AwsQueueManager awsQueueProducer;
 
     @Value("${aws_category_queue_name}")
     private String categoryQueue;

@@ -1,11 +1,13 @@
 package com.eswaraj.web.admin.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
@@ -17,13 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.LocationService;
@@ -37,9 +36,6 @@ public class LocationController extends BaseController {
 
     @Autowired
     private LocationService locationService;
-
-    @Autowired
-    private CustomService customService;
 
     @Autowired
     private FileService fileService;
@@ -60,17 +56,24 @@ public class LocationController extends BaseController {
     }
 
     @RequestMapping(value = "/location/upload/{locationId}", method = RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") String name, @RequestParam("file") MultipartFile file, @PathVariable Long locationId) {
-        if (!file.isEmpty()) {
-            try {
-                customService.processLocationBoundaryFile(locationId, file.getInputStream());
-                return "You successfully uploaded " + name + " into " + name + "-uploaded !";
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " + name + " because the file was empty.";
+    public @ResponseBody String handleFileUpload(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws IOException, ServletException, ApplicationException {
+        System.out.println("locationId=" + locationId);
+        Collection<Part> parts = httpServletRequest.getParts();
+        for (Part onePart : parts) {
+            System.out.println("getContentType = " + onePart.getContentType());
+            System.out.println("getName = " + onePart.getName());
+            System.out.println("getSize = " + onePart.getSize());
+            System.out.println("getSubmittedFileName = " + onePart.getSubmittedFileName());
+            System.out.println("getHeaderNames = " + onePart.getHeaderNames());
         }
+        Part uploadedImagePart = httpServletRequest.getPart("file");
+        if (uploadedImagePart == null) {
+            throw new ApplicationException("Please choose a file");
+        }
+        LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+
+
+        return locationBoundaryFileDto.getFileNameAndPath();
     }
 
     @RequestMapping(value = "/ajax/locationtype/get", method = RequestMethod.GET)

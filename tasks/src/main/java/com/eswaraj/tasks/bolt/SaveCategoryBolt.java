@@ -14,13 +14,11 @@ import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.tuple.Tuple;
 
-import com.eswaraj.core.service.AppService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 @Component
 public class SaveCategoryBolt extends EswarajBaseBolt {
 
-	private AppService appService;
 	/**
 	 * 
 	 */
@@ -43,7 +41,6 @@ public class SaveCategoryBolt extends EswarajBaseBolt {
 
 	@Override
 	public void execute(Tuple input) {
-        logInfo("Message Received " + input + ", " + appService);
 		try{
 			//List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
 			//TODO write these categories to Redis

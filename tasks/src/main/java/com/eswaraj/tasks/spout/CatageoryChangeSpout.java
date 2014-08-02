@@ -1,27 +1,25 @@
 package com.eswaraj.tasks.spout;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.tasks.topology.EswarajAwsSqsBaseSpout;
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.tasks.topology.EswarajBaseSpout;
 
-public class CatageoryChangeSpout extends EswarajAwsSqsBaseSpout {
-
-    @Autowired
-    public CatageoryChangeSpout(@Value("${aws_category_queue_name}") String awsQueueName) {
-        super(awsQueueName);
-    }
+public class CatageoryChangeSpout extends EswarajBaseSpout {
 
     private static final long serialVersionUID = 1L;
 
     @Override
     public void nextTuple() {
-        String message = getMessage();
-        logInfo("Mesage Recieved in Spout :  " + message);
-        if (message != null) {
-            writeToStream(new Values(message));
+        String message;
+        try {
+            message = getQueueService().receiveCategoryUpdateMessage();
+            if (message != null) {
+                logInfo("Mesage Recieved in Spout :  " + message);
+                writeToStream(new Values(message));
+            }
+        } catch (ApplicationException e) {
+            logError("Unable to receive Category Update message from AWS Quque", e);
         }
 
     }

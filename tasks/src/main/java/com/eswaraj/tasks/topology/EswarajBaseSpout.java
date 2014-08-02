@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.IRichSpout;
 import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 
-public abstract class EswarajBaseSpout extends BaseRichSpout {
+public abstract class EswarajBaseSpout extends EswarajBaseComponent implements IRichSpout {
 
 	private static final long serialVersionUID = 1L;
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -23,9 +23,11 @@ public abstract class EswarajBaseSpout extends BaseRichSpout {
     protected String componentId;
     private SpoutOutputCollector collector;
 
+
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
         this.collector = collector;
+        super.init();
     }
 	@Override
 	public Map<String, Object> getComponentConfiguration() {
@@ -45,29 +47,33 @@ public abstract class EswarajBaseSpout extends BaseRichSpout {
     }
 
     protected String[] getFields() {
-        return new String[] { "Test" };
+        return new String[] { "Default" };
     }
 
 	public void setOutputStream(String outputStream) {
 		this.outputStream = outputStream;
 	}
 
+    @Override
     protected void writeToStream(List<Object> tuple) {
         logInfo("Writing To Stream " + outputStream);
-		collector.emit(outputStream, tuple);
-	}
+        collector.emit(outputStream, tuple);
+    }
 
     protected void writeToStream(List<Object> tuple, Object messageId) {
-		collector.emit(outputStream, tuple, messageId);
-	}
-	
-    protected void writeToTaskStream(int taskId, List<Object> tuple) {
-		collector.emitDirect(taskId, outputStream, tuple);
-	}
+        collector.emit(outputStream, tuple, messageId);
+    }
 
+    @Override
+    protected void writeToTaskStream(int taskId, List<Object> tuple) {
+        collector.emitDirect(taskId, outputStream, tuple);
+    }
+
+    @Override
     protected void writeToTaskStream(int taskId, List<Object> tuple, Object messageId) {
-		collector.emitDirect(taskId, outputStream, tuple);
-	}
+        collector.emitDirect(taskId, outputStream, tuple);
+    }
+
 	protected void logInfo(String message){
 		logger.info(message);
 	}
@@ -77,6 +83,10 @@ public abstract class EswarajBaseSpout extends BaseRichSpout {
 	protected void logError(String message){
 		logger.error(message);
 	}
+
+    protected void logError(String message, Throwable ex) {
+        logger.error(message, ex);
+    }
 
     public String getComponentId() {
         return componentId;
@@ -92,6 +102,29 @@ public abstract class EswarajBaseSpout extends BaseRichSpout {
 
     public void setCollector(SpoutOutputCollector collector) {
         this.collector = collector;
+    }
+
+    @Override
+    public void close() {
+        super.destroy();
+    }
+
+    @Override
+    public void activate() {
+
+    }
+
+    @Override
+    public void deactivate() {
+
+    }
+
+    @Override
+    public void ack(Object msgId) {
+    }
+
+    @Override
+    public void fail(Object msgId) {
     }
 
 }

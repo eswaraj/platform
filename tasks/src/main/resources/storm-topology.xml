@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:util="http://www.springframework.org/schema/util"
+     xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
@@ -20,6 +24,7 @@
 	        <list>
 	            <ref bean="CatageoryChangeSpoutBean" />
 	            <ref bean="LocationFileUploadSpoutBean" />
+	            <ref bean="ComplaintCreatedSpoutBean" />
 	        </list>
         </property>
         <property name="boltConfigs">
@@ -34,21 +39,40 @@
     <bean id="CatageoryChangeSpoutBean" class="com.eswaraj.tasks.spout.CatageoryChangeSpout">
         <property name="componentId" value="CatageoryChangeSpout" />
         <property name="outputStream" value="CatageoryChangeStream" />
-        <property name="deleteMessageOnFail" value="true" />
-        <property name="defaultWaitTime" value="20" /><!-- In seconds -->
-        <property name="maxNumberOfMessages" value="1" />
+        <!-- Properties define which services will be available for spout  -->        
+        <property name="initializeRedisServices" value="false" />
+        <property name="initializeQueueServices" value="true" />
+        <property name="initializeDbServices" value="false" />
     </bean>
     <bean id="LocationFileUploadSpoutBean" class="com.eswaraj.tasks.spout.LocationFileUploadSpout">
         <property name="componentId" value="LocationFileUploadSpout" />
         <property name="outputStream" value="LocationFileUploadStream" />
-        <property name="deleteMessageOnFail" value="true" />
-        <property name="defaultWaitTime" value="20" /><!-- In seconds -->
-        <property name="maxNumberOfMessages" value="1" />
+        <!-- Properties define which services will be available for spout  -->        
+        <property name="initializeRedisServices" value="false" />
+        <property name="initializeQueueServices" value="true" />
+        <property name="initializeDbServices" value="false" />
+    </bean>
+    
+    <bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
+        <property name="componentId" value="ComplaintCreatedSpout" />
+        <property name="outputStream" value="ComplaintCreatedStream" />
+        <!-- Properties define which services will be available for spout  -->        
+        <property name="initializeRedisServices" value="false" />
+        <property name="initializeQueueServices" value="true" />
+        <property name="initializeDbServices" value="false" />
     </bean>
     
     
+    
+        <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="QueueService" name="QueueService" scope="singleton" >
+    </bean>    
+    
     <bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
         <property name="componentId" value="CatageoryChangeBolt" />
+        <!-- Properties define which services will be available for Bolt  -->        
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="CatageoryChangeSpout" value="CatageoryChangeStream" />
@@ -57,6 +81,10 @@
     </bean>
     <bean id="LcaotionFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LcaotionFileProcessorBolt">
         <property name="componentId" value="LcaotionFileProcessorBolt" />
+        <!-- Properties define which services will be available for Bolt  -->        
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="LocationFileUploadSpout" value="LocationFileUploadStream" />
@@ -64,27 +92,6 @@
         </property>
     </bean>
     	
-	<bean id="TestSpoutBean" class="com.eswaraj.tasks.spout.TestSpout">
-        <property name="componentId" value="TestSpout" />
-        <property name="outputStream" value="TestStream" />
-	</bean>
-	<bean id="TestBoltBean" class="com.eswaraj.tasks.bolt.TestBolt">
-        <property name="componentId" value="TestBolt" />
-        <property name="outputStream" value="TestBoltStream" />
-	    <property name="sourceComponentStreams">
-	        <map>
-	            <entry key="TestSpout" value="TestStream" />
-	        </map>
-        </property>
-	</bean>
-	<bean id="TestBoltBean2" class="com.eswaraj.tasks.bolt.TestBolt">
-        <property name="componentId" value="TestBolt2" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="TestBolt" value="TestBoltStream" />
-            </map>
-        </property>
-    </bean>
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<property name="searchSystemEnvironment" value="true" />
@@ -94,4 +101,11 @@
 			</util:properties>
 		</property>
 	</bean>
+	
+	<!-- Redis Bean -->
+	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+        p:host-name="${redis_server}" p:port="${redis_port}"/>
+	
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" 
+	    p:connection-factory-ref="jedisConnectionFactory"/>
 </beans>

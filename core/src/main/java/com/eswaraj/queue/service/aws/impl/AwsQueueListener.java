@@ -1,4 +1,4 @@
-package com.eswaraj.core.util;
+package com.eswaraj.queue.service.aws.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

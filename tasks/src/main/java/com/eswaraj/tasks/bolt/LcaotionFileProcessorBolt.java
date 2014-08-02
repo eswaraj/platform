@@ -11,6 +11,7 @@ import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,7 +50,8 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             Long locationId = jsonObject.get("locationId").getAsLong();
             if (jsonObject.get("oldLocationBoundaryFileId") != null) {
                 Long oldLocationBoundaryFileId = jsonObject.get("oldLocationBoundaryFileId").getAsLong();
-                processBoundaryFile(locationId, oldLocationBoundaryFileId, false);//remove old file points
+                // processBoundaryFile(locationId, oldLocationBoundaryFileId,
+                // false);//remove old file points
                 // process old file
             }
 
@@ -93,12 +95,14 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
 
             NodeList coordinateList = doc.getElementsByTagName("coordinates");
             String coordinates = null;
+            AtomicLong totalPointsMissed = new AtomicLong(0);
+            AtomicLong totalPointsProcessed = new AtomicLong(0);
             for (int temp = 0; temp < coordinateList.getLength(); temp++) {
                 Node nNode = coordinateList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     coordinates = eElement.getTextContent();
-                    processCoordinates(coordinates, locationId, add);
+                    processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed);
                 }
             }
         } catch (IOException ioe) {
@@ -110,7 +114,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
         }
     }
 
-    private void processCoordinates(String coordinates, Long locationId, boolean add) throws ApplicationException {
+    private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
 
         Path2D myPolygon = createPolygon(coordinates);
         Rectangle coveringRectangle = myPolygon.getBounds();
@@ -127,8 +131,7 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
                 onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
                 i++;
-                logInfo("Created " + i + " points " + onePoint);
-                processOnePoint(myPolygon, onePoint, locationId, add);
+                processOnePoint(myPolygon, onePoint, locationId, add, totalPointsMissed, totalPointsProcessed);
             }
         }
 
@@ -227,18 +230,22 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
         return myPolygon;
     }
 
-    private void processOnePoint(Path2D myPolygon, Point2D onePoint, Long locationId, boolean add) throws ApplicationException {
+    private void processOnePoint(Path2D myPolygon, Point2D onePoint, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
         if (myPolygon.contains(onePoint)) {
+
             String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
-            logInfo("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is inside area Will save key " + redisKey + " in database");
             if (add) {
                 writeToMemoryStoreSet(redisKey, locationId);
             } else {
                 removeFromMemoryStoreSet(redisKey, locationId);
             }
+            totalPointsProcessed.incrementAndGet();
 
         } else {
-            logInfo("Point[" + onePoint.getX() + "," + onePoint.getY() + "] is outside area and will not save");
+            totalPointsMissed.incrementAndGet();
+        }
+        if (totalPointsProcessed.get() % 1000 == 0) {
+            logInfo("Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }
     }
 

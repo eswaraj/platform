@@ -22,7 +22,6 @@ import com.eswaraj.core.convertors.LocationTypeJsonConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
-import com.eswaraj.core.util.AwsQueueProducer;
 import com.eswaraj.core.util.DateTimeUtil;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
@@ -32,13 +31,13 @@ import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.BoundaryDto;
 import com.eswaraj.web.dto.GeoPointDto;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
-import com.google.gson.JsonObject;
 
 @Component
 @Transactional
@@ -63,13 +62,11 @@ public class LocationServiceImpl implements LocationService {
 	@Autowired
 	private DataClientRepository dataClientRepository;
     @Autowired
-    private AwsQueueProducer awsQueueProducer;
+    private QueueService queueService;
 	
     @Value("${aws_s3_directory_for_location_files:locations}")
 	private String awsDirectoryForLocationFiles;
 
-    @Value("${aws_location_file_queue_name}")
-    private String awsLocationQueueName;
 
 	private String indiaEswarajClientName = "Eswaraj-India";
 	private String indiaEswarajRootLocationTypeName = "Country";
@@ -148,17 +145,12 @@ public class LocationServiceImpl implements LocationService {
         location.setBoundaryFile(httpPath);
         location = locationRepository.save(location);
 
-        JsonObject jsonObject = new JsonObject();
+        Long existingLocationBoundaryFileId = null;
         if (existingLocationBoundayrFile != null) {
-            jsonObject.addProperty("oldLocationBoundaryFileId", existingLocationBoundayrFile.getId());
+            existingLocationBoundaryFileId = existingLocationBoundayrFile.getId();
         }
-        jsonObject.addProperty("newLocationBoundaryFileId", locationBoundaryFile.getId());
-        jsonObject.addProperty("locationId", location.getId());
 
-        logger.info("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
-        System.out.println("Sending message " + jsonObject.toString() + " to queue " + awsLocationQueueName);
-
-        awsQueueProducer.sendMessage(awsLocationQueueName, jsonObject.toString());
+        queueService.sendLocationFileUploadMessage(existingLocationBoundaryFileId, locationBoundaryFile.getId(), locationId);
 
 		return locationBoundaryFileConvertor.convertBean(locationBoundaryFile);
 	}

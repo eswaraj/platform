@@ -1,60 +1,46 @@
 package com.eswaraj.core.service.impl;
 
-import java.io.Serializable;
-import java.util.Properties;
-
-import kafka.javaapi.producer.Producer;
-import kafka.producer.KeyedMessage;
-import kafka.producer.ProducerConfig;
-
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.QueueService;
+import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.queue.service.QueueService;
 
-public abstract class KafkaQueueServiceImpl<KeyType,ValueType extends Serializable> implements QueueService<KeyType,ValueType> {
 
-	private Producer<KeyType,ValueType> producer;
-	
-	private ProducerConfig producerConfig;
-	
-	public KafkaQueueServiceImpl(String kafkaBrokers){
-		//this(kafkaBrokers, "com.eswaraj.core.util.MySerializer", "1", "com.eswaraj.core.util.SimplePartitioner");
-        //this(kafkaBrokers, "kafka.serializer.DefaultEncoder", "1", "kafka.producer.DefaultPartitioner");
-        this(kafkaBrokers, "kafka.serializer.StringEncoder", "1", "kafka.producer.DefaultPartitioner");
-        // kafka.producer.ByteArrayPartitioner.
-        
-		
-		
-	}
+public class KafkaQueueServiceImpl implements QueueService {
 
-	public KafkaQueueServiceImpl(String kafkaBrokers, String serializerClass, String ack,String partitionerClass){
-		Properties props = new Properties();
-		props.put("metadata.broker.list", kafkaBrokers);
-		props.put("serializer.class", serializerClass);
-		if(partitionerClass != null){
-			props.put("partitioner.class", partitionerClass);	
-		}
-		props.put("request.required.acks", ack);
-		System.out.println("metadata.broker.list="+ kafkaBrokers);
-		System.out.println("serializer.class="+ serializerClass);
-		System.out.println("partitioner.class="+ partitionerClass);
-		System.out.println("request.required.acks="+ ack);
-		System.out.println("props="+ props);
-		producerConfig = new ProducerConfig(props);
-		
-		producer = new Producer<KeyType,ValueType>(producerConfig);
-	}
-	public void preDestroy(){
-		//Close Producer
-		producer.close();
-	}
-	@Override
-	public void sendMessage(String topicName, ValueType value) throws ApplicationException {
-		KeyedMessage<KeyType, ValueType> message = new KeyedMessage<KeyType, ValueType>(topicName, value);
-		producer.send(message);
-	}
-	@Override
-	public void sendMessage(String topicName, KeyType key, ValueType value) throws ApplicationException {
-		KeyedMessage<KeyType, ValueType> message = new KeyedMessage<KeyType, ValueType>(topicName, key, value);
-		producer.send(message);
-	}
+    @Override
+    public void sendLocationFileUploadMessage(Long existingLocationBoundaryFileId, Long newLocationBoundaryFileId, Long locationId) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public String receiveLocationFileUploadMessage() throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void sendCategoryUpdateMessage(Long categoryId) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public String receiveCategoryUpdateMessage() throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void sendComplaintCreatedMessage(Complaint complaint) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public Complaint receiveComplaintCreatedMessage() throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
 }

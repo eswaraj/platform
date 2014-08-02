@@ -28,7 +28,7 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     }
 	@Override
 	public String buildLocationKey(double longitude, double lattitude) throws ApplicationException {
-        String key = "LOC-" + decimalFormat.format(longitude) + "-" + decimalFormat.format(lattitude);
+        String key = "L" + decimalFormat.format(longitude) + "-" + decimalFormat.format(lattitude);
         return key;
 	}
 

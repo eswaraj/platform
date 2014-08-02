@@ -6,11 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.ComplaintService;
-import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.PersonService;
-import com.eswaraj.core.util.AwsQueueProducer;
+import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 
 @Configuration
 public class MockServiceConfig {
@@ -20,11 +19,6 @@ public class MockServiceConfig {
 		return Mockito.mock(LocationService.class);
 	}
 	
-	@Bean
-	public CustomService customService() {
-		return Mockito.mock(CustomService.class);
-	}
-
 	@Bean
 	public FileService fileService() {
 		return Mockito.mock(FileService.class);
@@ -46,7 +40,7 @@ public class MockServiceConfig {
 	}
 
     @Bean
-    public AwsQueueProducer awsQueueProducer() {
-        return Mockito.mock(AwsQueueProducer.class);
+    public AwsQueueManager awsQueueProducer() {
+        return Mockito.mock(AwsQueueManager.class);
     }
 }

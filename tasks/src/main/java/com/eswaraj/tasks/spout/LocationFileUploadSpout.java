@@ -1,33 +1,33 @@
 package com.eswaraj.tasks.spout;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.tasks.topology.EswarajAwsSqsBaseSpout;
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.tasks.topology.EswarajBaseSpout;
 
-public class LocationFileUploadSpout extends EswarajAwsSqsBaseSpout {
+public class LocationFileUploadSpout extends EswarajBaseSpout {
 
     private static final long serialVersionUID = 1L;
-
-    @Autowired
-    public LocationFileUploadSpout(@Value("${aws_location_file_queue_name}") String awsQueueName) {
-        super(awsQueueName);
-    }
+    
 
     @Override
     public void nextTuple() {
-        String message = getMessage();
-        logInfo("Mesage Recieved in Spout :  " + message);
-        if (message != null) {
-            writeToStream(new Values(message, 1L));
+        String message;
+        try {
+            System.out.println("queueService=" + getQueueService());
+            message = getQueueService().receiveLocationFileUploadMessage();
+            if (message != null) {
+                logInfo("Mesage Recieved in Spout :  " + message);
+                writeToStream(new Values(message, 1L));
+            }
+        } catch (ApplicationException e) {
+            logError("Unable to receive Location File message from AWS Quque", e);
         }
     }
     
     @Override
     protected String[] getFields() {
-        return new String[] { "LatLong", "LocationId" };
+        return new String[] { "LocationSaveMessage" };
     }
 
 }
