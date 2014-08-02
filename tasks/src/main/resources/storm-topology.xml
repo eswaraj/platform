@@ -24,13 +24,17 @@
 	        <list>
 	            <ref bean="CatageoryChangeSpoutBean" />
 	            <ref bean="LocationFileUploadSpoutBean" />
+	            <!-- 
 	            <ref bean="ComplaintCreatedSpoutBean" />
+	             -->
 	        </list>
         </property>
         <property name="boltConfigs">
             <list>
                 <ref bean="CatageoryChangeBoltBean"/>
+                <!-- 
                 <ref bean="LcaotionFileProcessorBoltBean"/>
+                 -->
                 
             </list>
         </property>
@@ -61,11 +65,6 @@
         <property name="initializeQueueServices" value="true" />
         <property name="initializeDbServices" value="false" />
     </bean>
-    
-    
-    
-        <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="QueueService" name="QueueService" scope="singleton" >
-    </bean>    
     
     <bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
         <property name="componentId" value="CatageoryChangeBolt" />
@@ -102,10 +101,4 @@
 		</property>
 	</bean>
 	
-	<!-- Redis Bean -->
-	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-        p:host-name="${redis_server}" p:port="${redis_port}"/>
-	
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" 
-	    p:connection-factory-ref="jedisConnectionFactory"/>
 </beans>

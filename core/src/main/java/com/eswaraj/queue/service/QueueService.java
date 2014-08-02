@@ -2,6 +2,7 @@ package com.eswaraj.queue.service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.web.dto.ComplaintDto;
 
 public interface QueueService {
 
@@ -15,5 +16,5 @@ public interface QueueService {
 
     void sendComplaintCreatedMessage(Complaint complaint) throws ApplicationException;
 
-    Complaint receiveComplaintCreatedMessage() throws ApplicationException;
+    ComplaintDto receiveComplaintCreatedMessage() throws ApplicationException;
 }

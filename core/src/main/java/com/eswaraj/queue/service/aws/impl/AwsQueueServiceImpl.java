@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.queue.service.QueueService;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -90,10 +91,10 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     }
 
     @Override
-    public Complaint receiveComplaintCreatedMessage() throws ApplicationException {
+    public ComplaintDto receiveComplaintCreatedMessage() throws ApplicationException {
         String mesage = awsQueueManager.receiveMessage(awsComplaintCreatedQueueName);
         Gson gson = new Gson();
-        return gson.fromJson(mesage, Complaint.class);
+        return gson.fromJson(mesage, ComplaintDto.class);
     }
 
 }

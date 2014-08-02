@@ -1,5 +1,6 @@
 package com.eswaraj.tasks.topology;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -20,7 +21,7 @@ import com.eswaraj.queue.service.QueueService;
  * @author Ravi
  *
  */
-public abstract class EswarajBaseComponent {
+public abstract class EswarajBaseComponent implements Serializable {
     private boolean initializeDbServices = false;
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
