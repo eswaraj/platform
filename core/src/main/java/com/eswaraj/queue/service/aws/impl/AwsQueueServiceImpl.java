@@ -44,8 +44,12 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
 
     }
 
-    public AwsQueueServiceImpl(AwsQueueManager awsQueueManager) {
+    public AwsQueueServiceImpl(AwsQueueManager awsQueueManager, String awsLocationQueueName, String awsCategoryUpdateQueueName, String awsComplaintCreatedQueueName) {
+        super();
         this.awsQueueManager = awsQueueManager;
+        this.awsLocationQueueName = awsLocationQueueName;
+        this.awsCategoryUpdateQueueName = awsCategoryUpdateQueueName;
+        this.awsComplaintCreatedQueueName = awsComplaintCreatedQueueName;
     }
 
     /**

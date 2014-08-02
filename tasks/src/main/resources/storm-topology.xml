@@ -36,7 +36,7 @@
             </list>
         </property>
 	</bean>
-
+	
     <bean id="CatageoryChangeSpoutBean" class="com.eswaraj.tasks.spout.CatageoryChangeSpout">
         <property name="componentId" value="CatageoryChangeSpout" />
         <property name="outputStream" value="CatageoryChangeStream" />
@@ -54,6 +54,11 @@
         <property name="regions" value="${aws_region}" />
         <property name="accessKey" value="${aws_access_key}" />
         <property name="secretKey" value="${aws_access_secret}" />
+        
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
     </bean>
     <bean id="LocationFileUploadSpoutBean" class="com.eswaraj.tasks.spout.LocationFileUploadSpout">
         <property name="componentId" value="LocationFileUploadSpout" />
@@ -72,7 +77,11 @@
         <property name="regions" value="${aws_region}" />
         <property name="accessKey" value="${aws_access_key}" />
         <property name="secretKey" value="${aws_access_secret}" />
-    </bean>
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+     </bean>
     
     <bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
         <property name="componentId" value="ComplaintCreatedSpout" />
@@ -91,6 +100,12 @@
         <property name="regions" value="${aws_region}" />
         <property name="accessKey" value="${aws_access_key}" />
         <property name="secretKey" value="${aws_access_secret}" />
+        
+         <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+        
     </bean>
     
     <bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
@@ -114,6 +129,12 @@
         <property name="regions" value="${aws_region}" />
         <property name="accessKey" value="${aws_access_key}" />
         <property name="secretKey" value="${aws_access_secret}" />
+        
+                <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+        
     </bean>
     <bean id="LcaotionFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LcaotionFileProcessorBolt">
         <property name="componentId" value="LcaotionFileProcessorBolt" />
@@ -136,6 +157,12 @@
         <property name="regions" value="${aws_region}" />
         <property name="accessKey" value="${aws_access_key}" />
         <property name="secretKey" value="${aws_access_secret}" />
+        
+                <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+        
     </bean>
     	
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

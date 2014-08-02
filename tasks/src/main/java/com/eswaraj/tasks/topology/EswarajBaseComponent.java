@@ -42,6 +42,10 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String accessKey;
     private String secretKey;
 
+    private String awsLocationQueueName;
+    private String awsCategoryUpdateQueueName;
+    private String awsComplaintCreatedQueueName;
+
     protected void init() {
         if (initializeDbServices) {
             initializeDbService(dbUrl);
@@ -76,7 +80,8 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
         AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
-        queueService = new AwsQueueServiceImpl(awsQueueManager);
+        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName);
+
     }
 
     protected abstract void writeToStream(List<Object> tuple);
@@ -251,6 +256,30 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public String getAwsLocationQueueName() {
+        return awsLocationQueueName;
+    }
+
+    public void setAwsLocationQueueName(String awsLocationQueueName) {
+        this.awsLocationQueueName = awsLocationQueueName;
+    }
+
+    public String getAwsCategoryUpdateQueueName() {
+        return awsCategoryUpdateQueueName;
+    }
+
+    public void setAwsCategoryUpdateQueueName(String awsCategoryUpdateQueueName) {
+        this.awsCategoryUpdateQueueName = awsCategoryUpdateQueueName;
+    }
+
+    public String getAwsComplaintCreatedQueueName() {
+        return awsComplaintCreatedQueueName;
+    }
+
+    public void setAwsComplaintCreatedQueueName(String awsComplaintCreatedQueueName) {
+        this.awsComplaintCreatedQueueName = awsComplaintCreatedQueueName;
     }
 
 }
