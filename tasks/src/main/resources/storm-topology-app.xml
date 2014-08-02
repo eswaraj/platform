@@ -11,11 +11,6 @@
 
 	<context:component-scan base-package="com.eswaraj.tasks.topology" />
 
-	<import resource="classpath:eswaraj-core.xml" />
-	<import resource="classpath:eswaraj-neo4j-db-context.xml" />
-
-	<context:property-placeholder />
-	
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<property name="searchSystemEnvironment" value="true" />
@@ -26,7 +21,10 @@
 		</property>
 	</bean>
 	
-	<!-- Redis Bean -->
+    <import resource="classpath:eswaraj-core.xml" />
+    <import resource="classpath:eswaraj-neo4j-db-context.xml" />
+	
+    <!-- Redis Bean -->
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
         p:host-name="${redis_server}" p:port="${redis_port}" lazy-init="true" />
 	
