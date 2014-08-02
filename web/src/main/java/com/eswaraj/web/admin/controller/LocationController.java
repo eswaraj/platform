@@ -147,12 +147,12 @@ public class LocationController extends BaseController {
                 throw new ApplicationException("Please choose a file");
             }
             LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
-
+            return locationBoundaryFileDto.getFileNameAndPath();
         } catch (Exception ex) {
             throw new ApplicationException(ex);
         }
 
-        return "All Good";
+
 
     }
 
