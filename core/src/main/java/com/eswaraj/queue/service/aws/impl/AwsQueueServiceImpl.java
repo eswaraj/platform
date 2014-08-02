@@ -44,6 +44,9 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
 
     }
 
+    public AwsQueueServiceImpl(AwsQueueManager awsQueueManager) {
+        this.awsQueueManager = awsQueueManager;
+    }
 
     /**
      * Will send a message to AWS Queue whose name is awsLocationQueueName

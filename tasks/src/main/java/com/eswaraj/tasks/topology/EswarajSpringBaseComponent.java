@@ -7,15 +7,13 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Transaction;
-import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.queue.service.QueueService;
-import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
-import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
 
 /**
  * This class gives support for Neo4j and Redis to all Spouts and Bolts
@@ -23,7 +21,7 @@ import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
  * @author Ravi
  *
  */
-public abstract class EswarajBaseComponent implements Serializable {
+public abstract class EswarajSpringBaseComponent implements Serializable {
     private boolean initializeDbServices = false;
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
@@ -34,49 +32,38 @@ public abstract class EswarajBaseComponent implements Serializable {
     private AppService appService;
 
     private QueueService queueService;
-
-    private String dbUrl;
-    private String redisUrl;
-    private int redisPort;
-    private String regions;
-    private String accessKey;
-    private String secretKey;
+    private ClassPathXmlApplicationContext applicationContext;
 
     protected void init() {
-        if (initializeDbServices) {
-            initializeDbService(dbUrl);
-        }
+        applicationContext = new ClassPathXmlApplicationContext("storm-topology-app.xml");
+        appService = applicationContext.getBean(AppService.class);
         if (initializeQueueServices) {
-            initializeQueueService(regions, accessKey, secretKey);
+            initializeQueueService(applicationContext);
+        }
+        if (initializeDbServices) {
+            initializeDbService(applicationContext);
         }
         if (initializeRedisServices) {
-            initializeRedisService(redisUrl, redisPort);
+            initializeRedisService(applicationContext);
         }
-    }
 
-    protected void initializeDbService(String dbUrl) {
-        graphDatabaseService = new SpringRestGraphDatabase(dbUrl);
-        neo4jTemplate = new Neo4jTemplate(graphDatabaseService);
-    }
-
-    protected void initializeRedisService(String redisUrl, int redisPort) {
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName(redisUrl);
-        jedisConnectionFactory.setPort(redisPort);
-        jedisConnectionFactory.setUsePool(true);
-        jedisConnectionFactory.afterPropertiesSet();
-
-        redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
-        redisTemplate.afterPropertiesSet();
     }
 
     protected void destroy() {
+        applicationContext.close();
     }
 
-    private void initializeQueueService(String regions, String accessKey, String secretKey) {
-        AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
-        queueService = new AwsQueueServiceImpl(awsQueueManager);
+    private void initializeDbService(ApplicationContext applicationContext) {
+        graphDatabaseService = applicationContext.getBean(GraphDatabaseService.class);
+        neo4jTemplate = applicationContext.getBean(Neo4jTemplate.class);
+    }
+
+    private void initializeQueueService(ApplicationContext applicationContext) {
+        queueService = applicationContext.getBean(QueueService.class);
+    }
+
+    private void initializeRedisService(ApplicationContext applicationContext) {
+        redisTemplate = applicationContext.getBean(RedisTemplate.class);
     }
 
     protected abstract void writeToStream(List<Object> tuple);
@@ -203,54 +190,6 @@ public abstract class EswarajBaseComponent implements Serializable {
         if (!initializeDbServices) {
             throw new RuntimeException("DB Service has not been intialized, set the property initializeDbServices to true");
         }
-    }
-
-    public String getDbUrl() {
-        return dbUrl;
-    }
-
-    public void setDbUrl(String dbUrl) {
-        this.dbUrl = dbUrl;
-    }
-
-    public String getRedisUrl() {
-        return redisUrl;
-    }
-
-    public void setRedisUrl(String redisUrl) {
-        this.redisUrl = redisUrl;
-    }
-
-    public int getRedisPort() {
-        return redisPort;
-    }
-
-    public void setRedisPort(int redisPort) {
-        this.redisPort = redisPort;
-    }
-
-    public String getRegions() {
-        return regions;
-    }
-
-    public void setRegions(String regions) {
-        this.regions = regions;
-    }
-
-    public String getAccessKey() {
-        return accessKey;
-    }
-
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
     }
 
 }

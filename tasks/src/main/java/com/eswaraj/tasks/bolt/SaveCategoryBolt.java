@@ -8,7 +8,6 @@ import org.neo4j.rest.graphdb.RestGraphDatabase;
 import org.springframework.data.neo4j.core.GraphDatabase;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.stereotype.Component;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -16,7 +15,6 @@ import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
-@Component
 public class SaveCategoryBolt extends EswarajBaseBolt {
 
 	/**

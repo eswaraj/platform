@@ -28,7 +28,9 @@
         </property>
         <property name="boltConfigs">
             <list>
+                <!-- 
                 <ref bean="CatageoryChangeBoltBean"/>
+                 -->
                 <ref bean="LcaotionFileProcessorBoltBean"/>
                 
             </list>
@@ -42,6 +44,16 @@
         <property name="initializeRedisServices" value="false" />
         <property name="initializeQueueServices" value="true" />
         <property name="initializeDbServices" value="false" />
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
     </bean>
     <bean id="LocationFileUploadSpoutBean" class="com.eswaraj.tasks.spout.LocationFileUploadSpout">
         <property name="componentId" value="LocationFileUploadSpout" />
@@ -50,6 +62,16 @@
         <property name="initializeRedisServices" value="false" />
         <property name="initializeQueueServices" value="true" />
         <property name="initializeDbServices" value="false" />
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
     </bean>
     
     <bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
@@ -59,6 +81,16 @@
         <property name="initializeRedisServices" value="false" />
         <property name="initializeQueueServices" value="true" />
         <property name="initializeDbServices" value="false" />
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
     </bean>
     
     <bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
@@ -72,6 +104,16 @@
                 <entry key="CatageoryChangeSpout" value="CatageoryChangeStream" />
             </map>
         </property>
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
     </bean>
     <bean id="LcaotionFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LcaotionFileProcessorBolt">
         <property name="componentId" value="LcaotionFileProcessorBolt" />
@@ -84,6 +126,16 @@
                 <entry key="LocationFileUploadSpout" value="LocationFileUploadStream" />
             </map>
         </property>
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
     </bean>
     	
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

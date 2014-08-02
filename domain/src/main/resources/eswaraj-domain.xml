@@ -15,7 +15,7 @@
 
 	<context:annotation-config />
 	
-	<neo4j:repositories base-package="com.eswaraj.domain.repo, com.eswaraj.domain.nodes.different" />
+	<neo4j:repositories base-package="com.eswaraj.domain.repo" />
 	<context:component-scan base-package="com.eswaraj.domain.validator" />
 
 

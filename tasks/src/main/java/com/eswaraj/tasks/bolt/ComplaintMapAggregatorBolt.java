@@ -3,7 +3,6 @@ package com.eswaraj.tasks.bolt;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -21,7 +20,6 @@ import com.eswaraj.core.service.AppService;
  * @author Ravi
  *
  */
-@Component
 public class ComplaintMapAggregatorBolt implements IRichBolt{
 
 	@Autowired
