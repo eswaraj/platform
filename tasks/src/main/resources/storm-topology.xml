@@ -11,9 +11,6 @@
 
 	<context:component-scan base-package="com.eswaraj.tasks.topology" />
 
-	<import resource="classpath:eswaraj-core.xml" />
-	<import resource="classpath:eswaraj-neo4j-db-context.xml" />
-
 	<bean class="com.eswaraj.tasks.topology.SpringEswarajTopology">
 		<property name="name" value="Eswaraj" />
 		<property name="maxSpoutPending" value="5000" />
@@ -32,9 +29,7 @@
         <property name="boltConfigs">
             <list>
                 <ref bean="CatageoryChangeBoltBean"/>
-                <!-- 
                 <ref bean="LcaotionFileProcessorBoltBean"/>
-                 -->
                 
             </list>
         </property>
