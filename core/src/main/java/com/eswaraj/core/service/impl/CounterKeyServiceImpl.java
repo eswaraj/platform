@@ -8,13 +8,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.eswaraj.core.service.CounterKeyService;
 
+@Component
 public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final String GLOBAL_KEY = "Global";
-    private final String GLOBAL_PREFIX = GLOBAL_KEY + ".";
+    private final String GLOBAL_PREFIX = "Global.";
 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
     protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
