@@ -32,6 +32,10 @@
 				<ref bean="MonthCounterBoltBean" />
 				<ref bean="YearCounterBoltBean" />
 				<ref bean="TotalCounterBoltBean" />
+				<ref bean="CategoryHourlyCounterBoltBean" />
+				<ref bean="LocationHourlyCounterBoltBean" />
+				<ref bean="LocationCategoryHourlyCounterBoltBean" />
+				
 			</list>
 		</property>
 	</bean>
@@ -198,7 +202,7 @@
 
 	</bean>
 
-	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.GlobalHourlyCounterBolt">
+	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.GlobalHourlyCounterBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
 		<property name="outputStream" value="GlobalHourlyCounterStream" />
 		<property name="paralellism" value="1" />
@@ -229,6 +233,102 @@
 
 	</bean>
 	
+	<bean id="CategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.CategoryHourlyCounterBolt">
+        <property name="componentId" value="CategoryHourlyCounterBolt" />
+        <property name="outputStream" value="CategoryHourlyCounterStream" />
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+            </map>
+        </property>
+
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	<bean id="LocationHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.LocationHourlyCounterBolt">
+        <property name="componentId" value="LocationHourlyCounterBolt" />
+        <property name="outputStream" value="LocationHourlyCounterStream" />
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+            </map>
+        </property>
+
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	<bean id="LocationCategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.LocationCategoryHourlyCounterBolt">
+        <property name="componentId" value="LocationCategoryHourlyCounterBolt" />
+        <property name="outputStream" value="LocationCategoryHourlyCounterStream" />
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+            </map>
+        </property>
+
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	
+	
+	
 	<bean id="DayCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.DayCounterBolt">
         <property name="componentId" value="DayCounterBolt" />
         <property name="outputStream" value="DayCounterStream" />
@@ -241,6 +341,9 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
+                <entry key="CategoryHourlyCounterBolt" value="CategoryHourlyCounterStream" />
+                <entry key="LocationHourlyCounterBolt" value="CategoryHourlyCounterStream" />
+                <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
             </map>
         </property>
 
@@ -272,6 +375,9 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
+                <entry key="CategoryHourlyCounterBolt" value="CategoryHourlyCounterStream" />
+                <entry key="LocationHourlyCounterBolt" value="CategoryHourlyCounterStream" />
+                <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
             </map>
         </property>
 

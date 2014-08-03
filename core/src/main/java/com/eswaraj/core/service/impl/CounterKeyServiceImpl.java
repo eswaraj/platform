@@ -17,6 +17,8 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
 
     private static final long serialVersionUID = 1L;
     private final String GLOBAL_PREFIX = "Global.";
+    private final String CATEGORY_PREFIX = "Category.";
+    private final String LOCATION_PREFIX = "Location.";
 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
     protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
@@ -132,6 +134,36 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
             allYearKeys.add(getYearComplaintCounterKey(prefix, calendar.getTime()));
         }
         return allYearKeys;
+    }
+
+    @Override
+    public String getCategoryHourComplaintCounterKey(Date date, Long categoryId) {
+        return getCategoryKeyPrefix(categoryId) + hourFormat.format(date);
+    }
+
+    @Override
+    public String getCategoryKeyPrefix(Long categoryId) {
+        return CATEGORY_PREFIX + categoryId + ".";
+    }
+
+    @Override
+    public String getLocationHourComplaintCounterKey(Date date, Long locationId) {
+        return getLocationKeyPrefix(locationId) + hourFormat.format(date);
+    }
+
+    @Override
+    public String getLocationKeyPrefix(Long locationId) {
+        return LOCATION_PREFIX + locationId + ".";
+    }
+
+    @Override
+    public String getLocationCategoryHourComplaintCounterKey(Date date, Long locationId, Long categoryId) {
+        return getLocationCategoryKeyPrefix(locationId, categoryId) + hourFormat.format(date);
+    }
+
+    @Override
+    public String getLocationCategoryKeyPrefix(Long locationId, Long categoryId) {
+        return LOCATION_PREFIX + locationId + "." + CATEGORY_PREFIX + categoryId + ".";
     }
 
 }

@@ -1,8 +1,9 @@
-package com.eswaraj.tasks.bolt;
+package com.eswaraj.tasks.bolt.counter.starter;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.neo4j.annotation.QueryType;
@@ -16,13 +17,13 @@ import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
-public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
+public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
 
     private static final long serialVersionUID = 1L;
 
     CounterKeyService counterKeyService;
 
-    public GlobalHourlyCounterBolt() {
+    public CategoryHourlyCounterBolt() {
         counterKeyService = new CounterKeyServiceImpl();
     }
 
@@ -33,25 +34,33 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
+        List<Long> categories = complaintCreatedMessage.getCategoryIds();
 
-        String redisKey = counterKeyService.getGlobalHourComplaintCounterKey(creationDate);
-        logInfo("redisKey = " + redisKey);
-        String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
+        if (categories == null && categories.isEmpty()) {
+            logInfo("No Categories attached, nothing to do");
+            return;
+        }
+        for (Long oneCategory : categories) {
+            String cypherQuery = "start category=node({categoryId}) match (category)<-[:BELONGS_TO]-(complaint) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("startTime", startOfHour);
-        params.put("endTime", endOfHour);
-        logInfo("params=" + params);
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("categoryId", oneCategory);
+            params.put("startTime", startOfHour);
+            params.put("endTime", endOfHour);
+            logInfo("params=" + params);
 
-        Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
-        logInfo("Result = " + result);
-        logInfo("Result.single() = " + result.single());
-        Long totalComplaint = ((Integer) ((Map) result.single()).get("totalComplaint")).longValue();
+            Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
+            logInfo("Result.single() = " + result.single());
+            Long totalComplaint = ((Integer) ((Map) result.single()).get("totalComplaint")).longValue();
 
-        writeToMemoryStoreValue(redisKey, totalComplaint);
+            String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
+            logInfo("redisKey = " + redisKey);
 
-        String keyPrefixForNextBolt = counterKeyService.getGlobalKeyPrefix();
-        writeToStream(new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToMemoryStoreValue(redisKey, totalComplaint);
+
+            String keyPrefixForNextBolt = counterKeyService.getCategoryKeyPrefix(oneCategory);
+            writeToStream(new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+        }
         
     }
 

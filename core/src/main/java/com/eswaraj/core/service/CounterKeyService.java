@@ -8,6 +8,20 @@ public interface CounterKeyService {
 
     String getGlobalHourComplaintCounterKey(Date date);
 
+    String getGlobalKeyPrefix();
+
+    String getCategoryHourComplaintCounterKey(Date date, Long categoryId);
+
+    String getCategoryKeyPrefix(Long categoryId);
+
+    String getLocationHourComplaintCounterKey(Date date, Long locationId);
+
+    String getLocationKeyPrefix(Long locationId);
+
+    String getLocationCategoryHourComplaintCounterKey(Date date, Long locationId, Long categoryId);
+
+    String getLocationCategoryKeyPrefix(Long locationId, Long categoryId);
+
     String getDayComplaintCounterKey(String prefix, Date date);
 
     String getLast24HourComplaintCounterKey(String prefix, Date date);
@@ -18,10 +32,10 @@ public interface CounterKeyService {
 
     String getTotalComplaintCounterKey(String prefix);
 
-    String getGlobalKeyPrefix();
     
     
     
+
     List<String> getHourComplaintKeysForTheDay(String prefix, Date date);
 
     List<String> getHourComplaintKeysForLast24Hours(String prefix, Date date);

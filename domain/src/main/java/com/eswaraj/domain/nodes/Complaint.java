@@ -36,6 +36,8 @@ public class Complaint extends BaseNode {
 	private Set<PoliticalBodyAdmin> servants;
 	private Set<Photo> photos;
 	private Set<Video> videos;
+    @RelatedTo(type = "AT")
+    private Set<Location> locations;
     @Indexed
     private Long complaintTime;
 	
@@ -151,6 +153,14 @@ public class Complaint extends BaseNode {
 
     public void setComplaintTime(Long complaintTime) {
         this.complaintTime = complaintTime;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
     }
     @Override
 	public String toString() {
