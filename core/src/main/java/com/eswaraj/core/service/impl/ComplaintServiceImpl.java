@@ -192,10 +192,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 		}else{
             System.out.println("Existing Device = " + device);
             System.out.println("Existing User Id = " + device.getUser().getId());
-			User user = userRepository.findOne(device.getUser().getId());
+            User user = userRepository.getUserByDevice(device);
+
             System.out.println("Existing User = " + user);
-            System.out.println("Existing Person Id = " + user.getPerson().getId());
-			Person person = personRepository.findOne(user.getPerson().getId());
+            Person person = personRepository.getPersonByUser(user);
+            System.out.println("Existing Person = " + person);
 			return person;
 		}
 	}

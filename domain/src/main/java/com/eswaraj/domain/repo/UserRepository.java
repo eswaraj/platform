@@ -3,6 +3,7 @@ package com.eswaraj.domain.repo;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
+import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.User;
 
@@ -18,4 +19,8 @@ public interface UserRepository extends GraphRepository<User>{
 
     @Query("start person=node({0}) match (user)<-[:ATTACHED_TO]-(person) where user.__type__ = 'com.eswaraj.domain.nodes.User' return user")
     public User getUserByPerson(Person person);
+
+    @Query("start device=node({0}) match (user)<-[:OF_USER]-(device) where user.__type__ = 'com.eswaraj.domain.nodes.User' return user")
+    public User getUserByDevice(Device device);
+
 }
