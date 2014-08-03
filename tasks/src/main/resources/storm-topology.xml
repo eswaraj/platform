@@ -31,6 +31,7 @@
                 <!-- 
                 <ref bean="CatageoryChangeBoltBean"/>
                  -->
+                 <ref bean="LocationFileDistributeBoltBean" />
                 <ref bean="LocationOneFileProcessorBoltBean"/>
                 
             </list>
