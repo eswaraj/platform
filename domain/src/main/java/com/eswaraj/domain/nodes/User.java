@@ -15,7 +15,7 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class User extends BaseNode {
 
-    @RelatedTo(type = "ATTACHED_TO", elementClass = Device.class)
+    @RelatedTo(type = "ATTACHED_TO", elementClass = Person.class)
 	private Person person;
 
 	public Person getPerson() {
