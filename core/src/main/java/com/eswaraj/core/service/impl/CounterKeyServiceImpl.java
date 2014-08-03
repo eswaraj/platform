@@ -19,7 +19,7 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
     protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
     protected DateFormat monthFormat = new SimpleDateFormat("yyyyMM");
-    protected DateFormat yearFormat = new SimpleDateFormat("yyyyMM");
+    protected DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
     @Override
     public String getGlobalHourComplaintCounterKey(Date date) {
