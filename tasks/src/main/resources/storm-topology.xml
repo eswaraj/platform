@@ -196,7 +196,7 @@
 
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.GlobalHourlyCounterBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
-		<property name="keyPrefix" value="Global" />
+		<property name="keyPrefix" value="Global." />
 		<property name="keyPrefixFieldName" value="keyPrefixFieldName" />
 		
 		<property name="paralellism" value="1" />

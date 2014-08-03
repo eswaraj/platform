@@ -58,7 +58,7 @@ public class GlobalHourlyCounterBolt extends CounterBolt {
 
         String redisKey = buildGlobalHourKey(creationDate);
         logInfo("redisKey = " + redisKey);
-        String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= startTime and n.complaintTime<= endTime return count(n)";
+        String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n)";
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("startTime", startOfHour);
