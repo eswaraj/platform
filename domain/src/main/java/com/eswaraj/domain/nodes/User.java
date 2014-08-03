@@ -1,7 +1,5 @@
 package com.eswaraj.domain.nodes;
 
-import java.util.Set;
-
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -19,10 +17,6 @@ public class User extends BaseNode {
 
     @RelatedTo(type = "ATTACHED_TO", elementClass = Device.class)
 	private Person person;
-	@RelatedTo(type="OF_USER", elementClass=FacebookAccount.class)
-	private Set<FacebookAccount> facebookAccounts;
-	@RelatedTo(type="OF_USER", elementClass=Device.class)
-	private Set<Device> devices;
 
 	public Person getPerson() {
 		return person;
@@ -32,24 +26,8 @@ public class User extends BaseNode {
 		this.person = person;
 	}
 
-	public Set<FacebookAccount> getFacebookAccounts() {
-		return facebookAccounts;
-	}
-
-	public void setFacebookAccounts(Set<FacebookAccount> facebookAccounts) {
-		this.facebookAccounts = facebookAccounts;
-	}
-
-	public Set<Device> getDevices() {
-		return devices;
-	}
-
-	public void setDevices(Set<Device> devices) {
-		this.devices = devices;
-	}
-
     @Override
     public String toString() {
-        return "User [person=" + person + ", facebookAccounts=" + facebookAccounts + ", devices=" + devices + ", id=" + id + "]";
+        return "User [person=" + person + ", id=" + id + "]";
     }
 }
