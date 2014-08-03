@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.conversion.Result;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
 
 public class GlobalHourlyCounterBolt extends CounterBolt {
 
@@ -50,9 +50,9 @@ public class GlobalHourlyCounterBolt extends CounterBolt {
 
     @Override
     public void execute(Tuple input) {
-        Complaint complaint = (Complaint) input.getValue(0);
+        ComplaintCreatedMessage complaint = (ComplaintCreatedMessage) input.getValue(0);
 
-        Date creationDate = complaint.getDateCreated();
+        Date creationDate = new Date(complaint.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
 

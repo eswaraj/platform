@@ -124,7 +124,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         for (Device oneDevice : allDevices) {
             deviceIds.add(oneDevice.getDeviceType().toString() + "." + oneDevice.getDeviceId());
         }
+        complaintCreatedMessage.setComplaintTime(complaint.getComplaintTime());
         complaintCreatedMessage.setDeviceIds(deviceIds);
+
 
         complaintCreatedMessage.setLattitude(complaint.getLattitude());
         complaintCreatedMessage.setLongitude(complaint.getLongitude());

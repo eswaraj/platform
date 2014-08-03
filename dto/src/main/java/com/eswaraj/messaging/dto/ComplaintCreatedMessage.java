@@ -16,6 +16,7 @@ public class ComplaintCreatedMessage implements Serializable {
     private List<String> deviceIds;
     private Long adminId;
     private String status;
+    private long complaintTime;
 
     private List<Long> PoliticalAdminIds;
 
@@ -106,4 +107,13 @@ public class ComplaintCreatedMessage implements Serializable {
     public void setPoliticalAdminIds(List<Long> politicalAdminIds) {
         PoliticalAdminIds = politicalAdminIds;
     }
+
+    public long getComplaintTime() {
+        return complaintTime;
+    }
+
+    public void setComplaintTime(long complaintTime) {
+        this.complaintTime = complaintTime;
+    }
+
 }

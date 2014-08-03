@@ -14,7 +14,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
     protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
     protected DateFormat monthFormat = new SimpleDateFormat("yyyyMM");
     private String keyPrefix;
-    private String keyPrefixFieldName;
+    private String keyPrefixFieldName = "Default";
 
     public String getKeyPrefix() {
         return keyPrefix;

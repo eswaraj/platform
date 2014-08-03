@@ -81,6 +81,7 @@
 	<bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
 		<property name="componentId" value="ComplaintCreatedSpout" />
 		<property name="outputStream" value="ComplaintCreatedStream" />
+		
 		<!-- Properties define which services will be available for spout -->
 		<property name="initializeRedisServices" value="false" />
 		<property name="initializeQueueServices" value="true" />
@@ -195,6 +196,9 @@
 
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.GlobalHourlyCounterBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
+		<property name="keyPrefix" value="Global" />
+		<property name="keyPrefixFieldName" value="keyPrefixFieldName" />
+		
 		<property name="paralellism" value="1" />
 		<!-- Properties define which services will be available for Bolt -->
 		<property name="initializeRedisServices" value="true" />
