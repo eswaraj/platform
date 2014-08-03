@@ -132,15 +132,10 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         boolean first = true;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
-                onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(" ");
-                }
-                sb.append(longitude.toString());
+
+                sb.append(longitude.round(topLeftMc).toString());
                 sb.append(",");
-                sb.append(latitude.toString());
+                sb.append(longitude.round(topLeftMc).toString());
             }
             count++;
             if (count % 10 == 0) {
@@ -154,6 +149,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         logInfo("bottomRightLat = " + bottomRightLat);
         logInfo("bottomRightLong = " + bottomRightLong);
     }
+
 
     private Rectangle createPolygonRectangle(String coordinates) {
         String[] locationPoints = coordinates.split(" ");
