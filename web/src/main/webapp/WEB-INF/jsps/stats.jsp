@@ -11,13 +11,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-Index.jsp
 <br>
 </br>
 <h1>Total Complaints Since Start = ${totalComplaints}</h1>
 <br></br>
 <h2>Complaints By Year<h2>
-<table>
+<table border="1">
 <tr><th>Year key</th><th>Number of Complaints</th></tr>
 <c:forEach items="${yearComplaints}" var="entry">
 <tr>
@@ -30,7 +29,7 @@ Index.jsp
 
 <br></br>
 <h2>Complaints By Month(Current Year Only)<h2>
-<table>
+<table border="1">
 <tr><th>Month key</th><th>Number of Complaints</th></tr>
 <c:forEach items="${monthComplaints}" var="entry">
 <tr>
@@ -42,7 +41,7 @@ Index.jsp
 
 <br></br>
 <h2>Complaints By Day(Current Month Only)<h2>
-<table>
+<table border="1">
 <tr><th>Day key</th><th>Number of Complaints</th></tr>
 <c:forEach items="${dayComplaints}" var="entry">
 <tr>
@@ -53,7 +52,7 @@ Index.jsp
 
 <br></br>
 <h2>Complaints By Hour(Today Only)<h2>
-<table>
+<table border="1">
 <tr><th>Hour key</th><th>Number of Complaints</th></tr>
 <c:forEach items="${dayHourComplaints}" var="entry">
 <tr>
@@ -65,7 +64,7 @@ Index.jsp
 
 <br></br>
 <h2>Complaints By Hour(Last 24 Hours Only)<h2>
-<table>
+<table border="1">
 <tr><th>Hour key</th><th>Number of Complaints</th></tr>
 <c:forEach items="${last24HourComplaints}" var="entry">
 <tr>
