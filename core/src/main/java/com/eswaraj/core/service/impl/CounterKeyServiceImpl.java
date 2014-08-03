@@ -13,7 +13,7 @@ import com.eswaraj.core.service.CounterKeyService;
 public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final String GLOBAL_KEY = "Global.";
+    private final String GLOBAL_KEY = "Global";
     private final String GLOBAL_PREFIX = GLOBAL_KEY + ".";
 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
