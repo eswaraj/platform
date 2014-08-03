@@ -47,4 +47,9 @@ public class User extends BaseNode {
 	public void setDevices(Set<Device> devices) {
 		this.devices = devices;
 	}
+
+    @Override
+    public String toString() {
+        return "User [person=" + person + ", facebookAccounts=" + facebookAccounts + ", devices=" + devices + ", id=" + id + "]";
+    }
 }

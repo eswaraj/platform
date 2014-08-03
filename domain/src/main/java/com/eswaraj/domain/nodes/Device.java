@@ -49,4 +49,10 @@ public class Device extends BaseNode {
 	public enum DeviceType {
 		Android, Iphone;
 	}
+
+    @Override
+    public String toString() {
+        return "Device [deviceType=" + deviceType + ", deviceId=" + deviceId + ", user=" + user + ", id=" + id + "]";
+    }
+
 }
