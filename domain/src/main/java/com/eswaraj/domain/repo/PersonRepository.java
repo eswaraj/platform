@@ -15,7 +15,7 @@ public interface PersonRepository extends GraphRepository<Person>{
 	//@Query("start n=node:PersonNameFt(name:*avi*) return n")
 	Collection<Person> searchPersonByName(String name);
 
-    @Query("start user=node({0}) match (user)<-[:ATTACHED_TO]-(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
+    @Query("start user=node({0}) match (user)-[:ATTACHED_TO]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
     public Person getPersonByUser(User user);
 
 }
