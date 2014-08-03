@@ -31,7 +31,9 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
         Long totalComplaints = 0L;
         for (Long oneCounterValue : counterValues) {
-            totalComplaints = totalComplaints + oneCounterValue;
+            if (oneCounterValue != null) {
+                totalComplaints = totalComplaints + oneCounterValue;
+            }
         }
 
         String redisKey = getMemeoryKeyForWrite(prefix, complaintCreatedMessage);
