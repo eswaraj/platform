@@ -132,7 +132,11 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         boolean first = true;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
-
+                if (first) {
+                    first = false;
+                } else {
+                    sb.append(" ");
+                }
                 sb.append(longitude.round(topLeftMc).toString());
                 sb.append(",");
                 sb.append(longitude.round(topLeftMc).toString());
@@ -143,11 +147,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 sb = new StringBuilder();
             }
         }
-
-        logInfo("topLeftLat = " + topLeftLat);
-        logInfo("topLeftLong = " + topLeftLong);
-        logInfo("bottomRightLat = " + bottomRightLat);
-        logInfo("bottomRightLong = " + bottomRightLong);
     }
 
 

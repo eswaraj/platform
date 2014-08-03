@@ -50,9 +50,9 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
             processCoordinates(coordinates, locationId, pointsToProcess, true, totalPointsMissed, totalPointsProcessed);
-            incrementCounterToMemoryStore("totalPointsMissed", totalPointsMissed.get());
-            incrementCounterToMemoryStore("totalPointsProcessed", totalPointsProcessed.get());
-        } catch (Exception ex) {
+            incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get());
+            incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get());
+        } catch (Throwable ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {
             Date endTime = new Date();

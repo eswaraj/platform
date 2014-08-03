@@ -93,8 +93,10 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         logger.error(message);
     }
 
-    protected void logError(String message, Exception ex) {
+    protected void logError(String message, Throwable ex) {
         logger.error(message, ex);
+        System.out.println(message);
+        ex.printStackTrace();
     }
 
     public String getOutputStream() {
