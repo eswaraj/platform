@@ -83,7 +83,6 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     protected void logInfo(String message) {
         logger.info(message);
-        System.out.println(message);
     }
 
     protected void logWarning(String message) {

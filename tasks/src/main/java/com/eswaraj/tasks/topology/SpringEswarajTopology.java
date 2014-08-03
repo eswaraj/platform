@@ -42,12 +42,12 @@ public class SpringEswarajTopology {
         // Create a Multiple Tree to print in logs
         for (EswarajBaseSpout oneSpout : spoutConfigs) {
             System.out.println("Building Spout id=[" + oneSpout.getComponentId() + "], output stream = [" + oneSpout.getOutputStream() + "]");
-            builder.setSpout(oneSpout.getComponentId(), oneSpout);
+            builder.setSpout(oneSpout.getComponentId(), oneSpout, oneSpout.getParalellism());
         }
         BoltDeclarer boltDeclarer;
         for (EswarajBaseBolt oneBolt : boltConfigs) {
             System.out.println("Building Bolt id=[" + oneBolt.getComponentId() + "], Bolt CLass = [" + oneBolt.getClass() + "]");
-            boltDeclarer = builder.setBolt(oneBolt.getComponentId(), oneBolt);
+            boltDeclarer = builder.setBolt(oneBolt.getComponentId(), oneBolt, oneBolt.getParalellism());
             for (Entry<String, String> oneSourceComponentStream : oneBolt.getSourceComponentStreams().entrySet()) {
                 System.out.println("Shuffling to Spout ID =[" + oneSourceComponentStream.getKey() + "], Spout Stream = [" + oneSourceComponentStream.getValue() + "]");
                 boltDeclarer.shuffleGrouping(oneSourceComponentStream.getKey(), oneSourceComponentStream.getValue());

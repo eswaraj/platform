@@ -3,8 +3,8 @@ package com.eswaraj.tasks.spout;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
 import com.eswaraj.tasks.topology.EswarajBaseSpout;
-import com.eswaraj.web.dto.ComplaintDto;
 
 public class ComplaintCreatedSpout extends EswarajBaseSpout {
 
@@ -12,7 +12,7 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
 
     @Override
     public void nextTuple() {
-        ComplaintDto complaint;
+        ComplaintCreatedMessage complaint;
         try {
             logInfo("Geting Message from Complaint Queue");
             complaint = getQueueService().receiveComplaintCreatedMessage();

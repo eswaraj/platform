@@ -17,6 +17,7 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class User extends BaseNode {
 
+    @RelatedTo(type = "ATTACHED_TO", elementClass = Device.class)
 	private Person person;
 	@RelatedTo(type="OF_USER", elementClass=FacebookAccount.class)
 	private Set<FacebookAccount> facebookAccounts;

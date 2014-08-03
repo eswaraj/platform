@@ -29,10 +29,8 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
+public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
 
     private static final long serialVersionUID = 1L;
     LocationKeyService locationKeyService = new LocationkeyServiceImpl();
@@ -42,33 +40,18 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
         Date startTime = new Date();
         try {
             // Read the incoming Message
-            String message = input.getString(0);
-            logInfo("Recived = " + getComponentId() + " " + message);
+            String coordinates = input.getString(0);
+            String pointsToProcess = input.getString(1);
+            Long locationId = input.getLong(2);
+            logInfo("Recived = " + getComponentId() + ", coordinates=" + coordinates);
+            logInfo("Recived = " + getComponentId() + ", pointsToProcess=" + pointsToProcess);
+            logInfo("Recived = " + getComponentId() + ", locationId=" + locationId);
 
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObject = (JsonObject) parser.parse(message);
-            Long locationId = jsonObject.get("locationId").getAsLong();
-            if (jsonObject.get("oldLocationBoundaryFileId") != null) {
-                Long oldLocationBoundaryFileId = jsonObject.get("oldLocationBoundaryFileId").getAsLong();
-                // processBoundaryFile(locationId, oldLocationBoundaryFileId,
-                // false);//remove old file points
-                // process old file
-            }
-
-            Long newLocationBoundaryFileId = jsonObject.get("newLocationBoundaryFileId").getAsLong();
-
-            processBoundaryFile(locationId, newLocationBoundaryFileId, true);
-            /*
-            JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-            jedisConnectionFactory.setHostName("cache.vyaut5.0001.usw2.cache.amazonaws.com");
-            jedisConnectionFactory.setPort(6379);
-            jedisConnectionFactory.setUsePool(true);
-            jedisConnectionFactory.afterPropertiesSet();
-
-            RedisTemplate<String, Long> template = new RedisTemplate<>();
-            template.setConnectionFactory(jedisConnectionFactory);
-            template.afterPropertiesSet();
-            */
+            AtomicLong totalPointsMissed = new AtomicLong(0);
+            AtomicLong totalPointsProcessed = new AtomicLong(0);
+            processCoordinates(coordinates, locationId, pointsToProcess, true, totalPointsMissed, totalPointsProcessed);
+            incrementCounterToMemoryStore("totalPointsMissed", totalPointsMissed.get());
+            incrementCounterToMemoryStore("totalPointsProcessed", totalPointsProcessed.get());
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {
@@ -79,42 +62,8 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
     }
 
 
-    private void processBoundaryFile(Long locationId, Long boundaryFileId, boolean add) throws ApplicationException {
-        org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
-        try {
-            String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
-            logInfo("Getting Location file from " + s3HttpUrl);
-            URL url = new URL(s3HttpUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream is = urlConnection.getInputStream();
-
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(is);
-            doc.getDocumentElement().normalize();
-
-            NodeList coordinateList = doc.getElementsByTagName("coordinates");
-            String coordinates = null;
-            AtomicLong totalPointsMissed = new AtomicLong(0);
-            AtomicLong totalPointsProcessed = new AtomicLong(0);
-            for (int temp = 0; temp < coordinateList.getLength(); temp++) {
-                Node nNode = coordinateList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    coordinates = eElement.getTextContent();
-                    processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed);
-                }
-            }
-        } catch (IOException ioe) {
-            throw new ApplicationException(ioe);
-        } catch (ParserConfigurationException pce) {
-            throw new ApplicationException(pce);
-        } catch (SAXException se) {
-            throw new ApplicationException(se);
-        }
-    }
-
-    private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
+    private void processCoordinates(String coordinates, Long locationId, String pointsToProcess, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
+            throws ApplicationException {
 
         Path2D myPolygon = createPolygon(coordinates);
         Rectangle coveringRectangle = myPolygon.getBounds();
@@ -124,17 +73,18 @@ public class LcaotionFileProcessorBolt extends EswarajBaseBolt {
         MathContext bottomRightMc = new MathContext(3, RoundingMode.UP);
         BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc);
         BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc);
-        BigDecimal addedValue = new BigDecimal(.001);
         Point2D onePoint;
-        int i = 0;
-        for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
-            for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
-                onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
-                i++;
-                processOnePoint(myPolygon, onePoint, locationId, add, totalPointsMissed, totalPointsProcessed);
-            }
-        }
 
+        String[] locationPoints = pointsToProcess.split(" ");
+        String[] latLong;
+        BigDecimal oneLat, oneLong;
+        for (String oneLocationPoint : locationPoints) {
+            latLong = oneLocationPoint.split(",");
+            oneLong = new BigDecimal(latLong[0]);
+            oneLat = new BigDecimal(latLong[1]);
+            onePoint = new Point2D.Double(oneLat.doubleValue(), oneLong.doubleValue());
+            processOnePoint(myPolygon, onePoint, locationId, add, totalPointsMissed, totalPointsProcessed);
+        }
         logInfo("topLeftLat = " + topLeftLat);
         logInfo("topLeftLong = " + topLeftLong);
         logInfo("bottomRightLat = " + bottomRightLat);

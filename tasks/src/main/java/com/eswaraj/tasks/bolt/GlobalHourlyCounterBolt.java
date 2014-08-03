@@ -1,6 +1,11 @@
 package com.eswaraj.tasks.bolt;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.data.neo4j.annotation.QueryType;
+import org.springframework.data.neo4j.conversion.Result;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
@@ -22,6 +27,11 @@ public class GlobalHourlyCounterBolt extends CounterBolt {
         // and update it in Redis
         Date creationDate = complaint.getDateCreated();
         String redisKey = buildGlobalHourKey(creationDate);
+
+        String cypherQuery = "START n=node(*) WHERE n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {0} and n.complaintTime <= {1} RETURN count(n)";
+        Map<String, Object> params = new HashMap<String, Object>();
+        Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
+        Long totalComplaint = (Long) result.single();
 
         String keyPrefixForNextBolt = getKeyPrefix();
         writeToStream(new Values(keyPrefixForNextBolt));

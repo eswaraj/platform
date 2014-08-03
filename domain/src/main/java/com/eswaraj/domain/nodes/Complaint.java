@@ -35,6 +35,7 @@ public class Complaint extends BaseNode {
 	private Set<PoliticalBodyAdmin> servants;
 	private Set<Photo> photos;
 	private Set<Video> videos;
+    private Long complaintTime;
 	
 	public Complaint(){}
 	public Complaint(String title) {
@@ -126,7 +127,30 @@ public class Complaint extends BaseNode {
 		}
 	}
 
-	@Override
+    public double getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(double lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Long getComplaintTime() {
+        return complaintTime;
+    }
+
+    public void setComplaintTime(Long complaintTime) {
+        this.complaintTime = complaintTime;
+    }
+    @Override
 	public String toString() {
 		return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", category="
 				+ category + ", person=" + person + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements

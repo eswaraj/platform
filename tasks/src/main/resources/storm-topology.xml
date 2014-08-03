@@ -31,7 +31,7 @@
                 <!-- 
                 <ref bean="CatageoryChangeBoltBean"/>
                  -->
-                <ref bean="LcaotionFileProcessorBoltBean"/>
+                <ref bean="LocationOneFileProcessorBoltBean"/>
                 
             </list>
         </property>
@@ -136,8 +136,11 @@
         <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
         
     </bean>
-    <bean id="LcaotionFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LcaotionFileProcessorBolt">
-        <property name="componentId" value="LcaotionFileProcessorBolt" />
+    
+    
+    <bean id="LocationFileDistributeBoltBean" class="com.eswaraj.tasks.bolt.LocationFileDistributeBolt">
+        <property name="componentId" value="LocationFileDistributeBolt" />
+        <property name="outputStream" value="LocationFileDistributeStream" />
         <!-- Properties define which services will be available for Bolt  -->        
         <property name="initializeRedisServices" value="true" />
         <property name="initializeQueueServices" value="false" />
@@ -164,7 +167,62 @@
         <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
         
     </bean>
-    	
+    
+    <bean id="LocationOneFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LocationOneFileProcessorBolt">
+        <property name="componentId" value="LocationOneFileProcessorBolt" />
+        <property name="paralellism" value="20" />
+        <!-- Properties define which services will be available for Bolt  -->        
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="LocationFileDistributeBolt" value="LocationFileDistributeStream" />
+            </map>
+        </property>
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+        
+                <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+        
+    </bean>
+        
+    <!-- 
+    <bean id="LocotionFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LocationFileProcessorBolt">
+        <property name="componentId" value="LocationFileProcessorBolt" />
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="LocationFileUploadSpout" value="LocationFileUploadStream" />
+            </map>
+        </property>
+        
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <property name="dbUrl" value="${db_url}" />
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+        
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+        
+    </bean>
+    	-->
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<property name="searchSystemEnvironment" value="true" />

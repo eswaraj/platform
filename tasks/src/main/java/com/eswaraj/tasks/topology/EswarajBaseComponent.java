@@ -27,6 +27,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private boolean initializeDbServices = false;
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
+    private int paralellism = 1;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
@@ -57,6 +58,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         System.out.println("awsComplaintCreatedQueueName=" + awsComplaintCreatedQueueName);
 
     }
+
     protected void init() {
         printAllConfigs();
         if (initializeDbServices) {
@@ -121,6 +123,11 @@ public abstract class EswarajBaseComponent implements Serializable {
     protected <T> Long writeToMemoryStoreSet(String redisKey, T id) {
         checkRedisServices();
         return redisTemplate.opsForSet().add(redisKey, id);
+    }
+
+    protected <T> Long incrementCounterToMemoryStore(String redisKey, Long delta) {
+        checkRedisServices();
+        return redisTemplate.opsForValue().increment(redisKey, delta);
     }
 
     protected <T> Long removeFromMemoryStoreSet(String redisKey, T id) {
@@ -292,6 +299,14 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     public void setAwsComplaintCreatedQueueName(String awsComplaintCreatedQueueName) {
         this.awsComplaintCreatedQueueName = awsComplaintCreatedQueueName;
+    }
+
+    public int getParalellism() {
+        return paralellism;
+    }
+
+    public void setParalellism(int paralellism) {
+        this.paralellism = paralellism;
     }
 
 }

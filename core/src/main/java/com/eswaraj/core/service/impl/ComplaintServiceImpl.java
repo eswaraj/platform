@@ -1,7 +1,11 @@
 package com.eswaraj.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
@@ -14,21 +18,25 @@ import com.eswaraj.core.convertors.ComplaintConvertor;
 import com.eswaraj.core.convertors.PhotoConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Device.DeviceType;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.User;
+import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.DeviceRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PhotoRepository;
 import com.eswaraj.domain.repo.UserRepository;
+import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
-import com.eswaraj.web.dto.SaveComplaintResponseDto;
 
 /**
  * Implementation for complaint service
@@ -54,6 +62,10 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	private DeviceRepository deviceRepository;
 	@Autowired
 	private UserRepository userRepository;
+    @Autowired
+    private QueueService queueService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 	@Override
 	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
@@ -73,12 +85,72 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	public ComplaintDto saveComplaint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
 		System.out.println("Saving Complaint "+ saveComplaintRequestDto);
 		Complaint complaint = complaintConvertor.convert(saveComplaintRequestDto);
+        complaint.setComplaintTime(Calendar.getInstance().getTimeInMillis());
 		Person person = getPerson(saveComplaintRequestDto);
 		complaint.setPerson(person);
+		boolean newComplaint = true;
+        if (complaint.getId() != null && complaint.getId() > 0) {
+            newComplaint = false;
+        }
 		
 		complaint = complaintRepository.save(complaint);
+
+        if (newComplaint) {
+            ComplaintCreatedMessage complaintCreatedMessage = buildComplaintCreatedMessage(complaint);
+            queueService.sendComplaintCreatedMessage(complaintCreatedMessage);
+        }
+
 		return complaintConvertor.convertBean(complaint);
 	}
+
+    private ComplaintCreatedMessage buildComplaintCreatedMessage(Complaint complaint) {
+        ComplaintCreatedMessage complaintCreatedMessage = new ComplaintCreatedMessage();
+        if (complaint.getAdministrator() != null) {
+            complaintCreatedMessage.setAdminId(complaint.getAdministrator().getId());
+        }
+        complaintCreatedMessage.setCategoryIds(getAllCategories(complaint.getCategory()));
+
+        complaintCreatedMessage.setDescription(complaint.getDescription());
+
+        // Get All Devices
+        User user = userRepository.getUserByPerson(complaint.getPerson());
+        complaintCreatedMessage.setUserId(user.getId());
+        Collection<Device> allDevices = deviceRepository.getAllDevicesOfUser(user);
+        List<String> deviceIds = new ArrayList<>();
+        for (Device oneDevice : allDevices) {
+            deviceIds.add(oneDevice.getDeviceType().toString() + "." + oneDevice.getDeviceId());
+        }
+        complaintCreatedMessage.setDeviceIds(deviceIds);
+
+        complaintCreatedMessage.setLattitude(complaint.getLattitude());
+        complaintCreatedMessage.setLongitude(complaint.getLongitude());
+        complaintCreatedMessage.setPersonId(complaint.getPerson().getId());
+
+        Set<PoliticalBodyAdmin> politicalAdmins = complaint.getServants();
+        if (politicalAdmins != null) {
+            List<Long> politicalAdminIds = new ArrayList<>(politicalAdmins.size());
+            for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalAdmins) {
+                politicalAdminIds.add(onePoliticalBodyAdmin.getId());
+            }
+            complaintCreatedMessage.setPoliticalAdminIds(politicalAdminIds);
+        }
+
+        complaintCreatedMessage.setStatus(complaint.getStatus().toString());
+        complaintCreatedMessage.setTitle(complaint.getTitle());
+        return complaintCreatedMessage;
+    }
+
+    private List<Long> getAllCategories(Category category) {
+        List<Long> categoryIds = new ArrayList<>();
+        if (category == null) {
+            return categoryIds;
+        }
+        while (category != null) {
+            categoryIds.add(category.getId());
+            category = categoryRepository.getParentCategory(category);
+        }
+        return categoryIds;
+    }
 	
 	private Person getPerson(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException{
 		System.out.println("Get/Create Person");
