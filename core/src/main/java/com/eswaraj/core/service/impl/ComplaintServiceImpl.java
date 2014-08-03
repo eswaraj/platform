@@ -3,6 +3,7 @@ package com.eswaraj.core.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,11 +20,13 @@ import com.eswaraj.core.convertors.ComplaintConvertor;
 import com.eswaraj.core.convertors.PhotoConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
+import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Complaint.Status;
 import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Device.DeviceType;
+import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
@@ -30,6 +34,7 @@ import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.DeviceRepository;
+import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PhotoRepository;
 import com.eswaraj.domain.repo.UserRepository;
@@ -67,6 +72,12 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private QueueService queueService;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private LocationKeyService LocationKeyService;
+    @Autowired
+    private LocationRepository locationRepository;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 	@Override
 	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
@@ -96,6 +107,19 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         } else {
             complaint.setStatus(Status.PENDING);
         }
+
+        // Get all Locations and attach to it.
+        Set<Long> complaintLocations = redisTemplate.opsForSet().members(LocationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude()));
+        if (complaintLocations != null && !complaintLocations.isEmpty()) {
+            Set<Location> locations = new HashSet<>();
+            for (Long oneLocationId : complaintLocations) {
+                Location oneLocation = locationRepository.findOne(oneLocationId);
+                locations.add(oneLocation);
+            }
+            complaint.setLocations(locations);
+        }
+
+        // TODO attach Political Admin and Executive Admin
 		
 		complaint = complaintRepository.save(complaint);
 

@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.neo4j.annotation.QueryType;
-import org.springframework.data.neo4j.conversion.Result;
-
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
@@ -36,7 +33,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
         long endOfHour = getEndOfHour(creationDate);
         List<Long> categories = complaintCreatedMessage.getCategoryIds();
 
-        if (categories == null && categories.isEmpty()) {
+        if (categories == null || categories.isEmpty()) {
             logInfo("No Categories attached, nothing to do");
             return;
         }
@@ -49,9 +46,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
             params.put("endTime", endOfHour);
             logInfo("params=" + params);
 
-            Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
-            logInfo("Result.single() = " + result.single());
-            Long totalComplaint = ((Integer) ((Map) result.single()).get("totalComplaint")).longValue();
+            Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
             String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
             logInfo("redisKey = " + redisKey);

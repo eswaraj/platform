@@ -2,11 +2,16 @@ package com.eswaraj.tasks.topology;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.neo4j.annotation.QueryType;
+import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -24,6 +29,9 @@ import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
  *
  */
 public abstract class EswarajBaseComponent implements Serializable {
+
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private boolean initializeDbServices = false;
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
@@ -119,6 +127,12 @@ public abstract class EswarajBaseComponent implements Serializable {
         return node;
     }
 
+    // DB Related Functions
+    protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
+        Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
+        Long totalCount = ((Integer) ((Map) result.single()).get(totalFieldName)).longValue();
+        return totalCount;
+    }
     // Redis related functions
     protected <T> Long writeToMemoryStoreSet(String redisKey, T id) {
         checkRedisServices();
@@ -322,6 +336,23 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     public void setParalellism(int paralellism) {
         this.paralellism = paralellism;
+    }
+
+    protected void logInfo(String message) {
+        logger.info(message);
+        System.out.println(message);
+    }
+
+    protected void logWarning(String message) {
+        logger.warn(message);
+    }
+
+    protected void logError(String message) {
+        logger.error(message);
+    }
+
+    protected void logError(String message, Throwable ex) {
+        logger.error(message, ex);
     }
 
 }

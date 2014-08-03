@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.data.neo4j.annotation.QueryType;
-import org.springframework.data.neo4j.conversion.Result;
-
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
@@ -43,10 +40,7 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
         params.put("endTime", endOfHour);
         logInfo("params=" + params);
 
-        Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
-        logInfo("Result = " + result);
-        logInfo("Result.single() = " + result.single());
-        Long totalComplaint = ((Integer) ((Map) result.single()).get("totalComplaint")).longValue();
+        Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
         writeToMemoryStoreValue(redisKey, totalComplaint);
 
