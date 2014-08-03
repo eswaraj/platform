@@ -125,6 +125,11 @@ public abstract class EswarajBaseComponent implements Serializable {
         return redisTemplate.opsForSet().add(redisKey, id);
     }
 
+    protected void writeToMemoryStoreValue(String redisKey, Long id) {
+        checkRedisServices();
+        redisTemplate.opsForValue().set(redisKey, id);
+    }
+
     protected <T> Long incrementCounterInMemoryStore(String redisKey, Long delta) {
         checkRedisServices();
         return redisTemplate.opsForValue().increment(redisKey, delta);

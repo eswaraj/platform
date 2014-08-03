@@ -2,6 +2,7 @@ package com.eswaraj.tasks.bolt;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
@@ -9,9 +10,9 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt;
 public abstract class CounterBolt extends EswarajBaseBolt {
 
     private static final long serialVersionUID = 1L;
-    DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
-    DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
-    DateFormat monthFormat = new SimpleDateFormat("yyyyMM");
+    protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
+    protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
+    protected DateFormat monthFormat = new SimpleDateFormat("yyyyMM");
     private String keyPrefix;
     private String keyPrefixFieldName;
 
@@ -31,12 +32,8 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         this.keyPrefixFieldName = keyPrefixFieldName;
     }
 
-    private final String buildGlobalKey(DateFormat df, Date date) {
+    protected final String buildGlobalKey(DateFormat df, Date date) {
         return keyPrefix + df.format(date);
-    }
-
-    protected String buildGlobalHourKey(Date date){
-        return buildGlobalKey(hourFormat, date);
     }
 
     protected String buildGlobalDayKey(Date date) {
@@ -76,5 +73,26 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
     protected String buildStateAllTimeKey(Date date, Long stateId) {
         return keyPrefix + stateId + ".AllTime";
+    }
+
+    protected Long getStartOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 1);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
+        return calendar.getTimeInMillis();
+    }
+
+    protected Long getEndOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
+        return calendar.getTimeInMillis();
     }
 }
