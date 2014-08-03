@@ -67,7 +67,8 @@ public class GlobalHourlyCounterBolt extends CounterBolt {
 
         Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
         logInfo("Result = " + result);
-        Long totalComplaint = (Long) result.single();
+        logInfo("Result.single() = " + result.single());
+        Long totalComplaint = 1L;
 
         writeToMemoryStoreValue(redisKey, totalComplaint);
 
