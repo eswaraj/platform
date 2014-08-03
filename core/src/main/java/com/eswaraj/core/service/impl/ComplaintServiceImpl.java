@@ -20,6 +20,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.Complaint.Status;
 import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Device.DeviceType;
 import com.eswaraj.domain.nodes.Person;
@@ -85,12 +86,15 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	public ComplaintDto saveComplaint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
 		System.out.println("Saving Complaint "+ saveComplaintRequestDto);
 		Complaint complaint = complaintConvertor.convert(saveComplaintRequestDto);
+
         complaint.setComplaintTime(Calendar.getInstance().getTimeInMillis());
 		Person person = getPerson(saveComplaintRequestDto);
 		complaint.setPerson(person);
 		boolean newComplaint = true;
         if (complaint.getId() != null && complaint.getId() > 0) {
             newComplaint = false;
+        } else {
+            complaint.setStatus(Status.PENDING);
         }
 		
 		complaint = complaintRepository.save(complaint);
