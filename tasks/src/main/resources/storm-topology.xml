@@ -27,7 +27,11 @@
 				<ref bean="LocationFileDistributeBoltBean" />
 				<ref bean="LocationOneFileProcessorBoltBean" />
 				<ref bean="GlobalHourlyCounterBoltBean" />
-
+				<ref bean="Lat24HourCounterBoltBean" />
+				<ref bean="DayCounterBoltBean" />
+				<ref bean="MonthCounterBoltBean" />
+				<ref bean="YearCounterBoltBean" />
+				<ref bean="TotalCounterBoltBean" />
 			</list>
 		</property>
 	</bean>
@@ -196,9 +200,7 @@
 
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.GlobalHourlyCounterBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
-		<property name="keyPrefix" value="Global." />
-		<property name="keyPrefixFieldName" value="keyPrefixFieldName" />
-		
+		<property name="outputStream" value="GlobalHourlyCounterStream" />
 		<property name="paralellism" value="1" />
 		<!-- Properties define which services will be available for Bolt -->
 		<property name="initializeRedisServices" value="true" />
@@ -226,6 +228,165 @@
 		<property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
 
 	</bean>
+	
+	<bean id="DayCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.DayCounterBolt">
+        <property name="componentId" value="DayCounterBolt" />
+        <property name="outputStream" value="DayCounterStream" />
+        
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
+            </map>
+        </property>
+
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.Lat24HourCounterBolt">
+        <property name="componentId" value="Lat24HourCounterBolt" />
+        
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
+            </map>
+        </property>
+
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	<bean id="MonthCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.MonthCounterBolt">
+        <property name="componentId" value="MonthCounterBolt" />
+        <property name="outputStream" value="MonthCounterStream" />
+        
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DayCounterBolt" value="DayCounterStream" />
+            </map>
+        </property>
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	<bean id="YearCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.YearCounterBolt">
+        <property name="componentId" value="YearCounterBolt" />
+        <property name="outputStream" value="YearCounterStream" />
+        
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="MonthCounterBolt" value="MonthCounterStream" />
+            </map>
+        </property>
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
+    
+	
+	<bean id="TotalCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.TotalCounterBolt">
+        <property name="componentId" value="TotalCounterBolt" />
+        
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="YearCounterBolt" value="YearCounterStream" />
+            </map>
+        </property>
+        
+        <!-- Redis -->
+        <property name="redisUrl" value="${redis_server}" />
+        <property name="redisPort" value="${redis_port}" />
+        <!-- Neo4j -->
+        <property name="dbUrl" value="${db_url}" />
+        <!-- Aws Queue -->
+        <property name="regions" value="${aws_region}" />
+        <property name="accessKey" value="${aws_access_key}" />
+        <property name="secretKey" value="${aws_access_secret}" />
+
+        <!-- Queue Names -->
+        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
+        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
+        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
+
+    </bean>
 
 
 

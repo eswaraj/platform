@@ -130,6 +130,16 @@ public abstract class EswarajBaseComponent implements Serializable {
         redisTemplate.opsForValue().set(redisKey, id);
     }
 
+    protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
+        checkRedisServices();
+        return redisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
+    protected List<Object> readMultiKeyFromMemoryStore(List<String> redisKeys) {
+        checkRedisServices();
+        return redisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
     protected <T> Long incrementCounterInMemoryStore(String redisKey, Long delta) {
         checkRedisServices();
         return redisTemplate.opsForValue().increment(redisKey, delta);

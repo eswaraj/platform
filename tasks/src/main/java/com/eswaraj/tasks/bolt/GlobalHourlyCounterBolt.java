@@ -11,52 +11,30 @@ import org.springframework.data.neo4j.conversion.Result;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+import com.eswaraj.core.service.CounterKeyService;
+import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
-public class GlobalHourlyCounterBolt extends CounterBolt {
+public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
 
     private static final long serialVersionUID = 1L;
 
-    private String cipharQuery;
+    CounterKeyService counterKeyService;
 
-    public static void main(String[] args) {
-        Calendar now = Calendar.getInstance();
-        printStartAndEnd(now.getTime());
-        now.add(Calendar.HOUR, 1);
-        printStartAndEnd(now.getTime());
-        now.add(Calendar.HOUR, 1);
-        printStartAndEnd(now.getTime());
-        now.add(Calendar.HOUR, 1);
-        printStartAndEnd(now.getTime());
-        now.add(Calendar.HOUR, 1);
-        printStartAndEnd(now.getTime());
-
-    }
-
-    private static void printStartAndEnd(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 1);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        long startOfHour = calendar.getTimeInMillis();
-        System.out.println("startOfHour = " + startOfHour + " , " + calendar.getTime());
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MILLISECOND, 0);
-        long endOfHour = calendar.getTimeInMillis();
-        System.out.println("endOfHour = " + endOfHour + " , " + calendar.getTime());
-
+    public GlobalHourlyCounterBolt() {
+        counterKeyService = new CounterKeyServiceImpl();
     }
 
     @Override
     public void execute(Tuple input) {
-        ComplaintCreatedMessage complaint = (ComplaintCreatedMessage) input.getValue(0);
+        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(0);
 
-        Date creationDate = new Date(complaint.getComplaintTime());
+        Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
 
-        String redisKey = buildGlobalHourKey(creationDate);
+        String redisKey = counterKeyService.getGlobalHourComplaintCounterKey(creationDate);
         logInfo("redisKey = " + redisKey);
         String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
 
@@ -72,26 +50,35 @@ public class GlobalHourlyCounterBolt extends CounterBolt {
 
         writeToMemoryStoreValue(redisKey, totalComplaint);
 
-        String keyPrefixForNextBolt = getKeyPrefix();
-        writeToStream(new Values(keyPrefixForNextBolt));
+        String keyPrefixForNextBolt = counterKeyService.getGlobalKeyPrefix();
+        writeToStream(new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         
-    }
-
-    protected String buildGlobalHourKey(Date date) {
-        return buildGlobalKey(hourFormat, date);
     }
 
     @Override
     protected String[] getFields() {
-        return new String[] { getKeyPrefixFieldName() };
+        return new String[] { "KeyPrefix", "Complaint" };
     }
 
-    public String getCipharQuery() {
-        return cipharQuery;
+    protected Long getStartOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 1);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
+        return calendar.getTimeInMillis();
     }
 
-    public void setCipharQuery(String cipharQuery) {
-        this.cipharQuery = cipharQuery;
+    protected Long getEndOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
+        return calendar.getTimeInMillis();
     }
 
 }
