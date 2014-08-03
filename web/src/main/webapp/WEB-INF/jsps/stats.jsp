@@ -25,6 +25,54 @@ Index.jsp
     </tr>
 </c:forEach>
 </table>
-${locationDto.id}
+
+
+
+<br></br>
+<h2>Complaints By Month(Current Year Only)<h2>
+<table>
+<tr><th>Month key</th><th>Number of Complaints</th></tr>
+<c:forEach items="${monthComplaints}" var="entry">
+<tr>
+    <td>${entry.key}</td><td> ${entry.value}</td>
+    </tr>
+</c:forEach>
+</table>
+
+
+<br></br>
+<h2>Complaints By Day(Current Month Only)<h2>
+<table>
+<tr><th>Day key</th><th>Number of Complaints</th></tr>
+<c:forEach items="${dayComplaints}" var="entry">
+<tr>
+    <td>${entry.key}</td><td> ${entry.value}</td>
+    </tr>
+</c:forEach>
+</table>
+
+<br></br>
+<h2>Complaints By Hour(Today Only)<h2>
+<table>
+<tr><th>Hour key</th><th>Number of Complaints</th></tr>
+<c:forEach items="${dayHourComplaints}" var="entry">
+<tr>
+    <td>${entry.key}</td><td> ${entry.value}</td>
+    </tr>
+</c:forEach>
+</table>
+
+
+<br></br>
+<h2>Complaints By Hour(Last 24 Hours Only)<h2>
+<table>
+<tr><th>Hour key</th><th>Number of Complaints</th></tr>
+<c:forEach items="${last24HourComplaints}" var="entry">
+<tr>
+    <td>${entry.key}</td><td> ${entry.value}</td>
+    </tr>
+</c:forEach>
+</table>
+
 </body>
 </html>
