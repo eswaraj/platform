@@ -3,6 +3,7 @@ package com.eswaraj.tasks.topology;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,11 +57,11 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     @Override
     protected void writeToStream(List<Object> tuple) {
-        logInfo("Writing To Stream " + outputStream);
-        collector.emit(outputStream, tuple);
+        collector.emit(outputStream, tuple, UUID.randomUUID().toString());
     }
 
     protected void writeToStream(List<Object> tuple, Object messageId) {
+        logInfo("Writing To Stream " + outputStream + " with message id as " + messageId);
         collector.emit(outputStream, tuple, messageId);
     }
 
