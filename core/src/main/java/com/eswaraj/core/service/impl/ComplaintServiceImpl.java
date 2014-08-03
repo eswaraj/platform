@@ -176,12 +176,15 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 			person.setName("anonymous");
 			person.setExternalId(UUID.randomUUID().toString());
 			person = personRepository.save(person);
+            System.out.println("Person = " + person);
 			
 			
 			User user = new User();
 			user.setExternalId(UUID.randomUUID().toString());
 			user.setPerson(person);
+            System.out.println("user = " + user);
 			user = userRepository.save(user);
+            System.out.println("after user = " + user);
 			
 			device = new Device();
 			device.setDeviceId(deviceId);
