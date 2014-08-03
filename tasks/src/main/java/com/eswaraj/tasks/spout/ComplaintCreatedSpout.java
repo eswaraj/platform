@@ -22,6 +22,8 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
             }
         } catch (ApplicationException e) {
             logError("Unable to receive Complaint Created message from AWS Quque", e);
+        } catch (Exception e) {
+            logError("Unable to receive Complaint Created message from AWS Quque", e);
         }
 
     }

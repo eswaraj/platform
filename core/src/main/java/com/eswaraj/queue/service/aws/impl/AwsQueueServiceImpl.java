@@ -99,6 +99,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     @Override
     public ComplaintCreatedMessage receiveComplaintCreatedMessage() throws ApplicationException {
         String mesage = awsQueueManager.receiveMessage(awsComplaintCreatedQueueName);
+        logger.info("Message Received : " + mesage);
         Gson gson = new Gson();
         return gson.fromJson(mesage, ComplaintCreatedMessage.class);
     }
