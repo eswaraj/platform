@@ -115,7 +115,7 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             logInfo("RedisKey [" + redisKey + "] Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         } else {
             totalPointsMissed.incrementAndGet();
-            logInfo("Missed Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
+            //logInfo("Missed Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }
         
         if ((totalPointsProcessed.get() + totalPointsMissed.get()) % 10000 == 0) {

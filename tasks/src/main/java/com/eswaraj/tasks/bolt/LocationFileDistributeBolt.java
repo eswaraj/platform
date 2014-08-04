@@ -139,7 +139,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 } else {
                     sb.append(" ");
                 }
-                logInfo("Point " + longitude.toString() + "," + latitude.toString());
+                //logInfo("Point " + longitude.toString() + "," + latitude.toString());
                 sb.append(longitude.toString());
                 sb.append(",");
                 sb.append(latitude.toString());
