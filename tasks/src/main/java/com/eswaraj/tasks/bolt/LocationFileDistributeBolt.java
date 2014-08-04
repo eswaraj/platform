@@ -2,7 +2,6 @@ package com.eswaraj.tasks.bolt;
 
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -96,11 +95,14 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     coordinates = eElement.getTextContent();
+                    /*
                     if (temp == 0) {
                         processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, new BigDecimal(9.549));
                     } else {
                         processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null);
                     }
+                    */
+                    processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null);
                 }
             }
         } catch (IOException ioe) {
@@ -122,7 +124,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc);
         BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc);
         BigDecimal addedValue = new BigDecimal(.001);
-        Point2D onePoint;
         StringBuilder sb = new StringBuilder();
         if (startValue != null) {
             topLeftLat = startValue;
@@ -130,6 +131,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
 
         int count = 0;
         boolean first = true;
+        int totalDivide = 0;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
                 if (first) {
@@ -141,17 +143,25 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 sb.append(",");
                 sb.append(longitude.round(topLeftMc).toString());
             }
-            count++;
-            logInfo("Will Check if can write to stream");
-            if (count % 10 == 0) {
-                logInfo("Writing to stream");
-                writeToStream(new Values(coordinates, sb.toString(), locationId));
-                logInfo("Writing Done");
-                sb = new StringBuilder();
-                first = true;
-            }
+
         }
+        count++;
+        logInfo("Will Check if can write to stream");
+        if (count % 10 == 0) {
+            totalDivide++;
+            logInfo("Writing to stream");
+            writeToStream(new Values(coordinates, sb.toString(), locationId));
+            logInfo("Writing Done");
+            sb = new StringBuilder();
+            first = true;
+        }
+        if (count % 10 > 0){
+            writeToStream(new Values(coordinates, sb.toString(), locationId));
+            totalDivide++;
+        }
+        logInfo("Total Divides are : " + totalDivide);
     }
+        
 
 
     private Rectangle createPolygonRectangle(String coordinates) {

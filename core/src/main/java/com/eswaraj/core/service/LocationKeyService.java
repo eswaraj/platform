@@ -10,5 +10,7 @@ public interface LocationKeyService {
 
 	String buildLocationKey(double longitude, double lattitude) throws ApplicationException;
 
+    String buildLocationKeyForNearByComplaints(double longitude, double lattitude) throws ApplicationException;
+
     List<Point2D> getAllPointsBetweenRectangle(BigDecimal topLeftLat, BigDecimal topLeftLong, BigDecimal bottomRightLat, BigDecimal bottomRightLong) throws ApplicationException;
 }

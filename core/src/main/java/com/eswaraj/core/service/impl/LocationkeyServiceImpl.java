@@ -20,10 +20,13 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     private static final long serialVersionUID = 1L;
 
     private DecimalFormat decimalFormat;
+    private DecimalFormat decimalFormatUpto2DecimalPoints;
 
     public LocationkeyServiceImpl() {
         decimalFormat = new DecimalFormat("#.000");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
+        decimalFormatUpto2DecimalPoints = new DecimalFormat("#.00");
+        decimalFormatUpto2DecimalPoints.setRoundingMode(RoundingMode.DOWN);
 
     }
 	@Override
@@ -52,6 +55,12 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
             }
         }
         return allPoints;
+    }
+
+    @Override
+    public String buildLocationKeyForNearByComplaints(double longitude, double lattitude) throws ApplicationException {
+        String key = "L" + decimalFormatUpto2DecimalPoints.format(longitude) + "-" + decimalFormatUpto2DecimalPoints.format(lattitude);
+        return key;
     }
 
 }

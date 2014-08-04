@@ -76,6 +76,7 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
         Point2D onePoint;
 
         String[] locationPoints = pointsToProcess.split(" ");
+        logInfo("Splitted Points are : " + locationPoints.length);
         String[] latLong;
         BigDecimal oneLat, oneLong;
         for (String oneLocationPoint : locationPoints) {
@@ -181,6 +182,7 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
     }
 
     private void processOnePoint(Path2D myPolygon, Point2D onePoint, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
+
         if (myPolygon.contains(onePoint)) {
 
             String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
