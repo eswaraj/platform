@@ -107,9 +107,9 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
 
             String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
             if (add) {
-                // writeToMemoryStoreSet(redisKey, locationId);
+                writeToMemoryStoreSet(redisKey, locationId);
             } else {
-                // removeFromMemoryStoreSet(redisKey, locationId);
+                removeFromMemoryStoreSet(redisKey, locationId);
             }
             totalPointsProcessed.incrementAndGet();
             logInfo("RedisKey [" + redisKey + "] Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
