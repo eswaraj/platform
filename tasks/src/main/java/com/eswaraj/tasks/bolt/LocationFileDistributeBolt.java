@@ -143,18 +143,18 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 sb.append(",");
                 sb.append(longitude.round(topLeftMc).toString());
             }
+            count++;
+            logInfo("Will Check if can write to stream");
+            if (count % 10 == 0) {
+                totalDivide++;
+                logInfo("Writing to stream");
+                writeToStream(new Values(coordinates, sb.toString(), locationId));
+                logInfo("Writing Done");
+                sb = new StringBuilder();
+                first = true;
+            }
+        }
 
-        }
-        count++;
-        logInfo("Will Check if can write to stream");
-        if (count % 10 == 0) {
-            totalDivide++;
-            logInfo("Writing to stream");
-            writeToStream(new Values(coordinates, sb.toString(), locationId));
-            logInfo("Writing Done");
-            sb = new StringBuilder();
-            first = true;
-        }
         if (count % 10 > 0){
             writeToStream(new Values(coordinates, sb.toString(), locationId));
             totalDivide++;

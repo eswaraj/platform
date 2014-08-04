@@ -192,10 +192,12 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
                 removeFromMemoryStoreSet(redisKey, locationId);
             }
             totalPointsProcessed.incrementAndGet();
-
+            logInfo("RedisKey [" + redisKey + "] Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         } else {
             totalPointsMissed.incrementAndGet();
+            logInfo("Missed Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }
+        
         if ((totalPointsProcessed.get() + totalPointsMissed.get()) % 10000 == 0) {
             logInfo("Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }
