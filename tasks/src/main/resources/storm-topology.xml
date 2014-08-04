@@ -342,7 +342,7 @@
             <map>
                 <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
                 <entry key="CategoryHourlyCounterBolt" value="CategoryHourlyCounterStream" />
-                <entry key="LocationHourlyCounterBolt" value="CategoryHourlyCounterStream" />
+                <entry key="LocationHourlyCounterBolt" value="LocationHourlyCounterStream" />
                 <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
             </map>
         </property>
@@ -376,7 +376,7 @@
             <map>
                 <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
                 <entry key="CategoryHourlyCounterBolt" value="CategoryHourlyCounterStream" />
-                <entry key="LocationHourlyCounterBolt" value="CategoryHourlyCounterStream" />
+                <entry key="LocationHourlyCounterBolt" value="LocationHourlyCounterStream" />
                 <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
             </map>
         </property>

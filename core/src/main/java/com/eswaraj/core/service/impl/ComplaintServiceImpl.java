@@ -37,6 +37,7 @@ import com.eswaraj.domain.repo.DeviceRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PhotoRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
 import com.eswaraj.queue.service.QueueService;
@@ -78,6 +79,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private LocationRepository locationRepository;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private PoliticalBodyAdminRepository politicalBodyAdminRepository;
 
 	@Override
 	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
@@ -111,15 +114,29 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         // Get all Locations and attach to it.
         Set<Long> complaintLocations = redisTemplate.opsForSet().members(LocationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude()));
         if (complaintLocations != null && !complaintLocations.isEmpty()) {
+
             Set<Location> locations = new HashSet<>();
+
+            Set<PoliticalBodyAdmin> politicalBodyAdmins = new HashSet<>();
+            Collection<PoliticalBodyAdmin> oneLocationPoliticalBodyAdmins;
+
             for (Long oneLocationId : complaintLocations) {
                 Location oneLocation = locationRepository.findOne(oneLocationId);
                 locations.add(oneLocation);
+                
+                oneLocationPoliticalBodyAdmins = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocation(oneLocation);
+                if(oneLocationPoliticalBodyAdmins != null && !oneLocationPoliticalBodyAdmins.isEmpty() ){
+                    politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
+                }
             }
             complaint.setLocations(locations);
+            complaint.setServants(politicalBodyAdmins);
+            
+            //TODO find Executive Admin based on Location and Category and attach it to complaint
         }
 
-        // TODO attach Political Admin and Executive Admin
+        
+        
 		
 		complaint = complaintRepository.save(complaint);
 
@@ -154,7 +171,18 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
         complaintCreatedMessage.setLattitude(complaint.getLattitude());
         complaintCreatedMessage.setLongitude(complaint.getLongitude());
+
+        if (complaint.getLocations() != null && !complaint.getLocations().isEmpty()) {
+            List<Long> locationIds = new ArrayList<>();
+            for (Location oneLocation : complaint.getLocations()) {
+                locationIds.add(oneLocation.getId());
+            }
+            complaintCreatedMessage.setLocationIds(locationIds);
+
+        }
+
         complaintCreatedMessage.setPersonId(complaint.getPerson().getId());
+
 
         Set<PoliticalBodyAdmin> politicalAdmins = complaint.getServants();
         if (politicalAdmins != null) {
@@ -164,6 +192,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             }
             complaintCreatedMessage.setPoliticalAdminIds(politicalAdminIds);
         }
+
 
         complaintCreatedMessage.setStatus(complaint.getStatus().toString());
         complaintCreatedMessage.setTitle(complaint.getTitle());
