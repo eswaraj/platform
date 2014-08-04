@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -35,6 +36,9 @@ public class Complaint extends BaseNode {
 	private Set<PoliticalBodyAdmin> servants;
 	private Set<Photo> photos;
 	private Set<Video> videos;
+    @RelatedTo(type = "AT")
+    private Set<Location> locations;
+    @Indexed
     private Long complaintTime;
 	
 	public Complaint(){}
@@ -149,6 +153,14 @@ public class Complaint extends BaseNode {
 
     public void setComplaintTime(Long complaintTime) {
         this.complaintTime = complaintTime;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
     }
     @Override
 	public String toString() {

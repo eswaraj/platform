@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.IRichSpout;
@@ -17,7 +14,6 @@ import backtype.storm.tuple.Fields;
 public abstract class EswarajBaseSpout extends EswarajBaseComponent implements IRichSpout {
 
 	private static final long serialVersionUID = 1L;
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	Map<String, Object> configuration = new HashMap<String, Object>();
 
 	private String outputStream;
@@ -73,21 +69,6 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     @Override
     protected void writeToTaskStream(int taskId, List<Object> tuple, Object messageId) {
         collector.emitDirect(taskId, outputStream, tuple);
-    }
-
-	protected void logInfo(String message){
-		logger.info(message);
-        System.out.println(message);
-	}
-	protected void logWarning(String message){
-		logger.warn(message);
-	}
-	protected void logError(String message){
-		logger.error(message);
-	}
-
-    protected void logError(String message, Throwable ex) {
-        logger.error(message, ex);
     }
 
     public String getComponentId() {

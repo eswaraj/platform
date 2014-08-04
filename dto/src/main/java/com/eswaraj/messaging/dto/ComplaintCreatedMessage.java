@@ -16,8 +16,10 @@ public class ComplaintCreatedMessage implements Serializable {
     private List<String> deviceIds;
     private Long adminId;
     private String status;
+    private long complaintTime;
 
     private List<Long> PoliticalAdminIds;
+    private List<Long> locationIds;
 
     public String getTitle() {
         return title;
@@ -106,4 +108,28 @@ public class ComplaintCreatedMessage implements Serializable {
     public void setPoliticalAdminIds(List<Long> politicalAdminIds) {
         PoliticalAdminIds = politicalAdminIds;
     }
+
+    public long getComplaintTime() {
+        return complaintTime;
+    }
+
+    public void setComplaintTime(long complaintTime) {
+        this.complaintTime = complaintTime;
+    }
+
+    public List<Long> getLocationIds() {
+        return locationIds;
+    }
+
+    public void setLocationIds(List<Long> locationIds) {
+        this.locationIds = locationIds;
+    }
+
+    @Override
+    public String toString() {
+        return "ComplaintCreatedMessage [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categoryIds=" + categoryIds + ", personId="
+                + personId + ", userId=" + userId + ", deviceIds=" + deviceIds + ", adminId=" + adminId + ", status=" + status + ", complaintTime=" + complaintTime + ", PoliticalAdminIds="
+                + PoliticalAdminIds + "]";
+    }
+
 }
