@@ -24,7 +24,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         // Read Input
         String prefix = (String) input.getValue(0);
         ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(1);
-
+        logInfo("prefix = " + prefix);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
         List<Long> counterValues = readMultiKeyFromMemoryStore(allKeys, Long.class);
@@ -43,6 +43,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
             //Some Counter Bolt may be last in the hierarchy so Stream may not be defined
             writeToStream(new Values(prefix, complaintCreatedMessage));
         }
+        logInfo("prefix  done= " + prefix);
 
     }
     
