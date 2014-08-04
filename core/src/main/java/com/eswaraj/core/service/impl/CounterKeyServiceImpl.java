@@ -59,7 +59,7 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     public List<String> getHourComplaintKeysForTheDay(String prefix, Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         return getGlobalHourComplaintKeysFor24Hours(prefix, calendar);
     }
 
