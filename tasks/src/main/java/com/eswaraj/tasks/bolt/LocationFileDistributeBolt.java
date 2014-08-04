@@ -117,13 +117,12 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed, BigDecimal startValue) throws ApplicationException {
 
         Rectangle coveringRectangle = createPolygonRectangle(coordinates);
-        Path2D polygon = createPolygon(coordinates);
         MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
-        BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc);
-        BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc);
+        BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc).setScale(3, RoundingMode.DOWN);
+        BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc).setScale(3, RoundingMode.DOWN);
         MathContext bottomRightMc = new MathContext(3, RoundingMode.UP);
-        BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc);
-        BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc);
+        BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc).setScale(3, RoundingMode.UP);
+        BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc).setScale(3, RoundingMode.DOWN);
         BigDecimal addedValue = new BigDecimal(.001);
         StringBuilder sb = new StringBuilder();
         if (startValue != null) {
@@ -133,27 +132,19 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         int count = 0;
         boolean first = true;
         int totalDivide = 0;
-        for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
-            for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
-                if (polygon.contains(topLeftLat.doubleValue(), topLeftLong.doubleValue())) {
-                    logInfo("Point is inside the boundary " + topLeftLat.doubleValue() + " , " + topLeftLong.doubleValue());
-                    if (first) {
-                        first = false;
-                    } else {
-                        sb.append(" ");
-                    }
-                    sb.append(longitude.round(topLeftMc).toString());
-                    sb.append(",");
-                    sb.append(longitude.round(topLeftMc).toString());
-                    count++;
-                    break;
+        for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
+            for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
+                if (first) {
+                    first = false;
+                } else {
+                    sb.append(" ");
                 }
+                logInfo("Point " + longitude.toString() + "," + latitude.toString());
+                sb.append(longitude.toString());
+                sb.append(",");
+                sb.append(latitude.toString());
             }
-            if (count > 0) {
-                break;
-            }
-            /*
-            logInfo("Will Check if can write to stream");
+            count++;
             if (count % 10 == 0) {
                 totalDivide++;
                 logInfo("Writing to stream");
@@ -162,17 +153,11 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 sb = new StringBuilder();
                 first = true;
             }
-            */
         }
-        logInfo("Writing to stream");
-        writeToStream(new Values(coordinates, sb.toString(), locationId));
-        logInfo("Writing Done");
-        /*
         if (count % 10 > 0){
             writeToStream(new Values(coordinates, sb.toString(), locationId));
             totalDivide++;
         }
-        */
         logInfo("Total Divides are : " + totalDivide);
     }
         

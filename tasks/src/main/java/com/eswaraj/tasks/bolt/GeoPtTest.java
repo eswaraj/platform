@@ -33,7 +33,7 @@ public class GeoPtTest {
 
     private void processBoundaryFile(Long locationId, Long boundaryFileId, boolean add) throws ApplicationException {
         try {
-            FileInputStream is = new FileInputStream("/Users/Ravi/Downloads/KML_zip_20140801063847.kml");
+            FileInputStream is = new FileInputStream("/Users/Ravi/Downloads/BangalorDistrict.kml");
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -66,27 +66,28 @@ public class GeoPtTest {
         Path2D myPolygon = createPolygon(coordinates);
         Rectangle coveringRectangle = myPolygon.getBounds();
         MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
-        BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc);
-        BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc);
+        BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc).setScale(3, RoundingMode.DOWN);
+        BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc).setScale(3, RoundingMode.DOWN);
         MathContext bottomRightMc = new MathContext(3, RoundingMode.UP);
-        BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc);
-        BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc);
+        BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc).setScale(3, RoundingMode.UP);
+        BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc).setScale(3, RoundingMode.UP);
         BigDecimal addedValue = new BigDecimal(.001);
         Point2D onePoint;
         int i = 0;
-        topLeftLat = new BigDecimal(8.080).round(topLeftMc);
-        logInfo("topLeftLat = " + topLeftLat);
-        logInfo("topLeftLong = " + topLeftLong);
-        logInfo("bottomRightLat = " + bottomRightLat);
-        logInfo("bottomRightLong = " + bottomRightLong);
+        // topLeftLat = new BigDecimal(8.080).round(topLeftMc);
 
-        for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
-            for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
+        for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
+            logInfo("***********latitude = " + latitude);
+            for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
                 onePoint = new Point2D.Double(latitude.doubleValue(), longitude.doubleValue());
                 i++;
                 processOnePoint(myPolygon, onePoint, locationId, add, totalPointsMissed, totalPointsProcessed);
             }
         }
+        logInfo("topLeftLat = " + topLeftLat);
+        logInfo("topLeftLong = " + topLeftLong);
+        logInfo("bottomRightLat = " + bottomRightLat);
+        logInfo("bottomRightLong = " + bottomRightLong);
 
     }
 
@@ -121,8 +122,9 @@ public class GeoPtTest {
         } else {
             totalPointsMissed.incrementAndGet();
         }
-        if ((totalPointsProcessed.get() + totalPointsMissed.get()) % 10000 == 0) {
-            logInfo("Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
+        if ((totalPointsProcessed.get() + totalPointsMissed.get()) % 100 == 0) {
+            logInfo("Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] Latitude =" + onePoint.getX() + " , Longitude = "
+                    + onePoint.getY());
         }
     }
 
