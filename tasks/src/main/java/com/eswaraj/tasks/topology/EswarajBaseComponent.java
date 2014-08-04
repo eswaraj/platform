@@ -154,7 +154,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         return redisTemplate.opsForValue().multiGet(redisKeys);
     }
 
-    protected <T> Long incrementCounterInMemoryStore(String redisKey, Long delta) {
+    protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {
         checkRedisServices();
         return redisTemplate.opsForValue().increment(redisKey, delta);
     }

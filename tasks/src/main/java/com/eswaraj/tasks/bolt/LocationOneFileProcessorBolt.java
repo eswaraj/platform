@@ -36,8 +36,8 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
             processCoordinates(coordinates, locationId, pointsToProcess, true, totalPointsMissed, totalPointsProcessed);
-            incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get());
-            incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get());
+            logInfo("totalPointsMissed(Redis)= " + incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get()));
+            logInfo("totalPointsProcessed(Redis)= " + incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get()));
         } catch (Throwable ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {
@@ -107,9 +107,9 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
 
             String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
             if (add) {
-                writeToMemoryStoreSet(redisKey, locationId);
+                // writeToMemoryStoreSet(redisKey, locationId);
             } else {
-                removeFromMemoryStoreSet(redisKey, locationId);
+                // removeFromMemoryStoreSet(redisKey, locationId);
             }
             totalPointsProcessed.incrementAndGet();
             logInfo("RedisKey [" + redisKey + "] Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
