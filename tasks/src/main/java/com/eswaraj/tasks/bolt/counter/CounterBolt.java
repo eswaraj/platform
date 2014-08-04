@@ -37,6 +37,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         }
 
         String redisKey = getMemeoryKeyForWrite(prefix, complaintCreatedMessage);
+        logInfo("prefix  redisKey= " + redisKey + ", " + totalComplaints);
 
         writeToMemoryStoreValue(redisKey, totalComplaints);
         if (getOutputStream() != null) {
