@@ -117,6 +117,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed, BigDecimal startValue) throws ApplicationException {
 
         Rectangle coveringRectangle = createPolygonRectangle(coordinates);
+        Path2D polygon = createPolygon(coordinates);
         MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
         BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc);
         BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc);
@@ -134,16 +135,24 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         int totalDivide = 0;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue)) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(" ");
+                if (polygon.contains(topLeftLat.doubleValue(), topLeftLong.doubleValue())) {
+                    logInfo("Point is inside the boundary " + topLeftLat.doubleValue() + " , " + topLeftLong.doubleValue());
+                    if (first) {
+                        first = false;
+                    } else {
+                        sb.append(" ");
+                    }
+                    sb.append(longitude.round(topLeftMc).toString());
+                    sb.append(",");
+                    sb.append(longitude.round(topLeftMc).toString());
+                    count++;
+                    break;
                 }
-                sb.append(longitude.round(topLeftMc).toString());
-                sb.append(",");
-                sb.append(longitude.round(topLeftMc).toString());
             }
-            count++;
+            if (count > 0) {
+                break;
+            }
+            /*
             logInfo("Will Check if can write to stream");
             if (count % 10 == 0) {
                 totalDivide++;
@@ -153,12 +162,17 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 sb = new StringBuilder();
                 first = true;
             }
+            */
         }
-
+        logInfo("Writing to stream");
+        writeToStream(new Values(coordinates, sb.toString(), locationId));
+        logInfo("Writing Done");
+        /*
         if (count % 10 > 0){
             writeToStream(new Values(coordinates, sb.toString(), locationId));
             totalDivide++;
         }
+        */
         logInfo("Total Divides are : " + totalDivide);
     }
         
@@ -184,6 +198,27 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         myPolygon.closePath();
         Rectangle coveringRectangle = myPolygon.getBounds();
         return coveringRectangle;
+    }
+
+    private Path2D createPolygon(String coordinates) {
+        String[] locationPoints = coordinates.split(" ");
+        String[] latLong;
+        BigDecimal oneLat, oneLong;
+        Path2D myPolygon = new Path2D.Double();
+        boolean first = true;
+        for (String oneLocationPoint : locationPoints) {
+            latLong = oneLocationPoint.split(",");
+            oneLong = new BigDecimal(latLong[0]);
+            oneLat = new BigDecimal(latLong[1]);
+            if (first) {
+                myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
+                first = false;
+            } else {
+                myPolygon.lineTo(oneLat.doubleValue(), oneLong.doubleValue());
+            }
+        }
+        myPolygon.closePath();
+        return myPolygon;
     }
 
 }
