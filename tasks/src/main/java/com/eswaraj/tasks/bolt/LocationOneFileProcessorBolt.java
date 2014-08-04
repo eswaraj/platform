@@ -29,8 +29,8 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             String coordinates = input.getString(0);
             String pointsToProcess = input.getString(1);
             Long locationId = input.getLong(2);
-            logInfo("Recived = " + getComponentId() + ", coordinates=" + coordinates);
-            logInfo("Recived = " + getComponentId() + ", pointsToProcess=" + pointsToProcess);
+            logInfo("Recived = " + getComponentId() + ", coordinates=" + coordinates.length());
+            logInfo("Recived = " + getComponentId() + ", pointsToProcess=" + pointsToProcess.length());
             logInfo("Recived = " + getComponentId() + ", locationId=" + locationId);
 
             AtomicLong totalPointsMissed = new AtomicLong(0);
