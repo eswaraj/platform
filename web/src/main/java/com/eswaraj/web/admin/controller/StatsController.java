@@ -120,11 +120,11 @@ public class StatsController {
         List<Long> last24HourComplaints = valueOperation.multiGet(category24HourKeys);
 
         mv.getModel().put("totalCategoryComplaints", mergeKeyAndValue(categoryName, yearComplaints));
-        mv.getModel().put("yearComplaints", mergeKeyAndValue(categoryName, yearComplaints));
-        mv.getModel().put("monthComplaints", mergeKeyAndValue(categoryName, monthComplaints));
-        mv.getModel().put("dayComplaints", mergeKeyAndValue(categoryName, dayComplaints));
-        mv.getModel().put("dayHourComplaints", mergeKeyAndValue(categoryName, dayHourComplaints));
-        mv.getModel().put("last24HourComplaints", mergeKeyAndValue(categoryName, last24HourComplaints));
+        mv.getModel().put("yearCategoryComplaints", mergeKeyAndValue(categoryName, yearComplaints));
+        mv.getModel().put("monthCategoryComplaints", mergeKeyAndValue(categoryName, monthComplaints));
+        mv.getModel().put("dayCategoryComplaints", mergeKeyAndValue(categoryName, dayComplaints));
+        mv.getModel().put("dayHourCategoryComplaints", mergeKeyAndValue(categoryName, dayHourComplaints));
+        mv.getModel().put("last24HourCategoryComplaints", mergeKeyAndValue(categoryName, last24HourComplaints));
 
     }
 
