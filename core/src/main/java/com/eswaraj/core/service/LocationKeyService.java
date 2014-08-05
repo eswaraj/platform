@@ -8,9 +8,9 @@ import com.eswaraj.core.exceptions.ApplicationException;
 
 public interface LocationKeyService {
 
-	String buildLocationKey(double longitude, double lattitude) throws ApplicationException;
+    String buildLocationKey(double lattitude, double longitude) throws ApplicationException;
 
-    String buildLocationKeyForNearByComplaints(double longitude, double lattitude) throws ApplicationException;
+    String buildLocationKeyForNearByComplaints(double lattitude, double longitude) throws ApplicationException;
 
     List<Point2D> getAllPointsBetweenRectangle(BigDecimal topLeftLat, BigDecimal topLeftLong, BigDecimal bottomRightLat, BigDecimal bottomRightLong) throws ApplicationException;
 }

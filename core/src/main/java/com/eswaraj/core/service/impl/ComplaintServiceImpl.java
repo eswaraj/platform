@@ -134,7 +134,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             
             //TODO find Executive Admin based on Location and Category and attach it to complaint
         }
-
+        complaint.setNearByKey(LocationKeyService.buildLocationKeyForNearByComplaints(saveComplaintRequestDto.getLattitude(), saveComplaintRequestDto.getLongitude()));
         
         
 		

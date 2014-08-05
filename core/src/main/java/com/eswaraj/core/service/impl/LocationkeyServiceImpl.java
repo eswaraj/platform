@@ -30,8 +30,8 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
 
     }
 	@Override
-	public String buildLocationKey(double longitude, double lattitude) throws ApplicationException {
-        String key = "L" + decimalFormat.format(longitude) + "-" + decimalFormat.format(lattitude);
+    public String buildLocationKey(double lattitude, double longitude) throws ApplicationException {
+        String key = "L" + decimalFormat.format(lattitude) + "-" + decimalFormat.format(longitude);
         return key;
 	}
 
@@ -58,8 +58,8 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     }
 
     @Override
-    public String buildLocationKeyForNearByComplaints(double longitude, double lattitude) throws ApplicationException {
-        String key = "L" + decimalFormatUpto2DecimalPoints.format(longitude) + "-" + decimalFormatUpto2DecimalPoints.format(lattitude);
+    public String buildLocationKeyForNearByComplaints(double lattitude, double longitude) throws ApplicationException {
+        String key = "L" + decimalFormatUpto2DecimalPoints.format(lattitude) + "-" + decimalFormatUpto2DecimalPoints.format(longitude);
         return key;
     }
 

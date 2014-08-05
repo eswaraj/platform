@@ -40,6 +40,8 @@ public class Complaint extends BaseNode {
     private Set<Location> locations;
     @Indexed
     private Long complaintTime;
+    @Indexed
+    private String nearByKey;
 	
 	public Complaint(){}
 	public Complaint(String title) {
@@ -161,6 +163,14 @@ public class Complaint extends BaseNode {
 
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
+    }
+
+    public String getNearByKey() {
+        return nearByKey;
+    }
+
+    public void setNearByKey(String nearByKey) {
+        this.nearByKey = nearByKey;
     }
     @Override
 	public String toString() {
