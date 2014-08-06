@@ -28,6 +28,8 @@ public interface LocationService {
 	
 	//LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException;
 	
+    LocationTypeDto getLocationTypeById(Long locationTypeId) throws ApplicationException;
+
 	LocationDto getRootLocationForSwarajIndia() throws ApplicationException;
 	
 	List<LocationTypeDto> getChildLocationsTypeOfParent(Long parentLocationTypeId) throws ApplicationException;

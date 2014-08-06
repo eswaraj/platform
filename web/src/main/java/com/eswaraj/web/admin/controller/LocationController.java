@@ -82,6 +82,12 @@ public class LocationController extends BaseController {
         return locationTypeJsonDto;
     }
 
+    @RequestMapping(value = "/ajax/locationtype/get/{locationTypeId}", method = RequestMethod.GET)
+    public @ResponseBody LocationTypeDto getLocationTypes(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        LocationTypeDto locationType = locationService.getLocationTypeById(locationId);
+        return locationType;
+    }
+
     @RequestMapping(value = "/ajax/locationtype/getchild/{parentLocationTypeId}", method = RequestMethod.GET)
     public @ResponseBody List<LocationTypeDto> getLocationTypeChildren(ModelAndView mv, @PathVariable Long parentLocationTypeId) throws ApplicationException {
         List<LocationTypeDto> childLocationType = locationService.getChildLocationsTypeOfParent(parentLocationTypeId);

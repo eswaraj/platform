@@ -265,4 +265,10 @@ public class LocationServiceImpl implements LocationService {
 		return saveRootLocationType(locationTypeDto, true);
 	}
 
+    @Override
+    public LocationTypeDto getLocationTypeById(Long locationTypeId) throws ApplicationException {
+        LocationType locationType = locationTypeRepository.findOne(locationTypeId);
+        return locationTypeConvertor.convertBean(locationType);
+    }
+
 }
