@@ -1,0 +1,23 @@
+{
+id: 72816,
+externalId: null,
+name: "Country",
+parentLocationTypeId: null,
+children: [
+{
+id: 72818,
+externalId: null,
+name: "State",
+parentLocationTypeId: 72816,
+children: [
+{
+id: 72887,
+externalId: null,
+name: "Parliament Constituency",
+parentLocationTypeId: 72818,
+children: null
+}
+]
+}
+]
+}

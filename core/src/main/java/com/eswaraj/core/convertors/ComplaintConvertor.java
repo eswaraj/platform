@@ -1,10 +1,14 @@
 package com.eswaraj.core.convertors;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
@@ -28,7 +32,7 @@ public class ComplaintConvertor extends BaseConvertor<Complaint, ComplaintDto> {
 			complaint = new Complaint();
 		}
 		BeanUtils.copyProperties(complaintDto, complaint);
-		complaint.setCategory(getObjectIfExists(complaintDto.getCategoryId(), "Category", categoryRepository));
+        complaint.setCategories(getAllCategories(getObjectIfExists(complaintDto.getCategoryId(), "Catgeory", categoryRepository)));
 		complaint.setPerson(getObjectIfExists(complaintDto.getPersonId(), "Person", personRepository));
 		return complaint;
 	}
@@ -37,9 +41,18 @@ public class ComplaintConvertor extends BaseConvertor<Complaint, ComplaintDto> {
 	protected ComplaintDto convertBeanInternal(Complaint dbDto) {
 		ComplaintDto complaintDto = new ComplaintDto();
 		BeanUtils.copyProperties(dbDto, complaintDto);
-		complaintDto.setCategoryId(getNodeId(dbDto.getCategory()));
+        // complaintDto.setCategoryId(getAllCategories(category));
 		complaintDto.setPersonId(getNodeId(dbDto.getPerson()));
 		return complaintDto;
 	}
+	
+	private Set<Category> getAllCategories(Category category) {
+	    Set<Category> categories = new HashSet<>();
+        while (category != null) {
+            categories.add(category);
+            category = categoryRepository.getParentCategory(category);
+        }
+        return categories;
+    }
 
 }

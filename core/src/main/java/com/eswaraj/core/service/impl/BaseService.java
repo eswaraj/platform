@@ -1,7 +1,10 @@
 package com.eswaraj.core.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -18,6 +21,13 @@ public abstract class BaseService implements Serializable {
 		}
 		return dbObject;
 	}
+
+    protected String readFile(String file) throws IOException {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream = classloader.getResourceAsStream(file);
+        String json = IOUtils.toString(inputStream, "UTF-8");
+        return json;
+    }
 
 
 }

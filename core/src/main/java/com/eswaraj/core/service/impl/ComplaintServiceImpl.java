@@ -153,7 +153,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (complaint.getAdministrator() != null) {
             complaintCreatedMessage.setAdminId(complaint.getAdministrator().getId());
         }
-        complaintCreatedMessage.setCategoryIds(getAllCategories(complaint.getCategory()));
+        complaintCreatedMessage.setCategoryIds(getAllCategories(complaint.getCategories()));
 
         complaintCreatedMessage.setDescription(complaint.getDescription());
 
@@ -199,14 +199,13 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         return complaintCreatedMessage;
     }
 
-    private List<Long> getAllCategories(Category category) {
+    private List<Long> getAllCategories(Set<Category> categories) {
         List<Long> categoryIds = new ArrayList<>();
-        if (category == null) {
+        if (categories == null) {
             return categoryIds;
         }
-        while (category != null) {
-            categoryIds.add(category.getId());
-            category = categoryRepository.getParentCategory(category);
+        for (Category oneCatgeory : categories) {
+            categoryIds.add(oneCatgeory.getId());
         }
         return categoryIds;
     }

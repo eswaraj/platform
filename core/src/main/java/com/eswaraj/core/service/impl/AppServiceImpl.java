@@ -1,12 +1,10 @@
 package com.eswaraj.core.service.impl;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Component;
@@ -348,7 +346,7 @@ public class AppServiceImpl extends BaseService implements AppService {
             JsonArray childArray = (JsonArray) jsonObject.get("childCategories");
             if (childArray != null) {
                 for (int j = 0; j < childArray.size(); j++) {
-                    JsonObject jsonChildObject = (JsonObject) childArray.get(i);
+                    JsonObject jsonChildObject = (JsonObject) childArray.get(j);
                     createCategory(jsonChildObject, category);
                 }
             }
@@ -368,14 +366,9 @@ public class AppServiceImpl extends BaseService implements AppService {
             category.setRoot(false);
         }
         category.setVideoUrl(jsonObject.get("videoUrl").getAsString());
-        // category = categoryRepository.save(category);
+        category = categoryRepository.save(category);
         return category;
     }
-    private String readFile(String file) throws IOException {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream inputStream = classloader.getResourceAsStream(file);
-        String json = IOUtils.toString(inputStream, "UTF-8");
-        return json;
-    }
+
 
 }
