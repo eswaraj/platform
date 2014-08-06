@@ -1,6 +1,7 @@
 package com.eswaraj.core.service;
 
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -20,6 +21,8 @@ public interface LocationService {
 	
 	List<LocationDto> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
 	
+    List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException;
+
 	LocationTypeDto saveLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;
 	
 	LocationTypeDto saveRootLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;

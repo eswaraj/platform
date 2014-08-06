@@ -271,4 +271,10 @@ public class LocationServiceImpl implements LocationService {
         return locationTypeConvertor.convertBean(locationType);
     }
 
+    @Override
+    public List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException {
+        Iterable<Location> locationIterbale = locationRepository.findAll(locations);
+        return locationConvertor.convertBeanList(locationIterbale);
+    }
+
 }

@@ -3,7 +3,6 @@ package com.eswaraj.web.admin.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -110,18 +109,19 @@ public class LocationController extends BaseController {
         return locationDto;
     }
 
-    @RequestMapping(value = "/ajax/location/getpoint", method = RequestMethod.GET)
-    public @ResponseBody List<Long> getLocationAtPoint(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
+    @RequestMapping(value = "/ajax/location/getpointlocations", method = RequestMethod.GET)
+    public @ResponseBody List<LocationDto> getLocationAtPoint(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
         System.out.println("Lat = " + Double.parseDouble(httpServletRequest.getParameter("lat")));
         System.out.println("Long = " + Double.parseDouble(httpServletRequest.getParameter("long")));
         String redisKey = LocationKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         System.out.println("Redis Key = " + redisKey);
         Set<Long> locations = redisTemplate.opsForSet().members(redisKey);
-        if (locations == null || locations.isEmpty()) {
-            locations = new HashSet<>();
-            locations.add(-100L);
+
+        List<LocationDto> returnList = new ArrayList<>(1);
+        if (locations != null && !locations.isEmpty()) {
+            returnList = locationService.getLocations(locations);
         }
-        return new ArrayList<>(locations);
+        return returnList;
     }
 
     @RequestMapping(value = "/ajax/location/getchild/{parentId}", method = RequestMethod.GET)
