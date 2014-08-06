@@ -1,5 +1,8 @@
 package com.eswaraj.core.service.impl;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +49,9 @@ import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Component
 @Transactional
@@ -322,5 +328,60 @@ public class AppServiceImpl extends BaseService implements AppService {
 		Collection<Department> departments = departmentRepository.getAllDepartmentsOfCategory(category);
 		return departmentConvertor.convertBeanList(departments);
 	}
+
+    @Override
+    public void initializeData() throws ApplicationException {
+        try {
+            loadAllcategories();
+        } catch (Exception ex) {
+            throw new ApplicationException(ex);
+        }
+    }
+
+    private void loadAllcategories() throws IOException {
+        String categoryJson = readFile("data/category.json");
+        JsonArray jsonArray = (JsonArray) new JsonParser().parse(categoryJson);
+        Category category;
+        for(int i=0;i<jsonArray.size();i++){
+            JsonObject jsonObject = (JsonObject) jsonArray.get(i);
+            category = createCategory(jsonObject, null);
+            JsonArray childArray = (JsonArray) jsonObject.get("childCategories");
+            if (childArray != null) {
+                for (int j = 0; j < childArray.size(); j++) {
+                    JsonObject jsonChildObject = (JsonObject) childArray.get(i);
+                    createCategory(jsonChildObject, category);
+                }
+            }
+        }
+    }
+
+    private Category createCategory(JsonObject jsonObject, Category parentCategory) {
+        Category category = new Category();
+        category.setDescription(jsonObject.get("description").getAsString());
+        category.setHeaderImageUrl(jsonObject.get("headerImageUrl").getAsString());
+        category.setImageUrl(jsonObject.get("imageUrl").getAsString());
+        category.setName(jsonObject.get("name").getAsString());
+        category.setParentCategory(parentCategory);
+        if (parentCategory == null) {
+            category.setRoot(true);
+        } else {
+            category.setRoot(false);
+        }
+        category.setVideoUrl(jsonObject.get("videoUrl").getAsString());
+        // category = categoryRepository.save(category);
+        return category;
+    }
+    private String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+
+        return stringBuilder.toString();
+    }
 
 }
