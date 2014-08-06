@@ -41,11 +41,26 @@ public class AnalyticsController extends BaseController {
     @RequestMapping(value = "/stats/counter/location/{locationId}/parentcategory/{parentCategoryId}", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationParentCategoryCounts(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long parentCategoryId) throws ApplicationException {
+        
+        List<CategoryDto> childCategories = appService.getAllChildCategoryOfParentCategory(parentCategoryId);
+        JsonArray jsonArray = getCountersForLocationAndCategories(locationId, childCategories);
+        return jsonArray.toString();
+    }
+
+    @RequestMapping(value = "/stats/counter/location/{locationId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getLocationAllCategoryCounts(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long parentCategoryId) throws ApplicationException {
+        
+        List<CategoryDto> rootCategories = appService.getAllRootCategories();
+        JsonArray jsonArray = getCountersForLocationAndCategories(locationId, rootCategories);
+        return jsonArray.toString();
+    }
+
+    private JsonArray getCountersForLocationAndCategories(Long locationId, List<CategoryDto> categories) {
         JsonArray jsonArray = new JsonArray();
-        List<CategoryDto> childCaategories = appService.getAllChildCategoryOfParentCategory(parentCategoryId);
-        if (childCaategories != null && !childCaategories.isEmpty()) {
-            List<String> allKeys = new ArrayList<>(childCaategories.size());
-            for (CategoryDto oneChildCategory : childCaategories) {
+        if (categories != null && !categories.isEmpty()) {
+            List<String> allKeys = new ArrayList<>(categories.size());
+            for (CategoryDto oneChildCategory : categories) {
                 String keyPreFix = counterKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategory.getId());
                 String redisKeyForAllTime = counterKeyService.getTotalComplaintCounterKey(keyPreFix);
                 logger.info("getting data from Redis for key {}", redisKeyForAllTime);
@@ -56,13 +71,12 @@ public class AnalyticsController extends BaseController {
             for (Long oneCount : result) {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("count", oneCount);
-                jsonObject.addProperty("name", childCaategories.get(i).getName());
-                jsonObject.addProperty("id", childCaategories.get(i).getId());
+                jsonObject.addProperty("name", categories.get(i).getName());
+                jsonObject.addProperty("id", categories.get(i).getId());
                 jsonArray.add(jsonObject);
             }
         }
-
-        return jsonArray.toString();
+        return jsonArray;
     }
 
 }
