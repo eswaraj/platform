@@ -1,5 +1,7 @@
 package com.eswaraj.domain.validator;
 
+import java.util.Collection;
+
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.google.gdata.util.common.base.StringUtil;
 
@@ -29,6 +31,15 @@ public abstract class BaseValidator<T> {
 			throw new ValidationException(validationMessage);
 		}
 	}
+
+    protected void checkIfNullOrEmpty(String fieldName, Collection fieldValue, String validationMessage) throws ValidationException {
+        if (fieldValue == null) {
+            throw new ValidationException(validationMessage);
+        }
+        if (fieldValue.isEmpty()) {
+            throw new ValidationException(validationMessage);
+        }
+    }
 	
 	protected void checkLength(String fieldValue, String validationMessage, int min, int max) throws ValidationException {
 		if(fieldValue.length() < min || fieldValue.length() > max)
