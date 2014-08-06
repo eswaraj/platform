@@ -339,7 +339,7 @@ public class AppServiceImpl extends BaseService implements AppService {
     }
 
     private void loadAllcategories() throws IOException {
-        String categoryJson = readFile("data/category.json");
+        String categoryJson = readFile("/data/category.json");
         JsonArray jsonArray = (JsonArray) new JsonParser().parse(categoryJson);
         Category category;
         for(int i=0;i<jsonArray.size();i++){
