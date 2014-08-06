@@ -37,7 +37,7 @@ public class InitDataController extends BaseController {
     private RedisTemplate redisTemplate;
 
 
-    @RequestMapping(value = "/data/init", method = RequestMethod.POST)
+    @RequestMapping(value = "/data/init", method = RequestMethod.GET)
     public @ResponseBody String handleFileUpload(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws IOException, ServletException, ApplicationException {
         appService.initializeData();
         return "Data Loaded";
