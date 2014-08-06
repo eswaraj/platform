@@ -40,6 +40,7 @@ import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -301,13 +302,16 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         locationType.setParentLocationType(parent);
         locationType = locationTypeRepository.save(locationType);
 
-        JsonArray childArray = (JsonArray) jsonObject.get("children");
-        if (childArray != null) {
-            for (int j = 0; j < childArray.size(); j++) {
-                JsonObject jsonChildObject = (JsonObject) childArray.get(j);
-                saveLocationType(jsonChildObject, dataClient, locationType);
+        if (jsonObject.get("children").getClass() != JsonNull.class) {
+            JsonArray childArray = (JsonArray) jsonObject.get("children");
+            if (childArray != null) {
+                for (int j = 0; j < childArray.size(); j++) {
+                    JsonObject jsonChildObject = (JsonObject) childArray.get(j);
+                    saveLocationType(jsonChildObject, dataClient, locationType);
+                }
             }
         }
+
     }
 
     @Override
