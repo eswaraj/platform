@@ -14,24 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.core.service.FileService;
-import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.LocationService;
 
 @Controller
 public class InitDataController extends BaseController {
 
     @Autowired
-    private LocationService locationService;
-
-    @Autowired
-    private FileService fileService;
-
-    @Autowired
     private AppService appService;
 
     @Autowired
-    private LocationKeyService LocationKeyService;
+    private LocationService locationService;
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -39,6 +31,7 @@ public class InitDataController extends BaseController {
     @RequestMapping(value = "/data/init", method = RequestMethod.GET)
     public @ResponseBody String handleFileUpload(HttpServletRequest httpServletRequest) throws IOException, ServletException, ApplicationException {
         appService.initializeData();
+        locationService.initializeData();
         return "Data Loaded";
     }
 
