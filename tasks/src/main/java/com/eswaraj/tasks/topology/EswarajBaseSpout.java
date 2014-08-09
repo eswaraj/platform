@@ -51,9 +51,10 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 		this.outputStream = outputStream;
 	}
 
-    @Override
-    protected void writeToStream(List<Object> tuple) {
-        collector.emit(outputStream, tuple, UUID.randomUUID().toString());
+    protected String writeToStream(List<Object> tuple) {
+        String messageId = UUID.randomUUID().toString();
+        collector.emit(outputStream, tuple, messageId);
+        return messageId;
     }
 
     protected void writeToStream(List<Object> tuple, Object messageId) {
@@ -61,12 +62,10 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
         collector.emit(outputStream, tuple, messageId);
     }
 
-    @Override
     protected void writeToTaskStream(int taskId, List<Object> tuple) {
         collector.emitDirect(taskId, outputStream, tuple);
     }
 
-    @Override
     protected void writeToTaskStream(int taskId, List<Object> tuple, Object messageId) {
         collector.emitDirect(taskId, outputStream, tuple);
     }

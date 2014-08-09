@@ -106,11 +106,6 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     }
 
-    protected abstract void writeToStream(List<Object> tuple);
-
-    protected abstract void writeToTaskStream(int taskId, List<Object> tuple);
-
-    protected abstract void writeToTaskStream(int taskId, List<Object> tuple, Object messageId);
     // Neo4j related functions
     protected Node getNodeByid(Long id) {
         Transaction trx = graphDatabaseService.beginTx();

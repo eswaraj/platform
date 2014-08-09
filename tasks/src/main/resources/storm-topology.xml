@@ -11,8 +11,8 @@
 	<bean class="com.eswaraj.tasks.topology.SpringEswarajTopology">
 		<property name="name" value="Eswaraj" />
 		<property name="maxSpoutPending" value="5000" />
-		<property name="numWorkers" value="20" />
-		<property name="numParallel" value="20" />
+		<property name="numWorkers" value="2" />
+		<property name="numParallel" value="2" />
 
 		<property name="spoutConfigs">
 			<list>

@@ -38,12 +38,12 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     LocationKeyService locationKeyService = new LocationkeyServiceImpl();
 
     @Override
-    public void execute(Tuple input) {
+    public void execute(Tuple inputTuple) {
         Date startTime = new Date();
         try {
             // Read the incoming Message
-            String message = input.getString(0);
-            logInfo("Recived = " + getComponentId() + " " + message + " , message id = " + input.getMessageId());
+            String message = inputTuple.getString(0);
+            logInfo("Recived = " + getComponentId() + " " + message + " , message id = " + inputTuple.getMessageId());
 
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = (JsonObject) parser.parse(message);
@@ -56,7 +56,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
 
             Long newLocationBoundaryFileId = jsonObject.get("newLocationBoundaryFileId").getAsLong();
 
-            distributeBoundaryFile(locationId, newLocationBoundaryFileId, true);
+            distributeBoundaryFile(locationId, newLocationBoundaryFileId, true, inputTuple);
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {
@@ -72,7 +72,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     }
 
 
-    private void distributeBoundaryFile(Long locationId, Long boundaryFileId, boolean add) throws ApplicationException {
+    private void distributeBoundaryFile(Long locationId, Long boundaryFileId, boolean add, Tuple inputTuple) throws ApplicationException {
         org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
         try {
             String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
@@ -102,7 +102,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                         processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null);
                     }
                     */
-                    processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null);
+                    processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null, inputTuple);
                 }
             }
         } catch (IOException ioe) {
@@ -114,7 +114,8 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         }
     }
 
-    private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed, BigDecimal startValue) throws ApplicationException {
+    private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed, BigDecimal startValue, Tuple inputTuple)
+            throws ApplicationException {
 
         Rectangle coveringRectangle = createPolygonRectangle(coordinates);
         MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
@@ -148,14 +149,14 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
             if (count % 10 == 0) {
                 totalDivide++;
                 logInfo("Writing to stream");
-                writeToStream(new Values(coordinates, sb.toString(), locationId));
+                writeToStream(inputTuple, new Values(coordinates, sb.toString(), locationId));
                 logInfo("Writing Done");
                 sb = new StringBuilder();
                 first = true;
             }
         }
         if (count % 10 > 0){
-            writeToStream(new Values(coordinates, sb.toString(), locationId));
+            writeToStream(inputTuple, new Values(coordinates, sb.toString(), locationId));
             totalDivide++;
         }
         logInfo("Total Divides are : " + totalDivide);

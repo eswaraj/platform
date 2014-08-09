@@ -25,8 +25,9 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple input) {
-        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(0);
+    public void execute(Tuple inputTuple) {
+        logger.info("Received Message " + inputTuple.getMessageId());
+        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
@@ -54,7 +55,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
             writeToMemoryStoreValue(redisKey, totalComplaint);
 
             String keyPrefixForNextBolt = counterKeyService.getLocationKeyPrefix(oneLocation);
-            writeToStream(new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
         
     }
@@ -64,6 +65,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
         return new String[] { "KeyPrefix", "Complaint" };
     }
 
+    @Override
     protected Long getStartOfHour(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -74,6 +76,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
         return calendar.getTimeInMillis();
     }
 
+    @Override
     protected Long getEndOfHour(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

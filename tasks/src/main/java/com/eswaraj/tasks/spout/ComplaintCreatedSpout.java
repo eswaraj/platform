@@ -27,4 +27,13 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
         }
 
     }
+
+    @Override
+    public void ack(Object msgId) {
+        logger.info("Message {} has been processed", msgId);
+    }
+
+    @Override
+    public void fail(Object msgId) {
+    }
 }

@@ -20,10 +20,11 @@ public abstract class CounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple input) {
+    public void execute(Tuple inputTuple) {
+        logger.info("Received Message " + inputTuple.getMessageId());
         // Read Input
-        String prefix = (String) input.getValue(0);
-        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(1);
+        String prefix = (String) inputTuple.getValue(0);
+        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(1);
         logInfo("prefix = " + prefix);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
@@ -42,15 +43,21 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         writeToMemoryStoreValue(redisKey, totalComplaints);
         if (getOutputStream() != null) {
             //Some Counter Bolt may be last in the hierarchy so Stream may not be defined
-            writeToStream(new Values(prefix, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
         }
-        logInfo("prefix  done= " + prefix);
+        if (isLastBolt()) {
+            acknowledgeTuple(inputTuple);
+        }
 
     }
     
     protected abstract List<String> getMemoryKeysForRead(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
 
     protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
+
+    protected boolean isLastBolt() {
+        return false;
+    }
 
     @Override
     protected String[] getFields() {

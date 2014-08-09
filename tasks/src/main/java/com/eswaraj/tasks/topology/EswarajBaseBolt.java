@@ -1,5 +1,7 @@
 package com.eswaraj.tasks.topology;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
 
 /**
  * All bolts should extend this class
@@ -22,7 +25,7 @@ import backtype.storm.tuple.Fields;
 public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IRichBolt {
 
 	private static final long serialVersionUID = 1L;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
     public EswarajBaseBolt() {}
 
     protected OutputCollector outputCollector;
@@ -55,20 +58,17 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         return new String[] { "Default" };
     }
 
-    @Override
-    protected void writeToStream(List<Object> tuple) {
+    protected void writeToStream(Tuple anchor, List<Object> tuple) {
         logInfo("Writing To Stream " + outputStream);
-        outputCollector.emit(outputStream, tuple);
+        outputCollector.emit(outputStream, anchor, tuple);
     }
 
-    @Override
-    protected void writeToTaskStream(int taskId, List<Object> tuple) {
-        outputCollector.emitDirect(taskId, outputStream, tuple);
+    protected void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
+        outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
     }
 
-    @Override
-    protected void writeToTaskStream(int taskId, List<Object> tuple, Object messageId) {
-        outputCollector.emitDirect(taskId, outputStream, tuple);
+    protected void acknowledgeTuple(Tuple input) {
+        outputCollector.ack(input);
     }
 
     @Override
@@ -127,5 +127,25 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         this.sourceComponentStreams = sourceComponentStreams;
     }
 
+    protected Long getStartOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 1);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
+        return calendar.getTimeInMillis();
+    }
+
+    protected Long getEndOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
+        return calendar.getTimeInMillis();
+    }
 
 }

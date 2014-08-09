@@ -18,5 +18,10 @@ public class TotalCounterBolt extends CounterBolt {
         return counterKeyService.getTotalComplaintCounterKey(prefix);
     }
 
+    @Override
+    protected boolean isLastBolt() {
+        return true;
+    }
+
 
 }
