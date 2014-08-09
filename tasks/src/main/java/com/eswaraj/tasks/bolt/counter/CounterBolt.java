@@ -45,9 +45,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
             //Some Counter Bolt may be last in the hierarchy so Stream may not be defined
             writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
         }
-        if (isLastBolt()) {
-            acknowledgeTuple(inputTuple);
-        }
+        acknowledgeTuple(inputTuple);
 
     }
     
@@ -55,9 +53,9 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
     protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
 
-    protected boolean isLastBolt() {
-        return false;
-    }
+    /*
+     * protected boolean isLastBolt() { return false; }
+     */
 
     @Override
     protected String[] getFields() {

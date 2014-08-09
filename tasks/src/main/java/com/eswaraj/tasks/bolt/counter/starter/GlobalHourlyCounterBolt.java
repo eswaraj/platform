@@ -47,7 +47,7 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
 
         String keyPrefixForNextBolt = counterKeyService.getGlobalKeyPrefix();
         writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
-        
+        acknowledgeTuple(inputTuple);
     }
 
     @Override

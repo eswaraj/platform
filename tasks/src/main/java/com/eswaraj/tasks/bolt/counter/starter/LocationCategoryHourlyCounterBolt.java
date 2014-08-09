@@ -64,6 +64,7 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
                 writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
             }
         }
+        acknowledgeTuple(inputTuple);
         
     }
 

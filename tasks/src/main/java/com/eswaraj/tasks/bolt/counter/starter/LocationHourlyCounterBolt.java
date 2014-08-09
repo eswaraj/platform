@@ -57,6 +57,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
             String keyPrefixForNextBolt = counterKeyService.getLocationKeyPrefix(oneLocation);
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
+        acknowledgeTuple(inputTuple);
         
     }
 

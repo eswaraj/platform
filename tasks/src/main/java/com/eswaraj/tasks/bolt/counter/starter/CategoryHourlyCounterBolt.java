@@ -57,7 +57,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
             String keyPrefixForNextBolt = counterKeyService.getCategoryKeyPrefix(oneCategory);
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
-        
+        acknowledgeTuple(inputTuple);
     }
 
     @Override
