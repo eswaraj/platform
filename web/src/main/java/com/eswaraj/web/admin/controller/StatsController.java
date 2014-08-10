@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,8 +39,8 @@ public class StatsController {
     public ModelAndView showIndexPage(ModelAndView mv) throws ApplicationException {
 
         String globalPrefix = counterKeyService.getGlobalKeyPrefix();
-        addDataToModel(mv, globalPrefix);
-        addCategoryStats(mv);
+        // addDataToModel(mv, globalPrefix);
+        // addCategoryStats(mv);
         mv.setViewName("stats");
         return mv;
     }
@@ -50,7 +51,7 @@ public class StatsController {
         String globalPrefix = counterKeyService.getGlobalKeyPrefix();
         addDataToModel(mv, globalPrefix);
         addCategoryStats(mv);
-
+        mv.getModel().put("title", "Gloabl Stats");
         LocationDto india = locationService.getRootLocationForSwarajIndia();
         List<LocationDto> childLocations = locationService.getChildLocationsOfParent(india.getId());
         mv.getModel().put("locations", childLocations);
@@ -59,12 +60,16 @@ public class StatsController {
 		return mv;
 	}
 
-    @RequestMapping(value = "/locations.html", method = RequestMethod.GET)
-    public ModelAndView showStateLocations(ModelAndView mv) throws ApplicationException {
+    @RequestMapping(value = "/stat/locations/{locationId}.html", method = RequestMethod.GET)
+    public ModelAndView showStateLocations(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
-        String globalPrefix = counterKeyService.getGlobalKeyPrefix();
-        addDataToModel(mv, globalPrefix);
+        String locationPrefix = counterKeyService.getLocationKeyPrefix(locationId);
+        addDataToModel(mv, locationPrefix);
         addCategoryStats(mv);
+        List<LocationDto> childLocations = locationService.getChildLocationsOfParent(locationId);
+        LocationDto location = locationService.getLocationById(locationId);
+        mv.getModel().put("title", "Stats for " + location.getName());
+        mv.getModel().put("locations", childLocations);
         mv.setViewName("global");
         return mv;
     }

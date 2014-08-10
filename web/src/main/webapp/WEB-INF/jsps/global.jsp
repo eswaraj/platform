@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>${title}</h1>
 <br>
 </br>
 <h1>Total Complaints Since Start = ${totalComplaints}</h1>
