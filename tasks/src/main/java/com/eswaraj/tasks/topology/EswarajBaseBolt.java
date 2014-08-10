@@ -89,7 +89,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     private void failTuple(Tuple input) {
-        logInfo("acknowledgeTuple : " + printTuple(input));
+        logInfo("***Failed acknowledgeTuple : " + printTuple(input));
         outputCollector.fail(input);
     }
 
