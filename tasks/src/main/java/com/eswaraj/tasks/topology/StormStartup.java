@@ -14,8 +14,8 @@ public class StormStartup {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Creating Context");
-        System.out.println("Utils.readDefaultConfig()=" + Utils.readDefaultConfig());
-        NimbusClient nimbusClient = NimbusClient.getConfiguredClient(Utils.readDefaultConfig());
+        System.out.println("Utils.readStormConfig()=" + Utils.readStormConfig());
+        NimbusClient nimbusClient = NimbusClient.getConfiguredClient(Utils.readStormConfig());
         List<TopologySummary> topologySummaries = nimbusClient.getClient().getClusterInfo().get_topologies();
         System.out.println("Already Running Toplogies");
         for(TopologySummary oneTopologySummary: topologySummaries){
