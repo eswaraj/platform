@@ -8,8 +8,8 @@
 
 	<context:component-scan base-package="com.eswaraj.tasks.topology" />
 	
-	<beans:import resource="storm-topology-location.xml" />
-	<beans:import resource="storm-topology-counters.xml" />
-	<beans:import resource="storm-topology-app-cache.xml" />
+	<import resource="storm-topology-location.xml" />
+	<import resource="storm-topology-counters.xml" />
+	<import resource="storm-topology-app-cache.xml" />
 
 </beans>

@@ -19,9 +19,9 @@ public class StormStartup {
         List<TopologySummary> topologySummaries = nimbusClient.getClient().getClusterInfo().get_topologies();
         System.out.println("Already Running Toplogies");
         for(TopologySummary oneTopologySummary: topologySummaries){
-            System.out.println("Name" + oneTopologySummary.get_name());
-            System.out.println("     Id" + oneTopologySummary.get_id());
-            System.out.println("     Status" + oneTopologySummary.get_status());
+            System.out.println("Name : " + oneTopologySummary.get_name());
+            System.out.println("     Id     : " + oneTopologySummary.get_id());
+            System.out.println("     Status : " + oneTopologySummary.get_status());
         }
 
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("storm-topology.xml");
