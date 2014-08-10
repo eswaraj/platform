@@ -65,6 +65,7 @@ public class AwsQueueManager implements Serializable {
                 // Messages have been received
                 for (Message message : rmResult.getMessages()) {
                     messagesRecieved.add(message.getBody());
+                    deleteMessage(message, queueName);
                 }
             } else {
                 logger.debug("No messages available");
