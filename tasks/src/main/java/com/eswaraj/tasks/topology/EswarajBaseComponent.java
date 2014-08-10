@@ -66,14 +66,14 @@ public abstract class EswarajBaseComponent implements Serializable {
         logger.debug("awsComplaintCreatedQueueName=" + awsComplaintCreatedQueueName);
         
         
-        logger.debug("SYSTEM : dbUrl=" + System.getenv("db_url"));
-        logger.debug("SYSTEM : redisUrl=" + System.getenv("redis_server"));
-        logger.debug("SYSTEM : redisPort=" + System.getenv("redis_port"));
-        logger.debug("SYSTEM : regions=" + System.getenv("aws_region"));
-        logger.debug("SYSTEM : accessKey=******");
-        logger.debug("SYSTEM : awsLocationQueueName=" + System.getenv("aws_location_file_queue_name"));
-        logger.debug("SYSTEM : awsCategoryUpdateQueueName=" + System.getenv("aws_category_queue_name"));
-        logger.debug("SYSTEM : awsComplaintCreatedQueueName=" + System.getenv("aws_complaint_created_queue_name"));
+        logInfo("SYSTEM : dbUrl=" + System.getenv("db_url"));
+        logInfo("SYSTEM : redisUrl=" + System.getenv("redis_server"));
+        logInfo("SYSTEM : redisPort=" + System.getenv("redis_port"));
+        logInfo("SYSTEM : regions=" + System.getenv("aws_region"));
+        logInfo("SYSTEM : accessKey=******");
+        logInfo("SYSTEM : awsLocationQueueName=" + System.getenv("aws_location_file_queue_name"));
+        logInfo("SYSTEM : awsCategoryUpdateQueueName=" + System.getenv("aws_category_queue_name"));
+        logInfo("SYSTEM : awsComplaintCreatedQueueName=" + System.getenv("aws_complaint_created_queue_name"));
 
     }
 
