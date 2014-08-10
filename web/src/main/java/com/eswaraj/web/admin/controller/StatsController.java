@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.CounterKeyService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.LocationDto;
 
 @Controller
 public class StatsController {
@@ -26,6 +28,8 @@ public class StatsController {
     private CounterKeyService counterKeyService;
     @Autowired
     private AppService appService;
+    @Autowired
+    private LocationService locationService;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -37,8 +41,33 @@ public class StatsController {
         addDataToModel(mv, globalPrefix);
         addCategoryStats(mv);
         mv.setViewName("stats");
+        return mv;
+    }
+
+    @RequestMapping(value = "/global.html", method = RequestMethod.GET)
+    public ModelAndView showGlobalPage(ModelAndView mv) throws ApplicationException {
+
+        String globalPrefix = counterKeyService.getGlobalKeyPrefix();
+        addDataToModel(mv, globalPrefix);
+        addCategoryStats(mv);
+
+        LocationDto india = locationService.getRootLocationForSwarajIndia();
+        List<LocationDto> childLocations = locationService.getChildLocationsOfParent(india.getId());
+        mv.getModel().put("locations", childLocations);
+
+        mv.setViewName("global");
 		return mv;
 	}
+
+    @RequestMapping(value = "/locations.html", method = RequestMethod.GET)
+    public ModelAndView showStateLocations(ModelAndView mv) throws ApplicationException {
+
+        String globalPrefix = counterKeyService.getGlobalKeyPrefix();
+        addDataToModel(mv, globalPrefix);
+        addCategoryStats(mv);
+        mv.setViewName("global");
+        return mv;
+    }
 
     private void addDataToModel(ModelAndView mv, String prefix) throws ApplicationException {
         Date currentDate = new Date();

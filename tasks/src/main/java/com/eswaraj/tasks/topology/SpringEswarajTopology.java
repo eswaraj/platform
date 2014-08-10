@@ -28,6 +28,7 @@ public class SpringEswarajTopology {
 	private int numWorkers;
 	private int numParallel;
     private int maxSpoutPending;
+    private int messageTimeoutSeconds = 30;
 	private String kafkaZookeeper;
     private List<EswarajBaseSpout> spoutConfigs;
     private List<EswarajBaseBolt> boltConfigs;
@@ -63,7 +64,7 @@ public class SpringEswarajTopology {
         conf.setMaxTaskParallelism(numParallel);
         conf.setMaxSpoutPending(maxSpoutPending);
         // conf.setNumAckers(2);
-        // conf.setMessageTimeoutSecs(100000);
+        conf.setMessageTimeoutSecs(messageTimeoutSeconds);
         StormTopology stormTopology = buildTopology();
         StormSubmitter.submitTopology(getName(), conf, stormTopology);
 	    /*

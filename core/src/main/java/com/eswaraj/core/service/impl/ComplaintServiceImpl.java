@@ -55,7 +55,8 @@ import com.eswaraj.web.dto.SaveComplaintRequestDto;
 @Transactional
 public class ComplaintServiceImpl extends BaseService implements ComplaintService {
 	
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private ComplaintRepository complaintRepository;
 	@Autowired
 	private ComplaintConvertor complaintConvertor;
@@ -74,7 +75,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private LocationKeyService LocationKeyService;
+    private LocationKeyService locationKeyService;
     @Autowired
     private LocationRepository locationRepository;
     @Autowired
@@ -112,7 +113,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         }
 
         // Get all Locations and attach to it.
-        Set<Long> complaintLocations = redisTemplate.opsForSet().members(LocationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude()));
+        Set<Long> complaintLocations = redisTemplate.opsForSet().members(locationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude()));
         if (complaintLocations != null && !complaintLocations.isEmpty()) {
 
             Set<Location> locations = new HashSet<>();
@@ -134,7 +135,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             
             //TODO find Executive Admin based on Location and Category and attach it to complaint
         }
-        complaint.setNearByKey(LocationKeyService.buildLocationKeyForNearByComplaints(saveComplaintRequestDto.getLattitude(), saveComplaintRequestDto.getLongitude()));
+        complaint.setNearByKey(locationKeyService.buildLocationKeyForNearByComplaints(saveComplaintRequestDto.getLattitude(), saveComplaintRequestDto.getLongitude()));
         
         
 		
