@@ -14,7 +14,6 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
     public void nextTuple() {
         ComplaintCreatedMessage complaint;
         try {
-            logInfo("Geting Message from Complaint Queue");
             complaint = getQueueService().receiveComplaintCreatedMessage();
             if (complaint != null) {
                 logInfo("Mesage Recieved in Spout :  " + complaint);

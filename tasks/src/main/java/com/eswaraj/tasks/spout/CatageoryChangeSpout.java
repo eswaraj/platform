@@ -13,7 +13,6 @@ public class CatageoryChangeSpout extends EswarajBaseSpout {
     public void nextTuple() {
         String message;
         try {
-            logInfo("Geting Message from Category Queue");
             message = getQueueService().receiveCategoryUpdateMessage();
             if (message != null) {
                 logInfo("Mesage Recieved in Spout :  " + message);
