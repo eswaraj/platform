@@ -56,14 +56,14 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsComplaintCreatedQueueName;
 
     private void printAllConfigs() {
-        System.out.println("dbUrl=" + dbUrl);
-        System.out.println("redisUrl=" + redisUrl);
-        System.out.println("redisPort=" + redisPort);
-        System.out.println("regions=" + regions);
-        System.out.println("accessKey=******");
-        System.out.println("awsLocationQueueName=" + awsLocationQueueName);
-        System.out.println("awsCategoryUpdateQueueName=" + awsCategoryUpdateQueueName);
-        System.out.println("awsComplaintCreatedQueueName=" + awsComplaintCreatedQueueName);
+        logger.debug("dbUrl=" + dbUrl);
+        logger.debug("redisUrl=" + redisUrl);
+        logger.debug("redisPort=" + redisPort);
+        logger.debug("regions=" + regions);
+        logger.debug("accessKey=******");
+        logger.debug("awsLocationQueueName=" + awsLocationQueueName);
+        logger.debug("awsCategoryUpdateQueueName=" + awsCategoryUpdateQueueName);
+        logger.debug("awsComplaintCreatedQueueName=" + awsComplaintCreatedQueueName);
 
     }
 

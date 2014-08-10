@@ -25,7 +25,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logger.info("Received Message " + inputTuple.getMessageId());
+        logDebug("Received Message " + inputTuple.getMessageId());
         ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
@@ -34,7 +34,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
         List<Long> categories = complaintCreatedMessage.getCategoryIds();
 
         if (categories == null || categories.isEmpty()) {
-            logInfo("No Categories attached, nothing to do");
+            logDebug("No Categories attached, nothing to do");
             return Result.Success;
         }
         for (Long oneCategory : categories) {
@@ -49,7 +49,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
             String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
-            logInfo("redisKey = " + redisKey);
+            logDebug("redisKey = {}", redisKey);
 
             writeToMemoryStoreValue(redisKey, totalComplaint);
 
