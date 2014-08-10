@@ -60,7 +60,7 @@ public class StatsController {
 		return mv;
 	}
 
-    @RequestMapping(value = "/stat/locations/{locationId}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/stat/location/{locationId}.html", method = RequestMethod.GET)
     public ModelAndView showStateLocations(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
         String locationPrefix = counterKeyService.getLocationKeyPrefix(locationId);
@@ -75,34 +75,36 @@ public class StatsController {
     }
 
     private void addDataToModel(ModelAndView mv, String prefix) throws ApplicationException {
-        Date currentDate = new Date();
-        ValueOperations valueOperation = redisTemplate.opsForValue();
-        long totalComplaints = (Long) valueOperation.get(counterKeyService.getTotalComplaintCounterKey(prefix));
+        try {
+            Date currentDate = new Date();
+            ValueOperations valueOperation = redisTemplate.opsForValue();
+            long totalComplaints = (Long) valueOperation.get(counterKeyService.getTotalComplaintCounterKey(prefix));
 
-        List<String> yearKeys = counterKeyService.getYearComplaintKeysForEternitySinceStart(prefix);
-        List<Long> yearComplaints = valueOperation.multiGet(yearKeys);
+            List<String> yearKeys = counterKeyService.getYearComplaintKeysForEternitySinceStart(prefix);
+            List<Long> yearComplaints = valueOperation.multiGet(yearKeys);
 
-        List<String> monthKeys = counterKeyService.getMonthComplaintKeysForTheYear(prefix, currentDate);
-        List<Long> monthComplaints = valueOperation.multiGet(monthKeys);
+            List<String> monthKeys = counterKeyService.getMonthComplaintKeysForTheYear(prefix, currentDate);
+            List<Long> monthComplaints = valueOperation.multiGet(monthKeys);
 
-        List<String> dayKeys = counterKeyService.getDayComplaintKeysForTheMonth(prefix, currentDate);
-        List<Long> dayComplaints = valueOperation.multiGet(dayKeys);
+            List<String> dayKeys = counterKeyService.getDayComplaintKeysForTheMonth(prefix, currentDate);
+            List<Long> dayComplaints = valueOperation.multiGet(dayKeys);
 
-        
-        List<String> dayHourKeys = counterKeyService.getHourComplaintKeysForTheDay(prefix, currentDate);
-        List<Long> dayHourComplaints = valueOperation.multiGet(dayHourKeys);
-        
+            List<String> dayHourKeys = counterKeyService.getHourComplaintKeysForTheDay(prefix, currentDate);
+            List<Long> dayHourComplaints = valueOperation.multiGet(dayHourKeys);
 
-        List<String> last24HourKeys = counterKeyService.getHourComplaintKeysForLast24Hours(prefix, currentDate);
-        List<Long> last24HourComplaints = valueOperation.multiGet(last24HourKeys);
+            List<String> last24HourKeys = counterKeyService.getHourComplaintKeysForLast24Hours(prefix, currentDate);
+            List<Long> last24HourComplaints = valueOperation.multiGet(last24HourKeys);
 
 
-        mv.getModel().put("totalComplaints", totalComplaints);
-        mv.getModel().put("yearComplaints", mergeKeyAndValue(yearKeys, yearComplaints));
-        mv.getModel().put("monthComplaints", mergeKeyAndValue(monthKeys, monthComplaints));
-        mv.getModel().put("dayComplaints", mergeKeyAndValue(dayKeys, dayComplaints));
-        mv.getModel().put("dayHourComplaints", mergeKeyAndValue(dayHourKeys, dayHourComplaints));
-        mv.getModel().put("last24HourComplaints", mergeKeyAndValue(last24HourKeys, last24HourComplaints));
+            mv.getModel().put("totalComplaints", totalComplaints);
+            mv.getModel().put("yearComplaints", mergeKeyAndValue(yearKeys, yearComplaints));
+            mv.getModel().put("monthComplaints", mergeKeyAndValue(monthKeys, monthComplaints));
+            mv.getModel().put("dayComplaints", mergeKeyAndValue(dayKeys, dayComplaints));
+            mv.getModel().put("dayHourComplaints", mergeKeyAndValue(dayHourKeys, dayHourComplaints));
+            mv.getModel().put("last24HourComplaints", mergeKeyAndValue(last24HourKeys, last24HourComplaints));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
