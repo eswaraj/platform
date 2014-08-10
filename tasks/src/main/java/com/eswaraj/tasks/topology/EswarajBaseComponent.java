@@ -337,6 +337,14 @@ public abstract class EswarajBaseComponent implements Serializable {
         logger.info(message);
     }
 
+    protected void logDebug(String message) {
+        logger.debug(message);
+    }
+
+    protected void logDebug(String message, Object... obj1) {
+        logger.debug(message, obj1);
+    }
+
     protected void logWarning(String message) {
         logger.warn(message);
     }

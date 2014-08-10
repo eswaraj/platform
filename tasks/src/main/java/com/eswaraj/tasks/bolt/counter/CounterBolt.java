@@ -21,11 +21,11 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
     @Override
     public void execute(Tuple inputTuple) {
-        logger.info("Received Message " + inputTuple.getMessageId());
+        logDebug("Received Message {}", inputTuple.getMessageId());
         // Read Input
         String prefix = (String) inputTuple.getValue(0);
         ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(1);
-        logInfo("prefix = " + prefix);
+        logDebug("prefix = " + prefix);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
         List<Long> counterValues = readMultiKeyFromMemoryStore(allKeys, Long.class);
@@ -38,7 +38,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         }
 
         String redisKey = getMemeoryKeyForWrite(prefix, complaintCreatedMessage);
-        logInfo("prefix  redisKey= " + redisKey + ", " + totalComplaints);
+        logDebug("prefix  redisKey= " + redisKey + ", " + totalComplaints);
 
         writeToMemoryStoreValue(redisKey, totalComplaints);
         if (getOutputStream() != null) {

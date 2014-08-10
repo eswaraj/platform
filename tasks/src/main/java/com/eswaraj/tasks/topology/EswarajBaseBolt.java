@@ -55,7 +55,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     protected void writeToStream(Tuple anchor, List<Object> tuple) {
-        logInfo("Writing To Stream " + outputStream);
+        logDebug("Writing To Stream {}", outputStream);
         outputCollector.emit(outputStream, anchor, tuple);
     }
 
