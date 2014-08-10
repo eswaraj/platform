@@ -56,25 +56,15 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsComplaintCreatedQueueName;
 
     private void printAllConfigs() {
-        logger.debug("dbUrl=" + dbUrl);
-        logger.debug("redisUrl=" + redisUrl);
-        logger.debug("redisPort=" + redisPort);
-        logger.debug("regions=" + regions);
-        logger.debug("accessKey=******");
-        logger.debug("awsLocationQueueName=" + awsLocationQueueName);
-        logger.debug("awsCategoryUpdateQueueName=" + awsCategoryUpdateQueueName);
-        logger.debug("awsComplaintCreatedQueueName=" + awsComplaintCreatedQueueName);
         
-        
-        logInfo("SYSTEM : dbUrl=" + System.getenv("db_url"));
-        logInfo("SYSTEM : redisUrl=" + System.getenv("redis_server"));
-        logInfo("SYSTEM : redisPort=" + System.getenv("redis_port"));
-        logInfo("SYSTEM : regions=" + System.getenv("aws_region"));
+        logInfo("SYSTEM : dbUrl= {}, Spring DbUrl = {}", System.getenv("db_url"), dbUrl);
+        logInfo("SYSTEM : redisUrl= {}, Spring redisUrl = {}", System.getenv("redis_server"), redisUrl);
+        logInfo("SYSTEM : redisPort= {}, Spring redisPort = {}", System.getenv("redis_port"), redisPort);
+        logInfo("SYSTEM : regions= {}, Spring region = {} ", System.getenv("aws_region"), regions);
         logInfo("SYSTEM : accessKey=******");
-        logInfo("SYSTEM : awsLocationQueueName=" + System.getenv("aws_location_file_queue_name"));
-        logInfo("SYSTEM : awsCategoryUpdateQueueName=" + System.getenv("aws_category_queue_name"));
-        logInfo("SYSTEM : awsComplaintCreatedQueueName=" + System.getenv("aws_complaint_created_queue_name"));
-
+        logInfo("SYSTEM : awsLocationQueueName= {}, Spring awsLocationQueueName= {}", System.getenv("aws_location_file_queue_name"), awsLocationQueueName);
+        logInfo("SYSTEM : awsCategoryUpdateQueueName= {}, Spring awsCategoryUpdateQueueName= {}", System.getenv("aws_category_queue_name"), awsCategoryUpdateQueueName);
+        logInfo("SYSTEM : awsComplaintCreatedQueueName= {}, Spring awsComplaintCreatedQueueName={}", System.getenv("aws_complaint_created_queue_name"), awsComplaintCreatedQueueName);
     }
 
     protected void init() {
@@ -345,6 +335,10 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     protected void logInfo(String message) {
         logger.info(message);
+    }
+
+    protected void logInfo(String message, Object... objects) {
+        logger.info(message, objects);
     }
 
     protected void logDebug(String message) {
