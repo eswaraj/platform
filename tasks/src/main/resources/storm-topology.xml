@@ -9,7 +9,7 @@
 	<context:component-scan base-package="com.eswaraj.tasks.topology" />
 
 	<bean class="com.eswaraj.tasks.topology.SpringEswarajTopology">
-		<property name="name" value="Eswaraj" />
+		<property name="name" value="Eswaraj-1" />
 		<property name="maxSpoutPending" value="5000" />
 		<property name="numWorkers" value="2" />
 		<property name="numParallel" value="2" />
