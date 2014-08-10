@@ -2,25 +2,24 @@ package com.eswaraj.tasks.bolt;
 
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
@@ -48,15 +47,30 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = (JsonObject) parser.parse(message);
             Long locationId = jsonObject.get("locationId").getAsLong();
-            if (jsonObject.get("oldLocationBoundaryFileId") != null) {
-                Long oldLocationBoundaryFileId = jsonObject.get("oldLocationBoundaryFileId").getAsLong();
-                //distributeBoundaryFile(locationId, oldLocationBoundaryFileId, false);
-                // remove old file points process old file
-            }
 
             Long newLocationBoundaryFileId = jsonObject.get("newLocationBoundaryFileId").getAsLong();
+            Long oldLocationBoundaryFileId = null;
 
-            distributeBoundaryFile(locationId, newLocationBoundaryFileId, true, inputTuple);
+            if (jsonObject.get("oldLocationBoundaryFileId") != null) {
+                oldLocationBoundaryFileId = jsonObject.get("oldLocationBoundaryFileId").getAsLong();
+            }
+
+            String[] newCoordinates = getCoordinatesForBoundaryFileId(newLocationBoundaryFileId);
+
+            AtomicLong totalPointsMissed = new AtomicLong(0);
+            AtomicLong totalPointsProcessed = new AtomicLong(0);
+            if (oldLocationBoundaryFileId != null) {
+                String[] oldCoordinates = getCoordinatesForBoundaryFileId(oldLocationBoundaryFileId);
+                // Send all points of old boundary with new Boundary.
+                for (String coordinates : oldCoordinates) {
+                    processCoordinates(coordinates, newCoordinates, locationId, totalPointsMissed, totalPointsProcessed, inputTuple);
+                }
+            }
+
+            for (String coordinates : newCoordinates) {
+                processCoordinates(coordinates, new String[] { coordinates }, locationId, totalPointsMissed, totalPointsProcessed, inputTuple);
+            }
+
             return Result.Success;
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
@@ -73,11 +87,8 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         return new String[] { "MapBoundary", "Points", "LocationId" };
     }
 
-
-    private void distributeBoundaryFile(Long locationId, Long boundaryFileId, boolean add, Tuple inputTuple) throws ApplicationException {
-        org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
+    private String[] getCoordinatesFromHttpFile(String s3HttpUrl) throws ApplicationException {
         try {
-            String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
             logInfo("Getting Location file from " + s3HttpUrl);
             URL url = new URL(s3HttpUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -90,34 +101,32 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
 
             NodeList coordinateList = doc.getElementsByTagName("coordinates");
             String coordinates = null;
-            AtomicLong totalPointsMissed = new AtomicLong(0);
-            AtomicLong totalPointsProcessed = new AtomicLong(0);
+            List<String> coordinateLists = new ArrayList<>();
             for (int temp = 0; temp < coordinateList.getLength(); temp++) {
                 Node nNode = coordinateList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     coordinates = eElement.getTextContent();
-                    /*
-                    if (temp == 0) {
-                        processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, new BigDecimal(9.549));
-                    } else {
-                        processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null);
-                    }
-                    */
-                    processCoordinates(coordinates, locationId, add, totalPointsMissed, totalPointsProcessed, null, inputTuple);
+                    coordinateLists.add(coordinates);
                 }
             }
-        } catch (IOException ioe) {
-            throw new ApplicationException(ioe);
-        } catch (ParserConfigurationException pce) {
-            throw new ApplicationException(pce);
-        } catch (SAXException se) {
-            throw new ApplicationException(se);
+            return coordinateLists.toArray(new String[coordinateLists.size()]);
+        } catch (Exception ex) {
+            throw new ApplicationException(ex);
         }
+
     }
 
-    private void processCoordinates(String coordinates, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed, BigDecimal startValue, Tuple inputTuple)
-            throws ApplicationException {
+    private String[] getCoordinatesForBoundaryFileId(Long boundaryFileId) throws ApplicationException {
+        org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
+        String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
+        return getCoordinatesFromHttpFile(s3HttpUrl);
+
+    }
+
+
+    private void processCoordinates(String coordinates, String[] boundaryCorrdinates, Long locationId, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed,
+            Tuple inputTuple) throws ApplicationException {
 
         Rectangle coveringRectangle = createPolygonRectangle(coordinates);
         MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
@@ -128,9 +137,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc).setScale(3, RoundingMode.DOWN);
         BigDecimal addedValue = new BigDecimal(.001);
         StringBuilder sb = new StringBuilder();
-        if (startValue != null) {
-            topLeftLat = startValue;
-        }
 
         int count = 0;
         boolean first = true;
@@ -142,7 +148,8 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
                 } else {
                     sb.append(" ");
                 }
-                //logInfo("Point " + longitude.toString() + "," + latitude.toString());
+                // logInfo("Point " + longitude.toString() + "," +
+                // latitude.toString());
                 sb.append(longitude.toString());
                 sb.append(",");
                 sb.append(latitude.toString());
@@ -151,19 +158,18 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
             if (count % 10 == 0) {
                 totalDivide++;
                 logInfo("Writing to stream");
-                writeToStream(inputTuple, new Values(coordinates, sb.toString(), locationId));
+                writeToStream(inputTuple, new Values(boundaryCorrdinates, sb.toString(), locationId));
                 logInfo("Writing Done");
                 sb = new StringBuilder();
                 first = true;
             }
         }
-        if (count % 10 > 0){
-            writeToStream(inputTuple, new Values(coordinates, sb.toString(), locationId));
+        if (count % 10 > 0) {
+            writeToStream(inputTuple, new Values(boundaryCorrdinates, sb.toString(), locationId));
             totalDivide++;
         }
         logInfo("Total Divides are : " + totalDivide);
     }
-        
 
 
     private Rectangle createPolygonRectangle(String coordinates) {

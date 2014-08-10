@@ -42,21 +42,6 @@
 		<property name="initializeQueueServices" value="true" />
 		<property name="initializeDbServices" value="false" />
 
-		<!-- Redis -->
-		<property name="redisUrl" value="${redis_server}" />
-		<property name="redisPort" value="${redis_port}" />
-		<!-- Neo4j -->
-		<property name="dbUrl" value="${db_url}" />
-		<!-- Aws Queue -->
-		<property name="regions" value="${aws_region}" />
-		<property name="accessKey" value="${aws_access_key}" />
-		<property name="secretKey" value="${aws_access_secret}" />
-
-		<!-- Queue Names -->
-		<property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-		<property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-		<property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
 	</bean>
 
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.GlobalHourlyCounterBolt">
@@ -72,21 +57,6 @@
 				<entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
 			</map>
 		</property>
-
-		<!-- Redis -->
-		<property name="redisUrl" value="${redis_server}" />
-		<property name="redisPort" value="${redis_port}" />
-		<!-- Neo4j -->
-		<property name="dbUrl" value="${db_url}" />
-		<!-- Aws Queue -->
-		<property name="regions" value="${aws_region}" />
-		<property name="accessKey" value="${aws_access_key}" />
-		<property name="secretKey" value="${aws_access_secret}" />
-
-		<!-- Queue Names -->
-		<property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-		<property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-		<property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
 
 	</bean>
 	
@@ -104,21 +74,6 @@
             </map>
         </property>
 
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
     
 	<bean id="LocationHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.LocationHourlyCounterBolt">
@@ -135,21 +90,6 @@
             </map>
         </property>
 
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
     
 	<bean id="LocationCategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.LocationCategoryHourlyCounterBolt">
@@ -165,21 +105,6 @@
                 <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
             </map>
         </property>
-
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
 
     </bean>
     
@@ -204,21 +129,6 @@
             </map>
         </property>
 
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
     
 	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.Lat24HourCounterBolt">
@@ -238,21 +148,6 @@
             </map>
         </property>
 
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
     
 	<bean id="MonthCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.MonthCounterBolt">
@@ -270,21 +165,6 @@
             </map>
         </property>
         
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
     
 	<bean id="YearCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.YearCounterBolt">
@@ -302,21 +182,6 @@
             </map>
         </property>
         
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
     
 	
@@ -334,20 +199,5 @@
             </map>
         </property>
         
-        <!-- Redis -->
-        <property name="redisUrl" value="${redis_server}" />
-        <property name="redisPort" value="${redis_port}" />
-        <!-- Neo4j -->
-        <property name="dbUrl" value="${db_url}" />
-        <!-- Aws Queue -->
-        <property name="regions" value="${aws_region}" />
-        <property name="accessKey" value="${aws_access_key}" />
-        <property name="secretKey" value="${aws_access_secret}" />
-
-        <!-- Queue Names -->
-        <property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-        <property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-        <property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
     </bean>
 </beans>

@@ -1,12 +1,11 @@
 package com.eswaraj.tasks.bolt;
 
-import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import backtype.storm.tuple.Tuple;
@@ -26,16 +25,16 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
         Date startTime = new Date();
         try {
             // Read the incoming Message
-            String coordinates = input.getString(0);
+            String[] coordinates = (String[]) input.getValue(0);
             String pointsToProcess = input.getString(1);
             Long locationId = input.getLong(2);
-            logInfo("Recived = " + getComponentId() + ", coordinates=" + coordinates.length());
+            logInfo("Recived = " + getComponentId() + ", coordinates=" + coordinates.length);
             logInfo("Recived = " + getComponentId() + ", pointsToProcess=" + pointsToProcess.length());
             logInfo("Recived = " + getComponentId() + ", locationId=" + locationId);
 
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
-            processCoordinates(coordinates, locationId, pointsToProcess, true, totalPointsMissed, totalPointsProcessed);
+            processCoordinates(coordinates, locationId, pointsToProcess, totalPointsMissed, totalPointsProcessed);
             logInfo("totalPointsMissed(Redis)= " + incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get()));
             logInfo("totalPointsProcessed(Redis)= " + incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get()));
             return Result.Success;
@@ -50,11 +49,11 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
     }
 
 
-    private void processCoordinates(String coordinates, Long locationId, String pointsToProcess, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
+    private void processCoordinates(String[] boundaryCoordinates, Long locationId, String pointsToProcess, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
             throws ApplicationException {
 
-        Path2D myPolygon = createPolygon(coordinates);
-        Rectangle coveringRectangle = myPolygon.getBounds();
+        List<Path2D> myPolygons = createPolygon(boundaryCoordinates);
+
         Point2D onePoint;
 
         String[] locationPoints = pointsToProcess.split(" ");
@@ -66,60 +65,55 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             oneLong = new BigDecimal(latLong[0]);
             oneLat = new BigDecimal(latLong[1]);
             onePoint = new Point2D.Double(oneLat.doubleValue(), oneLong.doubleValue());
-            processOnePoint(myPolygon, onePoint, locationId, add, totalPointsMissed, totalPointsProcessed);
+            processOnePoint(myPolygons, onePoint, locationId, totalPointsMissed, totalPointsProcessed);
         }
 
-        MathContext topLeftMc = new MathContext(3, RoundingMode.DOWN);
-        BigDecimal topLeftLat = new BigDecimal(coveringRectangle.getMinX()).round(topLeftMc);
-        BigDecimal topLeftLong = new BigDecimal(coveringRectangle.getMinY()).round(topLeftMc);
-        MathContext bottomRightMc = new MathContext(3, RoundingMode.UP);
-        BigDecimal bottomRightLat = new BigDecimal(coveringRectangle.getMaxX()).round(bottomRightMc);
-        BigDecimal bottomRightLong = new BigDecimal(coveringRectangle.getMaxY()).round(bottomRightMc);
-
-        logInfo("topLeftLat = " + topLeftLat);
-        logInfo("topLeftLong = " + topLeftLong);
-        logInfo("bottomRightLat = " + bottomRightLat);
-        logInfo("bottomRightLong = " + bottomRightLong);
     }
 
-    private Path2D createPolygon(String coordinates) {
-        String[] locationPoints = coordinates.split(" ");
-        String[] latLong;
-        BigDecimal oneLat, oneLong;
-        Path2D myPolygon = new Path2D.Double();
-        boolean first = true;
-        for (String oneLocationPoint : locationPoints) {
-            latLong = oneLocationPoint.split(",");
-            oneLong = new BigDecimal(latLong[0]);
-            oneLat = new BigDecimal(latLong[1]);
-            if (first) {
-                myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
-                first = false;
-            } else {
-                myPolygon.lineTo(oneLat.doubleValue(), oneLong.doubleValue());
+    private List<Path2D> createPolygon(String[] boundaryCoordinates) {
+        List<Path2D> allPaths = new ArrayList<>();
+        for (String oneCoordinateString : boundaryCoordinates) {
+            String[] locationPoints = oneCoordinateString.split(" ");
+            String[] latLong;
+            BigDecimal oneLat, oneLong;
+            Path2D myPolygon = new Path2D.Double();
+            boolean first = true;
+            for (String oneLocationPoint : locationPoints) {
+                latLong = oneLocationPoint.split(",");
+                oneLong = new BigDecimal(latLong[0]);
+                oneLat = new BigDecimal(latLong[1]);
+                if (first) {
+                    myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
+                    first = false;
+                } else {
+                    myPolygon.lineTo(oneLat.doubleValue(), oneLong.doubleValue());
+                }
+            }
+            myPolygon.closePath();
+            allPaths.add(myPolygon);
+        }
+
+        return allPaths;
+    }
+
+    private void processOnePoint(List<Path2D> myPolygons, Point2D onePoint, Long locationId, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
+        boolean insideBoundaries = false;
+        for (Path2D onePolygon : myPolygons) {
+            if (onePolygon.contains(onePoint)) {
+                insideBoundaries = true;
+                break;
             }
         }
-        myPolygon.closePath();
-        return myPolygon;
-    }
-
-    private void processOnePoint(Path2D myPolygon, Point2D onePoint, Long locationId, boolean add, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
-
-        if (myPolygon.contains(onePoint)) {
-
-            String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
-            if (add) {
-                writeToMemoryStoreSet(redisKey, locationId);
-            } else {
-                removeFromMemoryStoreSet(redisKey, locationId);
-            }
+        String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
+        if (insideBoundaries) {
+            writeToMemoryStoreSet(redisKey, locationId);
             totalPointsProcessed.incrementAndGet();
-            logInfo("RedisKey [" + redisKey + "] Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         } else {
+            removeFromMemoryStoreSet(redisKey, locationId);
             totalPointsMissed.incrementAndGet();
-            //logInfo("Missed Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }
         
+
         if ((totalPointsProcessed.get() + totalPointsMissed.get()) % 10000 == 0) {
             logInfo("Total Point Processed [" + totalPointsProcessed.get() + "] , total point missed [" + totalPointsMissed.get() + "] " + onePoint);
         }

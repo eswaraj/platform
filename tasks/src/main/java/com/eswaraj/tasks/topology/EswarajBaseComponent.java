@@ -62,18 +62,18 @@ public abstract class EswarajBaseComponent implements Serializable {
         regions = System.getenv("aws_region");
         accessKey = System.getenv("aws_access_key");
         secretKey = System.getenv("aws_access_secret");
-
         awsLocationQueueName = System.getenv("aws_location_file_queue_name");
         awsCategoryUpdateQueueName = System.getenv("aws_category_queue_name");
         awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
-        logInfo("SYSTEM : dbUrl= {}, Spring DbUrl = {}", System.getenv("db_url"), dbUrl);
-        logInfo("SYSTEM : redisUrl= {}, Spring redisUrl = {}", System.getenv("redis_server"), redisUrl);
-        logInfo("SYSTEM : redisPort= {}, Spring redisPort = {}", System.getenv("redis_port"), redisPort);
-        logInfo("SYSTEM : regions= {}, Spring region = {} ", System.getenv("aws_region"), regions);
+
+        logInfo("SYSTEM : dbUrl= {}", dbUrl);
+        logInfo("SYSTEM : redisUrl= {}", redisUrl);
+        logInfo("SYSTEM : redisPort= {}", redisPort);
+        logInfo("SYSTEM : regions= {}", regions);
         logInfo("SYSTEM : accessKey=******");
-        logInfo("SYSTEM : awsLocationQueueName= {}, Spring awsLocationQueueName= {}", System.getenv("aws_location_file_queue_name"), awsLocationQueueName);
-        logInfo("SYSTEM : awsCategoryUpdateQueueName= {}, Spring awsCategoryUpdateQueueName= {}", System.getenv("aws_category_queue_name"), awsCategoryUpdateQueueName);
-        logInfo("SYSTEM : awsComplaintCreatedQueueName= {}, Spring awsComplaintCreatedQueueName={}", System.getenv("aws_complaint_created_queue_name"), awsComplaintCreatedQueueName);
+        logInfo("SYSTEM : awsLocationQueueName= {}", awsLocationQueueName);
+        logInfo("SYSTEM : awsCategoryUpdateQueueName={}", awsCategoryUpdateQueueName);
+        logInfo("SYSTEM : awsComplaintCreatedQueueName={}", awsComplaintCreatedQueueName);
     }
 
     protected void init() {

@@ -33,19 +33,6 @@
 		<property name="initializeQueueServices" value="true" />
 		<property name="initializeDbServices" value="false" />
 
-		<!-- Redis -->
-		<property name="redisUrl" value="${redis_server}" />
-		<property name="redisPort" value="${redis_port}" />
-		<!-- Neo4j -->
-		<property name="dbUrl" value="${db_url}" />
-		<!-- Aws Queue -->
-		<property name="regions" value="${aws_region}" />
-		<property name="accessKey" value="${aws_access_key}" />
-		<property name="secretKey" value="${aws_access_secret}" />
-		<!-- Queue Names -->
-		<property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-		<property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-		<property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
 	</bean>
 
 	<bean id="LocationFileDistributeBoltBean" class="com.eswaraj.tasks.bolt.LocationFileDistributeBolt">
@@ -61,21 +48,6 @@
 			</map>
 		</property>
 
-		<!-- Redis -->
-		<property name="redisUrl" value="${redis_server}" />
-		<property name="redisPort" value="${redis_port}" />
-		<!-- Neo4j -->
-		<property name="dbUrl" value="${db_url}" />
-		<!-- Aws Queue -->
-		<property name="regions" value="${aws_region}" />
-		<property name="accessKey" value="${aws_access_key}" />
-		<property name="secretKey" value="${aws_access_secret}" />
-
-		<!-- Queue Names -->
-		<property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-		<property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-		<property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
-
 	</bean>
 
 	<bean id="LocationOneFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LocationOneFileProcessorBolt">
@@ -90,21 +62,6 @@
 				<entry key="LocationFileDistributeBolt" value="LocationFileDistributeStream" />
 			</map>
 		</property>
-
-		<!-- Redis -->
-		<property name="redisUrl" value="${redis_server}" />
-		<property name="redisPort" value="${redis_port}" />
-		<!-- Neo4j -->
-		<property name="dbUrl" value="${db_url}" />
-		<!-- Aws Queue -->
-		<property name="regions" value="${aws_region}" />
-		<property name="accessKey" value="${aws_access_key}" />
-		<property name="secretKey" value="${aws_access_secret}" />
-
-		<!-- Queue Names -->
-		<property name="awsLocationQueueName" value="${aws_location_file_queue_name}" />
-		<property name="awsCategoryUpdateQueueName" value="${aws_category_queue_name}" />
-		<property name="awsComplaintCreatedQueueName" value="${aws_complaint_created_queue_name}" />
 
 	</bean>
 
