@@ -26,15 +26,15 @@ public class SaveCategoryBolt extends EswarajBaseBolt {
 	*/
 
 	@Override
-	public void execute(Tuple input) {
+    public Result processTuple(Tuple input) {
 		try{
 			//List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
 			//TODO write these categories to Redis
-            acknowledgeTuple(input);
+            return Result.Success;
 		}catch(Exception ex){
-            failTuple(input);
-        }
 
+        }
+        return Result.Failed;
 	}
 
 }

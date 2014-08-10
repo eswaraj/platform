@@ -38,7 +38,7 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     LocationKeyService locationKeyService = new LocationkeyServiceImpl();
 
     @Override
-    public void execute(Tuple inputTuple) {
+    public Result processTuple(Tuple inputTuple) {
         Date startTime = new Date();
         try {
             // Read the incoming Message
@@ -57,12 +57,14 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
             Long newLocationBoundaryFileId = jsonObject.get("newLocationBoundaryFileId").getAsLong();
 
             distributeBoundaryFile(locationId, newLocationBoundaryFileId, true, inputTuple);
+            return Result.Success;
         } catch (Exception ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {
             Date endTime = new Date();
             logInfo("Total time taken to process file " + ((endTime.getTime() - startTime.getTime()) / 1000) + " seconds");
         }
+        return Result.Failed;
 
     }
 

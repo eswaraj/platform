@@ -22,7 +22,7 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
     LocationKeyService locationKeyService = new LocationkeyServiceImpl();
 
     @Override
-    public void execute(Tuple input) {
+    public Result processTuple(Tuple input) {
         Date startTime = new Date();
         try {
             // Read the incoming Message
@@ -38,12 +38,14 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             processCoordinates(coordinates, locationId, pointsToProcess, true, totalPointsMissed, totalPointsProcessed);
             logInfo("totalPointsMissed(Redis)= " + incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get()));
             logInfo("totalPointsProcessed(Redis)= " + incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get()));
+            return Result.Success;
         } catch (Throwable ex) {
             logError("Unable to save lcoation file in redis ", ex);
         } finally {
             Date endTime = new Date();
             logInfo("Total time taken to process file " + ((endTime.getTime() - startTime.getTime()) / 1000) + " seconds");
         }
+        return Result.Failed;
 
     }
 

@@ -25,7 +25,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple inputTuple) {
+    public Result processTuple(Tuple inputTuple) {
         logger.info("Received Message " + inputTuple.getMessageId());
         ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
 
@@ -36,7 +36,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
 
         if (locations == null || locations.isEmpty()) {
             logInfo("No Locations attached, nothing to do");
-            return;
+            return Result.Success;
         }
         for (Long oneLocation : locations) {
             String cypherQuery = "start location=node({locationId}) match (location)<-[:AT]-(complaint) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
@@ -57,7 +57,7 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
             String keyPrefixForNextBolt = counterKeyService.getLocationKeyPrefix(oneLocation);
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
-        acknowledgeTuple(inputTuple);
+        return Result.Success;
         
     }
 

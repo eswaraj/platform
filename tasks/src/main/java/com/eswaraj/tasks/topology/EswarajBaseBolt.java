@@ -50,6 +50,26 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         }
     }
 
+    public enum Result {
+        Success, Failed;
+    }
+
+    protected abstract Result processTuple(Tuple inputTuple);
+
+    @Override
+    public final void execute(Tuple inputTuple) {
+        try {
+            Result result = processTuple(inputTuple);
+            if (Result.Success.equals(result)) {
+                acknowledgeTuple(inputTuple);
+            } else {
+                failTuple(inputTuple);
+            }
+        } catch (Throwable t) {
+            failTuple(inputTuple);
+        }
+    }
+
     protected String[] getFields() {
         return new String[] { "Default" };
     }
@@ -63,12 +83,12 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
     }
 
-    protected void acknowledgeTuple(Tuple input) {
+    private void acknowledgeTuple(Tuple input) {
         logInfo("acknowledgeTuple : " + printTuple(input));
         outputCollector.ack(input);
     }
 
-    protected void failTuple(Tuple input) {
+    private void failTuple(Tuple input) {
         logInfo("acknowledgeTuple : " + printTuple(input));
         outputCollector.fail(input);
     }

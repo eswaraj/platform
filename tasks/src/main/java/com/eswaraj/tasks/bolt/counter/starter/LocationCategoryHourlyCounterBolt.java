@@ -24,7 +24,7 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple inputTuple) {
+    public Result processTuple(Tuple inputTuple) {
         logger.info("Received Message " + inputTuple.getMessageId());
         ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
 
@@ -36,11 +36,11 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
 
         if (locations == null || locations.isEmpty()) {
             logInfo("No Locations attached, nothing to do");
-            return;
+            return Result.Success;
         }
         if (categories == null || categories.isEmpty()) {
             logInfo("No Categories attached, nothing to do");
-            return;
+            return Result.Success;
         }
         for (Long oneLocation : locations) {
             for (Long oneCategory : categories) {
@@ -64,7 +64,7 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
                 writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
             }
         }
-        acknowledgeTuple(inputTuple);
+        return Result.Success;
         
     }
 

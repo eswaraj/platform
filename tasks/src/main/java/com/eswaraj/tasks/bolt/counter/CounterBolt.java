@@ -20,7 +20,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple inputTuple) {
+    public Result processTuple(Tuple inputTuple) {
         logDebug("Received Message {}", inputTuple.getMessageId());
         // Read Input
         String prefix = (String) inputTuple.getValue(0);
@@ -45,7 +45,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
             //Some Counter Bolt may be last in the hierarchy so Stream may not be defined
             writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
         }
-        acknowledgeTuple(inputTuple);
+        return Result.Success;
 
     }
     

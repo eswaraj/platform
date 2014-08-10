@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.tuple.Tuple;
-import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.CounterKeyService;
@@ -51,8 +50,8 @@ public class ComplaintMapAggregatorBolt extends EswarajBaseBolt {
 	}
 
 	@Override
-	public void execute(Tuple input) {
-		try{
+    public Result processTuple(Tuple input) {
+        try {
             ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(0);
 
             Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
@@ -77,9 +76,11 @@ public class ComplaintMapAggregatorBolt extends EswarajBaseBolt {
             String keyPrefixForNextBolt = counterKeyService.getLocationCategoryKeyPrefix(oneLocation, oneCategory);
             writeToStream(new Values(keyPrefixForNextBolt, complaintCreatedMessage));
             */
-		}catch(Exception ex){
-			collector.fail(input);
-		}
+            return Result.Success;
+        } catch (Exception ex) {
+            collector.fail(input);
+        }
+        return Result.Failed;
 	}
 
 	@Override

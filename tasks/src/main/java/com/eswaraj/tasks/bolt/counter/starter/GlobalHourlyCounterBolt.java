@@ -1,6 +1,5 @@
 package com.eswaraj.tasks.bolt.counter.starter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple inputTuple) {
+    public Result processTuple(Tuple inputTuple) {
         logger.info("Received Message " + inputTuple.getMessageId());
         ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
 
@@ -47,35 +46,12 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
 
         String keyPrefixForNextBolt = counterKeyService.getGlobalKeyPrefix();
         writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
-        acknowledgeTuple(inputTuple);
+        return Result.Success;
     }
 
     @Override
     protected String[] getFields() {
         return new String[] { "KeyPrefix", "Complaint" };
-    }
-
-    @Override
-    protected Long getStartOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 1);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
-    }
-
-    @Override
-    protected Long getEndOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
     }
 
 }
