@@ -142,7 +142,6 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         calendar.set(Calendar.MILLISECOND, 1);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
-        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
         return calendar.getTimeInMillis();
     }
 
@@ -153,7 +152,6 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
-        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
         return calendar.getTimeInMillis();
     }
 

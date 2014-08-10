@@ -53,10 +53,6 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
     protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
 
-    /*
-     * protected boolean isLastBolt() { return false; }
-     */
-
     @Override
     protected String[] getFields() {
         return new String[] { "KeyPrefix", "Complaint" };

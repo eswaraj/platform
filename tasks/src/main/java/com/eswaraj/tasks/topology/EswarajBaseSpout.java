@@ -53,8 +53,8 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     protected String writeToStream(List<Object> tuple) {
         String messageId = UUID.randomUUID().toString();
-        collector.emit(outputStream, tuple, messageId);
-        return messageId;
+        collector.emit(outputStream, tuple, 1000000);
+        return "1000000";
     }
 
     protected void writeToStream(List<Object> tuple, Object messageId) {
