@@ -80,7 +80,7 @@
 <tr><th>Location Name</th></tr>
 <c:forEach items="${locations}" var="oneLocation">
 <tr>
-    <td><a href="/stat/location/${oneLocation.id}.html" >${oneLocation.name}</a></td>
+    <td><a href="/eswaraj-web/stat/location/${oneLocation.id}.html" >${oneLocation.name}</a></td>
     </tr>
 </c:forEach>
 </table>

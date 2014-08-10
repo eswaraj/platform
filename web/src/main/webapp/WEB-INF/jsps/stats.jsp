@@ -13,9 +13,9 @@
 <body>
 <br>
 </br>
-<h1><a href="./global.html">Global Stats</a></h1>
-<h1><a href="./location.html">By Location</a></h1>
-<h1><a href="./category.html">By Category</a></h1>
+<h1><a href="/eswaraj-web/global.html">Global Stats</a></h1>
+<h1><a href="/eswaraj-web/location.html">By Location</a></h1>
+<h1><a href="/eswaraj-web/category.html">By Category</a></h1>
 
 </body>
 </html>
