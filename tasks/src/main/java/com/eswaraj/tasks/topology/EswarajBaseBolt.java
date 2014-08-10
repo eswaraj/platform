@@ -68,6 +68,11 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         outputCollector.ack(input);
     }
 
+    protected void failTuple(Tuple input) {
+        logInfo("acknowledgeTuple : " + printTuple(input));
+        outputCollector.fail(input);
+    }
+
     protected String printTuple(Tuple input) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("getSourceComponent : " + input.getSourceComponent() + " , ");

@@ -1,6 +1,5 @@
 package com.eswaraj.tasks.bolt.counter.starter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,29 +62,6 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
     @Override
     protected String[] getFields() {
         return new String[] { "KeyPrefix", "Complaint" };
-    }
-
-    @Override
-    protected Long getStartOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 1);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
-    }
-
-    @Override
-    protected Long getEndOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
     }
 
 }

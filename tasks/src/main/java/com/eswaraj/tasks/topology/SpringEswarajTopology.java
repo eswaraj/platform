@@ -62,7 +62,7 @@ public class SpringEswarajTopology {
         conf.setNumWorkers(numWorkers);
         conf.setMaxTaskParallelism(numParallel);
         conf.setMaxSpoutPending(maxSpoutPending);
-        conf.setNumAckers(2);
+        // conf.setNumAckers(2);
         // conf.setMessageTimeoutSecs(100000);
         StormTopology stormTopology = buildTopology();
         StormSubmitter.submitTopology(getName(), conf, stormTopology);

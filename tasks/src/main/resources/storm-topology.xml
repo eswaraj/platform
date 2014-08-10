@@ -39,7 +39,7 @@
 			</list>
 		</property>
 	</bean>
-
+	
 	<bean id="CatageoryChangeSpoutBean" class="com.eswaraj.tasks.spout.CatageoryChangeSpout">
 		<property name="componentId" value="CatageoryChangeSpout" />
 		<property name="outputStream" value="CatageoryChangeStream" />
