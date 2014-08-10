@@ -55,8 +55,17 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsCategoryUpdateQueueName;
     private String awsComplaintCreatedQueueName;
 
-    private void printAllConfigs() {
-        
+    private void initConfigs() {
+        dbUrl = System.getenv("db_url");
+        redisUrl = System.getenv("redis_server");
+        redisPort = Integer.parseInt(System.getenv("redis_port"));
+        regions = System.getenv("aws_region");
+        accessKey = System.getenv("aws_access_key");
+        secretKey = System.getenv("aws_access_secret");
+
+        awsLocationQueueName = System.getenv("aws_location_file_queue_name");
+        awsCategoryUpdateQueueName = System.getenv("aws_category_queue_name");
+        awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
         logInfo("SYSTEM : dbUrl= {}, Spring DbUrl = {}", System.getenv("db_url"), dbUrl);
         logInfo("SYSTEM : redisUrl= {}, Spring redisUrl = {}", System.getenv("redis_server"), redisUrl);
         logInfo("SYSTEM : redisPort= {}, Spring redisPort = {}", System.getenv("redis_port"), redisPort);
@@ -68,7 +77,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     protected void init() {
-        printAllConfigs();
+        initConfigs();
         if (initializeDbServices) {
             initializeDbService(dbUrl);
         }
