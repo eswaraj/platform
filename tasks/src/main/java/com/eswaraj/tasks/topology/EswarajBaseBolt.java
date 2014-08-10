@@ -42,10 +42,6 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         //initializeDbService("http://ip-172-31-47-87.us-west-2.compute.internal:7474/db/data");
     }
 
-    public final void saveToRedis(String key, Object object) {
-
-    }
-
     @Override
     public final void declareOutputFields(OutputFieldsDeclarer declarer) {
         logInfo("outputStream = " + outputStream);
@@ -68,7 +64,20 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     protected void acknowledgeTuple(Tuple input) {
+        logInfo("acknowledgeTuple : " + printTuple(input));
         outputCollector.ack(input);
+    }
+
+    protected String printTuple(Tuple input) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("getSourceComponent : " + input.getSourceComponent() + " , ");
+        stringBuilder.append("getSourceStreamId : " + input.getSourceStreamId() + " , ");
+        stringBuilder.append("getSourceGlobalStreamid : " + input.getSourceGlobalStreamid() + " , ");
+        stringBuilder.append("getSourceTask : " + input.getSourceTask() + " , ");
+        stringBuilder.append("getMessageId : " + input.getMessageId() + " , ");
+        stringBuilder.append("getMessageId.getAnchors : " + input.getMessageId().getAnchors() + " , ");
+        stringBuilder.append("getMessageId.getAnchorsToIds : " + input.getMessageId().getAnchorsToIds() + " , ");
+        return stringBuilder.toString();
     }
 
     @Override
