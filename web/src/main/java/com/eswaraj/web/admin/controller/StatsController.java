@@ -119,6 +119,7 @@ public class StatsController {
             for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
                 categoryName.add(oneCategoryWithChildCategoryDto.getName());
                 String prefix = counterKeyService.getCategoryKeyPrefix(oneCategoryWithChildCategoryDto.getId());
+                categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
                 if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
                     for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
                         categoryName.add(oneChildCategoryWithChildCategoryDto.getName());
