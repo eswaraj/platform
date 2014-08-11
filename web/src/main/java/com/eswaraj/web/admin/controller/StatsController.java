@@ -50,7 +50,8 @@ public class StatsController {
 
         String globalPrefix = counterKeyService.getGlobalKeyPrefix();
         addDataToModel(mv, globalPrefix);
-        addCategoryStats(mv);
+        addCategoryAllTimeStats(mv, null);
+
         mv.getModel().put("title", "Gloabl Stats");
         LocationDto india = locationService.getRootLocationForSwarajIndia();
         List<LocationDto> childLocations = locationService.getChildLocationsOfParent(india.getId());
@@ -65,7 +66,7 @@ public class StatsController {
 
         String locationPrefix = counterKeyService.getLocationKeyPrefix(locationId);
         addDataToModel(mv, locationPrefix);
-        addCategoryStats(mv);
+        addCategoryAllTimeStats(mv, locationId);
         List<LocationDto> childLocations = locationService.getChildLocationsOfParent(locationId);
         LocationDto location = locationService.getLocationById(locationId);
         mv.getModel().put("title", "Stats for " + location.getName());
@@ -102,6 +103,40 @@ public class StatsController {
             mv.getModel().put("dayComplaints", mergeKeyAndValue(dayKeys, dayComplaints));
             mv.getModel().put("dayHourComplaints", mergeKeyAndValue(dayHourKeys, dayHourComplaints));
             mv.getModel().put("last24HourComplaints", mergeKeyAndValue(last24HourKeys, last24HourComplaints));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void addCategoryAllTimeStats(ModelAndView mv, Long locationId) throws ApplicationException {
+        try {
+            List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
+
+            Date currentDate = new Date();
+            List<String> categoryName = new ArrayList<>();
+            List<String> categoryTotalKeys = new ArrayList<>();
+            for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
+                categoryName.add(oneCategoryWithChildCategoryDto.getName());
+                String prefix = counterKeyService.getCategoryKeyPrefix(oneCategoryWithChildCategoryDto.getId());
+                if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
+                    for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
+                        categoryName.add(oneChildCategoryWithChildCategoryDto.getName());
+                        if (locationId == null) {
+                            prefix = counterKeyService.getCategoryKeyPrefix(oneChildCategoryWithChildCategoryDto.getId());
+                        } else {
+                            prefix = counterKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategoryWithChildCategoryDto.getId());
+                        }
+
+                        categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
+                    }
+                }
+            }
+            ValueOperations valueOperation = redisTemplate.opsForValue();
+
+            List<Long> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
+
+            mv.getModel().put("totalCategoryComplaints", mergeKeyAndValue(categoryName, totalComplaints));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

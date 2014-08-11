@@ -74,6 +74,16 @@
 </c:forEach>
 </table>
 
+<br></br>
+<h2>Complaints By Category in this location<h2>
+<table border="1">
+<tr><th>Category</th><th>Number of Complaints</th></tr>
+<c:forEach items="${totalCategoryComplaints}" var="entry">
+<tr>
+    <td>${entry.key}</td><td> ${entry.value}</td>
+    </tr>
+</c:forEach>
+</table>
 
 <br></br>
 <h2>Choose Locations<h2>
