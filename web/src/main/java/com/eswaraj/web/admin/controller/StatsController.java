@@ -133,7 +133,7 @@ public class StatsController {
                 }
             }
             ValueOperations valueOperation = redisTemplate.opsForValue();
-
+            System.out.println("Total Category keys = " + categoryTotalKeys.size());
             List<Long> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
 
             mv.getModel().put("totalCategoryComplaints", mergeKeyAndValue(categoryName, totalComplaints));
@@ -200,10 +200,17 @@ public class StatsController {
     }
 
     private Map<String, Long> mergeKeyAndValue(List<String> keys, List<Long> values) {
+        System.out.println("Total Categories " + keys.size());
+        System.out.println("Total Counters " + values.size());
         Map<String, Long> map = new LinkedHashMap<>();
         int count = 0;
         for (String oneKey : keys) {
-            map.put(oneKey, values.get(count));
+            try {
+                map.put(oneKey, values.get(count));
+            } catch (Exception ex) {
+
+            }
+
             count++;
         }
         return map;
