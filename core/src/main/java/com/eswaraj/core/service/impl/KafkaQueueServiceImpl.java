@@ -1,7 +1,7 @@
 package com.eswaraj.core.service.impl;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
 
 
@@ -32,13 +32,19 @@ public class KafkaQueueServiceImpl implements QueueService {
     }
 
     @Override
-    public void sendComplaintCreatedMessage(ComplaintCreatedMessage complaint) throws ApplicationException {
+    public void sendComplaintCreatedMessage(ComplaintMessage complaint) throws ApplicationException {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public ComplaintCreatedMessage receiveComplaintCreatedMessage() throws ApplicationException {
+    public ComplaintMessage receiveComplaintCreatedMessage() throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String receiveReprocessAllComplaintMessage() throws ApplicationException {
         // TODO Auto-generated method stub
         return null;
     }

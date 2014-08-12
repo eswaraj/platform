@@ -25,7 +25,7 @@ import backtype.storm.tuple.Tuple;
 public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IRichBolt {
 
 	private static final long serialVersionUID = 1L;
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     public EswarajBaseBolt() {}
 
     protected OutputCollector outputCollector;
@@ -38,8 +38,6 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.outputCollector = collector;
         super.init();
-        //initializeRedisService("cache.vyaut5.0001.usw2.cache.amazonaws.com", 6379);
-        //initializeDbService("http://ip-172-31-47-87.us-west-2.compute.internal:7474/db/data");
     }
 
     @Override

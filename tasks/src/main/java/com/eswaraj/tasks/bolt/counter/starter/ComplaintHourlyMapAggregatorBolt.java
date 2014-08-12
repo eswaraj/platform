@@ -6,8 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import backtype.storm.task.OutputCollector;
-import backtype.storm.task.TopologyContext;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
@@ -16,7 +14,7 @@ import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 /**
@@ -35,7 +33,6 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private OutputCollector collector;
 	
     LocationKeyService locationKeyService;
     CounterKeyService counterKeyService;
@@ -46,14 +43,9 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
     }
 
 	@Override
-	public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-		this.collector = collector;
-	}
-
-	@Override
     public Result processTuple(Tuple inputTuple) {
         try {
-            ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
+            ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
             Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
             long startOfHour = getStartOfHour(creationDate);
@@ -82,7 +74,7 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
 
             return Result.Success;
         } catch (Exception ex) {
-            logger.error("Unable to process tuple", ex);
+            logError("Unable to process tuple", ex);
         }
         return Result.Failed;
 	}

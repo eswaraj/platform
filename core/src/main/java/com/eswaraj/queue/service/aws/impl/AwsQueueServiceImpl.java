@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,17 +38,22 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     @Value("${aws_complaint_created_queue_name}")
     private String awsComplaintCreatedQueueName;
 
+    @Value("${aws_reprocess_all_complaint_queue_name}")
+    private String awsReProcessAllComplaintQueueName;
+
     // Normal Constructor to be used by Spring
     public AwsQueueServiceImpl() {
 
     }
 
-    public AwsQueueServiceImpl(AwsQueueManager awsQueueManager, String awsLocationQueueName, String awsCategoryUpdateQueueName, String awsComplaintCreatedQueueName) {
+    public AwsQueueServiceImpl(AwsQueueManager awsQueueManager, String awsLocationQueueName, String awsCategoryUpdateQueueName, String awsComplaintCreatedQueueName,
+            String awsReProcessAllComplaintQueueName) {
         super();
         this.awsQueueManager = awsQueueManager;
         this.awsLocationQueueName = awsLocationQueueName;
         this.awsCategoryUpdateQueueName = awsCategoryUpdateQueueName;
         this.awsComplaintCreatedQueueName = awsComplaintCreatedQueueName;
+        this.awsReProcessAllComplaintQueueName = awsReProcessAllComplaintQueueName;
     }
 
     /**
@@ -89,7 +94,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     }
 
     @Override
-    public void sendComplaintCreatedMessage(ComplaintCreatedMessage complaint) throws ApplicationException {
+    public void sendComplaintCreatedMessage(ComplaintMessage complaint) throws ApplicationException {
         Gson gson = new Gson();
         String messageBody = gson.toJson(complaint);
         awsQueueManager.sendMessage(awsComplaintCreatedQueueName, messageBody);
@@ -97,11 +102,18 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     }
 
     @Override
-    public ComplaintCreatedMessage receiveComplaintCreatedMessage() throws ApplicationException {
+    public ComplaintMessage receiveComplaintCreatedMessage() throws ApplicationException {
         String mesage = awsQueueManager.receiveMessage(awsComplaintCreatedQueueName);
         logger.debug("Message Received : {} ", mesage);
         Gson gson = new Gson();
-        return gson.fromJson(mesage, ComplaintCreatedMessage.class);
+        return gson.fromJson(mesage, ComplaintMessage.class);
+    }
+
+    @Override
+    public String receiveReprocessAllComplaintMessage() throws ApplicationException {
+        String mesage = awsQueueManager.receiveMessage(awsReProcessAllComplaintQueueName);
+        logger.debug("Message Received : {} ", mesage);
+        return mesage;
     }
 
 }

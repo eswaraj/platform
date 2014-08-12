@@ -7,7 +7,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 public abstract class CounterBolt extends EswarajBaseBolt {
@@ -24,7 +24,7 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         logDebug("Received Message {}", inputTuple.getMessageId());
         // Read Input
         String prefix = (String) inputTuple.getValue(0);
-        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(1);
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
         logDebug("prefix = " + prefix);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
@@ -49,9 +49,9 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
     }
     
-    protected abstract List<String> getMemoryKeysForRead(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
+    protected abstract List<String> getMemoryKeysForRead(String prefix, ComplaintMessage complaintCreatedMessage);
 
-    protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
+    protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintMessage complaintCreatedMessage);
 
     @Override
     protected String[] getFields() {

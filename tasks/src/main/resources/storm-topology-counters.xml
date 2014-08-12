@@ -43,6 +43,23 @@
 		<property name="initializeDbServices" value="false" />
 
 	</bean>
+	
+	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.counter.ComplaintProcessorBolt">
+        <property name="componentId" value="ComplaintProcessorBolt" />
+        <property name="outputStream" value="ComplaintProcessorStream" />
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="false" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="false" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+            </map>
+        </property>
+
+    </bean>
+	
 
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.GlobalHourlyCounterBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
@@ -54,7 +71,7 @@
 		<property name="initializeDbServices" value="true" />
 		<property name="sourceComponentStreams">
 			<map>
-				<entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+				<entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
 			</map>
 		</property>
 
@@ -70,7 +87,7 @@
         <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
 

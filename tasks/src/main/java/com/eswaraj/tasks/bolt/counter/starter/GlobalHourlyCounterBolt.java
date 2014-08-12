@@ -9,7 +9,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
@@ -24,8 +24,8 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logger.info("Received Message " + inputTuple.getMessageId());
-        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) inputTuple.getValue(0);
+        logInfo("Received Message {}", inputTuple.getMessageId());
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);

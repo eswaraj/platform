@@ -6,7 +6,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseSpout;
 
-public class ComplaintCreatedSpout extends EswarajBaseSpout {
+public class ReProcessAllComplaintsSpout extends EswarajBaseSpout {
 
     private static final long serialVersionUID = 1L;
 

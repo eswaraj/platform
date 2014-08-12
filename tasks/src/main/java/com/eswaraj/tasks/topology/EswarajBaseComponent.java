@@ -11,6 +11,7 @@ import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.neo4j.annotation.QueryType;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
@@ -54,6 +55,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsLocationQueueName;
     private String awsCategoryUpdateQueueName;
     private String awsComplaintCreatedQueueName;
+    private String awsReprocessAllComplaintQueueName;
 
     private void initConfigs() {
         dbUrl = System.getenv("db_url");
@@ -65,6 +67,8 @@ public abstract class EswarajBaseComponent implements Serializable {
         awsLocationQueueName = System.getenv("aws_location_file_queue_name");
         awsCategoryUpdateQueueName = System.getenv("aws_category_queue_name");
         awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
+        awsReprocessAllComplaintQueueName = System.getenv("aws_reprocess_all_complaint_queue_name");
+        
 
         logInfo("SYSTEM : dbUrl= {}", dbUrl);
         logInfo("SYSTEM : redisUrl= {}", redisUrl);
@@ -74,6 +78,8 @@ public abstract class EswarajBaseComponent implements Serializable {
         logInfo("SYSTEM : awsLocationQueueName= {}", awsLocationQueueName);
         logInfo("SYSTEM : awsCategoryUpdateQueueName={}", awsCategoryUpdateQueueName);
         logInfo("SYSTEM : awsComplaintCreatedQueueName={}", awsComplaintCreatedQueueName);
+        logInfo("SYSTEM : awsReprocessAllComplaintQueueName={}", awsReprocessAllComplaintQueueName);
+
     }
 
     protected void init() {
@@ -111,8 +117,7 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
         AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
-        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName);
-
+        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName);
     }
 
     // Neo4j related functions
@@ -130,12 +135,33 @@ public abstract class EswarajBaseComponent implements Serializable {
 
         return node;
     }
+    
+ // Neo4j related functions
+    protected <T> T getNodeById(Long id, Class<T> clazz) {
+        Transaction trx = graphDatabaseService.beginTx();
+        Node node = null;
+        try {
+            return neo4jTemplate.findOne(id, clazz);
+        } catch (NotFoundException nfe) {
+            // Don't do anything
+            nfe.printStackTrace();
+        } finally {
+            trx.finish();
+        }
+
+        return null;
+    }
 
     // DB Related Functions
     protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
         Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
         Long totalCount = ((Integer) ((Map) result.single()).get(totalFieldName)).longValue();
         return totalCount;
+    }
+
+    protected <T> EndResult<T> findAll(Class<T> clazz) {
+        EndResult<T> result = getNeo4jTemplate().findAll(clazz);
+        return result;
     }
     // Redis related functions
     protected <T> Long writeToMemoryStoreSet(String redisKey, T id) {

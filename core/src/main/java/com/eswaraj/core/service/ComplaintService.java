@@ -3,6 +3,7 @@ package com.eswaraj.core.service;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
@@ -27,5 +28,7 @@ public interface ComplaintService {
 	
 	ComplaintDto saveComplaint(SaveComplaintRequestDto complaintDto) throws ApplicationException;
 	
+    ComplaintMessage updateLocationAndAdmins(Long complaintId) throws ApplicationException;
+
 	PhotoDto addPhotoToComplaint(Long complaintId, PhotoDto photoDto) throws ApplicationException;
 }

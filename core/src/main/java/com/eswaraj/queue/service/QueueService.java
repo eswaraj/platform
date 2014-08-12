@@ -1,7 +1,7 @@
 package com.eswaraj.queue.service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 
 public interface QueueService {
 
@@ -13,7 +13,9 @@ public interface QueueService {
 
     String receiveCategoryUpdateMessage() throws ApplicationException;
 
-    void sendComplaintCreatedMessage(ComplaintCreatedMessage complaint) throws ApplicationException;
+    void sendComplaintCreatedMessage(ComplaintMessage complaint) throws ApplicationException;
 
-    ComplaintCreatedMessage receiveComplaintCreatedMessage() throws ApplicationException;
+    ComplaintMessage receiveComplaintCreatedMessage() throws ApplicationException;
+
+    String receiveReprocessAllComplaintMessage() throws ApplicationException;
 }
