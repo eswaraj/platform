@@ -48,12 +48,12 @@ public class PoliticalAdminHourlyCounterBolt extends EswarajBaseBolt {
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, onePoliticalAdmin);
+            String redisKey = counterKeyService.getPoliticalAdminHourComplaintCounterKey(creationDate, onePoliticalAdmin);
             logDebug("redisKey = {}", redisKey);
 
             writeToMemoryStoreValue(redisKey, totalComplaint);
 
-            String keyPrefixForNextBolt = counterKeyService.getCategoryKeyPrefix(onePoliticalAdmin);
+            String keyPrefixForNextBolt = counterKeyService.getPoliticalAdminKeyPrefix(onePoliticalAdmin);
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
         return Result.Success;
