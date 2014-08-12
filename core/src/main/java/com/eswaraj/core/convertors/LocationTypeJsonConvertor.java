@@ -57,7 +57,6 @@ public class LocationTypeJsonConvertor extends BaseConvertor<LocationType, Locat
 		Map<Long, List<LocationTypeJsonDto>> childLocationTypeMapById = new HashMap<Long, List<LocationTypeJsonDto>>();
 		List<LocationTypeJsonDto> childrenList;
 		for(LocationType oneLocationType : dbLocationTypes){
-            System.out.println("oneLocationType=" + oneLocationType);
 			locationTypeJsonDto = convertBean(oneLocationType);
 			//add children list if already created
 			locationTypeJsonDto.setChildren(childLocationTypeMapById.get(locationTypeJsonDto.getId()));
@@ -67,9 +66,7 @@ public class LocationTypeJsonConvertor extends BaseConvertor<LocationType, Locat
 				childrenList = null;
 				parentLocationTypeJsonDto = locationTypeMapById.get(locationTypeJsonDto.getParentLocationTypeId());
 				
-				if(parentLocationTypeJsonDto != null){
-					childrenList = parentLocationTypeJsonDto.getChildren();
-				}
+                childrenList = childLocationTypeMapById.get(locationTypeJsonDto.getParentLocationTypeId());
 				if(childrenList == null){
 					childrenList = new ArrayList<>();
 				}

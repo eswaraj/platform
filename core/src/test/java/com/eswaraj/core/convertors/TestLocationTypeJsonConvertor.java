@@ -25,11 +25,21 @@ public class TestLocationTypeJsonConvertor extends BaseNeo4jEswarajTest {
     @Test
     public void test01_convertToJsonBean() throws ApplicationException {
         List<LocationType> dbLocationTypes = new ArrayList<>();
-        LocationType root = addOneLocationType(dbLocationTypes, 1L,"India", null);
-        LocationType state = addOneLocationType(dbLocationTypes, 2L, "State", root);
-        addOneLocationType(dbLocationTypes, 3L, "AC", state);
-        addOneLocationType(dbLocationTypes, 4L, "PC", state);
-        addOneLocationType(dbLocationTypes, 5L, "District", state);
+        LocationType root = createOneLocationType(1L, "India", null);
+        LocationType state = createOneLocationType(2L, "State", root);
+        LocationType ac = createOneLocationType(3L, "AC", state);
+        LocationType pc = createOneLocationType(4L, "PC", state);
+        LocationType district = createOneLocationType(5L, "District", state);
+        LocationType mc = createOneLocationType(6L, "MC", ac);
+        LocationType ward = createOneLocationType(7L, "Ward", mc);
+        dbLocationTypes.add(ward);
+        dbLocationTypes.add(mc);
+        dbLocationTypes.add(district);
+        dbLocationTypes.add(pc);
+        dbLocationTypes.add(ac);
+        dbLocationTypes.add(state);
+        dbLocationTypes.add(root);
+
         LocationTypeJsonDto locationTypeJsonDto = locationTypeJsonConvertor.convertToJsonBean(dbLocationTypes);
         System.out.println(locationTypeJsonDto);
         Assert.assertEquals(1, locationTypeJsonDto.getChildren().size());
@@ -45,6 +55,17 @@ public class TestLocationTypeJsonConvertor extends BaseNeo4jEswarajTest {
             locationtype.setRoot(true);
         }
         dbLocationTypes.add(locationtype);
+        return locationtype;
+    }
+
+    private LocationType createOneLocationType(Long id, String name, LocationType parentLocationType) {
+        LocationType locationtype = new LocationType();
+        locationtype.setId(id);
+        locationtype.setName(name);
+        locationtype.setParentLocationType(parentLocationType);
+        if (parentLocationType == null) {
+            locationtype.setRoot(true);
+        }
         return locationtype;
     }
 }
