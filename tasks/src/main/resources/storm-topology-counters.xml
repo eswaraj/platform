@@ -28,7 +28,7 @@
 				<ref bean="CategoryHourlyCounterBoltBean" />
 				<ref bean="LocationHourlyCounterBoltBean" />
 				<ref bean="LocationCategoryHourlyCounterBoltBean" />
-				
+				<ref bean="ComplaintHourlyMapAggregatorBoltBean" />
 			</list>
 		</property>
 	</bean>
@@ -107,6 +107,21 @@
         </property>
 
     </bean>
+    <bean id="ComplaintHourlyMapAggregatorBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.ComplaintHourlyMapAggregatorBolt">
+        <property name="componentId" value="ComplaintHourlyMapAggregatorBolt" />
+        <property name="outputStream" value="ComplaintHourlyMapAggregatorStream" />
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+            </map>
+        </property>
+
+    </bean>
     
 	
 	
@@ -126,6 +141,7 @@
                 <entry key="CategoryHourlyCounterBolt" value="CategoryHourlyCounterStream" />
                 <entry key="LocationHourlyCounterBolt" value="LocationHourlyCounterStream" />
                 <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
+                <entry key="ComplaintHourlyMapAggregatorBolt" value="ComplaintHourlyMapAggregatorStream" />
             </map>
         </property>
 
@@ -145,6 +161,7 @@
                 <entry key="CategoryHourlyCounterBolt" value="CategoryHourlyCounterStream" />
                 <entry key="LocationHourlyCounterBolt" value="LocationHourlyCounterStream" />
                 <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
+                <entry key="ComplaintHourlyMapAggregatorBolt" value="ComplaintHourlyMapAggregatorStream" />
             </map>
         </property>
 
