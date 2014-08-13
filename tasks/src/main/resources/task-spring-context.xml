@@ -21,4 +21,12 @@
     
 	<import resource="classpath:eswaraj-core.xml" />
 	<import resource="classpath:eswaraj-neo4j-db-context.xml" />
+	
+	   <!-- Redis related -->
+    <beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
+        p:host-name="${redis_server}" p:port="${redis_port}" 
+        />
+    <!-- redis template definition -->
+    <beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connection-factory-ref="jedisConnFactory" />
+	
 </beans>
