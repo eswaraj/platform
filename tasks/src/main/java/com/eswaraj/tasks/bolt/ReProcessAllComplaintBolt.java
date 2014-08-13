@@ -23,7 +23,7 @@ public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
             EndResult<Complaint> allComplaints = findAll(Complaint.class);
             Iterator<Complaint> complaintIterator = allComplaints.iterator();
             Complaint oneComplaint;
-            logInfo("Reprocessing All Complaints");
+            logInfo("Reprocessing All Complaints after getting message : " + input.getMessageId());
             while (complaintIterator.hasNext()) {
                 oneComplaint = complaintIterator.next();
                 logInfo("     oneComplaint : " + oneComplaint);
