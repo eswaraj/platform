@@ -44,7 +44,7 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
 	public List<Complaint> getPagedComplaintsLodgedForLocation(Location location, int start, int end);
 	
 	
-    @Query("match complaint return complaint order by complaint.dateCreated ASC " + "skip {0} limit {1}")
+    @Query("match complaint return complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' order by complaint.dateCreated ASC " + "skip {0} limit {1}")
     public List<Complaint> getAllPagedComplaints(long start, long end);
 
 }

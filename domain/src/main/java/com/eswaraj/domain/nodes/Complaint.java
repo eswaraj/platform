@@ -45,6 +45,7 @@ public class Complaint extends BaseNode {
     private String nearByKey;
 
     public Complaint() {
+        this.status = Status.PENDING;
     }
 
     public Complaint(String title) {
