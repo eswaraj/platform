@@ -18,7 +18,8 @@ import com.eswaraj.web.dto.LocationTypeJsonDto;
 @Component
 public class LocationTypeJsonConvertor extends BaseConvertor<LocationType, LocationTypeJsonDto> {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private LocationTypeRepository locationTypeRepository;
 	
 

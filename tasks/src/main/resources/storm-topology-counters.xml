@@ -43,6 +43,17 @@
 		<property name="initializeDbServices" value="false" />
 
 	</bean>
+	<bean id="ReProcessAllComplaintsSpoutBean" class="com.eswaraj.tasks.spout.ReProcessAllComplaintsSpout">
+        <property name="componentId" value="ReProcessAllComplaintsSpout" />
+        <property name="outputStream" value="ReProcessAllComplaintsStream" />
+        
+        <!-- Properties define which services will be available for spout -->
+        <property name="initializeRedisServices" value="false" />
+        <property name="initializeQueueServices" value="true" />
+        <property name="initializeDbServices" value="false" />
+
+    </bean>
+	
 	
 	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.counter.ComplaintProcessorBolt">
         <property name="componentId" value="ComplaintProcessorBolt" />
@@ -234,4 +245,22 @@
         </property>
         
     </bean>
+    
+	<bean id="ReProcessAllComplaintBoltBean" class="com.eswaraj.tasks.bolt.ReProcessAllComplaintBolt">
+        <property name="componentId" value="ReProcessAllComplaintBolt" />
+        <property name="outputStream" value="ReProcessAllComplaintStream" />
+        
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ReProcessAllComplaintsSpout" value="ReProcessAllComplaintsStream" />
+            </map>
+        </property>
+    </bean>
+    
+	
 </beans>

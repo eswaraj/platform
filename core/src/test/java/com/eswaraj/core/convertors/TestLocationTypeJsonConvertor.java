@@ -41,7 +41,6 @@ public class TestLocationTypeJsonConvertor extends BaseNeo4jEswarajTest {
         dbLocationTypes.add(root);
 
         LocationTypeJsonDto locationTypeJsonDto = locationTypeJsonConvertor.convertToJsonBean(dbLocationTypes);
-        System.out.println(locationTypeJsonDto);
         Assert.assertEquals(1, locationTypeJsonDto.getChildren().size());
         Assert.assertEquals(3, locationTypeJsonDto.getChildren().get(0).getChildren().size());
     }

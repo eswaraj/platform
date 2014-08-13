@@ -3,7 +3,6 @@ package com.eswaraj.tasks.spout;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseSpout;
 
 public class ReProcessAllComplaintsSpout extends EswarajBaseSpout {
@@ -12,13 +11,12 @@ public class ReProcessAllComplaintsSpout extends EswarajBaseSpout {
 
     @Override
     public void nextTuple() {
-        ComplaintMessage complaint;
+        String message;
         try {
-            complaint = getQueueService().receiveComplaintCreatedMessage();
-            if (complaint != null) {
-                logInfo("Mesage Recieved in Spout :  " + complaint);
-                String messageId = writeToStream(new Values(complaint));
-                logInfo("Mesage Written by Spout :  " + messageId);
+            message = getQueueService().receiveReprocessAllComplaintMessage();
+            if (message != null) {
+                logInfo("Mesage Recieved in Spout :  " + message);
+                writeToStream(new Values(message));
             }
         } catch (ApplicationException e) {
             logError("Unable to receive Complaint Created message from AWS Quque", e);
