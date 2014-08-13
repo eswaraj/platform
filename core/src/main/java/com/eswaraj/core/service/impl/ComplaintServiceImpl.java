@@ -335,7 +335,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     }
 
     @Override
-    public List<Long> getAllComplaintIds(Long start, Long totalComplaints) throws ApplicationException {
-        return complaintRepository.getAllPagedComplaints(start, totalComplaints);
+    public List<ComplaintDto> getAllComplaints(Long start, Long totalComplaints) throws ApplicationException {
+        return complaintConvertor.convertBeanList(complaintRepository.getAllPagedComplaints(start, totalComplaints));
     }
 }

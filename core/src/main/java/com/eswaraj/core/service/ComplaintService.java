@@ -24,7 +24,7 @@ public interface ComplaintService {
 	
 	List<ComplaintDto> getAllDeviceComplaints(String deviceId) throws ApplicationException;
 
-    List<Long> getAllComplaintIds(Long start, Long totalComplaints) throws ApplicationException;
+    List<ComplaintDto> getAllComplaints(Long start, Long totalComplaints) throws ApplicationException;
 
 	ComplaintDto getComplaintById(Long complaintId) throws ApplicationException;
 	

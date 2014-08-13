@@ -6,6 +6,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.web.dto.ComplaintDto;
 
 public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
 
@@ -19,19 +20,19 @@ public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
 		try{
             Long start = 0L;
             Long pageSize = 100L;
-            List<Long> ids;
+            List<ComplaintDto> complaints;
             while (true) {
-                ids = getComplaintService().getAllComplaintIds(start, pageSize);
-                if (ids == null || ids.isEmpty()) {
+                complaints = getComplaintService().getAllComplaints(start, pageSize);
+                if (complaints == null || complaints.isEmpty()) {
                     break;
                 }
-                for (Long oneId : ids) {
-                    logInfo("     oneComplaint : " + oneId);
-                    if (oneId != null) {
-                        writeToStream(input, new Values(oneId));
+                for (ComplaintDto oneComplaint : complaints) {
+                    logInfo("     oneComplaint : " + oneComplaint);
+                    if (oneComplaint != null) {
+                        writeToStream(input, new Values(oneComplaint));
                     }
                 }
-                start = start + ids.size();
+                start = start + complaints.size();
             }
             return Result.Success;
 		}catch(Exception ex){
