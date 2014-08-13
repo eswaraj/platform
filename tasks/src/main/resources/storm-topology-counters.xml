@@ -15,6 +15,7 @@
 		<property name="spoutConfigs">
 			<list>
 				<ref bean="ComplaintCreatedSpoutBean" />
+				<ref bean="ReProcessAllComplaintsSpoutBean" />
 			</list>
 		</property>
 		<property name="boltConfigs">
@@ -29,6 +30,8 @@
 				<ref bean="LocationHourlyCounterBoltBean" />
 				<ref bean="LocationCategoryHourlyCounterBoltBean" />
 				<ref bean="ComplaintHourlyMapAggregatorBoltBean" />
+				<ref bean="PoliticalAdminHourlyCounterBoltBean" />
+				<ref bean="ReProcessAllComplaintBoltBean" />
 			</list>
 		</property>
 	</bean>
@@ -55,7 +58,7 @@
     </bean>
 	
 	
-	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.counter.ComplaintProcessorBolt">
+	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.ComplaintProcessorBolt">
         <property name="componentId" value="ComplaintProcessorBolt" />
         <property name="outputStream" value="ComplaintProcessorStream" />
         <property name="paralellism" value="1" />
@@ -150,6 +153,21 @@
         </property>
 
     </bean>
+    <bean id="PoliticalAdminHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.starter.PoliticalAdminHourlyCounterBolt">
+        <property name="componentId" value="PoliticalAdminHourlyCounterBolt" />
+        <property name="outputStream" value="PoliticalAdminHourlyCounterStream" />
+        <property name="paralellism" value="1" />
+        <!-- Properties define which services will be available for Bolt -->
+        <property name="initializeRedisServices" value="true" />
+        <property name="initializeQueueServices" value="false" />
+        <property name="initializeDbServices" value="true" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+            </map>
+        </property>
+
+    </bean>
     
 	
 	
@@ -170,9 +188,10 @@
                 <entry key="LocationHourlyCounterBolt" value="LocationHourlyCounterStream" />
                 <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
                 <entry key="ComplaintHourlyMapAggregatorBolt" value="ComplaintHourlyMapAggregatorStream" />
+                <entry key="PoliticalAdminHourlyCounterBolt" value="PoliticalAdminHourlyCounterStream" />
             </map>
         </property>
-
+        
     </bean>
     
 	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.Lat24HourCounterBolt">
@@ -190,7 +209,8 @@
                 <entry key="LocationHourlyCounterBolt" value="LocationHourlyCounterStream" />
                 <entry key="LocationCategoryHourlyCounterBolt" value="LocationCategoryHourlyCounterStream" />
                 <entry key="ComplaintHourlyMapAggregatorBolt" value="ComplaintHourlyMapAggregatorStream" />
-            </map>
+                <entry key="PoliticalAdminHourlyCounterBolt" value="PoliticalAdminHourlyCounterStream" />
+           </map>
         </property>
 
     </bean>
