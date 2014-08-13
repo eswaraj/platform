@@ -32,6 +32,8 @@
 				<ref bean="ComplaintHourlyMapAggregatorBoltBean" />
 				<ref bean="PoliticalAdminHourlyCounterBoltBean" />
 				<ref bean="ReProcessAllComplaintBoltBean" />
+				<ref bean="ComplaintProcessorBoltBean" />
+				
 			</list>
 		</property>
 	</bean>
