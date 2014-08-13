@@ -4,12 +4,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
@@ -27,8 +24,6 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt;
  */
 public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
 
-	@Autowired
-	private AppService appService;
 	/**
 	 * 
 	 */
