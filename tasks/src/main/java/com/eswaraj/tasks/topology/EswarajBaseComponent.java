@@ -10,7 +10,9 @@ import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.neo4j.annotation.QueryType;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
@@ -18,6 +20,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
@@ -36,11 +39,14 @@ public abstract class EswarajBaseComponent implements Serializable {
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
     private int paralellism = 1;
+    private ClassPathXmlApplicationContext applicationContext;
+    private ComplaintService complaintService;
+    private AppService appService;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
-    private AppService appService;
+
 
     private QueueService queueService;
 
@@ -54,21 +60,45 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsLocationQueueName;
     private String awsCategoryUpdateQueueName;
     private String awsComplaintCreatedQueueName;
+    private String awsReprocessAllComplaintQueueName;
 
-    private void printAllConfigs() {
-        System.out.println("dbUrl=" + dbUrl);
-        System.out.println("redisUrl=" + redisUrl);
-        System.out.println("redisPort=" + redisPort);
-        System.out.println("regions=" + regions);
-        System.out.println("accessKey=******");
-        System.out.println("awsLocationQueueName=" + awsLocationQueueName);
-        System.out.println("awsCategoryUpdateQueueName=" + awsCategoryUpdateQueueName);
-        System.out.println("awsComplaintCreatedQueueName=" + awsComplaintCreatedQueueName);
+    private void initConfigs() {
+        dbUrl = System.getenv("db_url");
+        redisUrl = System.getenv("redis_server");
+        redisPort = Integer.parseInt(System.getenv("redis_port"));
+        regions = System.getenv("aws_region");
+        accessKey = System.getenv("aws_access_key");
+        secretKey = System.getenv("aws_access_secret");
+        awsLocationQueueName = System.getenv("aws_location_file_queue_name");
+        awsCategoryUpdateQueueName = System.getenv("aws_category_queue_name");
+        awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
+        awsReprocessAllComplaintQueueName = System.getenv("aws_reprocess_all_complaint_queue_name");
+        
+
+        logInfo("SYSTEM : dbUrl= {}", dbUrl);
+        logInfo("SYSTEM : redisUrl= {}", redisUrl);
+        logInfo("SYSTEM : redisPort= {}", redisPort);
+        logInfo("SYSTEM : regions= {}", regions);
+        logInfo("SYSTEM : accessKey=******");
+        logInfo("SYSTEM : awsLocationQueueName= {}", awsLocationQueueName);
+        logInfo("SYSTEM : awsCategoryUpdateQueueName={}", awsCategoryUpdateQueueName);
+        logInfo("SYSTEM : awsComplaintCreatedQueueName={}", awsComplaintCreatedQueueName);
+        logInfo("SYSTEM : awsReprocessAllComplaintQueueName={}", awsReprocessAllComplaintQueueName);
 
     }
 
+    protected ClassPathXmlApplicationContext getApplicationContext() {
+        if (applicationContext == null) {
+            synchronized (this) {
+                if (applicationContext == null) {
+                    applicationContext = new ClassPathXmlApplicationContext("task-spring-context.xml");
+                }
+            }
+        }
+        return applicationContext;
+    }
     protected void init() {
-        printAllConfigs();
+        initConfigs();
         if (initializeDbServices) {
             initializeDbService(dbUrl);
         }
@@ -98,19 +128,20 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     protected void destroy() {
+        if (applicationContext != null) {
+            try {
+                applicationContext.close();
+            } catch (Exception ex) {
+                logError("Unable to close application context", ex);
+            }
+        }
     }
 
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
         AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
-        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName);
-
+        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName);
     }
 
-    protected abstract void writeToStream(List<Object> tuple);
-
-    protected abstract void writeToTaskStream(int taskId, List<Object> tuple);
-
-    protected abstract void writeToTaskStream(int taskId, List<Object> tuple, Object messageId);
     // Neo4j related functions
     protected Node getNodeByid(Long id) {
         Transaction trx = graphDatabaseService.beginTx();
@@ -126,12 +157,33 @@ public abstract class EswarajBaseComponent implements Serializable {
 
         return node;
     }
+    
+ // Neo4j related functions
+    protected <T> T getNodeById(Long id, Class<T> clazz) {
+        Transaction trx = graphDatabaseService.beginTx();
+        Node node = null;
+        try {
+            return neo4jTemplate.findOne(id, clazz);
+        } catch (NotFoundException nfe) {
+            // Don't do anything
+            nfe.printStackTrace();
+        } finally {
+            trx.finish();
+        }
+
+        return null;
+    }
 
     // DB Related Functions
     protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
         Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
         Long totalCount = ((Integer) ((Map) result.single()).get(totalFieldName)).longValue();
         return totalCount;
+    }
+
+    protected <T> EndResult<T> findAll(Class<T> clazz) {
+        EndResult<T> result = getNeo4jTemplate().findAll(clazz);
+        return result;
     }
     // Redis related functions
     protected <T> Long writeToMemoryStoreSet(String redisKey, T id) {
@@ -154,7 +206,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         return redisTemplate.opsForValue().multiGet(redisKeys);
     }
 
-    protected <T> Long incrementCounterInMemoryStore(String redisKey, Long delta) {
+    protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {
         checkRedisServices();
         return redisTemplate.opsForValue().increment(redisKey, delta);
     }
@@ -230,14 +282,6 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
-    }
-
-    public AppService getAppService() {
-        return appService;
-    }
-
-    public void setAppService(AppService appService) {
-        this.appService = appService;
     }
 
     private void checkQueueServices() {
@@ -340,7 +384,18 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     protected void logInfo(String message) {
         logger.info(message);
-        System.out.println(message);
+    }
+
+    protected void logInfo(String message, Object... objects) {
+        logger.info(message, objects);
+    }
+
+    protected void logDebug(String message) {
+        logger.debug(message);
+    }
+
+    protected void logDebug(String message, Object... obj1) {
+        logger.debug(message, obj1);
     }
 
     protected void logWarning(String message) {
@@ -353,6 +408,28 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     protected void logError(String message, Throwable ex) {
         logger.error(message, ex);
+    }
+
+    protected AppService getApplicationService() {
+        if (appService == null) {
+            synchronized (this) {
+                if (appService == null) {
+                    appService = getApplicationContext().getBean(AppService.class);
+                }
+            }
+        }
+        return appService;
+    }
+
+    protected ComplaintService getComplaintService() {
+        if (complaintService == null) {
+            synchronized (this) {
+                if (complaintService == null) {
+                    complaintService = getApplicationContext().getBean(ComplaintService.class);
+                }
+            }
+        }
+        return complaintService;
     }
 
 }

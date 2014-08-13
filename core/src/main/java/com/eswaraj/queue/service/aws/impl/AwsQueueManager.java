@@ -86,13 +86,25 @@ public class AwsQueueManager implements Serializable {
 
     }
 
-    private void deleteMessage(Message message, String queueName) {
+    public void deleteMessage(Message message, String queueName) {
         // Doesnt matter what happened, remove it
         // from AWS, its App's responsbility to make
         // sure that persist this message
         // in case of failure/exception
         try {
             sqs.deleteMessage(new DeleteMessageRequest(queueName, message.getReceiptHandle()));
+        } catch (Exception ex) {
+            // In case some error occurs
+        }
+    }
+
+    public void deleteMessage(String messageReceiptHandle, String queueName) {
+        // Doesnt matter what happened, remove it
+        // from AWS, its App's responsbility to make
+        // sure that persist this message
+        // in case of failure/exception
+        try {
+            sqs.deleteMessage(new DeleteMessageRequest(queueName, messageReceiptHandle));
         } catch (Exception ex) {
             // In case some error occurs
         }

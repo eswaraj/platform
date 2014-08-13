@@ -86,4 +86,6 @@ public interface AppService {
 	DepartmentDto getDepartmentById(Long departmentId) throws ApplicationException;
 	
 	List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException;
+
+    void initializeData() throws ApplicationException;
 }

@@ -3,6 +3,7 @@ package com.eswaraj.core.convertors;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.data.neo4j.conversion.EndResult;
@@ -69,6 +70,19 @@ public abstract class BaseConvertor<DbType, WebType> implements Serializable {
 		}
 		return webTypeList;
 	}
+
+    public List<WebType> convertBeanList(Iterable<DbType> dbTypeIterbale) throws ApplicationException {
+        List<WebType> returnList = new ArrayList<>();
+        if (dbTypeIterbale != null) {
+            if(dbTypeIterbale.iterator().hasNext()){
+                Iterator<DbType> locationIterator = dbTypeIterbale.iterator();
+                while(locationIterator.hasNext()){
+                    returnList.add(convertBean(locationIterator.next()));
+                }
+            }
+        }
+        return returnList;
+    }
 	
 	public List<WebType> convertBeanList(EndResult<DbType> dbTypeCollection) throws ApplicationException{
 		if(dbTypeCollection == null){

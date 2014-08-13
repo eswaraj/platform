@@ -7,7 +7,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 public abstract class CounterBolt extends EswarajBaseBolt {
@@ -20,11 +20,12 @@ public abstract class CounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple input) {
+    public Result processTuple(Tuple inputTuple) {
+        logDebug("Received Message {}", inputTuple.getMessageId());
         // Read Input
-        String prefix = (String) input.getValue(0);
-        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(1);
-        logInfo("prefix = " + prefix);
+        String prefix = (String) inputTuple.getValue(0);
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
+        logDebug("prefix = " + prefix);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
         List<Long> counterValues = readMultiKeyFromMemoryStore(allKeys, Long.class);
@@ -37,20 +38,20 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         }
 
         String redisKey = getMemeoryKeyForWrite(prefix, complaintCreatedMessage);
-        logInfo("prefix  redisKey= " + redisKey + ", " + totalComplaints);
+        logDebug("prefix  redisKey= " + redisKey + ", " + totalComplaints);
 
         writeToMemoryStoreValue(redisKey, totalComplaints);
         if (getOutputStream() != null) {
             //Some Counter Bolt may be last in the hierarchy so Stream may not be defined
-            writeToStream(new Values(prefix, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
         }
-        logInfo("prefix  done= " + prefix);
+        return Result.Success;
 
     }
     
-    protected abstract List<String> getMemoryKeysForRead(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
+    protected abstract List<String> getMemoryKeysForRead(String prefix, ComplaintMessage complaintCreatedMessage);
 
-    protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintCreatedMessage complaintCreatedMessage);
+    protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintMessage complaintCreatedMessage);
 
     @Override
     protected String[] getFields() {

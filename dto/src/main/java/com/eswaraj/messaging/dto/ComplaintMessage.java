@@ -3,9 +3,10 @@ package com.eswaraj.messaging.dto;
 import java.io.Serializable;
 import java.util.List;
 
-public class ComplaintCreatedMessage implements Serializable {
+public class ComplaintMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private Long id;
     private String title;
     private String description;
     private double lattitude;
@@ -18,8 +19,16 @@ public class ComplaintCreatedMessage implements Serializable {
     private String status;
     private long complaintTime;
 
-    private List<Long> PoliticalAdminIds;
+    private List<Long> politicalAdminIds;
     private List<Long> locationIds;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -102,11 +111,11 @@ public class ComplaintCreatedMessage implements Serializable {
     }
 
     public List<Long> getPoliticalAdminIds() {
-        return PoliticalAdminIds;
+        return politicalAdminIds;
     }
 
     public void setPoliticalAdminIds(List<Long> politicalAdminIds) {
-        PoliticalAdminIds = politicalAdminIds;
+        this.politicalAdminIds = politicalAdminIds;
     }
 
     public long getComplaintTime() {
@@ -129,7 +138,7 @@ public class ComplaintCreatedMessage implements Serializable {
     public String toString() {
         return "ComplaintCreatedMessage [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categoryIds=" + categoryIds + ", personId="
                 + personId + ", userId=" + userId + ", deviceIds=" + deviceIds + ", adminId=" + adminId + ", status=" + status + ", complaintTime=" + complaintTime + ", PoliticalAdminIds="
-                + PoliticalAdminIds + "]";
+                + politicalAdminIds + "]";
     }
 
 }

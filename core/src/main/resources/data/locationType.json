@@ -1,0 +1,26 @@
+{
+	"name": "Country",
+	"children": 
+	[
+		{
+			"name": "State",
+			"children": 
+			[
+				{
+					"name": "Parliament Constituency",
+					"children": null
+				},
+
+				{
+					"name": "Assembly Constituency",
+					"children": null
+				},
+
+                {
+                    "name": "District",
+                    "children": null
+                }
+			]
+		}
+	]
+}

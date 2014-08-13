@@ -19,6 +19,7 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     private final String GLOBAL_PREFIX = "Global.";
     private final String CATEGORY_PREFIX = "Category.";
     private final String LOCATION_PREFIX = "Location.";
+    private final String POLITICAL_BODY_ADMIN_PREFIX = "PBA.";
 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
     protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
@@ -28,6 +29,11 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     @Override
     public String getGlobalHourComplaintCounterKey(Date date) {
         return GLOBAL_PREFIX + hourFormat.format(date);
+    }
+
+    @Override
+    public String getHourComplaintCounterKey(String prefix, Date date) {
+        return prefix + hourFormat.format(date);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
-        return getGlobalHourComplaintKeysFor24Hours(prefix, calendar);
+        return getHourComplaintKeysFor24Hours(prefix, calendar);
     }
 
     @Override
@@ -68,15 +74,15 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, -23);
-        return getGlobalHourComplaintKeysFor24Hours(prefix, calendar);
+        return getHourComplaintKeysFor24Hours(prefix, calendar);
     }
 
-    private List<String> getGlobalHourComplaintKeysFor24Hours(String prefix, Calendar startDateCalendar) {
+    private List<String> getHourComplaintKeysFor24Hours(String prefix, Calendar startDateCalendar) {
         List<String> returnList = new ArrayList<>();
-        returnList.add(getGlobalHourComplaintCounterKey(startDateCalendar.getTime()));
+        returnList.add(getHourComplaintCounterKey(prefix, startDateCalendar.getTime()));
         for (int i = 0; i < 23; i++) {
             startDateCalendar.add(Calendar.HOUR_OF_DAY, 1);
-            returnList.add(getGlobalHourComplaintCounterKey(startDateCalendar.getTime()));
+            returnList.add(getHourComplaintCounterKey(prefix, startDateCalendar.getTime()));
         }
         return returnList;
     }
@@ -164,6 +170,16 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     @Override
     public String getLocationCategoryKeyPrefix(Long locationId, Long categoryId) {
         return LOCATION_PREFIX + locationId + "." + CATEGORY_PREFIX + categoryId + ".";
+    }
+
+    @Override
+    public String getPoliticalAdminHourComplaintCounterKey(Date date, Long getPoliticalAdminKeyPrefix) {
+        return getPoliticalAdminKeyPrefix(getPoliticalAdminKeyPrefix) + hourFormat.format(date);
+    }
+
+    @Override
+    public String getPoliticalAdminKeyPrefix(Long politicalAdminId) {
+        return POLITICAL_BODY_ADMIN_PREFIX + politicalAdminId + ".";
     }
 
 }

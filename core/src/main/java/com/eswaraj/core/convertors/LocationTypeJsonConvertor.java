@@ -18,7 +18,8 @@ import com.eswaraj.web.dto.LocationTypeJsonDto;
 @Component
 public class LocationTypeJsonConvertor extends BaseConvertor<LocationType, LocationTypeJsonDto> {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private LocationTypeRepository locationTypeRepository;
 	
 
@@ -66,9 +67,7 @@ public class LocationTypeJsonConvertor extends BaseConvertor<LocationType, Locat
 				childrenList = null;
 				parentLocationTypeJsonDto = locationTypeMapById.get(locationTypeJsonDto.getParentLocationTypeId());
 				
-				if(parentLocationTypeJsonDto != null){
-					childrenList = parentLocationTypeJsonDto.getChildren();
-				}
+                childrenList = childLocationTypeMapById.get(locationTypeJsonDto.getParentLocationTypeId());
 				if(childrenList == null){
 					childrenList = new ArrayList<>();
 				}

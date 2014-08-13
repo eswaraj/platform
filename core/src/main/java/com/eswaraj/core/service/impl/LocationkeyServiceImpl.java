@@ -5,8 +5,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -21,6 +24,7 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
 
     private DecimalFormat decimalFormat;
     private DecimalFormat decimalFormatUpto2DecimalPoints;
+    protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
 
     public LocationkeyServiceImpl() {
         decimalFormat = new DecimalFormat("#.000");
@@ -30,8 +34,8 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
 
     }
 	@Override
-	public String buildLocationKey(double longitude, double lattitude) throws ApplicationException {
-        String key = "L" + decimalFormat.format(longitude) + "-" + decimalFormat.format(lattitude);
+    public String buildLocationKey(double lattitude, double longitude) throws ApplicationException {
+        String key = "L" + decimalFormat.format(lattitude) + "-" + decimalFormat.format(longitude);
         return key;
 	}
 
@@ -58,9 +62,21 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     }
 
     @Override
-    public String buildLocationKeyForNearByComplaints(double longitude, double lattitude) throws ApplicationException {
-        String key = "L" + decimalFormatUpto2DecimalPoints.format(longitude) + "-" + decimalFormatUpto2DecimalPoints.format(lattitude);
+    public String buildLocationKeyForNearByComplaints(double lattitude, double longitude) throws ApplicationException {
+        String key = "L" + decimalFormatUpto2DecimalPoints.format(lattitude) + "-" + decimalFormatUpto2DecimalPoints.format(longitude);
         return key;
+    }
+
+    @Override
+    public String getNearByHourComplaintCounterKey(Date date, double lattitude, double longitude) throws ApplicationException {
+        String key = buildLocationKeyForNearByComplaints(lattitude, longitude);
+        key = key + "." + hourFormat.format(date);
+        return key;
+    }
+
+    @Override
+    public String getNearByKeyPrefix(double lattitude, double longitude) throws ApplicationException {
+        return buildLocationKeyForNearByComplaints(lattitude, longitude);
     }
 
 }

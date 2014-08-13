@@ -13,7 +13,6 @@ public class CatageoryChangeSpout extends EswarajBaseSpout {
     public void nextTuple() {
         String message;
         try {
-            logInfo("Geting Message from Category Queue");
             message = getQueueService().receiveCategoryUpdateMessage();
             if (message != null) {
                 logInfo("Mesage Recieved in Spout :  " + message);
@@ -24,4 +23,15 @@ public class CatageoryChangeSpout extends EswarajBaseSpout {
         }
 
     }
+
+    @Override
+    public void ack(Object msgId) {
+        logInfo("****** Mesage ack in Spout :  " + msgId);
+    }
+
+    @Override
+    public void fail(Object msgId) {
+        logInfo("****** Mesage failed in Spout :  " + msgId);
+    }
+
 }

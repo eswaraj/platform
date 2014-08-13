@@ -1,5 +1,6 @@
 package com.eswaraj.core.service.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
@@ -38,12 +39,17 @@ import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationTypeDto;
 import com.eswaraj.web.dto.LocationTypeJsonDto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Component
 @Transactional
-public class LocationServiceImpl implements LocationService {
+public class LocationServiceImpl extends BaseService implements LocationService {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private DateTimeUtil dateTimeUtil;
 	@Autowired 
 	private LocationRepository locationRepository;
@@ -264,5 +270,58 @@ public class LocationServiceImpl implements LocationService {
 		
 		return saveRootLocationType(locationTypeDto, true);
 	}
+
+    @Override
+    public LocationTypeDto getLocationTypeById(Long locationTypeId) throws ApplicationException {
+        LocationType locationType = locationTypeRepository.findOne(locationTypeId);
+        return locationTypeConvertor.convertBean(locationType);
+    }
+
+    @Override
+    public List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException {
+        Iterable<Location> locationIterbale = locationRepository.findAll(locations);
+        return locationConvertor.convertBeanList(locationIterbale);
+    }
+
+    private void loadAllLocationTypes() throws IOException {
+        DataClient dataClient = getOrCreateDataClientIndiaEswaraj();
+        String categoryJson = readFile("/data/locationType.json");
+        JsonObject jsonObject = (JsonObject) new JsonParser().parse(categoryJson);
+        saveLocationType(jsonObject, dataClient, null);
+    }
+
+    private void saveLocationType(JsonObject jsonObject, DataClient dataClient, LocationType parent) {
+        LocationType locationType = new LocationType();
+        locationType.setDataClient(dataClient);
+        locationType.setName(jsonObject.get("name").getAsString());
+        if(parent == null){
+            locationType.setRoot(true);
+        }else{
+            locationType.setRoot(false);
+        }
+        locationType.setParentLocationType(parent);
+        locationType = locationTypeRepository.save(locationType);
+
+        if (jsonObject.get("children").getClass() != JsonNull.class) {
+            JsonArray childArray = (JsonArray) jsonObject.get("children");
+            if (childArray != null) {
+                for (int j = 0; j < childArray.size(); j++) {
+                    JsonObject jsonChildObject = (JsonObject) childArray.get(j);
+                    saveLocationType(jsonChildObject, dataClient, locationType);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void initializeData() throws ApplicationException {
+        try {
+            loadAllLocationTypes();
+        } catch (IOException e) {
+            throw new ApplicationException(e);
+        }
+
+    }
 
 }

@@ -27,6 +27,7 @@ public class Person extends BaseNode {
 	private String landlineNumber2;
 	private String mobileNumber1;
 	private String mobileNumber2;
+    private String profilePhoto;
 	private Address address;
 	public String getName() {
 		return name;
@@ -88,7 +89,16 @@ public class Person extends BaseNode {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	@Override
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    @Override
 	public String toString() {
 		return "Person [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="
 				+ landlineNumber1 + ", \nlandlineNumber2=" + landlineNumber2 + ", \nmobileNumber1=" + mobileNumber1 + ", \nmobileNumber2=" + mobileNumber2

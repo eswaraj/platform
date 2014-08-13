@@ -1,23 +1,5 @@
 package com.eswaraj.tasks.topology;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import storm.kafka.BrokerHosts;
-import storm.kafka.KafkaSpout;
-import storm.kafka.SpoutConfig;
-import storm.kafka.StringScheme;
-import storm.kafka.ZkHosts;
-import backtype.storm.Config;
-import backtype.storm.generated.StormTopology;
-import backtype.storm.spout.SchemeAsMultiScheme;
-import backtype.storm.topology.TopologyBuilder;
-
-import com.eswaraj.tasks.bolt.LoggerBolt;
-import com.eswaraj.tasks.bolt.SavedComplaintCounterBolt;
-import com.eswaraj.tasks.util.TopologyRunner;
 
 /**
  * @author anuj
@@ -25,7 +7,7 @@ import com.eswaraj.tasks.util.TopologyRunner;
  */
 public class ComplaintTopology {
 
-
+/*
 	public static final Logger LOG = LoggerFactory.getLogger(ComplaintTopology.class);
 
 	private static final String COMPLAINT_TOPIC_NAME = "savedComplaint";
@@ -77,4 +59,5 @@ public class ComplaintTopology {
 			TopologyRunner.runTopologyLocally(stormTopology, "complaint-test-topology", config);
 		}
 	}
+	*/
 }

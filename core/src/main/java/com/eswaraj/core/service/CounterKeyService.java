@@ -22,6 +22,10 @@ public interface CounterKeyService {
 
     String getLocationCategoryKeyPrefix(Long locationId, Long categoryId);
 
+    String getPoliticalAdminHourComplaintCounterKey(Date date, Long politicalAdminId);
+
+    String getPoliticalAdminKeyPrefix(Long politicalAdminId);
+
     String getDayComplaintCounterKey(String prefix, Date date);
 
     String getLast24HourComplaintCounterKey(String prefix, Date date);
@@ -34,7 +38,7 @@ public interface CounterKeyService {
 
     
     
-    
+    String getHourComplaintCounterKey(String prefix, Date date);
 
     List<String> getHourComplaintKeysForTheDay(String prefix, Date date);
 

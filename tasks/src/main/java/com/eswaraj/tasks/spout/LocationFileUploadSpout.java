@@ -1,7 +1,5 @@
 package com.eswaraj.tasks.spout;
 
-import java.util.UUID;
-
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -16,12 +14,11 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
     public void nextTuple() {
         String message;
         try {
-            logInfo("queueService=" + getQueueService());
             message = getQueueService().receiveLocationFileUploadMessage();
             if (message != null) {
                 logInfo("Mesage Recieved in Spout :  " + message);
-                writeToStream(new Values(message), UUID.randomUUID().toString());
-                logInfo("Mesage Emitted from :  " + message);
+                String messageId = writeToStream(new Values(message));
+                logInfo("Mesage Emitted from :  " + messageId);
             }
         } catch (ApplicationException e) {
             logError("Unable to receive Location File message from AWS Quque", e);

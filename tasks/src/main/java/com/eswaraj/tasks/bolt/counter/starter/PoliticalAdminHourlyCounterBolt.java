@@ -13,13 +13,13 @@ import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
-public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
+public class PoliticalAdminHourlyCounterBolt extends EswarajBaseBolt {
 
     private static final long serialVersionUID = 1L;
 
     CounterKeyService counterKeyService;
 
-    public CategoryHourlyCounterBolt() {
+    public PoliticalAdminHourlyCounterBolt() {
         counterKeyService = new CounterKeyServiceImpl();
     }
 
@@ -31,29 +31,29 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
-        List<Long> categories = complaintCreatedMessage.getCategoryIds();
+        List<Long> politicalAdminIds = complaintCreatedMessage.getPoliticalAdminIds();
 
-        if (categories == null || categories.isEmpty()) {
-            logDebug("No Categories attached, nothing to do");
+        if (politicalAdminIds == null || politicalAdminIds.isEmpty()) {
+            logDebug("No Political Admins attached, nothing to do");
             return Result.Success;
         }
-        for (Long oneCategory : categories) {
-            String cypherQuery = "start category=node({categoryId}) match (category)<-[:BELONGS_TO]-(complaint) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
+        for (Long onePoliticalAdmin : politicalAdminIds) {
+            String cypherQuery = "start politicalAdmin=node({politicalAdmin}) match (politicalAdmin)<-[:SERVED_BY]-(complaint) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
 
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("categoryId", oneCategory);
+            params.put("politicalAdmin", onePoliticalAdmin);
             params.put("startTime", startOfHour);
             params.put("endTime", endOfHour);
             logInfo("params=" + params);
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
+            String redisKey = counterKeyService.getPoliticalAdminHourComplaintCounterKey(creationDate, onePoliticalAdmin);
             logDebug("redisKey = {}", redisKey);
 
             writeToMemoryStoreValue(redisKey, totalComplaint);
 
-            String keyPrefixForNextBolt = counterKeyService.getCategoryKeyPrefix(oneCategory);
+            String keyPrefixForNextBolt = counterKeyService.getPoliticalAdminKeyPrefix(onePoliticalAdmin);
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
         return Result.Success;

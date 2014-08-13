@@ -20,6 +20,7 @@ public class PersonDto extends BaseDto {
 	private String landlineNumber2;
 	private String mobileNumber1;
 	private String mobileNumber2;
+    private String profilePhoto;
 	private AddressDto personAddress;
 	public String getName() {
 		return name;
@@ -81,7 +82,16 @@ public class PersonDto extends BaseDto {
 	public void setPersonAddress(AddressDto personAddress) {
 		this.personAddress = personAddress;
 	}
-	@Override
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    @Override
 	public String toString() {
 		return "PersonDto [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="
 				+ landlineNumber1 + ", \nlandlineNumber2=" + landlineNumber2 + ", \nmobileNumber1=" + mobileNumber1 + ", \nmobileNumber2=" + mobileNumber2

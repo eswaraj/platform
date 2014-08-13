@@ -1,6 +1,5 @@
 package com.eswaraj.tasks.bolt.counter.starter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +10,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
-import com.eswaraj.messaging.dto.ComplaintCreatedMessage;
+import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
@@ -25,8 +24,9 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
     }
 
     @Override
-    public void execute(Tuple input) {
-        ComplaintCreatedMessage complaintCreatedMessage = (ComplaintCreatedMessage) input.getValue(0);
+    public Result processTuple(Tuple inputTuple) {
+        logInfo("Received Message {}", inputTuple.getMessageId());
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
@@ -36,11 +36,11 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
 
         if (locations == null || locations.isEmpty()) {
             logInfo("No Locations attached, nothing to do");
-            return;
+            return Result.Success;
         }
         if (categories == null || categories.isEmpty()) {
             logInfo("No Categories attached, nothing to do");
-            return;
+            return Result.Success;
         }
         for (Long oneLocation : locations) {
             for (Long oneCategory : categories) {
@@ -61,36 +61,16 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
                 writeToMemoryStoreValue(redisKey, totalComplaint);
 
                 String keyPrefixForNextBolt = counterKeyService.getLocationCategoryKeyPrefix(oneLocation, oneCategory);
-                writeToStream(new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+                writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
             }
         }
+        return Result.Success;
         
     }
 
     @Override
     protected String[] getFields() {
         return new String[] { "KeyPrefix", "Complaint" };
-    }
-
-    protected Long getStartOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 1);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
-    }
-
-    protected Long getEndOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
     }
 
 }

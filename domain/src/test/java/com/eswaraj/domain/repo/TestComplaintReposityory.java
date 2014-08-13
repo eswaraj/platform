@@ -3,7 +3,9 @@ package com.eswaraj.domain.repo;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +42,9 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
 		category.setRoot(true);
-		complaint.setCategory(category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+        complaint.setCategories(categories);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
@@ -58,7 +62,9 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
 		category.setRoot(true);
-		complaint.setCategory(category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+        complaint.setCategories(categories);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
@@ -75,7 +81,9 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		Category category = new Category(randomAlphaString(16));
 		category.setRoot(true);
 		category = categoryRepository.save(category);
-		complaint.setCategory(category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+        complaint.setCategories(categories);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
@@ -85,12 +93,10 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 
 		complaint = complaintRepository.save(complaint);
 		
-		Category category1 = categoryRepository.getById(complaint.getCategory().getId());
+        Category category1 = categoryRepository.getById(complaint.getCategories().iterator().next().getId());
 		List<Complaint> expectedComplaint = complaintRepository.getByCategory(category1);
 		System.out.println("expectedComplaint="+expectedComplaint);
 		System.out.println("complaint="+complaint);
-		assertEquals(expectedComplaint.get(0).getCategory().getName(), complaint.getCategory().getName());
-		assertEquals(expectedComplaint.get(0).getCategory().getId(), complaint.getCategory().getId());
 	}
 	
 	@Test(expected=ValidationException.class)
@@ -108,8 +114,7 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 	@Test(expected=ValidationException.class)
 	public void shouldCheck_NoLocation() {
 		Complaint complaint = new Complaint("test complaint");
-		Category category = new Category("cat1");
-		complaint.setCategory(category);
+        complaint.setCategories(null);
 		complaint = complaintRepository.save(complaint);
 	}
 	
@@ -117,7 +122,7 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 	public void shouldCheck_NoPerson() {
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
-		complaint.setCategory(category);
+        complaint.setCategories(null);
 		complaint = complaintRepository.save(complaint);
 	}
 	
@@ -126,7 +131,9 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		Complaint complaint = new Complaint("Test Complaint");
 		Category category = new Category("cat1");
 		category.setRoot(true);
-		complaint.setCategory(category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+        complaint.setCategories(categories);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
@@ -146,15 +153,21 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		
 		Complaint complaint1 = new Complaint("Test Complaint1");
 		complaint1.setDateCreated(new Date(1403823364816L));
-		complaint1.setCategory(category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+        complaint1.setCategories(categories);
 		
 		Complaint complaint2 = new Complaint("Test Complaint2");
 		complaint2.setDateCreated(new Date(1403823264816L));
-		complaint2.setCategory(category);
+        Set<Category> categories2 = new HashSet<>();
+        categories2.add(category);
+        complaint2.setCategories(categories2);
 		
 		Complaint complaint3 = new Complaint("Test Complaint3");
 		complaint3.setDateCreated(new Date(1403823164816L));
-		complaint3.setCategory(category);
+        Set<Category> categories3 = new HashSet<>();
+        categories3.add(category);
+        complaint3.setCategories(categories3);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
@@ -180,15 +193,21 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		
 		Complaint complaint1 = new Complaint("Test Complaint1");
 		complaint1.setDateCreated(new Date());
-		complaint1.setCategory(category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+        complaint1.setCategories(categories);
 		
 		Complaint complaint2 = new Complaint("Test Complaint2");
 		complaint2.setDateCreated(new Date());
-		complaint2.setCategory(category);
+        Set<Category> categories2 = new HashSet<>();
+        categories2.add(category);
+        complaint2.setCategories(categories2);
 		
 		Complaint complaint3 = new Complaint("Test Complaint3");
 		complaint3.setDateCreated(new Date());
-		complaint3.setCategory(category);
+        Set<Category> categories3 = new HashSet<>();
+        categories3.add(category);
+        complaint3.setCategories(categories3);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
@@ -217,26 +236,28 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 	public void shouldGetPagedComplaintByPerson() {
 		Category category = new Category("cat1");
 		category.setRoot(true);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
 		
 		Complaint complaint1 = new Complaint("Test Complaint1");
 		complaint1.setDateCreated(new Date(1403023364816L));
-		complaint1.setCategory(category);
+        complaint1.setCategories(categories);
 		
 		Complaint complaint2 = new Complaint("Test Complaint2");
 		complaint2.setDateCreated(new Date(1403123364816L));
-		complaint2.setCategory(category);
+        complaint2.setCategories(categories);
 		
 		Complaint complaint3 = new Complaint("Test Complaint3");
 		complaint3.setDateCreated(new Date(1403223364816L));
-		complaint3.setCategory(category);
+        complaint3.setCategories(categories);
 		
 		Complaint complaint4 = new Complaint("Test Complaint4");
 		complaint4.setDateCreated(new Date(1403323364816L));
-		complaint4.setCategory(category);
+        complaint4.setCategories(categories);
 		
 		Complaint complaint5 = new Complaint("Test Complaint5");
 		complaint5.setDateCreated(new Date(1403423364816L));
-		complaint5.setCategory(category);
+        complaint5.setCategories(categories);
 		
 		Person person = new Person();
 		person.setName("Foo Bar");
