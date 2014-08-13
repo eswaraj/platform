@@ -111,6 +111,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
 
     @Override
     public String receiveReprocessAllComplaintMessage() throws ApplicationException {
+        logger.debug("Receiving Message From : {} ", awsReProcessAllComplaintQueueName);
         String mesage = awsQueueManager.receiveMessage(awsReProcessAllComplaintQueueName);
         logger.debug("Message Received : {} ", mesage);
         return mesage;
