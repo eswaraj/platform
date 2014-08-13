@@ -333,4 +333,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaint.setNearByKey(locationKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
         return buildComplaintMessage(complaint);
     }
+
+    @Override
+    public List<Long> getAllComplaintIds(Long start, Long totalComplaints) throws ApplicationException {
+        return complaintRepository.getAllPagedComplaints(start, totalComplaints);
+    }
 }

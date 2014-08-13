@@ -10,6 +10,7 @@ import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.neo4j.annotation.QueryType;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
@@ -19,6 +20,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
@@ -37,11 +39,14 @@ public abstract class EswarajBaseComponent implements Serializable {
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
     private int paralellism = 1;
+    private ClassPathXmlApplicationContext applicationContext;
+    private ComplaintService complaintService;
+    private AppService appService;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
-    private AppService appService;
+
 
     private QueueService queueService;
 
@@ -82,6 +87,16 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     }
 
+    protected ClassPathXmlApplicationContext getApplicationContext() {
+        if (applicationContext == null) {
+            synchronized (this) {
+                if (applicationContext == null) {
+                    applicationContext = new ClassPathXmlApplicationContext("task-spring-context.xml");
+                }
+            }
+        }
+        return applicationContext;
+    }
     protected void init() {
         initConfigs();
         if (initializeDbServices) {
@@ -113,6 +128,13 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     protected void destroy() {
+        if (applicationContext != null) {
+            try {
+                applicationContext.close();
+            } catch (Exception ex) {
+                logError("Unable to close application context", ex);
+            }
+        }
     }
 
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
@@ -262,14 +284,6 @@ public abstract class EswarajBaseComponent implements Serializable {
         this.redisTemplate = redisTemplate;
     }
 
-    public AppService getAppService() {
-        return appService;
-    }
-
-    public void setAppService(AppService appService) {
-        this.appService = appService;
-    }
-
     private void checkQueueServices() {
         if (!initializeQueueServices) {
             throw new RuntimeException("Queue Service has not been intialized, set the property initializeQueueServices to true");
@@ -394,6 +408,28 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     protected void logError(String message, Throwable ex) {
         logger.error(message, ex);
+    }
+
+    protected AppService getApplicationService() {
+        if (appService == null) {
+            synchronized (this) {
+                if (appService == null) {
+                    appService = getApplicationContext().getBean(AppService.class);
+                }
+            }
+        }
+        return appService;
+    }
+
+    protected ComplaintService getComplaintService() {
+        if (complaintService == null) {
+            synchronized (this) {
+                if (complaintService == null) {
+                    complaintService = getApplicationContext().getBean(ComplaintService.class);
+                }
+            }
+        }
+        return complaintService;
     }
 
 }
