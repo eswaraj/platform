@@ -158,4 +158,12 @@ public class SpringEswarajTopology {
     public void setMaxSpoutPending(int maxSpoutPending) {
         this.maxSpoutPending = maxSpoutPending;
     }
+
+    public int getMessageTimeoutSeconds() {
+        return messageTimeoutSeconds;
+    }
+
+    public void setMessageTimeoutSeconds(int messageTimeoutSeconds) {
+        this.messageTimeoutSeconds = messageTimeoutSeconds;
+    }
 }
