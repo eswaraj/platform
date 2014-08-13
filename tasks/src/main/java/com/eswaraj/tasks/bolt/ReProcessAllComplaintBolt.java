@@ -25,10 +25,11 @@ public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
                 if (ids == null || ids.isEmpty()) {
                     break;
                 }
-                for (long oneId : ids) {
+                for (Long oneId : ids) {
                     logInfo("     oneComplaint : " + oneId);
-                    writeToStream(input, new Values(oneId));
-
+                    if (oneId != null) {
+                        writeToStream(input, new Values(oneId));
+                    }
                 }
                 start = start + ids.size();
             }
