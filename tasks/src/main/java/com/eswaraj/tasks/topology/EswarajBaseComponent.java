@@ -19,6 +19,8 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import backtype.storm.tuple.Tuple;
+
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.queue.service.QueueService;
@@ -33,6 +35,8 @@ import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
  */
 public abstract class EswarajBaseComponent implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private boolean initializeDbServices = false;
@@ -46,6 +50,8 @@ public abstract class EswarajBaseComponent implements Serializable {
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
+
+    private ThreadLocal<Tuple> tupleThreadLocal = new ThreadLocal<>();
 
 
     private QueueService queueService;
@@ -384,6 +390,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     protected void logInfo(String message) {
+        String trackingId = getTupleThreadLocal().get().getMessageId().getAnchors().toString();
         logger.info(message);
     }
 
@@ -431,6 +438,10 @@ public abstract class EswarajBaseComponent implements Serializable {
             }
         }
         return complaintService;
+    }
+
+    public ThreadLocal<Tuple> getTupleThreadLocal() {
+        return tupleThreadLocal;
     }
 
 }

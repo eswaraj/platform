@@ -121,7 +121,7 @@
         <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
 
@@ -137,7 +137,7 @@
         <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
 
@@ -152,7 +152,7 @@
         <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
 
@@ -167,7 +167,7 @@
         <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
 

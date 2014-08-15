@@ -56,6 +56,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     @Override
     public final void execute(Tuple inputTuple) {
+        getTupleThreadLocal().set(inputTuple);
         try {
             Result result = processTuple(inputTuple);
             if (Result.Success.equals(result)) {
@@ -65,6 +66,8 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
             }
         } catch (Throwable t) {
             failTuple(inputTuple);
+        } finally {
+            getTupleThreadLocal().remove();
         }
     }
 
