@@ -3,13 +3,14 @@ package com.eswaraj.tasks.topology;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
+
+import com.eswaraj.tasks.spout.mesage.id.MessageId;
 
 public abstract class EswarajBaseSpout extends EswarajBaseComponent implements IRichSpout {
 
@@ -19,6 +20,7 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 	private String outputStream;
     protected String componentId;
     private SpoutOutputCollector collector;
+    private int retry;
 
 
     @Override
@@ -62,8 +64,9 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     }
 
-    protected String writeToStream(List<Object> tuple) {
-        String messageId = UUID.randomUUID().toString();
+    protected MessageId<List<Object>> writeToStream(List<Object> tuple) {
+        MessageId<List<Object>> messageId = new MessageId<>();
+        messageId.setData(tuple);
         collector.emit(outputStream, tuple, messageId);
         logInfo("Mesage Written by Spout :  {}", messageId);
         return messageId;
@@ -114,11 +117,54 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     }
 
     @Override
-    public void ack(Object msgId) {
+    public final void ack(Object msgId) {
+        logInfo("********************************");
+        logInfo("Message {} has been processed", msgId + " , " + msgId.getClass());
+        onAck(msgId);
+        logInfo("********************************");
+
+    }
+
+    protected void onAck(Object msgId) {
+
+    }
+
+    protected void onFail(Object msgId) {
+
     }
 
     @Override
-    public void fail(Object msgId) {
+    public final void fail(Object msgId) {
+        logInfo("********************************");
+        logInfo("Message {} has been failed", msgId + " , " + msgId.getClass());
+        if (getRetry() > 0) {
+            logDebug("Retry count set to {} so will see if i can retry", getRetry());
+            // If retry count set more then 0
+            if (msgId instanceof MessageId) {
+                MessageId messageId = (MessageId) msgId;
+                logDebug("current Retry count is {} " + messageId.getRetryCount());
+                if (messageId.getRetryCount() < getRetry()) {
+                    logDebug("Retrying {} " + messageId);
+                    messageId.setRetryCount(messageId.getRetryCount() + 1);
+                    writeToStream((List<Object>) messageId.getData(), messageId);
+                }
+            } else {
+                logDebug("msgId is not of type MessageId so can not retry");
+            }
+
+        } else {
+            logDebug("Message Failed and i will not retry it : {}", msgId);
+        }
+        onFail(msgId);
+        logInfo("********************************");
+    }
+
+    public int getRetry() {
+        return retry;
+    }
+
+    public void setRetry(int retry) {
+        this.retry = retry;
     }
 
 }

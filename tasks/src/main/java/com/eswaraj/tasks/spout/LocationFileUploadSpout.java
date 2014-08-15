@@ -3,6 +3,7 @@ package com.eswaraj.tasks.spout;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.tasks.spout.mesage.id.MessageId;
 import com.eswaraj.tasks.topology.EswarajBaseSpout;
 
 public class LocationFileUploadSpout extends EswarajBaseSpout {
@@ -17,7 +18,9 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
             message = getQueueService().receiveLocationFileUploadMessage();
             if (message != null) {
                 logInfo("Mesage Recieved in Spout :  " + message);
-                String messageId = writeToStream(new Values(message));
+                MessageId<String> messageId = new MessageId<>();
+                messageId.setData(message);
+                writeToStream(new Values(message), messageId);
                 logInfo("Mesage Emitted from :  " + messageId);
             }
         } catch (ApplicationException e) {
@@ -30,6 +33,14 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
     @Override
     protected String[] getFields() {
         return new String[] { "LocationSaveMessage" };
+    }
+
+    @Override
+    public void onAck(Object msgId) {
+    }
+
+    @Override
+    public void onFail(Object msgId) {
     }
 
 }

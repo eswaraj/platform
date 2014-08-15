@@ -27,18 +27,11 @@ public class ReProcessAllComplaintsSpout extends EswarajBaseSpout {
     }
 
     @Override
-    public void ack(Object msgId) {
-        super.ack(msgId);
-        logger.info("********************************");
-        logger.info("Message {} has been processed", msgId + " , " + msgId.getClass());
-        logger.info("********************************");
+    public void onAck(Object msgId) {
     }
 
     @Override
-    public void fail(Object msgId) {
-        super.fail(msgId);
-        logger.info("********************************");
-        logger.info("Message {} has been Failed", msgId + " , " + msgId.getClass());
-        logger.info("********************************");
+    public void onFail(Object msgId) {
     }
+
 }

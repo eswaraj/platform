@@ -17,8 +17,7 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
             complaint = getQueueService().receiveComplaintCreatedMessage();
             if (complaint != null) {
                 logInfo("Mesage Recieved in Spout :  " + complaint);
-                String messageId = writeToStream(new Values(complaint));
-                logInfo("Mesage Written by Spout :  " + messageId);
+                writeToStream(new Values(complaint));
             }
         } catch (ApplicationException e) {
             logError("Unable to receive Complaint Created message from AWS Quque", e);
@@ -29,16 +28,11 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
     }
 
     @Override
-    public void ack(Object msgId) {
-        logger.info("********************************");
-        logger.info("Message {} has been processed", msgId + " , " + msgId.getClass());
-        logger.info("********************************");
+    public void onAck(Object msgId) {
     }
 
     @Override
-    public void fail(Object msgId) {
-        logger.info("********************************");
-        logger.info("Message {} has been Failed", msgId + " , " + msgId.getClass());
-        logger.info("********************************");
+    public void onFail(Object msgId) {
     }
+
 }

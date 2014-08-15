@@ -60,9 +60,8 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
             
             String redisKey = locationKeyService.getNearByHourComplaintCounterKey(new Date(complaintCreatedMessage.getComplaintTime()), complaintCreatedMessage.getLattitude(),
                     complaintCreatedMessage.getLongitude());
-            logInfo("redisKey = " + redisKey);
 
-            writeToMemoryStoreValue(dbNearByKey, totalComplaint);
+            writeToMemoryStoreValue(redisKey, totalComplaint);
 
             String keyPrefixForNextBolt = locationKeyService.getNearByKeyPrefix(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));

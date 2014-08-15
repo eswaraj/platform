@@ -25,13 +25,11 @@ public class CatageoryChangeSpout extends EswarajBaseSpout {
     }
 
     @Override
-    public void ack(Object msgId) {
-        logInfo("****** Mesage ack in Spout :  " + msgId);
+    public void onAck(Object msgId) {
     }
 
     @Override
-    public void fail(Object msgId) {
-        logInfo("****** Mesage failed in Spout :  " + msgId);
+    public void onFail(Object msgId) {
     }
 
 }
