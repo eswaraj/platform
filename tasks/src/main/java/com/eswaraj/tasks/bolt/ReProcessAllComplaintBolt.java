@@ -29,7 +29,7 @@ public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
                 for (ComplaintDto oneComplaint : complaints) {
                     logInfo("     oneComplaint : " + oneComplaint);
                     if (oneComplaint != null) {
-                        writeToStream(input, new Values(oneComplaint));
+                        writeToStream(input, new Values(oneComplaint.getId()));
                     }
                 }
                 start = start + complaints.size();

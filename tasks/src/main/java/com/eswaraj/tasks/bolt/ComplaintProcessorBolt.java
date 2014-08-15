@@ -5,6 +5,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.web.dto.ComplaintDto;
 
 public class ComplaintProcessorBolt extends EswarajBaseBolt {
 
@@ -21,6 +22,9 @@ public class ComplaintProcessorBolt extends EswarajBaseBolt {
             Object value = input.getValue(0);
             if (value instanceof ComplaintMessage) {
                 ComplaintMessage complaint = (ComplaintMessage) value;
+                complaintId = complaint.getId();
+            } else if (value instanceof ComplaintDto) {
+                ComplaintDto complaint = (ComplaintDto) value;
                 complaintId = complaint.getId();
             } else {
                 complaintId = (Long) value;
