@@ -54,7 +54,6 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
             params.put("nearByKey", dbNearByKey);
             params.put("startTime", startOfHour);
             params.put("endTime", endOfHour);
-            logInfo("params=" + params);
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
             

@@ -24,7 +24,6 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logInfo("Received Message {}", inputTuple.getMessageId());
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
@@ -38,7 +37,6 @@ public class GlobalHourlyCounterBolt extends EswarajBaseBolt {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("startTime", startOfHour);
         params.put("endTime", endOfHour);
-        logInfo("params=" + params);
 
         Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 

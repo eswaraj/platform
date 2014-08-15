@@ -43,7 +43,6 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
             params.put("categoryId", oneCategory);
             params.put("startTime", startOfHour);
             params.put("endTime", endOfHour);
-            logInfo("params=" + params);
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 

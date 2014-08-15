@@ -42,7 +42,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         try {
             // Read the incoming Message
             String message = inputTuple.getString(0);
-            logInfo("Recived = " + getComponentId() + " " + message + " , message id = " + inputTuple.getMessageId());
 
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = (JsonObject) parser.parse(message);

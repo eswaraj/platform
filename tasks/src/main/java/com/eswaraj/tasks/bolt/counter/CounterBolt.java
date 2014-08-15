@@ -21,7 +21,6 @@ public abstract class CounterBolt extends EswarajBaseBolt {
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logDebug("Received Message {}", inputTuple.getMessageId());
         // Read Input
         String prefix = (String) inputTuple.getValue(0);
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);

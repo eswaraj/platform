@@ -183,6 +183,7 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     // DB Related Functions
     protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
+        logDebug("Running Query {} with Params {}", cypherQuery, params);
         Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
         Long totalCount = ((Integer) ((Map) result.single()).get(totalFieldName)).longValue();
         return totalCount;

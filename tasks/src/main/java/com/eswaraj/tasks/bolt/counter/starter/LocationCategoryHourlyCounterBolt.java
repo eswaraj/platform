@@ -25,7 +25,6 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logInfo("Received Message {}", inputTuple.getMessageId());
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
@@ -51,7 +50,6 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
                 params.put("locationId", oneLocation);
                 params.put("startTime", startOfHour);
                 params.put("endTime", endOfHour);
-                logInfo("params=" + params);
 
                 Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
