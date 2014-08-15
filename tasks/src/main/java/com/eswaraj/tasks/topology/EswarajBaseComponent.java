@@ -51,7 +51,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
 
-    private transient ThreadLocal<Tuple> tupleThreadLocal = new ThreadLocal<>();
+    private transient ThreadLocal<Tuple> tupleThreadLocal;
 
 
     private QueueService queueService;
@@ -104,6 +104,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         return applicationContext;
     }
     protected void init() {
+        tupleThreadLocal = new ThreadLocal<>();
         initConfigs();
         if (initializeDbServices) {
             initializeDbService(dbUrl);
