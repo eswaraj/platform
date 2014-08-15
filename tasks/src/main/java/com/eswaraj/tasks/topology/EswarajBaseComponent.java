@@ -389,33 +389,48 @@ public abstract class EswarajBaseComponent implements Serializable {
         this.paralellism = paralellism;
     }
 
+    protected void setCurrentTuple(Tuple tuple) {
+        getTupleThreadLocal().set(tuple);
+    }
+
+    protected void clearCurrentTuple() {
+        getTupleThreadLocal().remove();
+    }
+
+    protected String getCurremtTupleAnchor() {
+        Tuple tuple = getTupleThreadLocal().get();
+        if (tuple == null) {
+            return "NI";
+        }
+        return tuple.getMessageId().getAnchors().toString();
+    }
+    // Log related functions
     protected void logInfo(String message) {
-        String trackingId = getTupleThreadLocal().get().getMessageId().getAnchors().toString();
-        logger.info(message);
+        logger.info(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logInfo(String message, Object... objects) {
-        logger.info(message, objects);
+        logger.info(getCurremtTupleAnchor() + " : " + message, objects);
     }
 
     protected void logDebug(String message) {
-        logger.debug(message);
+        logger.debug(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logDebug(String message, Object... obj1) {
-        logger.debug(message, obj1);
+        logger.debug(getCurremtTupleAnchor() + " : " + message, obj1);
     }
 
     protected void logWarning(String message) {
-        logger.warn(message);
+        logger.warn(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logError(String message) {
-        logger.error(message);
+        logger.error(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logError(String message, Throwable ex) {
-        logger.error(message, ex);
+        logger.error(getCurremtTupleAnchor() + " : " + message, ex);
     }
 
     protected AppService getApplicationService() {
