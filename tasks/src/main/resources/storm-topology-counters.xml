@@ -71,6 +71,8 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
+                <entry key="ReProcessAllComplaintBolt" value="ReProcessAllComplaintStream" />
+                
             </map>
         </property>
 

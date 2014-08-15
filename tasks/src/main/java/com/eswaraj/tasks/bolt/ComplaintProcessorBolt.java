@@ -25,7 +25,7 @@ public class ComplaintProcessorBolt extends EswarajBaseBolt {
             } else {
                 complaintId = (Long) value;
             }
-
+            logInfo("Working on Complaint : " + complaintId);
             ComplaintMessage updatedComplaintMessage = getComplaintService().updateLocationAndAdmins(complaintId);
             writeToStream(input, new Values(updatedComplaintMessage));
             return Result.Success;
