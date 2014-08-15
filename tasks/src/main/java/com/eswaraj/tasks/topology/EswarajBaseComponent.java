@@ -399,7 +399,11 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     protected String getCurremtTupleAnchor() {
-        Tuple tuple = getTupleThreadLocal().get();
+        ThreadLocal<Tuple> threadLocal = getTupleThreadLocal();
+        if (threadLocal == null) {
+            return "NI";
+        }
+        Tuple tuple = threadLocal.get();
         if (tuple == null) {
             return "NI";
         }
