@@ -76,8 +76,12 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
-		
+        super.cleanup();
 	}
+
+    @Override
+    protected String[] getFields() {
+        return new String[] { "KeyPrefix", "Complaint" };
+    }
 
 }

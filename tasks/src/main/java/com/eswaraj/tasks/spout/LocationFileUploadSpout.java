@@ -11,7 +11,7 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
     
 
     @Override
-    public void nextTuple() {
+    public void getNextTuple() {
         String message;
         try {
             message = getQueueService().receiveLocationFileUploadMessage();

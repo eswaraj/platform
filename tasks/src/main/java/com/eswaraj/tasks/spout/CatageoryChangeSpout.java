@@ -10,7 +10,7 @@ public class CatageoryChangeSpout extends EswarajBaseSpout {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void nextTuple() {
+    public void getNextTuple() {
         String message;
         try {
             message = getQueueService().receiveCategoryUpdateMessage();

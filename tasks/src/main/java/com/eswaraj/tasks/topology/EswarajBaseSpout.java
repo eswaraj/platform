@@ -51,6 +51,17 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 		this.outputStream = outputStream;
 	}
 
+    public abstract void getNextTuple();
+    @Override
+    public final void nextTuple() {
+        try {
+            getNextTuple();
+        } catch (Exception e) {
+            logError("Unable to get Next Tuple", e);
+        }
+
+    }
+
     protected String writeToStream(List<Object> tuple) {
         String messageId = UUID.randomUUID().toString();
         collector.emit(outputStream, tuple, messageId);

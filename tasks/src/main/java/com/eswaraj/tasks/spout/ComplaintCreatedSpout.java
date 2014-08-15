@@ -11,7 +11,7 @@ public class ComplaintCreatedSpout extends EswarajBaseSpout {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void nextTuple() {
+    public void getNextTuple() {
         ComplaintMessage complaint;
         try {
             complaint = getQueueService().receiveComplaintCreatedMessage();
