@@ -25,7 +25,6 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logDebug("Received Message " + inputTuple.getMessageId());
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());

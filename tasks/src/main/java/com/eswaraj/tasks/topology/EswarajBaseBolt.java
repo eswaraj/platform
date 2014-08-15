@@ -56,6 +56,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     @Override
     public final void execute(Tuple inputTuple) {
+        logInfo("Received Message " + inputTuple.getMessageId());
         getTupleThreadLocal().set(inputTuple);
         try {
             Result result = processTuple(inputTuple);
@@ -85,12 +86,12 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     private void acknowledgeTuple(Tuple input) {
-        logInfo("acknowledgeTuple : " + printTuple(input));
+        logDebug("acknowledgeTuple : " + printTuple(input));
         outputCollector.ack(input);
     }
 
     private void failTuple(Tuple input) {
-        logInfo("***Failed acknowledgeTuple : " + printTuple(input));
+        logDebug("***Failed acknowledgeTuple : " + printTuple(input));
         outputCollector.fail(input);
     }
 
