@@ -193,6 +193,7 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     protected void writeToMemoryStoreValue(String redisKey, Long id) {
         checkRedisServices();
+        logInfo("redisKey = {}, Value = {}", redisKey, id);
         redisTemplate.opsForValue().set(redisKey, id);
     }
 

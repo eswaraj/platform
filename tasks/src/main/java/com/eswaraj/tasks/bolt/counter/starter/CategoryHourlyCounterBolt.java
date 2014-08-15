@@ -49,7 +49,7 @@ public class CategoryHourlyCounterBolt extends EswarajBaseBolt {
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
             String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
-            logDebug("redisKey = {}", redisKey);
+            logDebug("redisKey = {}, totalComplaint={}", redisKey, totalComplaint);
 
             writeToMemoryStoreValue(redisKey, totalComplaint);
 
