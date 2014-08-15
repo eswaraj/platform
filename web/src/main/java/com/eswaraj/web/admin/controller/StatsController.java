@@ -122,7 +122,7 @@ public class StatsController {
                 categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
                 if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
                     for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
-                        categoryName.add(oneChildCategoryWithChildCategoryDto.getName());
+                        categoryName.add(oneCategoryWithChildCategoryDto.getName() + "  -->  " + oneChildCategoryWithChildCategoryDto.getName());
                         if (locationId == null) {
                             prefix = counterKeyService.getCategoryKeyPrefix(oneChildCategoryWithChildCategoryDto.getId());
                         } else {
