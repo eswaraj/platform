@@ -51,6 +51,11 @@
 	    p:connection-factory-ref="jedisConnFactory" 
 	    p:keySerializer-ref="stringRedisSerializer"
 	    />
+	
+	<beans:bean id="stringRedisTemplate" 
+        class="org.springframework.data.redis.core.StringRedisTemplate" 
+        p:connection-factory-ref="jedisConnFactory" 
+        />
 
 
 	<beans:bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

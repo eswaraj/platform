@@ -71,22 +71,6 @@ public class SpringEswarajTopology {
         System.out.println("messageTimeoutSeconds=[" + messageTimeoutSeconds + "]");
         StormTopology stormTopology = buildTopology();
         StormSubmitter.submitTopology(getName(), conf, stormTopology);
-	    /*
-		brokerHosts = new ZkHosts(kafkaZookeeper);
-		Config config = new Config();
-		config.put(Config.TOPOLOGY_TRIDENT_BATCH_EMIT_INTERVAL_MILLIS, 2000);
-		StormTopology stormTopology = buildTopology();
-		LOG.info("Submitting topology to remote cluster");
-		
-		config.setNumWorkers(numWorkers);
-		config.setMaxTaskParallelism(numParallel);
-		config.put(Config.NIMBUS_HOST, nimbusHostIp);
-		config.put(Config.NIMBUS_THRIFT_PORT, nimbusHostPort);
-		config.put(Config.STORM_ZOOKEEPER_PORT, stormZkPort);
-		config.put(Config.STORM_ZOOKEEPER_SERVERS, Arrays.asList(nimbusHostIp));
-		
-		TopologyRunner.runTopologyRemotely(stormTopology, name, config);
-		*/
 	}
 	
 	public void startTopologyLocally() throws Exception {
