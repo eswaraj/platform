@@ -89,6 +89,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		//Check Parent child rule
 		checkParentChildRule(location);
 		locationRepository.save(location);
+        queueService.sendLocationUpdateMessage(location.getId());
 		return locationConvertor.convertBean(location);
 	}
 	private void checkParentChildRule(Location location) throws ApplicationException{

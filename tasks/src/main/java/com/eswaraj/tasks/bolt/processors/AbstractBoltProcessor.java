@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.annotation.QueryType;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import backtype.storm.tuple.Tuple;
@@ -26,8 +25,6 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private RedisTemplate redisTemplate;
     @Autowired
     private Neo4jTemplate neo4jTemplate;
 
@@ -95,13 +92,19 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         return stringRedisTemplate.opsForSet().add(redisKey, value);
     }
 
-    protected Long writeToMemoryStoreSet(String redisKey, Object value) {
+    protected Long removeFromMemoryStoreSet(String redisKey, String value) {
         logDebug("redisKey = {}, Value = {}", redisKey, value);
-        return redisTemplate.opsForSet().add(redisKey, value);
+        return stringRedisTemplate.opsForSet().remove(redisKey, value);
     }
 
-    protected <T> Long removeFromMemoryStoreSet(String redisKey, T id) {
-        return redisTemplate.opsForSet().remove(redisKey, id);
+    protected Boolean writeToMemoryStoreSortedSet(String redisKey, String value, double score) {
+        logDebug("redisKey = {}, Value = {}, score = {}", redisKey, value, score);
+        return stringRedisTemplate.opsForZSet().add(redisKey, value, score);
+    }
+
+    protected Long removeFromMemoryStoreSortedSet(String redisKey, String value) {
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        return stringRedisTemplate.opsForZSet().remove(redisKey, value);
     }
 
 
@@ -111,26 +114,13 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         stringRedisTemplate.opsForValue().set(redisKey, value);
     }
 
-    protected void writeToMemoryStoreValue(String redisKey, Object value) {
-        logDebug("redisKey = {}, Value = {}", redisKey, value);
-        redisTemplate.opsForValue().set(redisKey, value);
-    }
-
     protected void writeToMemoryStoreValue(String redisKey, Long value) {
         logDebug("redisKey = {}, Value = {}", redisKey, String.valueOf(value));
         stringRedisTemplate.opsForValue().set(redisKey, String.valueOf(value));
     }
 
-    protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
-        return redisTemplate.opsForValue().multiGet(redisKeys);
-    }
-
     protected List<String> readMultiKeyFromStringMemoryStore(List<String> redisKeys) {
         return stringRedisTemplate.opsForValue().multiGet(redisKeys);
-    }
-
-    protected List<Object> readMultiKeyFromMemoryStore(List<String> redisKeys) {
-        return redisTemplate.opsForValue().multiGet(redisKeys);
     }
 
     protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {

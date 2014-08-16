@@ -109,10 +109,10 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
         }
         String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
         if (insideBoundaries) {
-            writeToMemoryStoreSet(redisKey, locationId);
+            writeToMemoryStoreSet(redisKey, String.valueOf(locationId));
             totalPointsProcessed.incrementAndGet();
         } else {
-            removeFromMemoryStoreSet(redisKey, locationId);
+            removeFromMemoryStoreSet(redisKey, String.valueOf(locationId));
             totalPointsMissed.incrementAndGet();
         }
         

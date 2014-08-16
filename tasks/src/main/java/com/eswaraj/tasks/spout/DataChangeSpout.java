@@ -27,6 +27,9 @@ public class DataChangeSpout extends EswarajBaseSpout {
             case DataMessageTypes.CATEGORY_CHANGE_MESSAGE_TYPE:
                 writeToParticularStream(new Values(message), "CategoryChangedStream");
                 break;
+            case DataMessageTypes.LOCATION_UPDATE_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "LocationUpdatedStream");
+                break;
             }
         } catch (Exception e) {
             logError("Unable to Process Data message from AWS Quque " + message, e);

@@ -19,7 +19,7 @@
 		</property>
 		<property name="boltConfigs">
 			<list>
-				<ref bean="CatageoryChangeBoltBean" />
+				<ref bean="CatageoryUpdatedBoltBean" />
 			</list>
 		</property>
 	</bean>
@@ -28,7 +28,8 @@
 		<property name="componentId" value="DataChangeSpout" />
 		<property name="outputStreams">
             <list>
-                <value>CategoryChangedStream</value>
+                <value>CategoryUpdatedStream</value>
+                <value>LocationUpdatedStream</value>
             </list>
         </property>
 		<!-- Properties define which services will be available for spout -->
@@ -38,13 +39,22 @@
 		
 	</bean>
 
-	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+	<bean id="CatageoryUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />
 		<property name="sourceComponentStreams">
             <map>
-                <entry key="DataChangeSpout" value="CategoryChangedStream" />
+                <entry key="DataChangeSpout" value="CategoryUpdatedStream" />
             </map>
         </property>
 	</bean>
+	<bean id="LocationUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="LocationUpdatedBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationUpdatedBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="LocationUpdatedStream" />
+            </map>
+        </property>
+    </bean>
 </beans>

@@ -1,33 +1,24 @@
-package com.eswaraj.tasks.bolt;
+package com.eswaraj.tasks.bolt.processors;
 
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import backtype.storm.task.OutputCollector;
-import backtype.storm.task.TopologyContext;
 import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.LocationKeyService;
-import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
-import com.google.gson.Gson;
+import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class LocationChangeBolt extends EswarajBaseBolt {
+@Component
+public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    @Autowired
     private LocationKeyService locationKeyService;
-    private Gson gson;
-    private JsonParser jsonParser;
-    @Override
-    public void onPrepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-        locationKeyService = new LocationkeyServiceImpl();
-        gson = new Gson();
-        jsonParser = new JsonParser();
-    }
+    @Autowired
+    private StormCacheAppServices stormCacheAppServices;
+    private JsonParser jsonParser = new JsonParser();
 
 	@Override
     public Result processTuple(Tuple input) {
@@ -35,14 +26,12 @@ public class LocationChangeBolt extends EswarajBaseBolt {
             String message = (String) input.getValue(0);
             JsonObject jsonObject = (JsonObject)jsonParser.parse(message);
             Long locationId = jsonObject.get("LocationId").getAsLong();
-            /*
-            JsonObject outputJsonObject = getStormCacheAppServices().getCompleteLocationInfo(locationId);
+            JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
             String redisKey = locationKeyService.getLocationInformationKey(locationId);
 
             String locationInfo = outputJsonObject.toString();
             logInfo("Writing Key {} to redis with Value as {}", redisKey, locationInfo);
             writeToMemoryStoreValue(redisKey, locationInfo);
-            */
             return Result.Success;
 		}catch(Exception ex){
 
