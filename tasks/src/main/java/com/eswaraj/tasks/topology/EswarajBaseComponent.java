@@ -133,8 +133,10 @@ public abstract class EswarajBaseComponent implements Serializable {
 
         redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(redisTemplate.getStringSerializer());
+        logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         redisTemplate.afterPropertiesSet();
+        logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
 
     }
 
@@ -206,6 +208,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     protected void writeToMemoryStoreValue(String redisKey, Object value) {
         checkRedisServices();
         logDebug("redisKey = {}, Value = {}", redisKey, value);
+        logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
         redisTemplate.opsForValue().set(redisKey, value);
     }
 
