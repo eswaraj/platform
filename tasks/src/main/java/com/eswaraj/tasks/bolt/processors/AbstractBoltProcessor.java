@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +30,6 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     private RedisTemplate redisTemplate;
     @Autowired
     private Neo4jTemplate neo4jTemplate;
-
-    @PostConstruct
-    public void init() {
-        redisTemplate.setKeySerializer(redisTemplate.getStringSerializer());
-    }
 
     // Log related functions
     protected void logInfo(String message) {
@@ -123,9 +116,9 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         redisTemplate.opsForValue().set(redisKey, value);
     }
 
-    protected void writeToMemoryStoreValue(String redisKey, Number value) {
+    protected void writeToMemoryStoreValue(String redisKey, Long value) {
         logDebug("redisKey = {}, Value = {}", redisKey, String.valueOf(value));
-        redisTemplate.opsForValue().set(redisKey, value);
+        stringRedisTemplate.opsForValue().set(redisKey, String.valueOf(value));
     }
 
     protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
