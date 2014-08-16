@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
@@ -14,6 +15,7 @@ import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
+@Component
 public class LocationCategoryHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired

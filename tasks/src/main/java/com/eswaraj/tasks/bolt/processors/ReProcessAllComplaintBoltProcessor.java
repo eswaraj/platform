@@ -3,6 +3,7 @@ package com.eswaraj.tasks.bolt.processors;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
@@ -11,6 +12,7 @@ import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.ComplaintDto;
 
+@Component
 public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired

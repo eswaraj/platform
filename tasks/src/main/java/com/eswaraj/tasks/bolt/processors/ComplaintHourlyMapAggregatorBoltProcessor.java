@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
@@ -22,6 +23,7 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
  * @author Ravi
  *
  */
+@Component
 public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProcessor {
 	
     @Autowired
