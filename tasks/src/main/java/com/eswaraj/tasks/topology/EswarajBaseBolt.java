@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -14,6 +13,8 @@ import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
+
+import com.eswaraj.tasks.bolt.processors.BoltProcessor;
 
 /**
  * All bolts should extend this class
@@ -25,15 +26,23 @@ import backtype.storm.tuple.Tuple;
 public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IRichBolt {
 
 	private static final long serialVersionUID = 1L;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     public EswarajBaseBolt() {}
 
     protected OutputCollector outputCollector;
     protected String outputStream;
     protected String componentId;
+    private String boltProcessor;
     // key - CompnenetId , Value - Stream
     Map<String, String> sourceComponentStreams;
 
+    protected BoltProcessor getBoltProcessor() {
+        try {
+            return (BoltProcessor) getApplicationContext().getBean(Class.forName(boltProcessor));
+        } catch (BeansException | ClassNotFoundException e) {
+            logError("Unable to create Bolt Processor " + boltProcessor, e);
+        }
+        return null;
+    }
     @Override
     public final void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         super.init();
@@ -163,6 +172,10 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
         return calendar.getTimeInMillis();
+    }
+
+    public void setBoltProcessor(String boltProcessor) {
+        this.boltProcessor = boltProcessor;
     }
 
 }

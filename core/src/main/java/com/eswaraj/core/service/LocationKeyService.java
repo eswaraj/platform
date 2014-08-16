@@ -19,4 +19,6 @@ public interface LocationKeyService {
 
     String getNearByKeyPrefix(double lattitude, double longitude) throws ApplicationException;
 
+    String getLocationInformationKey(Long locationId);
+
 }

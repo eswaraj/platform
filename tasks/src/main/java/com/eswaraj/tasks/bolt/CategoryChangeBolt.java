@@ -1,6 +1,5 @@
 package com.eswaraj.tasks.bolt;
 
-import java.util.List;
 import java.util.Map;
 
 import backtype.storm.task.OutputCollector;
@@ -9,8 +8,8 @@ import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.impl.AppKeyServiceImpl;
+import com.eswaraj.tasks.bolt.processors.BoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.gson.Gson;
 
 public class CategoryChangeBolt extends EswarajBaseBolt {
@@ -28,19 +27,10 @@ public class CategoryChangeBolt extends EswarajBaseBolt {
         gson = new Gson();
     }
 
-	@Override
+    @Override
     public Result processTuple(Tuple input) {
-		try{
-            List<CategoryWithChildCategoryDto> categories = getApplicationService().getAllCategories();
-            String redisKey = appKeyService.getAllCategoriesKey();
-            String allCategories = gson.toJson(categories);
-            logInfo("Writing Key {} to redis with Value as {}", redisKey, allCategories);
-            writeToMemoryStoreValue(redisKey, allCategories);
-            return Result.Success;
-		}catch(Exception ex){
-
-        }
-        return Result.Failed;
-	}
+        BoltProcessor boltprocessor = getBoltProcessor();
+        return boltprocessor.processTuple(input);
+    }
 
 }

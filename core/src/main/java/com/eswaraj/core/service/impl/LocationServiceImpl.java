@@ -32,6 +32,7 @@ import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.BoundaryDto;
 import com.eswaraj.web.dto.GeoPointDto;
@@ -68,7 +69,10 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 	@Autowired
 	private DataClientRepository dataClientRepository;
     @Autowired
+    private PoliticalBodyAdminRepository politicalBodyAdminRepository;
+    @Autowired
     private QueueService queueService;
+
 	
     @Value("${aws_s3_directory_for_location_files:locations}")
 	private String awsDirectoryForLocationFiles;

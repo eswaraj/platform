@@ -40,10 +40,7 @@
 
 	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.CategoryChangeBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
-		<!-- Properties define which services will be available for Bolt -->
-		<property name="initializeRedisServices" value="true" />
-		<property name="initializeQueueServices" value="false" />
-		<property name="initializeDbServices" value="true" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />
 		<property name="sourceComponentStreams">
             <map>
                 <entry key="DataChangeSpout" value="CategoryChangedStream" />

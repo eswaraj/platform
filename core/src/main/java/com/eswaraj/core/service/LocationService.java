@@ -52,5 +52,5 @@ public interface LocationService {
 	GeoPointDto saveBoundaryPoint(GeoPointDto geoPointDto) throws ApplicationException;
 	
     void initializeData() throws ApplicationException;
-	
+
 }

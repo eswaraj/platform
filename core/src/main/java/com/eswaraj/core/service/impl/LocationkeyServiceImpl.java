@@ -26,6 +26,8 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     private DecimalFormat decimalFormatUpto2DecimalPoints;
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
 
+    private final String LOCATION_PREFIX = "Location.";
+
     public LocationkeyServiceImpl() {
         decimalFormat = new DecimalFormat("#.000");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
@@ -77,6 +79,11 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     @Override
     public String getNearByKeyPrefix(double lattitude, double longitude) throws ApplicationException {
         return buildLocationKeyForNearByComplaints(lattitude, longitude);
+    }
+
+    @Override
+    public String getLocationInformationKey(Long locationId) {
+        return LOCATION_PREFIX + locationId + ".info";
     }
 
 }

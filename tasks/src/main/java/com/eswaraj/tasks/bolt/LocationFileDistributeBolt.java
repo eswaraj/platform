@@ -117,7 +117,8 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     }
 
     private String[] getCoordinatesForBoundaryFileId(Long boundaryFileId) throws ApplicationException {
-        org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
+        // TODO fix it
+        org.neo4j.graphdb.Node dbLocationFileNode = null;// getNodeByid(boundaryFileId);
         String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
         return getCoordinatesFromHttpFile(s3HttpUrl);
 
