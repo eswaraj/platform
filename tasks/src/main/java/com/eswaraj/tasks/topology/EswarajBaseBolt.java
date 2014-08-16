@@ -72,7 +72,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     @Override
     public final void execute(Tuple inputTuple) {
-        logDebug("Received Message {}", inputTuple.getMessageId());
+        logDebug("Received Message {} in component {}", inputTuple.getMessageId(), componentId);
         getTupleThreadLocal().set(inputTuple);
         try {
             Result result = processTuple(inputTuple);
