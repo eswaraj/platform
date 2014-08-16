@@ -29,12 +29,12 @@ public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
         logDebug("complaintCreatedMessage = " + complaintCreatedMessage);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
-        List<Long> counterValues = readMultiKeyFromMemoryStore(allKeys, Long.class);
+        List<String> counterValues = readMultiKeyFromStringMemoryStore(allKeys);
 
         Long totalComplaints = 0L;
-        for (Long oneCounterValue : counterValues) {
+        for (String oneCounterValue : counterValues) {
             if (oneCounterValue != null) {
-                totalComplaints = totalComplaints + oneCounterValue;
+                totalComplaints = totalComplaints + Long.parseLong(oneCounterValue);
             }
         }
 

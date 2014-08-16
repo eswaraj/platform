@@ -125,6 +125,10 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         return redisTemplate.opsForValue().multiGet(redisKeys);
     }
 
+    protected List<String> readMultiKeyFromStringMemoryStore(List<String> redisKeys) {
+        return stringRedisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
     protected List<Object> readMultiKeyFromMemoryStore(List<String> redisKeys) {
         return redisTemplate.opsForValue().multiGet(redisKeys);
     }
