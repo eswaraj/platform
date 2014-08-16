@@ -23,6 +23,7 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
     @Override
     public Result processTuple(Tuple inputTuple) {
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
+        logInfo("Got complaintCreatedMessage : " + complaintCreatedMessage);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);

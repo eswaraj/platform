@@ -22,6 +22,7 @@ public class ComplaintProcessorBoltProcessor extends AbstractBoltProcessor {
 		try{
             Long complaintId = null;
             Object value = input.getValue(0);
+            logInfo("Got Input : " + value);
             if (value instanceof ComplaintMessage) {
                 ComplaintMessage complaint = (ComplaintMessage) value;
                 complaintId = complaint.getId();
