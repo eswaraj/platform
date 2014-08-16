@@ -70,9 +70,13 @@
             <map>
                 <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
                 <entry key="ReProcessAllComplaintBolt" value="ReProcessAllComplaintStream" />
-                
             </map>
         </property>
+        
+        <property name="fields">
+            <list><value>Fields1</value></list>
+        </property>
+        
 
     </bean>
 	
@@ -87,7 +91,10 @@
 				<entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
 			</map>
 		</property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
+		
 	</bean>
 	
 	<bean id="CategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -100,7 +107,10 @@
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
+        
     </bean>
     
 	<bean id="LocationHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -113,7 +123,9 @@
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	<bean id="LocationCategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -126,7 +138,9 @@
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     <bean id="ComplaintHourlyMapAggregatorBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="ComplaintHourlyMapAggregatorBolt" />
@@ -138,7 +152,9 @@
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     <bean id="PoliticalAdminHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="PoliticalAdminHourlyCounterBolt" />
@@ -150,7 +166,9 @@
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
             </map>
         </property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	
@@ -172,7 +190,9 @@
                 <entry key="PoliticalAdminHourlyCounterBolt" value="PoliticalAdminHourlyCounterStream" />
             </map>
         </property>
-        
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -189,7 +209,9 @@
                 <entry key="PoliticalAdminHourlyCounterBolt" value="PoliticalAdminHourlyCounterStream" />
            </map>
         </property>
-
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	<bean id="MonthCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -203,7 +225,9 @@
                 <entry key="DayCounterBolt" value="DayCounterStream" />
             </map>
         </property>
-        
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	<bean id="YearCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -217,7 +241,9 @@
                 <entry key="MonthCounterBolt" value="MonthCounterStream" />
             </map>
         </property>
-        
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	
@@ -231,7 +257,9 @@
                 <entry key="YearCounterBolt" value="YearCounterStream" />
             </map>
         </property>
-        
+        <property name="fields">
+            <list><value>Fields1</value><value>Fields2</value></list>
+        </property>
     </bean>
     
 	<bean id="ReProcessAllComplaintBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
@@ -244,6 +272,9 @@
             <map>
                 <entry key="ReProcessAllComplaintsSpout" value="ReProcessAllComplaintsStream" />
             </map>
+        </property>
+        <property name="fields">
+            <list><value>Fields1</value></list>
         </property>
     </bean>
     

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.BeansException;
+import org.springframework.util.CollectionUtils;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -33,7 +34,8 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     protected String componentId;
     private String boltProcessor;
     // key - CompnenetId , Value - Stream
-    Map<String, String> sourceComponentStreams;
+    private Map<String, String> sourceComponentStreams;
+    private List<String> fields;
 
     protected BoltProcessor getBoltProcessor() {
         try {
@@ -91,7 +93,10 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     protected String[] getFields() {
-        return new String[] { "Default" };
+        if (CollectionUtils.isEmpty(fields)) {
+            return new String[] { "Default" };
+        }
+        return fields.toArray(new String[fields.size()]);
     }
 
     public void writeToStream(Tuple anchor, List<Object> tuple) {
@@ -180,6 +185,10 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     public void setBoltProcessor(String boltProcessor) {
         this.boltProcessor = boltProcessor;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
     }
 
 }
