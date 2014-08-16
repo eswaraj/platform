@@ -12,7 +12,6 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
@@ -21,10 +20,6 @@ public class CategoryHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
     private CounterKeyService counterKeyService;
-
-    public CategoryHourlyCounterBoltProcessor() {
-        counterKeyService = new CounterKeyServiceImpl();
-    }
 
     @Override
     public Result processTuple(Tuple inputTuple) {
