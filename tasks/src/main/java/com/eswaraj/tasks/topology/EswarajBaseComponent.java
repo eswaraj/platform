@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.NotFoundException;
+import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.neo4j.annotation.QueryType;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
+import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,8 +23,6 @@ import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.ComplaintService;
-import com.eswaraj.core.service.LocationService;
-import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
@@ -37,16 +39,17 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private boolean initializeDbServices = false;
+    private boolean initializeRedisServices = false;
+    private boolean initializeQueueServices = false;
     private int paralellism = 1;
     private ClassPathXmlApplicationContext applicationContext;
     private ComplaintService complaintService;
     private AppService appService;
-    private LocationService locationService;
-    private StormCacheAppServices stormCacheAppServices;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     private transient ThreadLocal<Tuple> tupleThreadLocal;
 
@@ -103,11 +106,20 @@ public abstract class EswarajBaseComponent implements Serializable {
     protected void init() {
         tupleThreadLocal = new ThreadLocal<>();
         initConfigs();
-        /*
-        initializeDbService(dbUrl);
-        initializeQueueService(regions, accessKey, secretKey);
-        initializeRedisService(redisUrl, redisPort);
-        */
+        if (initializeDbServices) {
+            initializeDbService(dbUrl);
+        }
+        if (initializeQueueServices) {
+            initializeQueueService(regions, accessKey, secretKey);
+        }
+        if (initializeRedisServices) {
+            initializeRedisService(redisUrl, redisPort);
+        }
+    }
+
+    protected void initializeDbService(String dbUrl) {
+        graphDatabaseService = new SpringRestGraphDatabase(dbUrl);
+        neo4jTemplate = new Neo4jTemplate(graphDatabaseService);
     }
 
     protected void initializeRedisService(String redisUrl, int redisPort) {
@@ -141,6 +153,38 @@ public abstract class EswarajBaseComponent implements Serializable {
         queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName);
     }
 
+    // Neo4j related functions
+    protected Node getNodeByid(Long id) {
+        Transaction trx = graphDatabaseService.beginTx();
+        Node node = null;
+        try {
+            node = graphDatabaseService.getNodeById(id);
+        } catch (NotFoundException nfe) {
+            // Don't do anything
+            nfe.printStackTrace();
+        } finally {
+            trx.finish();
+        }
+
+        return node;
+    }
+    
+ // Neo4j related functions
+    protected <T> T getNodeById(Long id, Class<T> clazz) {
+        Transaction trx = graphDatabaseService.beginTx();
+        Node node = null;
+        try {
+            return neo4jTemplate.findOne(id, clazz);
+        } catch (NotFoundException nfe) {
+            // Don't do anything
+            nfe.printStackTrace();
+        } finally {
+            trx.finish();
+        }
+
+        return null;
+    }
+
     // DB Related Functions
     protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
         logDebug("Running Query {} with Params {}", cypherQuery, params);
@@ -155,32 +199,39 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
     // Redis related functions
     protected <T> Long writeToMemoryStoreSet(String redisKey, T id) {
+        checkRedisServices();
         return redisTemplate.opsForSet().add(redisKey, id);
     }
 
     protected void writeToMemoryStoreValue(String redisKey, Object value) {
+        checkRedisServices();
         logDebug("redisKey = {}, Value = {}", redisKey, value);
         logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
         redisTemplate.opsForValue().set(redisKey, value);
     }
 
     protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
-        return (List<T>) redisTemplate.opsForValue().multiGet(redisKeys);
+        checkRedisServices();
+        return redisTemplate.opsForValue().multiGet(redisKeys);
     }
 
     protected List<Object> readMultiKeyFromMemoryStore(List<String> redisKeys) {
+        checkRedisServices();
         return redisTemplate.opsForValue().multiGet(redisKeys);
     }
 
     protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {
+        checkRedisServices();
         return redisTemplate.opsForValue().increment(redisKey, delta);
     }
 
     protected <T> Long removeFromMemoryStoreSet(String redisKey, T id) {
+        checkRedisServices();
         return redisTemplate.opsForSet().remove(redisKey, id);
     }
 
     public QueueService getQueueService() {
+        checkQueueServices();
         return queueService;
     }
 
@@ -188,14 +239,40 @@ public abstract class EswarajBaseComponent implements Serializable {
         this.queueService = queueService;
     }
 
+    public boolean isInitializeDbServices() {
+        return initializeDbServices;
+    }
+
+    public void setInitializeDbServices(boolean initializeDbServices) {
+        this.initializeDbServices = initializeDbServices;
+    }
+
+    public boolean isInitializeRedisServices() {
+        return initializeRedisServices;
+    }
+
+    public void setInitializeRedisServices(boolean initializeRedisServices) {
+        this.initializeRedisServices = initializeRedisServices;
+    }
+
+    public boolean isInitializeQueuServices() {
+        return initializeQueueServices;
+    }
+
+    public void setInitializeQueuServices(boolean initializeQueuServices) {
+        this.initializeQueueServices = initializeQueuServices;
+    }
+
+    public boolean isInitializeQueueServices() {
+        return initializeQueueServices;
+    }
+
+    public void setInitializeQueueServices(boolean initializeQueueServices) {
+        this.initializeQueueServices = initializeQueueServices;
+    }
+
     public GraphDatabaseService getGraphDatabaseService() {
-        if(graphDatabaseService == null){
-            synchronized (this) {
-                if(graphDatabaseService == null){
-                    graphDatabaseService = getApplicationContext().getBean(GraphDatabaseService.class);
-                }
-            }
-        }
+        checkDbServices();
         return graphDatabaseService;
     }
 
@@ -204,6 +281,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     public Neo4jTemplate getNeo4jTemplate() {
+        checkDbServices();
         return neo4jTemplate;
     }
 
@@ -212,11 +290,30 @@ public abstract class EswarajBaseComponent implements Serializable {
     }
 
     public RedisTemplate getRedisTemplate() {
+        checkRedisServices();
         return redisTemplate;
     }
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+    }
+
+    private void checkQueueServices() {
+        if (!initializeQueueServices) {
+            throw new RuntimeException("Queue Service has not been intialized, set the property initializeQueueServices to true");
+        }
+    }
+
+    private void checkRedisServices() {
+        if (!initializeRedisServices) {
+            throw new RuntimeException("Redis Cache Service has not been intialized, set the property initializeRedisServices to true");
+        }
+    }
+
+    private void checkDbServices() {
+        if (!initializeDbServices) {
+            throw new RuntimeException("DB Service has not been intialized, set the property initializeDbServices to true");
+        }
     }
 
     public String getDbUrl() {
@@ -371,28 +468,6 @@ public abstract class EswarajBaseComponent implements Serializable {
             }
         }
         return complaintService;
-    }
-
-    protected LocationService getLocationService() {
-        if (locationService == null) {
-            synchronized (this) {
-                if (locationService == null) {
-                    locationService = getApplicationContext().getBean(LocationService.class);
-                }
-            }
-        }
-        return locationService;
-    }
-
-    protected StormCacheAppServices getStormCacheAppServices() {
-        if (stormCacheAppServices == null) {
-            synchronized (this) {
-                if (stormCacheAppServices == null) {
-                    stormCacheAppServices = getApplicationContext().getBean(StormCacheAppServices.class);
-                }
-            }
-        }
-        return stormCacheAppServices;
     }
 
     public ThreadLocal<Tuple> getTupleThreadLocal() {

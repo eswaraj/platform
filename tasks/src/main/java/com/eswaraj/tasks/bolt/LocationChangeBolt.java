@@ -35,13 +35,14 @@ public class LocationChangeBolt extends EswarajBaseBolt {
             String message = (String) input.getValue(0);
             JsonObject jsonObject = (JsonObject)jsonParser.parse(message);
             Long locationId = jsonObject.get("LocationId").getAsLong();
-
+            /*
             JsonObject outputJsonObject = getStormCacheAppServices().getCompleteLocationInfo(locationId);
             String redisKey = locationKeyService.getLocationInformationKey(locationId);
 
             String locationInfo = outputJsonObject.toString();
             logInfo("Writing Key {} to redis with Value as {}", redisKey, locationInfo);
             writeToMemoryStoreValue(redisKey, locationInfo);
+            */
             return Result.Success;
 		}catch(Exception ex){
 
