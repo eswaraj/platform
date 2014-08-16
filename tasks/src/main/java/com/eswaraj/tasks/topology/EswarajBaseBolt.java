@@ -38,7 +38,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     protected BoltProcessor getBoltProcessor() {
         try {
-            logInfo("Getting Bolt Processor for {}", boltProcessor);
+            logDebug("Getting Bolt Processor for {}", boltProcessor);
             BoltProcessor boltProcessorObject =  (BoltProcessor)getApplicationContext().getBean(Class.forName(boltProcessor));
             boltProcessorObject.initBoltProcessorForTuple(getTupleThreadLocal(), this);
             return boltProcessorObject;
