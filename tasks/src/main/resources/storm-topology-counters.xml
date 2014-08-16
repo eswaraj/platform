@@ -60,8 +60,10 @@
     </bean>
 	
 	
-	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.ComplaintProcessorBolt">
+	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="ComplaintProcessorBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.ComplaintProcessorBoltProcessor" />
+        
         <property name="outputStream" value="ComplaintProcessorStream" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">

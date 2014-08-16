@@ -1,19 +1,19 @@
-package com.eswaraj.tasks.bolt;
+package com.eswaraj.tasks.bolt.processors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.ComplaintDto;
 
-public class ComplaintProcessorBolt extends EswarajBaseBolt {
+public class ComplaintProcessorBoltProcessor extends AbstractBoltProcessor {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+    @Autowired
+    private ComplaintService complaintService;
 
 	@Override
     public Result processTuple(Tuple input) {
@@ -30,7 +30,7 @@ public class ComplaintProcessorBolt extends EswarajBaseBolt {
                 complaintId = (Long) value;
             }
             logInfo("Working on Complaint : " + complaintId);
-            ComplaintMessage updatedComplaintMessage = getComplaintService().updateLocationAndAdmins(complaintId);
+            ComplaintMessage updatedComplaintMessage = complaintService.updateLocationAndAdmins(complaintId);
             writeToStream(input, new Values(updatedComplaintMessage));
             return Result.Success;
 		}catch(Exception ex){

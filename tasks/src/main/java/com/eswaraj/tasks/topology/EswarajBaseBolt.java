@@ -38,7 +38,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     protected BoltProcessor getBoltProcessor() {
         try {
             BoltProcessor boltProcessorObject =  (BoltProcessor)getApplicationContext().getBean(Class.forName(boltProcessor));
-            boltProcessorObject.initBoltProcessorForTuple(getTupleThreadLocal().get());
+            boltProcessorObject.initBoltProcessorForTuple(getTupleThreadLocal(), this);
             return boltProcessorObject;
         } catch (BeansException | ClassNotFoundException e) {
             logError("Unable to create Bolt Processor " + boltProcessor, e);
@@ -92,12 +92,12 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         return new String[] { "Default" };
     }
 
-    protected void writeToStream(Tuple anchor, List<Object> tuple) {
+    public void writeToStream(Tuple anchor, List<Object> tuple) {
         logDebug("Writing To Stream {}", outputStream);
         outputCollector.emit(outputStream, anchor, tuple);
     }
 
-    protected void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
+    public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
         outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
     }
 

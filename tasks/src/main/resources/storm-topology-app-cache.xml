@@ -38,7 +38,7 @@
 		
 	</bean>
 
-	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.CategoryChangeBolt">
+	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />
 		<property name="sourceComponentStreams">

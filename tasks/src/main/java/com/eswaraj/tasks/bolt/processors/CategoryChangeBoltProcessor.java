@@ -33,7 +33,7 @@ public class CategoryChangeBoltProcessor extends AbstractBoltProcessor {
             List<CategoryWithChildCategoryDto> categories = appService.getAllCategories();
             String redisKey = appKeyService.getAllCategoriesKey();
             String allCategories = gson.toJson(categories);
-            //logInfo("Writing Key {} to redis with Value as {}", redisKey, allCategories);
+            logInfo("Writing Key {} to redis with Value as {}", redisKey, allCategories);
             stringRedisTemplate.opsForValue().set(redisKey, allCategories);
             return Result.Success;
         }catch(Exception ex){
