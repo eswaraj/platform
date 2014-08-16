@@ -82,6 +82,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
                 failTuple(inputTuple);
             }
         } catch (Throwable t) {
+            logError("Bolt Processor threw Exception", t);
             failTuple(inputTuple);
         } finally {
             getTupleThreadLocal().remove();
