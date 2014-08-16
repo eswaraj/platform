@@ -64,10 +64,6 @@
         <property name="componentId" value="ComplaintProcessorBolt" />
         <property name="outputStream" value="ComplaintProcessorStream" />
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="false" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="false" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintCreatedSpout" value="ComplaintCreatedStream" />
@@ -83,10 +79,6 @@
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
 		<property name="outputStream" value="GlobalHourlyCounterStream" />
 		<property name="paralellism" value="1" />
-		<!-- Properties define which services will be available for Bolt -->
-		<property name="initializeRedisServices" value="true" />
-		<property name="initializeQueueServices" value="false" />
-		<property name="initializeDbServices" value="true" />
 		<property name="sourceComponentStreams">
 			<map>
 				<entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
@@ -99,10 +91,6 @@
         <property name="componentId" value="CategoryHourlyCounterBolt" />
         <property name="outputStream" value="CategoryHourlyCounterStream" />
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
@@ -115,10 +103,6 @@
         <property name="componentId" value="LocationHourlyCounterBolt" />
         <property name="outputStream" value="LocationHourlyCounterStream" />
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
@@ -131,10 +115,6 @@
         <property name="componentId" value="LocationCategoryHourlyCounterBolt" />
         <property name="outputStream" value="LocationCategoryHourlyCounterStream" />
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
@@ -146,10 +126,6 @@
         <property name="componentId" value="ComplaintHourlyMapAggregatorBolt" />
         <property name="outputStream" value="ComplaintHourlyMapAggregatorStream" />
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
@@ -161,10 +137,6 @@
         <property name="componentId" value="PoliticalAdminHourlyCounterBolt" />
         <property name="outputStream" value="PoliticalAdminHourlyCounterStream" />
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
@@ -181,10 +153,6 @@
         <property name="outputStream" value="DayCounterStream" />
         
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
@@ -202,10 +170,6 @@
         <property name="componentId" value="Lat24HourCounterBolt" />
         
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="GlobalHourlyCounterBolt" value="GlobalHourlyCounterStream" />
@@ -224,10 +188,6 @@
         <property name="outputStream" value="MonthCounterStream" />
         
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="DayCounterBolt" value="DayCounterStream" />
@@ -241,10 +201,6 @@
         <property name="outputStream" value="YearCounterStream" />
         
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="MonthCounterBolt" value="MonthCounterStream" />
@@ -258,10 +214,6 @@
         <property name="componentId" value="TotalCounterBolt" />
         
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="YearCounterBolt" value="YearCounterStream" />
@@ -275,10 +227,6 @@
         <property name="outputStream" value="ReProcessAllComplaintStream" />
         
         <property name="paralellism" value="1" />
-        <!-- Properties define which services will be available for Bolt -->
-        <property name="initializeRedisServices" value="true" />
-        <property name="initializeQueueServices" value="false" />
-        <property name="initializeDbServices" value="true" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ReProcessAllComplaintsSpout" value="ReProcessAllComplaintsStream" />
