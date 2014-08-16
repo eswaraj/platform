@@ -22,7 +22,7 @@ public class ComplaintProcessorBoltProcessor extends AbstractBoltProcessor {
 		try{
             Long complaintId = null;
             Object value = input.getValue(0);
-            logInfo("Got Input : " + value);
+            logDebug("Got Input : {}", value);
             if (value instanceof ComplaintMessage) {
                 ComplaintMessage complaint = (ComplaintMessage) value;
                 complaintId = complaint.getId();
@@ -32,7 +32,7 @@ public class ComplaintProcessorBoltProcessor extends AbstractBoltProcessor {
             } else {
                 complaintId = (Long) value;
             }
-            logInfo("Working on Complaint : " + complaintId);
+            logDebug("Working on Complaint : {}", complaintId);
             ComplaintMessage updatedComplaintMessage = complaintService.updateLocationAndAdmins(complaintId);
             writeToStream(input, new Values(updatedComplaintMessage));
             return Result.Success;

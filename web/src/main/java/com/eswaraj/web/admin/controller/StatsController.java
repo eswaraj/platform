@@ -78,8 +78,8 @@ public class StatsController {
     private void addDataToModel(ModelAndView mv, String prefix) throws ApplicationException {
         try {
             Date currentDate = new Date();
-            ValueOperations valueOperation = redisTemplate.opsForValue();
-            long totalComplaints = (Long) valueOperation.get(counterKeyService.getTotalComplaintCounterKey(prefix));
+            ValueOperations<String, String> valueOperation = redisTemplate.opsForValue();
+            String totalComplaints = valueOperation.get(counterKeyService.getTotalComplaintCounterKey(prefix));
 
             List<String> yearKeys = counterKeyService.getYearComplaintKeysForEternitySinceStart(prefix);
             List<String> yearComplaints = valueOperation.multiGet(yearKeys);
@@ -133,7 +133,7 @@ public class StatsController {
                     }
                 }
             }
-            ValueOperations valueOperation = redisTemplate.opsForValue();
+            ValueOperations<String, String> valueOperation = redisTemplate.opsForValue();
             System.out.println("Total Category keys = " + categoryTotalKeys.size());
             List<String> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
 
@@ -177,7 +177,7 @@ public class StatsController {
                 }
             }
         }
-        ValueOperations valueOperation = redisTemplate.opsForValue();
+        ValueOperations<String, String> valueOperation = redisTemplate.opsForValue();
 
         List<String> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
 

@@ -23,14 +23,13 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
     @Override
     public Result processTuple(Tuple inputTuple) {
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
-        logInfo("Got complaintCreatedMessage : " + complaintCreatedMessage);
+        logDebug("Got complaintCreatedMessage : {}", complaintCreatedMessage);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
 
         String redisKey = counterKeyService.getGlobalHourComplaintCounterKey(creationDate);
-        logInfo("redisKey = " + redisKey);
         String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
 
         Map<String, Object> params = new HashMap<String, Object>();
