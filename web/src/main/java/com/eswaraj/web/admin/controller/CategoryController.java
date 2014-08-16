@@ -14,10 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.google.gson.JsonObject;
 
 /**
  * @author ravi
@@ -31,7 +30,7 @@ public class CategoryController extends BaseController{
 	private AppService appService;
 	
     @Autowired
-    private AwsQueueManager awsQueueProducer;
+    private QueueService queueService;
 
     @Value("${aws_category_queue_name}")
     private String categoryQueue;
@@ -52,10 +51,7 @@ public class CategoryController extends BaseController{
 	@RequestMapping(value = "/ajax/categories/save", method = RequestMethod.POST)
 	public @ResponseBody CategoryDto saveLocationTypes(ModelAndView mv, @RequestBody CategoryDto categoryDto) throws ApplicationException {
 		categoryDto = appService.saveCategory(categoryDto);
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("Message", "Category Updated");
-        jsonObject.addProperty("CategoryId", categoryDto.getId());
-        awsQueueProducer.sendMessage(categoryQueue, jsonObject.toString());
+        queueService.sendCategoryUpdateMessage(categoryDto.getId());
 		return categoryDto;
 	}
 
