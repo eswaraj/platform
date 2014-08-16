@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +33,7 @@ public class StatsController {
     private LocationService locationService;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
     @RequestMapping(value = "/stats.html", method = RequestMethod.GET)
     public ModelAndView showIndexPage(ModelAndView mv) throws ApplicationException {
@@ -82,19 +82,19 @@ public class StatsController {
             long totalComplaints = (Long) valueOperation.get(counterKeyService.getTotalComplaintCounterKey(prefix));
 
             List<String> yearKeys = counterKeyService.getYearComplaintKeysForEternitySinceStart(prefix);
-            List<Long> yearComplaints = valueOperation.multiGet(yearKeys);
+            List<String> yearComplaints = valueOperation.multiGet(yearKeys);
 
             List<String> monthKeys = counterKeyService.getMonthComplaintKeysForTheYear(prefix, currentDate);
-            List<Long> monthComplaints = valueOperation.multiGet(monthKeys);
+            List<String> monthComplaints = valueOperation.multiGet(monthKeys);
 
             List<String> dayKeys = counterKeyService.getDayComplaintKeysForTheMonth(prefix, currentDate);
-            List<Long> dayComplaints = valueOperation.multiGet(dayKeys);
+            List<String> dayComplaints = valueOperation.multiGet(dayKeys);
 
             List<String> dayHourKeys = counterKeyService.getHourComplaintKeysForTheDay(prefix, currentDate);
-            List<Long> dayHourComplaints = valueOperation.multiGet(dayHourKeys);
+            List<String> dayHourComplaints = valueOperation.multiGet(dayHourKeys);
 
             List<String> last24HourKeys = counterKeyService.getHourComplaintKeysForLast24Hours(prefix, currentDate);
-            List<Long> last24HourComplaints = valueOperation.multiGet(last24HourKeys);
+            List<String> last24HourComplaints = valueOperation.multiGet(last24HourKeys);
 
 
             mv.getModel().put("totalComplaints", totalComplaints);
@@ -135,7 +135,7 @@ public class StatsController {
             }
             ValueOperations valueOperation = redisTemplate.opsForValue();
             System.out.println("Total Category keys = " + categoryTotalKeys.size());
-            List<Long> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
+            List<String> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
 
             mv.getModel().put("totalCategoryComplaints", mergeKeyAndValue(categoryName, totalComplaints));
         } catch (Exception ex) {
@@ -179,17 +179,17 @@ public class StatsController {
         }
         ValueOperations valueOperation = redisTemplate.opsForValue();
 
-        List<Long> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
+        List<String> totalComplaints = valueOperation.multiGet(categoryTotalKeys);
 
-        List<Long> yearComplaints = valueOperation.multiGet(categoryYearKeys);
+        List<String> yearComplaints = valueOperation.multiGet(categoryYearKeys);
 
-        List<Long> monthComplaints = valueOperation.multiGet(categoryMonthKeys);
+        List<String> monthComplaints = valueOperation.multiGet(categoryMonthKeys);
 
-        List<Long> dayComplaints = valueOperation.multiGet(categoryDayKeys);
+        List<String> dayComplaints = valueOperation.multiGet(categoryDayKeys);
 
-        List<Long> dayHourComplaints = valueOperation.multiGet(categoryHourlyKeys);
+        List<String> dayHourComplaints = valueOperation.multiGet(categoryHourlyKeys);
 
-        List<Long> last24HourComplaints = valueOperation.multiGet(category24HourKeys);
+        List<String> last24HourComplaints = valueOperation.multiGet(category24HourKeys);
 
         mv.getModel().put("totalCategoryComplaints", mergeKeyAndValue(categoryName, yearComplaints));
         mv.getModel().put("yearCategoryComplaints", mergeKeyAndValue(categoryName, yearComplaints));
@@ -200,10 +200,10 @@ public class StatsController {
 
     }
 
-    private Map<String, Long> mergeKeyAndValue(List<String> keys, List<Long> values) {
+    private Map<String, String> mergeKeyAndValue(List<String> keys, List<String> values) {
         System.out.println("Total Categories " + keys.size());
         System.out.println("Total Counters " + values.size());
-        Map<String, Long> map = new LinkedHashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         int count = 0;
         for (String oneKey : keys) {
             try {
