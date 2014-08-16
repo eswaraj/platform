@@ -25,7 +25,7 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 		try{
             String message = (String) input.getValue(0);
             JsonObject jsonObject = (JsonObject)jsonParser.parse(message);
-            Long locationId = jsonObject.get("LocationId").getAsLong();
+            Long locationId = jsonObject.get("locationId").getAsLong();
             JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
             String redisKey = locationKeyService.getLocationInformationKey(locationId);
 
@@ -34,7 +34,7 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
             writeToMemoryStoreValue(redisKey, locationInfo);
             return Result.Success;
 		}catch(Exception ex){
-
+            logError("Unable to process message " + input.getValue(0), ex);
         }
         return Result.Failed;
 	}

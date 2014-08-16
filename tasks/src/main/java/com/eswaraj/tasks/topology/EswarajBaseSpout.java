@@ -87,9 +87,9 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
         writeToStream(tuple, messageId, outputStream);
     }
 
-    protected void writeToStream(List<Object> tuple, Object messageId, String steamId) {
-        logInfo("Writing To Stream " + outputStream + " with message id as " + messageId);
-        collector.emit(steamId, tuple, messageId);
+    protected void writeToStream(List<Object> tuple, Object messageId, String streamId) {
+        logInfo("Writing To Stream " + streamId + " with message id as " + messageId);
+        collector.emit(streamId, tuple, messageId);
     }
 
     protected void writeToTaskStream(int taskId, List<Object> tuple) {
