@@ -1,27 +1,23 @@
-package com.eswaraj.tasks.bolt.counter.starter;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
-public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
+public class LocationCategoryHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
-
-    CounterKeyService counterKeyService;
-
-    public LocationCategoryHourlyCounterBolt() {
-        counterKeyService = new CounterKeyServiceImpl();
-    }
+    @Autowired
+    private CounterKeyService counterKeyService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -64,11 +60,6 @@ public class LocationCategoryHourlyCounterBolt extends EswarajBaseBolt {
         }
         return Result.Success;
         
-    }
-
-    @Override
-    protected String[] getFields() {
-        return new String[] { "KeyPrefix", "Complaint" };
     }
 
 }

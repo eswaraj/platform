@@ -1,12 +1,18 @@
 package com.eswaraj.tasks.bolt.processors;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.annotation.QueryType;
+import org.springframework.data.neo4j.conversion.Result;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -24,6 +30,8 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private Neo4jTemplate neo4jTemplate;
 
     @PostConstruct
     public void init() {
@@ -127,5 +135,30 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         return stringRedisTemplate.opsForValue().increment(redisKey, delta);
     }
 
+    protected Long getStartOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 1);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        return calendar.getTimeInMillis();
+    }
+
+    protected Long getEndOfHour(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        return calendar.getTimeInMillis();
+    }
+
+    protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
+        logDebug("Running Query {} with Params {}", cypherQuery, params);
+        Result<Object> result = neo4jTemplate.queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
+        Long totalCount = ((Integer) ((Map) result.single()).get(totalFieldName)).longValue();
+        return totalCount;
+    }
 
 }

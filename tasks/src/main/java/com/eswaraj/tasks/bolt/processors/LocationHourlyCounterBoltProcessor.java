@@ -1,28 +1,23 @@
-package com.eswaraj.tasks.bolt.counter.starter;
+package com.eswaraj.tasks.bolt.processors;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
-public class LocationHourlyCounterBolt extends EswarajBaseBolt {
+public class LocationHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
-
-    CounterKeyService counterKeyService;
-
-    public LocationHourlyCounterBolt() {
-        counterKeyService = new CounterKeyServiceImpl();
-    }
+    @Autowired
+    private CounterKeyService counterKeyService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -56,34 +51,6 @@ public class LocationHourlyCounterBolt extends EswarajBaseBolt {
         }
         return Result.Success;
         
-    }
-
-    @Override
-    protected String[] getFields() {
-        return new String[] { "KeyPrefix", "Complaint" };
-    }
-
-    @Override
-    protected Long getStartOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 1);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("startOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
-    }
-
-    @Override
-    protected Long getEndOfHour(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        logInfo("endOfHour = " + calendar.getTimeInMillis() + " , " + calendar.getTime());
-        return calendar.getTimeInMillis();
     }
 
 }

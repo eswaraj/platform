@@ -1,18 +1,18 @@
-package com.eswaraj.tasks.bolt.counter.starter;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
-import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 /**
  * This bolt will put the Complaint on location rectangle as per lat long It
@@ -22,20 +22,12 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt;
  * @author Ravi
  *
  */
-public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProcessor {
 	
-    LocationKeyService locationKeyService;
-    CounterKeyService counterKeyService;
-
-    public ComplaintHourlyMapAggregatorBolt() {
-        locationKeyService = new LocationkeyServiceImpl();
-        counterKeyService = new CounterKeyServiceImpl();
-    }
+    @Autowired
+    private LocationKeyService locationKeyService;
+    @Autowired
+    private CounterKeyService counterKeyService;
 
 	@Override
     public Result processTuple(Tuple inputTuple) {
@@ -71,15 +63,5 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
         }
         return Result.Failed;
 	}
-
-	@Override
-	public void cleanup() {
-        super.cleanup();
-	}
-
-    @Override
-    protected String[] getFields() {
-        return new String[] { "KeyPrefix", "Complaint" };
-    }
 
 }
