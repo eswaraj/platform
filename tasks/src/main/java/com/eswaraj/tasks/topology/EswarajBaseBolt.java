@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeansException;
 import org.springframework.util.CollectionUtils;
 
 import backtype.storm.task.OutputCollector;
@@ -43,9 +42,10 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
             BoltProcessor boltProcessorObject =  (BoltProcessor)getApplicationContext().getBean(Class.forName(boltProcessor));
             boltProcessorObject.initBoltProcessorForTuple(getTupleThreadLocal(), this);
             return boltProcessorObject;
-        } catch (BeansException | ClassNotFoundException e) {
+        } catch (Exception e) {
             logError("Unable to create Bolt Processor " + boltProcessor, e);
         }
+        logWarning("Returning Null Processor");
         return null;
     }
     @Override

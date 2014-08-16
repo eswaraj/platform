@@ -23,8 +23,9 @@ public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
     public Result processTuple(Tuple inputTuple) {
         // Read Input
         String prefix = (String) inputTuple.getValue(0);
-        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
         logDebug("prefix = " + prefix);
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
+        logDebug("complaintCreatedMessage = " + complaintCreatedMessage);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
         List<Long> counterValues = readMultiKeyFromMemoryStore(allKeys, Long.class);
