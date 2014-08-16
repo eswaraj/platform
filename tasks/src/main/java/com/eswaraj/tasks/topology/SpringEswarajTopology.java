@@ -68,6 +68,7 @@ public class SpringEswarajTopology {
         conf.setMaxSpoutPending(maxSpoutPending);
         // conf.setNumAckers(2);
         conf.setMessageTimeoutSecs(messageTimeoutSeconds);
+        System.out.println("messageTimeoutSeconds=[" + messageTimeoutSeconds + "]");
         StormTopology stormTopology = buildTopology();
         StormSubmitter.submitTopology(getName(), conf, stormTopology);
 	    /*

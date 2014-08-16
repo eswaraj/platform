@@ -11,6 +11,8 @@
 		<property name="maxSpoutPending" value="5000" />
 		<property name="numWorkers" value="1" />
 		<property name="numParallel" value="1" />
+		<property name="messageTimeoutSeconds" value="3600" /><!-- Max One Hours for Message to expire -->
+		
 
 		<property name="spoutConfigs">
 			<list>
