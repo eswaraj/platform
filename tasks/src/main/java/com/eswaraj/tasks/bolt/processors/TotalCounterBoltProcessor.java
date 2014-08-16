@@ -14,6 +14,10 @@ public class TotalCounterBoltProcessor extends CounterBoltProcessor {
     @Autowired
     private CounterKeyService counterKeyService;
 
+    public TotalCounterBoltProcessor() {
+        super(false);
+    }
+
     @Override
     protected List<String> getMemoryKeysForRead(String prefix, ComplaintMessage complaintCreatedMessage) {
         return counterKeyService.getYearComplaintKeysForEternitySinceStart(prefix);

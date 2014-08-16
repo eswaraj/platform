@@ -100,8 +100,12 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     public void writeToStream(Tuple anchor, List<Object> tuple) {
-        logDebug("Writing To Stream {}", outputStream);
-        outputCollector.emit(outputStream, anchor, tuple);
+        if (outputStream == null) {
+            logDebug("no output stream defined so wont be writing anything");
+        } else {
+            logDebug("Writing To Stream {}", outputStream);
+            outputCollector.emit(outputStream, anchor, tuple);
+        }
     }
 
     public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {

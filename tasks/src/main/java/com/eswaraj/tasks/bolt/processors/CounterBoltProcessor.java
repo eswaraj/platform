@@ -10,6 +10,15 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
 
+    boolean writeToOutputStream = true;
+
+    public CounterBoltProcessor(boolean writeToOutputStream) {
+        this.writeToOutputStream = writeToOutputStream;
+    }
+
+    public CounterBoltProcessor() {
+        this(true);
+    }
     @Override
     public Result processTuple(Tuple inputTuple) {
         // Read Input
@@ -31,7 +40,10 @@ public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
         logDebug("prefix  redisKey= " + redisKey + ", " + totalComplaints);
 
         writeToMemoryStoreValue(redisKey, totalComplaints);
-        writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
+        if (writeToOutputStream) {
+            writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
+        }
+
         return Result.Success;
 
     }
