@@ -38,6 +38,7 @@ import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
@@ -90,6 +91,8 @@ public class AppServiceImpl extends BaseService implements AppService {
 	private DepartmentRepository departmentRepository;
 	@Autowired
 	private DepartmentConvertor departmentConvertor;
+    @Autowired
+    private QueueService queueService;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -168,6 +171,8 @@ public class AppServiceImpl extends BaseService implements AppService {
 		validateWithExistingData(politicalBodyAdmin);
         validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
+        // Send message to update Location Info
+        queueService.sendLocationUpdateMessage(politicalBodyAdmin.getLocation().getId());
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);	
 	}
 	private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException{
