@@ -104,7 +104,8 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
             logDebug("no output stream defined so wont be writing anything");
         } else {
             logDebug("Writing To Stream {}", outputStream);
-            outputCollector.emit(outputStream, anchor, tuple);
+            List<Integer> taskIds = outputCollector.emit(outputStream, anchor, tuple);
+            logDebug("Sent to taks {}", taskIds);
         }
     }
 

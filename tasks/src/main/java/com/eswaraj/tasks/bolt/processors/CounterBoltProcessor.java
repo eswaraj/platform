@@ -22,6 +22,7 @@ public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
     @Override
     public Result processTuple(Tuple inputTuple) {
         // Read Input
+        logDebug("inputTuple = " + inputTuple);
         String prefix = (String) inputTuple.getValue(0);
         logDebug("prefix = " + prefix);
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
