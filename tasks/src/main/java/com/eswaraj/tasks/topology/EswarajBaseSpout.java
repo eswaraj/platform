@@ -39,9 +39,14 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     @Override
     public final void declareOutputFields(OutputFieldsDeclarer declarer) {
+        Fields fields = new Fields(getFields());
         if (outputStream != null) {
-            Fields fields = new Fields(getFields());
-            declarer.declareStream(getOutputStream(), fields);
+            declarer.declareStream(outputStream, fields);
+        }
+        if (outputStreams != null && !outputStreams.isEmpty()) {
+            for (String oneOutpurStream : outputStreams) {
+                declarer.declareStream(oneOutpurStream, fields);
+            }
         }
     }
 

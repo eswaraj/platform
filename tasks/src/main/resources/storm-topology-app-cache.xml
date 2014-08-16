@@ -38,7 +38,7 @@
 		
 	</bean>
 
-	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
+	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.CategoryChangeBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
 		<!-- Properties define which services will be available for Bolt -->
 		<property name="initializeRedisServices" value="true" />
