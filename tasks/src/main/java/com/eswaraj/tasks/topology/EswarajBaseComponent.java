@@ -18,7 +18,6 @@ import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 import backtype.storm.tuple.Tuple;
 
@@ -51,7 +50,6 @@ public abstract class EswarajBaseComponent implements Serializable {
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
-    StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
 
     private transient ThreadLocal<Tuple> tupleThreadLocal;
 
