@@ -1,4 +1,4 @@
-package com.eswaraj.tasks.bolt;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
@@ -8,17 +8,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationKeyService;
-import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
-public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
+@Component
+public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
-    LocationKeyService locationKeyService = new LocationkeyServiceImpl();
+    @Autowired
+    private LocationKeyService locationKeyService;
 
     @Override
     public Result processTuple(Tuple input) {
@@ -28,9 +31,9 @@ public class LocationOneFileProcessorBolt extends EswarajBaseBolt {
             String[] coordinates = (String[]) input.getValue(0);
             String pointsToProcess = input.getString(1);
             Long locationId = input.getLong(2);
-            logInfo("Recived = " + getComponentId() + ", coordinates=" + coordinates.length);
-            logInfo("Recived = " + getComponentId() + ", pointsToProcess=" + pointsToProcess.length());
-            logInfo("Recived = " + getComponentId() + ", locationId=" + locationId);
+            logInfo("Recived coordinates=" + coordinates.length);
+            logInfo("Recived pointsToProcess=" + pointsToProcess.length());
+            logInfo("Recived locationId=" + locationId);
 
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);

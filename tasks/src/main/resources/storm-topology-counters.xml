@@ -150,9 +150,10 @@
 	
 	
 	
-	<bean id="DayCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.DayCounterBolt">
+	<bean id="DayCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="DayCounterBolt" />
         <property name="outputStream" value="DayCounterStream" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.DayCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
@@ -168,9 +169,9 @@
         
     </bean>
     
-	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.Lat24HourCounterBolt">
+	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="Lat24HourCounterBolt" />
-        
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.Lat24HourCounterBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -185,9 +186,10 @@
 
     </bean>
     
-	<bean id="MonthCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.MonthCounterBolt">
+	<bean id="MonthCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="MonthCounterBolt" />
         <property name="outputStream" value="MonthCounterStream" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.MonthCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
@@ -198,9 +200,10 @@
         
     </bean>
     
-	<bean id="YearCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.YearCounterBolt">
+	<bean id="YearCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="YearCounterBolt" />
         <property name="outputStream" value="YearCounterStream" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.YearCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
@@ -212,8 +215,9 @@
     </bean>
     
 	
-	<bean id="TotalCounterBoltBean" class="com.eswaraj.tasks.bolt.counter.TotalCounterBolt">
+	<bean id="TotalCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="TotalCounterBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.TotalCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">

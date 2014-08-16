@@ -2,8 +2,13 @@ package com.eswaraj.tasks.bolt.processors;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import backtype.storm.tuple.Tuple;
 
@@ -14,6 +19,16 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private ThreadLocal<Tuple> currentTuple;
     private EswarajBaseBolt eswarajBaseBolt;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @PostConstruct
+    public void init() {
+        redisTemplate.setKeySerializer(redisTemplate.getStringSerializer());
+    }
 
     // Log related functions
     protected void logInfo(String message) {
@@ -71,5 +86,46 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
         eswarajBaseBolt.writeToTaskStream(taskId, anchor, tuple);
     }
+
+    // Redis related functions
+    // Set
+    protected Long writeToMemoryStoreSet(String redisKey, String value) {
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        return stringRedisTemplate.opsForSet().add(redisKey, value);
+    }
+
+    protected Long writeToMemoryStoreSet(String redisKey, Object value) {
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        return redisTemplate.opsForSet().add(redisKey, value);
+    }
+
+    protected <T> Long removeFromMemoryStoreSet(String redisKey, T id) {
+        return redisTemplate.opsForSet().remove(redisKey, id);
+    }
+
+
+    // Value
+    protected void writeToMemoryStoreValue(String redisKey, String value) {
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        stringRedisTemplate.opsForValue().set(redisKey, value);
+    }
+
+    protected void writeToMemoryStoreValue(String redisKey, Object value) {
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        redisTemplate.opsForValue().set(redisKey, value);
+    }
+
+    protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
+        return redisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
+    protected List<Object> readMultiKeyFromMemoryStore(List<String> redisKeys) {
+        return redisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
+    protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {
+        return stringRedisTemplate.opsForValue().increment(redisKey, delta);
+    }
+
 
 }
