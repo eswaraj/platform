@@ -20,6 +20,7 @@
 		<property name="boltConfigs">
 			<list>
 				<ref bean="CatageoryUpdatedBoltBean" />
+				<ref bean="LocationUpdatedBoltBean" />
 			</list>
 		</property>
 	</bean>
