@@ -109,7 +109,13 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     }
 
     public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
-        outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
+        if (outputStream == null) {
+            logDebug("no output stream defined so wont be writing anything");
+        } else {
+            logDebug("Writing To Stream {}", outputStream);
+            outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
+        }
+
     }
 
     private void acknowledgeTuple(Tuple input) {
@@ -124,6 +130,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     protected String printTuple(Tuple input) {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Component : " + componentId + " , ");
         stringBuilder.append("getSourceComponent : " + input.getSourceComponent() + " , ");
         stringBuilder.append("getSourceStreamId : " + input.getSourceStreamId() + " , ");
         stringBuilder.append("getSourceGlobalStreamid : " + input.getSourceGlobalStreamid() + " , ");
