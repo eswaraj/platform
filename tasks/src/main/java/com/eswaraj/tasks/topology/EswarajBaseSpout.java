@@ -21,7 +21,7 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     protected String componentId;
     private SpoutOutputCollector collector;
     private int retry;
-
+    private List<String> outputStreams;
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
@@ -67,14 +67,24 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     protected MessageId<List<Object>> writeToStream(List<Object> tuple) {
         MessageId<List<Object>> messageId = new MessageId<>();
         messageId.setData(tuple);
-        collector.emit(outputStream, tuple, messageId);
-        logInfo("Mesage Written by Spout :  {}", messageId);
+        writeToStream(tuple, messageId);
+        return messageId;
+    }
+
+    protected MessageId<List<Object>> writeToParticularStream(List<Object> tuple, String streamId) {
+        MessageId<List<Object>> messageId = new MessageId<>();
+        messageId.setData(tuple);
+        writeToStream(tuple, messageId, streamId);
         return messageId;
     }
 
     protected void writeToStream(List<Object> tuple, Object messageId) {
+        writeToStream(tuple, messageId, outputStream);
+    }
+
+    protected void writeToStream(List<Object> tuple, Object messageId, String steamId) {
         logInfo("Writing To Stream " + outputStream + " with message id as " + messageId);
-        collector.emit(outputStream, tuple, messageId);
+        collector.emit(steamId, tuple, messageId);
     }
 
     protected void writeToTaskStream(int taskId, List<Object> tuple) {
@@ -165,6 +175,14 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     public void setRetry(int retry) {
         this.retry = retry;
+    }
+
+    public List<String> getOutputStreams() {
+        return outputStreams;
+    }
+
+    public void setOutputStreams(List<String> outputStreams) {
+        this.outputStreams = outputStreams;
     }
 
 }

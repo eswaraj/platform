@@ -49,9 +49,12 @@ public class SpringEswarajTopology {
         for (EswarajBaseBolt oneBolt : boltConfigs) {
             System.out.println("Building Bolt id=[" + oneBolt.getComponentId() + "], Bolt CLass = [" + oneBolt.getClass() + "]");
             boltDeclarer = builder.setBolt(oneBolt.getComponentId(), oneBolt, oneBolt.getParalellism());
-            for (Entry<String, String> oneSourceComponentStream : oneBolt.getSourceComponentStreams().entrySet()) {
-                System.out.println("Shuffling to Spout ID =[" + oneSourceComponentStream.getKey() + "], Spout Stream = [" + oneSourceComponentStream.getValue() + "]");
-                boltDeclarer.shuffleGrouping(oneSourceComponentStream.getKey(), oneSourceComponentStream.getValue());
+            if (oneBolt.getSourceComponentStreams() != null) {
+                for (Entry<String, String> oneSourceComponentStream : oneBolt.getSourceComponentStreams().entrySet()) {
+                    System.out.println("Shuffling to Spout ID =[" + oneSourceComponentStream.getKey() + "], Spout Stream = [" + oneSourceComponentStream.getValue() + "]");
+                    boltDeclarer.shuffleGrouping(oneSourceComponentStream.getKey(), oneSourceComponentStream.getValue());
+                }
+
             }
         }
 		return builder.createTopology();

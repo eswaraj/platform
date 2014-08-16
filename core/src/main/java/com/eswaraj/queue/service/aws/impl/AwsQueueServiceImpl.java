@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.util.DataMessageTypes;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.google.gson.Gson;
@@ -82,6 +83,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     public void sendCategoryUpdateMessage(Long categoryId) throws ApplicationException {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("categoryId", categoryId);
+        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.CATEGORY_CHANGE_MESSAGE_TYPE);
 
         logger.debug("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
 

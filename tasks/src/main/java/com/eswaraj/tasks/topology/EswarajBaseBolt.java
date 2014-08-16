@@ -35,9 +35,14 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     Map<String, String> sourceComponentStreams;
 
     @Override
-    public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-        this.outputCollector = collector;
+    public final void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         super.init();
+        this.outputCollector = collector;
+        onPrepare(stormConf, context, collector);
+    }
+
+    protected void onPrepare(Map stormConf, TopologyContext context, OutputCollector collector) {
+
     }
 
     @Override
