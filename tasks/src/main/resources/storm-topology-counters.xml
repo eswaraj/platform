@@ -41,6 +41,7 @@
 	<bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
 		<property name="componentId" value="ComplaintCreatedSpout" />
 		<property name="outputStream" value="ComplaintCreatedStream" />
+		<property name="retry" value="2" />
 		
 		<!-- Properties define which services will be available for spout -->
 		<property name="initializeRedisServices" value="false" />
