@@ -123,6 +123,11 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         redisTemplate.opsForValue().set(redisKey, value);
     }
 
+    protected void writeToMemoryStoreValue(String redisKey, Number value) {
+        logDebug("redisKey = {}, Value = {}", redisKey, String.valueOf(value));
+        redisTemplate.opsForValue().set(redisKey, value);
+    }
+
     protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
         return redisTemplate.opsForValue().multiGet(redisKeys);
     }
