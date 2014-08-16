@@ -43,7 +43,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
     private int paralellism = 1;
-    private ClassPathXmlApplicationContext applicationContext;
+    private static ClassPathXmlApplicationContext applicationContext;
     private ComplaintService complaintService;
     private AppService appService;
 
