@@ -42,7 +42,7 @@
 	<beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
 	    p:host-name="cache.vyaut5.0001.usw2.cache.amazonaws.com" p:port="6379" 
 	    />
-	<bean 
+	<beans:bean 
     id="stringRedisSerializer" 
     class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
 	<!-- redis template definition -->
