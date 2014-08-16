@@ -135,28 +135,28 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     @Override
     public final void fail(Object msgId) {
-        logInfo("********************************");
-        logInfo("Message {} has been failed", msgId + " , " + msgId.getClass());
+        logWarning("********************************");
+        logWarning("Message {} has been failed", msgId + " , " + msgId.getClass());
         if (getRetry() > 0) {
-            logDebug("Retry count set to {} so will see if i can retry", getRetry());
+            logInfo("Retry count set to {} so will see if i can retry", getRetry());
             // If retry count set more then 0
             if (msgId instanceof MessageId) {
                 MessageId messageId = (MessageId) msgId;
-                logDebug("current Retry count is {} " + messageId.getRetryCount());
+                logInfo("current Retry count is {} " + messageId.getRetryCount());
                 if (messageId.getRetryCount() < getRetry()) {
-                    logDebug("Retrying {} " + messageId);
+                    logInfo("Retrying {} " + messageId);
                     messageId.setRetryCount(messageId.getRetryCount() + 1);
                     writeToStream((List<Object>) messageId.getData(), messageId);
                 }
             } else {
-                logDebug("msgId is not of type MessageId so can not retry");
+                logWarning("msgId is not of type MessageId so can not retry");
             }
 
         } else {
-            logDebug("Message Failed and i will not retry it : {}", msgId);
+            logWarning("Message Failed and i will not retry it as retry count set to 0 : {}", msgId);
         }
         onFail(msgId);
-        logInfo("********************************");
+        logWarning("********************************");
     }
 
     public int getRetry() {

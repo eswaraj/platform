@@ -431,6 +431,10 @@ public abstract class EswarajBaseComponent implements Serializable {
         logger.warn(getCurremtTupleAnchor() + " : " + message);
     }
 
+    protected void logWarning(String message, Object... obj1) {
+        logger.warn(getCurremtTupleAnchor() + " : " + message, obj1);
+    }
+
     protected void logError(String message) {
         logger.error(getCurremtTupleAnchor() + " : " + message);
     }
