@@ -234,7 +234,7 @@
         
     </bean>
     
-	<bean id="ReProcessAllComplaintBoltBean" class="com.eswaraj.tasks.SimpleEswarajBolt">
+	<bean id="ReProcessAllComplaintBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="ReProcessAllComplaintBolt" />
         <property name="outputStream" value="ReProcessAllComplaintStream" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.ReProcessAllComplaintBoltProcessor" />
