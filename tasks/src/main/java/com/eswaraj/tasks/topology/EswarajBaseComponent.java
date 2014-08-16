@@ -18,6 +18,7 @@ import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import backtype.storm.tuple.Tuple;
 
@@ -50,6 +51,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
+    StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
 
     private transient ThreadLocal<Tuple> tupleThreadLocal;
 
@@ -130,8 +132,10 @@ public abstract class EswarajBaseComponent implements Serializable {
         jedisConnectionFactory.afterPropertiesSet();
 
         redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(redisTemplate.getStringSerializer());
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         redisTemplate.afterPropertiesSet();
+
     }
 
     protected void destroy() {
@@ -199,10 +203,10 @@ public abstract class EswarajBaseComponent implements Serializable {
         return redisTemplate.opsForSet().add(redisKey, id);
     }
 
-    protected void writeToMemoryStoreValue(String redisKey, Long id) {
+    protected void writeToMemoryStoreValue(String redisKey, Object value) {
         checkRedisServices();
-        logDebug("redisKey = {}, Value = {}", redisKey, id);
-        redisTemplate.opsForValue().set(redisKey, id);
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        redisTemplate.opsForValue().set(redisKey, value);
     }
 
     protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {

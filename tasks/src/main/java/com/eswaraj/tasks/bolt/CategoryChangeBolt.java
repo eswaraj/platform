@@ -35,7 +35,7 @@ public class CategoryChangeBolt extends EswarajBaseBolt {
             String redisKey = appKeyService.getAllCategoriesKey();
             String allCategories = gson.toJson(categories);
             logInfo("Writing Key {} to redis with Value as {}", redisKey, allCategories);
-            writeToMemoryStoreSet(redisKey, allCategories);
+            writeToMemoryStoreValue(redisKey, allCategories);
             return Result.Success;
 		}catch(Exception ex){
 
