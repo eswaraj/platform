@@ -166,6 +166,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 	public PoliticalBodyAdminDto savePoliticalBodyAdmin(PoliticalBodyAdminDto politicalBodyAdminDto) throws ApplicationException {
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminConvertor.convert(politicalBodyAdminDto);
 		validateWithExistingData(politicalBodyAdmin);
+        validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);	
 	}
@@ -176,6 +177,15 @@ public class AppServiceImpl extends BaseService implements AppService {
 			checkForDateOverlap(politicalBodyAdmin, allPoliticalBodyAdminsForLocation);
 		}
 	}
+
+    private void validateLocation(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        if (politicalBodyAdmin.getLocation() != null && politicalBodyAdmin.getPoliticalBodyType() != null) {
+            if (!politicalBodyAdmin.getLocation().getLocationType().getId().equals(politicalBodyAdmin.getPoliticalBodyType().getLocationType().getId())) {
+                throw new ApplicationException("You can not create political Admin of type [" + politicalBodyAdmin.getPoliticalBodyType().getName() + "] at location ["
+                        + politicalBodyAdmin.getLocation().getName() + "," + politicalBodyAdmin.getLocation().getId() + "]");
+            }
+        }
+    }
 	private void checkForDateOverlap(PoliticalBodyAdmin politicalBodyAdmin, Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation) throws ApplicationException{
 		for(PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation){
 			if(!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin)){
