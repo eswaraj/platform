@@ -27,6 +27,7 @@ import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
 import com.eswaraj.domain.nodes.ExecutivePost;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
@@ -36,6 +37,7 @@ import com.eswaraj.domain.repo.ExecutiveBodyRepository;
 import com.eswaraj.domain.repo.ExecutivePostRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
+import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.queue.service.QueueService;
@@ -91,6 +93,8 @@ public class AppServiceImpl extends BaseService implements AppService {
 	private DepartmentRepository departmentRepository;
 	@Autowired
 	private DepartmentConvertor departmentConvertor;
+    @Autowired
+    private PersonRepository personRepository;
     @Autowired
     private QueueService queueService;
 	
@@ -385,5 +389,11 @@ public class AppServiceImpl extends BaseService implements AppService {
         return category;
     }
 
+    @Override
+    public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException {
+        Person person = getObjectIfExistsElseThrowExcetpion(personId, "Location", personRepository);
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getPoliticalAdminHistoryByPerson(person);
+        return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
+    }
 
 }

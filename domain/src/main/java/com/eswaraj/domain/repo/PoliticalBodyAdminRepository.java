@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 
@@ -22,5 +23,8 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 
 	@Query("start location=node({0}),politicalBodyType=node({1})  match (location)<-[:BELONGS_TO]-(PoliticalAdmin)-[:OF_TYPE]->politicalBodyType return PoliticalAdmin")
 	Collection<PoliticalBodyAdmin> getAllPoliticalAdminByLocationAndPoliticalBodyType(Location location, PoliticalBodyType politicalBodyType);
+
+    @Query("start person=node({0}) match (location)<-[:IS]-(PoliticalAdmin) return PoliticalAdmin")
+    Collection<PoliticalBodyAdmin> getPoliticalAdminHistoryByPerson(Person person);
 
 }
