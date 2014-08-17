@@ -36,7 +36,7 @@
 				<ref bean="ReProcessAllComplaintBoltBean" />
 				<ref bean="ComplaintProcessorBoltBean" />
 				<ref bean="LocationWiseComplaintZsetBoltBean" />
-				
+				<ref bean="ComplaintRefreshBoltBean" />
 			</list>
 		</property>
 	</bean>
@@ -76,12 +76,17 @@
                 <entry key="ReProcessAllComplaintBolt" value="ReProcessAllComplaintStream" />
             </map>
         </property>
-        
-        <property name="fields">
-            <list><value>Fields1</value></list>
+    </bean>
+    
+	<bean id="ComplaintRefreshBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="ComplaintRefreshBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.ComplaintRefreshBoltProcessor" />
+        <property name="paralellism" value="1" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
+            </map>
         </property>
-        
-
     </bean>
 	
 

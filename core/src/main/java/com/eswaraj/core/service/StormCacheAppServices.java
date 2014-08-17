@@ -13,4 +13,6 @@ import com.google.gson.JsonObject;
 public interface StormCacheAppServices {
 
     JsonObject getCompleteLocationInfo(Long locationId) throws ApplicationException;
+
+    JsonObject getCompleteComplaintInfo(Long complaintId) throws ApplicationException;
 }

@@ -8,16 +8,26 @@ import org.springframework.util.CollectionUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
+import com.eswaraj.domain.nodes.ExecutivePost;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.ComplaintRepository;
+import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
+import com.eswaraj.domain.repo.ExecutivePostRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
+import com.eswaraj.domain.repo.PhotoRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.google.gson.JsonArray;
@@ -38,6 +48,16 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     private PartyRepository partyRepository;
     @Autowired
     private PoliticalBodyTypeRepository politicalBodyTypeRepository;
+    @Autowired
+    private ComplaintRepository complaintRepository;
+    @Autowired
+    private ExecutiveBodyAdminRepository executiveBodyAdminRepository;
+    @Autowired
+    private ExecutivePostRepository executivePostRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private PhotoRepository photoRepository;
 
     @Override
     public JsonObject getCompleteLocationInfo(Long locationId) throws ApplicationException {
@@ -103,6 +123,79 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             jsonObject.add("politicalInfo", politicalBodyJsonArray);
         }
         return jsonObject;
+    }
+
+    @Override
+    public JsonObject getCompleteComplaintInfo(Long complaintId) throws ApplicationException {
+        Complaint complaint = complaintRepository.findOne(complaintId);
+        return buildComplaintInfo(complaint);
+    }
+
+    private JsonObject buildComplaintInfo(Complaint complaint) {
+        JsonObject complaintJsonObject = new JsonObject();
+        complaintJsonObject.addProperty("complaintTime", complaint.getComplaintTime());
+        complaintJsonObject.addProperty("title", complaint.getTitle());
+        complaintJsonObject.addProperty("description", complaint.getDescription());
+        complaintJsonObject.addProperty("lattitude", complaint.getLattitude());
+        complaintJsonObject.addProperty("longitude", complaint.getLongitude());
+        complaintJsonObject.addProperty("status", complaint.getStatus().toString());
+
+        if (complaint.getAdministrator() != null) {
+            ExecutiveBodyAdmin eba = executiveBodyAdminRepository.findOne(complaint.getAdministrator().getId());
+            Person ebaPerson = personRepository.findOne(eba.getPerson().getId());
+            ExecutivePost ebaExecutivePost = executivePostRepository.findOne(eba.getPost().getId());
+            JsonObject ebaJsonObject = new JsonObject();
+            ebaJsonObject.addProperty("name", ebaPerson.getName());
+            ebaJsonObject.addProperty("profilePhoto", ebaPerson.getProfilePhoto());
+            ebaJsonObject.addProperty("postTitle", ebaExecutivePost.getTitle());
+            ebaJsonObject.addProperty("postShortTitle", ebaExecutivePost.getShortTitle());
+            complaintJsonObject.add("executiveBodyAdmin", ebaJsonObject);
+        }
+
+        if (!CollectionUtils.isEmpty(complaint.getCategories())) {
+            JsonArray jsonArray = new JsonArray();
+            for (Category oneCategory : complaint.getCategories()) {
+                JsonObject categoryJsonObject = new JsonObject();
+                oneCategory = categoryRepository.findOne(oneCategory.getId());
+                if (!oneCategory.isRoot()) {
+                    complaintJsonObject.addProperty("categoryTitle", oneCategory.getName());
+                }
+                categoryJsonObject.addProperty("externalId", oneCategory.getExternalId());
+                categoryJsonObject.addProperty("headerImageurl", oneCategory.getHeaderImageUrl());
+                categoryJsonObject.addProperty("imageUrl", oneCategory.getImageUrl());
+                categoryJsonObject.addProperty("name", oneCategory.getName());
+                categoryJsonObject.addProperty("videoUrl", oneCategory.getVideoUrl());
+                categoryJsonObject.addProperty("root", oneCategory.isRoot());
+                jsonArray.add(categoryJsonObject);
+            }
+            complaintJsonObject.add("categories", jsonArray);
+        }
+
+        if (!CollectionUtils.isEmpty(complaint.getLocations())) {
+            JsonArray jsonArray = new JsonArray();
+            for (Location oneLocation : complaint.getLocations()) {
+                JsonObject locationJsonObject = new JsonObject();
+                oneLocation = locationRepository.findOne(oneLocation.getId());
+                locationJsonObject.addProperty("externalId", oneLocation.getExternalId());
+                locationJsonObject.addProperty("name", oneLocation.getName());
+                jsonArray.add(locationJsonObject);
+            }
+            complaintJsonObject.add("locations", jsonArray);
+        }
+        if (!CollectionUtils.isEmpty(complaint.getPhotos())) {
+            JsonArray photosArray = new JsonArray();
+            for (Photo onePhoto : complaint.getPhotos()) {
+                JsonObject locationJsonObject = new JsonObject();
+                onePhoto = photoRepository.findOne(onePhoto.getId());
+                locationJsonObject.addProperty("imageUrl-large", onePhoto.getLargeUrl());
+                locationJsonObject.addProperty("imageUrl-medium", onePhoto.getMediumUrl());
+                locationJsonObject.addProperty("imageUrl-small", onePhoto.getSmallUrl());
+                locationJsonObject.addProperty("imageUrl-square", onePhoto.getSquareUrl());
+                photosArray.add(locationJsonObject);
+            }
+            complaintJsonObject.add("photos", photosArray);
+        }
+        return complaintJsonObject;
     }
 
 }

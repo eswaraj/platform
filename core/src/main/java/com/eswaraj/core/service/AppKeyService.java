@@ -4,4 +4,6 @@ public interface AppKeyService {
 
     String getAllCategoriesKey();
 
+    String getComplaintObjectKey(Long complaintId);
+
 }
