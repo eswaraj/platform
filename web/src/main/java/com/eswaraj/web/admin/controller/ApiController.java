@@ -24,6 +24,7 @@ import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Controller
 public class ApiController {
@@ -89,15 +90,26 @@ public class ApiController {
 
     @RequestMapping(value = "/api/complaint/location/{locationId}/{categoryId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<String> getComplaintsOfLocationAndCategory(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId, @PathVariable Long categoryId)
+    public String getComplaintsOfLocationAndCategory(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId, @PathVariable Long categoryId)
             throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int end = getIntParameter(httpServletRequest, "end", 20);
 
         String locationComplaintCategoryKey = locationKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
         logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
+        List<String> allComplaints = getComplaintsOfKey(locationComplaintCategoryKey, start, end); 
+        return convertList(allComplaints);
+    }
 
-        return getComplaintsOfKey(locationComplaintCategoryKey, start, end);
+    private String convertList(List<String> complaints) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject;
+        JsonArray jsonArray = new JsonArray();
+        for (String oneComplaint : complaints) {
+            jsonObject = (JsonObject) jsonParser.parse(oneComplaint);
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray.toString();
     }
 
     private List<String> getComplaintsOfKey(String key, int start, int end) {
