@@ -22,4 +22,9 @@ public class AppKeyServiceImpl implements AppKeyService {
         return COMPLAINT_PREFIX + complaintId;
     }
 
+    @Override
+    public String getComplaintObjectKey(String complaintId) {
+        return COMPLAINT_PREFIX + complaintId;
+    }
+
 }

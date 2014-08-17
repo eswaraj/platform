@@ -6,4 +6,6 @@ public interface AppKeyService {
 
     String getComplaintObjectKey(Long complaintId);
 
+    String getComplaintObjectKey(String complaintId);
+
 }

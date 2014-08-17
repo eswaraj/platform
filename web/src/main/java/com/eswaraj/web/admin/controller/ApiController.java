@@ -1,7 +1,11 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.google.gson.JsonArray;
@@ -28,6 +33,8 @@ public class ApiController {
     private LocationKeyService locationKeyService;
     @Autowired
     private CounterKeyService counterKeyService;
+    @Autowired
+    private AppKeyService appKeyService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -66,5 +73,33 @@ public class ApiController {
         returnObject.addProperty("totalComplaints", totalComplaints);
         returnObject.add("dayWise", jsonArray);
         return returnObject.toString();
+    }
+
+    @RequestMapping(value = "/api/complaint/location/{locationId}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
+        int start = getIntParameter(httpServletRequest, "start", 0);
+        int end = getIntParameter(httpServletRequest, "end", 20);
+
+        String locationComplaintKey = locationKeyService.getLocationComplaintsKey(locationId);
+        logger.info("locationComplaintKey : {}", locationComplaintKey);
+        
+        Set<String> complaintIds = stringRedisTemplate.opsForZSet().range(locationComplaintKey, start, end);
+        logger.info("complaintIds : {}", complaintIds);
+        List<String> complaintKeys = new ArrayList<>();
+        for(String oneComplaintId : complaintIds){
+            complaintKeys.add(appKeyService.getComplaintObjectKey(oneComplaintId));
+        }
+        List<String> complaintList = stringRedisTemplate.opsForValue().multiGet(complaintKeys);
+
+        return complaintList;
+    }
+
+    private int getIntParameter(HttpServletRequest httpServletRequest, String parameter, int defaultValue) {
+        String paramValue = httpServletRequest.getParameter(parameter);
+        if (paramValue == null) {
+            return defaultValue;
+        }
+        return Integer.parseInt(paramValue);
     }
 }
