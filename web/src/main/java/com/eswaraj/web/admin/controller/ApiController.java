@@ -84,14 +84,30 @@ public class ApiController {
         String locationComplaintKey = locationKeyService.getLocationComplaintsKey(locationId);
         logger.info("locationComplaintKey : {}", locationComplaintKey);
         
-        Set<String> complaintIds = stringRedisTemplate.opsForZSet().range(locationComplaintKey, start, end);
+        return getComplaintsOfKey(locationComplaintKey, start, end);
+    }
+
+    @RequestMapping(value = "/api/complaint/location/{locationId}/{categoryId}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getComplaintsOfLocationAndCategory(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId, @PathVariable Long categoryId)
+            throws ApplicationException {
+        int start = getIntParameter(httpServletRequest, "start", 0);
+        int end = getIntParameter(httpServletRequest, "end", 20);
+
+        String locationComplaintCategoryKey = locationKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
+        logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
+
+        return getComplaintsOfKey(locationComplaintCategoryKey, start, end);
+    }
+
+    private List<String> getComplaintsOfKey(String key, int start, int end) {
+        Set<String> complaintIds = stringRedisTemplate.opsForZSet().range(key, start, end);
         logger.info("complaintIds : {}", complaintIds);
         List<String> complaintKeys = new ArrayList<>();
-        for(String oneComplaintId : complaintIds){
+        for (String oneComplaintId : complaintIds) {
             complaintKeys.add(appKeyService.getComplaintObjectKey(oneComplaintId));
         }
         List<String> complaintList = stringRedisTemplate.opsForValue().multiGet(complaintKeys);
-
         return complaintList;
     }
 
