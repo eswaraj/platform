@@ -7,7 +7,7 @@
 
 
 	<bean class="com.eswaraj.tasks.topology.SpringEswarajTopology">
-		<property name="name" value="Eswaraj-counters" />
+		<property name="name" value="Eswaraj-complaints" />
 		<property name="maxSpoutPending" value="5000" />
 		<property name="numWorkers" value="1" />
 		<property name="numParallel" value="1" />
