@@ -37,7 +37,7 @@ public class CategoryChangeBoltProcessor extends AbstractBoltProcessor {
             stringRedisTemplate.opsForValue().set(redisKey, allCategories);
             return Result.Success;
         }catch(Exception ex){
-
+            logError("Unable to refresh Categories ", ex);
         }
         return Result.Failed;
     }
