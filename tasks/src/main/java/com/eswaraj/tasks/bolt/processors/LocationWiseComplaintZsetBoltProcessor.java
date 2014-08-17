@@ -1,6 +1,7 @@
 package com.eswaraj.tasks.bolt.processors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import backtype.storm.tuple.Tuple;
@@ -9,6 +10,7 @@ import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
+@Component
 public class LocationWiseComplaintZsetBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
