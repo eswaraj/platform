@@ -35,6 +35,7 @@
 				<ref bean="PoliticalAdminHourlyCounterBoltBean" />
 				<ref bean="ReProcessAllComplaintBoltBean" />
 				<ref bean="ComplaintProcessorBoltBean" />
+				<ref bean="LocationWiseComplaintZsetBoltBean" />
 				
 			</list>
 		</property>
@@ -84,6 +85,19 @@
     </bean>
 	
 
+	<bean id="LocationWiseComplaintZsetBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="LocationWiseComplaintZsetBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationWiseComplaintZsetBoltProcessor" />
+        <property name="paralellism" value="1" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
+            </map>
+        </property>
+        <property name="fields">
+            <list><value>Fields1</value></list>
+        </property>
+    </bean>
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
 		<property name="outputStream" value="GlobalHourlyCounterStream" />
@@ -97,7 +111,6 @@
         <property name="fields">
             <list><value>Fields1</value><value>Fields2</value></list>
         </property>
-		
 	</bean>
 	
 	<bean id="CategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">

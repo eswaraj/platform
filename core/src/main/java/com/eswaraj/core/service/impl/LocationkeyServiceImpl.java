@@ -86,4 +86,9 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
         return LOCATION_PREFIX + locationId + ".info";
     }
 
+    @Override
+    public String getLocationComplaintsKey(Long locationId) {
+        return LOCATION_PREFIX + locationId + ".complaints";
+    }
+
 }
