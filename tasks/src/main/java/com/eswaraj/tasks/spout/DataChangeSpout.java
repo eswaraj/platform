@@ -25,7 +25,7 @@ public class DataChangeSpout extends EswarajBaseSpout {
 
             switch (messageType) {
             case DataMessageTypes.CATEGORY_CHANGE_MESSAGE_TYPE:
-                writeToParticularStream(new Values(message), "CategoryChangedStream");
+                writeToParticularStream(new Values(message), "CategoryUpdatedStream");
                 break;
             case DataMessageTypes.LOCATION_UPDATE_MESSAGE_TYPE:
                 writeToParticularStream(new Values(message), "LocationUpdatedStream");
