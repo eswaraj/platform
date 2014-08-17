@@ -22,6 +22,7 @@ public class LocationWiseComplaintZsetBoltProcessor extends AbstractBoltProcesso
 
         if (CollectionUtils.isEmpty(complaintCreatedMessage.getLocationIds())) {
             logInfo("No location found, nothing to do for complaint message: {}", complaintCreatedMessage);
+            return Result.Success;
         }
         String redisKey;
         for (Long locationId : complaintCreatedMessage.getLocationIds()) {
