@@ -25,9 +25,16 @@ public class LocationWiseComplaintZsetBoltProcessor extends AbstractBoltProcesso
             return Result.Success;
         }
         String redisKey;
+        String locationCategoryKey;
         for (Long locationId : complaintCreatedMessage.getLocationIds()) {
             redisKey = locationKeyService.getLocationComplaintsKey(locationId);
             writeToMemoryStoreSortedSet(redisKey, complaintCreatedMessage.getId().toString(), complaintCreatedMessage.getComplaintTime());
+            if (!CollectionUtils.isEmpty(complaintCreatedMessage.getCategoryIds())) {
+                for (Long oneCategoryId : complaintCreatedMessage.getCategoryIds()) {
+                    locationCategoryKey = locationKeyService.getLocationCategoryComplaintsKey(locationId, oneCategoryId);
+                    writeToMemoryStoreSortedSet(locationCategoryKey, complaintCreatedMessage.getId().toString(), complaintCreatedMessage.getComplaintTime());
+                }
+            }
         }
 
         return Result.Success;

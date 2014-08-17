@@ -23,4 +23,6 @@ public interface LocationKeyService {
 
     String getLocationComplaintsKey(Long locationId);
 
+    String getLocationCategoryComplaintsKey(Long locationId, long categoryId);
+
 }

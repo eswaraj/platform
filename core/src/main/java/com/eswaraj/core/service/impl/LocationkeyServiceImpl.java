@@ -27,6 +27,7 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
 
     private final String LOCATION_PREFIX = "Location.";
+    private final String CATEGORY_PREFIX = "Category.";
 
     public LocationkeyServiceImpl() {
         decimalFormat = new DecimalFormat("#.000");
@@ -89,6 +90,11 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     @Override
     public String getLocationComplaintsKey(Long locationId) {
         return LOCATION_PREFIX + locationId + ".complaints";
+    }
+
+    @Override
+    public String getLocationCategoryComplaintsKey(Long locationId, long categoryId) {
+        return LOCATION_PREFIX + locationId + "." + CATEGORY_PREFIX + categoryId + ".complaints";
     }
 
 }
