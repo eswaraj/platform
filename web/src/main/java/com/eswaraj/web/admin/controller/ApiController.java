@@ -78,7 +78,7 @@ public class ApiController {
 
     @RequestMapping(value = "/api/complaint/location/{locationId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<String> getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
+    public String getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int end = getIntParameter(httpServletRequest, "end", 20);
 
@@ -97,8 +97,8 @@ public class ApiController {
 
         String locationComplaintCategoryKey = locationKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
         logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
-        List<String> allComplaints = getComplaintsOfKey(locationComplaintCategoryKey, start, end); 
-        return convertList(allComplaints);
+        return getComplaintsOfKey(locationComplaintCategoryKey, start, end);
+
     }
 
     private String convertList(List<String> complaints) {
@@ -112,7 +112,7 @@ public class ApiController {
         return jsonArray.toString();
     }
 
-    private List<String> getComplaintsOfKey(String key, int start, int end) {
+    private String getComplaintsOfKey(String key, int start, int end) {
         Set<String> complaintIds = stringRedisTemplate.opsForZSet().range(key, start, end);
         logger.info("complaintIds : {}", complaintIds);
         List<String> complaintKeys = new ArrayList<>();
@@ -120,7 +120,7 @@ public class ApiController {
             complaintKeys.add(appKeyService.getComplaintObjectKey(oneComplaintId));
         }
         List<String> complaintList = stringRedisTemplate.opsForValue().multiGet(complaintKeys);
-        return complaintList;
+        return convertList(complaintList);
     }
 
     private int getIntParameter(HttpServletRequest httpServletRequest, String parameter, int defaultValue) {
