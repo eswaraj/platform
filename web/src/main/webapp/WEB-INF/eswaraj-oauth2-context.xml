@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/security 
+       http://www.springframework.org/schema/security/spring-security-3.2.xsd
+       http://www.springframework.org/schema/security/oauth2 
+       http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
+       
+	<mvc:annotation-driven />
+	<context:component-scan base-package="com.eswaraj.web.outh2.test" />
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" id="handlerMapping">
+		<property name="alwaysUseFullPath" value="true" />
+	</bean>
+	
+	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    	<property name="prefixJson" value="false"/>
+    	<property name="supportedMediaTypes" value="application/json"/>
+  	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<oauth:authorization-server client-details-service-ref="client-details-service" token-services-ref="tokenServices">  
+        <oauth:refresh-token/>  
+        <oauth:password/>  
+    </oauth:authorization-server>
+    
+    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"  
+      xmlns="http://www.springframework.org/schema/security">  
+    <anonymous enabled="false"/>  
+    <http-basic entry-point-ref="clientAuthenticationEntryPoint"/>  
+    <access-denied-handler ref="oauthAccessDeniedHandler"/>  
+	</http>
+	<bean id="clientCredentialsTokenEndpointFilter"  
+	      class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">  
+	    <property name="authenticationManager" ref="clientAuthenticationManager"/>  
+	</bean>
+	
+	<authentication-manager id="clientAuthenticationManager" xmlns="http://www.springframework.org/schema/security">  
+    	<authentication-provider user-service-ref="client-details-user-service"/>  
+	</authentication-manager> 
+	
+	<bean id="client-details-user-service" class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">  
+    	<constructor-arg ref="client-details-service" />  
+	</bean>
+	<oauth:client-details-service id="client-details-service">  
+            <!-- test clients -->  
+            <oauth:client 
+                    client-id="test_client"  
+                    secret="test_secret"  
+                    authorized-grant-types="password,refresh_token"  
+                    authorities="ROLE_ANDROID"  
+                    access-token-validity="10"  
+                    refresh-token-validity="10"  
+                    />  
+    </oauth:client-details-service>  
+    
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+	<bean id="userService" class="com.eswaraj.web.outh2.test.UserServiceImpl" />  
+      
+    <sec:authentication-manager alias="userAuthenticationManager">  
+        <sec:authentication-provider user-service-ref="userService">  
+            <sec:password-encoder ref="passwordEncoder"/>  
+        </sec:authentication-provider>  
+    </sec:authentication-manager>
+    
+    <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">  
+        <property name="tokenStore" ref="tokenStore"/>  
+        <property name="supportRefreshToken" value="true"/>  
+        <property name="clientDetailsService" ref="client-details-service"/>  
+    </bean>
+     
+    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>
+    
+    <bean id="tokenStore" class="com.porterhead.oauth2.mongodb.OAuth2RepositoryTokenStore">  
+      <constructor-arg ref="OAuth2AccessTokenRepository"/>  
+      <constructor-arg ref="OAuth2RefreshTokenRepository"/>  
+	</bean>
+	
+    <sec:global-method-security jsr250-annotations="enabled" access-decision-manager-ref="accessDecisionManager"/>
+    
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">  
+        <property name="decisionVoters">  
+            <list>  
+                <bean class="org.springframework.security.access.annotation.Jsr250Voter"/>  
+            </list>  
+        </property>  
+    </bean> 
+    
+</beans>
