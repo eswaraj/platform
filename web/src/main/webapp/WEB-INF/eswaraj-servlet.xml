@@ -81,6 +81,4 @@
 		<beans:import resource="controllers.xml" />
 		<beans:import resource="eswaraj-neo4j-db-context.xml" />
 	</beans:beans>
-
-
 </beans:beans>
