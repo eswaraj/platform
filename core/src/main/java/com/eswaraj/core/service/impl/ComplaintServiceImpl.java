@@ -335,6 +335,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             // attach it to complaint
         }
         complaint.setNearByKey(locationKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
+        complaint = complaintRepository.save(complaint);
         return buildComplaintMessage(complaint);
     }
 
