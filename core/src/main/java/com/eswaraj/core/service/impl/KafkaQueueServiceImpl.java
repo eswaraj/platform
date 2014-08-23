@@ -48,5 +48,11 @@ public class KafkaQueueServiceImpl implements QueueService {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public void sendLocationUpdateMessage(Long locationId) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
     
 }

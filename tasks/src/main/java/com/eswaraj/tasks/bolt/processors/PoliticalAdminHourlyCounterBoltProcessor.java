@@ -1,31 +1,28 @@
-package com.eswaraj.tasks.bolt.counter.starter;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
-public class PoliticalAdminHourlyCounterBolt extends EswarajBaseBolt {
+@Component
+public class PoliticalAdminHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
-
-    CounterKeyService counterKeyService;
-
-    public PoliticalAdminHourlyCounterBolt() {
-        counterKeyService = new CounterKeyServiceImpl();
-    }
+    @Autowired
+    private CounterKeyService counterKeyService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logDebug("Received Message " + inputTuple.getMessageId());
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
 
         Date creationDate = new Date(complaintCreatedMessage.getComplaintTime());
@@ -44,12 +41,10 @@ public class PoliticalAdminHourlyCounterBolt extends EswarajBaseBolt {
             params.put("politicalAdmin", onePoliticalAdmin);
             params.put("startTime", startOfHour);
             params.put("endTime", endOfHour);
-            logInfo("params=" + params);
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
             String redisKey = counterKeyService.getPoliticalAdminHourComplaintCounterKey(creationDate, onePoliticalAdmin);
-            logDebug("redisKey = {}", redisKey);
 
             writeToMemoryStoreValue(redisKey, totalComplaint);
 
@@ -57,11 +52,6 @@ public class PoliticalAdminHourlyCounterBolt extends EswarajBaseBolt {
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
         }
         return Result.Success;
-    }
-
-    @Override
-    protected String[] getFields() {
-        return new String[] { "KeyPrefix", "Complaint" };
     }
 
 }

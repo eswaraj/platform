@@ -55,6 +55,8 @@ public interface AppService {
 	
 	List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
+    List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException;
+
 	//Executive Body APIs
 	ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException;
 	

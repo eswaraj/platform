@@ -46,6 +46,8 @@ public interface CounterKeyService {
 
     List<String> getDayComplaintKeysForTheMonth(String prefix, Date date);
 
+    List<String> getHourComplaintKeysForLast30Days(String prefix, Date date);
+
     List<String> getMonthComplaintKeysForTheYear(String prefix, Date date);
 
     List<String> getYearComplaintKeysForEternitySinceStart(String prefix);

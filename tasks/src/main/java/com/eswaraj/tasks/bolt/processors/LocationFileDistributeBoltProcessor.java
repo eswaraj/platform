@@ -1,4 +1,4 @@
-package com.eswaraj.tasks.bolt;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,15 +28,19 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationKeyService;
-import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.core.service.LocationService;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
+import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class LocationFileDistributeBolt extends EswarajBaseBolt {
+@Component
+public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
-    LocationKeyService locationKeyService = new LocationkeyServiceImpl();
+    @Autowired
+    private LocationKeyService locationKeyService;
+    @Autowired
+    private LocationService locationService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -42,7 +48,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         try {
             // Read the incoming Message
             String message = inputTuple.getString(0);
-            logInfo("Recived = " + getComponentId() + " " + message + " , message id = " + inputTuple.getMessageId());
 
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = (JsonObject) parser.parse(message);
@@ -82,11 +87,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
 
     }
 
-    @Override
-    protected String[] getFields() {
-        return new String[] { "MapBoundary", "Points", "LocationId" };
-    }
-
     private String[] getCoordinatesFromHttpFile(String s3HttpUrl) throws ApplicationException {
         try {
             logInfo("Getting Location file from " + s3HttpUrl);
@@ -118,8 +118,8 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
     }
 
     private String[] getCoordinatesForBoundaryFileId(Long boundaryFileId) throws ApplicationException {
-        org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
-        String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
+        LocationBoundaryFileDto locationBoundaryFileDto = locationService.getLocationBoundaryFileById(boundaryFileId);
+        String s3HttpUrl = locationBoundaryFileDto.getFileNameAndPath();
         return getCoordinatesFromHttpFile(s3HttpUrl);
 
     }
@@ -192,27 +192,6 @@ public class LocationFileDistributeBolt extends EswarajBaseBolt {
         myPolygon.closePath();
         Rectangle coveringRectangle = myPolygon.getBounds();
         return coveringRectangle;
-    }
-
-    private Path2D createPolygon(String coordinates) {
-        String[] locationPoints = coordinates.split(" ");
-        String[] latLong;
-        BigDecimal oneLat, oneLong;
-        Path2D myPolygon = new Path2D.Double();
-        boolean first = true;
-        for (String oneLocationPoint : locationPoints) {
-            latLong = oneLocationPoint.split(",");
-            oneLong = new BigDecimal(latLong[0]);
-            oneLat = new BigDecimal(latLong[1]);
-            if (first) {
-                myPolygon.moveTo(oneLat.doubleValue(), oneLong.doubleValue());
-                first = false;
-            } else {
-                myPolygon.lineTo(oneLat.doubleValue(), oneLong.doubleValue());
-            }
-        }
-        myPolygon.closePath();
-        return myPolygon;
     }
 
 }

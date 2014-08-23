@@ -19,6 +19,8 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import backtype.storm.tuple.Tuple;
+
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.queue.service.QueueService;
@@ -33,19 +35,23 @@ import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
  */
 public abstract class EswarajBaseComponent implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private boolean initializeDbServices = false;
     private boolean initializeRedisServices = false;
     private boolean initializeQueueServices = false;
     private int paralellism = 1;
-    private ClassPathXmlApplicationContext applicationContext;
+    private static ClassPathXmlApplicationContext applicationContext;
     private ComplaintService complaintService;
     private AppService appService;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
     private RedisTemplate redisTemplate;
+
+    private transient ThreadLocal<Tuple> tupleThreadLocal;
 
 
     private QueueService queueService;
@@ -98,6 +104,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         return applicationContext;
     }
     protected void init() {
+        tupleThreadLocal = new ThreadLocal<>();
         initConfigs();
         if (initializeDbServices) {
             initializeDbService(dbUrl);
@@ -123,8 +130,12 @@ public abstract class EswarajBaseComponent implements Serializable {
         jedisConnectionFactory.afterPropertiesSet();
 
         redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(redisTemplate.getStringSerializer());
+        logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         redisTemplate.afterPropertiesSet();
+        logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
+
     }
 
     protected void destroy() {
@@ -176,6 +187,7 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     // DB Related Functions
     protected Long executeCountQueryAndReturnLong(String cypherQuery, Map<String, Object> params, String totalFieldName) {
+        logDebug("Running Query {} with Params {}", cypherQuery, params);
         Result<Object> result = getNeo4jTemplate().queryEngineFor(QueryType.Cypher).query(cypherQuery, params);
         Long totalCount = ((Integer) ((Map) result.single()).get(totalFieldName)).longValue();
         return totalCount;
@@ -191,9 +203,11 @@ public abstract class EswarajBaseComponent implements Serializable {
         return redisTemplate.opsForSet().add(redisKey, id);
     }
 
-    protected void writeToMemoryStoreValue(String redisKey, Long id) {
+    protected void writeToMemoryStoreValue(String redisKey, Object value) {
         checkRedisServices();
-        redisTemplate.opsForValue().set(redisKey, id);
+        logDebug("redisKey = {}, Value = {}", redisKey, value);
+        logInfo("Key Serializer = " + redisTemplate.getKeySerializer());
+        redisTemplate.opsForValue().set(redisKey, value);
     }
 
     protected <T> List<T> readMultiKeyFromMemoryStore(List<String> redisKeys, Class<T> clazz) {
@@ -382,32 +396,56 @@ public abstract class EswarajBaseComponent implements Serializable {
         this.paralellism = paralellism;
     }
 
+    protected void setCurrentTuple(Tuple tuple) {
+        getTupleThreadLocal().set(tuple);
+    }
+
+    protected void clearCurrentTuple() {
+        getTupleThreadLocal().remove();
+    }
+
+    protected String getCurremtTupleAnchor() {
+        ThreadLocal<Tuple> threadLocal = getTupleThreadLocal();
+        if (threadLocal == null) {
+            return "NI";
+        }
+        Tuple tuple = threadLocal.get();
+        if (tuple == null) {
+            return "NI";
+        }
+        return tuple.getMessageId().getAnchors().toString();
+    }
+    // Log related functions
     protected void logInfo(String message) {
-        logger.info(message);
+        logger.info(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logInfo(String message, Object... objects) {
-        logger.info(message, objects);
+        logger.info(getCurremtTupleAnchor() + " : " + message, objects);
     }
 
     protected void logDebug(String message) {
-        logger.debug(message);
+        logger.debug(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logDebug(String message, Object... obj1) {
-        logger.debug(message, obj1);
+        logger.debug(getCurremtTupleAnchor() + " : " + message, obj1);
     }
 
     protected void logWarning(String message) {
-        logger.warn(message);
+        logger.warn(getCurremtTupleAnchor() + " : " + message);
+    }
+
+    protected void logWarning(String message, Object... obj1) {
+        logger.warn(getCurremtTupleAnchor() + " : " + message, obj1);
     }
 
     protected void logError(String message) {
-        logger.error(message);
+        logger.error(getCurremtTupleAnchor() + " : " + message);
     }
 
     protected void logError(String message, Throwable ex) {
-        logger.error(message, ex);
+        logger.error(getCurremtTupleAnchor() + " : " + message, ex);
     }
 
     protected AppService getApplicationService() {
@@ -430,6 +468,10 @@ public abstract class EswarajBaseComponent implements Serializable {
             }
         }
         return complaintService;
+    }
+
+    public ThreadLocal<Tuple> getTupleThreadLocal() {
+        return tupleThreadLocal;
     }
 
 }

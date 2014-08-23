@@ -47,10 +47,12 @@ public interface LocationService {
 	 */
 	LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException;
 	
+    LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException;
+
 	BoundaryDto saveBoundary(BoundaryDto boundaryDto) throws ApplicationException;
 	
 	GeoPointDto saveBoundaryPoint(GeoPointDto geoPointDto) throws ApplicationException;
 	
     void initializeData() throws ApplicationException;
-	
+
 }

@@ -3,13 +3,14 @@ package com.eswaraj.tasks.topology;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
+
+import com.eswaraj.tasks.spout.mesage.id.MessageId;
 
 public abstract class EswarajBaseSpout extends EswarajBaseComponent implements IRichSpout {
 
@@ -19,7 +20,8 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 	private String outputStream;
     protected String componentId;
     private SpoutOutputCollector collector;
-
+    private int retry;
+    private List<String> outputStreams;
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
@@ -37,9 +39,14 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     @Override
     public final void declareOutputFields(OutputFieldsDeclarer declarer) {
+        Fields fields = new Fields(getFields());
         if (outputStream != null) {
-            Fields fields = new Fields(getFields());
-            declarer.declareStream(getOutputStream(), fields);
+            declarer.declareStream(outputStream, fields);
+        }
+        if (outputStreams != null && !outputStreams.isEmpty()) {
+            for (String oneOutpurStream : outputStreams) {
+                declarer.declareStream(oneOutpurStream, fields);
+            }
         }
     }
 
@@ -51,16 +58,38 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 		this.outputStream = outputStream;
 	}
 
-    protected String writeToStream(List<Object> tuple) {
-        String messageId = UUID.randomUUID().toString();
-        collector.emit(outputStream, tuple, messageId);
-        logInfo("Mesage Written by Spout :  {}", messageId);
+    public abstract void getNextTuple();
+    @Override
+    public final void nextTuple() {
+        try {
+            getNextTuple();
+        } catch (Exception e) {
+            logError("Unable to get Next Tuple", e);
+        }
+
+    }
+
+    protected MessageId<List<Object>> writeToStream(List<Object> tuple) {
+        MessageId<List<Object>> messageId = new MessageId<>();
+        messageId.setData(tuple);
+        writeToStream(tuple, messageId);
+        return messageId;
+    }
+
+    protected MessageId<List<Object>> writeToParticularStream(List<Object> tuple, String streamId) {
+        MessageId<List<Object>> messageId = new MessageId<>();
+        messageId.setData(tuple);
+        writeToStream(tuple, messageId, streamId);
         return messageId;
     }
 
     protected void writeToStream(List<Object> tuple, Object messageId) {
-        logInfo("Writing To Stream " + outputStream + " with message id as " + messageId);
-        collector.emit(outputStream, tuple, messageId);
+        writeToStream(tuple, messageId, outputStream);
+    }
+
+    protected void writeToStream(List<Object> tuple, Object messageId, String streamId) {
+        logInfo("Writing To Stream " + streamId + " with message id as " + messageId);
+        collector.emit(streamId, tuple, messageId);
     }
 
     protected void writeToTaskStream(int taskId, List<Object> tuple) {
@@ -103,11 +132,62 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     }
 
     @Override
-    public void ack(Object msgId) {
+    public final void ack(Object msgId) {
+        logInfo("********************************");
+        logInfo("Message {} has been processed", msgId + " , " + msgId.getClass());
+        onAck(msgId);
+        logInfo("********************************");
+
+    }
+
+    protected void onAck(Object msgId) {
+
+    }
+
+    protected void onFail(Object msgId) {
+
     }
 
     @Override
-    public void fail(Object msgId) {
+    public final void fail(Object msgId) {
+        logWarning("********************************");
+        logWarning("Message {} has been failed", msgId + " , " + msgId.getClass());
+        if (getRetry() > 0) {
+            logInfo("Retry count set to {} so will see if i can retry", getRetry());
+            // If retry count set more then 0
+            if (msgId instanceof MessageId) {
+                MessageId messageId = (MessageId) msgId;
+                logInfo("current Retry count is {} " + messageId.getRetryCount());
+                if (messageId.getRetryCount() < getRetry()) {
+                    logInfo("Retrying {} " + messageId);
+                    messageId.setRetryCount(messageId.getRetryCount() + 1);
+                    writeToStream((List<Object>) messageId.getData(), messageId);
+                }
+            } else {
+                logWarning("msgId is not of type MessageId so can not retry");
+            }
+
+        } else {
+            logWarning("Message Failed and i will not retry it as retry count set to 0 : {}", msgId);
+        }
+        onFail(msgId);
+        logWarning("********************************");
+    }
+
+    public int getRetry() {
+        return retry;
+    }
+
+    public void setRetry(int retry) {
+        this.retry = retry;
+    }
+
+    public List<String> getOutputStreams() {
+        return outputStreams;
+    }
+
+    public void setOutputStreams(List<String> outputStreams) {
+        this.outputStreams = outputStreams;
     }
 
 }

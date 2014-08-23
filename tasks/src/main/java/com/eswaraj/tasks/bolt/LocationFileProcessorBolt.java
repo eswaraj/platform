@@ -69,7 +69,9 @@ public class LocationFileProcessorBolt extends EswarajBaseBolt {
 
 
     private void processBoundaryFile(Long locationId, Long boundaryFileId, boolean add) throws ApplicationException {
-        org.neo4j.graphdb.Node dbLocationFileNode = getNodeByid(boundaryFileId);
+        // TODO fix it
+        org.neo4j.graphdb.Node dbLocationFileNode = null;
+        ;// getNodeByid(boundaryFileId);
         try {
             String s3HttpUrl = (String) dbLocationFileNode.getProperty("fileNameAndPath");
             logInfo("Getting Location file from " + s3HttpUrl);
