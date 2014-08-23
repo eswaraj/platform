@@ -308,6 +308,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private ComplaintMessage updateLocationAndAdmins(Complaint complaint) throws ApplicationException {
         // Get all Locations and attach to it.
         Set<Long> complaintLocations = redisTemplate.opsForSet().members(locationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude()));
+        if (complaintLocations.isEmpty()) {
+            complaintLocations.add(78340L);
+        }
         if (complaintLocations != null && !complaintLocations.isEmpty()) {
 
             Set<Location> locations = new HashSet<>();
