@@ -337,12 +337,17 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
     private void addAllParentLocationsToComplaint(Set<Location> locations, Location location, Set<Long> complaintLocations) {
         if (location.getParentLocation() == null) {
+            System.out.println("No Parent for location " + location.getId());
             return;
         }
+        System.out.println("Parent for location " + location.getId() + " is " + location.getParentLocation());
         if (complaintLocations.contains(location.getParentLocation().getId())) {
+            System.out.println("Not processing Parent location " + location.getParentLocation().getId());
             return;// No need to do naything
         }
+        System.out.println("Find location with Id " + location.getParentLocation().getId());
         Location location2 = locationRepository.findOne(location.getParentLocation().getId());
+        System.out.println("Found " + location2);
         locations.add(location2);
         addAllParentLocationsToComplaint(locations, location2, complaintLocations);
 
