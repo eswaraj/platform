@@ -318,6 +318,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             for (Long oneLocationId : complaintLocations) {
                 Location oneLocation = locationRepository.findOne(oneLocationId);
                 locations.add(oneLocation);
+                addAllParentLocationsToComplaint(locations, oneLocation, complaintLocations);
 
                 oneLocationPoliticalBodyAdmins = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocation(oneLocation);
                 if (oneLocationPoliticalBodyAdmins != null && !oneLocationPoliticalBodyAdmins.isEmpty()) {
@@ -332,6 +333,19 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         }
         complaint.setNearByKey(locationKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
         return buildComplaintMessage(complaint);
+    }
+
+    private void addAllParentLocationsToComplaint(Set<Location> locations, Location location, Set<Long> complaintLocations) {
+        if (location.getParentLocation() == null) {
+            return;
+        }
+        if (complaintLocations.contains(location.getParentLocation().getId())) {
+            return;// No need to do naything
+        }
+        Location location2 = locationRepository.findOne(location.getParentLocation().getId());
+        locations.add(location2);
+        addAllParentLocationsToComplaint(locations, location2, complaintLocations);
+
     }
 
     @Override
