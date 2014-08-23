@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -14,6 +13,8 @@ import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
+
+import com.eswaraj.tasks.bolt.processors.BoltProcessor;
 
 /**
  * All bolts should extend this class
@@ -25,19 +26,37 @@ import backtype.storm.tuple.Tuple;
 public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IRichBolt {
 
 	private static final long serialVersionUID = 1L;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     public EswarajBaseBolt() {}
 
     protected OutputCollector outputCollector;
     protected String outputStream;
     protected String componentId;
+    private String boltProcessor;
     // key - CompnenetId , Value - Stream
-    Map<String, String> sourceComponentStreams;
+    private Map<String, String> sourceComponentStreams;
+    private List<String> fields;
 
+    protected BoltProcessor getBoltProcessor() {
+        try {
+            logDebug("Getting Bolt Processor for {}", boltProcessor);
+            BoltProcessor boltProcessorObject =  (BoltProcessor)getApplicationContext().getBean(Class.forName(boltProcessor));
+            boltProcessorObject.initBoltProcessorForTuple(getTupleThreadLocal(), this);
+            return boltProcessorObject;
+        } catch (Exception e) {
+            logError("Unable to create Bolt Processor " + boltProcessor, e);
+        }
+        logWarning("Returning Null Processor");
+        return null;
+    }
     @Override
-    public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-        this.outputCollector = collector;
+    public final void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         super.init();
+        this.outputCollector = collector;
+        onPrepare(stormConf, context, collector);
+    }
+
+    protected void onPrepare(Map stormConf, TopologyContext context, OutputCollector collector) {
+
     }
 
     @Override
@@ -56,6 +75,8 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     @Override
     public final void execute(Tuple inputTuple) {
+        logDebug("Received Message {} in component {}", inputTuple.getMessageId(), componentId);
+        getTupleThreadLocal().set(inputTuple);
         try {
             Result result = processTuple(inputTuple);
             if (Result.Success.equals(result)) {
@@ -64,35 +85,53 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
                 failTuple(inputTuple);
             }
         } catch (Throwable t) {
+            logError("Bolt Processor threw Exception", t);
             failTuple(inputTuple);
+        } finally {
+            getTupleThreadLocal().remove();
         }
     }
 
     protected String[] getFields() {
-        return new String[] { "Default" };
+        if (CollectionUtils.isEmpty(fields)) {
+            return new String[] { "Default" };
+        }
+        return fields.toArray(new String[fields.size()]);
     }
 
-    protected void writeToStream(Tuple anchor, List<Object> tuple) {
-        logDebug("Writing To Stream {}", outputStream);
-        outputCollector.emit(outputStream, anchor, tuple);
+    public void writeToStream(Tuple anchor, List<Object> tuple) {
+        if (outputStream == null) {
+            logDebug("no output stream defined so wont be writing anything");
+        } else {
+            logDebug("Writing To Stream {}", outputStream);
+            List<Integer> taskIds = outputCollector.emit(outputStream, anchor, tuple);
+            logDebug("Sent to taks {}", taskIds);
+        }
     }
 
-    protected void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
-        outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
+    public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
+        if (outputStream == null) {
+            logDebug("no output stream defined so wont be writing anything");
+        } else {
+            logDebug("Writing To Stream {}", outputStream);
+            outputCollector.emitDirect(taskId, outputStream, anchor, tuple);
+        }
+
     }
 
     private void acknowledgeTuple(Tuple input) {
-        logInfo("acknowledgeTuple : " + printTuple(input));
+        logDebug("acknowledgeTuple : " + printTuple(input));
         outputCollector.ack(input);
     }
 
     private void failTuple(Tuple input) {
-        logInfo("***Failed acknowledgeTuple : " + printTuple(input));
+        logWarning("***Failed acknowledgeTuple : " + printTuple(input));
         outputCollector.fail(input);
     }
 
     protected String printTuple(Tuple input) {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Component : " + componentId + " , ");
         stringBuilder.append("getSourceComponent : " + input.getSourceComponent() + " , ");
         stringBuilder.append("getSourceStreamId : " + input.getSourceStreamId() + " , ");
         stringBuilder.append("getSourceGlobalStreamid : " + input.getSourceGlobalStreamid() + " , ");
@@ -154,6 +193,14 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
         return calendar.getTimeInMillis();
+    }
+
+    public void setBoltProcessor(String boltProcessor) {
+        this.boltProcessor = boltProcessor;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
     }
 
 }

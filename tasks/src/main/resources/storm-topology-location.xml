@@ -37,34 +37,36 @@
 
 	</bean>
 
-	<bean id="LocationFileDistributeBoltBean" class="com.eswaraj.tasks.bolt.LocationFileDistributeBolt">
+	<bean id="LocationFileDistributeBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="LocationFileDistributeBolt" />
 		<property name="outputStream" value="LocationFileDistributeStream" />
-		<!-- Properties define which services will be available for Bolt -->
-		<property name="initializeRedisServices" value="true" />
-		<property name="initializeQueueServices" value="false" />
-		<property name="initializeDbServices" value="true" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationFileDistributeBoltProcessor" />
+		
 		<property name="sourceComponentStreams">
 			<map>
 				<entry key="LocationFileUploadSpout" value="LocationFileUploadStream" />
 			</map>
 		</property>
-
+        <property name="fields">
+            <list>
+                <value>Fields1</value>
+                <value>Fields2</value>
+                <value>Fields3</value>
+            </list>
+        </property>
+		
 	</bean>
 
-	<bean id="LocationOneFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.LocationOneFileProcessorBolt">
+	<bean id="LocationOneFileProcessorBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="LocationOneFileProcessorBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationOneFileProcessorBoltProcessor" />
+		
 		<property name="paralellism" value="20" />
-		<!-- Properties define which services will be available for Bolt -->
-		<property name="initializeRedisServices" value="true" />
-		<property name="initializeQueueServices" value="false" />
-		<property name="initializeDbServices" value="true" />
 		<property name="sourceComponentStreams">
 			<map>
 				<entry key="LocationFileDistributeBolt" value="LocationFileDistributeStream" />
 			</map>
 		</property>
-
 	</bean>
 
 </beans>

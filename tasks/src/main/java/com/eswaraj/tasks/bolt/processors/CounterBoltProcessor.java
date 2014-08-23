@@ -1,39 +1,40 @@
-package com.eswaraj.tasks.bolt.counter;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.List;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
-public abstract class CounterBolt extends EswarajBaseBolt {
+public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
-    protected CounterKeyService counterKeyService;
+    boolean writeToOutputStream = true;
 
-    public CounterBolt() {
-        counterKeyService = new CounterKeyServiceImpl();
+    public CounterBoltProcessor(boolean writeToOutputStream) {
+        this.writeToOutputStream = writeToOutputStream;
     }
 
+    public CounterBoltProcessor() {
+        this(true);
+    }
     @Override
     public Result processTuple(Tuple inputTuple) {
-        logDebug("Received Message {}", inputTuple.getMessageId());
         // Read Input
+        logDebug("inputTuple = " + inputTuple);
         String prefix = (String) inputTuple.getValue(0);
-        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
         logDebug("prefix = " + prefix);
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
+        logDebug("complaintCreatedMessage = " + complaintCreatedMessage);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
-        List<Long> counterValues = readMultiKeyFromMemoryStore(allKeys, Long.class);
+        List<String> counterValues = readMultiKeyFromStringMemoryStore(allKeys);
 
         Long totalComplaints = 0L;
-        for (Long oneCounterValue : counterValues) {
+        for (String oneCounterValue : counterValues) {
             if (oneCounterValue != null) {
-                totalComplaints = totalComplaints + oneCounterValue;
+                totalComplaints = totalComplaints + Long.parseLong(oneCounterValue);
             }
         }
 
@@ -41,10 +42,10 @@ public abstract class CounterBolt extends EswarajBaseBolt {
         logDebug("prefix  redisKey= " + redisKey + ", " + totalComplaints);
 
         writeToMemoryStoreValue(redisKey, totalComplaints);
-        if (getOutputStream() != null) {
-            //Some Counter Bolt may be last in the hierarchy so Stream may not be defined
+        if (writeToOutputStream) {
             writeToStream(inputTuple, new Values(prefix, complaintCreatedMessage));
         }
+
         return Result.Success;
 
     }
@@ -52,11 +53,5 @@ public abstract class CounterBolt extends EswarajBaseBolt {
     protected abstract List<String> getMemoryKeysForRead(String prefix, ComplaintMessage complaintCreatedMessage);
 
     protected abstract String getMemeoryKeyForWrite(String prefix, ComplaintMessage complaintCreatedMessage);
-
-    @Override
-    protected String[] getFields() {
-        return new String[] { "KeyPrefix", "Complaint" };
-    }
-
 
 }

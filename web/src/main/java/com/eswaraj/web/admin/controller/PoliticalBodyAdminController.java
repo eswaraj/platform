@@ -35,4 +35,10 @@ public class PoliticalBodyAdminController extends BaseController {
 		return politicalBodyAdminDto;
 	}
 
+    @RequestMapping(value = "/ajax/pbadmin/history/get/{personId}", method = RequestMethod.GET)
+    public @ResponseBody List<PoliticalBodyAdminDto> getPoliticalBodyAdminHistoryOfPerson(ModelAndView mv, @PathVariable Long personId) throws ApplicationException {
+        List<PoliticalBodyAdminDto> politicalBodyAdmins = appService.getAllPoliticalBodyAdminHistoryByPersonId(personId);
+        return politicalBodyAdmins;
+    }
+
 }

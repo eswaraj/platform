@@ -1,12 +1,22 @@
-package com.eswaraj.tasks.bolt.counter;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 
-public class TotalCounterBolt extends CounterBolt {
+@Component
+public class TotalCounterBoltProcessor extends CounterBoltProcessor {
 
-    private static final long serialVersionUID = 1L;
+    @Autowired
+    private CounterKeyService counterKeyService;
+
+    public TotalCounterBoltProcessor() {
+        super(false);
+    }
 
     @Override
     protected List<String> getMemoryKeysForRead(String prefix, ComplaintMessage complaintCreatedMessage) {

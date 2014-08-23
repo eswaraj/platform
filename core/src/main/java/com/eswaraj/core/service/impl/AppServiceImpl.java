@@ -27,6 +27,7 @@ import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
 import com.eswaraj.domain.nodes.ExecutivePost;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
@@ -36,8 +37,10 @@ import com.eswaraj.domain.repo.ExecutiveBodyRepository;
 import com.eswaraj.domain.repo.ExecutivePostRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
+import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
@@ -90,6 +93,10 @@ public class AppServiceImpl extends BaseService implements AppService {
 	private DepartmentRepository departmentRepository;
 	@Autowired
 	private DepartmentConvertor departmentConvertor;
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
+    private QueueService queueService;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -166,7 +173,10 @@ public class AppServiceImpl extends BaseService implements AppService {
 	public PoliticalBodyAdminDto savePoliticalBodyAdmin(PoliticalBodyAdminDto politicalBodyAdminDto) throws ApplicationException {
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminConvertor.convert(politicalBodyAdminDto);
 		validateWithExistingData(politicalBodyAdmin);
+        validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
+        // Send message to update Location Info
+        queueService.sendLocationUpdateMessage(politicalBodyAdmin.getLocation().getId());
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);	
 	}
 	private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException{
@@ -176,6 +186,15 @@ public class AppServiceImpl extends BaseService implements AppService {
 			checkForDateOverlap(politicalBodyAdmin, allPoliticalBodyAdminsForLocation);
 		}
 	}
+
+    private void validateLocation(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        if (politicalBodyAdmin.getLocation() != null && politicalBodyAdmin.getPoliticalBodyType() != null) {
+            if (!politicalBodyAdmin.getLocation().getLocationType().getId().equals(politicalBodyAdmin.getPoliticalBodyType().getLocationType().getId())) {
+                throw new ApplicationException("You can not create political Admin of type [" + politicalBodyAdmin.getPoliticalBodyType().getName() + "] at location ["
+                        + politicalBodyAdmin.getLocation().getName() + "," + politicalBodyAdmin.getLocation().getId() + "]");
+            }
+        }
+    }
 	private void checkForDateOverlap(PoliticalBodyAdmin politicalBodyAdmin, Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation) throws ApplicationException{
 		for(PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation){
 			if(!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin)){
@@ -370,5 +389,11 @@ public class AppServiceImpl extends BaseService implements AppService {
         return category;
     }
 
+    @Override
+    public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException {
+        Person person = getObjectIfExistsElseThrowExcetpion(personId, "Location", personRepository);
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getPoliticalAdminHistoryByPerson(person);
+        return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
+    }
 
 }

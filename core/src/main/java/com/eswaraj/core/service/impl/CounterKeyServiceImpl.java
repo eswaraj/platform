@@ -112,6 +112,33 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     }
 
     @Override
+    public List<String> getHourComplaintKeysForLast30Days(String prefix, Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Date endDate = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
+        Date startDate = calendar.getTime();
+        return getDayComplaintKeys(prefix, startDate, endDate);
+    }
+
+    private List<String> getDayComplaintKeys(String prefix, Date startDate, Date endDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+
+        List<String> allDayKeysOfMonth = new ArrayList<>();
+        // Add for first of month
+        allDayKeysOfMonth.add(getDayComplaintCounterKey(prefix, calendar.getTime()));
+        // and then loop through until total day - 2, if 28 days we want to add
+        // 1 max 27 times
+        // one is already covered above
+        while (calendar.getTime().before(endDate)) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            allDayKeysOfMonth.add(getDayComplaintCounterKey(prefix, calendar.getTime()));
+        }
+        return allDayKeysOfMonth;
+    }
+
+    @Override
     public List<String> getMonthComplaintKeysForTheYear(String prefix, Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, 0);
@@ -181,5 +208,6 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     public String getPoliticalAdminKeyPrefix(Long politicalAdminId) {
         return POLITICAL_BODY_ADMIN_PREFIX + politicalAdminId + ".";
     }
+
 
 }

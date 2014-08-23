@@ -49,9 +49,12 @@ public class SpringEswarajTopology {
         for (EswarajBaseBolt oneBolt : boltConfigs) {
             System.out.println("Building Bolt id=[" + oneBolt.getComponentId() + "], Bolt CLass = [" + oneBolt.getClass() + "]");
             boltDeclarer = builder.setBolt(oneBolt.getComponentId(), oneBolt, oneBolt.getParalellism());
-            for (Entry<String, String> oneSourceComponentStream : oneBolt.getSourceComponentStreams().entrySet()) {
-                System.out.println("Shuffling to Spout ID =[" + oneSourceComponentStream.getKey() + "], Spout Stream = [" + oneSourceComponentStream.getValue() + "]");
-                boltDeclarer.shuffleGrouping(oneSourceComponentStream.getKey(), oneSourceComponentStream.getValue());
+            if (oneBolt.getSourceComponentStreams() != null) {
+                for (Entry<String, String> oneSourceComponentStream : oneBolt.getSourceComponentStreams().entrySet()) {
+                    System.out.println("Shuffling to Spout ID =[" + oneSourceComponentStream.getKey() + "], Spout Stream = [" + oneSourceComponentStream.getValue() + "]");
+                    boltDeclarer.shuffleGrouping(oneSourceComponentStream.getKey(), oneSourceComponentStream.getValue());
+                }
+
             }
         }
 		return builder.createTopology();
@@ -65,24 +68,9 @@ public class SpringEswarajTopology {
         conf.setMaxSpoutPending(maxSpoutPending);
         // conf.setNumAckers(2);
         conf.setMessageTimeoutSecs(messageTimeoutSeconds);
+        System.out.println("messageTimeoutSeconds=[" + messageTimeoutSeconds + "]");
         StormTopology stormTopology = buildTopology();
         StormSubmitter.submitTopology(getName(), conf, stormTopology);
-	    /*
-		brokerHosts = new ZkHosts(kafkaZookeeper);
-		Config config = new Config();
-		config.put(Config.TOPOLOGY_TRIDENT_BATCH_EMIT_INTERVAL_MILLIS, 2000);
-		StormTopology stormTopology = buildTopology();
-		LOG.info("Submitting topology to remote cluster");
-		
-		config.setNumWorkers(numWorkers);
-		config.setMaxTaskParallelism(numParallel);
-		config.put(Config.NIMBUS_HOST, nimbusHostIp);
-		config.put(Config.NIMBUS_THRIFT_PORT, nimbusHostPort);
-		config.put(Config.STORM_ZOOKEEPER_PORT, stormZkPort);
-		config.put(Config.STORM_ZOOKEEPER_SERVERS, Arrays.asList(nimbusHostIp));
-		
-		TopologyRunner.runTopologyRemotely(stormTopology, name, config);
-		*/
 	}
 	
 	public void startTopologyLocally() throws Exception {

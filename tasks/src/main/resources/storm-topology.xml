@@ -20,7 +20,7 @@
     </bean>
     
 	<import resource="storm-topology-location.xml" />
-	<import resource="storm-topology-counters.xml" />
+	<import resource="storm-topology-complaint.xml" />
 	<import resource="storm-topology-app-cache.xml" />
 
 </beans>

@@ -14,36 +14,48 @@
 
 		<property name="spoutConfigs">
 			<list>
-				<ref bean="CatageoryChangeSpoutBean" />
+				<ref bean="DataChangeSpoutBean" />
 			</list>
 		</property>
 		<property name="boltConfigs">
 			<list>
-				<ref bean="CatageoryChangeBoltBean" />
+				<ref bean="CatageoryUpdatedBoltBean" />
+				<ref bean="LocationUpdatedBoltBean" />
 			</list>
 		</property>
 	</bean>
-	
-	<bean id="CatageoryChangeSpoutBean" class="com.eswaraj.tasks.spout.CatageoryChangeSpout">
-		<property name="componentId" value="CatageoryChangeSpout" />
-		<property name="outputStream" value="CatageoryChangeStream" />
+
+	<bean id="DataChangeSpoutBean" class="com.eswaraj.tasks.spout.DataChangeSpout">
+		<property name="componentId" value="DataChangeSpout" />
+		<property name="outputStreams">
+            <list>
+                <value>CategoryUpdatedStream</value>
+                <value>LocationUpdatedStream</value>
+            </list>
+        </property>
 		<!-- Properties define which services will be available for spout -->
 		<property name="initializeRedisServices" value="false" />
 		<property name="initializeQueueServices" value="true" />
 		<property name="initializeDbServices" value="false" />
-
+		
 	</bean>
 
-	<bean id="CatageoryChangeBoltBean" class="com.eswaraj.tasks.bolt.SaveCategoryBolt">
+	<bean id="CatageoryUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
-		<!-- Properties define which services will be available for Bolt -->
-		<property name="initializeRedisServices" value="true" />
-		<property name="initializeQueueServices" value="false" />
-		<property name="initializeDbServices" value="true" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />
 		<property name="sourceComponentStreams">
-			<map>
-				<entry key="CatageoryChangeSpout" value="CatageoryChangeStream" />
-			</map>
-		</property>
+            <map>
+                <entry key="DataChangeSpout" value="CategoryUpdatedStream" />
+            </map>
+        </property>
 	</bean>
+	<bean id="LocationUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="LocationUpdatedBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationUpdatedBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="LocationUpdatedStream" />
+            </map>
+        </property>
+    </bean>
 </beans>

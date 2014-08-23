@@ -1,19 +1,22 @@
-package com.eswaraj.tasks.bolt;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.core.service.ComplaintService;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.ComplaintDto;
 
-public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
+@Component
+public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    @Autowired
+    private ComplaintService complaintService;
 
 	@Override
     public Result processTuple(Tuple input) {
@@ -22,14 +25,14 @@ public class ReProcessAllComplaintBolt extends EswarajBaseBolt {
             Long pageSize = 100L;
             List<ComplaintDto> complaints;
             while (true) {
-                complaints = getComplaintService().getAllComplaints(start, pageSize);
+                complaints = complaintService.getAllComplaints(start, pageSize);
                 if (complaints == null || complaints.isEmpty()) {
                     break;
                 }
                 for (ComplaintDto oneComplaint : complaints) {
                     logInfo("     oneComplaint : " + oneComplaint);
                     if (oneComplaint != null) {
-                        writeToStream(input, new Values(oneComplaint));
+                        writeToStream(input, new Values(oneComplaint.getId()));
                     }
                 }
                 start = start + complaints.size();

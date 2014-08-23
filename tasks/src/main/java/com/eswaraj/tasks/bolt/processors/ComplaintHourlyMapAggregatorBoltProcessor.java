@@ -1,18 +1,19 @@
-package com.eswaraj.tasks.bolt.counter.starter;
+package com.eswaraj.tasks.bolt.processors;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
-import com.eswaraj.core.service.impl.CounterKeyServiceImpl;
-import com.eswaraj.core.service.impl.LocationkeyServiceImpl;
 import com.eswaraj.messaging.dto.ComplaintMessage;
-import com.eswaraj.tasks.topology.EswarajBaseBolt;
+import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 /**
  * This bolt will put the Complaint on location rectangle as per lat long It
@@ -22,20 +23,13 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt;
  * @author Ravi
  *
  */
-public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+@Component
+public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProcessor {
 	
-    LocationKeyService locationKeyService;
-    CounterKeyService counterKeyService;
-
-    public ComplaintHourlyMapAggregatorBolt() {
-        locationKeyService = new LocationkeyServiceImpl();
-        counterKeyService = new CounterKeyServiceImpl();
-    }
+    @Autowired
+    private LocationKeyService locationKeyService;
+    @Autowired
+    private CounterKeyService counterKeyService;
 
 	@Override
     public Result processTuple(Tuple inputTuple) {
@@ -46,7 +40,7 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
             long startOfHour = getStartOfHour(creationDate);
             long endOfHour = getEndOfHour(creationDate);
 
-            String cypherQuery = "start complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.nearByKey={nearByKey} and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
+            String cypherQuery = "match complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.nearByKey={nearByKey} and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
 
             String dbNearByKey = locationKeyService.buildLocationKeyForNearByComplaints(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
             
@@ -54,15 +48,13 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
             params.put("nearByKey", dbNearByKey);
             params.put("startTime", startOfHour);
             params.put("endTime", endOfHour);
-            logInfo("params=" + params);
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
             
             String redisKey = locationKeyService.getNearByHourComplaintCounterKey(new Date(complaintCreatedMessage.getComplaintTime()), complaintCreatedMessage.getLattitude(),
                     complaintCreatedMessage.getLongitude());
-            logInfo("redisKey = " + redisKey);
 
-            writeToMemoryStoreValue(dbNearByKey, totalComplaint);
+            writeToMemoryStoreValue(redisKey, totalComplaint);
 
             String keyPrefixForNextBolt = locationKeyService.getNearByKeyPrefix(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
             writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
@@ -72,12 +64,6 @@ public class ComplaintHourlyMapAggregatorBolt extends EswarajBaseBolt {
             logError("Unable to process tuple", ex);
         }
         return Result.Failed;
-	}
-
-	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

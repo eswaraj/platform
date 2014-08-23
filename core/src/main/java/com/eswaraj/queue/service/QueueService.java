@@ -18,4 +18,6 @@ public interface QueueService {
     ComplaintMessage receiveComplaintCreatedMessage() throws ApplicationException;
 
     String receiveReprocessAllComplaintMessage() throws ApplicationException;
+
+    void sendLocationUpdateMessage(Long locationId) throws ApplicationException;
 }
