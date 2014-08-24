@@ -30,8 +30,8 @@ public interface LocationTypeRepository extends GraphRepository<LocationType>{
 	@Query("start locationType=node:LocationType(name={0}) match (locationType)-[:BELONGS_TO]->(dataClient) return locationType")
     public LocationType getLocationTypeByNameAndDataClientType(String name, DataClient dataClient);
 
-	@Query("start dataClient=node:DataClient(name={0}) match (dataClient)<-[:BELONGS_TO]-(locationType) where locationType.root = true return locationType")
-    public LocationType getRootLocationTypeByDataClient(String dataClientName);
+    @Query("start dataClient=node({0}) match (dataClient)<-[:BELONGS_TO]-(locationType) where locationType.root = true return locationType")
+    public LocationType getRootLocationTypeByDataClient(DataClient dataClient);
 
 	@Query("start dataClient=node({0}) match (dataClient)<-[:BELONGS_TO]-(locationType) return locationType")
     public Collection<LocationType> getAllLocationTypeOfDataClient(Long dataClientId);

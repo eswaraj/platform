@@ -180,6 +180,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 	}
 	
 	private DataClient getOrCreateDataClientIndiaEswaraj(){
+        System.out.println("Creating DataClient");
 		DataClient dataClient = null;
 		try{
 			dataClient = dataClientRepository.getDataClientByName(indiaEswarajClientName);
@@ -197,7 +198,9 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		return dataClient;
 	}
 	private LocationType getOrCreateRootLocationTypeIndiaEswaraj(DataClient dataClient){
-		LocationType locationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient.getName());
+        System.out.println("Creating Root Location Type");
+        LocationType locationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient);
+        System.out.println("Location Type not found for Country India " + dataClient.getName());
 		if(locationType == null){
 			locationType = new LocationType();
 			locationType.setName(indiaEswarajRootLocationTypeName);
@@ -214,7 +217,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		if(locationType.getParentLocationType() == null){
 			//now check if one ROOT Location already exists for this Data client
 			//If yes then throw exception as we can not have more then one Root Location(usually country) for a Data client
-			LocationType existingRootLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient.getName());
+            LocationType existingRootLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient);
 			if(existingRootLocationType != null){
 				throw new ApplicationException("One root location type already exists["+ existingRootLocationType.getName()+","+existingRootLocationType.getId()+"], you can not create more then one root location Type. If you are trying to create child location type then make sure you set parentLocationType");
 			}
