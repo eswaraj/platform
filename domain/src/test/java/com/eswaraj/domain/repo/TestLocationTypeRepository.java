@@ -107,7 +107,7 @@ public class TestLocationTypeRepository extends BaseNeo4jEswarajTest {
 		final boolean isRoot = true;
 		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
 		LocationType countryLocationType = createLocationType(locationTypeRepository, countryName, null, dataClient, isRoot);
-		LocationType dbCountryLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient.getName());
+        LocationType dbCountryLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient);
 		
 		assertNotNull(dbCountryLocationType);
 		assertLocationTypeEquals(countryLocationType, dbCountryLocationType, true);
@@ -141,7 +141,7 @@ public class TestLocationTypeRepository extends BaseNeo4jEswarajTest {
 		final String stateName = "State";
 		createLocationType(locationTypeRepository, stateName, countryLocationType, dataClient, isChildRoot);
 
-		LocationType dbCountryLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient.getName());
+        LocationType dbCountryLocationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient);
 		
 		assertNotNull(dbCountryLocationType);
 		assertLocationTypeEquals(countryLocationType, dbCountryLocationType, true);
