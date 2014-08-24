@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
+import org.neo4j.rest.graphdb.RestResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,7 +184,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		try{
 			dataClient = dataClientRepository.getDataClientByName(indiaEswarajClientName);
 			
-		}catch(MissingIndexException|InvalidDataAccessResourceUsageException mie){
+        } catch (MissingIndexException | InvalidDataAccessResourceUsageException | RestResultException mie) {
 			//for first time this exception gets thrown as we havent created a single node of type DataClient.
 			//just catch it and ignore it
 			dataClient = null;
