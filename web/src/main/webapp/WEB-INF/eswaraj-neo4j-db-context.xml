@@ -15,7 +15,7 @@
 	
 	<neo4j:config graphDatabaseService="graphDatabaseService" base-package="com.eswaraj.domain.repo" />
 	<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
-		<constructor-arg index="0" value="http://localhost:7474/db/data" />
+		<constructor-arg index="0" value="${db_url}" />
 	</bean>
 
 
