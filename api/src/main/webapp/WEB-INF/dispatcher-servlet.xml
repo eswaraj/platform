@@ -10,6 +10,8 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
 	<context:component-scan base-package="com.eswaraj.web.outh2.test" />
+	<context:component-scan base-package="com.eswaraj.api.controller" />
+	
 	<mvc:annotation-driven />
 	
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
