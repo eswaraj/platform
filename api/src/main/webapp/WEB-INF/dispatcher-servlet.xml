@@ -32,7 +32,6 @@
     </bean>
     <!-- App beans -->
     <bean id="appKeyService" class="com.eswaraj.core.service.impl.AppKeyServiceImpl" />
-    <bean 
 	<!-- Redis related -->
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
         p:host-name="cache.vyaut5.0001.usw2.cache.amazonaws.com" p:port="6379" 
