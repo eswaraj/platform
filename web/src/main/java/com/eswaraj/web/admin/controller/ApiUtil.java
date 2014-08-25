@@ -1,6 +1,10 @@
 package com.eswaraj.web.admin.controller;
 
 import java.net.URI;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -38,11 +42,21 @@ public class ApiUtil {
         return httpClientBuilder.build();
     }
 
-    public String getResponseFrom(String urlPath) throws ApplicationException {
+    public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
         try {
             logger.info("Getting Results from " + urlPath);
-            URI uri = new URIBuilder().setScheme("http").setHost("dev.api.eswaraj.com").setPath(urlPath).build();
+            URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost("dev.api.eswaraj.com").setPath(urlPath);
+            Map<String, String[]> parameters = httpServletRequest.getParameterMap();
+            for(Entry<String, String[]> oneParameterEntry : parameters.entrySet()){
+                for (String oneValue : oneParameterEntry.getValue()) {
+                    uriBuilder.addParameter(oneParameterEntry.getKey(), oneValue);
+                }
+            }
+            // TODO add hear params and authentication paramaters
+            
+            URI uri = uriBuilder.build();
             HttpGet httpget = new HttpGet(uri);
+            
             logger.info("Getting Results from " + httpget.getURI());
             HttpResponse httpResponse = getHttpClient().execute(httpget);
             return EntityUtils.toString(httpResponse.getEntity());
