@@ -8,7 +8,7 @@ var root_node,new_node,sel;
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getroot",
+  url:"/ajax/location/getroot",
   dataType: "JSON",
   success: function(data){
   //alert(JSON.stringify(data));
@@ -58,7 +58,7 @@ ctaLayer.setMap(map); */
 	
 		$.ajax({
 			  type: "GET",
-			  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/getchild/"+selected_loc_typeid,
+			  url:"/ajax/locationtype/getchild/"+selected_loc_typeid,
 			  contentType: "application/json; charset=utf-8",
 			  dataType: "JSON",
 			  success: function(data){
@@ -92,7 +92,7 @@ ctaLayer.setMap(map); */
 	var sel;
 	$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getchild/"+selected_node,
+		  url:"/ajax/location/getchild/"+selected_node,
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "JSON",
 		  success: function(data){
@@ -129,7 +129,7 @@ function sendFile(file) {
 var selected_node =  $('#js_tree').jstree('get_selected');
   $.ajax({
     type: 'post',
-    url: 'http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/'+selected_node[0]+'/upload',
+    url: '/ajax/location/'+selected_node[0]+'/upload',
     data: file,
 	headers: {
 	'Content-Type': 'multipart/mixed;'
@@ -172,7 +172,7 @@ var post_data = {
   };
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/save",
+  url:"/ajax/location/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -212,7 +212,7 @@ var form = document.getElementById("form1");
             form.onsubmit = function(){
                 var searchText = document.getElementById("file");
 				var selected_node =  $('#js_tree').jstree('get_selected');
-           var  kml_url= 'http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/'+selected_node[0]+'/upload'
+           var  kml_url= '/ajax/location/'+selected_node[0]+'/upload'
                  $('#form1').attr('action', kml_url);
 $('#form1').submit();				 // window.location = kml_url;
                 return false;
@@ -262,7 +262,7 @@ var post_data = {
   }
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/save",
+  url:"/ajax/location/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",

@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/categories/getroot",
+  url:"/ajax/categories/getroot",
   dataType: "JSON",
   success: function(data){
  
@@ -30,7 +30,7 @@ $.ajax({
 		
 		$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/department/getall/"+categoryId,
+		  url:"/ajax/department/getall/"+categoryId,
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "JSON",
 		  success: function(data){
@@ -68,7 +68,7 @@ $.ajax({
 	var sel;
 	$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/categories/getchild/"+data.node.id,
+		  url:"/ajax/categories/getchild/"+data.node.id,
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "JSON",
 		  success: function(data){
@@ -109,7 +109,7 @@ var post_data = {
   };
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/department/save",
+  url:"/ajax/department/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",

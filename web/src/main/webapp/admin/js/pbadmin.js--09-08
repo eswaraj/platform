@@ -21,7 +21,7 @@ var loc_type_data;
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/get",
+  url:"/ajax/locationtype/get",
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
   success: function(data){
@@ -49,7 +49,7 @@ $.ajax({
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getroot",
+  url:"/ajax/location/getroot",
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
   success: function(data){
@@ -62,7 +62,7 @@ $.ajax({
 		 
 	$.when($.ajax({
 	  type: "GET",
-	  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getchild/"+data.id,
+	  url:"/ajax/location/getchild/"+data.id,
 	  contentType: "application/json; charset=utf-8",
 	  dataType: "JSON",
 	  success: function(data){
@@ -89,7 +89,7 @@ $.ajax({
 	
 
 $( "#search-person" ).autocomplete({
-	source: "http://dev.admin.eswaraj.com/eswaraj-web/ajax/person/search/name/",
+	source: "/ajax/person/search/name/",
 	minLength: 3 
 });
 
@@ -102,7 +102,7 @@ $("#add-new-admin").css("display","block");
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/party/getall",
+  url:"/ajax/party/getall",
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
   success: function(data){
@@ -119,7 +119,7 @@ $.ajax({
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbtype/get",
+  url:"/ajax/pbtype/get",
   dataType: "JSON",
   success: function(data){
   
@@ -193,7 +193,7 @@ var post_data = {
  // alert(JSON.stringify(post_data));
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbtype/save",
+  url:"/ajax/pbtype/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -221,7 +221,7 @@ function get_child_location_type(loc_typeid){
 
    $.ajax({
 	  type: "GET",
-	  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/getchild/loc_typeid",
+	  url:"/ajax/locationtype/getchild/loc_typeid",
 	  contentType: "application/json; charset=utf-8",
 	  dataType: "JSON",
 	  success: function(data){
@@ -235,7 +235,7 @@ function get_child_nodes(parent_id){
 
  $.ajax({
 	  type: "GET",
-	  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getchild/"+parent_id,
+	  url:"/ajax/location/getchild/"+parent_id,
 	  contentType: "application/json; charset=utf-8",
 	  dataType: "JSON",
 	  success: function(data){
@@ -250,7 +250,7 @@ var params = $("#"+event.id).val().split(',');
 alert(params[1]);
 $.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/getchild/"+params[1],
+		  url:"/ajax/locationtype/getchild/"+params[1],
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "JSON",
 		  success: function(data){

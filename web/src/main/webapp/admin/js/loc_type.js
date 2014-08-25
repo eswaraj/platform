@@ -9,7 +9,7 @@ var root_node;
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/get",
+  url:"/ajax/locationtype/get",
   dataType: "JSON",
   success: function(data){
   var root_node = 
@@ -37,7 +37,7 @@ $.ajax({
 	var sel;
 	$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/getchild/"+data.node.id,
+		  url:"/ajax/locationtype/getchild/"+data.node.id,
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "JSON",
 		  success: function(data){
@@ -104,7 +104,7 @@ var post_data = {
   };
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/save",
+  url:"/ajax/locationtype/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -150,7 +150,7 @@ var post_data = {
   }
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/save",
+  url:"/ajax/locationtype/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",

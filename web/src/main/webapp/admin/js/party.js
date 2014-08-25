@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/party/getall",
+  url:"/ajax/party/getall",
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
   success: function(data){
@@ -30,7 +30,7 @@ var post_data = {
   };
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/party/save",
+  url:"/ajax/party/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",

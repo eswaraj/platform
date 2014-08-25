@@ -7,7 +7,7 @@ function fetch_pbtype(){
   var result;
   $.when($.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbtype/get",
+  url:"/ajax/pbtype/get",
   dataType: "JSON",
   success: function(data){
   //alert(JSON.stringify(data));
@@ -22,7 +22,7 @@ console.log(result);
 function fetch_ltype(){
   $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/get",
+  url:"/ajax/locationtype/get",
   dataType: "JSON",
   success: function(data){
   //console.log(JSON.stringify(data));
@@ -51,7 +51,7 @@ var all_ltype = fetch_ltype();
 //console.log(all_pbtype+"All pbtype ");
 
 $("#search_person").autocomplete({
-	source: "http://dev.admin.eswaraj.com/eswaraj-web/ajax/person/search/name/",
+	source: "/ajax/person/search/name/",
 	minLength: 3,
 	response: function( event, ui ) {
 	console.log(JSON.stringify(ui));
@@ -72,7 +72,7 @@ $("#search_person").autocomplete({
 
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getroot",
+  url:"/ajax/location/getroot",
   dataType: "JSON",
   success: function(data){
   //console.log(JSON.stringify(data));
@@ -96,7 +96,7 @@ $.ajax({
 		//console.log(selected_loc_typeid);
 		$.when($.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbtype/get",
+		  url:"/ajax/pbtype/get",
 		  dataType: "JSON",
 		  success: function(data){
 		     result = data;
@@ -140,7 +140,7 @@ $.ajax({
 	var sel;
 	$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getchild/"+selected_node,
+		  url:"/ajax/location/getchild/"+selected_node,
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "JSON",
 		  success: function(data){
@@ -204,7 +204,7 @@ var post_data = {
   };
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/person/save",
+  url:"/ajax/person/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -267,7 +267,7 @@ var post_data = {
     }
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbadmin/save",
+  url:"/ajax/pbadmin/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -313,7 +313,7 @@ var post_data = {
   }
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/save",
+  url:"/ajax/location/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -336,7 +336,7 @@ function runMyFunction(event){
 					
 		$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
+		  url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
 		  dataType: "JSON",
 		  success: function(data){
 		   //alert(JSON.stringify(data));	
@@ -352,7 +352,7 @@ function runMyFunction(event){
 					
 		$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
+		  url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
 		  dataType: "JSON",
 		  success: function(data){
 		   //alert(JSON.stringify(data));	
@@ -371,7 +371,7 @@ function runMyFunction(event){
 	if($('#'+target.id).hasClass('person')){
 		$.ajax({
 		  type: "GET",
-		  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/party/getall",
+		  url:"/ajax/party/getall",
 		  dataType: "JSON",
 		  success: function(data){
 		   //alert(JSON.stringify(data));	
