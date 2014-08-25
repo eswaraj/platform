@@ -1,5 +1,5 @@
 $(function(){
-      $("#menu").load("../sidebar_menu.html"); 
+      $("#menu").load("../admin/sidebar_menu.html"); 
 });
 $(document).ready(function(){
 

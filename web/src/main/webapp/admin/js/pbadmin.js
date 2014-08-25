@@ -1,6 +1,6 @@
 /*******************Load Root Node ***********************************/
 $(function(){
-      $("#menu").load("../sidebar_menu.html"); 
+      $("#menu").load("../admin/sidebar_menu.html"); 
 });
 
 function fetch_pbtype(){

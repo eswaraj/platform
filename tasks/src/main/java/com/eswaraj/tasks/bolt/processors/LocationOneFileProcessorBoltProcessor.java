@@ -5,7 +5,9 @@ import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +17,17 @@ import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
+import com.eswaraj.web.dto.LocationDto;
 
 @Component
 public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
     private LocationKeyService locationKeyService;
+    @Autowired
+    private LocationService locationService;
 
     @Override
     public Result processTuple(Tuple input) {
@@ -35,9 +41,11 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
             logInfo("Recived pointsToProcess=" + pointsToProcess.length());
             logInfo("Recived locationId=" + locationId);
 
+            Set<Long> allLocations = getAllParents(locationId);
+
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
-            processCoordinates(coordinates, locationId, pointsToProcess, totalPointsMissed, totalPointsProcessed);
+            processCoordinates(coordinates, allLocations, pointsToProcess, totalPointsMissed, totalPointsProcessed);
             logInfo("totalPointsMissed(Redis)= " + incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get()));
             logInfo("totalPointsProcessed(Redis)= " + incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get()));
             return Result.Success;
@@ -51,8 +59,25 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
 
     }
 
+    private Set<Long> getAllParents(Long locationId) {
+        List<LocationDto> locations;
+        Set<Long> returnCollection = new LinkedHashSet<Long>();
+        returnCollection.add(locationId);
+        try {
+            locations = locationService.getAllParents(locationId);
+            for (LocationDto oneLocationDto : locations) {
+                returnCollection.add(oneLocationDto.getId());
+            }
+        } catch (ApplicationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-    private void processCoordinates(String[] boundaryCoordinates, Long locationId, String pointsToProcess, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
+        return returnCollection;
+    }
+
+
+    private void processCoordinates(String[] boundaryCoordinates, Set<Long> allLocations, String pointsToProcess, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
             throws ApplicationException {
 
         List<Path2D> myPolygons = createPolygon(boundaryCoordinates);
@@ -68,7 +93,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
             oneLong = new BigDecimal(latLong[0]);
             oneLat = new BigDecimal(latLong[1]);
             onePoint = new Point2D.Double(oneLat.doubleValue(), oneLong.doubleValue());
-            processOnePoint(myPolygons, onePoint, locationId, totalPointsMissed, totalPointsProcessed);
+            processOnePoint(myPolygons, onePoint, allLocations, totalPointsMissed, totalPointsProcessed);
         }
 
     }
@@ -99,7 +124,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
         return allPaths;
     }
 
-    private void processOnePoint(List<Path2D> myPolygons, Point2D onePoint, Long locationId, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
+    private void processOnePoint(List<Path2D> myPolygons, Point2D onePoint, Set<Long> allLocations, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
         boolean insideBoundaries = false;
         for (Path2D onePolygon : myPolygons) {
             if (onePolygon.contains(onePoint)) {
@@ -109,10 +134,11 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
         }
         String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
         if (insideBoundaries) {
-            writeToMemoryStoreSet(redisKey, String.valueOf(locationId));
+
+            writeToMemoryStoreSet(redisKey, allLocations);
             totalPointsProcessed.incrementAndGet();
         } else {
-            removeFromMemoryStoreSet(redisKey, String.valueOf(locationId));
+            removeFromMemoryStoreSet(redisKey, allLocations);
             totalPointsMissed.incrementAndGet();
         }
         

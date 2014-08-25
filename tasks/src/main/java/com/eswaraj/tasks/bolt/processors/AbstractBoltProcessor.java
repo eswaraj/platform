@@ -2,8 +2,10 @@ package com.eswaraj.tasks.bolt.processors;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,14 +89,30 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
 
     // Redis related functions
     // Set
-    protected Long writeToMemoryStoreSet(String redisKey, String value) {
+    protected Long writeToMemoryStoreSet(String redisKey, String... value) {
         logDebug("redisKey = {}, Value = {}", redisKey, value);
         return stringRedisTemplate.opsForSet().add(redisKey, value);
     }
 
-    protected Long removeFromMemoryStoreSet(String redisKey, String value) {
+    protected Long writeToMemoryStoreSet(String redisKey, Set<Long> values) {
+        Set<String> valueString = new HashSet<>();
+        for (Long oneLong : values) {
+            valueString.add(String.valueOf(oneLong));
+        }
+        return writeToMemoryStoreSet(redisKey, valueString.toArray(new String[valueString.size()]));
+    }
+
+    protected Long removeFromMemoryStoreSet(String redisKey, String... value) {
         logDebug("redisKey = {}, Value = {}", redisKey, value);
         return stringRedisTemplate.opsForSet().remove(redisKey, value);
+    }
+
+    protected Long removeFromMemoryStoreSet(String redisKey, Set<Long> values) {
+        Set<String> valueString = new HashSet<>();
+        for (Long oneLong : values) {
+            valueString.add(String.valueOf(oneLong));
+        }
+        return removeFromMemoryStoreSet(redisKey, valueString.toArray(new String[valueString.size()]));
     }
 
     protected Boolean writeToMemoryStoreSortedSet(String redisKey, String value, double score) {

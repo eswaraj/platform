@@ -2,6 +2,7 @@ package com.eswaraj.core.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -337,6 +338,21 @@ public class LocationServiceImpl extends BaseService implements LocationService 
     public LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException {
         LocationBoundaryFile locationBoundaryFile = locationBoundaryFileRepository.findOne(locationBoundaryFileId);
         return locationBoundaryFileConvertor.convertBean(locationBoundaryFile);
+    }
+
+    @Override
+    public List<LocationDto> getAllParents(Long locationId) throws ApplicationException {
+        List<LocationDto> list = new ArrayList<>();
+        Location location = locationRepository.findOne(locationId);
+        while (location != null) {
+            list.add(locationConvertor.convertBean(location));
+            if (location.getParentLocation() != null) {
+                location = locationRepository.findOne(location.getParentLocation().getId());
+            } else {
+                location = null;// break from the loop
+            }
+        }
+        return list;
     }
 
 }
