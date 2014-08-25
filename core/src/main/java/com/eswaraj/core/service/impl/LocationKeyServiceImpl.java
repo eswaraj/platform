@@ -18,7 +18,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationKeyService;
 
 @Component
-public class LocationkeyServiceImpl implements LocationKeyService, Serializable {
+public class LocationKeyServiceImpl implements LocationKeyService, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class LocationkeyServiceImpl implements LocationKeyService, Serializable 
     private final String LOCATION_PREFIX = "Location.";
     private final String CATEGORY_PREFIX = "Category.";
 
-    public LocationkeyServiceImpl() {
+    public LocationKeyServiceImpl() {
         decimalFormat = new DecimalFormat("#.000");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
         decimalFormatUpto2DecimalPoints = new DecimalFormat("#.00");
