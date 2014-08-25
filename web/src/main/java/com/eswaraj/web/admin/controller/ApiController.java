@@ -36,16 +36,18 @@ public class ApiController {
     private CounterKeyService counterKeyService;
     @Autowired
     private AppKeyService appKeyService;
+    @Autowired
+    private ApiUtil apiUtil;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/api/location/{locationId}/info", method = RequestMethod.GET)
     @ResponseBody
-    public String getLocationCategoryCount(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        String redisKeyForLocationInfo = locationKeyService.getLocationInformationKey(locationId);
-        logger.info("getting data from Redis for key {}", redisKeyForLocationInfo);
-        String data = stringRedisTemplate.opsForValue().get(redisKeyForLocationInfo);
-        return data;
+    public String getLocationCategoryCount(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
+        logger.info("Context Path " + httpServletRequest.getContextPath());
+        logger.info("Path Info : " + httpServletRequest.getPathInfo());
+        logger.info("Request URL : " + httpServletRequest.getRequestURL().toString());
+        return apiUtil.getResponseFrom("/api/v0/location/" + locationId + "/info");
     }
 
     @RequestMapping(value = "/api/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
