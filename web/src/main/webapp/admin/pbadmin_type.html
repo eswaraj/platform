@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Political Admin Type Manager</title>
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+
+ 
+<!-- Script -->
+<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+<script type="text/javascript" src="js/script.js"></script><!-- Script -->
+<script type="text/javascript" src="js/pbadmin_type.js"></script><!-- Script -->
+
+  <!-- 2 load the theme CSS file -->
+  <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+   <!-- 4 include the jQuery library -->
+
+  <!-- 5 include the minified jstree source -->
+  <script src="dist/jstree.min.js"></script>
+</head>
+<body>
+		<div class="responsive-menu">
+			<div class="responsive-menu-dropdown blue">
+				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
+			</div>
+			
+	</div>
+	<header>
+		
+	</header><!-- Header -->
+
+	<div id= "menu" class="menu">
+		
+	</div><!-- Right Menu -->
+
+<div class="wrapper">
+	<div class="container">
+		<h3>Political Admin Type Manager</h3>	
+		<a class="btn pink" href="#add-admin-type" onclick='return reset_form(event);' data-toggle="modal"><i class="fa fa-plus"></i> New Admin Type</a>	
+		<div class="row">
+			<div class="col-md-12 profile-margin">
+			<div class="col-md-4">
+</div>
+			
+				<div class="col-md-5">
+					<h3>List of Political Admin Types</h3>
+						
+							<div id="tab1">
+								<table id="admin_type_data">
+								<tr>
+								<td>S.No</td>
+								<td>Name</td>
+								<td>Short Name</td>
+								<td>Description</td>
+								<td>Location Type ID</td>
+								<td>Edit</td>
+								
+								</tr>
+															
+								</table>
+								
+							</div>					
+					
+					
+		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-admin-type" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+					  <h4 class="modal-title">Add New Admin Type</h4>
+					</div>
+					<div class="modal-body">
+					  <table>
+					  <tr><td>Short Name</td><td><input type="text" id="short_name" placeholder="Short Name"/></td></tr>
+					  <tr><td>Full Name</td><td><input type="text" id="full_name" placeholder="Full Name" /></td></tr>
+					  <tr><td>Admin Description</td><td><textarea id="admin_description" ></textarea> </td></tr> 
+					  <tr><td>Admin Type ID</td><td><input type="text" id="admin_type_id" disabled="disabled" placeholder="Admin Type ID" /></td></tr>
+					 <tr><td>Location Type</td><td><select id="location_type_id">
+					  <option selected="selected" value="">Choose Location Type</option>
+					  </select>
+					  </td></tr>
+					  <tr><div class="modal-footer">
+					  <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+					  <button class="btn btn-primary blue" type="button" onclick="add_update_admin_type();" >Save changes</button>
+					</div></tr>					  </table>
+					  
+					</div>
+					 				  
+					</div>
+					
+				</div><!-- /.modal-content -->
+			</div>
+			<div class="">
+				<div id="map-canvas"></div>	
+			</div>
+			
+		</div>
+			</div>
+			
+				
+			</div>
+		</div>
+		
+		
+		</div><!-- Container -->
+	</div><!-- Wrapper -->
+
+
+
+</body>
+</html>

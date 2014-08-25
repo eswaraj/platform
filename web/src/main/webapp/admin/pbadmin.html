@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Political Admin Manager</title>
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+
+<!-- Script -->
+<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+<script type="text/javascript" src="js/script.js"></script><!-- Script -->
+<script type="text/javascript" src="js/pbadmin.js"></script><!-- Script -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <!-- 2 load the theme CSS file -->
+  <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+   <!-- 4 include the jQuery library -->
+
+  <!-- 5 include the minified jstree source -->
+  <script src="dist/jstree.min.js"></script>
+  <link rel="stylesheet" href="css/jquery-ui.min.css" />
+  <script src="js/jquery-ui.min.js"></script>
+
+</head>
+<body>
+		<div class="responsive-menu">
+			<div class="responsive-menu-dropdown blue">
+				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
+			</div>
+			
+	</div>
+	<header>
+		
+	</header><!-- Header -->
+
+	<div id="menu" class="menu">
+		
+	</div><!-- Right Menu -->
+
+	<div class="wrapper">
+		<div class="container">
+			
+			
+		<div class="row">
+			<div class="col-md-12 profile-margin">
+			<div class="col-md-4">
+			<h3>Political Admin Manager</h3> 
+			
+ <!-- the tree is populated via ajax -->
+			<div id="js_tree"></div>	
+					
+			</div>
+			
+				<div class="col-md-5">
+					<a href="#" class="active">
+					</a>
+					
+							<div id="tab1">
+								<table style="padding:10px;">
+								<tr>
+								<td>Location Node</td>
+								<td><input type="text" name="node_title" id="node_title" value="" disabled="disabled"></td>
+								</tr>
+								<tr id="add_child_btn">
+								</tr>
+<tr><td><input type='text' id='search_person' placeholder='Search Person' /></td>
+<td id='search_result'></td></tr>	
+<tr>
+<td><a id='new-person-btn' class='btn green' href='#new-person' data-toggle='modal'>Add New Person</a></td>
+
+</tr>							
+	</table>								
+							</div>											
+	<div aria-hidden="true" role="dialog"  class="modal fade" id="new-person" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+					  <h4 class="modal-title">Add New Person</h4>
+					</div>
+					<div class="modal-body">
+			       
+					  <input type="text" id="new_person_id" placeholder="Person ID" disabled="disabled" />
+					  <input type="text" id="new_person_name" placeholder="Name" />
+					  <input type="text" id="new_person_biodata" placeholder="Biodata" />
+					  <input type="text" id="new_person_dob" placeholder="Date of Birth" />
+					  <input type="text" id="new_person_photo" placeholder="Profile Photo" />
+					  <select type="text" id="new_person_gender"><option value="Male">Male</option><option value="Female">Female</option><select/>
+					  <input type="text" id="new_person_email" placeholder="Email" />
+					  <input type="date" id="new_person_ll1" placeholder="Landline1" />
+					  <input type="date" id="new_person_ll2" placeholder="Landline2" />
+					  <input type="text" id="new_person_mobile1" placeholder="Mobile1" />
+					  <input type="text" id="new_person_mobile2" placeholder="Mobile2" />
+					  <input type="text" id="new_person_addressId" placeholder="Address Id" disabled="disabled"/>
+					  <input type="text" id="new_person_line1" placeholder="Address Line 1" />
+					  <input type="text" id="new_person_line2" placeholder="Address Line 2" />
+					  <input type="text" id="new_person_line3" placeholder="Address Line 3" />
+					  <input type="text" id="new_person_postal" placeholder="Postal Code" />
+					 
+		   <input type="text" id='village-list' placeholder="Village ID"/>
+		   <input type="text" id='ward-list' placeholder="Ward ID"/>
+		   <input type="text" id='city-list' placeholder="City ID"/>
+		   <input type="text" id='district-list' placeholder="District ID"/>
+		   <input type="text" id='state-list' placeholder="State ID"/>
+		   <input type="text" id='country-list' placeholder="Country ID"/>
+		   	   		  
+					</div>					 				  
+					</div>
+					<div class="modal-footer">
+					  <button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
+					  <button class="btn btn-primary blue" type="button" onclick="new_person();" >Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+	</div>	
+
+	
+	<div aria-hidden="true" role="dialog"  class="modal fade" id="current_pbadmin" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+					  <h4 class="modal-title">Current PB Admin</h4>
+					</div>
+					<div class="modal-body" id="current_pbadmin_content">
+			       
+					
+		   	   		  
+					</div>					 				  
+					</div>
+					<div class="modal-footer">
+					  <button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
+					 
+					</div>
+				</div><!-- /.modal-content -->
+	</div>	
+	
+		
+		<div aria-hidden="true" role="dialog"  class="modal fade" id="assign_pbadmin" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+					  <h4 class="modal-title">Add New Political Admin</h4>
+					</div>
+					<div class="modal-body">			        
+					  <input type="text" id="pbadmin_id" placeholder="PbAdmin ID" disabled="disabled"/>
+					  <select id="pbtype_list"></select>
+					  <input type="text" id="pbadmin_locationId" placeholder="Location ID" disabled="disabled"/>
+					  <input type="text" id="pbadmin_personId" placeholder="Person ID" disabled="disabled"/>
+					  <select id="party_list"></select>
+					  <input type="text" id="pbadmin_email" placeholder="Email" />
+					  <input type="text" id="pbadmin_llandline1" placeholder="Landline 1" />
+					  <input type="text" id="pbadmin_llandline2" placeholder="Landline 2" />
+					  <input type="text" id="pbadmin_mobile1" placeholder="Mobile 1" />
+					  <input type="text" id="pbadmin_mobile2" placeholder="Mobile 2" />
+					  
+					  
+					  <input type="date" id="pbadmin_startdate" placeholder="Start Date" />
+					  <input type="date" id="pbadmin_enddate" placeholder="End Date" />
+					  <input type="text" id="pbadmin_oaLine1" placeholder="Office Address Line 1" />
+					  <input type="text" id="pbadmin_oaLine2" placeholder="Office Address Line 2" />
+					  <input type="text" id="pbadmin_oaLine3" placeholder="Office Address Line 3" />
+					  <input type="text" id="pbadmin_oapostal" placeholder="Office Postal Code" />
+					 
+		   <input type="text" id='pbadmin_ovillage-list' placeholder="Village ID"/>
+		   <input type="text" id='pbadmin_oward-list' placeholder="Ward ID"/>
+		   <input type="text" id='pbadmin_ocity-list' placeholder="City ID"/>
+		   <input type="text" id='pbadmin_odistrict-list' placeholder="District ID"/>
+		   <input type="text" id='pbadmin_ostate-list' placeholder="State ID"/>
+		   <input type="text" id='pbadmin_ocountry-list' placeholder="Country ID"/>
+		   
+		   
+		    <input type="text" id="pbadmin__haLine1" placeholder="Home Address Line 1" />
+					  <input type="text" id="pbadmin_haLine2" placeholder="Home Address Line 2" />
+					  <input type="text" id="pbadmin_haLine3" placeholder="Home Address Line 3" />
+					  <input type="text" id="pbadmin_hapostal" placeholder="Home Postal Code" />
+					 
+		   <input type="text" id='pbadmin_hvillage-list' placeholder="Village Code"/>
+		   <input type="text" id='pbadmin_hward-list' placeholder="Ward Code"/>
+		   <input type="text" id='pbadmin_hcity-list' placeholder="City Code"/>
+		   <input type="text" id='pbadmin_hdistrict-list' placeholder="District Code"/>
+		   <input type="text" id='pbadmin_hstate-list' placeholder="State Code"/>
+		   <input type="text" id='pbadmin_hcountry-list' placeholder="Country Code"/>					 
+					  
+					</div>					 				  
+					</div>
+					<div class="modal-footer">
+					  <button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
+					  <button class="btn btn-primary blue" type="button" onclick="add_pbadmin();" >Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div>
+			
+			<div aria-hidden="true" role="dialog"  class="modal fade" id="pb-list" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+					  <h4 class="modal-title">Existing Political Admins</h4>
+					</div>
+					<div class="modal-body">
+					<div id="all_pbadmin_content">
+					</div>					
+					  					  
+					</div>					 				  
+					</div>
+					<div class="modal-footer">
+					  <button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
+					  <button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div>
+			
+		</div>
+			</div>
+			
+				
+			</div>
+		</div>
+		
+		
+		</div><!-- Container -->
+	</div><!-- Wrapper -->
+
+
+
+</body>
+</html>

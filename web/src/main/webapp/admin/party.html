@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Political Party Manager</title>
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+
+ 
+<!-- Script -->
+<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+<script type="text/javascript" src="js/script.js"></script><!-- Script -->
+<script type="text/javascript" src="js/party.js"></script><!-- Script -->
+
+  <!-- 2 load the theme CSS file -->
+  <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+   <!-- 4 include the jQuery library -->
+
+  <!-- 5 include the minified jstree source -->
+  <script src="dist/jstree.min.js"></script>
+</head>
+<body>
+		<div class="responsive-menu">
+			<div class="responsive-menu-dropdown blue">
+				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
+			</div>
+			
+	</div>
+	<header>
+		
+	</header><!-- Header -->
+
+	<div id="menu" class="menu">
+		
+	</div><!-- Right Menu -->
+
+<div class="wrapper">
+	<div class="container">
+		<h3>Political Party Manager</h3>	
+		<a class="btn pink" href="#add-party" data-toggle="modal"><i class="fa fa-plus"></i> New Party</a>	
+		<div class="row">
+			<div class="col-md-12 profile-margin">
+			<div class="col-md-4">
+</div>
+			
+				<div class="col-md-5">
+					<h3>List of Registered Political Parties</h3>
+						
+							<div id="tab1">
+								<table id="party_data">
+								<tr>
+								<td>S.No</td>
+								<td>Name</td>
+								<td>Short Name</td>
+								<td>Edit</td>
+								
+								</tr>	
+															
+								</table>
+								
+							</div>					
+					
+					
+		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-party" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+					  <h4 class="modal-title">Add New Political Party</h4>
+					</div>
+					<div class="modal-body">
+					  <input type="text" id="short_name" placeholder="Short Name"/>
+					  <input type="text" id="full_name" placeholder="Full Name" />
+					  <input type="text" id="party_id" placeholder="Party ID" disabled="disabled" />	  
+					  
+					</div>
+					 				  
+					</div>
+					<div class="modal-footer">
+					  <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+					  <button class="btn btn-primary blue" type="button" onclick="add_update_party();" >Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div>
+			<div class="">
+				<div id="map-canvas"></div>	
+			</div>
+			
+		</div>
+			</div>
+			
+				
+			</div>
+		</div>
+		
+		
+		</div><!-- Container -->
+	</div><!-- Wrapper -->
+
+
+
+</body>
+</html>
