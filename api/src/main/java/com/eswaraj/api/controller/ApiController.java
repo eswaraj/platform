@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -34,12 +33,12 @@ public class ApiController extends BaseController {
     @Autowired
     private LocationKeyService locationKeyService;
     @Autowired
-    private CounterKeyService counterKeyService;
-    @Autowired
     private AppKeyService appKeyService;
     @Autowired
     private RedisUtil redisUtil;
-
+    /*
+     * @Autowired private CounterKeyService counterKeyService;
+     */
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/api/v0/location/{locationId}/info", method = RequestMethod.GET)
@@ -51,7 +50,7 @@ public class ApiController extends BaseController {
         List<Map> results = redisUtil.executeAll();
         return (String) results.get(0).get(locationId);
     }
-
+    /*
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationComplaintCountForLast30Days(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
@@ -134,4 +133,5 @@ public class ApiController extends BaseController {
         }
         return Integer.parseInt(paramValue);
     }
+    */
 }
