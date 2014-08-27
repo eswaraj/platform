@@ -23,12 +23,17 @@ public class KmlFileDisector {
 
     public static void main(String[] args) throws Exception {
         List<String> files = new ArrayList<>();
+        /*
         files.add("/usr/local/dev/data/eswaraj/originals/Delhi_Wards.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiCityRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiDistrictRegions.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiMCD_Zones.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiStateRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiSubdistricts.kml");
+        files.add("/usr/local/dev/data/eswaraj/originals/DelhiSubdistricts.kml");
+        */
+        files.add("/usr/local/dev/data/eswaraj/originals/Delhi_AC.kml");
+        files.add("/usr/local/dev/data/eswaraj/originals/Delhi_PC.kml");
         for (String oneFile : files) {
             disectFile(oneFile);
         }
@@ -93,6 +98,8 @@ public class KmlFileDisector {
         String cityName = null;
         String mcdZoneName = null;
         String name = null;
+        String pcName = null;
+        String acName = null;
         NodeList nodeList = doc.getElementsByTagName("SimpleData");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
@@ -118,7 +125,17 @@ public class KmlFileDisector {
             if (node.getAttributes().item(0).getNodeValue().equals("MCD_ZONE")) {
                 mcdZoneName = node.getTextContent();
             }
+            if (node.getAttributes().item(0).getNodeValue().equals("PC_NAME")) {
+                pcName = node.getTextContent();
+            }
+            if (node.getAttributes().item(0).getNodeValue().equals("AC_NAME")) {
+                acName = node.getTextContent();
+            }
 
+        }
+        if(stateName != null && stateName.equals("Delhi")){
+            stateName = "NCT of Delhi";
+            
         }
         System.out.println("stateName = " + stateName + ", cityName=" + cityName + ", district0Name=" + district0Name + ",districtName=" + districtName + ",wardName=" + wardName + ",mcdZoneName="
                 + mcdZoneName);
@@ -132,6 +149,22 @@ public class KmlFileDisector {
             directory = directory + stateName;
             createDirectory(directory);
             fileName = stateName + ".kml";
+        }
+        if (pcName != null) {
+            directory = directory + "/pcs/";
+            parentDirectory = directory;
+            createDirectory(directory);
+            directory = directory + pcName;
+            createDirectory(directory);
+            fileName = pcName + ".kml";
+        }
+        if (acName != null) {
+            directory = directory + "/acs/";
+            parentDirectory = directory;
+            createDirectory(directory);
+            directory = directory + acName;
+            createDirectory(directory);
+            fileName = acName + ".kml";
         }
         if (cityName != null) {
             directory = directory + "/cities/";

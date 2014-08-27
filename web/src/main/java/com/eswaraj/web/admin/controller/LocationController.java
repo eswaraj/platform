@@ -116,7 +116,7 @@ public class LocationController extends BaseController {
         String redisKey = LocationKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         System.out.println("Redis Key = " + redisKey);
         Set<Long> locations = redisTemplate.opsForSet().members(redisKey);
-
+        System.out.println("Redis Output = " + locations);
         List<LocationDto> returnList = new ArrayList<>(1);
         if (locations != null && !locations.isEmpty()) {
             returnList = locationService.getLocations(locations);
