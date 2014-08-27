@@ -41,7 +41,7 @@
 
 	<!-- Redis related -->
 	<beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
-	    p:host-name="${redis_server}" p:port="6379" 
+	    p:host-name="${redis_server}" p:port="${redis_port}" 
 	    />
 	<beans:bean 
     id="stringRedisSerializer" 

@@ -38,7 +38,7 @@
     
 	<!-- Redis related -->
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
-        p:host-name="cache.vyaut5.0001.usw2.cache.amazonaws.com" p:port="6379" 
+        p:host-name="${redis_server}" p:port="${redis_port}" 
         />
     <bean 
     id="stringRedisSerializer" 
