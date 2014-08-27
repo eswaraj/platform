@@ -181,7 +181,6 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 	}
 	
 	private DataClient getOrCreateDataClientIndiaEswaraj(){
-        System.out.println("Creating DataClient");
 		DataClient dataClient = null;
 		try{
 			dataClient = dataClientRepository.getDataClientByName(indiaEswarajClientName);
@@ -199,9 +198,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		return dataClient;
 	}
 	private LocationType getOrCreateRootLocationTypeIndiaEswaraj(DataClient dataClient){
-        System.out.println("Creating Root Location Type");
         LocationType locationType = locationTypeRepository.getRootLocationTypeByDataClient(dataClient);
-        System.out.println("Location Type not found for Country India " + dataClient.getName());
 		if(locationType == null){
 			locationType = new LocationType();
 			locationType.setName(indiaEswarajRootLocationTypeName);
