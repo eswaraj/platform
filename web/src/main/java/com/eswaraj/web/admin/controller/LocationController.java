@@ -12,7 +12,7 @@ import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +40,7 @@ public class LocationController extends BaseController {
     private FileService fileService;
 
     @Autowired
-    private RedisTemplate<String, Long> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     private LocationKeyService LocationKeyService;
@@ -115,11 +115,15 @@ public class LocationController extends BaseController {
         System.out.println("Long = " + Double.parseDouble(httpServletRequest.getParameter("long")));
         String redisKey = LocationKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         System.out.println("Redis Key = " + redisKey);
-        Set<Long> locations = redisTemplate.opsForSet().members(redisKey);
+        Set<String> locations = stringRedisTemplate.opsForSet().members(redisKey);
         System.out.println("Redis Output = " + locations);
         List<LocationDto> returnList = new ArrayList<>(1);
         if (locations != null && !locations.isEmpty()) {
-            returnList = locationService.getLocations(locations);
+            List<Long> locationsLong = new ArrayList<>(locations.size());
+            for (String oneLocationId : locations) {
+                locationsLong.add(Long.parseLong(oneLocationId));
+            }
+            returnList = locationService.getLocations(locationsLong);
         }
         return returnList;
     }
