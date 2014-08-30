@@ -69,7 +69,6 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
                 returnCollection.add(oneLocationDto.getId());
             }
         } catch (ApplicationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
