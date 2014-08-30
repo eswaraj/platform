@@ -133,7 +133,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>eswaraj-web</finalName>
+		<finalName>eswaraj-admin</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
