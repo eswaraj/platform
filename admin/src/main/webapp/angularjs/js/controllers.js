@@ -33,21 +33,21 @@ eSwarajMod.controller('RootCategories', ['$scope', '$http', function($scope, $ht
 }]);
 
 eSwarajMod.controller('GetLocation', ['$scope', '$http', function($scope, $http) {
-  $http.get('http://dev.admin.eswaraj.com/eswaraj-web/api/location/78340/info').success(function(data) {
+  $http.get('/api/location/78340/info').success(function(data) {
     $scope.location = data;
     
   });
 }]);
 
 eSwarajMod.controller('GetTotalComplaintsForLocation', ['$scope', '$http', function($scope, $http) {
-  $http.get('http://dev.admin.eswaraj.com/eswaraj-web/api/location/78340/complaintcounts/last30').success(function(data) {
+  $http.get('/api/location/78340/complaintcounts/last30').success(function(data) {
     $scope.totalComplaintsForLocation = data;
     
   });
 }]);
 
 eSwarajMod.controller('GetAllComplaints', ['$scope', '$http', function($scope, $http) {
-  $http.get('http://dev.admin.eswaraj.com/eswaraj-web/api/complaint/location/78340').success(function(data) {
+  $http.get('/api/complaint/location/78340').success(function(data) {
     $scope.allComplaints = data;
     
   });

@@ -2,7 +2,7 @@ $(document).ready(function(){
 fetch_locationTypeId();
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbtype/get",
+  url:"/ajax/pbtype/get",
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
   success: function(data){
@@ -31,7 +31,7 @@ var post_data = {
  // alert(JSON.stringify(post_data));
 $.ajax({
   type: "POST",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/pbtype/save",
+  url:"/ajax/pbtype/save",
   data: JSON.stringify(post_data),
   contentType: "application/json; charset=utf-8",
   dataType: "JSON",
@@ -58,7 +58,7 @@ $.ajax({
 function fetch_locationTypeId(){
 $.ajax({
   type: "GET",
-  url:"http://dev.admin.eswaraj.com/eswaraj-web/ajax/locationtype/get",
+  url:"/ajax/locationtype/get",
   dataType: "JSON",
   success: function(data){
   var location_dd =$("#location_type_id").html();
