@@ -15,6 +15,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 /**
  * @author ravi
@@ -49,5 +50,11 @@ public class CategoryController extends BaseController{
         queueService.sendCategoryUpdateMessage(categoryDto.getId());
 		return categoryDto;
 	}
+
+    @RequestMapping(value = "/mobile/categories", method = RequestMethod.GET)
+    public @ResponseBody List<CategoryWithChildCategoryDto> getAllCategories(ModelAndView mv) throws ApplicationException {
+        List<CategoryWithChildCategoryDto> allCategories = appService.getAllCategories();
+        return allCategories;
+    }
 
 }
