@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,9 @@ public class BaseController {
 	protected AppService appService;
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Value("static_content_host")
+    private String staticContentHost;
 
 	@ExceptionHandler(ApplicationException.class)
 	@ResponseBody
@@ -51,7 +55,7 @@ public class BaseController {
 	}
 
     protected void addGenericValues(ModelAndView mv) {
-        mv.getModel().put("staticHost", "https://dev.eswaraj.com.s3-website-us-west-2.amazonaws.com");
+        mv.getModel().put("staticHost", staticContentHost);
     }
 
 	protected String getFileName(String submittedFileName) {
