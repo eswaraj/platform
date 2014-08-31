@@ -76,7 +76,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
     }
 
 
-    private void processCoordinates(String[] boundaryCoordinates, Set<Long> allLocations, String pointsToProcess, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
+    private void processCoordinates(String[] boundaryCoordinates, Set<Long> allLocations, Long locationId, String pointsToProcess, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
             throws ApplicationException {
 
         List<Path2D> myPolygons = createPolygon(boundaryCoordinates);
@@ -123,7 +123,8 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
         return allPaths;
     }
 
-    private void processOnePoint(List<Path2D> myPolygons, Point2D onePoint, Set<Long> allLocations, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed) throws ApplicationException {
+    private void processOnePoint(List<Path2D> myPolygons, Point2D onePoint, Set<Long> allLocations, Long locationId, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed)
+            throws ApplicationException {
         boolean insideBoundaries = false;
         for (Path2D onePolygon : myPolygons) {
             if (onePolygon.contains(onePoint)) {
@@ -137,7 +138,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
             writeToMemoryStoreSet(redisKey, allLocations);
             totalPointsProcessed.incrementAndGet();
         } else {
-            removeFromMemoryStoreSet(redisKey, allLocations);
+            removeFromMemoryStoreSet(redisKey, String.valueOf(locationId));
             totalPointsMissed.incrementAndGet();
         }
         
