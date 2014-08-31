@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
@@ -48,6 +49,10 @@ public class BaseController {
 		errorMessageDto.setMessage(exception.getMessage());
 		return errorMessageDto;
 	}
+
+    protected void addGenericValues(ModelAndView mv) {
+        mv.getModel().put("staticHost", "https://dev.eswaraj.com.s3-website-us-west-2.amazonaws.com");
+    }
 
 	protected String getFileName(String submittedFileName) {
 		return UUID.randomUUID().toString()

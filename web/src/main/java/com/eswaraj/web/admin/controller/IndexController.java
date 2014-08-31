@@ -11,14 +11,15 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
 
 @Controller
-public class IndexController {
+public class IndexController extends BaseController {
 
 	@Autowired
 	private LocationService locationService;
 	
 	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
 	public ModelAndView showIndexPage(ModelAndView mv) {
-		mv.setViewName("index");
+        addGenericValues(mv);
+		mv.setViewName("home");
 		return mv;
 	}
 	@RequestMapping(value = "/", method = RequestMethod.GET)
