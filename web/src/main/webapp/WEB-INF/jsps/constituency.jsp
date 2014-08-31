@@ -79,11 +79,11 @@
 		<!-- .list-row  -->
 		<div class="list-row">
 			<div class="issue-pic">
-				<img src="images/issues/issues.png" alt=""></div>
+				<img src="${staticHost}/images/issues/issues.png" alt=""></div>
 			<div class="innerblock">
 				<div class="profile-info">
 					<div class="profile-pic">
-						<img src="images/profile-pic.jpg" alt=""></div>
+						<img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
 						<p class="whom"><strong class="issue-id">Issue #51 </strong> <span class="connector">raised by</span> <a href="#" class="username">Somnath Nabajja</a></p>
 						<p class="whenwhere"><span>2 hrs ago</span> <span class="connector">at</span> <span><i class="glyphicon glyphicon-map-marker"></i> <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a></span></p>
 				</div>
@@ -103,11 +103,11 @@
 		<!-- .list-row  -->
 		<div class="list-row">
 			<div class="issue-pic">
-				<img src="images/issues/issues.png" alt=""></div>
+				<img src="${staticHost}/images/issues/issues.png" alt=""></div>
 			<div class="innerblock">
 				<div class="profile-info">
 					<div class="profile-pic">
-						<img src="images/profile-pic.jpg" alt=""></div>
+						<img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
 						<p class="whom"><strong class="issue-id">Issue #51 </strong> <span class="connector">raised by</span> <a href="#" class="username">Somnath Nabajja</a></p>
 						<p class="whenwhere"><span>2 hrs ago</span> <span class="connector">at</span> <span><i class="glyphicon glyphicon-map-marker"></i> <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a></span></p>
 				</div>
@@ -127,11 +127,11 @@
 		<!-- .list-row  -->
 		<div class="list-row">
 			<div class="issue-pic">
-				<img src="images/issues/issues.png" alt=""></div>
+				<img src="${staticHost}/images/issues/issues.png" alt=""></div>
 			<div class="innerblock">
 				<div class="profile-info">
 					<div class="profile-pic">
-						<img src="images/profile-pic.jpg" alt=""></div>
+						<img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
 						<p class="whom"><strong class="issue-id">Issue #51 </strong> <span class="connector">raised by</span> <a href="#" class="username">Somnath Nabajja</a></p>
 						<p class="whenwhere"><span>2 hrs ago</span> <span class="connector">at</span> <span><i class="glyphicon glyphicon-map-marker"></i> <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a></span></p>
 				</div>
@@ -151,11 +151,11 @@
 		<!-- .list-row  -->
 		<div class="list-row">
 			<div class="issue-pic">
-				<img src="images/issues/issues.png" alt=""></div>
+				<img src="${staticHost}/images/issues/issues.png" alt=""></div>
 			<div class="innerblock">
 				<div class="profile-info">
 					<div class="profile-pic">
-						<img src="images/profile-pic.jpg" alt=""></div>
+						<img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
 						<p class="whom"><strong class="issue-id">Issue #51 </strong> <span class="connector">raised by</span> <a href="#" class="username">Somnath Nabajja</a></p>
 						<p class="whenwhere"><span>2 hrs ago</span> <span class="connector">at</span> <span><i class="glyphicon glyphicon-map-marker"></i> <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a></span></p>
 				</div>
@@ -175,11 +175,11 @@
 		<!-- .list-row  -->
 		<div class="list-row">
 			<div class="issue-pic">
-				<img src="images/issues/issues.png" alt=""></div>
+				<img src="${staticHost}/images/issues/issues.png" alt=""></div>
 			<div class="innerblock">
 				<div class="profile-info">
 					<div class="profile-pic">
-						<img src="images/profile-pic.jpg" alt=""></div>
+						<img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
 						<p class="whom"><strong class="issue-id">Issue #51 </strong> <span class="connector">raised by</span> <a href="#" class="username">Somnath Nabajja</a></p>
 						<p class="whenwhere"><span>2 hrs ago</span> <span class="connector">at</span> <span><i class="glyphicon glyphicon-map-marker"></i> <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a></span></p>
 				</div>
