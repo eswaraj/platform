@@ -22,7 +22,7 @@ public class BaseController {
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("static_content_host")
+    @Value("${static_content_host}")
     private String staticContentHost;
 
 	@ExceptionHandler(ApplicationException.class)
