@@ -33,7 +33,7 @@ public class Complaint extends BaseNode {
     private Status status;
     @RelatedTo(type = "ENDORSED_BY", elementClass = Person.class)
     private Set<Person> endorsements;
-    @RelatedTo(type = "SERVED_BY")
+    @RelatedTo(type = "POLITICAL_SERVED_BY")
     private Set<PoliticalBodyAdmin> servants;
     private Set<Photo> photos;
     private Set<Video> videos;

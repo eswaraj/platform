@@ -31,7 +31,7 @@
 						Leveraging Mobile
 						<br>&amp; Internet for a Better Governance</h1>
 					<p>
-						E-Swaraj is for everyone. It helps the common people to report about issues in their city. And it helps the government to govern better.
+						eSwaraj is for everyone. It helps the common people to report about issues in their city. And it helps the government to govern better.
 					</p>
 					<div class="dwld">
 						<a href="#">
