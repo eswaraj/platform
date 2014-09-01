@@ -91,7 +91,7 @@ $.ajax({
 /****************************Load KML Layer on Google Map*****************************/
 
 var kml_path = $('#'+parent).attr('boundaryFile');
-update_map(kmp_path);
+update_map(kml_path);
 		  
 /*************************End KML Load****************************************************/
 
@@ -168,7 +168,7 @@ update_map(kmp_path);
 
 /*******************Update the map***********************************/
 
-function update_map(kmp_path){
+function update_map(kml_path){
 
 var map_html = '<iframe width="625" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'&output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
 
