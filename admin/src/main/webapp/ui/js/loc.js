@@ -43,6 +43,19 @@ var root_node,new_node,sel;
 		  }
 		});
 
+$("#save_btn").click(function() {		
+		update_selected_node();		
+});
+
+var form = document.getElementById("form1");
+            form.onsubmit = function(){
+                var searchText = document.getElementById("file");
+				var selected_node =  $('#js_tree').jstree('get_selected');
+           var  kml_url= '/ajax/location/'+selected_node[0]+'/upload'
+                 $('#form1').attr('action', kml_url);
+$('#form1').submit();				 // window.location = kml_url;
+                return false;
+};  
 
 $.ajax({
   type: "GET",
@@ -75,48 +88,19 @@ $.ajax({
 		 */
 		  
 /****************************Load KML Layer on Google Map*****************************/
-/* var chicago = new google.maps.LatLng(41.875696,-87.624207);
-  var mapOptions = {
-    zoom: 11,
-    center: chicago
-  }
 
-var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-alert($('#'+parent).attr('boundaryFile'));
-  var ctaLayer = new google.maps.KmlLayer({
-    url:$('#'+parent).attr('boundaryFile')
-	//$('#'+parent).attr('boundaryFile')'http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml'
-	
-  });
-ctaLayer.setMap(map); */
-/* var layer = new google.maps.KmlLayer({
-  driveFileId: "0B1vuuiO3sog7bExvSFl3Y1Q1VEU"
-}) */
 var kml_path = $('#'+parent).attr('boundaryFile');
-//alert(kml_path+"Encoded"+encodeURIComponent(kml_path));
 
 var map_html = '<iframe width="625" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'&output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
 
 $('#map-canvas').html(map_html);
-
-/* var mapOptions = {
-    zoom: 11
-  }
-
-var map = new google.maps.Map($('#map-canvas'), mapOptions);
-
-var ctaLayer = new google.maps.KmlLayer({
-    url:$('#'+parent).attr('boundaryFile')
-  });
-ctaLayer.setMap(map);  */
 		  
 /*************************End KML Load****************************************************/
 
 
 						
 		var selected_loc_typeid =  $('#'+parent).attr('loc_typeid');
-		//alert(selected_loc_typeid);
-	
+
 		$.ajax({
 			  type: "GET",
 			  url:"/ajax/locationtype/getchild/"+selected_loc_typeid,
@@ -184,39 +168,7 @@ ctaLayer.setMap(map);  */
 
 });
 
-/**********************File Upload***********************************/
 
-
-
-function sendFile(file) {
-var selected_node =  $('#js_tree').jstree('get_selected');
-  $.ajax({
-    type: 'post',
-    url: '/ajax/location/'+selected_node[0]+'/upload',
-    data: file,
-	headers: {
-	'Content-Type': 'multipart/mixed;'
-	},
-    success: function () {
-     alert('File Uploaded');
-    },
-    xhrFields: {
-      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
-      onprogress: function (progress) {
-        // calculate upload progress
-        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
-        // log upload progress to console
-        console.log('progress', percentage);
-        if (percentage === 100) {
-          console.log('DONE!');
-        }
-      }
-    },
-    processData: false,
-    contentType: file.type
-  });
-
-}
 
 /*******************Add a new Child Node***********************************/
 
@@ -253,58 +205,6 @@ var sel = $('#js_tree').jstree(true).create_node(selected_node, new_node);
 
 
 }
-
-
-$(document).ready(function(){
-	
-$("#edit_btn").click(function() {
-		$("#save_btn").css('display','block');
-		$("#edit_btn").css('display','none');
-		$('#tab1 input').toggleDisabled();
-		
-});	
-$("#save_btn").click(function() {
-		$("#edit_btn").css('display','block');
-		$("#save_btn").css('display','none');
-		update_selected_node();
-		$('#tab1 input').toggleDisabled();
-		
-});
-
-var form = document.getElementById("form1");
-            form.onsubmit = function(){
-                var searchText = document.getElementById("file");
-				var selected_node =  $('#js_tree').jstree('get_selected');
-           var  kml_url= '/ajax/location/'+selected_node[0]+'/upload'
-                 $('#form1').attr('action', kml_url);
-$('#form1').submit();				 // window.location = kml_url;
-                return false;
-            };    
-
-$('#node_add_btn0').on('click',function(){
-alert($(even.target).val());;
-
-})
-	
-
-});
-
-(function($) {
-    $.fn.toggleDisabled = function() {
-        return this.each(function() {
-            var $this = $(this);
-            if ($this.attr('disabled')) $this.removeAttr('disabled');
-            else $this.attr('disabled', 'disabled');
-        });
-    };
-})(jQuery);
-
-$(function() {
-    $('input:button').click(function() {
-        $('input:text').toggleDisabled();
-    });
-});
-
 
 /*******************Update Selected node***********************************/
 
