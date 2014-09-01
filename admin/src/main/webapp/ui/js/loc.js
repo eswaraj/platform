@@ -51,10 +51,11 @@ var form = document.getElementById("form1");
             form.onsubmit = function(){
                 var searchText = document.getElementById("file");
 				var selected_node =  $('#js_tree').jstree('get_selected');
-           var  kml_url= '/ajax/location/'+selected_node[0]+'/upload'
-                 $('#form1').attr('action', kml_url);
-$('#form1').submit();				 // window.location = kml_url;
-                return false;
+				var  kml_url= '/ajax/location/'+selected_node[0]+'/upload'
+                $('#form1').attr('action', kml_url);
+				$('#form1').submit();	
+				update_map(kml_url);			 // window.location = kml_url;
+				return false;
 };  
 
 $.ajax({
@@ -90,10 +91,7 @@ $.ajax({
 /****************************Load KML Layer on Google Map*****************************/
 
 var kml_path = $('#'+parent).attr('boundaryFile');
-
-var map_html = '<iframe width="625" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'&output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
-
-$('#map-canvas').html(map_html);
+update_map(kmp_path);
 		  
 /*************************End KML Load****************************************************/
 
@@ -168,7 +166,15 @@ $('#map-canvas').html(map_html);
 
 });
 
+/*******************Update the map***********************************/
 
+function update_map(kmp_path){
+
+var map_html = '<iframe width="625" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'&output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
+
+$('#map-canvas').html(map_html);
+
+}
 
 /*******************Add a new Child Node***********************************/
 
