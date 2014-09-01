@@ -10,6 +10,7 @@ display:none;
 }
 #node_info{
 position:fixed;
+left:30%;
 }
 .save{
 background: url("../images/edit-save.png")35px 0 !important;
