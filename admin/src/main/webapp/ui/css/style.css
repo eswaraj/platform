@@ -8,6 +8,9 @@ body {
 #tab2{
 display:none;
 }
+#js_tree{
+position:fixed;
+}
 .save{
 background: url("../images/edit-save.png")35px 0 !important;
 left: 35px !important;
