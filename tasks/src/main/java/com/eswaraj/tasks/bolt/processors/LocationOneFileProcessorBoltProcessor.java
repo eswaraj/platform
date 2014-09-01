@@ -45,7 +45,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
 
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
-            processCoordinates(coordinates, allLocations, pointsToProcess, totalPointsMissed, totalPointsProcessed);
+            processCoordinates(coordinates, allLocations, locationId, pointsToProcess, totalPointsMissed, totalPointsProcessed);
             logInfo("totalPointsMissed(Redis)= " + incrementCounterInMemoryStore("totalPointsMissed", totalPointsMissed.get()));
             logInfo("totalPointsProcessed(Redis)= " + incrementCounterInMemoryStore("totalPointsProcessed", totalPointsProcessed.get()));
             return Result.Success;
@@ -92,7 +92,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
             oneLong = new BigDecimal(latLong[0]);
             oneLat = new BigDecimal(latLong[1]);
             onePoint = new Point2D.Double(oneLat.doubleValue(), oneLong.doubleValue());
-            processOnePoint(myPolygons, onePoint, allLocations, totalPointsMissed, totalPointsProcessed);
+            processOnePoint(myPolygons, onePoint, allLocations, locationId, totalPointsMissed, totalPointsProcessed);
         }
 
     }
