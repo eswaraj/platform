@@ -8,6 +8,10 @@ body {
 #tab2{
 display:none;
 }
+#node_info{
+position:fixed;
+left:40%;
+}
 .save{
 background: url("../images/edit-save.png")35px 0 !important;
 left: 35px !important;
