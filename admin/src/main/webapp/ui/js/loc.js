@@ -83,11 +83,7 @@ $.ajax({
 		if($('#'+parent).attr('boundaryFile') != 'null'){
 			$('#kml_status').html("<p>KML File exists</p>");	
 		} else { $('#kml_status').html("<p>KML File does not exist</p>");	}
-		/* var mapOptions = {
-			zoom: 11
-		};
-		 */
-		  
+				  
 /****************************Load KML Layer on Google Map*****************************/
 
 var kml_path = $('#'+parent).attr('boundaryFile');
