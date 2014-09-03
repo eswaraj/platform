@@ -30,6 +30,7 @@ function searchLocationTypeName(id){
 }
 
 $(document).ready(function(){
+window.added = 0
 var root_node,new_node,sel;
 
 	$.ajax({
@@ -117,12 +118,14 @@ update_map(kml_path);
 		
 		//if(!($('#'+parent).hasClass('jstree-open')) || $('#'+parent).closest("li").children("ul").length ==0){
 		//if(!($('#'+parent).hasClass('jstree-open')) && $('#fake_node'+$('#'+parent).attr('id')).length == 0){
-		var tree = jQuery.jstree._reference('#js_tree');
-		var children = tree._get_children(parent);
-		if(!($('#'+parent).hasClass('jstree-open')) && children.length == 0){
+		//var tree = jQuery.jstree._reference('#js_tree');
+		//var children = tree._get_children(parent);
+		//if(!($('#'+parent).hasClass('jstree-open')) && children.length == 0){
+		if(!($('#'+parent).hasClass('jstree-open')) && window.added == 0){
 		//alert("Dummy Node created");	
 		new_node = {'text':'fake','id':'fake_node'+$('#'+parent).attr('id')};
 		$('#js_tree').jstree(true).create_node(parent, new_node);
+		window.added = 1;
 			
 }
 }).bind("open_node.jstree",function(e,data){
