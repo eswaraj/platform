@@ -365,6 +365,9 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 urlIdentifier = urlIdentifier.replace(' ', '-');
                 urlIdentifier = urlIdentifier.replace("&", "");
                 while(true){
+                    if (oneLocation.getParentLocation() == null) {
+                        break;
+                    }
                     existingLocation = locationRepository.findLocationByParentLocationAndUrlId(oneLocation.getParentLocation(), urlIdentifier);
                     if (existingLocation == null) {
                         break;
