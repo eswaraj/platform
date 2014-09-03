@@ -130,7 +130,7 @@ update_map(kml_path);
 }
 }).bind("open_node.jstree",function(e,data){
    var parent = $('#js_tree').jstree('get_selected');
-   parent = data.node;
+   parent = data.node.id;
    //$('#'+parent).jstree("destroy").empty();
   $("#js_tree").jstree("delete_node", $('#fake_node'+$('#'+parent).attr('id')));
 	
