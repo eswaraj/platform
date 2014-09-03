@@ -34,8 +34,15 @@ public class InitDataController extends BaseController {
 
     @RequestMapping(value = "/data/updateurl", method = RequestMethod.GET)
     public @ResponseBody String update(HttpServletRequest httpServletRequest) throws IOException, ServletException, ApplicationException {
-        locationService.updateAllLocationUrls();
-        appService.updateAllUrls();
+        System.out.println("Updating Location Urls");
+        try {
+            locationService.updateAllLocationUrls();
+            appService.updateAllUrls();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("Finished");
         return "Data updated";
     }
 
