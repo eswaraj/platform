@@ -361,6 +361,10 @@ public class LocationServiceImpl extends BaseService implements LocationService 
             String urlIdentifier;
             Location existingLocation;
             for (Location oneLocation : allLocationResultSet) {
+                logger.info("updaing location : {}", oneLocation);
+                if (oneLocation.getName() == null) {
+                    continue;
+                }
                 urlIdentifier = oneLocation.getName().toLowerCase();
                 urlIdentifier = urlIdentifier.replace(' ', '-');
                 urlIdentifier = urlIdentifier.replace("&", "");
