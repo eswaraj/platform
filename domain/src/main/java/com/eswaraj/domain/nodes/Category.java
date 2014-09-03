@@ -22,6 +22,7 @@ public class Category extends BaseNode{
 	private boolean root;
 	private String headerImageUrl;
 	private String videoUrl;
+    private String urlIdentifier;
 	    
     public Category() {}
     public Category(String name) {
@@ -71,7 +72,16 @@ public class Category extends BaseNode{
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
-	@Override
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
+    @Override
 	public String toString() {
 		return "Category [name=" + name + ", description=" + description
 				+ ", parentCategory=" + parentCategory + ", imageUrl="

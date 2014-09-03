@@ -31,6 +31,10 @@ public class LocationDto extends BaseDto {
 	
 	private Long totalFemaleWorkingPopulation;
 	
+    private Double area;
+
+    private Double perimeter;
+
 	public String getName() {
 		return name;
 	}
@@ -130,6 +134,21 @@ public class LocationDto extends BaseDto {
         this.boundaryFile = boundaryFile;
     }
 
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public Double getPerimeter() {
+        return perimeter;
+    }
+
+    public void setPerimeter(Double perimeter) {
+        this.perimeter = perimeter;
+    }
     @Override
 	public String toString() {
 		return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", latitude=" + latitude

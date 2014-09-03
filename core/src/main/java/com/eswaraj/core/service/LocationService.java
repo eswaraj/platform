@@ -57,4 +57,6 @@ public interface LocationService {
 	
     void initializeData() throws ApplicationException;
 
+    void updateAllLocationUrls() throws ApplicationException;
+
 }

@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,8 +23,6 @@ public class InitDataController extends BaseController {
 
     @Autowired
     private LocationService locationService;
-    @Autowired
-    private RedisTemplate redisTemplate;
 
 
     @RequestMapping(value = "/data/init", method = RequestMethod.GET)
@@ -33,6 +30,13 @@ public class InitDataController extends BaseController {
         appService.initializeData();
         locationService.initializeData();
         return "Data Loaded";
+    }
+
+    @RequestMapping(value = "/data/updateurl", method = RequestMethod.GET)
+    public @ResponseBody String update(HttpServletRequest httpServletRequest) throws IOException, ServletException, ApplicationException {
+        locationService.updateAllLocationUrls();
+        appService.updateAllUrls();
+        return "Data updated";
     }
 
 }
