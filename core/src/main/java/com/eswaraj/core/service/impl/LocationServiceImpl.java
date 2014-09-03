@@ -360,7 +360,9 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         try {
             String urlIdentifier;
             Location existingLocation;
+            List<Location> locations = new ArrayList<>();
             for (Location oneLocation : allLocationResultSet) {
+                System.out.println("updaing location : " + oneLocation);
                 logger.info("updaing location : {}", oneLocation);
                 if (oneLocation.getName() == null) {
                     continue;
@@ -382,13 +384,17 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 }
                 oneLocation.setUrlIdentifier(urlIdentifier);
                 logger.info("updaing location : {}", oneLocation);
-                locationRepository.save(oneLocation);
+                locations.add(oneLocation);
+
+            }
+            for (Location location : locations) {
+                locationRepository.save(location);
             }
         } finally {
             try {
                 allLocationResultSet.finish();
             } catch (Exception ex) {
-
+                ex.printStackTrace();
             }
 
         }
