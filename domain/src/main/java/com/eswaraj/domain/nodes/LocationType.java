@@ -24,6 +24,8 @@ public class LocationType extends BaseNode {
 	@RelatedTo(type="BELONGS_TO")
 	private DataClient dataClient;
 	
+    private String urlIdentifier;
+
 	private boolean root;
 	
 	public String getName() {
@@ -58,11 +60,18 @@ public class LocationType extends BaseNode {
 		this.root = root;
 	}
 
-	@Override
-	public String toString() {
-		return "LocationType [name=" + name + ", parentLocationType=" + parentLocationType + ", dataClient=" + dataClient + ", root=" + root + ", id=" + id
-				+ "]";
-	}
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
+    @Override
+    public String toString() {
+        return "LocationType [name=" + name + ", parentLocationType=" + parentLocationType + ", dataClient=" + dataClient + ", urlIdentifier=" + urlIdentifier + ", root=" + root + ", id=" + id + "]";
+    }
 
 	
 }

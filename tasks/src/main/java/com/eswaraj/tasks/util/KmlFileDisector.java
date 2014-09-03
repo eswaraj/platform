@@ -23,17 +23,19 @@ public class KmlFileDisector {
 
     public static void main(String[] args) throws Exception {
         List<String> files = new ArrayList<>();
-        /*
+        
         files.add("/usr/local/dev/data/eswaraj/originals/Delhi_Wards.kml");
+        /*
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiCityRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiDistrictRegions.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiMCD_Zones.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiStateRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiSubdistricts.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiSubdistricts.kml");
-        */
+        
         files.add("/usr/local/dev/data/eswaraj/originals/Delhi_AC.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/Delhi_PC.kml");
+        */
         for (String oneFile : files) {
             disectFile(oneFile);
         }

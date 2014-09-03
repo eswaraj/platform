@@ -24,6 +24,8 @@ public class Location extends BaseNode {
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
+    private String urlIdentifier;
+
     private String boundaryFile;
 
 	private Double latitude;
@@ -50,6 +52,10 @@ public class Location extends BaseNode {
 	
 	private Long totalFemaleWorkingPopulation;
 	
+    private Double area;
+
+    private Double perimeter;
+
 	public String getName() {
 		return name;
 	}
@@ -170,6 +176,22 @@ public class Location extends BaseNode {
 		this.totalFemaleWorkingPopulation = totalFemaleWorkingPopulation;
 	}
 
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public Double getPerimeter() {
+        return perimeter;
+    }
+
+    public void setPerimeter(Double perimeter) {
+        this.perimeter = perimeter;
+    }
+
     public String getBoundaryFile() {
         return boundaryFile;
     }
@@ -178,11 +200,23 @@ public class Location extends BaseNode {
         this.boundaryFile = boundaryFile;
     }
 
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
     @Override
-	public String toString() {
-		return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", latitude=" + latitude + ", longitude="
-				+ longitude + ", id=" + id + "]";
-	}
+    public String toString() {
+        return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", urlIdentifier=" + urlIdentifier + ", boundaryFile=" + boundaryFile
+                + ", latitude=" + latitude + ", longitude=" + longitude + ", totalNumberOfHouses=" + totalNumberOfHouses + ", totalPopulation=" + totalPopulation + ", totalMalePopulation="
+                + totalMalePopulation + ", totalFemalePopulation=" + totalFemalePopulation + ", totalLiteratePopulation=" + totalLiteratePopulation + ", totalMaleLiteratePopulation="
+                + totalMaleLiteratePopulation + ", totalFemaleLiteratePopulation=" + totalFemaleLiteratePopulation + ", totalWorkingPopulation=" + totalWorkingPopulation
+                + ", totalMaleWorkingPopulation=" + totalMaleWorkingPopulation + ", totalFemaleWorkingPopulation=" + totalFemaleWorkingPopulation + ", area=" + area + ", perimeter=" + perimeter
+                + ", id=" + id + "]";
+    }
 
 	
 }

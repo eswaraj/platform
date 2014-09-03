@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Component;
@@ -59,6 +61,7 @@ import com.google.gson.JsonParser;
 public class AppServiceImpl extends BaseService implements AppService {
 
     private static final long serialVersionUID = 1L;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
@@ -394,6 +397,29 @@ public class AppServiceImpl extends BaseService implements AppService {
         Person person = getObjectIfExistsElseThrowExcetpion(personId, "Location", personRepository);
         Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getPoliticalAdminHistoryByPerson(person);
         return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
+    }
+
+    @Override
+    public void updateAllUrls() throws ApplicationException {
+        EndResult<Category> categoryResultSet = categoryRepository.findAll();
+        try {
+            String urlIdentifier;
+            for (Category oneCategory : categoryResultSet) {
+                urlIdentifier = oneCategory.getName().toLowerCase();
+                urlIdentifier = urlIdentifier.replace("&", "");
+                urlIdentifier = urlIdentifier.replace(" ", "-");
+                oneCategory.setUrlIdentifier(urlIdentifier);
+                logger.info("updaing Category : {}", oneCategory);
+                categoryRepository.save(oneCategory);
+            }
+        } finally {
+            try {
+                categoryResultSet.finish();
+            } catch (Exception ex) {
+
+            }
+        }
+
     }
 
 }

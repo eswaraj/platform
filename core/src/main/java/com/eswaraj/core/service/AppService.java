@@ -90,4 +90,6 @@ public interface AppService {
 	List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException;
 
     void initializeData() throws ApplicationException;
+
+    void updateAllUrls() throws ApplicationException;
 }

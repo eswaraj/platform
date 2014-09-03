@@ -15,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.convertors.LocationBoundaryFileConvertor;
 import com.eswaraj.core.convertors.LocationConvertor;
@@ -350,6 +352,70 @@ public class LocationServiceImpl extends BaseService implements LocationService 
             }
         }
         return list;
+    }
+
+    @Override
+    public void updateAllLocationUrls() throws ApplicationException {
+        EndResult<Location> allLocationResultSet = locationRepository.findAll();
+        try {
+            String urlIdentifier;
+            Location existingLocation;
+            for (Location oneLocation : allLocationResultSet) {
+                urlIdentifier = oneLocation.getName().toLowerCase();
+                urlIdentifier = urlIdentifier.replace(' ', '-');
+                urlIdentifier = urlIdentifier.replace("&", "");
+                while(true){
+                    existingLocation = locationRepository.findLocationByParentLocationAndUrlId(oneLocation.getParentLocation(), urlIdentifier);
+                    if (existingLocation == null) {
+                        break;
+                    }
+                    if (existingLocation.getId().equals(oneLocation.getId())) {
+                        break;
+                    }
+                }
+                oneLocation.setUrlIdentifier(urlIdentifier);
+                logger.info("updaing location : {}", oneLocation);
+                locationRepository.save(oneLocation);
+            }
+        } finally {
+            try {
+                allLocationResultSet.finish();
+            } catch (Exception ex) {
+
+            }
+
+        }
+
+        EndResult<LocationType> allLocationTypeResultSet = locationTypeRepository.findAll();
+        try {
+            String urlIdentifier;
+            for (LocationType oneLocationType : allLocationTypeResultSet) {
+                urlIdentifier = oneLocationType.getName().toLowerCase();
+                urlIdentifier = urlIdentifier.replace("&", "");
+                if (urlIdentifier.contains(" ")) {
+                    // names like assembly constituency
+                    String parts[] = urlIdentifier.split(" ");
+                    String id = "";
+                    for (String onePart : parts) {
+                        if (StringUtils.isEmpty(onePart)) {
+                            continue;
+                        }
+                        id = id + onePart.charAt(0);
+                    }
+                    urlIdentifier = id;
+                }
+                oneLocationType.setUrlIdentifier(urlIdentifier);
+                logger.info("updaing location Type : {}", oneLocationType);
+                locationTypeRepository.save(oneLocationType);
+            }
+        } finally {
+            try {
+                allLocationTypeResultSet.finish();
+            } catch (Exception ex) {
+
+            }
+        }
+
     }
 
 }
