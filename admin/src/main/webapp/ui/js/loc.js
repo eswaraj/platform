@@ -117,14 +117,14 @@ update_map(kml_path);
 		
 		if(!($('#'+parent).hasClass('jstree-open')) || $('#'+parent).closest("li").children("ul").length ==0){
 		//alert("Dummy Node created");	
-		new_node = {'text':'fake','id':'fake_node'};
+		new_node = {'text':'fake','id':'fake_node'+$('#'+parent).attr('id')};
 		$('#js_tree').jstree(true).create_node(parent, new_node);
 			
 }
 }).bind("open_node.jstree",function(e,data){
    var parent = $('#js_tree').jstree('get_selected');
    //$('#'+parent).jstree("destroy").empty();
-  $("#js_tree").jstree("delete_node", $('#fake_node'));
+  $("#js_tree").jstree("delete_node", $('#fake_node'+$('#'+parent).attr('id')));
 	
 	if($('#'+parent).closest("li").children("ul").length ==0){
 		
