@@ -10,6 +10,7 @@ public class LocationDto extends BaseDto {
 	private Double latitude;
 	private Double longitude;
     private String boundaryFile;
+    private String urlIdentifier;
 	
 	private Long totalNumberOfHouses;
 	
@@ -148,6 +149,14 @@ public class LocationDto extends BaseDto {
 
     public void setPerimeter(Double perimeter) {
         this.perimeter = perimeter;
+    }
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
     }
     @Override
 	public String toString() {
