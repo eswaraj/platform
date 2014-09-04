@@ -49,7 +49,7 @@ $(document).ready(function(){
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	c = map.getCenter();
 	myMarker = new google.maps.Marker({
-		position: new google.maps.LatLng(c.lat, c.lng),
+		//position: new google.maps.LatLng(c.lat(), c.lng()),
 		draggable: true
 	});
 	myMarker.setMap(map);
@@ -207,8 +207,7 @@ $(document).ready(function(){
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
 		c = map.getCenter();
-		var latlng = new google.maps.LatLng(c.lat, c.lng);
-	        myMarker.setPosition(latlng);
+	        myMarker.setPosition(c);
 
 	}
 
