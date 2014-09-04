@@ -45,7 +45,7 @@ $(document).ready(function(){
 		//center: india,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
-	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	var c = map.getCenter();
 	myMarker = new google.maps.Marker({
 		position: new google.maps.LatLng(c.lat, c.lng),
