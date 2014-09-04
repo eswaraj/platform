@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
@@ -383,10 +385,29 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 
     @Override
     public void updateAllLocationUrls() throws ApplicationException {
+
+        EndResult<LocationType> allLocationTypeResultSet = locationTypeRepository.findAll();
+        try {
+            String urlIdentifier;
+            for (LocationType oneLocationType : allLocationTypeResultSet) {
+                urlIdentifier = getLocationTypeUrlIdentifier(oneLocationType);
+                oneLocationType.setUrlIdentifier(urlIdentifier);
+                System.out.println("updaing location Type : " + oneLocationType);
+                logger.info("updaing location Type : {}", oneLocationType);
+                locationTypeRepository.save(oneLocationType);
+            }
+        } finally {
+            try {
+                allLocationTypeResultSet.finish();
+            } catch (Exception ex) {
+
+            }
+        }
+        System.out.println("***LocationType  Done, starting Location");
         EndResult<Location> allLocationResultSet = locationRepository.findAll();
         try {
             String urlIdentifier;
-            Location existingLocation;
+            Set<String> alreadyUsedUrlids = new HashSet<>();
             List<Location> locations = new ArrayList<>();
             for (Location oneLocation : allLocationResultSet) {
                 System.out.println("updaing location : " + oneLocation);
@@ -394,27 +415,11 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 if (oneLocation.getName() == null) {
                     continue;
                 }
-                urlIdentifier = oneLocation.getName().toLowerCase();
-                urlIdentifier = urlIdentifier.replace(' ', '-');
-                urlIdentifier = urlIdentifier.replace("&", "");
-                int i = 1;
-                String modifiedUrlIdentifier = urlIdentifier;
-                while(true){
-                    if (oneLocation.getParentLocation() == null) {
-                        break;
-                    }
-                    System.out.println("modifiedUrlIdentifier=" + modifiedUrlIdentifier);
-                    existingLocation = locationRepository.findLocationByParentLocationAndUrlId(oneLocation.getParentLocation(), modifiedUrlIdentifier);
-                    if (existingLocation == null) {
-                        break;
-                    }
-                    if (existingLocation.getId().equals(oneLocation.getId())) {
-                        break;
-                    }
-                    modifiedUrlIdentifier = urlIdentifier + i;
-                    i++;
+                urlIdentifier = getLocationurlIdentifier(oneLocation);
+                if (alreadyUsedUrlids.contains(urlIdentifier)) {
+                    System.out.println("\n***** Already used : " + urlIdentifier);
                 }
-                oneLocation.setUrlIdentifier(modifiedUrlIdentifier);
+                oneLocation.setUrlIdentifier(urlIdentifier);
                 logger.info("updaing location : {}", oneLocation);
                 locations.add(oneLocation);
 
@@ -430,38 +435,59 @@ public class LocationServiceImpl extends BaseService implements LocationService 
             }
 
         }
-        System.out.println("***Location Done, starting Location Type");
-        EndResult<LocationType> allLocationTypeResultSet = locationTypeRepository.findAll();
-        try {
-            String urlIdentifier;
-            for (LocationType oneLocationType : allLocationTypeResultSet) {
-                urlIdentifier = oneLocationType.getName().toLowerCase();
-                urlIdentifier = urlIdentifier.replace("&", "");
-                if (urlIdentifier.contains(" ")) {
-                    // names like assembly constituency
-                    String parts[] = urlIdentifier.split(" ");
-                    String id = "";
-                    for (String onePart : parts) {
-                        if (StringUtils.isEmpty(onePart)) {
-                            continue;
-                        }
-                        id = id + onePart.charAt(0);
-                    }
-                    urlIdentifier = id;
-                }
-                oneLocationType.setUrlIdentifier(urlIdentifier);
-                System.out.println("updaing location Type : " + oneLocationType);
-                logger.info("updaing location Type : {}", oneLocationType);
-                locationTypeRepository.save(oneLocationType);
-            }
-        } finally {
-            try {
-                allLocationTypeResultSet.finish();
-            } catch (Exception ex) {
 
-            }
+
+    }
+
+    private String getLocationurlIdentifier(Location oneLocation) {
+
+        if (oneLocation.getParentLocation() == null) {
+            String urlIdentifier = removeExtraChars(oneLocation.getName());
+            return urlIdentifier;
         }
 
+        Location location = oneLocation;
+        LocationType locationType;
+        String locationTypeUrlId;
+        String locationTypeNameUrl;
+        String urlIdentifier = "";
+        while (location != null) {
+            locationType = locationTypeRepository.findOne(location.getLocationType().getId());
+            locationTypeUrlId = getLocationTypeUrlIdentifier(locationType);
+            locationTypeNameUrl = removeExtraChars(locationType.getName());
+            urlIdentifier = "/" + locationTypeUrlId + "/" + locationTypeNameUrl + urlIdentifier;
+
+            if (location.getParentLocation() == null) {
+                break;
+            }
+            location = locationRepository.findOne(location.getParentLocation().getId());
+        }
+        return urlIdentifier;
+    }
+
+    private String removeExtraChars(String str) {
+        String urlIdentifier = str.toLowerCase();
+        urlIdentifier = urlIdentifier.replace(' ', '-');
+        urlIdentifier = urlIdentifier.replace("&", "");
+        return urlIdentifier;
+    }
+
+    private String getLocationTypeUrlIdentifier(LocationType oneLocationType) {
+        String urlIdentifier = oneLocationType.getName().toLowerCase();
+        urlIdentifier = urlIdentifier.replace("&", "");
+        if (urlIdentifier.contains(" ")) {
+            // names like assembly constituency
+            String parts[] = urlIdentifier.split(" ");
+            String id = "";
+            for (String onePart : parts) {
+                if (StringUtils.isEmpty(onePart)) {
+                    continue;
+                }
+                id = id + onePart.charAt(0);
+            }
+            urlIdentifier = id;
+        }
+        return urlIdentifier;
     }
 
 }
