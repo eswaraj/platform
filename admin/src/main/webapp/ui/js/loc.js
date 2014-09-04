@@ -207,7 +207,7 @@ $.ajax({
   
  var new_node = {'text':data.name+" Type :"+data.locationTypeId,
 'id':data.id,
-'li_attr':{'title':data.name,'loc_typeid':data.locationTypeId,'p_id':data.parentLocationId,'center_lat':data.latitude,'center_long':data.longitude,'boundaryFile':data.boundaryFile}};
+'li_attr':{'title':data.name,'loc_typeid':data.locationTypeId,'p_id':data.parentLocationId,'center_lat':data.latitude,'center_long':data.longitude,'boundaryFile':data.boundaryFile, 'UrlIden':data.urlIdentifier}};
 //alert(JSON.stringify(new_node));
 var sel = $('#js_tree').jstree(true).create_node(selected_node, new_node);
   }
