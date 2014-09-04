@@ -68,7 +68,7 @@ $.ajax({
   var root_node = 
        {		'text'    	:data.name+" Type: Country",
 				'id'  	 	:data.id,								   
-				'li_attr':{'title':data.name,'loc_typeid':data.locationTypeId,'p_id':data.parentLocationId,'center_lat':data.latitude,'center_long':data.longitude,'boundaryFile':data.boundaryFile}  
+				'li_attr':{'title':data.name,'loc_typeid':data.locationTypeId,'p_id':data.parentLocationId,'center_lat':data.latitude,'center_long':data.longitude,'boundaryFile':data.boundaryFile, 'UrlIden':data.urlIdentifier}  
 	   };
 
 	$('#js_tree').jstree({ 'core' : {
@@ -81,6 +81,7 @@ $.ajax({
 		$('#node_title').val($('#'+parent).attr('title'));
 		$('#node_lat').val($('#'+parent).attr('center_lat'));
 		$('#node_long').val($('#'+parent).attr('center_long'));
+		$('#node_urliden').val($('#'+parent).attr('UrlIden'));
 		if($('#'+parent).attr('boundaryFile') != 'null'){
 			$('#kml_status').html("<p>KML File exists</p>");	
 		} else { $('#kml_status').html("<p>KML File does not exist</p>");	}
@@ -147,7 +148,7 @@ update_map(kml_path);
 		  success: function(data){
 		       if(data.length ==0){alert("No Children found");}		   			   
 			   for(var i=0; i< data.length;i++){
-			   	  new_node = {'text':data[i].name+" Type :"+searchLocationTypeName(data[i].locationTypeId),'id':data[i].id,'li_attr':{'title':data[i].name,'loc_typeid':data[i].locationTypeId,'p_id':data[i].parentLocationId,'center_lat':data[i].latitude,'center_long':data[i].longitude,'boundaryFile':data[i].boundaryFile}};
+			   	  new_node = {'text':data[i].name+" Type :"+searchLocationTypeName(data[i].locationTypeId),'id':data[i].id,'li_attr':{'title':data[i].name,'loc_typeid':data[i].locationTypeId,'p_id':data[i].parentLocationId,'center_lat':data[i].latitude,'center_long':data[i].longitude,'boundaryFile':data[i].boundaryFile, 'UrlIden':data[i].urlIdentifier}};
                   sel = $('#js_tree').jstree(true).create_node(selected_node, new_node);
 				  
 				}
