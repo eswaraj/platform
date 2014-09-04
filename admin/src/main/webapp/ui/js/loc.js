@@ -42,7 +42,7 @@ $(document).ready(function(){
 	//Create map
 	var mapOptions = {
 		zoom: 5,
-		center: india,
+		//center: india,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
