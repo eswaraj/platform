@@ -414,7 +414,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                     modifiedUrlIdentifier = urlIdentifier + i;
                     i++;
                 }
-                oneLocation.setUrlIdentifier(urlIdentifier);
+                oneLocation.setUrlIdentifier(modifiedUrlIdentifier);
                 logger.info("updaing location : {}", oneLocation);
                 locations.add(oneLocation);
 
