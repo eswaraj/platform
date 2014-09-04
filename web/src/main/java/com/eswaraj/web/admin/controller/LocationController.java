@@ -17,7 +17,7 @@ public class LocationController extends BaseController {
         return mv;
     }
 
-    @RequestMapping(value = "/state/*", method = RequestMethod.GET)
+    @RequestMapping(value = "/state/**", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv);

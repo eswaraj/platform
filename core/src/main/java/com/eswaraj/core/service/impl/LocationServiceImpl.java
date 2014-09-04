@@ -397,17 +397,22 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 urlIdentifier = oneLocation.getName().toLowerCase();
                 urlIdentifier = urlIdentifier.replace(' ', '-');
                 urlIdentifier = urlIdentifier.replace("&", "");
+                int i = 1;
+                String modifiedUrlIdentifier = urlIdentifier;
                 while(true){
                     if (oneLocation.getParentLocation() == null) {
                         break;
                     }
-                    existingLocation = locationRepository.findLocationByParentLocationAndUrlId(oneLocation.getParentLocation(), urlIdentifier);
+                    System.out.println("modifiedUrlIdentifier=" + modifiedUrlIdentifier);
+                    existingLocation = locationRepository.findLocationByParentLocationAndUrlId(oneLocation.getParentLocation(), modifiedUrlIdentifier);
                     if (existingLocation == null) {
                         break;
                     }
                     if (existingLocation.getId().equals(oneLocation.getId())) {
                         break;
                     }
+                    modifiedUrlIdentifier = urlIdentifier + i;
+                    i++;
                 }
                 oneLocation.setUrlIdentifier(urlIdentifier);
                 logger.info("updaing location : {}", oneLocation);
