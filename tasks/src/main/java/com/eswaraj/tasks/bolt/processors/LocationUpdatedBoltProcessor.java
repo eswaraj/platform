@@ -26,8 +26,9 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
             String message = (String) input.getValue(0);
             JsonObject jsonObject = (JsonObject)jsonParser.parse(message);
             Long locationId = jsonObject.get("locationId").getAsLong();
-            String urlId = jsonObject.get("url").getAsString();
+
             JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
+            String urlId = outputJsonObject.get("url").getAsString();
             String redisKey = locationKeyService.getLocationInformationKey(locationId);
 
             String locationInfo = outputJsonObject.toString();
