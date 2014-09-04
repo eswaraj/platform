@@ -6,6 +6,7 @@ var kmlPath;
 var myMarker;
 var set = true;
 var urlSuffix;
+var c;
 
 //
 $(function(){
@@ -46,7 +47,7 @@ $(document).ready(function(){
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	var c = map.getCenter();
+	c = map.getCenter();
 	myMarker = new google.maps.Marker({
 		position: new google.maps.LatLng(c.lat, c.lng),
 		draggable: true
@@ -205,7 +206,7 @@ $(document).ready(function(){
 		//$('#map-canvas').html(map_html);
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
-		var c = map.getCenter();
+		c = map.getCenter();
 		var latlng = new google.maps.LatLng(c.lat, c.lng);
 	        myMarker.setPosition(latlng);
 
