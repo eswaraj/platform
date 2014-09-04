@@ -430,7 +430,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
             }
 
         }
-
+        System.out.println("***Location Done, starting Location Type");
         EndResult<LocationType> allLocationTypeResultSet = locationTypeRepository.findAll();
         try {
             String urlIdentifier;
@@ -450,6 +450,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                     urlIdentifier = id;
                 }
                 oneLocationType.setUrlIdentifier(urlIdentifier);
+                System.out.println("updaing location Type : " + oneLocationType);
                 logger.info("updaing location Type : {}", oneLocationType);
                 locationTypeRepository.save(oneLocationType);
             }
