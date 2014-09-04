@@ -415,7 +415,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 if (oneLocation.getName() == null) {
                     continue;
                 }
-                urlIdentifier = getLocationurlIdentifier(oneLocation);
+                urlIdentifier = getLocationUrlIdentifier(oneLocation);
                 if (alreadyUsedUrlids.contains(urlIdentifier)) {
                     System.out.println("\n***** Already used : " + urlIdentifier);
                 }
@@ -439,7 +439,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 
     }
 
-    private String getLocationurlIdentifier(Location oneLocation) {
+    private String getLocationUrlIdentifier(Location oneLocation) {
 
         if (oneLocation.getParentLocation() == null) {
             String urlIdentifier = removeExtraChars(oneLocation.getName());
@@ -454,8 +454,10 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         while (location != null) {
             locationType = locationTypeRepository.findOne(location.getLocationType().getId());
             locationTypeUrlId = getLocationTypeUrlIdentifier(locationType);
-            locationTypeNameUrl = removeExtraChars(locationType.getName());
-            urlIdentifier = "/" + locationTypeUrlId + "/" + locationTypeNameUrl + urlIdentifier;
+            if (!locationTypeUrlId.equals("country")) {//No need to add country in url
+                locationTypeNameUrl = removeExtraChars(location.getName());
+                urlIdentifier = "/" + locationTypeUrlId + "/" + locationTypeNameUrl + urlIdentifier;
+            }
 
             if (location.getParentLocation() == null) {
                 break;
