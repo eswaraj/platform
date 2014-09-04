@@ -386,7 +386,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
     @Override
     public void updateAllLocationUrls() throws ApplicationException {
 
-        EndResult<LocationType> allLocationTypeResultSet = locationTypeRepository.findAll();
+        EndResult<LocationType> allLocationTypeResultSet = locationTypeRepository.findAllByPropertyValue("__type__", "com.eswaraj.domain.nodes.LocationType");
         try {
             String urlIdentifier;
             for (LocationType oneLocationType : allLocationTypeResultSet) {
@@ -404,7 +404,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
             }
         }
         System.out.println("***LocationType  Done, starting Location");
-        EndResult<Location> allLocationResultSet = locationRepository.findAll();
+        EndResult<Location> allLocationResultSet = locationRepository.findAllByPropertyValue("__type__", "com.eswaraj.domain.nodes.Location");
         try {
             String urlIdentifier;
             Set<String> alreadyUsedUrlids = new HashSet<>();
