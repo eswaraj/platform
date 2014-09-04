@@ -404,7 +404,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
             }
         }
         System.out.println("***LocationType  Done, starting Location");
-        EndResult<Location> allLocationResultSet = locationRepository.findAllByPropertyValue("__type__", "com.eswaraj.domain.nodes.Location");
+        EndResult<Location> allLocationResultSet = locationRepository.findAll();
         try {
             String urlIdentifier;
             Set<String> alreadyUsedUrlids = new HashSet<>();
