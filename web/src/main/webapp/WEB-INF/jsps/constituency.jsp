@@ -54,13 +54,9 @@
                         <div class="form-group">
                             <label>Citizen Services</label>
                             <select class="form-control">
-                                <option value="1">Show All</option>
-                                <option value="2">Road</option>
-                                <option value="3">Water</option>
-                                <option value="4">Transportation</option>
-                                <option value="5">Electricity</option>
-                                <option value="6">Law &amp; order</option>
-                                <option value="7">Sewage</option>
+                                <c:forEach items="${rootCategories}" var="oneCategory">
+                                    <option value="${oneCategory.id}">${oneCategory.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="form-group">
@@ -101,19 +97,16 @@
         </p>
         <div class="list-group">
             <a href="#" class="list-group-item active">Show All</a>
-            <a href="#" class="list-group-item">Water</a>
-            <a href="#" class="list-group-item">Electricity</a>
-            <a href="#" class="list-group-item">Sewage &amp; Sanitation</a>
-            <a href="#" class="list-group-item">Law &amp; Order</a>
-            <a href="#" class="list-group-item">Roads</a>
-            <a href="#" class="list-group-item">Transportation</a>
+            <c:forEach items="${rootCategories}" var="oneCategory">
+                <a href="#" class="list-group-item">${oneCategory.name}</a>
+            </c:forEach>
         </div>
     </div>
     <div class="col-sm-9">
         <div class="listing-wrapper">
             <div class="secondary-wrapper">
                 <div class="pull-left">
-                    <h1>CBD Belapur Constituency</h1>
+                    <h1>${location.name}</h1>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
