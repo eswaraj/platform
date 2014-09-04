@@ -94,7 +94,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		Location location = locationConvertor.convert(locationDto);
 		//Check Parent child rule
 		checkParentChildRule(location);
-        setUrlIdentifier(location);
+        location.setUrlIdentifier(getLocationUrlIdentifier(location));
 		locationRepository.save(location);
         queueService.sendLocationUpdateMessage(location.getId());
 		return locationConvertor.convertBean(location);
@@ -357,31 +357,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         return list;
     }
 
-    private void setUrlIdentifier(Location oneLocation) {
-        if (oneLocation.getUrlIdentifier() == null) {
-            if (oneLocation.getName() == null) {
-                return;
-            }
-            String urlIdentifier = oneLocation.getName().toLowerCase();
-            urlIdentifier = urlIdentifier.replace(' ', '-');
-            urlIdentifier = urlIdentifier.replace("&", "");
-            Location existingLocation;
-            while (true) {
-                if (oneLocation.getParentLocation() == null) {
-                    break;
-                }
-                existingLocation = locationRepository.findLocationByParentLocationAndUrlId(oneLocation.getParentLocation(), urlIdentifier);
-                if (existingLocation == null) {
-                    break;
-                }
-                if (existingLocation.getId().equals(oneLocation.getId())) {
-                    break;
-                }
-            }
-            oneLocation.setUrlIdentifier(urlIdentifier);
-            logger.info("updaing location : {}", oneLocation);
-        }
-    }
+
 
     @Override
     public void updateAllLocationUrls() throws ApplicationException {
