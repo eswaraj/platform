@@ -134,6 +134,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
 
     private JsonObject buildComplaintInfo(Complaint complaint) {
         JsonObject complaintJsonObject = new JsonObject();
+        complaintJsonObject.addProperty("id", complaint.getId());
         complaintJsonObject.addProperty("complaintTime", complaint.getComplaintTime());
         complaintJsonObject.addProperty("title", complaint.getTitle());
         complaintJsonObject.addProperty("description", complaint.getDescription());
@@ -188,13 +189,19 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             for (Photo onePhoto : complaint.getPhotos()) {
                 JsonObject locationJsonObject = new JsonObject();
                 onePhoto = photoRepository.findOne(onePhoto.getId());
-                locationJsonObject.addProperty("imageUrl-large", onePhoto.getLargeUrl());
-                locationJsonObject.addProperty("imageUrl-medium", onePhoto.getMediumUrl());
-                locationJsonObject.addProperty("imageUrl-small", onePhoto.getSmallUrl());
-                locationJsonObject.addProperty("imageUrl-square", onePhoto.getSquareUrl());
+                locationJsonObject.addProperty("imageUrlLarge", onePhoto.getLargeUrl());
+                locationJsonObject.addProperty("imageUrlMedium", onePhoto.getMediumUrl());
+                locationJsonObject.addProperty("imageUrlSmall", onePhoto.getSmallUrl());
+                locationJsonObject.addProperty("imageUrlSquare", onePhoto.getSquareUrl());
                 photosArray.add(locationJsonObject);
             }
             complaintJsonObject.add("photos", photosArray);
+        }
+        if (complaint.getPerson() != null) {
+            Person person = personRepository.findOne(complaint.getPerson().getId());
+            JsonObject personJsonObject = new JsonObject();
+            personJsonObject.addProperty("name", person.getName());
+            complaintJsonObject.add("loggedBy", personJsonObject);
         }
         return complaintJsonObject;
     }

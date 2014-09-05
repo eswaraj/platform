@@ -2,6 +2,7 @@ package com.eswaraj.tasks.bolt.processors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import backtype.storm.tuple.Tuple;
 
@@ -34,7 +35,10 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
             String locationInfo = outputJsonObject.toString();
             logInfo("Writing Key {} to redis with Value as {}", redisKey, locationInfo);
             writeToMemoryStoreValue(redisKey, locationInfo);
-            writeToMemoryStoreValue(urlId, locationId);
+            if (!StringUtils.isEmpty(urlId)) {
+                writeToMemoryStoreValue(urlId, locationId);
+            }
+
             return Result.Success;
 		}catch(Exception ex){
             logError("Unable to process message " + input.getValue(0), ex);

@@ -14,8 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.LocationDto;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 @Controller
 public class LocationController extends BaseController {
@@ -26,6 +29,8 @@ public class LocationController extends BaseController {
     private LocationService locationService;
     @Autowired
     private AppService appService;
+    @Autowired
+    private ApiUtil apiUtil;
 
     @RequestMapping(value = "/const.html", method = RequestMethod.GET)
     public ModelAndView showIndexPage(ModelAndView mv) {
@@ -47,6 +52,10 @@ public class LocationController extends BaseController {
                 mv.getModel().put("location", locationDto);
                 List<CategoryDto> allRootcategories = appService.getAllRootCategories();
                 mv.getModel().put("rootCategories", allRootcategories);
+                String locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
+                List<ComplaintBean> list = new Gson().fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
+                }.getType());
+                mv.getModel().put("complaintList", list);
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
