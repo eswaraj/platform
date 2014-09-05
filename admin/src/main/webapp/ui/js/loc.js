@@ -107,7 +107,8 @@ $(document).ready(function(){
 	$('#form1').submit(function(event){
 		event.preventDefault();
 		//grab all form data  
-		var formData = new FormData($('#form1'));
+		//var formData = new FormData($('#form1'));
+		var formData = new FormData(this);
 		var selected_node =  $('#js_tree').jstree('get_selected');
 		var  kml_url= '/ajax/location/'+selected_node[0]+'/upload';
 
