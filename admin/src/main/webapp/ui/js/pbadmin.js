@@ -3,6 +3,20 @@ $(function(){
 	$("#menu").load("../ui/sidebar_menu.html"); 
 });
 
+function addLocation(node)
+{
+	loc_hash[node.id] = node.name;
+	//console.log(node.name);
+	if(node.children)
+	{
+		//console.log("Error:"+node.name);
+		for(var i=0; i<node.children.length; i++)
+		{
+			addLocation(node.children[i]);
+		}
+	}
+}
+
 function fetch_pbtype(){
 	var result;
 	$.when($.ajax({
@@ -22,12 +36,13 @@ function fetch_pbtype(){
 function fetch_ltype(){
 	$.ajax({
 		type: "GET",
-		url:"/ajax/locationtype/get",
-		dataType: "JSON",
-		success: function(data){
-			//console.log(JSON.stringify(data));
-			return data;
-		}
+	url:"/ajax/locationtype/get",
+	dataType: "JSON",
+	success: function(data){
+		//console.log(JSON.stringify(data));
+		addLocation(data);
+		return data;
+	}
 	});
 
 }
@@ -48,6 +63,7 @@ $(document).ready(function(){
 
 	var root_node,new_node,sel;
 	window.hash = new Object();
+	window.loc_hash = new Object();
 	var all_ltype = fetch_ltype();
 	//console.log(all_pbtype+"All pbtype ");
 
@@ -77,7 +93,7 @@ $(document).ready(function(){
 		success: function(data){
 			//console.log(JSON.stringify(data));
 			var root_node = 
-	{		'text'    	:data.name+" Type: "+data.locationTypeId,
+	{		'text'    	:data.name+" Type: "+loc_hash[data.locationTypeId],
 		'id'  	 	:data.id,								   
 		'li_attr':{'title':data.name,'loc_typeid':data.locationTypeId,'p_id':data.parentLocationId,'center_lat':data.latitude,'center_long':data.longitude,'boundaryFile':data.boundaryFile}  
 	};
@@ -153,7 +169,7 @@ $(document).ready(function(){
 				success: function(data){
 					if(data.length ==0){alert("No Children found");}		   			   
 					for(var i=0; i< data.length;i++){
-						new_node = {'text':data[i].name+" Type :"+data[i].locationTypeId,'id':data[i].id,'li_attr':{'title':data[i].name,'loc_typeid':data[i].locationTypeId,'p_id':data[i].parentLocationId,'center_lat':data[i].latitude,'center_long':data[i].longitude,'boundaryFile':data[i].boundaryFile}};
+						new_node = {'text':data[i].name+" Type :"+loc_hash[data[i].locationTypeId],'id':data[i].id,'li_attr':{'title':data[i].name,'loc_typeid':data[i].locationTypeId,'p_id':data[i].parentLocationId,'center_lat':data[i].latitude,'center_long':data[i].longitude,'boundaryFile':data[i].boundaryFile}};
 						sel = $('#js_tree').jstree(true).create_node(selected_node, new_node);
 
 					}
@@ -171,224 +187,224 @@ $(document).ready(function(){
 
 	$('#js_tree').jstree("select_node",root_node.id);	
 
-		}
+	}
 	});
 
-});
+		});
 
 
 
-/*******************Add a new Person***********************************/
+	/*******************Add a new Person***********************************/
 
 
-function new_person(){
+	function new_person(){
 
-	var post_data = {
+		var post_data = {
 
-		"name":$("#new_person_name").val(),
-		"biodata":$("#new_person_biodata").val(), 
-		"dob":$("#new_person_dob").val(),
-		"gender":$("#new_person_gender").val(),
-		"profilePhoto":$("#new_person_photo").val(),
-		"email":$("#new_person_email").val(),
-		"landlineNumber1":$("#new_person_ll1").val(),
-		"landlineNumber2":$("#new_person_ll2").val(),
-		"mobileNumber1":$("#new_person_mobile1").val(),
-		"mobileNumber2":$("#new_person_mobile2").val(),
-		"personAddress": {
-			"id":'',     
-			"line1":$("#new_person_lin1").val(),
-			"line2":$("#new_person_line2").val(),
-			"line3":$("#new_person_line3").val(),
-			"postalCode":$("#new_person_postal").val(),
-			"villageId":$("#village-list").val(),
-			"wardId":$("#ward-list").val(),
-			"cityId":$("#city-list").val(),
-			"districtId":$("#district-list").val(),
-			"stateId":$("#state-list").val(),
-			"countryId":$("#country-list").val()
+			"name":$("#new_person_name").val(),
+			"biodata":$("#new_person_biodata").val(), 
+			"dob":$("#new_person_dob").val(),
+			"gender":$("#new_person_gender").val(),
+			"profilePhoto":$("#new_person_photo").val(),
+			"email":$("#new_person_email").val(),
+			"landlineNumber1":$("#new_person_ll1").val(),
+			"landlineNumber2":$("#new_person_ll2").val(),
+			"mobileNumber1":$("#new_person_mobile1").val(),
+			"mobileNumber2":$("#new_person_mobile2").val(),
+			"personAddress": {
+				"id":'',     
+				"line1":$("#new_person_lin1").val(),
+				"line2":$("#new_person_line2").val(),
+				"line3":$("#new_person_line3").val(),
+				"postalCode":$("#new_person_postal").val(),
+				"villageId":$("#village-list").val(),
+				"wardId":$("#ward-list").val(),
+				"cityId":$("#city-list").val(),
+				"districtId":$("#district-list").val(),
+				"stateId":$("#state-list").val(),
+				"countryId":$("#country-list").val()
+			}
+		};
+		$.ajax({
+			type: "POST",
+			url:"/ajax/person/save",
+			data: JSON.stringify(post_data),
+			contentType: "application/json; charset=utf-8",
+			dataType: "JSON",
+			success: function(data){
+				alert("Person Added"+data.name);
+				console.log(JSON.stringify(data, null, 4));
+
+			}
+		});
+
+	}
+
+
+	/*******************Add a new Child Node***********************************/
+
+
+	function add_pbadmin(){
+
+		var post_data = {
+			"politicalBodyTypeId":$("#pbtype_list").val(),
+			"locationId": $("#pbtype_list").val(),
+			"personId": $("#pbadmin_personId").val(),
+			"partyId": $("#party_list").val(),
+			"email": $("#pbadmin_email").val(),
+			"landLine1": $("#pbadmin_llandline1").val(),
+			"landLine2": $("#pbadmin_llandline2").val(),
+			"mobile1": $("#pbadmin_mobile1").val(),
+			"mobile2": $("#pbadmin_mobile2").val(),
+			"startDate": $("#pbadmin_startdate").val(), //date as milliseonds
+			"endDate": $("#pbadmin_enddate").val(), //date as milliseonds
+			"officeAddressDto": {
+				"id": 33132,     
+				"line1":$("#pbadmin_oaLine1").val(),
+				"line2":$("#pbadmin_oaLine2").val(),
+				"line3":$("#pbadmin_oaLine3").val(),
+				"postalCode":$("#pbadmin_oapostal").val(),
+				"villageId":$("#pbadmin_ovillage-list").val(),
+				"wardId":$("#pbadmin_oward-list").val(),
+				"cityId":$("#pbadmin_ocity-list").val(),
+				"districtId":$("#pbadmin_odistrict-list").val(),
+				"stateId":$("#pbadmin_ostate-list").val(),
+				"countryId":$("#pbadmin_ocountry-list").val()
+			},
+			"homeAddressDto": {
+				"id": $("#pbtype_list").val(),     
+				"line1":$("#pbadmin__haLine1").val(),
+				"line2":$("#pbadmin__haLine2").val(),
+				"line3":$("#pbadmin__haLine3").val(),
+				"postalCode":$("#pbadmin_hapostal").val(),
+				"villageId":$("#pbadmin_hvillage-list").val(),
+				"wardId":$("#pbadmin_hward-list").val(),
+				"cityId":$("#pbadmin_hcity-list").val(),
+				"districtId":$("#pbadmin_hdistrict-list").val(),
+				"stateId":$("#pbadmin_hstate-list").val(),
+				"countryId":$("#pbadmin_hcountry-list").val()
+			}
+
 		}
-	};
-	$.ajax({
-		type: "POST",
-		url:"/ajax/person/save",
+		$.ajax({
+			type: "POST",
+		url:"/ajax/pbadmin/save",
 		data: JSON.stringify(post_data),
 		contentType: "application/json; charset=utf-8",
 		dataType: "JSON",
 		success: function(data){
-			alert("Person Added"+data.name);
 			console.log(JSON.stringify(data, null, 4));
-
+			alert("PbAdmin Added"+data.personId);
 		}
-	});
-
-}
-
-
-/*******************Add a new Child Node***********************************/
-
-
-function add_pbadmin(){
-
-	var post_data = {
-		"politicalBodyTypeId":$("#pbtype_list").val(),
-		"locationId": $("#pbtype_list").val(),
-		"personId": $("#pbadmin_personId").val(),
-		"partyId": $("#party_list").val(),
-		"email": $("#pbadmin_email").val(),
-		"landLine1": $("#pbadmin_llandline1").val(),
-		"landLine2": $("#pbadmin_llandline2").val(),
-		"mobile1": $("#pbadmin_mobile1").val(),
-		"mobile2": $("#pbadmin_mobile2").val(),
-		"startDate": $("#pbadmin_startdate").val(), //date as milliseonds
-		"endDate": $("#pbadmin_enddate").val(), //date as milliseonds
-		"officeAddressDto": {
-			"id": 33132,     
-			"line1":$("#pbadmin_oaLine1").val(),
-			"line2":$("#pbadmin_oaLine2").val(),
-			"line3":$("#pbadmin_oaLine3").val(),
-			"postalCode":$("#pbadmin_oapostal").val(),
-			"villageId":$("#pbadmin_ovillage-list").val(),
-			"wardId":$("#pbadmin_oward-list").val(),
-			"cityId":$("#pbadmin_ocity-list").val(),
-			"districtId":$("#pbadmin_odistrict-list").val(),
-			"stateId":$("#pbadmin_ostate-list").val(),
-			"countryId":$("#pbadmin_ocountry-list").val()
-		},
-		"homeAddressDto": {
-			"id": $("#pbtype_list").val(),     
-			"line1":$("#pbadmin__haLine1").val(),
-			"line2":$("#pbadmin__haLine2").val(),
-			"line3":$("#pbadmin__haLine3").val(),
-			"postalCode":$("#pbadmin_hapostal").val(),
-			"villageId":$("#pbadmin_hvillage-list").val(),
-			"wardId":$("#pbadmin_hward-list").val(),
-			"cityId":$("#pbadmin_hcity-list").val(),
-			"districtId":$("#pbadmin_hdistrict-list").val(),
-			"stateId":$("#pbadmin_hstate-list").val(),
-			"countryId":$("#pbadmin_hcountry-list").val()
-		}
-
-	}
-	$.ajax({
-		type: "POST",
-	url:"/ajax/pbadmin/save",
-	data: JSON.stringify(post_data),
-	contentType: "application/json; charset=utf-8",
-	dataType: "JSON",
-	success: function(data){
-		console.log(JSON.stringify(data, null, 4));
-		alert("PbAdmin Added"+data.personId);
-	}
-	});
-
-
-
-}
-
-
-$(document).ready(function(){
-
-
-	$('#node_add_btn0').on('click',function(){
-		alert($(even.target).val());;
-
-	})
-
-
-});
-
-
-/*******************Update Selected node***********************************/
-
-function update_selected_node(){
-
-	var selected_node =  $('#js_tree').jstree('get_selected');
-
-	var post_data = {
-		"id":selected_node[0],
-		"name":$("#node_title").val(),
-		"locationTypeId":$('#'+selected_node[0]).attr('loc_typeid'),  
-		"latitude":$('#node_lat').val(),
-		"longitude":$('#node_long').val()
-	};
-
-	if($('#'+selected_node[0]).attr('p_id') != 'null'){
-		post_data.parentLocationId = $('#'+selected_node[0]).attr('p_id');
-	}
-	$.ajax({
-		type: "POST",
-		url:"/ajax/location/save",
-		data: JSON.stringify(post_data),
-		contentType: "application/json; charset=utf-8",
-		dataType: "JSON",
-		success: function(data){
-			//alert(JSON.stringify(data, null, 4));
-			$('#js_tree').jstree('set_text',data.id, data.name+data.locationTypeId);
-
-		}
-	});
-}
-
-function runMyFunction(event){
-
-	var target = event.target || event.srcElement;
-	var pbtypeId = $('#'+target.id).attr('value');
-	var selected_node =  $('#js_tree').jstree('get_selected');
-	var locationId = selected_node[0];
-
-	if($('#'+target.id).hasClass('current')){
-
-		$.ajax({
-			type: "GET",
-			url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
-			dataType: "JSON",
-			success: function(data){
-				//alert(JSON.stringify(data));	
-				if(data){
-					$("#current_pbadmin_content").html(JSON.stringify(data));
-				}	else {$("#current_pbadmin_content").html("No Political Admin found for this location.");} 
-			}
 		});
 
+
+
 	}
 
-	if($('#'+target.id).hasClass('person')){
+
+	$(document).ready(function(){
+
+
+		$('#node_add_btn0').on('click',function(){
+			alert($(even.target).val());;
+
+		})
+
+
+	});
+
+
+	/*******************Update Selected node***********************************/
+
+	function update_selected_node(){
+
+		var selected_node =  $('#js_tree').jstree('get_selected');
+
+		var post_data = {
+			"id":selected_node[0],
+			"name":$("#node_title").val(),
+			"locationTypeId":$('#'+selected_node[0]).attr('loc_typeid'),  
+			"latitude":$('#node_lat').val(),
+			"longitude":$('#node_long').val()
+		};
+
+		if($('#'+selected_node[0]).attr('p_id') != 'null'){
+			post_data.parentLocationId = $('#'+selected_node[0]).attr('p_id');
+		}
 		$.ajax({
-			type: "GET",
-			url:"/ajax/party/getall",
+			type: "POST",
+			url:"/ajax/location/save",
+			data: JSON.stringify(post_data),
+			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
-				//alert(JSON.stringify(data));	
+				//alert(JSON.stringify(data, null, 4));
+				$('#js_tree').jstree('set_text',data.id, data.name+data.locationTypeId);
 
-				var party_list = "";
-				for(var i=0; i<data.length;i++)
-		{
-			party_list += "<option id='"+data[i].id+"'>"+data[i].name+"</option>";
-
-		}		   
-		$("#party_list").html(party_list);		    	  
 			}
-
 		});
-
-		/**********************Grab values from the selected person*********************/
-
-		$('#pbadmin_locationId').val(locationId);
-		$('#pbadmin_personId').val($('#'+target.id).attr('value'));
-		$('#pbadmin_email').val($('#'+target.id).attr('email'));
-		$('#pbadmin_llandline1').val($('#'+target.id).attr('landlineNumber1'));
-		$('#pbadmin_llandline2').val($('#'+target.id).attr('landlineNumber1'));
-		$('#pbadmin_mobile1').val($('#'+target.id).attr('mobileNumber1'));
-		$('#pbadmin_mobile2').val($('#'+target.id).attr('mobileNumber2'));
-		$('#pbadmin__haLine1').val($('#'+target.id).attr('line1'));
-		$('#pbadmin__haLine2').val($('#'+target.id).attr('line2'));
-		$('#pbadmin__haLine3').val($('#'+target.id).attr('line3'));
-		$('#pbadmin_hapostal').val($('#'+target.id).attr('postalCode'));
-
 	}
 
-	$('#new_node_loc_typeid').val($('#'+target.id).attr('value'));
-	return true;
-	console.log($('#new_node_loc_typeid').attr('value'));
-}
+	function runMyFunction(event){
+
+		var target = event.target || event.srcElement;
+		var pbtypeId = $('#'+target.id).attr('value');
+		var selected_node =  $('#js_tree').jstree('get_selected');
+		var locationId = selected_node[0];
+
+		if($('#'+target.id).hasClass('current')){
+
+			$.ajax({
+				type: "GET",
+				url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
+				dataType: "JSON",
+				success: function(data){
+					//alert(JSON.stringify(data));	
+					if(data){
+						$("#current_pbadmin_content").html(JSON.stringify(data));
+					}	else {$("#current_pbadmin_content").html("No Political Admin found for this location.");} 
+				}
+			});
+
+		}
+
+		if($('#'+target.id).hasClass('person')){
+			$.ajax({
+				type: "GET",
+				url:"/ajax/party/getall",
+				dataType: "JSON",
+				success: function(data){
+					//alert(JSON.stringify(data));	
+
+					var party_list = "";
+					for(var i=0; i<data.length;i++)
+			{
+				party_list += "<option id='"+data[i].id+"'>"+data[i].name+"</option>";
+
+			}		   
+			$("#party_list").html(party_list);		    	  
+				}
+
+			});
+
+			/**********************Grab values from the selected person*********************/
+
+			$('#pbadmin_locationId').val(locationId);
+			$('#pbadmin_personId').val($('#'+target.id).attr('value'));
+			$('#pbadmin_email').val($('#'+target.id).attr('email'));
+			$('#pbadmin_llandline1').val($('#'+target.id).attr('landlineNumber1'));
+			$('#pbadmin_llandline2').val($('#'+target.id).attr('landlineNumber1'));
+			$('#pbadmin_mobile1').val($('#'+target.id).attr('mobileNumber1'));
+			$('#pbadmin_mobile2').val($('#'+target.id).attr('mobileNumber2'));
+			$('#pbadmin__haLine1').val($('#'+target.id).attr('line1'));
+			$('#pbadmin__haLine2').val($('#'+target.id).attr('line2'));
+			$('#pbadmin__haLine3').val($('#'+target.id).attr('line3'));
+			$('#pbadmin_hapostal').val($('#'+target.id).attr('postalCode'));
+
+		}
+
+		$('#new_node_loc_typeid').val($('#'+target.id).attr('value'));
+		return true;
+		console.log($('#new_node_loc_typeid').attr('value'));
+	}
