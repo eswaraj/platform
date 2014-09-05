@@ -7,6 +7,11 @@ var myMarker;
 var set = true;
 var urlSuffix;
 var c;
+var mylocation = {
+	'latitude': 28.61,
+	'longitude': 77.23
+};
+
 
 //
 $(function(){
@@ -39,12 +44,14 @@ function searchLocationTypeName(id){
 	}
 }
 
+$ = $.noConflict();
 $(document).ready(function(){
 	//Create map
+	var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
 	var mapOptions = {
 		zoom: 5,
-		//center: india,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+	center: myLatlng,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	c = map.getCenter();
@@ -207,7 +214,7 @@ $(document).ready(function(){
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
 		c = map.getCenter();
-	        myMarker.setPosition(c);
+		myMarker.setPosition(c);
 
 	}
 
