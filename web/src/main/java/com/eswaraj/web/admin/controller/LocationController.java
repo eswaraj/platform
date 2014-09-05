@@ -53,6 +53,7 @@ public class LocationController extends BaseController {
                 List<CategoryDto> allRootcategories = appService.getAllRootCategories();
                 mv.getModel().put("rootCategories", allRootcategories);
                 String locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
+                System.out.println("locationComplaints=" + locationComplaints);
                 List<ComplaintBean> list = new Gson().fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
                 }.getType());
                 mv.getModel().put("complaintList", list);
