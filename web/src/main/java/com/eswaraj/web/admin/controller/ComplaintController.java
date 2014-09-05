@@ -106,8 +106,8 @@ public class ComplaintController extends BaseController{
                 { 77.32968936615441, 28.614741215262395 } };
         Random random = new Random(System.currentTimeMillis());
         int nextNumber = random.nextInt(delhiPoints.length);
-        saveComplaintRequestDto.setLattitude(delhiPoints[nextNumber][0]);
-        saveComplaintRequestDto.setLongitude(delhiPoints[nextNumber][1]);
+        saveComplaintRequestDto.setLattitude(delhiPoints[nextNumber][1]);
+        saveComplaintRequestDto.setLongitude(delhiPoints[nextNumber][0]);
     }
 	private void addPhoto(HttpServletRequest httpServletRequest, ComplaintDto complaintDto) throws IOException, ServletException, ApplicationException{
 		String imageHttpUrl = "";
