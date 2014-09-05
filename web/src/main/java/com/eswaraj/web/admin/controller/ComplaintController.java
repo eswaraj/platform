@@ -76,6 +76,7 @@ public class ComplaintController extends BaseController{
 		SaveComplaintRequestDto saveComplaintRequestDto = new Gson().fromJson(saveComplaintRequestString, SaveComplaintRequestDto.class);
         updateRandomDelhiPoint(saveComplaintRequestDto);
 		ComplaintDto savedComplaintDto = complaintService.saveComplaint(saveComplaintRequestDto);
+        System.out.println("Complaint Saved : " + savedComplaintDto);
 		addPhoto(httpServletRequest, savedComplaintDto);
 		
 		return savedComplaintDto;

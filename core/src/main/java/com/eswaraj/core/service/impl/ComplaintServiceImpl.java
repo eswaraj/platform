@@ -307,7 +307,10 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
     private ComplaintMessage updateLocationAndAdmins(Complaint complaint) throws ApplicationException {
         // Get all Locations and attach to it.
-        Set<Long> complaintLocations = redisTemplate.opsForSet().members(locationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude()));
+        String rediskey = locationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude());
+        System.out.println("Get Locations for Key : " + rediskey);
+        Set<Long> complaintLocations = redisTemplate.opsForSet().members(rediskey);
+        System.out.println("Founds Locations for Key : " + complaintLocations);
         if (complaintLocations.isEmpty()) {
             complaintLocations.add(78340L);
         }
@@ -328,6 +331,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                     politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
                 }
             }
+            System.out.println("atatching Locations " + locations);
             complaint.setLocations(locations);
             complaint.setServants(politicalBodyAdmins);
 
