@@ -1,5 +1,6 @@
 package com.eswaraj.core.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,9 +134,11 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     }
 
     private JsonObject buildComplaintInfo(Complaint complaint) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         JsonObject complaintJsonObject = new JsonObject();
         complaintJsonObject.addProperty("id", complaint.getId());
         complaintJsonObject.addProperty("complaintTime", complaint.getComplaintTime());
+        complaintJsonObject.addProperty("complaintTimeIso", sdf.format(complaint.getDateCreated()));
         complaintJsonObject.addProperty("title", complaint.getTitle());
         complaintJsonObject.addProperty("description", complaint.getDescription());
         complaintJsonObject.addProperty("lattitude", complaint.getLattitude());

@@ -146,7 +146,7 @@
                                 <a href="#" class="username">${oneComplaint.loggedBy.name}</a>
                             </p>
                             <p class="whenwhere">
-                                <span>2 hrs ago</span>
+                                <span><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></span>
                                 <span class="connector">at</span>
                                 <span>
                                     <i class="glyphicon glyphicon-map-marker"></i>

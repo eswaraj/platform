@@ -12,12 +12,15 @@
     <link rel="stylesheet" href="${staticHost}/css/jquery.selectBoxIt.css">
     <link rel="stylesheet" href="${staticHost}/css/jquery.mobile-1.2.0.min.css">
     <link rel="stylesheet" href="${staticHost}/css/bootstrap-tagsinput.css">
+    
     <!-- css ends -->
     <script src="${staticHost}/js/jquery-2.1.0.min.js"></script>
     <script src="${staticHost}/js/bootstrap.min.js"></script>
     <script src="${staticHost}/js/jquery-ui.min.js"></script>
     <script src="${staticHost}/js/jquery.selectBoxIt.min.js"></script>
     <script src="${staticHost}/js/bootstrap-tagsinput.js"></script>
+    <script src="${staticHost}/js/jquery.timeago.js"></script>
+    
     
 </head>
 <body>

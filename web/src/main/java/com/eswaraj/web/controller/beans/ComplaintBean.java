@@ -10,6 +10,7 @@ public class ComplaintBean {
 
     private Long id;
     private Long complaintTime;
+    private String complaintTimeIso;
     private String title;
     private String description;
     private Double lattitude;
@@ -27,6 +28,14 @@ public class ComplaintBean {
 
     public void setComplaintTime(Long complaintTime) {
         this.complaintTime = complaintTime;
+    }
+
+    public String getComplaintTimeIso() {
+        return complaintTimeIso;
+    }
+
+    public void setComplaintTimeIso(String complaintTimeIso) {
+        this.complaintTimeIso = complaintTimeIso;
     }
 
     public String getTitle() {
