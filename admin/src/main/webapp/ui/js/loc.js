@@ -66,6 +66,9 @@ $(document).ready(function(){
 		$('#node_lat').val(evt.latLng.lat());
 		$('#node_long').val(evt.latLng.lng());
 	});
+	google.maps.event.addListener(map, "center_changed", function() {
+		myMarker.setPosition(map.getCenter());
+	});
 
 	//map end
 
@@ -223,8 +226,8 @@ $(document).ready(function(){
 		}
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
-		c = map.getCenter();
-		myMarker.setPosition(c);
+		//c = map.getCenter();
+		//myMarker.setPosition(c);
 
 	}
 
