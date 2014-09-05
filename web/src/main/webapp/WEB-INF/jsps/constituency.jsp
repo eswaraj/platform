@@ -125,170 +125,58 @@
             </div>
             <div class="listing">
                 <!-- .list-row  -->
-                <div class="list-row">
+                <c:forEach items="${complaintList}" var="oneComplaint">
+                    <div class="list-row">
                     <div class="issue-pic">
-                        <img src="${staticHost}/images/issues/issues.png" alt=""></div>
+                        <c:if test="${!empty photos}">
+                            <img src="${photos[0].imageUrlLarge}" alt="">
+                        </c:if>
+                        
+                        <c:if test="${empty photos}">
+                            <img src="${staticHost}/images/issues/issues.png" alt="">
+                        </c:if>
+                    </div>
                     <div class="innerblock">
                         <div class="profile-info">
                             <div class="profile-pic">
                                 <img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
                             <p class="whom">
-                                <strong class="issue-id">Issue #51</strong>
+                                <strong class="issue-id">Issue #${oneComplaint.id}</strong>
                                 <span class="connector">raised by</span>
-                                <a href="#" class="username">Somnath Nabajja</a>
+                                <a href="#" class="username">${oneComplaint.loggedBy.name}</a>
                             </p>
                             <p class="whenwhere">
                                 <span>2 hrs ago</span>
                                 <span class="connector">at</span>
                                 <span>
                                     <i class="glyphicon glyphicon-map-marker"></i>
-                                    <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a>
+                                    <a href="#" class="location">TODO</a>
                                 </span>
                             </p>
                         </div>
                         <div class="issue-info">
                             <p class="desc elipsis">
-                                Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente enim facilis explicabo perferendis possimus veniam assumenda sit dolore cumque aliquam. dolor sit amet, consectetur adipisicing elit. Laboriosam, sint
+                                <c:if test="${empty oneComplaint.description}">
+                                    ${oneComplaint.categoryTitle}
+                                </c:if>
+                                <c:if test="${!empty oneComplaint.description}">
+                                    ${oneComplaint.description}
+                                </c:if>
                             </p>
                             <p class="classify">
-                                <small class="badge badge-infra">Type - Lack of Transparency</small>
+                                <c:forEach items="${oneComplaint.categories}" var="oneCategory">
+                                    <c:if test="${oneCategory.root}">
+                                        <small class="badge badge-infra">Type - ${oneCategory.name}</small>
+                                    </c:if>
+                                    
+                                </c:forEach>
+                                
                             </p>
                         </div>
                     </div>
-                </div>
-                <!-- /.list-row  -->
-                <!-- .list-row  -->
-                <div class="list-row">
-                    <div class="issue-pic">
-                        <img src="${staticHost}/images/issues/issues.png" alt=""></div>
-                    <div class="innerblock">
-                        <div class="profile-info">
-                            <div class="profile-pic">
-                                <img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
-                            <p class="whom">
-                                <strong class="issue-id">Issue #51</strong>
-                                <span class="connector">raised by</span>
-                                <a href="#" class="username">Somnath Nabajja</a>
-                            </p>
-                            <p class="whenwhere">
-                                <span>2 hrs ago</span>
-                                <span class="connector">at</span>
-                                <span>
-                                    <i class="glyphicon glyphicon-map-marker"></i>
-                                    <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a>
-                                </span>
-                            </p>
-                        </div>
-                        <div class="issue-info">
-                            <p class="desc elipsis">
-                                Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nam aspernatur obcaecati cupiditate dolorum odio cumque debitis repellendus recusandae. Accusantium. dolor sit amet, consectetur adipisicing elit. Laboriosam, sint
-                            </p>
-                            <p class="classify">
-                                <small class="badge badge-infra">Type - Lack of Transparency</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.list-row  -->
-                <!-- .list-row  -->
-                <div class="list-row">
-                    <div class="issue-pic">
-                        <img src="${staticHost}/images/issues/issues.png" alt=""></div>
-                    <div class="innerblock">
-                        <div class="profile-info">
-                            <div class="profile-pic">
-                                <img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
-                            <p class="whom">
-                                <strong class="issue-id">Issue #51</strong>
-                                <span class="connector">raised by</span>
-                                <a href="#" class="username">Somnath Nabajja</a>
-                            </p>
-                            <p class="whenwhere">
-                                <span>2 hrs ago</span>
-                                <span class="connector">at</span>
-                                <span>
-                                    <i class="glyphicon glyphicon-map-marker"></i>
-                                    <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a>
-                                </span>
-                            </p>
-                        </div>
-                        <div class="issue-info">
-                            <p class="desc elipsis">
-                                Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta voluptas molestias at minus, magni est accusamus dolore aliquid nisi totam. dolor sit amet, consectetur adipisicing elit. Laboriosam, sint
-                            </p>
-                            <p class="classify">
-                                <small class="badge badge-infra">Type - Lack of Transparency</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.list-row  -->
-                <!-- .list-row  -->
-                <div class="list-row">
-                    <div class="issue-pic">
-                        <img src="${staticHost}/images/issues/issues.png" alt=""></div>
-                    <div class="innerblock">
-                        <div class="profile-info">
-                            <div class="profile-pic">
-                                <img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
-                            <p class="whom">
-                                <strong class="issue-id">Issue #51</strong>
-                                <span class="connector">raised by</span>
-                                <a href="#" class="username">Somnath Nabajja</a>
-                            </p>
-                            <p class="whenwhere">
-                                <span>2 hrs ago</span>
-                                <span class="connector">at</span>
-                                <span>
-                                    <i class="glyphicon glyphicon-map-marker"></i>
-                                    <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a>
-                                </span>
-                            </p>
-                        </div>
-                        <div class="issue-info">
-                            <p class="desc elipsis">
-                                Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum dignissimos id cum quaerat soluta praesentium perferendis, possimus dolore libero eaque. dolor sit amet, consectetur adipisicing elit. Laboriosam, sint
-                            </p>
-                            <p class="classify">
-                                <small class="badge badge-infra">Type - Lack of Transparency</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.list-row  -->
-                <!-- .list-row  -->
-                <div class="list-row">
-                    <div class="issue-pic">
-                        <img src="${staticHost}/images/issues/issues.png" alt=""></div>
-                    <div class="innerblock">
-                        <div class="profile-info">
-                            <div class="profile-pic">
-                                <img src="${staticHost}/images/profile-pic.jpg" alt=""></div>
-                            <p class="whom">
-                                <strong class="issue-id">Issue #51</strong>
-                                <span class="connector">raised by</span>
-                                <a href="#" class="username">Somnath Nabajja</a>
-                            </p>
-                            <p class="whenwhere">
-                                <span>2 hrs ago</span>
-                                <span class="connector">at</span>
-                                <span>
-                                    <i class="glyphicon glyphicon-map-marker"></i>
-                                    <a href="#" class="location">Cassena Business Park main road,Keverappa Layout</a>
-                                </span>
-                            </p>
-                        </div>
-                        <div class="issue-info">
-                            <p class="desc elipsis">
-                                Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio nostrum excepturi voluptas, laborum. Porro omnis esse voluptatem molestiae, ad voluptates! dolor sit amet, consectetur adipisicing elit. Laboriosam, sint
-                            </p>
-                            <p class="classify">
-                                <small class="badge badge-infra">Type - Lack of Transparency</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.list-row  -->
+                </div><!-- /.list-row  -->
+                </c:forEach>
+                
                 <div class="pagination-wrapper">
                     <ul class="pagination">
                         <li class="disabled">

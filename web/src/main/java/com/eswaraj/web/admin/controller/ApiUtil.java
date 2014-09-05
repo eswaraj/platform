@@ -46,6 +46,10 @@ public class ApiUtil {
         return httpClientBuilder.build();
     }
 
+    public String getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId;
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
         try {
             logger.info("Getting Results from " + urlPath);

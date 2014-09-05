@@ -17,6 +17,7 @@ public class ComplaintMessage implements Serializable {
     private List<String> deviceIds;
     private Long adminId;
     private String status;
+    private String imageUrl;
     private long complaintTime;
 
     private List<Long> politicalAdminIds;
@@ -132,6 +133,14 @@ public class ComplaintMessage implements Serializable {
 
     public void setLocationIds(List<Long> locationIds) {
         this.locationIds = locationIds;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

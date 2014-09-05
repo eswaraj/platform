@@ -48,7 +48,7 @@ public class ApiController {
     @RequestMapping(value = "/api/complaint/location/{locationId}", method = RequestMethod.GET)
     @ResponseBody
     public String getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
-        return apiUtil.getResponseFrom(httpServletRequest, "/api/v0/complaint/location/" + locationId);
+        return apiUtil.getLocationComplaints(httpServletRequest, locationId);
     }
 
     @RequestMapping(value = "/api/complaint/location/{locationId}/{categoryId}", method = RequestMethod.GET)
