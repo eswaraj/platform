@@ -122,10 +122,12 @@ $(document).ready(function(){
 			processData: false,
 			success: function (returndata) {
 				alert(returndata);
+				$('#'+selected_node).attr('boundaryFile',returndata);
+				$('#kml_status').html("<p>KML File exists</p>");
+				update_map(returndata);
 			}
 		});
 
-		//update_map(kml_url);			 // window.location = kml_url;
 		return false;
 	});
 
