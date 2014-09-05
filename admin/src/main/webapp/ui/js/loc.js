@@ -61,6 +61,12 @@ $(document).ready(function(){
 	});
 	myMarker.setMap(map);
 	urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
+
+	google.maps.event.addListener(myMarker, 'dragend', function(evt){
+		$('#node_lat').val(evt.latLng.lat());
+		$('#node_long').val(evt.latLng.lng());
+	});
+
 	//map end
 
 	var root_node,new_node,sel;
@@ -211,6 +217,10 @@ $(document).ready(function(){
 		//var map_html = '<iframe width="625" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'&output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
 
 		//$('#map-canvas').html(map_html);
+		if (typeof layer !== 'undefined')
+		{
+			layer.setMap(null);
+		}
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
 		c = map.getCenter();

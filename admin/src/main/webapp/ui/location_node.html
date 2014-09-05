@@ -11,151 +11,159 @@
 <link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
 <link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
  <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
+      html, body {
+	      height: 100%;
+	      margin: 0px;
+	      padding: 0px
+      }
+
+      #map-canvas {
+	      margin-left: auto;
+	      margin-right: auto;
+	      padding: 0;
+	      width: 600px;
+	      height: 400px;
       }
     </style>
 
-<!-- Script -->
-<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
-<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
-<script type="text/javascript" src="js/script.js"></script><!-- Script -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
- <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/defiant.js"></script>
-		<script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/string.js"></script>
-        <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/ie.polyfill.js"></script>
-        <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/json.js"></script>
-        <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/json.search.js"></script>
-        <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/json.toXML.js"></script>
-       <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/node.toJSON.js"></script>
-        <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/node.select.js"></script>
-        <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/node.serialize.js"></script>
+    <!-- Script -->
+    <script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+    <script type="text/javascript" src="js/script.js"></script><!-- Script -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/defiant.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/string.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/ie.polyfill.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/json.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/json.search.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/json.toXML.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/node.toJSON.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/node.select.js"></script>
+    <script type="text/javascript" src="http://www.defiantjs.com/defiant.js/src/node.serialize.js"></script>
 
 
-  <!-- 2 load the theme CSS file -->
-  <link rel="stylesheet" href="dist/themes/default/style.min.css" />
-   <!-- 4 include the jQuery library -->
+    <!-- 2 load the theme CSS file -->
+    <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+    <!-- 4 include the jQuery library -->
 
-  <!-- 5 include the minified jstree source -->
-  <script src="dist/jstree.min.js"></script>
+    <!-- 5 include the minified jstree source -->
+    <script src="dist/jstree.min.js"></script>
 
 </head>
 <body>
-		<div class="responsive-menu">
-			<div class="responsive-menu-dropdown blue">
-				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
-			</div>
-			
+	<div class="responsive-menu">
+		<div class="responsive-menu-dropdown blue">
+			<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
+		</div>
+
 	</div>
 	<header>
-		
+
 	</header><!-- Header -->
 
 	<div id="menu" class="menu">
-		
+
 	</div><!-- Right Menu -->
 
 	<div class="wrapper">
 		<div class="container">
-			
-			
-		<div class="row">
-			<div class="col-md-12 profile-margin">
-			<div class="col-md-4">
-			<h3>Location Node Manager</h3> 
-			
- <!-- the tree is populated via ajax -->
-			<div id="js_tree"></div>	
-					
-			</div>
-			
-				<div class="col-md-5" id="node_info">
-					<a href="#" class="active">
-					</a>
-					
-							<div id="tab1">
-								<table style="padding:10px;">
+
+
+			<div class="row">
+				<div class="col-md-12 profile-margin">
+					<div class="col-md-4">
+						<h3>Location Node Manager</h3> 
+
+						<!-- the tree is populated via ajax -->
+						<div id="js_tree"></div>	
+
+					</div>
+
+					<div class="col-md-5" id="node_info">
+						<a href="#" class="active">
+						</a>
+
+						<div id="tab1">
+							<table style="padding:10px;">
 								<tr>
-								<td>Node Name</td>
-								<td><input type="text" name="node_title" id="node_title" value=""></td>
+									<td>Node Name</td>
+									<td><input type="text" name="node_title" id="node_title" value=""></td>
 								</tr>	
 								<tr>
-								<td>Latitude</td>
-								<td><input type="text" name="node_lat" id="node_lat" value=""></td>
+									<td>Latitude</td>
+									<td><input type="text" name="node_lat" id="node_lat" value="" readonly></td>
 								</tr>
 								<tr>
-								<td>Longitude</td>
-								<td><input type="text" name="node_long" id="node_long" value=""></td>
+									<td>Longitude</td>
+									<td><input type="text" name="node_long" id="node_long" value="" readonly></td>
 								</tr>
 								<tr>
-								<td>URL Identifier</td>
-								<td><input type="text" name="node_urliden" id="node_urliden" value="" readonly></td>
+									<td>URL Identifier</td>
+									<td><input type="text" name="node_urliden" id="node_urliden" value="" readonly></td>
 								</tr>
 								<tr id="add_child_btn">
 								</tr>
 								<tr>
-								<td>Location Boundary</td>
-								<td id ="kml_status"></td>
-								<td>
-								<form method="post" enctype="multipart/form-data" id="form1" method="post" action="">
-      
-            <input type="file" id="file" name="file" />
-            <input type="submit" value="Upload KML" />
-        
-    </form></td>
-								<!-- <td><a id="upload_btn" class="btn pink">Upload</a></td> -->
+									<td>Location Boundary</td>
+									<td id ="kml_status"></td>
+									<td>
+										<form method="post" enctype="multipart/form-data" id="form1" method="post" action="">
+
+											<input type="file" id="file" name="file" />
+											<input type="submit" value="Upload KML" />
+
+									</form></td>
+									<!-- <td><a id="upload_btn" class="btn pink">Upload</a></td> -->
 								</tr>
-								
+
 								<tr>
-								<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
-								<td><a id="save_btn" class="btn green" href="#">Update Node</a></td>
-								
+									<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
+									<td><a id="save_btn" class="btn green" href="#">Update Node</a></td>
+
 								</tr>						
-								
-								</table>
-								
-							</div>	
-							<div id="map-canvas" width="500px;" height="500px;"></div>
-											
-					
-					
-		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-node" style="display: none;">
-			<div class="modal-dialog" style="top:30px;">
-				<div class="modal-content">
-					<div class="modal-header blue">
-					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
-					  <h4 class="modal-title">Add Child Node</h4>
+
+							</table>
+
+						</div>	
+						<div id="map-canvas" width="500px;" height="500px;"></div>
+
+
+
+						<div aria-hidden="true" role="dialog"  class="modal fade" id="add-node" style="display: none;">
+							<div class="modal-dialog" style="top:30px;">
+								<div class="modal-content">
+									<div class="modal-header blue">
+										<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+										<h4 class="modal-title">Add Child Node</h4>
+									</div>
+									<div class="modal-body">
+										<input type="text" id="new_node_title" placeholder="Node Title" />
+										<input type="text" id="new_node_lat" placeholder="Latitude" />
+										<input type="text" id="new_node_long" placeholder="Longitude" />
+										<input type="text" id="new_node_loc_typeid" disabled="disabled"/>
+
+									</div>					 				  
+								</div>
+								<div class="modal-footer">
+									<button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+									<button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div>
+						<!-- <div class="">
+							<div id="map-canvas"></div>	
+						</div> -->
+
 					</div>
-					<div class="modal-body">
-					  <input type="text" id="new_node_title" placeholder="Node Title" />
-					  <input type="text" id="new_node_lat" placeholder="Latitude" />
-					  <input type="text" id="new_node_long" placeholder="Longitude" />
-					  <input type="text" id="new_node_loc_typeid" disabled="disabled"/>
-					  
-					</div>					 				  
-					</div>
-					<div class="modal-footer">
-					  <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-					  <button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
-					</div>
-				</div><!-- /.modal-content -->
+				</div>
+
+
 			</div>
-			<!-- <div class="">
-				<div id="map-canvas"></div>	
-			</div> -->
-			
 		</div>
-			</div>
-			
-				
-			</div>
-		</div>
-		
-		
-		</div><!-- Container -->
-	</div><!-- Wrapper -->
+
+
+	</div><!-- Container -->
+</div><!-- Wrapper -->
 
 
 
