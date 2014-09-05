@@ -35,7 +35,9 @@ public class Complaint extends BaseNode {
     private Set<Person> endorsements;
     @RelatedTo(type = "POLITICAL_SERVED_BY")
     private Set<PoliticalBodyAdmin> servants;
+    @RelatedTo(type = "PHOTOS_OF_COMPLAINT")
     private Set<Photo> photos;
+    @RelatedTo(type = "VIDEOS_OF_COMPLAINT")
     private Set<Video> videos;
     @RelatedTo(type = "AT")
     private Set<Location> locations;
