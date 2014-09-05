@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -79,7 +79,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private LocationRepository locationRepository;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private PoliticalBodyAdminRepository politicalBodyAdminRepository;
 
@@ -309,10 +309,10 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         // Get all Locations and attach to it.
         String rediskey = locationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude());
         System.out.println("Get Locations for Key : " + rediskey);
-        Set<Long> complaintLocations = redisTemplate.opsForSet().members(rediskey);
+        Set<String> complaintLocations = stringRedisTemplate.opsForSet().members(rediskey);
         System.out.println("Founds Locations for Key : " + complaintLocations);
         if (complaintLocations.isEmpty()) {
-            complaintLocations.add(78340L);
+            complaintLocations.add("78340");
         }
         if (complaintLocations != null && !complaintLocations.isEmpty()) {
 
@@ -321,8 +321,10 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             Set<PoliticalBodyAdmin> politicalBodyAdmins = new HashSet<>();
             Collection<PoliticalBodyAdmin> oneLocationPoliticalBodyAdmins;
 
-            for (Long oneLocationId : complaintLocations) {
-                Location oneLocation = locationRepository.findOne(oneLocationId);
+            Long locationId;
+            for (String oneLocationId : complaintLocations) {
+                locationId = Long.parseLong(oneLocationId);
+                Location oneLocation = locationRepository.findOne(locationId);
                 locations.add(oneLocation);
                 addAllParentLocationsToComplaint(locations, oneLocation, complaintLocations);
 
@@ -343,13 +345,13 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         return buildComplaintMessage(complaint);
     }
 
-    private void addAllParentLocationsToComplaint(Set<Location> locations, Location location, Set<Long> complaintLocations) {
+    private void addAllParentLocationsToComplaint(Set<Location> locations, Location location, Set<String> complaintLocations) {
         if (location.getParentLocation() == null) {
             System.out.println("No Parent for location " + location.getId());
             return;
         }
         System.out.println("Parent for location " + location.getId() + " is " + location.getParentLocation());
-        if (complaintLocations.contains(location.getParentLocation().getId())) {
+        if (complaintLocations.contains(String.valueOf(location.getParentLocation().getId()))) {
             System.out.println("Not processing Parent location " + location.getParentLocation().getId());
             return;// No need to do naything
         }
