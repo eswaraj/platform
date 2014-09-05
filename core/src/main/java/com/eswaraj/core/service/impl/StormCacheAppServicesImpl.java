@@ -1,5 +1,7 @@
 package com.eswaraj.core.service.impl;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,9 +135,11 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     }
 
     private JsonObject buildComplaintInfo(Complaint complaint) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         JsonObject complaintJsonObject = new JsonObject();
         complaintJsonObject.addProperty("id", complaint.getId());
         complaintJsonObject.addProperty("complaintTime", complaint.getComplaintTime());
+        complaintJsonObject.addProperty("complaintTimeIso", sdf.format(new Date(complaint.getComplaintTime())));
         complaintJsonObject.addProperty("title", complaint.getTitle());
         complaintJsonObject.addProperty("description", complaint.getDescription());
         complaintJsonObject.addProperty("lattitude", complaint.getLattitude());
@@ -193,6 +197,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 locationJsonObject.addProperty("imageUrlMedium", onePhoto.getMediumUrl());
                 locationJsonObject.addProperty("imageUrlSmall", onePhoto.getSmallUrl());
                 locationJsonObject.addProperty("imageUrlSquare", onePhoto.getSquareUrl());
+                locationJsonObject.addProperty("imageUrlOriginal", onePhoto.getOrgUrl());
                 photosArray.add(locationJsonObject);
             }
             complaintJsonObject.add("photos", photosArray);
