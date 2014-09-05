@@ -68,7 +68,7 @@ $(document).ready(function(){
 	});
 	google.maps.event.addListener(map, "center_changed", function() {
 		c = map.getCenter();
-		myMarker.setPosition();
+		myMarker.setPosition(c);
 		$('#node_lat').val(c.lat());
 		$('#node_long').val(c.lng());
 	});
