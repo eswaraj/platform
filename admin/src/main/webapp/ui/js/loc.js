@@ -316,7 +316,8 @@ $(document).ready(function(){
 			dataType: "JSON",
 			success: function(data){
 				//alert(JSON.stringify(data, null, 4));
-				$('#js_tree').jstree('set_text',data.id, data.name+data.locationTypeId);
+				//$('#js_tree').jstree('set_text',data.id, data.name+data.locationTypeId);
+				$('#js_tree').jstree('set_text',data.id, data.name);
 				var error = data.message.length > 0;
 				if(error) {
 					alert("Error in node creation: " + data.message);
