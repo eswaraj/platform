@@ -1,5 +1,6 @@
 package com.eswaraj.core.service.impl;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 
@@ -138,7 +139,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         JsonObject complaintJsonObject = new JsonObject();
         complaintJsonObject.addProperty("id", complaint.getId());
         complaintJsonObject.addProperty("complaintTime", complaint.getComplaintTime());
-        complaintJsonObject.addProperty("complaintTimeIso", sdf.format(complaint.getDateCreated()));
+        complaintJsonObject.addProperty("complaintTimeIso", sdf.format(new Date(complaint.getComplaintTime())));
         complaintJsonObject.addProperty("title", complaint.getTitle());
         complaintJsonObject.addProperty("description", complaint.getDescription());
         complaintJsonObject.addProperty("lattitude", complaint.getLattitude());

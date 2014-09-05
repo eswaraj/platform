@@ -3,6 +3,7 @@ package com.eswaraj.core.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -108,8 +109,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 		boolean newComplaint = true;
         if (complaint.getId() != null && complaint.getId() > 0) {
             newComplaint = false;
+            complaint.setDateModified(new Date());
         } else {
             complaint.setStatus(Status.PENDING);
+            complaint.setDateCreated(new Date());
+            complaint.setDateModified(new Date());
         }
 
 
