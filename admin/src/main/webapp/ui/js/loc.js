@@ -61,6 +61,12 @@ $(document).ready(function(){
 	});
 	myMarker.setMap(map);
 	urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
+
+	google.maps.event.addListener(myMarker, 'dragend', function(evt){
+		$('#node_lat').val(evt.latLng.lat());
+		$('#node_long').val(evt.latLng.lng());
+	});
+
 	//map end
 
 	var root_node,new_node,sel;
