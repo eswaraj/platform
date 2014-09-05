@@ -217,6 +217,7 @@ $(document).ready(function(){
 		//var map_html = '<iframe width="625" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'&output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?q='+encodeURIComponent(kml_path)+'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
 
 		//$('#map-canvas').html(map_html);
+		layer.setMap(map);
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
 		c = map.getCenter();
