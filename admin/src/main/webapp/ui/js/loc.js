@@ -93,17 +93,6 @@ $(document).ready(function(){
 		update_selected_node();		
 	});
 
-	//var form = document.getElementById("form1");
-	//form.onsubmit = function(){
-	//	var searchText = document.getElementById("file");
-	//	var selected_node =  $('#js_tree').jstree('get_selected');
-	//	var  kml_url= '/ajax/location/'+selected_node[0]+'/upload';
-	//	$('#form1').attr('action', kml_url);
-	//	$('#form1').submit();	
-	//	update_map(kml_url);			 // window.location = kml_url;
-	//	return false;
-	//};  
-
 	$('#form1').submit(function(event){
 		event.preventDefault();
 		//grab all form data  
@@ -121,7 +110,6 @@ $(document).ready(function(){
 			contentType: false,
 			processData: false,
 			success: function (returndata) {
-				alert(returndata);
 				$('#'+selected_node).attr('boundaryFile',returndata);
 				$('#kml_status').html("<p>KML File exists</p>");
 				update_map(returndata);
