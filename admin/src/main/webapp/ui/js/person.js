@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$("#searchButton").click(function() {		
 		var s = $('#person_search').val();
 		$.ajax({
-			type: "POST",
+			type: "GET",
 			url:"/ajax/person/search/name/"+s,
 			data: "",
 			contentType: "application/json; charset=utf-8",
