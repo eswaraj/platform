@@ -1,4 +1,16 @@
 var person;
+//Google Maps variables
+var map;
+var layer;
+var kmlPath;
+var myMarker;
+var set = true;
+var urlSuffix;
+var c;
+var mylocation = {
+	'latitude': 28.61,
+	'longitude': 77.23
+};
 
 $(function(){
 	$("#menu").load("../ui/sidebar_menu.html"); 
@@ -30,7 +42,35 @@ function setNodeId(event) {
 	$("#country-list").val($('#'+target.id).attr('countryId'));
 }
 
+$ = $.noConflict();
 $(document).ready(function(){
+	var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
+	var mapOptions = {
+		zoom: 5,
+	center: myLatlng,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+	}
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	c = map.getCenter();
+	myMarker = new google.maps.Marker({
+		//position: new google.maps.LatLng(c.lat(), c.lng()),
+		draggable: true
+	});
+	myMarker.setMap(map);
+	urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
+
+	google.maps.event.addListener(myMarker, 'dragend', function(evt){
+		$('#node_lat').val(evt.latLng.lat());
+		$('#node_long').val(evt.latLng.lng());
+	});
+	google.maps.event.addListener(map, "center_changed", function() {
+		c = map.getCenter();
+		myMarker.setPosition(c);
+		$('#node_lat').val(c.lat());
+		$('#node_long').val(c.lng());
+	});
+
+	//map end
 	$("#searchButton").click(function() {		
 		var s = $('#person_search').val();
 		$.ajax({
