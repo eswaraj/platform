@@ -131,9 +131,9 @@ $(document).ready(function(){
 		searchBox.setBounds(bounds);
 	});
 
-	$('#new-person').on('shown', function () {
-		    google.maps.event.trigger(map, "resize");
-	});
+	//$('#new-person').on('shown', function () {
+	//	    google.maps.event.trigger(map, "resize");
+	//});
 
 	//map end
 	$("#searchButton").click(function() {		
