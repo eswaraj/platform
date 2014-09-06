@@ -181,6 +181,15 @@ $(document).ready(function(){
 
 	$("#submit").click(function() {		
 		//Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
-		alert("Person saved");
+		$.ajax({
+			type: "POST",
+			url:"/ajax/person/save",
+			data: person,
+			contentType: "application/json; charset=utf-8",
+			dataType: "JSON",
+			success: function(data){
+				alert("Person Added"+data.name);
+			}
+		});
 	});
 });
