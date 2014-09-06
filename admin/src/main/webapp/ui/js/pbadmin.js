@@ -93,7 +93,8 @@ $(document).ready(function(){
 		success: function(data){
 			//console.log(JSON.stringify(data));
 			var root_node = 
-	{		'text'    	:data.name+" Type: "+loc_hash[data.locationTypeId],
+	//{		'text'    	:data.name+" Type: "+loc_hash[data.locationTypeId],
+	{		'text'    	:data.name+" Type: "+"Country",
 		'id'  	 	:data.id,								   
 		'li_attr':{'title':data.name,'loc_typeid':data.locationTypeId,'p_id':data.parentLocationId,'center_lat':data.latitude,'center_long':data.longitude,'boundaryFile':data.boundaryFile}  
 	};
