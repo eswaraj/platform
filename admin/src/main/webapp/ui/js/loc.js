@@ -66,6 +66,12 @@ $(document).ready(function(){
 		$('#node_lat').val(evt.latLng.lat());
 		$('#node_long').val(evt.latLng.lng());
 	});
+	google.maps.event.addListener(map, "center_changed", function() {
+		c = map.getCenter();
+		myMarker.setPosition(c);
+		$('#node_lat').val(c.lat());
+		$('#node_long').val(c.lng());
+	});
 
 	//map end
 
@@ -87,16 +93,31 @@ $(document).ready(function(){
 		update_selected_node();		
 	});
 
-	var form = document.getElementById("form1");
-	form.onsubmit = function(){
-		var searchText = document.getElementById("file");
+	$('#form1').submit(function(event){
+		event.preventDefault();
+		//grab all form data  
+		//var formData = new FormData($('#form1'));
+		var formData = new FormData(this);
 		var selected_node =  $('#js_tree').jstree('get_selected');
-		var  kml_url= '/ajax/location/'+selected_node[0]+'/upload'
-			$('#form1').attr('action', kml_url);
-		$('#form1').submit();	
-		update_map(kml_url);			 // window.location = kml_url;
+		var  kml_url= '/ajax/location/'+selected_node[0]+'/upload';
+
+		$.ajax({
+			url: kml_url,
+			type: 'POST',
+			data: formData,
+			async: false,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function (returndata) {
+				$('#'+selected_node).attr('boundaryFile',returndata);
+				$('#kml_status').html("<p>KML File exists</p>");
+				update_map(returndata);
+			}
+		});
+
 		return false;
-	};  
+	});
 
 	$.ajax({
 		type: "GET",
@@ -223,8 +244,8 @@ $(document).ready(function(){
 		}
 		layer = new google.maps.KmlLayer(kml_path + '?' + urlSuffix );
 		layer.setMap(map);
-		c = map.getCenter();
-		myMarker.setPosition(c);
+		//c = map.getCenter();
+		//myMarker.setPosition(c);
 
 	}
 
@@ -295,7 +316,8 @@ $(document).ready(function(){
 			dataType: "JSON",
 			success: function(data){
 				//alert(JSON.stringify(data, null, 4));
-				$('#js_tree').jstree('set_text',data.id, data.name+data.locationTypeId);
+				//$('#js_tree').jstree('set_text',data.id, data.name+data.locationTypeId);
+				$('#js_tree').jstree('set_text',data.id, data.name);
 				var error = data.message.length > 0;
 				if(error) {
 					alert("Error in node creation: " + data.message);
