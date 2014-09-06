@@ -5,6 +5,7 @@ public class PhotoBean {
     private String imageUrlMedium;
     private String imageUrlSmall;
     private String imageUrlSquare;
+    private String orgUrl;
 
     public String getImageUrlLarge() {
         return imageUrlLarge;
@@ -36,5 +37,13 @@ public class PhotoBean {
 
     public void setImageUrlSquare(String imageUrlSquare) {
         this.imageUrlSquare = imageUrlSquare;
+    }
+
+    public String getOrgUrl() {
+        return orgUrl;
+    }
+
+    public void setOrgUrl(String orgUrl) {
+        this.orgUrl = orgUrl;
     }
 }

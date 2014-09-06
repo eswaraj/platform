@@ -134,7 +134,7 @@ jQuery(document).ready(function() {
                     <div class="list-row">
                     <div class="issue-pic">
                         <c:if test="${!empty photos}">
-                            <img src="${photos[0].imageUrlLarge}" alt="">
+                            <img src="${photos[0].orgUrl}" alt="">
                         </c:if>
                         
                         <c:if test="${empty photos}">
