@@ -191,7 +191,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: "POST",
 			url:"/ajax/person/save",
-			data: window.person,
+			data: JSON.stringify(window.person),
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
