@@ -25,7 +25,8 @@ public class LocationConvertor extends BaseConvertor<Location, LocationDto> {
 		if(location == null){
 			location = new Location();
 		}
-		BeanUtils.copyProperties(webDto, location);
+        // Do not copy boundaryFile field
+        BeanUtils.copyProperties(webDto, location, "boundaryFile");
 		if(webDto.getParentLocationId() != null){
 			Location parentLocation = locationRepository.findOne(webDto.getParentLocationId());
 			if(parentLocation == null){
