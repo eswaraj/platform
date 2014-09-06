@@ -141,7 +141,7 @@ $(document).ready(function(){
 			dataType: "JSON",
 			success: function(data){
 				for(var i=0; i<data.length; i++) {
-					$('#users tbody').innerHTML = "";
+					$('#users tbody').html("");
 					$('#users tbody').append("<tr>" +
 						"<td>" + data[i].name + "</td>" +
 						"<td>" + data[i].email + "</td>" +
@@ -166,6 +166,7 @@ $(document).ready(function(){
 		window.person.landlineNumber2 = $('#new_person_ll2').val();
 		window.person.mobileNumber1 = $('#new_person_mobile1').val();
 		window.person.mobileNumber2 = $('#new_person_mobile2').val();
+		window.person.personAddress = "";
 		window.person.personAddress.id = $('#new_person_addressId').val();
 		window.person.personAddress.line1 = $('#new_person_line1').val();
 		window.person.personAddress.line2 = $('#new_person_line2').val();
