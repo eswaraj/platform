@@ -176,5 +176,11 @@ $(document).ready(function(){
 		person.personAddress.districtId = $('#district-list').val();
 		person.personAddress.stateId = $('#state-list').val();
 		person.personAddress.countryId = $('#country-list').val();
+		alert("Final Step:Pick your location on map and then save the person");
+	});
+
+	$("#submit").click(function() {		
+		//Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
+		alert("Person saved");
 	});
 });
