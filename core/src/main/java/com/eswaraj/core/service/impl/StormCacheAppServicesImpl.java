@@ -188,6 +188,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             }
             complaintJsonObject.add("locations", jsonArray);
         }
+        System.out.println(complaint.getId() + ", " + complaint.getPhotos());
         if (!CollectionUtils.isEmpty(complaint.getPhotos())) {
             JsonArray photosArray = new JsonArray();
             for (Photo onePhoto : complaint.getPhotos()) {
