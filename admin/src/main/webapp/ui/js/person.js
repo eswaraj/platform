@@ -46,15 +46,19 @@ $ = $.noConflict();
 $(document).ready(function(){
 	var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
 	var mapOptions = {
-		zoom: 5,
-	center: myLatlng,
+	//	zoom: 5,
+	//center: myLatlng,
 	mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	c = map.getCenter();
+	var defaultBounds = new google.maps.LatLngBounds(
+		new google.maps.LatLng(-33.8902, 151.1759),
+		new google.maps.LatLng(-33.8474, 151.2631)
+		);
+	map.fitBounds(defaultBounds);
 	myMarker = new google.maps.Marker({
 		position: myLatlng,
-		draggable: true
+		 draggable: true
 	});
 	myMarker.setMap(map);
 	urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
@@ -70,6 +74,7 @@ $(document).ready(function(){
 		$('#node_long').val(c.lng());
 	});
 	//map new
+	var markers = [];
 	// Create the search box and link it to the UI element.
 	var input = /** @type {HTMLInputElement} */(
 			document.getElementById('pac-input'));
