@@ -1,4 +1,5 @@
 window.person="";
+window.personAddress="";
 //Google Maps variables
 var map;
 var layer;
@@ -130,6 +131,10 @@ $(document).ready(function(){
 		searchBox.setBounds(bounds);
 	});
 
+	$('#new-person').on('shown', function () {
+		    google.maps.event.trigger(map, "resize");
+	});
+
 	//map end
 	$("#searchButton").click(function() {		
 		var s = $('#person_search').val();
@@ -166,18 +171,18 @@ $(document).ready(function(){
 		window.person.landlineNumber2 = $('#new_person_ll2').val();
 		window.person.mobileNumber1 = $('#new_person_mobile1').val();
 		window.person.mobileNumber2 = $('#new_person_mobile2').val();
-		window.person.personAddress = "";
-		window.person.personAddress.id = $('#new_person_addressId').val();
-		window.person.personAddress.line1 = $('#new_person_line1').val();
-		window.person.personAddress.line2 = $('#new_person_line2').val();
-		window.person.personAddress.line3 = $('#new_person_line3').val();
-		window.person.personAddress.postalCode = $('#new_person_postal').val();
-		window.person.personAddress.villageId = $('#village-list').val();
-		window.person.personAddress.wardId = $('#ward-list').val();
-		window.person.personAddress.cityId = $('#city-list').val();
-		window.person.personAddress.districtId = $('#district-list').val();
-		window.person.personAddress.stateId = $('#state-list').val();
-		window.person.personAddress.countryId = $('#country-list').val();
+		window.personAddress.id = $('#new_person_addressId').val();
+		window.personAddress.line1 = $('#new_person_line1').val();
+		window.personAddress.line2 = $('#new_person_line2').val();
+		window.personAddress.line3 = $('#new_person_line3').val();
+		window.personAddress.postalCode = $('#new_person_postal').val();
+		window.personAddress.villageId = $('#village-list').val();
+		window.personAddress.wardId = $('#ward-list').val();
+		window.personAddress.cityId = $('#city-list').val();
+		window.personAddress.districtId = $('#district-list').val();
+		window.personAddress.stateId = $('#state-list').val();
+		window.personAddress.countryId = $('#country-list').val();
+		window.person.personAddress = window.personAddress;
 		alert("Final Step:Pick your location on map and then save the person");
 	});
 
