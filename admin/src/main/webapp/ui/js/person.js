@@ -1,4 +1,4 @@
-var person;
+window.person="";
 //Google Maps variables
 var map;
 var layer;
@@ -141,6 +141,7 @@ $(document).ready(function(){
 			dataType: "JSON",
 			success: function(data){
 				for(var i=0; i<data.length; i++) {
+					$('#users tbody').innerHTML = "";
 					$('#users tbody').append("<tr>" +
 						"<td>" + data[i].name + "</td>" +
 						"<td>" + data[i].email + "</td>" +
@@ -154,28 +155,28 @@ $(document).ready(function(){
 	});
 
 	$("#form-save").click(function() {		
-		person.id = $('#new_person_id').val();
-		person.name = $('#new_person_name').val();
-		person.biodata = $('#new_person_biodata').val();
-		person.dob = $('#new_person_dob').val();
-		person.photo = $('#new_person_photo').val();
-		person.gender = $('#new_person_gender').val();
-		person.email = $('#new_person_email').val();
-		person.landlineNumber1 = $('#new_person_ll1').val();
-		person.landlineNumber2 = $('#new_person_ll2').val();
-		person.mobileNumber1 = $('#new_person_mobile1').val();
-		person.mobileNumber2 = $('#new_person_mobile2').val();
-		person.personAddress.id = $('#new_person_addressId').val();
-		person.personAddress.line1 = $('#new_person_line1').val();
-		person.personAddress.line2 = $('#new_person_line2').val();
-		person.personAddress.line3 = $('#new_person_line3').val();
-		person.personAddress.postalCode = $('#new_person_postal').val();
-		person.personAddress.villageId = $('#village-list').val();
-		person.personAddress.wardId = $('#ward-list').val();
-		person.personAddress.cityId = $('#city-list').val();
-		person.personAddress.districtId = $('#district-list').val();
-		person.personAddress.stateId = $('#state-list').val();
-		person.personAddress.countryId = $('#country-list').val();
+		window.person.id = $('#new_person_id').val();
+		window.person.name = $('#new_person_name').val();
+		window.person.biodata = $('#new_person_biodata').val();
+		window.person.dob = $('#new_person_dob').val();
+		window.person.photo = $('#new_person_photo').val();
+		window.person.gender = $('#new_person_gender').val();
+		window.person.email = $('#new_person_email').val();
+		window.person.landlineNumber1 = $('#new_person_ll1').val();
+		window.person.landlineNumber2 = $('#new_person_ll2').val();
+		window.person.mobileNumber1 = $('#new_person_mobile1').val();
+		window.person.mobileNumber2 = $('#new_person_mobile2').val();
+		window.person.personAddress.id = $('#new_person_addressId').val();
+		window.person.personAddress.line1 = $('#new_person_line1').val();
+		window.person.personAddress.line2 = $('#new_person_line2').val();
+		window.person.personAddress.line3 = $('#new_person_line3').val();
+		window.person.personAddress.postalCode = $('#new_person_postal').val();
+		window.person.personAddress.villageId = $('#village-list').val();
+		window.person.personAddress.wardId = $('#ward-list').val();
+		window.person.personAddress.cityId = $('#city-list').val();
+		window.person.personAddress.districtId = $('#district-list').val();
+		window.person.personAddress.stateId = $('#state-list').val();
+		window.person.personAddress.countryId = $('#country-list').val();
 		alert("Final Step:Pick your location on map and then save the person");
 	});
 
@@ -184,7 +185,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: "POST",
 			url:"/ajax/person/save",
-			data: person,
+			data: window.person,
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
