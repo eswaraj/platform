@@ -134,10 +134,10 @@ jQuery(document).ready(function() {
                     <div class="list-row">
                     <div class="issue-pic">
                         <c:if test="${!empty oneComplaint.photos}">
-                            <img src="${photos[0].orgUrl}" alt="">
+                            <img src="${oneComplaint.photos[0].orgUrl}" alt="">
                         </c:if>
                         
-                        <c:if test="${empty photos}">
+                        <c:if test="${empty oneComplaint.photos}">
                             <img src="${staticHost}/images/issues/issues.png" alt="">
                         </c:if>
                     </div>

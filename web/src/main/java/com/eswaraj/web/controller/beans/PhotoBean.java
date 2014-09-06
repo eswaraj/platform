@@ -46,4 +46,10 @@ public class PhotoBean {
     public void setOrgUrl(String orgUrl) {
         this.orgUrl = orgUrl;
     }
+
+    @Override
+    public String toString() {
+        return "PhotoBean [imageUrlLarge=" + imageUrlLarge + ", imageUrlMedium=" + imageUrlMedium + ", imageUrlSmall=" + imageUrlSmall + ", imageUrlSquare=" + imageUrlSquare + ", orgUrl=" + orgUrl
+                + "]";
+    }
 }
