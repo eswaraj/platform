@@ -115,7 +115,7 @@ public class ApiController extends BaseController {
     }
 
     private String getComplaintsOfKey(String key, int start, int end) {
-        Set<String> complaintIds = stringRedisTemplate.opsForZSet().range(key, start, end);
+        Set<String> complaintIds = stringRedisTemplate.opsForZSet().reverseRange(key, start, end);
         logger.info("complaintIds : {}", complaintIds);
         List<String> complaintKeys = new ArrayList<>();
         for (String oneComplaintId : complaintIds) {

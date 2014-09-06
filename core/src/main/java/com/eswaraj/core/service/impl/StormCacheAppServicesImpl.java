@@ -188,6 +188,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             }
             complaintJsonObject.add("locations", jsonArray);
         }
+        System.out.println(complaint.getId() + ", " + complaint.getPhotos());
         if (!CollectionUtils.isEmpty(complaint.getPhotos())) {
             JsonArray photosArray = new JsonArray();
             for (Photo onePhoto : complaint.getPhotos()) {
@@ -197,7 +198,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 locationJsonObject.addProperty("imageUrlMedium", onePhoto.getMediumUrl());
                 locationJsonObject.addProperty("imageUrlSmall", onePhoto.getSmallUrl());
                 locationJsonObject.addProperty("imageUrlSquare", onePhoto.getSquareUrl());
-                locationJsonObject.addProperty("imageUrlOriginal", onePhoto.getOrgUrl());
+                locationJsonObject.addProperty("orgUrl", onePhoto.getOrgUrl());
                 photosArray.add(locationJsonObject);
             }
             complaintJsonObject.add("photos", photosArray);

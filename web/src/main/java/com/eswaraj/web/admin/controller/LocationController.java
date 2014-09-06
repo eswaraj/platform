@@ -57,6 +57,9 @@ public class LocationController extends BaseController {
                 List<ComplaintBean> list = new Gson().fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
                 }.getType());
                 mv.getModel().put("complaintList", list);
+                for (ComplaintBean oneComplaintBean : list) {
+                    System.out.println("oneComplaintBean.id=" + oneComplaintBean.getId() + ", Photos = " + oneComplaintBean.getPhotos());
+                }
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }

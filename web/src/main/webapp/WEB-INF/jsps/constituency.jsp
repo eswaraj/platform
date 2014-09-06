@@ -133,11 +133,11 @@ jQuery(document).ready(function() {
                 <c:forEach items="${complaintList}" var="oneComplaint">
                     <div class="list-row">
                     <div class="issue-pic">
-                        <c:if test="${!empty photos}">
-                            <img src="${photos[0].imageUrlLarge}" alt="">
+                        <c:if test="${!empty oneComplaint.photos}">
+                            <img src="${oneComplaint.photos[0].orgUrl}" alt="">
                         </c:if>
                         
-                        <c:if test="${empty photos}">
+                        <c:if test="${empty oneComplaint.photos}">
                             <img src="${staticHost}/images/issues/issues.png" alt="">
                         </c:if>
                     </div>
