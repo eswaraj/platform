@@ -16,7 +16,7 @@ $(document).ready(function(){
 						"<td>" + data[i].name + "</td>" +
 						"<td>" + data[i].email + "</td>" +
 						"<td>" + data[i].line1 + "</td>" +
-						"<td>" + "<a id='update' class='btn blue' href='#new-person' data-toggle='modal' " +" email='"+data[i].email+"' landlineNumber1='"+data[i].landlineNumber1+"' landlineNumber2='"+data[i].landlineNumber2+"' line1='"+data[i].line1+"' line2='"+data[i].line2+"' line3='"+data[i].line3+"' value='"+data[i].id+"' line2='"+data[i].line2+"' postalCode='"+data[i].postalCode+"' villageId='"+data[i].villageId+"' wardId='"+data[i].wardId+"' cityId='"+data[i].cityId+"' districtId='"+data[i].districtId+"' stateId='"+data[i].stateId+"' countryId='"+data[i].countryId+"'  + '>Update</a>' + "</td>" +
+						"<td>" + "<a id='update' class='btn blue' href='#new-person' data-toggle='modal' onClick='setNodeId();'" +" email='"+data[i].email+"' landlineNumber1='"+data[i].landlineNumber1+"' landlineNumber2='"+data[i].landlineNumber2+"' line1='"+data[i].line1+"' line2='"+data[i].line2+"' line3='"+data[i].line3+"' value='"+data[i].id+"' line2='"+data[i].line2+"' postalCode='"+data[i].postalCode+"' villageId='"+data[i].villageId+"' wardId='"+data[i].wardId+"' cityId='"+data[i].cityId+"' districtId='"+data[i].districtId+"' stateId='"+data[i].stateId+"' countryId='"+data[i].countryId+"'"  + '>Update</a>' + "</td>" +
 						"</tr>" 
 						);
 				}
