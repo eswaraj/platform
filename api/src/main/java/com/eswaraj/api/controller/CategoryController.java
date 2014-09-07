@@ -33,6 +33,7 @@ public class CategoryController extends BaseController {
     public @ResponseBody String getAllCategories(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         String allCategories = stringRedisTemplate.opsForValue().get(appKeyService.getAllCategoriesKey());
         JsonArray categoryJsonArray = new JsonArray();
+        System.out.println("allCategories=" + allCategories);
         if (allCategories != null) {
             categoryJsonArray = (JsonArray) jsonParser.parse(allCategories);
             addGlobalCounterTotalForCategory(httpServletRequest, categoryJsonArray);
@@ -42,13 +43,16 @@ public class CategoryController extends BaseController {
     }
 
     private void addGlobalCounterTotalForCategory(HttpServletRequest httpServletRequest, JsonArray categoryJsonArray) {
+        System.out.println("addGlobalCounterTotalForCategory");
         if (categoryJsonArray == null || categoryJsonArray.size() == 0) {
+            System.out.println("NO addGlobalCounterTotalForCategory");
             return;
         }
         JsonObject oneJsonObject;
         Long categoryId;
         
         String counter = httpServletRequest.getParameter("counter");
+        System.out.println("counter = " + counter);
         if(counter == null || !counter.equals("global")){
             return;
         }
@@ -59,6 +63,7 @@ public class CategoryController extends BaseController {
             categoryId = oneJsonObject.get("id").getAsLong();
             hashKeys.add(appKeyService.getCategoryKey(categoryId));
         }
+        System.out.println("hashKeys = " + hashKeys);
         List<Object> resultList = stringRedisTemplate.opsForHash().multiGet(redisKey, hashKeys);
        
         for (int i = 0; i < categoryJsonArray.size(); i++) {
