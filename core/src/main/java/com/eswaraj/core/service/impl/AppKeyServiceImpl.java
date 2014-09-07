@@ -83,7 +83,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public String getHourComplaintCounterKey(String prefix, Date date) {
-        return prefix + hourFormat.format(date);
+        return getCounterKey(prefix, hourFormat, date);
     }
 
     @Override
@@ -156,7 +156,13 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public String getLast24HourComplaintCounterKey(String prefix, Date date) {
-        return prefix + "24.HOUR";
+        if (StringUtils.isEmpty(prefix)) {
+            return "24.HOUR";
+        }
+        if (prefix.endsWith(".")) {
+            return prefix + "24.HOUR";
+        }
+        return prefix + "." + "24.HOUR";
     }
 
     @Override
