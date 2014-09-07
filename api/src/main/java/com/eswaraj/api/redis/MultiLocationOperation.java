@@ -15,7 +15,7 @@ public class MultiLocationOperation extends MultiLongKeyOperation {
 
     @Override
     protected String buildKey(Long id) {
-        return appKeyService.getLocationInformationKey(id);
+        return appKeyService.getEnityInformationHashKey();
     }
 
 }

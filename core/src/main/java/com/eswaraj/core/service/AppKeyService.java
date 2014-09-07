@@ -29,7 +29,7 @@ public interface AppKeyService {
 
     String getNearByKeyPrefix(double lattitude, double longitude) throws ApplicationException;
 
-    String getLocationInformationKey(Long locationId);
+    String getEnityInformationHashKey();
 
     String getLocationComplaintsKey(Long locationId);
 

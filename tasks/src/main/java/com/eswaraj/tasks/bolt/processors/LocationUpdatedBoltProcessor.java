@@ -30,11 +30,11 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 
             JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
             String urlId = outputJsonObject.get("url").getAsString();
-            String redisKey = appKeyService.getLocationInformationKey(locationId);
+            String redisKey = appKeyService.getLocationKey(locationId);
+            String hashKey = appKeyService.getEnityInformationHashKey();
 
             String locationInfo = outputJsonObject.toString();
-            logInfo("Writing Key {} to redis with Value as {}", redisKey, locationInfo);
-            writeToMemoryStoreValue(redisKey, locationInfo);
+            writeToMemoryStoreHash(redisKey, hashKey, locationInfo);
             if (!StringUtils.isEmpty(urlId)) {
                 writeToMemoryStoreValue(urlId, locationId);
             }

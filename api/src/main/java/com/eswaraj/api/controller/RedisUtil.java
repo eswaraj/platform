@@ -26,7 +26,7 @@ public class RedisUtil {
     public JsonArray expandLocations(Collection<Long> locationIds) {
         List<String> keys = new ArrayList<>(locationIds.size());
         for(Long oneLocationId : locationIds){
-            keys.add(appKeyService.getLocationInformationKey(oneLocationId));
+            keys.add(appKeyService.getEnityInformationHashKey());
         }
         List<String> results = stringRedisTemplate.opsForValue().multiGet(keys);
         JsonArray jsonArray = new JsonArray();

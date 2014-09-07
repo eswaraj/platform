@@ -32,9 +32,6 @@
     </bean>
     <!-- App beans -->
     <bean id="appKeyService" class="com.eswaraj.core.service.impl.AppKeyServiceImpl" />
-    <bean id="locationKeyService" class="com.eswaraj.core.service.impl.LocationKeyServiceImpl" />
-    <bean id="counterKeyService" class="com.eswaraj.core.service.impl.CounterKeyServiceImpl" />
-    
     
 	<!-- Redis related -->
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"

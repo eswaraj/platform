@@ -142,6 +142,10 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     }
 
     protected void writeToMemoryStoreHash(String redisKey, String hashKey, Long value) {
+        writeToMemoryStoreHash(redisKey, hashKey, String.valueOf(value));
+    }
+
+    protected void writeToMemoryStoreHash(String redisKey, String hashKey, String value) {
         logDebug("redisKey = {}, hashKey ={}, Value = {}", redisKey, hashKey, String.valueOf(value));
         stringRedisTemplate.opsForHash().put(redisKey, hashKey, String.valueOf(value));
     }

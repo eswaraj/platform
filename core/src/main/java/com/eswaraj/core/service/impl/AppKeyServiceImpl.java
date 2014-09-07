@@ -317,8 +317,8 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     }
 
     @Override
-    public String getLocationInformationKey(Long locationId) {
-        return LOCATION_PREFIX + locationId + ".info";
+    public String getEnityInformationHashKey() {
+        return "info";
     }
 
     @Override
