@@ -51,8 +51,18 @@ public class ApiUtil {
         return getResponseFrom(httpServletRequest, urlPath);
     }
 
+    public String getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
+
     public String getAllCategopries(HttpServletRequest httpServletRequest) throws ApplicationException {
         String urlPath = "/api/v0/categories";
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
+
+    public String getLocation(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
+        String urlPath = "/api/v0/location/" + locationId + "/info";
         return getResponseFrom(httpServletRequest, urlPath);
     }
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {

@@ -103,7 +103,7 @@ jQuery(document).ready(function() {
         <div class="list-group">
             <a href="#" class="list-group-item active">Show All</a>
             <c:forEach items="${rootCategories}" var="oneCategory">
-                <a href="#" class="list-group-item">${oneCategory.name}</a>
+                <a href="${location.url}/category/${oneCategory.name}.html" class="list-group-item">${oneCategory.name}</a>
             </c:forEach>
         </div>
     </div>

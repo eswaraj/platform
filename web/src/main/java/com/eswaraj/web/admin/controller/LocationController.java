@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +17,6 @@ import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.LocationDto;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
@@ -49,13 +49,44 @@ public class LocationController extends BaseController {
             Long locationId = Long.parseLong(locationIdString);
             try {
                 Gson gson = new Gson();
-                LocationDto locationDto = locationService.getLocationById(locationId);
-                mv.getModel().put("location", locationDto);
+                String locationString = apiUtil.getLocation(httpServletRequest, locationId);
+                mv.getModel().put("location", locationString);
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest);
                 List<CategoryWithChildCategoryDto> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryWithChildCategoryDto>>() {
                 }.getType());
                 mv.getModel().put("rootCategories", allRootcategories);
                 String locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
+                System.out.println("locationComplaints=" + locationComplaints);
+                List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
+                }.getType());
+                mv.getModel().put("complaintList", list);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
+        }
+        addGenericValues(mv);
+        mv.setViewName("constituency");
+        return mv;
+    }
+
+    @RequestMapping(value = "/state/**/category/{category}.html", method = RequestMethod.GET)
+    public ModelAndView showLocationCategoryPage(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long categoryId) {
+        System.out.println("Request URI : " + httpServletRequest.getRequestURI());
+        String urlkey = httpServletRequest.getRequestURI().replace("/category/" + categoryId + ".html", "");
+        System.out.println("Looking up URL in redis : " + urlkey);
+        System.out.println("categoryId : " + categoryId);
+        String locationIdString = stringRedisTemplate.opsForValue().get(urlkey);
+        if (locationIdString != null) {
+            Long locationId = Long.parseLong(locationIdString);
+            try {
+                Gson gson = new Gson();
+                String locationString = apiUtil.getLocation(httpServletRequest, locationId);
+                mv.getModel().put("location", locationString);
+                String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest);
+                List<CategoryWithChildCategoryDto> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryWithChildCategoryDto>>() {
+                }.getType());
+                mv.getModel().put("rootCategories", allRootcategories);
+                String locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, categoryId);
                 System.out.println("locationComplaints=" + locationComplaints);
                 List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
                 }.getType());
