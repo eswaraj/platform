@@ -97,6 +97,12 @@ $(document).ready(function(){
 		$('#node_lat').val(c.lat());
 		$('#node_long').val(c.lng());
 	});
+	google.maps.event.addListener(map, "zoom_changed", function() {
+		c = map.getCenter();
+		myMarker.setPosition(c);
+		$('#node_lat').val(c.lat());
+		$('#node_long').val(c.lng());
+	});
 	//map new
 	var markers = [];
 	// Create the search box and link it to the UI element.
