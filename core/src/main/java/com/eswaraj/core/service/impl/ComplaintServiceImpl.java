@@ -20,8 +20,8 @@ import org.springframework.util.StringUtils;
 import com.eswaraj.core.convertors.ComplaintConvertor;
 import com.eswaraj.core.convertors.PhotoConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.ComplaintService;
-import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Complaint.Status;
@@ -76,7 +76,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
     @Autowired
     private LocationRepository locationRepository;
     @Autowired
@@ -311,7 +311,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
     private ComplaintMessage updateLocationAndAdmins(Complaint complaint) throws ApplicationException {
         // Get all Locations and attach to it.
-        String rediskey = locationKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude());
+        String rediskey = appKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude());
         System.out.println("Get Locations for Key : " + rediskey);
         Set<String> complaintLocations = stringRedisTemplate.opsForSet().members(rediskey);
         System.out.println("Founds Locations for Key : " + complaintLocations);
@@ -344,7 +344,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             // TODO find Executive Admin based on Location and Category and
             // attach it to complaint
         }
-        complaint.setNearByKey(locationKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
+        complaint.setNearByKey(appKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
         complaint = complaintRepository.save(complaint);
         return buildComplaintMessage(complaint);
     }

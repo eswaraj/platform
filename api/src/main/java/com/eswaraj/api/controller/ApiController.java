@@ -21,8 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.LocationKeyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -32,13 +30,9 @@ public class ApiController extends BaseController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
-    private LocationKeyService locationKeyService;
-    @Autowired
     private AppKeyService appKeyService;
     @Autowired
     private RedisUtil redisUtil;
-    @Autowired
-    private CounterKeyService counterKeyService;
     private JsonParser jsonParser = new JsonParser();
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -55,8 +49,8 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationComplaintCountForLast30Days(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        String keyPrefix = counterKeyService.getLocationKey(locationId);
-        List<String> redisKeyForLocation30DaysCounter = counterKeyService.getHourComplaintKeysForLast30Days(keyPrefix, new Date());
+        String keyPrefix = appKeyService.getLocationKey(locationId);
+        List<String> redisKeyForLocation30DaysCounter = appKeyService.getHourComplaintKeysForLast30Days(keyPrefix, new Date());
         logger.info("getting data from Redis for keys {}", redisKeyForLocation30DaysCounter);
         List<String> data = stringRedisTemplate.opsForValue().multiGet(redisKeyForLocation30DaysCounter);
         Long totalComplaints = 0L;
@@ -86,7 +80,7 @@ public class ApiController extends BaseController {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int end = getIntParameter(httpServletRequest, "end", 20);
 
-        String locationComplaintKey = locationKeyService.getLocationComplaintsKey(locationId);
+        String locationComplaintKey = appKeyService.getLocationComplaintsKey(locationId);
         logger.info("locationComplaintKey : {}", locationComplaintKey);
         
         return getComplaintsOfKey(locationComplaintKey, start, end);
@@ -99,7 +93,7 @@ public class ApiController extends BaseController {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int end = getIntParameter(httpServletRequest, "end", 20);
 
-        String locationComplaintCategoryKey = locationKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
+        String locationComplaintCategoryKey = appKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
         logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
         return getComplaintsOfKey(locationComplaintCategoryKey, start, end);
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.CounterKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -24,13 +24,13 @@ public class AnalyticsCounterController extends BaseController {
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
-    private CounterKeyService counterKeyService;
+    private AppKeyService appKeyService;
 
     @RequestMapping(value = "/stats/counter/location/{locationId}/category/{categoryId}", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationCategoryCount(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long categoryId) throws ApplicationException {
-        String keyPreFix = counterKeyService.getLocationCategoryKeyPrefix(locationId, categoryId);
-        String redisKeyForAllTime = counterKeyService.getTotalComplaintCounterKey(keyPreFix);
+        String keyPreFix = appKeyService.getLocationCategoryKeyPrefix(locationId, categoryId);
+        String redisKeyForAllTime = appKeyService.getTotalComplaintCounterKey(keyPreFix);
         logger.info("getting data from Redis for key {}", redisKeyForAllTime);
         Long count = (Long) redisTemplate.opsForValue().get(redisKeyForAllTime);
         JsonObject jsonObject = new JsonObject();
@@ -65,8 +65,8 @@ public class AnalyticsCounterController extends BaseController {
         if (categories != null && !categories.isEmpty()) {
             List<String> allKeys = new ArrayList<>(categories.size());
             for (CategoryDto oneChildCategory : categories) {
-                String keyPreFix = counterKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategory.getId());
-                String redisKeyForAllTime = counterKeyService.getTotalComplaintCounterKey(keyPreFix);
+                String keyPreFix = appKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategory.getId());
+                String redisKeyForAllTime = appKeyService.getTotalComplaintCounterKey(keyPreFix);
                 logger.info("getting data from Redis for key {}", redisKeyForAllTime);
                 allKeys.add(redisKeyForAllTime);
             }

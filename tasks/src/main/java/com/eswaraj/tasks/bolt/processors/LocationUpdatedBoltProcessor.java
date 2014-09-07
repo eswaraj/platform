@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 
 import backtype.storm.tuple.Tuple;
 
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.google.gson.JsonObject;
@@ -16,7 +16,7 @@ import com.google.gson.JsonParser;
 public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
     private JsonParser jsonParser = new JsonParser();
@@ -30,7 +30,7 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 
             JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
             String urlId = outputJsonObject.get("url").getAsString();
-            String redisKey = locationKeyService.getLocationInformationKey(locationId);
+            String redisKey = appKeyService.getLocationInformationKey(locationId);
 
             String locationInfo = outputJsonObject.toString();
             logInfo("Writing Key {} to redis with Value as {}", redisKey, locationInfo);

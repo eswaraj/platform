@@ -32,7 +32,7 @@ public class LocationController extends BaseController {
         logger.info("Lat = " + Double.parseDouble(httpServletRequest.getParameter("lat")));
         logger.info("Long = " + Double.parseDouble(httpServletRequest.getParameter("long")));
         // First Redis operation
-        String redisKey = locationKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
+        String redisKey = appKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         logger.info("Redis Key = " + redisKey);
         Set<Long> locations = redisTemplate.opsForSet().members(redisKey);
 

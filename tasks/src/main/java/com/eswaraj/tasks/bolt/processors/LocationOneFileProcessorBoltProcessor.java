@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.LocationDto;
@@ -25,7 +25,7 @@ import com.eswaraj.web.dto.LocationDto;
 public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
     @Autowired
     private LocationService locationService;
 
@@ -132,7 +132,7 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
                 break;
             }
         }
-        String redisKey = locationKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
+        String redisKey = appKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
         if (insideBoundaries) {
 
             writeToMemoryStoreSet(redisKey, allLocations);

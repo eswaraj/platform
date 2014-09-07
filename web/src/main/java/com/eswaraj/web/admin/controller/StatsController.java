@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -25,8 +25,7 @@ import com.eswaraj.web.dto.LocationDto;
 @Controller
 public class StatsController {
 
-    @Autowired
-    private CounterKeyService counterKeyService;
+    private AppKeyService appKeyService;
     @Autowired
     private AppService appService;
     @Autowired
@@ -38,7 +37,7 @@ public class StatsController {
     @RequestMapping(value = "/stats.html", method = RequestMethod.GET)
     public ModelAndView showIndexPage(ModelAndView mv) throws ApplicationException {
 
-        String globalPrefix = counterKeyService.getGlobalKeyPrefix();
+        String globalPrefix = appKeyService.getGlobalKeyPrefix();
         // addDataToModel(mv, globalPrefix);
         // addCategoryStats(mv);
         mv.setViewName("stats");
@@ -48,7 +47,7 @@ public class StatsController {
     @RequestMapping(value = "/global.html", method = RequestMethod.GET)
     public ModelAndView showGlobalPage(ModelAndView mv) throws ApplicationException {
 
-        String globalPrefix = counterKeyService.getGlobalKeyPrefix();
+        String globalPrefix = appKeyService.getGlobalKeyPrefix();
         addDataToModel(mv, globalPrefix);
         addCategoryAllTimeStats(mv, null);
 
@@ -64,7 +63,7 @@ public class StatsController {
     @RequestMapping(value = "/stat/location/{locationId}.html", method = RequestMethod.GET)
     public ModelAndView showStateLocations(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
-        String locationPrefix = counterKeyService.getLocationKey(locationId);
+        String locationPrefix = appKeyService.getLocationKey(locationId);
         addDataToModel(mv, locationPrefix);
         addCategoryAllTimeStats(mv, locationId);
         List<LocationDto> childLocations = locationService.getChildLocationsOfParent(locationId);
@@ -79,21 +78,21 @@ public class StatsController {
         try {
             Date currentDate = new Date();
             ValueOperations<String, String> valueOperation = redisTemplate.opsForValue();
-            String totalComplaints = valueOperation.get(counterKeyService.getTotalComplaintCounterKey(prefix));
+            String totalComplaints = valueOperation.get(appKeyService.getTotalComplaintCounterKey(prefix));
 
-            List<String> yearKeys = counterKeyService.getYearComplaintKeysForEternitySinceStart(prefix);
+            List<String> yearKeys = appKeyService.getYearComplaintKeysForEternitySinceStart(prefix);
             List<String> yearComplaints = valueOperation.multiGet(yearKeys);
 
-            List<String> monthKeys = counterKeyService.getMonthComplaintKeysForTheYear(prefix, currentDate);
+            List<String> monthKeys = appKeyService.getMonthComplaintKeysForTheYear(prefix, currentDate);
             List<String> monthComplaints = valueOperation.multiGet(monthKeys);
 
-            List<String> dayKeys = counterKeyService.getDayComplaintKeysForTheMonth(prefix, currentDate);
+            List<String> dayKeys = appKeyService.getDayComplaintKeysForTheMonth(prefix, currentDate);
             List<String> dayComplaints = valueOperation.multiGet(dayKeys);
 
-            List<String> dayHourKeys = counterKeyService.getHourComplaintKeysForTheDay(prefix, currentDate);
+            List<String> dayHourKeys = appKeyService.getHourComplaintKeysForTheDay(prefix, currentDate);
             List<String> dayHourComplaints = valueOperation.multiGet(dayHourKeys);
 
-            List<String> last24HourKeys = counterKeyService.getHourComplaintKeysForLast24Hours(prefix, currentDate);
+            List<String> last24HourKeys = appKeyService.getHourComplaintKeysForLast24Hours(prefix, currentDate);
             List<String> last24HourComplaints = valueOperation.multiGet(last24HourKeys);
 
 
@@ -118,18 +117,18 @@ public class StatsController {
             List<String> categoryTotalKeys = new ArrayList<>();
             for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
                 categoryName.add(oneCategoryWithChildCategoryDto.getName());
-                String prefix = counterKeyService.getCategoryKey(oneCategoryWithChildCategoryDto.getId());
-                categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
+                String prefix = appKeyService.getCategoryKey(oneCategoryWithChildCategoryDto.getId());
+                categoryTotalKeys.add(appKeyService.getTotalComplaintCounterKey(prefix));
                 if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
                     for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
                         categoryName.add(oneCategoryWithChildCategoryDto.getName() + "  -->  " + oneChildCategoryWithChildCategoryDto.getName());
                         if (locationId == null) {
-                            prefix = counterKeyService.getCategoryKey(oneChildCategoryWithChildCategoryDto.getId());
+                            prefix = appKeyService.getCategoryKey(oneChildCategoryWithChildCategoryDto.getId());
                         } else {
-                            prefix = counterKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategoryWithChildCategoryDto.getId());
+                            prefix = appKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategoryWithChildCategoryDto.getId());
                         }
 
-                        categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
+                        categoryTotalKeys.add(appKeyService.getTotalComplaintCounterKey(prefix));
                     }
                 }
             }
@@ -157,23 +156,23 @@ public class StatsController {
         List<String> categoryTotalKeys = new ArrayList<>();
         for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
             categoryName.add(oneCategoryWithChildCategoryDto.getName());
-            String prefix = counterKeyService.getCategoryKey(oneCategoryWithChildCategoryDto.getId());
-            categoryHourlyKeys.add(counterKeyService.getCategoryHourComplaintCounterKey(currentDate, oneCategoryWithChildCategoryDto.getId()));
-            categoryDayKeys.add(counterKeyService.getDayComplaintCounterKey(prefix, currentDate));
-            category24HourKeys.add(counterKeyService.getLast24HourComplaintCounterKey(prefix, currentDate));
-            categoryMonthKeys.add(counterKeyService.getMonthComplaintCounterKey(prefix, currentDate));
-            categoryYearKeys.add(counterKeyService.getYearComplaintCounterKey(prefix, currentDate));
-            categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
+            String prefix = appKeyService.getCategoryKey(oneCategoryWithChildCategoryDto.getId());
+            categoryHourlyKeys.add(appKeyService.getCategoryHourComplaintCounterKey(currentDate, oneCategoryWithChildCategoryDto.getId()));
+            categoryDayKeys.add(appKeyService.getDayComplaintCounterKey(prefix, currentDate));
+            category24HourKeys.add(appKeyService.getLast24HourComplaintCounterKey(prefix, currentDate));
+            categoryMonthKeys.add(appKeyService.getMonthComplaintCounterKey(prefix, currentDate));
+            categoryYearKeys.add(appKeyService.getYearComplaintCounterKey(prefix, currentDate));
+            categoryTotalKeys.add(appKeyService.getTotalComplaintCounterKey(prefix));
             if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
                 for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
                     categoryName.add(oneChildCategoryWithChildCategoryDto.getName());
-                    prefix = counterKeyService.getCategoryKey(oneChildCategoryWithChildCategoryDto.getId());
-                    categoryHourlyKeys.add(counterKeyService.getCategoryHourComplaintCounterKey(currentDate, oneChildCategoryWithChildCategoryDto.getId()));
-                    categoryDayKeys.add(counterKeyService.getDayComplaintCounterKey(prefix, currentDate));
-                    category24HourKeys.add(counterKeyService.getLast24HourComplaintCounterKey(prefix, currentDate));
-                    categoryMonthKeys.add(counterKeyService.getMonthComplaintCounterKey(prefix, currentDate));
-                    categoryYearKeys.add(counterKeyService.getYearComplaintCounterKey(prefix, currentDate));
-                    categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
+                    prefix = appKeyService.getCategoryKey(oneChildCategoryWithChildCategoryDto.getId());
+                    categoryHourlyKeys.add(appKeyService.getCategoryHourComplaintCounterKey(currentDate, oneChildCategoryWithChildCategoryDto.getId()));
+                    categoryDayKeys.add(appKeyService.getDayComplaintCounterKey(prefix, currentDate));
+                    category24HourKeys.add(appKeyService.getLast24HourComplaintCounterKey(prefix, currentDate));
+                    categoryMonthKeys.add(appKeyService.getMonthComplaintCounterKey(prefix, currentDate));
+                    categoryYearKeys.add(appKeyService.getYearComplaintCounterKey(prefix, currentDate));
+                    categoryTotalKeys.add(appKeyService.getTotalComplaintCounterKey(prefix));
                 }
             }
         }

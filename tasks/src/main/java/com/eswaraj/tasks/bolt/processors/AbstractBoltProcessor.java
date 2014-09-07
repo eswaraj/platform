@@ -18,6 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import backtype.storm.tuple.Tuple;
 
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 public abstract class AbstractBoltProcessor implements BoltProcessor {
@@ -26,6 +27,8 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     private ThreadLocal<Tuple> currentTuple;
     private EswarajBaseBolt eswarajBaseBolt;
 
+    @Autowired
+    protected AppKeyService appKeyService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired

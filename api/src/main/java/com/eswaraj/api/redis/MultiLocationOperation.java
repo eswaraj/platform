@@ -2,20 +2,20 @@ package com.eswaraj.api.redis;
 
 import java.util.Collection;
 
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 
 public class MultiLocationOperation extends MultiLongKeyOperation {
 
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
 
-    public MultiLocationOperation(Collection<Long> locationIds, LocationKeyService locationKeyService) {
+    public MultiLocationOperation(Collection<Long> locationIds, AppKeyService appKeyService) {
         super(locationIds);
-        this.locationKeyService = locationKeyService;
+        this.appKeyService = appKeyService;
     }
 
     @Override
     protected String buildKey(Long id) {
-        return locationKeyService.getLocationInformationKey(id);
+        return appKeyService.getLocationInformationKey(id);
     }
 
 }

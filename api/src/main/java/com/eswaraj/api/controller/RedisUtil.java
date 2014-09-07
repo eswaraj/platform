@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.api.redis.MultiLocationOperation;
 import com.eswaraj.api.redis.RedisOperation;
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
@@ -19,14 +19,14 @@ import com.google.gson.JsonParser;
 public class RedisUtil {
 
     @Autowired
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     public JsonArray expandLocations(Collection<Long> locationIds) {
         List<String> keys = new ArrayList<>(locationIds.size());
         for(Long oneLocationId : locationIds){
-            keys.add(locationKeyService.getLocationInformationKey(oneLocationId));
+            keys.add(appKeyService.getLocationInformationKey(oneLocationId));
         }
         List<String> results = stringRedisTemplate.opsForValue().multiGet(keys);
         JsonArray jsonArray = new JsonArray();
@@ -43,7 +43,7 @@ public class RedisUtil {
     List<RedisOperation> redisOperations = new ArrayList<>();
 
     public void addLocationsExpandOperation(Collection<Long> locationIds) {
-        MultiLocationOperation multiLocationOperation = new MultiLocationOperation(locationIds, locationKeyService);
+        MultiLocationOperation multiLocationOperation = new MultiLocationOperation(locationIds, appKeyService);
         redisOperations.add(multiLocationOperation);
     }
 

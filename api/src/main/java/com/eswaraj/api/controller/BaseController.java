@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
@@ -14,7 +14,7 @@ public class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    protected LocationKeyService locationKeyService;
+    protected AppKeyService appKeyService;
 
     protected JsonArray convertToJsonArray(Collection<String> values) {
         JsonArray jsonArray = new JsonArray();
