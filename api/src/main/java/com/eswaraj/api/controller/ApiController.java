@@ -3,7 +3,6 @@ package com.eswaraj.api.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +41,10 @@ public class ApiController extends BaseController {
     public String getLocationCategoryCount(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
         List<Long> locationIds = new ArrayList<>(1);
         locationIds.add(locationId);
-        redisUtil.addLocationsExpandOperation(locationIds);
-        List<Map> results = redisUtil.executeAll();
-        return (String) results.get(0).get(locationId);
+        String redisKey = appKeyService.getLocationKey(locationId);
+        String infoHashKey = appKeyService.getEnityInformationHashKey();
+        String locationInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, infoHashKey);
+        return locationInfo;
     }
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
     @ResponseBody

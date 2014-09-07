@@ -111,10 +111,10 @@ jQuery(document).ready(function() {
             
             <c:forEach items="${rootCategories}" var="oneCategory">
                 <c:if test="${selectedCategory eq oneCategory.id}">
-                    <a href="${location.url}/category/${oneCategory.name}.html" class="list-group-item active">${oneCategory.name}</a>
+                    <a href="${location.url}/category/${oneCategory.id}.html" class="list-group-item active">${oneCategory.name}</a>
                 </c:if>
                 <c:if test="${ selectedCategory ne oneCategory.id}">
-                    <a href="${location.url}/category/${oneCategory.name}.html" class="list-group-item">${oneCategory.name}</a>
+                    <a href="${location.url}/category/${oneCategory.id}.html" class="list-group-item">${oneCategory.name}</a>
                 </c:if>
                 
             </c:forEach>
