@@ -39,6 +39,7 @@ public class CategoryController extends BaseController {
             addGlobalCounterTotalForCategory(httpServletRequest, categoryJsonArray);
             addLocationCounterTotalForCategory(httpServletRequest, categoryJsonArray);
         }
+        System.out.println("categoryJsonArray=" + categoryJsonArray);
         return categoryJsonArray.toString();
     }
 
@@ -56,24 +57,24 @@ public class CategoryController extends BaseController {
         if(counter == null || !counter.equals("global")){
             return;
         }
-        String redisKey = appKeyService.getGlobalComplaintCounterKey();
+
         List<Object> hashKeys = new ArrayList<>(categoryJsonArray.size());
         for (int i = 0; i < categoryJsonArray.size(); i++) {
             oneJsonObject = (JsonObject) categoryJsonArray.get(i);
             categoryId = oneJsonObject.get("id").getAsLong();
-            hashKeys.add(appKeyService.getCategoryKey(categoryId));
-        }
-        System.out.println("hashKeys = " + hashKeys);
-        List<Object> resultList = stringRedisTemplate.opsForHash().multiGet(redisKey, hashKeys);
-       
-        for (int i = 0; i < categoryJsonArray.size(); i++) {
-            oneJsonObject = (JsonObject) categoryJsonArray.get(i);
-            if (resultList.get(i) != null) {
-                oneJsonObject.addProperty("globalCount", resultList.get(i).toString());
+            String redisKey = appKeyService.getCategoryKey(categoryId);
+            String hashKey = appKeyService.getTotalComplaintCounterKey("");
+            System.out.println("redisKey = " + redisKey + ", hashKeys = " + hashKeys);
+            String value = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
+            System.out.println("redisKey = " + redisKey + ", hashKeys = " + hashKeys + ", Value = " + value);
+            if (value != null) {
+                oneJsonObject.addProperty("globalCount", value);
             } else {
                 oneJsonObject.addProperty("globalCount", 0);
             }
+            System.out.println("oneJsonObject=" + oneJsonObject);
         }
+
     }
 
     private void addLocationCounterTotalForCategory(HttpServletRequest httpServletRequest, JsonArray categoryJsonArray) {

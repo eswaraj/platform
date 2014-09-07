@@ -337,7 +337,6 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                     politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
                 }
             }
-            System.out.println("atatching Locations " + locations);
             complaint.setLocations(locations);
             complaint.setServants(politicalBodyAdmins);
 
