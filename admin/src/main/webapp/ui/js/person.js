@@ -76,7 +76,7 @@ $(document).ready(function(){
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	var defaultBounds = new google.maps.LatLngBounds(
 		new google.maps.LatLng(37.19705959279532, 64.02147375000004),
-		new google.maps.LatLng(i5.7668215619781575, 99.66112218750004)
+		new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
 		);
 	map.fitBounds(defaultBounds);
 	myMarker = new google.maps.Marker({
