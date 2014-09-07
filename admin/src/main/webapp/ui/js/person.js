@@ -236,7 +236,7 @@ $(document).ready(function(){
 		geocoder.geocode({'latLng': latlng}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				if (results[1]) {
-					$('#rev_geo').val(results[1].formatted_address);
+					$('#rev_geo').html(results[1].formatted_address);
 				} else {
 					alert('No results found');
 				}
