@@ -27,7 +27,7 @@ public abstract class CounterBoltProcessor extends AbstractBoltProcessor {
         String redisKey = (String) inputTuple.getValue(0);
         String prefix = (String) inputTuple.getValue(1);
         logDebug("redisKey = {}, hashKeyprefix = {}", redisKey, prefix);
-        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(1);
+        ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(2);
         logDebug("complaintCreatedMessage = " + complaintCreatedMessage);
         List<String> allKeys = getMemoryKeysForRead(prefix, complaintCreatedMessage);
 
