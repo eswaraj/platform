@@ -51,7 +51,7 @@ public class LocationController extends BaseController {
             try {
                 Gson gson = new Gson();
                 String locationString = apiUtil.getLocation(httpServletRequest, locationId);
-                mv.getModel().put("location", locationString);
+                mv.getModel().put("location", gson.fromJson(locationString, LocationBean.class));
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest);
                 List<CategoryWithChildCategoryDto> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryWithChildCategoryDto>>() {
                 }.getType());
