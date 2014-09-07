@@ -164,7 +164,7 @@ $(document).ready(function(){
 		window.person.name = $('#new_person_name').val();
 		window.person.biodata = $('#new_person_biodata').val();
 		window.person.dob = $('#new_person_dob').val();
-		window.person.photo = $('#new_person_photo').val();
+		window.person.profilePhoto = $('#new_person_photo').val();
 		window.person.gender = $('#new_person_gender').val();
 		window.person.email = $('#new_person_email').val();
 		window.person.landlineNumber1 = $('#new_person_ll1').val();
