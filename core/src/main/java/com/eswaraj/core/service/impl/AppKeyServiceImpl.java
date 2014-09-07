@@ -91,14 +91,14 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
         return getCounterKey(prefix, dayFormat, date);
     }
 
-    private String getCounterKey(String prefix, DateFormat dateFormat, Date date) {
+    private String getCounterKey(String prefix, DateFormat format, Date date) {
         if (StringUtils.isEmpty(prefix)) {
-            return dateFormat.format(date);
+            return format.format(date);
         }
         if (prefix.endsWith(".")) {
-            return prefix + dateFormat.format(date);
+            return prefix + format.format(date);
         }
-        return prefix + "." + dateFormat.format(date);
+        return prefix + "." + format.format(date);
 
     }
 
