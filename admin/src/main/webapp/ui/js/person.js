@@ -8,6 +8,7 @@ var myMarker;
 var set = true;
 var urlSuffix;
 var c;
+var geocoder;
 var mylocation = {
 	'latitude': 28.61,
 	'longitude': 77.23
@@ -157,6 +158,7 @@ $(document).ready(function(){
 	//$('#new-person').on('shown', function () {
 	//	    google.maps.event.trigger(map, "resize");
 	//});
+	geocoder = new google.maps.Geocoder();
 
 	//map end
 	$("#person_search").autocomplete({		
@@ -229,6 +231,20 @@ $(document).ready(function(){
 
 	$("#submit").click(function() {		
 		//Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
+		//Show reverse geocoded value
+		var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+		geocoder.geocode({'latLng': latlng}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				if (results[1]) {
+					$('#rev_geo').val(results[1].formatted_address);
+				} else {
+					alert('No results found');
+				}
+			} else {
+				alert('Geocoder failed due to: ' + status);
+			}
+		});
+		//end
 		$.ajax({
 			type: "POST",
 			url:"/ajax/person/save",
