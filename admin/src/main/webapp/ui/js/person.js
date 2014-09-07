@@ -167,8 +167,8 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
+				$('#users tbody').html("");
 				for(var i=0; i<data.length; i++) {
-					$('#users tbody').html("");
 					$('#users tbody').append("<tr>" +
 						"<td>" + data[i].name + "</td>" +
 						"<td>" + data[i].email + "</td>" +
