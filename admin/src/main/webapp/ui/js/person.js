@@ -195,7 +195,12 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
-				alert("Person Added"+data.name);
+				if(data.message){
+					alert("Error: Check POST response");
+				}
+				else{
+					alert("Person Added"+data.name);
+				}
 			}
 		});
 	});
