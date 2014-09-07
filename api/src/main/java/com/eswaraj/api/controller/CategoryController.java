@@ -32,12 +32,13 @@ public class CategoryController extends BaseController {
     @RequestMapping(value = "/api/v0/categories", method = RequestMethod.GET)
     public @ResponseBody String getAllCategories(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         String allCategories = stringRedisTemplate.opsForValue().get(appKeyService.getAllCategoriesKey());
+        JsonArray categoryJsonArray = new JsonArray();
         if (allCategories != null) {
-            JsonArray categoryJsonArray = (JsonArray) jsonParser.parse(allCategories);
+            categoryJsonArray = (JsonArray) jsonParser.parse(allCategories);
             addGlobalCounterTotalForCategory(httpServletRequest, categoryJsonArray);
             addLocationCounterTotalForCategory(httpServletRequest, categoryJsonArray);
         }
-        return allCategories;
+        return categoryJsonArray.toString();
     }
 
     private void addGlobalCounterTotalForCategory(HttpServletRequest httpServletRequest, JsonArray categoryJsonArray) {
