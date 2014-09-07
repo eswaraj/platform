@@ -60,6 +60,7 @@ public class LocationController extends BaseController {
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest, locationId, false);
                 List<CategoryBean> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryBean>>() {
                 }.getType());
+                addTotalComplaintCountToModel(mv, allRootcategories);
                 mv.getModel().put("rootCategories", allRootcategories);
                 String locationComplaints = null;
                 if (categoryId == null) {
@@ -79,6 +80,18 @@ public class LocationController extends BaseController {
         addGenericValues(mv);
         mv.setViewName("constituency");
         return mv;
+    }
+
+    private void addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
+        if (allRootcategories == null) {
+            mv.getModel().put("total", 0);
+            return;
+        }
+        Long total = 0L;
+        for (CategoryBean oneCategoryBean : allRootcategories) {
+            total = oneCategoryBean.getLocationCount() + total;
+        }
+        mv.getModel().put("total", total);
     }
 
 }

@@ -102,10 +102,10 @@ jQuery(document).ready(function() {
         </p>
         <div class="list-group">
             <c:if test="${empty selectedCategory}">
-                <a href="#" class="list-group-item active">Show All</a>
+                <a href="#" class="list-group-item active">Show All (${total})</a>
             </c:if>
             <c:if test="${!empty selectedCategory}">
-                <a href="${location.url}.html" class="list-group-item">Show All</a>
+                <a href="${location.url}.html" class="list-group-item">Show All (${total})</a>
             </c:if>
                                     
             
