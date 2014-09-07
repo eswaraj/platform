@@ -223,6 +223,7 @@ $(document).ready(function(){
 				}
 				else{
 					alert("Person Added"+data.name);
+					$( "#searchButton" ).trigger( "click" );
 				}
 			}
 		});
