@@ -16,6 +16,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.controller.beans.ComplaintBean;
+import com.eswaraj.web.controller.beans.LocationBean;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -82,7 +83,7 @@ public class LocationController extends BaseController {
                 mv.getModel().put("selectedCategory", categoryId);
                 Gson gson = new Gson();
                 String locationString = apiUtil.getLocation(httpServletRequest, locationId);
-                mv.getModel().put("location", locationString);
+                mv.getModel().put("location", gson.fromJson(locationString, LocationBean.class));
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest);
                 List<CategoryWithChildCategoryDto> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryWithChildCategoryDto>>() {
                 }.getType());
