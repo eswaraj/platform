@@ -19,37 +19,59 @@ $(function(){
 
 function setNodeId(event) {
 	var target = event.target || event.srcElement;
-	$("#new_person_id").val($('#'+target.id).attr('pid'));
-	$("#new_person_name").val($('#'+target.id).attr('pname'));
-	$("#new_person_biodata").val($('#'+target.id).attr('biodata'));
-	$("#new_person_dob").val($('#'+target.id).attr('dob'));
-	$("#new_person_photo").val($('#'+target.id).attr('photo'));
-	$("#new_person_gender").val($('#'+target.id).attr('gender'));
-	$("#new_person_email").val($('#'+target.id).attr('email'));
-	$("#new_person_ll1").val($('#'+target.id).attr('ll1'));
-	$("#new_person_ll2").val($('#'+target.id).attr('ll2'));
-	$("#new_person_mobile1").val($('#'+target.id).attr('mobile1'));
-	$("#new_person_mobile2").val($('#'+target.id).attr('mobile2'));
-	$("#new_person_addressId").val($('#'+target.id).attr('addressId'));
-	$("#new_person_line1").val($('#'+target.id).attr('line1'));
-	$("#new_person_line2").val($('#'+target.id).attr('line2'));
-	$("#new_person_line3").val($('#'+target.id).attr('line3'));
-	$("#new_person_postal").val($('#'+target.id).attr('postal'));
-	$("#village-list").val($('#'+target.id).attr('villageId'));
-	$("#ward-list").val($('#'+target.id).attr('wardId'));
-	$("#city-list").val($('#'+target.id).attr('cityId'));
-	$("#district-list").val($('#'+target.id).attr('districtId'));
-	$("#state-list").val($('#'+target.id).attr('stateId'));
-	$("#country-list").val($('#'+target.id).attr('countryId'));
+	if($('#'+target.id).attr('pid') !== 'null')
+		$("#new_person_id").val($('#'+target.id).attr('pid'));
+	if($('#'+target.id).attr('pname') !== 'null')
+		$("#new_person_name").val($('#'+target.id).attr('pname'));
+	if($('#'+target.id).attr('biodata') !== 'null')
+		$("#new_person_biodata").val($('#'+target.id).attr('biodata'));
+	if($('#'+target.id).attr('dob') !== 'null')
+		$("#new_person_dob").val($('#'+target.id).attr('dob'));
+	if($('#'+target.id).attr('photo') !== 'null')
+		$("#new_person_photo").val($('#'+target.id).attr('photo'));
+	if($('#'+target.id).attr('gender') !== 'null')
+		$("#new_person_gender").val($('#'+target.id).attr('gender'));
+	if($('#'+target.id).attr('email') !== 'null')
+		$("#new_person_email").val($('#'+target.id).attr('email'));
+	if($('#'+target.id).attr('ll1') !== 'null')
+		$("#new_person_ll1").val($('#'+target.id).attr('ll1'));
+	if($('#'+target.id).attr('ll2') !== 'null')
+		$("#new_person_ll2").val($('#'+target.id).attr('ll2'));
+	if($('#'+target.id).attr('mobile1') !== 'null')
+		$("#new_person_mobile1").val($('#'+target.id).attr('mobile1'));
+	if($('#'+target.id).attr('mobile2') !== 'null')
+		$("#new_person_mobile2").val($('#'+target.id).attr('mobile2'));
+	if($('#'+target.id).attr('addressId') !== 'null')
+		$("#new_person_addressId").val($('#'+target.id).attr('addressId'));
+	if($('#'+target.id).attr('line1') !== 'null')
+		$("#new_person_line1").val($('#'+target.id).attr('line1'));
+	if($('#'+target.id).attr('line2') !== 'null')
+		$("#new_person_line2").val($('#'+target.id).attr('line2'));
+	if($('#'+target.id).attr('line3') !== 'null')
+		$("#new_person_line3").val($('#'+target.id).attr('line3'));
+	if($('#'+target.id).attr('postal') !== 'null')
+		$("#new_person_postal").val($('#'+target.id).attr('postal'));
+	if($('#'+target.id).attr('villageId') !== 'null')
+		$("#village-list").val($('#'+target.id).attr('villageId'));
+	if($('#'+target.id).attr('wardId') !== 'null')
+		$("#ward-list").val($('#'+target.id).attr('wardId'));
+	if($('#'+target.id).attr('cityId') !== 'null')
+		$("#city-list").val($('#'+target.id).attr('cityId'));
+	if($('#'+target.id).attr('districtId') !== 'null')
+		$("#district-list").val($('#'+target.id).attr('districtId'));
+	if($('#'+target.id).attr('stateId') !== 'null')
+		$("#state-list").val($('#'+target.id).attr('stateId'));
+	if($('#'+target.id).attr('countryId') !== 'null')
+		$("#country-list").val($('#'+target.id).attr('countryId'));
 }
 
 $ = $.noConflict();
 $(document).ready(function(){
 	var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
 	var mapOptions = {
-	//	zoom: 5,
-	//center: myLatlng,
-	mapTypeId: google.maps.MapTypeId.ROADMAP
+		//	zoom: 5,
+		//center: myLatlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	var defaultBounds = new google.maps.LatLngBounds(
@@ -151,7 +173,7 @@ $(document).ready(function(){
 						"<td>" + data[i].name + "</td>" +
 						"<td>" + data[i].email + "</td>" +
 						"<td>" + data[i].line1 + "</td>" +
-						"<td>" + "<a id='update" + i + "' class='btn blue' href='#new-person' data-toggle='modal' onClick='setNodeId(event);'" +"pid='"+data[i].id+"' pname='"+data[i].name+"' biodata='"+data[i].biodata+"' dob='"+data[i].dob+"' gender='"+data[i].gender+"' photo='"+data[i].photo+"' email='"+data[i].email+"' ll1='"+data[i].landlineNumber1+"' ll2='"+data[i].landlineNumber2+"' mobile1='"+data[i].mobileNumber1+"' mobile2='"+data[i].mobileNumber2+"' addressId='"+data[i].personAddress.id+"' line1='"+data[i].personAddress.line1+"' line2='"+data[i].personAddress.line2+"' line3='"+data[i].personAddress.line3+"' value='"+data[i].id+"' postal='"+data[i].personAddress.postalCode+"' villageId='"+data[i].personAddress.villageId+"' wardId='"+data[i].personAddress.wardId+"' cityId='"+data[i].personAddress.cityId+"' districtId='"+data[i].personAddress.districtId+"' stateId='"+data[i].personAddress.stateId+"' countryId='"+data[i].personAddress.countryId+"'"  + '>Update</a>' + "</td>" +
+						"<td>" + "<a id='update" + i + "' class='btn blue' href='#new-person' data-toggle='modal' onClick='setNodeId(event);'" +"pid='"+data[i].id+"' pname='"+data[i].name+"' biodata='"+data[i].biodata+"' dob='"+data[i].dob+"' gender='"+data[i].gender+"' photo='"+data[i].profilePhoto+"' email='"+data[i].email+"' ll1='"+data[i].landlineNumber1+"' ll2='"+data[i].landlineNumber2+"' mobile1='"+data[i].mobileNumber1+"' mobile2='"+data[i].mobileNumber2+"' addressId='"+data[i].personAddress.id+"' line1='"+data[i].personAddress.line1+"' line2='"+data[i].personAddress.line2+"' line3='"+data[i].personAddress.line3+"' value='"+data[i].id+"' postal='"+data[i].personAddress.postalCode+"' villageId='"+data[i].personAddress.villageId+"' wardId='"+data[i].personAddress.wardId+"' cityId='"+data[i].personAddress.cityId+"' districtId='"+data[i].personAddress.districtId+"' stateId='"+data[i].personAddress.stateId+"' countryId='"+data[i].personAddress.countryId+"'"  + '>Update</a>' + "</td>" +
 						"</tr>" 
 						);
 				}
@@ -166,7 +188,8 @@ $(document).ready(function(){
 		window.person.dob = $('#new_person_dob').val();
 		window.person.profilePhoto = $('#new_person_photo').val();
 		window.person.gender = $('#new_person_gender').val();
-		window.person.email = $('#new_person_email').val();
+		if($('#new_person_email').val() !== "")
+			window.person.email = $('#new_person_email').val();
 		window.person.landlineNumber1 = $('#new_person_ll1').val();
 		window.person.landlineNumber2 = $('#new_person_ll2').val();
 		window.person.mobileNumber1 = $('#new_person_mobile1').val();
