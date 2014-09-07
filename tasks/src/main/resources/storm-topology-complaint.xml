@@ -106,7 +106,7 @@
 	<bean id="GlobalHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="GlobalHourlyCounterBolt" />
 		<property name="outputStream" value="GlobalHourlyCounterStream" />
-		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.GlobalHourlyCounterBoltProcessor" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.GlobalHourlyCounterBoltProcessor" />
 		<property name="paralellism" value="1" />
 		<property name="sourceComponentStreams">
 			<map>
@@ -114,14 +114,14 @@
 			</map>
 		</property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
 	</bean>
 	
 	<bean id="CategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="CategoryHourlyCounterBolt" />
         <property name="outputStream" value="CategoryHourlyCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryHourlyCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.CategoryHourlyCounterBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -129,7 +129,7 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
         
     </bean>
@@ -137,7 +137,7 @@
 	<bean id="LocationHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="LocationHourlyCounterBolt" />
         <property name="outputStream" value="LocationHourlyCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationHourlyCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.LocationHourlyCounterBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -145,14 +145,14 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     
 	<bean id="LocationCategoryHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="LocationCategoryHourlyCounterBolt" />
         <property name="outputStream" value="LocationCategoryHourlyCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationCategoryHourlyCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.LocationCategoryHourlyCounterBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -160,13 +160,13 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     <bean id="ComplaintHourlyMapAggregatorBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="ComplaintHourlyMapAggregatorBolt" />
         <property name="outputStream" value="ComplaintHourlyMapAggregatorStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.ComplaintHourlyMapAggregatorBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.ComplaintHourlyMapAggregatorBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -180,7 +180,7 @@
     <bean id="PoliticalAdminHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="PoliticalAdminHourlyCounterBolt" />
         <property name="outputStream" value="PoliticalAdminHourlyCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.PoliticalAdminHourlyCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.PoliticalAdminHourlyCounterBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -188,7 +188,7 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     
@@ -198,7 +198,7 @@
 	<bean id="DayCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="DayCounterBolt" />
         <property name="outputStream" value="DayCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.DayCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.DayCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
@@ -212,13 +212,13 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     
 	<bean id="Lat24HourCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="Lat24HourCounterBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.Lat24HourCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.Lat24HourCounterBoltProcessor" />
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -231,7 +231,7 @@
            </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     
@@ -247,14 +247,14 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     
 	<bean id="YearCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="YearCounterBolt" />
         <property name="outputStream" value="YearCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.YearCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.YearCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
@@ -263,14 +263,14 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     
 	
 	<bean id="TotalCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="TotalCounterBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.TotalCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.TotalCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
@@ -279,7 +279,7 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     

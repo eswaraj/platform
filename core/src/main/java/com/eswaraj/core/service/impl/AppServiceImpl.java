@@ -179,7 +179,7 @@ public class AppServiceImpl extends BaseService implements AppService {
         validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
         // Send message to update Location Info
-        queueService.sendLocationUpdateMessage(politicalBodyAdmin.getLocation().getId());
+        queueService.sendPoliticalBodyAdminUpdateMessage(politicalBodyAdmin.getLocation().getId(), politicalBodyAdmin.getId());
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);	
 	}
 	private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException{

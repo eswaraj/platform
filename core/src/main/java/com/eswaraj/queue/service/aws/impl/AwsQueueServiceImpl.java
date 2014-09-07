@@ -129,4 +129,24 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
         
     }
 
+    @Override
+    public void sendPoliticalBodyAdminUpdateMessage(Long locationId, Long politicalBodyAdminId) throws ApplicationException {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("locationId", locationId);
+        jsonObject.addProperty("politicalBodyAdminId", politicalBodyAdminId);
+        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.POLITICAL_BODY_ADMIN_UPDATE_MESSAGE_TYPE);
+
+        logger.debug("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
+        awsQueueManager.sendMessage(awsCategoryUpdateQueueName, jsonObject.toString());
+
+    }
+
+    @Override
+    public void sendReprocesAllComplaintOfLocation(Long locationId) throws ApplicationException {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("locationId", locationId);
+        logger.debug("Sending message {} to queue {}", jsonObject.toString(), awsReProcessAllComplaintQueueName);
+        awsQueueManager.sendMessage(awsReProcessAllComplaintQueueName, jsonObject.toString());
+    }
+
 }

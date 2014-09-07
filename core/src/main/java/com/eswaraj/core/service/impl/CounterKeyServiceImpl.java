@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.service.CounterKeyService;
 
@@ -17,8 +18,8 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
 
     private static final long serialVersionUID = 1L;
     private final String GLOBAL_PREFIX = "Global.";
-    private final String CATEGORY_PREFIX = "Category.";
-    private final String LOCATION_PREFIX = "Location.";
+    private final String CATEGORY_PREFIX = "CAT.";
+    private final String LOCATION_PREFIX = "LC.";
     private final String POLITICAL_BODY_ADMIN_PREFIX = "PBA.";
 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
@@ -27,8 +28,8 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     protected DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
     @Override
-    public String getGlobalHourComplaintCounterKey(Date date) {
-        return GLOBAL_PREFIX + hourFormat.format(date);
+    public String getGlobalComplaintCounterKey() {
+        return GLOBAL_PREFIX + "Count";
     }
 
     @Override
@@ -38,17 +39,28 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
 
     @Override
     public String getDayComplaintCounterKey(String prefix, Date date) {
-        return prefix + dayFormat.format(date);
+        return getCounterKey(prefix, dayFormat, date);
+    }
+
+    private String getCounterKey(String prefix, DateFormat dateFormat, Date date) {
+        if (StringUtils.isEmpty(prefix)) {
+            return dateFormat.format(date);
+        }
+        if (prefix.endsWith(".")) {
+            return prefix + dateFormat.format(date);
+        }
+        return prefix + "." + dateFormat.format(date);
+
     }
 
     @Override
     public String getMonthComplaintCounterKey(String prefix, Date date) {
-        return prefix + monthFormat.format(date);
+        return getCounterKey(prefix, monthFormat, date);
     }
 
     @Override
     public String getYearComplaintCounterKey(String prefix, Date date) {
-        return prefix + yearFormat.format(date);
+        return getCounterKey(prefix, yearFormat, date);
     }
 
     @Override
@@ -171,22 +183,22 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
 
     @Override
     public String getCategoryHourComplaintCounterKey(Date date, Long categoryId) {
-        return getCategoryKeyPrefix(categoryId) + hourFormat.format(date);
+        return getCategoryKey(categoryId) + "." + hourFormat.format(date);
     }
 
     @Override
-    public String getCategoryKeyPrefix(Long categoryId) {
-        return CATEGORY_PREFIX + categoryId + ".";
+    public String getCategoryKey(Long categoryId) {
+        return CATEGORY_PREFIX + categoryId;
     }
 
     @Override
     public String getLocationHourComplaintCounterKey(Date date, Long locationId) {
-        return getLocationKeyPrefix(locationId) + hourFormat.format(date);
+        return getLocationKey(locationId) + "." + hourFormat.format(date);
     }
 
     @Override
-    public String getLocationKeyPrefix(Long locationId) {
-        return LOCATION_PREFIX + locationId + ".";
+    public String getLocationKey(Long locationId) {
+        return LOCATION_PREFIX + locationId;
     }
 
     @Override
@@ -200,13 +212,13 @@ public class CounterKeyServiceImpl implements CounterKeyService, Serializable {
     }
 
     @Override
-    public String getPoliticalAdminHourComplaintCounterKey(Date date, Long getPoliticalAdminKeyPrefix) {
-        return getPoliticalAdminKeyPrefix(getPoliticalAdminKeyPrefix) + hourFormat.format(date);
+    public String getHourKey(Date date) {
+        return hourFormat.format(date);
     }
 
     @Override
-    public String getPoliticalAdminKeyPrefix(Long politicalAdminId) {
-        return POLITICAL_BODY_ADMIN_PREFIX + politicalAdminId + ".";
+    public String getPoliticalAdminKey(Long politicalAdminId) {
+        return POLITICAL_BODY_ADMIN_PREFIX + politicalAdminId;
     }
 
 

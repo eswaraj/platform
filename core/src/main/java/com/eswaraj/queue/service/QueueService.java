@@ -20,4 +20,8 @@ public interface QueueService {
     String receiveReprocessAllComplaintMessage() throws ApplicationException;
 
     void sendLocationUpdateMessage(Long locationId) throws ApplicationException;
+
+    void sendPoliticalBodyAdminUpdateMessage(Long locationId, Long politicalBodyAdminId) throws ApplicationException;
+
+    void sendReprocesAllComplaintOfLocation(Long locationId) throws ApplicationException;
 }

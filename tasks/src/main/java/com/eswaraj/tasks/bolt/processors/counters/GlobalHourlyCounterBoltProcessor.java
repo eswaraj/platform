@@ -1,4 +1,4 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
@@ -29,7 +30,8 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
 
-        String redisKey = counterKeyService.getGlobalHourComplaintCounterKey(creationDate);
+        String redisKey = counterKeyService.getGlobalComplaintCounterKey();
+        String hashKey = counterKeyService.getHourKey(creationDate);
         String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
 
         Map<String, Object> params = new HashMap<String, Object>();
@@ -38,10 +40,9 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
         Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-        writeToMemoryStoreValue(redisKey, totalComplaint);
+        writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-        String keyPrefixForNextBolt = counterKeyService.getGlobalKeyPrefix();
-        writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+        writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
         return Result.Success;
     }
 

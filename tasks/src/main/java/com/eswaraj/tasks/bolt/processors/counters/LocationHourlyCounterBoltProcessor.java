@@ -1,4 +1,4 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
@@ -44,12 +45,12 @@ public class LocationHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = counterKeyService.getLocationHourComplaintCounterKey(creationDate, oneLocation);
+            String redisKey = counterKeyService.getLocationKey(oneLocation);
+            String hashKey = counterKeyService.getHourKey(creationDate);
 
-            writeToMemoryStoreValue(redisKey, totalComplaint);
+            writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-            String keyPrefixForNextBolt = counterKeyService.getLocationKeyPrefix(oneLocation);
-            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
         }
         return Result.Success;
         

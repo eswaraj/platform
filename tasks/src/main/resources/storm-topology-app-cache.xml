@@ -21,6 +21,7 @@
 			<list>
 				<ref bean="CatageoryUpdatedBoltBean" />
 				<ref bean="LocationUpdatedBoltBean" />
+				<ref bean="PoliticalBodyAdminChangeBean" />
 			</list>
 		</property>
 	</bean>
@@ -31,6 +32,7 @@
             <list>
                 <value>CategoryUpdatedStream</value>
                 <value>LocationUpdatedStream</value>
+                <value>PoliticalBodyAdminUpdatedStream</value>
             </list>
         </property>
 		<!-- Properties define which services will be available for spout -->
@@ -58,4 +60,15 @@
             </map>
         </property>
     </bean>
+    <bean id="PoliticalBodyAdminChangeBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="PoliticalBodyAdminChangeBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.PoliticalBodyAdminChangeBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="PoliticalBodyAdminUpdatedStream" />
+            </map>
+        </property>
+    </bean>
+    
+	
 </beans>

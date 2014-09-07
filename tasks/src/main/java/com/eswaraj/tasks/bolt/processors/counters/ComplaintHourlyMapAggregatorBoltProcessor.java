@@ -1,4 +1,4 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import backtype.storm.tuple.Values;
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 /**

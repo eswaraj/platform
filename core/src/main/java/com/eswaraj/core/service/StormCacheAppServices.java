@@ -15,4 +15,9 @@ public interface StormCacheAppServices {
     JsonObject getCompleteLocationInfo(Long locationId) throws ApplicationException;
 
     JsonObject getCompleteComplaintInfo(Long complaintId) throws ApplicationException;
+
+    JsonObject getPoliticalBodyAdmin(Long politicalBodyAdminId) throws ApplicationException;
+
+    JsonObject getExecutiveBodyAdmin(Long executiveBodyAdminId) throws ApplicationException;
+
 }

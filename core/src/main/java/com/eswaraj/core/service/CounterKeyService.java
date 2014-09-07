@@ -6,25 +6,25 @@ import java.util.List;
 public interface CounterKeyService {
 
 
-    String getGlobalHourComplaintCounterKey(Date date);
+    String getGlobalComplaintCounterKey();
 
     String getGlobalKeyPrefix();
 
     String getCategoryHourComplaintCounterKey(Date date, Long categoryId);
 
-    String getCategoryKeyPrefix(Long categoryId);
+    String getCategoryKey(Long categoryId);
 
     String getLocationHourComplaintCounterKey(Date date, Long locationId);
 
-    String getLocationKeyPrefix(Long locationId);
+    String getLocationKey(Long locationId);
 
     String getLocationCategoryHourComplaintCounterKey(Date date, Long locationId, Long categoryId);
 
     String getLocationCategoryKeyPrefix(Long locationId, Long categoryId);
 
-    String getPoliticalAdminHourComplaintCounterKey(Date date, Long politicalAdminId);
+    String getHourKey(Date date);
 
-    String getPoliticalAdminKeyPrefix(Long politicalAdminId);
+    String getPoliticalAdminKey(Long politicalAdminId);
 
     String getDayComplaintCounterKey(String prefix, Date date);
 

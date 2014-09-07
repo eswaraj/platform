@@ -26,8 +26,8 @@ public class LocationKeyServiceImpl implements LocationKeyService, Serializable 
     private DecimalFormat decimalFormatUpto2DecimalPoints;
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
 
-    private final String LOCATION_PREFIX = "Location.";
-    private final String CATEGORY_PREFIX = "Category.";
+    private final String LOCATION_PREFIX = "LC.";
+    private final String CATEGORY_PREFIX = "CG.";
 
     public LocationKeyServiceImpl() {
         decimalFormat = new DecimalFormat("#.000");

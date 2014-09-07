@@ -15,7 +15,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.controller.beans.ComplaintBean;
-import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -48,13 +48,16 @@ public class LocationController extends BaseController {
         if (locationIdString != null) {
             Long locationId = Long.parseLong(locationIdString);
             try {
+                Gson gson = new Gson();
                 LocationDto locationDto = locationService.getLocationById(locationId);
                 mv.getModel().put("location", locationDto);
-                List<CategoryDto> allRootcategories = appService.getAllRootCategories();
+                String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest);
+                List<CategoryWithChildCategoryDto> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryWithChildCategoryDto>>() {
+                }.getType());
                 mv.getModel().put("rootCategories", allRootcategories);
                 String locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
                 System.out.println("locationComplaints=" + locationComplaints);
-                List<ComplaintBean> list = new Gson().fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
+                List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
                 }.getType());
                 mv.getModel().put("complaintList", list);
             } catch (ApplicationException e) {

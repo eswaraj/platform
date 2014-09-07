@@ -50,6 +50,11 @@ public class ApiUtil {
         String urlPath = "/api/v0/complaint/location/" + locationId;
         return getResponseFrom(httpServletRequest, urlPath);
     }
+
+    public String getAllCategopries(HttpServletRequest httpServletRequest) throws ApplicationException {
+        String urlPath = "/api/v0/categories";
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
         try {
             logger.info("Getting Results from " + urlPath);

@@ -14,7 +14,8 @@ import com.eswaraj.web.dto.LocationDto;
 @Component
 public class LocationConvertor extends BaseConvertor<Location, LocationDto> {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private LocationRepository locationRepository;
 	@Autowired
 	private LocationTypeRepository locationTypeRepository;

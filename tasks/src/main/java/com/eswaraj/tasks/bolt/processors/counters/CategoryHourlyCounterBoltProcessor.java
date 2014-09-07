@@ -1,4 +1,4 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
@@ -44,13 +45,13 @@ public class CategoryHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = counterKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
-            logDebug("redisKey = {}, totalComplaint={}", redisKey, totalComplaint);
+            String redisKey = counterKeyService.getCategoryKey(oneCategory);
+            String hashKey = counterKeyService.getHourKey(creationDate);
 
-            writeToMemoryStoreValue(redisKey, totalComplaint);
 
-            String keyPrefixForNextBolt = counterKeyService.getCategoryKeyPrefix(oneCategory);
-            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
+
+            writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
         }
         return Result.Success;
     }

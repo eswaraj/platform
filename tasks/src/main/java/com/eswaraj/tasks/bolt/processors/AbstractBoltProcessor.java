@@ -1,5 +1,6 @@
 package com.eswaraj.tasks.bolt.processors;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -137,8 +138,26 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         stringRedisTemplate.opsForValue().set(redisKey, String.valueOf(value));
     }
 
+    protected void writeToMemoryStoreHash(String redisKey, String hashKey, Long value) {
+        logDebug("redisKey = {}, hashKey ={}, Value = {}", redisKey, hashKey, String.valueOf(value));
+        stringRedisTemplate.opsForHash().put(redisKey, hashKey, String.valueOf(value));
+    }
+
     protected List<String> readMultiKeyFromStringMemoryStore(List<String> redisKeys) {
         return stringRedisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
+    protected List<Object> readMultiKeyFromStringMemoryHashStore(String redisKey, List<String> hashKeys) {
+        return stringRedisTemplate.opsForHash().multiGet(redisKey, convertStringListToObjectList(hashKeys));
+    }
+
+    private List<Object> convertStringListToObjectList(List<String> stringList) {
+        List<Object> objectList = new ArrayList<>(stringList.size());
+        for (String oneString : stringList) {
+            objectList.add(oneString);
+        }
+        return objectList;
+
     }
 
     protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {

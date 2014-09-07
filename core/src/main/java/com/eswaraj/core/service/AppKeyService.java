@@ -8,4 +8,8 @@ public interface AppKeyService {
 
     String getComplaintObjectKey(String complaintId);
 
+    String getPoliticalBodyAdminObjectKey(String politicalBodyAdminId);
+
+    String getExecutiveBodyAdminObjectKey(String executiveBodyAdminId);
+
 }

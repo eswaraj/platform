@@ -64,7 +64,7 @@ public class StatsController {
     @RequestMapping(value = "/stat/location/{locationId}.html", method = RequestMethod.GET)
     public ModelAndView showStateLocations(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
-        String locationPrefix = counterKeyService.getLocationKeyPrefix(locationId);
+        String locationPrefix = counterKeyService.getLocationKey(locationId);
         addDataToModel(mv, locationPrefix);
         addCategoryAllTimeStats(mv, locationId);
         List<LocationDto> childLocations = locationService.getChildLocationsOfParent(locationId);
@@ -118,13 +118,13 @@ public class StatsController {
             List<String> categoryTotalKeys = new ArrayList<>();
             for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
                 categoryName.add(oneCategoryWithChildCategoryDto.getName());
-                String prefix = counterKeyService.getCategoryKeyPrefix(oneCategoryWithChildCategoryDto.getId());
+                String prefix = counterKeyService.getCategoryKey(oneCategoryWithChildCategoryDto.getId());
                 categoryTotalKeys.add(counterKeyService.getTotalComplaintCounterKey(prefix));
                 if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
                     for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
                         categoryName.add(oneCategoryWithChildCategoryDto.getName() + "  -->  " + oneChildCategoryWithChildCategoryDto.getName());
                         if (locationId == null) {
-                            prefix = counterKeyService.getCategoryKeyPrefix(oneChildCategoryWithChildCategoryDto.getId());
+                            prefix = counterKeyService.getCategoryKey(oneChildCategoryWithChildCategoryDto.getId());
                         } else {
                             prefix = counterKeyService.getLocationCategoryKeyPrefix(locationId, oneChildCategoryWithChildCategoryDto.getId());
                         }
@@ -157,7 +157,7 @@ public class StatsController {
         List<String> categoryTotalKeys = new ArrayList<>();
         for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
             categoryName.add(oneCategoryWithChildCategoryDto.getName());
-            String prefix = counterKeyService.getCategoryKeyPrefix(oneCategoryWithChildCategoryDto.getId());
+            String prefix = counterKeyService.getCategoryKey(oneCategoryWithChildCategoryDto.getId());
             categoryHourlyKeys.add(counterKeyService.getCategoryHourComplaintCounterKey(currentDate, oneCategoryWithChildCategoryDto.getId()));
             categoryDayKeys.add(counterKeyService.getDayComplaintCounterKey(prefix, currentDate));
             category24HourKeys.add(counterKeyService.getLast24HourComplaintCounterKey(prefix, currentDate));
@@ -167,7 +167,7 @@ public class StatsController {
             if (oneCategoryWithChildCategoryDto.getChildCategories() != null) {
                 for (CategoryWithChildCategoryDto oneChildCategoryWithChildCategoryDto : oneCategoryWithChildCategoryDto.getChildCategories()) {
                     categoryName.add(oneChildCategoryWithChildCategoryDto.getName());
-                    prefix = counterKeyService.getCategoryKeyPrefix(oneChildCategoryWithChildCategoryDto.getId());
+                    prefix = counterKeyService.getCategoryKey(oneChildCategoryWithChildCategoryDto.getId());
                     categoryHourlyKeys.add(counterKeyService.getCategoryHourComplaintCounterKey(currentDate, oneChildCategoryWithChildCategoryDto.getId()));
                     categoryDayKeys.add(counterKeyService.getDayComplaintCounterKey(prefix, currentDate));
                     category24HourKeys.add(counterKeyService.getLast24HourComplaintCounterKey(prefix, currentDate));
