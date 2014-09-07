@@ -159,7 +159,7 @@ $(document).ready(function(){
 	//});
 
 	//map end
-	$("#searchButton").autocomplete({		
+	$("#person_search").autocomplete({		
 		source: "/ajax/person/search/name/",
 		minLength: 3,
 		response: function( event, ui ) {
