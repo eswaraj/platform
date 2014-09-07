@@ -79,6 +79,7 @@ public class LocationController extends BaseController {
         if (locationIdString != null) {
             Long locationId = Long.parseLong(locationIdString);
             try {
+                mv.getModel().put("selectedCategory", categoryId);
                 Gson gson = new Gson();
                 String locationString = apiUtil.getLocation(httpServletRequest, locationId);
                 mv.getModel().put("location", locationString);

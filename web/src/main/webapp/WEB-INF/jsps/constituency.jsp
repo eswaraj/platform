@@ -101,9 +101,22 @@ jQuery(document).ready(function() {
             <strong>Sort Issues by category</strong>
         </p>
         <div class="list-group">
-            <a href="#" class="list-group-item active">Show All</a>
+            <c:if test="${empty selectedCategory}">
+                <a href="#" class="list-group-item active">Show All</a>
+            </c:if>
+            <c:if test="${!empty selectedCategory}">
+                <a href="#" class="list-group-item">Show All</a>
+            </c:if>
+                                    
+            
             <c:forEach items="${rootCategories}" var="oneCategory">
-                <a href="${location.url}/category/${oneCategory.name}.html" class="list-group-item">${oneCategory.name}</a>
+                <c:if test="${eq selectedCategory oneCategory.id}">
+                    <a href="${location.url}/category/${oneCategory.name}.html" class="list-group-item active">${oneCategory.name}</a>
+                </c:if>
+                <c:if test="${!eq selectedCategory oneCategory.id}">
+                    <a href="${location.url}/category/${oneCategory.name}.html" class="list-group-item">${oneCategory.name}</a>
+                </c:if>
+                
             </c:forEach>
         </div>
     </div>
