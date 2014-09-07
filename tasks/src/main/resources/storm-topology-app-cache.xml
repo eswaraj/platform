@@ -33,7 +33,7 @@
             <list>
                 <value>CategoryUpdatedStream</value>
                 <value>LocationUpdatedStream</value>
-                <value>PoliticalBodyAdminUpdatedStream</value>
+                <value>RefreshAllLocationStream</value>
                 <value>PoliticalBodyAdminUpdatedStream</value>
             </list>
         </property>
