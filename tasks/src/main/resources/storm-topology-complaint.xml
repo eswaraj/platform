@@ -174,7 +174,7 @@
             </map>
         </property>
         <property name="fields">
-            <list><value>Fields1</value><value>Fields2</value></list>
+            <list><value>RedisKey</value><value>HashKeyPrefix</value><value>ComplaintMessage</value></list>
         </property>
     </bean>
     <bean id="PoliticalAdminHourlyCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
