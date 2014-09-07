@@ -22,7 +22,7 @@
 				<ref bean="CatageoryUpdatedBoltBean" />
 				<ref bean="LocationUpdatedBoltBean" />
 				<ref bean="PoliticalBodyAdminChangeBean" />
-				<ref bean="RefreshAllLocationStream" />
+				<ref bean="RefreshAllLocationBean" />
 			</list>
 		</property>
 	</bean>
