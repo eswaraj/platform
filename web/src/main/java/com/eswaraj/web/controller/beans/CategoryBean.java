@@ -1,5 +1,7 @@
 package com.eswaraj.web.controller.beans;
 
+import java.util.List;
+
 public class CategoryBean {
 
     private String externalId;
@@ -10,6 +12,7 @@ public class CategoryBean {
     private Long locationCount;
     private Long globalCount;
     private boolean root;
+    private List<CategoryBean> childCategories;
 
     public String getExternalId() {
         return externalId;
@@ -73,5 +76,13 @@ public class CategoryBean {
 
     public void setRoot(boolean root) {
         this.root = root;
+    }
+
+    public List<CategoryBean> getChildCategories() {
+        return childCategories;
+    }
+
+    public void setChildCategories(List<CategoryBean> childCategories) {
+        this.childCategories = childCategories;
     }
 }
