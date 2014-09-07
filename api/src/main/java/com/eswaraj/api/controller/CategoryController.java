@@ -85,7 +85,7 @@ public class CategoryController extends BaseController {
         for (int i = 0; i < categoryJsonArray.size(); i++) {
             oneJsonObject = (JsonObject) categoryJsonArray.get(i);
             categoryId = oneJsonObject.get("id").getAsLong();
-            hashKeys.add(appKeyService.getCategoryKey(categoryId));
+            hashKeys.add(appKeyService.getTotalComplaintCounterKey(appKeyService.getCategoryKey(categoryId)));
         }
         System.out.println("redisKey = " + locationRedisKey + ", hashKeys =" + hashKeys);
         List<Object> resultList = stringRedisTemplate.opsForHash().multiGet(locationRedisKey, hashKeys);
