@@ -114,7 +114,13 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public String getTotalComplaintCounterKey(String prefix) {
-        return prefix + "Total";
+        if (StringUtils.isEmpty(prefix)) {
+            return "Total";
+        }
+        if (prefix.endsWith(".")) {
+            return prefix + "Total";
+        }
+        return prefix + "." + "Total";
     }
 
     @Override

@@ -33,46 +33,37 @@ public class CategoryController extends BaseController {
     public @ResponseBody String getAllCategories(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         String allCategories = stringRedisTemplate.opsForValue().get(appKeyService.getAllCategoriesKey());
         JsonArray categoryJsonArray = new JsonArray();
-        System.out.println("allCategories=" + allCategories);
         if (allCategories != null) {
             categoryJsonArray = (JsonArray) jsonParser.parse(allCategories);
             addGlobalCounterTotalForCategory(httpServletRequest, categoryJsonArray);
             addLocationCounterTotalForCategory(httpServletRequest, categoryJsonArray);
         }
-        System.out.println("categoryJsonArray=" + categoryJsonArray);
         return categoryJsonArray.toString();
     }
 
     private void addGlobalCounterTotalForCategory(HttpServletRequest httpServletRequest, JsonArray categoryJsonArray) {
-        System.out.println("addGlobalCounterTotalForCategory");
         if (categoryJsonArray == null || categoryJsonArray.size() == 0) {
-            System.out.println("NO addGlobalCounterTotalForCategory");
             return;
         }
         JsonObject oneJsonObject;
         Long categoryId;
         
         String counter = httpServletRequest.getParameter("counter");
-        System.out.println("counter = " + counter);
         if(counter == null || !counter.equals("global")){
             return;
         }
 
-        List<Object> hashKeys = new ArrayList<>(categoryJsonArray.size());
         for (int i = 0; i < categoryJsonArray.size(); i++) {
             oneJsonObject = (JsonObject) categoryJsonArray.get(i);
             categoryId = oneJsonObject.get("id").getAsLong();
             String redisKey = appKeyService.getCategoryKey(categoryId);
             String hashKey = appKeyService.getTotalComplaintCounterKey("");
-            System.out.println("redisKey = " + redisKey + ", hashKeys = " + hashKeys);
             String value = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
-            System.out.println("redisKey = " + redisKey + ", hashKeys = " + hashKeys + ", Value = " + value);
             if (value != null) {
                 oneJsonObject.addProperty("globalCount", value);
             } else {
                 oneJsonObject.addProperty("globalCount", 0);
             }
-            System.out.println("oneJsonObject=" + oneJsonObject);
         }
 
     }
@@ -96,10 +87,12 @@ public class CategoryController extends BaseController {
             categoryId = oneJsonObject.get("id").getAsLong();
             hashKeys.add(appKeyService.getCategoryKey(categoryId));
         }
+        System.out.println("redisKey = " + locationRedisKey + ", hashKeys =" + hashKeys);
         List<Object> resultList = stringRedisTemplate.opsForHash().multiGet(locationRedisKey, hashKeys);
 
         for (int i = 0; i < categoryJsonArray.size(); i++) {
             oneJsonObject = (JsonObject) categoryJsonArray.get(i);
+            System.out.println("resultList.get(i) = " + resultList.get(i));
             if (resultList.get(i) != null) {
                 oneJsonObject.addProperty("locationCount", resultList.get(i).toString());
             } else {
