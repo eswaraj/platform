@@ -4,6 +4,7 @@ import java.util.List;
 
 public class CategoryBean {
 
+    private Long id;
     private String externalId;
     private String headerImageurl;
     private String imageUrl;
@@ -13,6 +14,14 @@ public class CategoryBean {
     private Long globalCount;
     private boolean root;
     private List<CategoryBean> childCategories;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getExternalId() {
         return externalId;
