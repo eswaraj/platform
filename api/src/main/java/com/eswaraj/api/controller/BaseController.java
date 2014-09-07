@@ -2,6 +2,8 @@ package com.eswaraj.api.controller;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,22 @@ public class BaseController {
             jsonArray.add(jsonParser.parse(oneResult));
         }
         return jsonArray;
+    }
+
+    protected int getIntParameter(HttpServletRequest httpServletRequest, String parameter, int defaultValue) {
+        String paramValue = httpServletRequest.getParameter(parameter);
+        if (paramValue == null) {
+            return defaultValue;
+        }
+        return Integer.parseInt(paramValue);
+    }
+
+    protected long getLongParameter(HttpServletRequest httpServletRequest, String parameter, long defaultValue) {
+        String paramValue = httpServletRequest.getParameter(parameter);
+        if (paramValue == null) {
+            return defaultValue;
+        }
+        return Long.parseLong(paramValue);
     }
 
 }

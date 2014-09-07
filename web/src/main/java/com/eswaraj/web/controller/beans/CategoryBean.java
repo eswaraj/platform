@@ -7,6 +7,8 @@ public class CategoryBean {
     private String imageUrl;
     private String name;
     private String videoUrl;
+    private Long locationCount;
+    private Long globalCount;
     private boolean root;
 
     public String getExternalId() {
@@ -47,6 +49,22 @@ public class CategoryBean {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public Long getLocationCount() {
+        return locationCount;
+    }
+
+    public void setLocationCount(Long locationCount) {
+        this.locationCount = locationCount;
+    }
+
+    public Long getGlobalCount() {
+        return globalCount;
+    }
+
+    public void setGlobalCount(Long globalCount) {
+        this.globalCount = globalCount;
     }
 
     public boolean isRoot() {

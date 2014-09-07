@@ -188,11 +188,4 @@ public class ApiController extends BaseController {
         }
     }
 
-    private int getIntParameter(HttpServletRequest httpServletRequest, String parameter, int defaultValue) {
-        String paramValue = httpServletRequest.getParameter(parameter);
-        if (paramValue == null) {
-            return defaultValue;
-        }
-        return Integer.parseInt(paramValue);
-    }
 }
