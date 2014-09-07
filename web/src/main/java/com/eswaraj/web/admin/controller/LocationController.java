@@ -57,6 +57,7 @@ public class LocationController extends BaseController {
         String categoryId = null;
         if (urlkey.contains("category")) {
             categoryId = urlkey.substring(urlkey.indexOf("category") + 9);
+            urlkey = urlkey.replace("/category/" + categoryId, "");
         }
         System.out.println("Looking up URL in redis : " + urlkey);
         String locationIdString = stringRedisTemplate.opsForValue().get(urlkey);
