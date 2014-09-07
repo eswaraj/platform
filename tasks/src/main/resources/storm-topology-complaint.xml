@@ -238,7 +238,7 @@
 	<bean id="MonthCounterBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="MonthCounterBolt" />
         <property name="outputStream" value="MonthCounterStream" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.MonthCounterBoltProcessor" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.counters.MonthCounterBoltProcessor" />
         
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
