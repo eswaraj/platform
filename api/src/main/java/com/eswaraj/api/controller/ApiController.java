@@ -143,11 +143,13 @@ public class ApiController extends BaseController {
             oneComplaintJsonObject.remove("pba");
             JsonObject ebaOneJsonObject;
             String redisKey;
+            String hashKey;
             JsonArray pbaJsonInforArray = new JsonArray();
             for (int i = 0; i < jsonArray.size(); i++) {
                 ebaOneJsonObject = (JsonObject) jsonArray.get(i);
                 redisKey = appKeyService.getPoliticalBodyAdminObjectKey(ebaOneJsonObject.get("id").getAsString());
-                String ebaInfo = stringRedisTemplate.opsForValue().get(redisKey);
+                hashKey = appKeyService.getEnityInformationHashKey();
+                String ebaInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
                 if (ebaInfo != null) {
                     JsonObject oneEbaJsonObject = (JsonObject) jsonParser.parse(ebaInfo);
                     pbaJsonInforArray.add(oneEbaJsonObject);
@@ -169,11 +171,13 @@ public class ApiController extends BaseController {
             oneComplaintJsonObject.remove("eba");
             JsonObject ebaOneJsonObject;
             String redisKey;
+            String hashKey;
             JsonArray ebaJsonInforArray = new JsonArray();
             for (int i = 0; i < jsonArray.size(); i++) {
                 ebaOneJsonObject = (JsonObject) jsonArray.get(i);
                 redisKey = appKeyService.getExecutiveBodyAdminObjectKey(ebaOneJsonObject.get("id").getAsString());
-                String ebaInfo = stringRedisTemplate.opsForValue().get(redisKey);
+                hashKey = appKeyService.getEnityInformationHashKey();
+                String ebaInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
                 if (ebaInfo != null) {
                     JsonObject oneEbaJsonObject = (JsonObject) jsonParser.parse(ebaInfo);
                     ebaJsonInforArray.add(oneEbaJsonObject);
