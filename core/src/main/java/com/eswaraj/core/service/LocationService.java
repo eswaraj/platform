@@ -25,6 +25,8 @@ public interface LocationService {
 
     List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException;
 
+    List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException;
+
 	LocationTypeDto saveLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;
 	
 	LocationTypeDto saveRootLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;

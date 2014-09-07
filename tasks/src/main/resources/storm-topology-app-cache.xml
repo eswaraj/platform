@@ -22,6 +22,7 @@
 				<ref bean="CatageoryUpdatedBoltBean" />
 				<ref bean="LocationUpdatedBoltBean" />
 				<ref bean="PoliticalBodyAdminChangeBean" />
+				<ref bean="RefreshAllLocationStream" />
 			</list>
 		</property>
 	</bean>
@@ -32,6 +33,7 @@
             <list>
                 <value>CategoryUpdatedStream</value>
                 <value>LocationUpdatedStream</value>
+                <value>PoliticalBodyAdminUpdatedStream</value>
                 <value>PoliticalBodyAdminUpdatedStream</value>
             </list>
         </property>
@@ -57,6 +59,7 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="DataChangeSpout" value="LocationUpdatedStream" />
+                <entry key="RefreshAllLocationBolt" value="RefreshSingleLocationStream" />
             </map>
         </property>
     </bean>
@@ -69,6 +72,19 @@
             </map>
         </property>
     </bean>
+    
+    <bean id="RefreshAllLocationBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshAllLocationBolt" />
+        <property name="outputStream" value="RefreshSingleLocationStream" />
+        
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllLocationBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="RefreshAllLocationStream" />
+            </map>
+        </property>
+    </bean>
+    
     
 	
 </beans>
