@@ -39,17 +39,6 @@ public class LocationController extends BaseController {
         return mv;
     }
 
-    public static void main(String[] args){
-        String url = "http://dev.eswaraj.com/state/delhi/category/78270.html";
-        url = url.replace(".html", "");
-        String categoryId = null;
-        if (url.contains("category")) {
-            String urlPartForCatgeoryId = url.substring(url.indexOf("category") + 9);
-            System.out.println("urlPartForCatgeoryId="+urlPartForCatgeoryId);
-            Integer.parseInt(urlPartForCatgeoryId);
-            
-        }
-    }
     @RequestMapping(value = "/state/**", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());

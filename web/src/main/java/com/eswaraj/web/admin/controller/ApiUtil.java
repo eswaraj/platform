@@ -76,7 +76,7 @@ public class ApiUtil {
         }
         extraParams.put("locationId", String.valueOf(locationId));
         String urlPath = "/api/v0/categories";
-        return getResponseFrom(httpServletRequest, urlPath);
+        return getResponseFrom(httpServletRequest, urlPath, extraParams);
     }
 
     public String getLocation(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
