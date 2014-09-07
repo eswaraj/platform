@@ -1,6 +1,7 @@
 package com.eswaraj.web.admin.controller;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -57,6 +58,23 @@ public class ApiUtil {
     }
 
     public String getAllCategopries(HttpServletRequest httpServletRequest) throws ApplicationException {
+        return getAllCategopries(httpServletRequest, false);
+    }
+    public String getAllCategopries(HttpServletRequest httpServletRequest, boolean getGlobalCount) throws ApplicationException {
+        Map<String, String> extraParams = new HashMap<String, String>();
+        if (getGlobalCount) {
+            extraParams.put("counter", "global");
+        }
+        String urlPath = "/api/v0/categories";
+        return getResponseFrom(httpServletRequest, urlPath, extraParams);
+    }
+
+    public String getAllCategopries(HttpServletRequest httpServletRequest, Long locationId, boolean getGlobalCount) throws ApplicationException {
+        Map<String, String> extraParams = new HashMap<String, String>();
+        if (getGlobalCount) {
+            extraParams.put("counter", "global");
+        }
+        extraParams.put("locationId", String.valueOf(locationId));
         String urlPath = "/api/v0/categories";
         return getResponseFrom(httpServletRequest, urlPath);
     }
@@ -66,6 +84,10 @@ public class ApiUtil {
         return getResponseFrom(httpServletRequest, urlPath);
     }
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
+        return getResponseFrom(httpServletRequest, urlPath, null);
+    }
+
+    public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath, Map<String, String> addedParameters) throws ApplicationException {
         try {
             logger.info("Getting Results from " + urlPath);
             URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost("dev.api.eswaraj.com").setPath(urlPath);
@@ -75,6 +97,12 @@ public class ApiUtil {
                     uriBuilder.addParameter(oneParameterEntry.getKey(), oneValue);
                 }
             }
+            if (addedParameters != null) {
+                for (Entry<String, String> oneParameterEntry : addedParameters.entrySet()) {
+                    uriBuilder.addParameter(oneParameterEntry.getKey(), oneParameterEntry.getValue());
+                }
+            }
+
             // TODO add hear params and authentication paramaters
             
             URI uri = uriBuilder.build();

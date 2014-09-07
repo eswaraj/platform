@@ -60,7 +60,7 @@ jQuery(document).ready(function() {
                             <label>Citizen Services</label>
                             <select class="form-control">
                                 <c:forEach items="${rootCategories}" var="oneCategory">
-                                    <option value="${oneCategory.id}">${oneCategory.name}</option>
+                                    <option value="${oneCategory.id}">${oneCategory.name} (${oneCategory.locationCount})</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -111,10 +111,10 @@ jQuery(document).ready(function() {
             
             <c:forEach items="${rootCategories}" var="oneCategory">
                 <c:if test="${selectedCategory eq oneCategory.id}">
-                    <a href="#" class="list-group-item active">${oneCategory.name}</a>
+                    <a href="#" class="list-group-item active">${oneCategory.name} (${oneCategory.locationCount})</a>
                 </c:if>
                 <c:if test="${ selectedCategory ne oneCategory.id}">
-                    <a href="${location.url}/category/${oneCategory.id}.html" class="list-group-item">${oneCategory.name}</a>
+                    <a href="${location.url}/category/${oneCategory.id}.html" class="list-group-item">${oneCategory.name} (${oneCategory.locationCount})</a>
                 </c:if>
                 
             </c:forEach>
