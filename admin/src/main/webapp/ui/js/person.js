@@ -75,8 +75,8 @@ $(document).ready(function(){
 	}
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	var defaultBounds = new google.maps.LatLngBounds(
-		new google.maps.LatLng(-33.8902, 151.1759),
-		new google.maps.LatLng(-33.8474, 151.2631)
+		new google.maps.LatLng(37.19705959279532, 64.02147375000004),
+		new google.maps.LatLng(i5.7668215619781575, 99.66112218750004)
 		);
 	map.fitBounds(defaultBounds);
 	myMarker = new google.maps.Marker({
@@ -90,12 +90,12 @@ $(document).ready(function(){
 		$('#node_lat').val(evt.latLng.lat());
 		$('#node_long').val(evt.latLng.lng());
 	});
-	google.maps.event.addListener(map, "center_changed", function() {
-		c = map.getCenter();
-		myMarker.setPosition(c);
-		$('#node_lat').val(c.lat());
-		$('#node_long').val(c.lng());
-	});
+	//google.maps.event.addListener(map, "center_changed", function() {
+	//	c = map.getCenter();
+	//	myMarker.setPosition(c);
+	//	$('#node_lat').val(c.lat());
+	//	$('#node_long').val(c.lng());
+	//});
 	//map new
 	var markers = [];
 	// Create the search box and link it to the UI element.
@@ -144,6 +144,7 @@ $(document).ready(function(){
 		}
 
 		map.fitBounds(bounds);
+		map.setZoom(17);
 	});
 
 	// Bias the SearchBox results towards places that are within the bounds of the
@@ -189,24 +190,24 @@ $(document).ready(function(){
 		window.person.profilePhoto = $('#new_person_photo').val();
 		window.person.gender = $('#new_person_gender').val();
 		if($('#new_person_email').val() !== "")
-			window.person.email = $('#new_person_email').val();
-		window.person.landlineNumber1 = $('#new_person_ll1').val();
-		window.person.landlineNumber2 = $('#new_person_ll2').val();
-		window.person.mobileNumber1 = $('#new_person_mobile1').val();
-		window.person.mobileNumber2 = $('#new_person_mobile2').val();
-		window.personAddress.id = $('#new_person_addressId').val();
-		window.personAddress.line1 = $('#new_person_line1').val();
-		window.personAddress.line2 = $('#new_person_line2').val();
-		window.personAddress.line3 = $('#new_person_line3').val();
-		window.personAddress.postalCode = $('#new_person_postal').val();
-		window.personAddress.villageId = $('#village-list').val();
-		window.personAddress.wardId = $('#ward-list').val();
-		window.personAddress.cityId = $('#city-list').val();
-		window.personAddress.districtId = $('#district-list').val();
-		window.personAddress.stateId = $('#state-list').val();
-		window.personAddress.countryId = $('#country-list').val();
-		window.person.personAddress = window.personAddress;
-		alert("Final Step:Pick your location on map and then save the person");
+		window.person.email = $('#new_person_email').val();
+	window.person.landlineNumber1 = $('#new_person_ll1').val();
+	window.person.landlineNumber2 = $('#new_person_ll2').val();
+	window.person.mobileNumber1 = $('#new_person_mobile1').val();
+	window.person.mobileNumber2 = $('#new_person_mobile2').val();
+	window.personAddress.id = $('#new_person_addressId').val();
+	window.personAddress.line1 = $('#new_person_line1').val();
+	window.personAddress.line2 = $('#new_person_line2').val();
+	window.personAddress.line3 = $('#new_person_line3').val();
+	window.personAddress.postalCode = $('#new_person_postal').val();
+	window.personAddress.villageId = $('#village-list').val();
+	window.personAddress.wardId = $('#ward-list').val();
+	window.personAddress.cityId = $('#city-list').val();
+	window.personAddress.districtId = $('#district-list').val();
+	window.personAddress.stateId = $('#state-list').val();
+	window.personAddress.countryId = $('#country-list').val();
+	window.person.personAddress = window.personAddress;
+	alert("Final Step:Pick your location on map and then save the person");
 	});
 
 	$("#submit").click(function() {		
