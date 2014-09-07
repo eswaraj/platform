@@ -9,7 +9,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -71,9 +70,8 @@ public class LocationKeyServiceImpl implements LocationKeyService, Serializable 
     }
 
     @Override
-    public String getNearByHourComplaintCounterKey(Date date, double lattitude, double longitude) throws ApplicationException {
+    public String getNearByKey(double lattitude, double longitude) throws ApplicationException {
         String key = buildLocationKeyForNearByComplaints(lattitude, longitude);
-        key = key + "." + hourFormat.format(date);
         return key;
     }
 

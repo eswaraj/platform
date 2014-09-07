@@ -52,13 +52,12 @@ public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProce
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
             
-            String redisKey = locationKeyService.getNearByHourComplaintCounterKey(new Date(complaintCreatedMessage.getComplaintTime()), complaintCreatedMessage.getLattitude(),
-                    complaintCreatedMessage.getLongitude());
+            String redisKey = locationKeyService.getNearByKey(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
+            String hashKey = counterKeyService.getHourKey(new Date(complaintCreatedMessage.getComplaintTime()));
 
-            writeToMemoryStoreValue(redisKey, totalComplaint);
+            writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-            String keyPrefixForNextBolt = locationKeyService.getNearByKeyPrefix(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
-            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
 
             return Result.Success;
         } catch (Exception ex) {
