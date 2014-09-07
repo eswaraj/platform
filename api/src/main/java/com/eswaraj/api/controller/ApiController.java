@@ -134,6 +134,9 @@ public class ApiController extends BaseController {
     }
 
     private void addPoliticalBodyAdminInformation(JsonObject oneComplaintJsonObject) {
+        if (oneComplaintJsonObject == null) {
+            return;
+        }
         if (oneComplaintJsonObject.get("pba").isJsonNull()) {
             JsonArray jsonArray = oneComplaintJsonObject.get("pba").getAsJsonArray();
             // remove eba
@@ -156,6 +159,9 @@ public class ApiController extends BaseController {
     }
 
     private void addExecutiveBodyAdminInformation(JsonObject oneComplaintJsonObject) {
+        if (oneComplaintJsonObject == null) {
+            return;
+        }
         if (oneComplaintJsonObject.get("eba").isJsonNull()) {
             JsonArray jsonArray = oneComplaintJsonObject.get("eba").getAsJsonArray();
             // remove eba
