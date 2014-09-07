@@ -25,6 +25,7 @@ import com.eswaraj.web.dto.LocationDto;
 @Controller
 public class StatsController {
 
+    @Autowired
     private AppKeyService appKeyService;
     @Autowired
     private AppService appService;
