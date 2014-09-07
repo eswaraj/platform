@@ -137,7 +137,7 @@ public class ApiController extends BaseController {
         if (oneComplaintJsonObject == null) {
             return;
         }
-        if (oneComplaintJsonObject.get("pba").isJsonNull()) {
+        if (oneComplaintJsonObject.get("pba") != null && !oneComplaintJsonObject.get("pba").isJsonNull()) {
             JsonArray jsonArray = oneComplaintJsonObject.get("pba").getAsJsonArray();
             // remove eba
             oneComplaintJsonObject.remove("pba");
@@ -162,7 +162,8 @@ public class ApiController extends BaseController {
         if (oneComplaintJsonObject == null) {
             return;
         }
-        if (oneComplaintJsonObject.get("eba").isJsonNull()) {
+        if (oneComplaintJsonObject.get("eba") != null && !oneComplaintJsonObject.get("eba").isJsonNull()) {
+            logger.info("eba is null = " + oneComplaintJsonObject.get("eba").isJsonNull());
             JsonArray jsonArray = oneComplaintJsonObject.get("eba").getAsJsonArray();
             // remove eba
             oneComplaintJsonObject.remove("eba");
