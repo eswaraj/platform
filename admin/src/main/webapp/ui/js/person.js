@@ -1,5 +1,5 @@
-window.person="";
-window.personAddress="";
+window.person=new Object();
+window.personAddress=new Object();
 //Google Maps variables
 var map;
 var layer;
