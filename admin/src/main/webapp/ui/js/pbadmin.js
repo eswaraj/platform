@@ -25,7 +25,7 @@ function fetch_pbtype(){
 		dataType: "JSON",
 		success: function(data){
 			//console.log(JSON.stringify(data));
-			return data;
+			all_pbtype = data;
 		}
 	});
 }
@@ -81,7 +81,7 @@ $(document).ready(function(){
 	window.hash = new Object();
 	window.loc_hash = new Object();
 	var all_ltype = fetch_ltype();
-	all_pbtype = fetch_pbtype();
+	fetch_pbtype();
 	fetch_plist();
 
 	$("#person_search").autocomplete({		
@@ -95,7 +95,7 @@ $(document).ready(function(){
 					"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Node</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Location</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -117,7 +117,7 @@ $(document).ready(function(){
 						"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Node</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Location</button>" + "</td>" +
 						"</tr>" 
 						); 
 				}
@@ -136,7 +136,7 @@ $(document).ready(function(){
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" + //change name to type when real API is available
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Person</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Location</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -158,7 +158,7 @@ $(document).ready(function(){
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Person</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Location</button>" + "</td>" +
 						"</tr>" 
 						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
