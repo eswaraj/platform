@@ -1,3 +1,5 @@
+var all_pbtype = new Object();
+
 $(function(){
 	$("#menu").load("../ui/sidebar_menu.html"); 
 });
