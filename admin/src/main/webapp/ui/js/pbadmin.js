@@ -82,6 +82,23 @@ $(document).ready(function(){
 	all_pbtype = fetch_pbtype();
 	fetch_plist();
 
+	$("#person_search").autocomplete({		
+		source: "/ajax/person/search/name/",
+		minLength: 3,
+		response: function( event, ui ) {
+			data = ui.content;
+			$('#users tbody').html("");
+			for(var i=0; i<data.length; i++) {
+				$('#users tbody').append("<tr>" +
+					"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
+					"<td>" + data[i].id + "</td>" +
+					"<td>" + data[i].name + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Node</button>" + "</td>" +
+					"</tr>" 
+					);
+			}
+		}
+	});
 
 	$("#searchButtonP").click(function() {		
 		var s = $('#person_search').val();
@@ -104,6 +121,24 @@ $(document).ready(function(){
 				}
 			}
 		});
+	});
+
+	$("#node_search").autocomplete({		
+		source: "/ajax/person/search/name/",
+		minLength: 3,
+		response: function( event, ui ) {
+			data = ui.content;
+			$('#nodes tbody').html("");
+			for(var i=0; i<data.length; i++) {
+				$('#nodes tbody').append("<tr>" +
+					"<td>" + data[i].id + "</td>" +
+					"<td>" + data[i].name + "</td>" + //change name to type when real API is available
+					"<td>" + data[i].name + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Person</button>" + "</td>" +
+					"</tr>" 
+					);
+			}
+		}
 	});
 
 	$("#searchButtonN").click(function() {		
@@ -334,13 +369,13 @@ function get_pbadmin(locationId,pbtypeId){
 
 		$.ajax({
 			type: "GET",
-			url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
-			dataType: "JSON",
-			success: function(data){
-				if(data){
+		url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
+		dataType: "JSON",
+		success: function(data){
+			if(data){
 				$('#pbadmin_list').append('<p>'+data.name+'</p>');
-				}
 			}
+		}
 		});
 
 	}
@@ -363,19 +398,19 @@ function get_pbadmin(locationId,pbtypeId){
 
 	//	});
 
-		/**********************Grab values from the selected person*********************/
+	/**********************Grab values from the selected person*********************/
 
-		//$('#pbadmin_locationId').val(locationId);
-		//$('#pbadmin_personId').val($('#'+target.id).attr('value'));
-		//$('#pbadmin_email').val($('#'+target.id).attr('email'));
-		//$('#pbadmin_llandline1').val($('#'+target.id).attr('landlineNumber1'));
-		//$('#pbadmin_llandline2').val($('#'+target.id).attr('landlineNumber1'));
-		//$('#pbadmin_mobile1').val($('#'+target.id).attr('mobileNumber1'));
-		//$('#pbadmin_mobile2').val($('#'+target.id).attr('mobileNumber2'));
-		//$('#pbadmin__haLine1').val($('#'+target.id).attr('line1'));
-		//$('#pbadmin__haLine2').val($('#'+target.id).attr('line2'));
-		//$('#pbadmin__haLine3').val($('#'+target.id).attr('line3'));
-		//$('#pbadmin_hapostal').val($('#'+target.id).attr('postalCode'));
+	//$('#pbadmin_locationId').val(locationId);
+	//$('#pbadmin_personId').val($('#'+target.id).attr('value'));
+	//$('#pbadmin_email').val($('#'+target.id).attr('email'));
+	//$('#pbadmin_llandline1').val($('#'+target.id).attr('landlineNumber1'));
+	//$('#pbadmin_llandline2').val($('#'+target.id).attr('landlineNumber1'));
+	//$('#pbadmin_mobile1').val($('#'+target.id).attr('mobileNumber1'));
+	//$('#pbadmin_mobile2').val($('#'+target.id).attr('mobileNumber2'));
+	//$('#pbadmin__haLine1').val($('#'+target.id).attr('line1'));
+	//$('#pbadmin__haLine2').val($('#'+target.id).attr('line2'));
+	//$('#pbadmin__haLine3').val($('#'+target.id).attr('line3'));
+	//$('#pbadmin_hapostal').val($('#'+target.id).attr('postalCode'));
 
 	//}
 
