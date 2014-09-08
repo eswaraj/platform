@@ -26,6 +26,8 @@ public interface ComplaintService {
 
     List<ComplaintDto> getAllComplaints(Long start, Long totalComplaints) throws ApplicationException;
 
+    List<ComplaintDto> getAllComplaintsOfLocation(Long locationId, Long start, Long totalComplaints) throws ApplicationException;
+
 	ComplaintDto getComplaintById(Long complaintId) throws ApplicationException;
 	
 	ComplaintDto saveComplaint(SaveComplaintRequestDto complaintDto) throws ApplicationException;

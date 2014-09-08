@@ -1,24 +1,20 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
 public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
-
-    @Autowired
-    private CounterKeyService counterKeyService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -29,7 +25,8 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
         long startOfHour = getStartOfHour(creationDate);
         long endOfHour = getEndOfHour(creationDate);
 
-        String redisKey = counterKeyService.getGlobalHourComplaintCounterKey(creationDate);
+        String redisKey = appKeyService.getGlobalComplaintCounterKey();
+        String hashKey = appKeyService.getHourKey(creationDate);
         String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
 
         Map<String, Object> params = new HashMap<String, Object>();
@@ -38,10 +35,9 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
         Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-        writeToMemoryStoreValue(redisKey, totalComplaint);
+        writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-        String keyPrefixForNextBolt = counterKeyService.getGlobalKeyPrefix();
-        writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+        writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
         return Result.Success;
     }
 

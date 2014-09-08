@@ -15,17 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.LocationKeyService;
 
 @Controller
 public class ApiController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private LocationKeyService locationKeyService;
-    @Autowired
-    private CounterKeyService counterKeyService;
     @Autowired
     private AppKeyService appKeyService;
     @Autowired

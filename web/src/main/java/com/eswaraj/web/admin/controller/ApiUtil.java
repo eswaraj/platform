@@ -1,6 +1,7 @@
 package com.eswaraj.web.admin.controller;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -48,9 +49,61 @@ public class ApiUtil {
 
     public String getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId;
+        Map<String, String> addedParams = getPagingInfo(httpServletRequest);
+        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+    }
+
+    public String getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
+        Map<String, String> addedParams = getPagingInfo(httpServletRequest);
+        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+    }
+
+    private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
+        String currentPage = httpServletRequest.getParameter("page");
+        Long start = 0L;
+        Long end = 10L;
+        if (currentPage != null) {
+            Long page = Long.parseLong(currentPage);
+            start = (page - 1) * 10;
+            end = start + end;
+        }
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("start", String.valueOf(start));
+        addedParams.put("end", String.valueOf(end));
+        return addedParams;
+    }
+    public String getAllCategopries(HttpServletRequest httpServletRequest) throws ApplicationException {
+        return getAllCategopries(httpServletRequest, false);
+    }
+    public String getAllCategopries(HttpServletRequest httpServletRequest, boolean getGlobalCount) throws ApplicationException {
+        Map<String, String> extraParams = new HashMap<String, String>();
+        if (getGlobalCount) {
+            extraParams.put("counter", "global");
+        }
+        String urlPath = "/api/v0/categories";
+        return getResponseFrom(httpServletRequest, urlPath, extraParams);
+    }
+
+    public String getAllCategopries(HttpServletRequest httpServletRequest, Long locationId, boolean getGlobalCount) throws ApplicationException {
+        Map<String, String> extraParams = new HashMap<String, String>();
+        if (getGlobalCount) {
+            extraParams.put("counter", "global");
+        }
+        extraParams.put("locationId", String.valueOf(locationId));
+        String urlPath = "/api/v0/categories";
+        return getResponseFrom(httpServletRequest, urlPath, extraParams);
+    }
+
+    public String getLocation(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
+        String urlPath = "/api/v0/location/" + locationId + "/info";
         return getResponseFrom(httpServletRequest, urlPath);
     }
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
+        return getResponseFrom(httpServletRequest, urlPath, null);
+    }
+
+    public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath, Map<String, String> addedParameters) throws ApplicationException {
         try {
             logger.info("Getting Results from " + urlPath);
             URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost("dev.api.eswaraj.com").setPath(urlPath);
@@ -60,6 +113,12 @@ public class ApiUtil {
                     uriBuilder.addParameter(oneParameterEntry.getKey(), oneValue);
                 }
             }
+            if (addedParameters != null) {
+                for (Entry<String, String> oneParameterEntry : addedParameters.entrySet()) {
+                    uriBuilder.addParameter(oneParameterEntry.getKey(), oneParameterEntry.getValue());
+                }
+            }
+
             // TODO add hear params and authentication paramaters
             
             URI uri = uriBuilder.build();

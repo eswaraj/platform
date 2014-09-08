@@ -1,25 +1,21 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
 public class LocationHourlyCounterBoltProcessor extends AbstractBoltProcessor {
-
-    @Autowired
-    private CounterKeyService counterKeyService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -44,12 +40,12 @@ public class LocationHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = counterKeyService.getLocationHourComplaintCounterKey(creationDate, oneLocation);
+            String redisKey = appKeyService.getLocationKey(oneLocation);
+            String hashKey = appKeyService.getHourKey(creationDate);
 
-            writeToMemoryStoreValue(redisKey, totalComplaint);
+            writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-            String keyPrefixForNextBolt = counterKeyService.getLocationKeyPrefix(oneLocation);
-            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
         }
         return Result.Success;
         

@@ -1,25 +1,21 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.CounterKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
 public class PoliticalAdminHourlyCounterBoltProcessor extends AbstractBoltProcessor {
-
-    @Autowired
-    private CounterKeyService counterKeyService;
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -44,12 +40,12 @@ public class PoliticalAdminHourlyCounterBoltProcessor extends AbstractBoltProces
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = counterKeyService.getPoliticalAdminHourComplaintCounterKey(creationDate, onePoliticalAdmin);
+            String redisKey = appKeyService.getPoliticalAdminKey(onePoliticalAdmin);
+            String hashKey = appKeyService.getHourKey(creationDate);
+            writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-            writeToMemoryStoreValue(redisKey, totalComplaint);
-
-            String keyPrefixForNextBolt = counterKeyService.getPoliticalAdminKeyPrefix(onePoliticalAdmin);
-            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            //String keyPrefixForNextBolt = counterKeyService.getPoliticalAdminKey(onePoliticalAdmin);
+            writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
         }
         return Result.Success;
     }

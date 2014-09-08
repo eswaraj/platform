@@ -60,7 +60,7 @@ jQuery(document).ready(function() {
                             <label>Citizen Services</label>
                             <select class="form-control">
                                 <c:forEach items="${rootCategories}" var="oneCategory">
-                                    <option value="${oneCategory.id}">${oneCategory.name}</option>
+                                    <option value="${oneCategory.id}">${oneCategory.name} (${oneCategory.locationCount})</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -101,9 +101,22 @@ jQuery(document).ready(function() {
             <strong>Sort Issues by category</strong>
         </p>
         <div class="list-group">
-            <a href="#" class="list-group-item active">Show All</a>
+            <c:if test="${empty selectedCategory}">
+                <a href="#" class="list-group-item active">Show All (${total})</a>
+            </c:if>
+            <c:if test="${!empty selectedCategory}">
+                <a href="${location.url}.html" class="list-group-item">Show All (${total})</a>
+            </c:if>
+                                    
+            
             <c:forEach items="${rootCategories}" var="oneCategory">
-                <a href="#" class="list-group-item">${oneCategory.name}</a>
+                <c:if test="${selectedCategory eq oneCategory.id}">
+                    <a href="#" class="list-group-item active">${oneCategory.name} (${oneCategory.locationCount})</a>
+                </c:if>
+                <c:if test="${ selectedCategory ne oneCategory.id}">
+                    <a href="${location.url}/category/${oneCategory.id}.html" class="list-group-item">${oneCategory.name} (${oneCategory.locationCount})</a>
+                </c:if>
+                
             </c:forEach>
         </div>
     </div>
@@ -184,27 +197,32 @@ jQuery(document).ready(function() {
                 
                 <div class="pagination-wrapper">
                     <ul class="pagination">
-                        <li class="disabled">
-                            <a href="#">&laquo;</a>
-                        </li>
+                    <c:if test="${enableFirst}">
+                        <li class="active"><a href="?page=1">&laquo;</a></li>
+                    </c:if>
+                    <c:if test="${!enableFirst}">
+                        <li class="disabled"><a href="#">&laquo;</a></li>
+                    </c:if>
+                    <c:forEach items="${pages}" var="onePage">
+                        <c:if test="${onePage eq currentPage}">
                         <li class="active">
-                            <a href="#">1</a>
+                            <a href="?page=${onePage}">${onePage}</a>
                         </li>
+                        </c:if>
+                        <c:if test="${onePage ne currentPage}">
                         <li>
-                            <a href="#">2</a>
+                            <a href="?page=${onePage}">${onePage}</a>
                         </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">5</a>
-                        </li>
-                        <li>
-                            <a href="#">&raquo;</a>
-                        </li>
+                        </c:if>
+                        
+                    </c:forEach>
+                    <c:if test="${enableLast}">
+                        <li class="active"><a href="?page=${totalPages}">&raquo;</a></li>
+                    </c:if>
+                    <c:if test="${!enableLast}">
+                        <li class="disabled"><a href="#">&raquo;</a></li>
+                    </c:if>
+                    
                     </ul>
                 </div>
             </div>

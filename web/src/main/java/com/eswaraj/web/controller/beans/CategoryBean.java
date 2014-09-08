@@ -1,13 +1,27 @@
 package com.eswaraj.web.controller.beans;
 
+import java.util.List;
+
 public class CategoryBean {
 
+    private Long id;
     private String externalId;
     private String headerImageurl;
     private String imageUrl;
     private String name;
     private String videoUrl;
+    private Long locationCount;
+    private Long globalCount;
     private boolean root;
+    private List<CategoryBean> childCategories;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getExternalId() {
         return externalId;
@@ -49,11 +63,35 @@ public class CategoryBean {
         this.videoUrl = videoUrl;
     }
 
+    public Long getLocationCount() {
+        return locationCount;
+    }
+
+    public void setLocationCount(Long locationCount) {
+        this.locationCount = locationCount;
+    }
+
+    public Long getGlobalCount() {
+        return globalCount;
+    }
+
+    public void setGlobalCount(Long globalCount) {
+        this.globalCount = globalCount;
+    }
+
     public boolean isRoot() {
         return root;
     }
 
     public void setRoot(boolean root) {
         this.root = root;
+    }
+
+    public List<CategoryBean> getChildCategories() {
+        return childCategories;
+    }
+
+    public void setChildCategories(List<CategoryBean> childCategories) {
+        this.childCategories = childCategories;
     }
 }

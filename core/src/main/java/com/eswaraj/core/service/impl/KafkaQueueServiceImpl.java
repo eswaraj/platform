@@ -54,5 +54,17 @@ public class KafkaQueueServiceImpl implements QueueService {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void sendPoliticalBodyAdminUpdateMessage(Long locationId, Long politicalBodyAdminId) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void sendReprocesAllComplaintOfLocation(Long locationId) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
     
 }

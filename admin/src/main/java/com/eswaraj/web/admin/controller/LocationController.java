@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.FileService;
-import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -43,7 +43,7 @@ public class LocationController extends BaseController {
     private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
-    private LocationKeyService LocationKeyService;
+    private AppKeyService appKeyService;
 
     @Value("${aws_s3_directory_for_kml_files}")
     private String awsDirectoryForComplaintPhoto;
@@ -107,7 +107,7 @@ public class LocationController extends BaseController {
     public @ResponseBody List<LocationDto> getLocationAtPoint(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
         System.out.println("Lat = " + Double.parseDouble(httpServletRequest.getParameter("lat")));
         System.out.println("Long = " + Double.parseDouble(httpServletRequest.getParameter("long")));
-        String redisKey = LocationKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
+        String redisKey = appKeyService.buildLocationKey(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         System.out.println("Redis Key = " + redisKey);
         Set<String> locations = stringRedisTemplate.opsForSet().members(redisKey);
         System.out.println("Redis Output = " + locations);

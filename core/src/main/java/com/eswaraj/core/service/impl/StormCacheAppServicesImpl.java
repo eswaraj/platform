@@ -147,15 +147,21 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         complaintJsonObject.addProperty("status", complaint.getStatus().toString());
 
         if (complaint.getAdministrator() != null) {
-            ExecutiveBodyAdmin eba = executiveBodyAdminRepository.findOne(complaint.getAdministrator().getId());
-            Person ebaPerson = personRepository.findOne(eba.getPerson().getId());
-            ExecutivePost ebaExecutivePost = executivePostRepository.findOne(eba.getPost().getId());
-            JsonObject ebaJsonObject = new JsonObject();
-            ebaJsonObject.addProperty("name", ebaPerson.getName());
-            ebaJsonObject.addProperty("profilePhoto", ebaPerson.getProfilePhoto());
-            ebaJsonObject.addProperty("postTitle", ebaExecutivePost.getTitle());
-            ebaJsonObject.addProperty("postShortTitle", ebaExecutivePost.getShortTitle());
-            complaintJsonObject.add("executiveBodyAdmin", ebaJsonObject);
+            JsonArray ebaIds = new JsonArray();
+            JsonObject oneAdmin = new JsonObject();
+            oneAdmin.addProperty("id", complaint.getAdministrator().getId());
+            ebaIds.add(oneAdmin);
+            complaintJsonObject.add("eba", ebaIds);
+        }
+
+        if (!CollectionUtils.isEmpty(complaint.getServants())) {
+            JsonArray jsonArray = new JsonArray();
+            for (PoliticalBodyAdmin onePoliticalBodyAdmin : complaint.getServants()) {
+                JsonObject pbaJsonObject = new JsonObject();
+                pbaJsonObject.addProperty("id", onePoliticalBodyAdmin.getId());
+                jsonArray.add(pbaJsonObject);
+            }
+            complaintJsonObject.add("pba", jsonArray);
         }
 
         if (!CollectionUtils.isEmpty(complaint.getCategories())) {
@@ -210,6 +216,48 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             complaintJsonObject.add("loggedBy", personJsonObject);
         }
         return complaintJsonObject;
+    }
+
+    @Override
+    public JsonObject getPoliticalBodyAdmin(Long politicalBodyAdminId) throws ApplicationException {
+        PoliticalBodyAdmin onePoliticalBodyAdmin = politicalBodyAdminRepository.findOne(politicalBodyAdminId);
+
+        JsonObject politicalBodyJsonObject = new JsonObject();
+        politicalBodyJsonObject.addProperty("externalId", onePoliticalBodyAdmin.getExternalId());
+        politicalBodyJsonObject.addProperty("startDate", onePoliticalBodyAdmin.getStartDate().getTime());
+
+        Person person = personRepository.findOne(onePoliticalBodyAdmin.getPerson().getId());
+        politicalBodyJsonObject.addProperty("name", person.getName());
+        politicalBodyJsonObject.addProperty("personExternalId", person.getExternalId());
+        politicalBodyJsonObject.addProperty("gender", person.getGender());
+        politicalBodyJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+
+        if (onePoliticalBodyAdmin.getParty() != null) {
+            Party party = partyRepository.findOne(onePoliticalBodyAdmin.getParty().getId());
+            politicalBodyJsonObject.addProperty("partyExternalId", party.getExternalId());
+            politicalBodyJsonObject.addProperty("partyName", party.getName());
+            politicalBodyJsonObject.addProperty("partyShortName", party.getShortName());
+        }
+
+        PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(onePoliticalBodyAdmin.getPoliticalBodyType().getId());
+        politicalBodyJsonObject.addProperty("politicalAdminType", politicalBodyType.getName());
+        politicalBodyJsonObject.addProperty("politicalAdminTypeShort", politicalBodyType.getShortName());
+        politicalBodyJsonObject.addProperty("politicalAdminTypeExternalId", politicalBodyType.getExternalId());
+
+        return politicalBodyJsonObject;
+    }
+
+    @Override
+    public JsonObject getExecutiveBodyAdmin(Long executiveBodyAdminId) throws ApplicationException {
+        ExecutiveBodyAdmin eba = executiveBodyAdminRepository.findOne(executiveBodyAdminId);
+        Person ebaPerson = personRepository.findOne(eba.getPerson().getId());
+        ExecutivePost ebaExecutivePost = executivePostRepository.findOne(eba.getPost().getId());
+        JsonObject ebaJsonObject = new JsonObject();
+        ebaJsonObject.addProperty("name", ebaPerson.getName());
+        ebaJsonObject.addProperty("profilePhoto", ebaPerson.getProfilePhoto());
+        ebaJsonObject.addProperty("postTitle", ebaExecutivePost.getTitle());
+        ebaJsonObject.addProperty("postShortTitle", ebaExecutivePost.getShortTitle());
+        return ebaJsonObject;
     }
 
 }

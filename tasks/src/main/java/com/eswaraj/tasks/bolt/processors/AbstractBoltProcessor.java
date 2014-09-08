@@ -1,5 +1,6 @@
 package com.eswaraj.tasks.bolt.processors;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import backtype.storm.tuple.Tuple;
 
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt;
 
 public abstract class AbstractBoltProcessor implements BoltProcessor {
@@ -25,6 +27,8 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
     private ThreadLocal<Tuple> currentTuple;
     private EswarajBaseBolt eswarajBaseBolt;
 
+    @Autowired
+    protected AppKeyService appKeyService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
@@ -137,8 +141,30 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         stringRedisTemplate.opsForValue().set(redisKey, String.valueOf(value));
     }
 
+    protected void writeToMemoryStoreHash(String redisKey, String hashKey, Long value) {
+        writeToMemoryStoreHash(redisKey, hashKey, String.valueOf(value));
+    }
+
+    protected void writeToMemoryStoreHash(String redisKey, String hashKey, String value) {
+        logDebug("redisKey = {}, hashKey ={}, Value = {}", redisKey, hashKey, value);
+        stringRedisTemplate.opsForHash().put(redisKey, hashKey, value);
+    }
+
     protected List<String> readMultiKeyFromStringMemoryStore(List<String> redisKeys) {
         return stringRedisTemplate.opsForValue().multiGet(redisKeys);
+    }
+
+    protected List<Object> readMultiKeyFromStringMemoryHashStore(String redisKey, List<String> hashKeys) {
+        return stringRedisTemplate.opsForHash().multiGet(redisKey, convertStringListToObjectList(hashKeys));
+    }
+
+    private List<Object> convertStringListToObjectList(List<String> stringList) {
+        List<Object> objectList = new ArrayList<>(stringList.size());
+        for (String oneString : stringList) {
+            objectList.add(oneString);
+        }
+        return objectList;
+
     }
 
     protected Long incrementCounterInMemoryStore(String redisKey, Long delta) {

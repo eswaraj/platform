@@ -468,4 +468,10 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         return urlIdentifier;
     }
 
+    @Override
+    public List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException {
+        List<Location> locations = locationRepository.getAllPagedLocations(start, pageSize);
+        return locationConvertor.convertBeanList(locations);
+    }
+
 }

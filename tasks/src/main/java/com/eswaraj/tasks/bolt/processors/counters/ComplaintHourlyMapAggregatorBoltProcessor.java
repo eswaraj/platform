@@ -1,18 +1,16 @@
-package com.eswaraj.tasks.bolt.processors;
+package com.eswaraj.tasks.bolt.processors.counters;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.CounterKeyService;
-import com.eswaraj.core.service.LocationKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 /**
@@ -26,11 +24,6 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 @Component
 public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProcessor {
 	
-    @Autowired
-    private LocationKeyService locationKeyService;
-    @Autowired
-    private CounterKeyService counterKeyService;
-
 	@Override
     public Result processTuple(Tuple inputTuple) {
         try {
@@ -42,7 +35,7 @@ public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProce
 
             String cypherQuery = "match complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.nearByKey={nearByKey} and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
 
-            String dbNearByKey = locationKeyService.buildLocationKeyForNearByComplaints(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
+            String dbNearByKey = appKeyService.buildLocationKeyForNearByComplaints(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
             
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("nearByKey", dbNearByKey);
@@ -51,13 +44,12 @@ public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProce
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
             
-            String redisKey = locationKeyService.getNearByHourComplaintCounterKey(new Date(complaintCreatedMessage.getComplaintTime()), complaintCreatedMessage.getLattitude(),
-                    complaintCreatedMessage.getLongitude());
+            String redisKey = appKeyService.getNearByKey(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
+            String hashKey = appKeyService.getHourKey(new Date(complaintCreatedMessage.getComplaintTime()));
 
-            writeToMemoryStoreValue(redisKey, totalComplaint);
+            writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-            String keyPrefixForNextBolt = locationKeyService.getNearByKeyPrefix(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
-            writeToStream(inputTuple, new Values(keyPrefixForNextBolt, complaintCreatedMessage));
+            writeToStream(inputTuple, new Values(redisKey, "", complaintCreatedMessage));
 
             return Result.Success;
         } catch (Exception ex) {

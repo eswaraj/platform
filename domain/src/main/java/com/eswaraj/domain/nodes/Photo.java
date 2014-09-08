@@ -65,7 +65,8 @@ public class Photo extends BaseNode {
 		this.largeUrl = largeUrl;
 	}
 	@Override
-	public String toString() {
-		return "Photo [orgUrl=" + orgUrl + "]";
-	}
+    public String toString() {
+        return "Photo [orgUrl=" + orgUrl + ", orgWidth=" + orgWidth + ", orgHeight=" + orgHeight + ", squareUrl=" + squareUrl + ", smallUrl=" + smallUrl + ", mediumUrl=" + mediumUrl + ", largeUrl="
+                + largeUrl + ", id=" + id + "]";
+    }
 }
