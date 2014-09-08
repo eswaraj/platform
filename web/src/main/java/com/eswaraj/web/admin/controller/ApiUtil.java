@@ -63,7 +63,7 @@ public class ApiUtil {
         String currentPage = httpServletRequest.getParameter("page");
         Long start = 0L;
         Long end = 10L;
-        if (currentPage == null) {
+        if (currentPage != null) {
             Long page = Long.parseLong(currentPage);
             start = page * 10;
             end = start + end;
