@@ -377,7 +377,7 @@ function get_pbadmin(locationId,pbtypeId){
 		//$('#pbadmin__haLine3').val($('#'+target.id).attr('line3'));
 		//$('#pbadmin_hapostal').val($('#'+target.id).attr('postalCode'));
 
-	}
+	//}
 
 	//$('#new_node_loc_typeid').val($('#'+target.id).attr('value'));
 	return true;
