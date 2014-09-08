@@ -197,27 +197,32 @@ jQuery(document).ready(function() {
                 
                 <div class="pagination-wrapper">
                     <ul class="pagination">
+                    <c:if test="${enableFirst}">
+                        <li class="active"><a href="?page=1">&laquo;</a></li>
+                    </c:if>
+                    <c:if test="${!enableFirst}">
+                        <li class="disabled"><a href="#">&laquo;</a></li>
+                    </c:if>
+                    <c:forEach items="${pages}" var="onePage">
+                        <c:if test="${onePage eq currentPage}">
                         <li class="disabled">
-                            <a href="#">&laquo;</a>
+                            <a href="?page=${onePage}">${onePage}</a>
                         </li>
+                        </c:if>
+                        <c:if test="${onePage ne currentPage}">
                         <li class="active">
-                            <a href="#">1</a>
+                            <a href="?page=${onePage}">${onePage}</a>
                         </li>
-                        <li>
-                            <a href="#">2</a>
-                        </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">5</a>
-                        </li>
-                        <li>
-                            <a href="#">&raquo;</a>
-                        </li>
+                        </c:if>
+                        
+                    </c:forEach>
+                    <c:if test="${enableLast}">
+                        <li class="active"><a href="?page=${totalPages}">&raquo;</a></li>
+                    </c:if>
+                    <c:if test="${!enableLast}">
+                        <li class="disabled"><a href="#">&raquo;</a></li>
+                    </c:if>
+                    
                     </ul>
                 </div>
             </div>

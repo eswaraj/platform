@@ -1,5 +1,6 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +70,6 @@ public class LocationController extends BaseController {
                     locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, Long.parseLong(categoryId));
                 }
                 
-                System.out.println("locationComplaints=" + locationComplaints);
                 List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
                 }.getType());
                 mv.getModel().put("complaintList", list);
@@ -80,6 +80,52 @@ public class LocationController extends BaseController {
         addGenericValues(mv);
         mv.setViewName("constituency");
         return mv;
+    }
+
+    private void addPaginationInfo(HttpServletRequest httpServletRequest, ModelAndView mv, long totalComplaint, String selectedCategory, List<CategoryBean> categories) {
+        String pageNumberString = httpServletRequest.getParameter("page");
+        if (pageNumberString == null) {
+            pageNumberString = "1";
+        }
+        long currentPage = Long.parseLong(pageNumberString);
+        long totalPages = 0;
+        if (selectedCategory == null) {
+            totalPages = totalComplaint / 10 + 1;
+        } else {
+            for (CategoryBean oneCategoryBean : categories) {
+                if (oneCategoryBean.getId().toString().equals(selectedCategory)) {
+                    totalPages = oneCategoryBean.getLocationCount() / 10 + 1;
+                }
+            }
+        }
+
+        long startPage = 1;
+        long endPage = totalPages;
+        if (totalPages > 5) {
+            if(currentPage > 3){
+                if(totalPages - currentPage >= 3){
+                    startPage = currentPage - 3 + 1;
+                    endPage = currentPage + 3 - 1;
+                }
+            }
+        }
+        List<Long> allPages = new ArrayList<>();
+        for (long i = startPage; i <= endPage; i++) {
+            allPages.add(i);
+        }
+        mv.getModel().put("pages", allPages);
+        if (startPage == 1) {
+            mv.getModel().put("enableFirst", false);
+        } else {
+            mv.getModel().put("enableFirst", true);
+        }
+        if (endPage == totalPages) {
+            mv.getModel().put("enableLast", false);
+        } else {
+            mv.getModel().put("enableLast", true);
+        }
+        mv.getModel().put("totalPages", totalPages);
+        mv.getModel().put("currentPage", currentPage);
     }
 
     private void addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
