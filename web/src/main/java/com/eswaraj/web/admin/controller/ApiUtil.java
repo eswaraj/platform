@@ -65,7 +65,7 @@ public class ApiUtil {
         Long end = 10L;
         if (currentPage != null) {
             Long page = Long.parseLong(currentPage);
-            start = page * 10;
+            start = (page - 1) * 10;
             end = start + end;
         }
         Map<String, String> addedParams = new HashMap<>();
