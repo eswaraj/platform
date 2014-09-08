@@ -61,7 +61,7 @@ public class LocationController extends BaseController {
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest, locationId, false);
                 List<CategoryBean> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryBean>>() {
                 }.getType());
-                addTotalComplaintCountToModel(mv, allRootcategories);
+                Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories);
                 mv.getModel().put("rootCategories", allRootcategories);
                 String locationComplaints = null;
                 if (categoryId == null) {
@@ -73,6 +73,8 @@ public class LocationController extends BaseController {
                 List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
                 }.getType());
                 mv.getModel().put("complaintList", list);
+
+                addPaginationInfo(httpServletRequest, mv, totalComplaints, categoryId, allRootcategories);
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
@@ -101,6 +103,7 @@ public class LocationController extends BaseController {
 
         long startPage = 1;
         long endPage = totalPages;
+
         if (totalPages > 5) {
             if(currentPage > 3){
                 if(totalPages - currentPage >= 3){
@@ -128,16 +131,17 @@ public class LocationController extends BaseController {
         mv.getModel().put("currentPage", currentPage);
     }
 
-    private void addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
+    private Long addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
         if (allRootcategories == null) {
             mv.getModel().put("total", 0);
-            return;
+            return 0L;
         }
         Long total = 0L;
         for (CategoryBean oneCategoryBean : allRootcategories) {
             total = oneCategoryBean.getLocationCount() + total;
         }
         mv.getModel().put("total", total);
+        return total;
     }
 
 }
