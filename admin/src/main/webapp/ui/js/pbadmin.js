@@ -1,4 +1,3 @@
-/*******************Load Root Node ***********************************/
 $(function(){
 	$("#menu").load("../ui/sidebar_menu.html"); 
 });
@@ -99,9 +98,9 @@ $(document).ready(function(){
 						"<td><img src='" + data[i].profilePhoto + "' class='thumb'>/td>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Person</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Node</button>" + "</td>" +
 						"</tr>" 
-						);
+						); 
 				}
 			}
 		});
@@ -122,9 +121,9 @@ $(document).ready(function(){
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "'>Select Node</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Person</button>" + "</td>" +
 						"</tr>" 
-						);
+						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
 			}
 		});
@@ -155,36 +154,37 @@ $(document).ready(function(){
 		$('#node_title').val($('#'+parent).attr('title'));
 
 		var selected_loc_typeid =  $('#'+parent).attr('loc_typeid');
-		var result,all_pbtype;
-		//console.log(selected_loc_typeid);
-		$.when($.ajax({
-			type: "GET",
-			url:"/ajax/pbtype/get",
-			dataType: "JSON",
-			success: function(data){
-				result = data;
-			}
-		})).done(function( x ) {
-			all_pbtype =  result;
-			//console.log("from line 86"+all_pbtype);
-			var pbtype_list = get_pbtypeForLocationType(all_pbtype,selected_loc_typeid);
-			console.log(pbtype_list);
-			var btn_html = "";
-			var pbtype_list_content = "";
+		populate(selected_loc_typeid,parent[0]);
+		//var result,all_pbtype;
+		////console.log(selected_loc_typeid);
+		//$.when($.ajax({
+		//	type: "GET",
+		//	url:"/ajax/pbtype/get",
+		//	dataType: "JSON",
+		//	success: function(data){
+		//		result = data;
+		//	}
+		//})).done(function( x ) {
+		//	all_pbtype =  result;
+		//	//console.log("from line 86"+all_pbtype);
+		//	var pbtype_list = get_pbtypeForLocationType(all_pbtype,selected_loc_typeid);
+		//	console.log(pbtype_list);
+		//	var btn_html = "";
+		//	var pbtype_list_content = "";
 
-			for(var i=0;i < pbtype_list.length; i++){
+		//	for(var i=0;i < pbtype_list.length; i++){
 
-				pbtype_list_content += "<option id='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
+		//		pbtype_list_content += "<option id='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
 
-				btn_html += "<tr><td><a id='current_pbadmin_btn"+i+"' onclick='return runMyFunction(event);' value='"+pbtype_list[i].id+"' class='btn pink current' href='#current_pbadmin' data-toggle='modal'>Current "+pbtype_list[i].shortName+"</a></td><td><a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+pbtype_list[i].id+"' class='btn green add_child' href='#pb-list' data-toggle='modal'>All "+pbtype_list[i].shortName+"</a></td></tr>";
+		//		btn_html += "<tr><td><a id='current_pbadmin_btn"+i+"' onclick='return runMyFunction(event);' value='"+pbtype_list[i].id+"' class='btn pink current' href='#current_pbadmin' data-toggle='modal'>Current "+pbtype_list[i].shortName+"</a></td><td><a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+pbtype_list[i].id+"' class='btn green add_child' href='#pb-list' data-toggle='modal'>All "+pbtype_list[i].shortName+"</a></td></tr>";
 
-			}
+		//	}
 
-			$('#pbtype_list').html(pbtype_list_content);
-			$('#add_child_btn').html(btn_html);		
+		//	$('#pbtype_list').html(pbtype_list_content);
+		//	$('#add_child_btn').html(btn_html);		
 
 
-		});
+		//});
 
 
 		if(!($('#'+parent).hasClass('jstree-open')) && !window.hash.hasOwnProperty('fake_node'+$('#'+parent).attr('id'))){
@@ -293,35 +293,34 @@ function add_pbadmin(){
 }
 
 
-$(document).ready(function(){
-
-
-	$('#node_add_btn0').on('click',function(){
-		alert($(even.target).val());;
-
-	})
-
-
-});
-
-
-
 function populate(loc_typeid, loc_id) {
 	var pbtype_list = get_pbtypeForLocationType(all_pbtype,loc_typeid);
 	//console.log(pbtype_list);
 	var pbtype_list_content = "";
+	$('#pbadmin_locationId').val(loc_id);
+	$('#pbadmin_list').html('');
 
 	for(var i=0;i < pbtype_list.length; i++){
 
 		pbtype_list_content += "<option id='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
 		$('#pbadmin_list').append('<h2>Current'+pbtype_list[i].shortName+'</h2>');
 		get_pbadmin(loc_id,pbtype_list[i].id);
-
-		//btn_html += "<tr><td><a id='current_pbadmin_btn"+i+"' onclick='return runMyFunction(event);' value='"+pbtype_list[i].id+"' class='btn pink current' href='#current_pbadmin' data-toggle='modal'>Current "+pbtype_list[i].shortName+"</a></td><td><a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+pbtype_list[i].id+"' class='btn green add_child' href='#pb-list' data-toggle='modal'>All "+pbtype_list[i].shortName+"</a></td></tr>";
-
 	}
 
 	$('#pbtype_list').html(pbtype_list_content);
+}
+
+function setNNodeId(event){
+	var target = event.target || event.srcElement;
+	var locationId = $('#'+target.id).attr('pid');
+	var pbtypeId = $('#'+target.id).attr('tid');
+	populate(locationId, pbtypeId);
+}
+
+function setPNodeId(event){
+	var target = event.target || event.srcElement;
+	var personId = $('#'+target.id).attr('pid');
+	$('pbadmin_personId').val(personId);
 }
 
 function get_pbadmin(locationId,pbtypeId){
