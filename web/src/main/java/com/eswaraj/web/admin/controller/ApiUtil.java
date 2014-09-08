@@ -49,14 +49,30 @@ public class ApiUtil {
 
     public String getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId;
-        return getResponseFrom(httpServletRequest, urlPath);
+        Map<String, String> addedParams = getPagingInfo(httpServletRequest);
+        return getResponseFrom(httpServletRequest, urlPath, addedParams);
     }
 
     public String getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
-        return getResponseFrom(httpServletRequest, urlPath);
+        Map<String, String> addedParams = getPagingInfo(httpServletRequest);
+        return getResponseFrom(httpServletRequest, urlPath, addedParams);
     }
 
+    private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
+        String currentPage = httpServletRequest.getParameter("page");
+        Long start = 0L;
+        Long end = 10L;
+        if (currentPage == null) {
+            Long page = Long.parseLong(currentPage);
+            start = page * 10;
+            end = start + end;
+        }
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("start", String.valueOf(start));
+        addedParams.put("end", String.valueOf(end));
+        return addedParams;
+    }
     public String getAllCategopries(HttpServletRequest httpServletRequest) throws ApplicationException {
         return getAllCategopries(httpServletRequest, false);
     }

@@ -92,7 +92,6 @@ public class CategoryController extends BaseController {
 
         for (int i = 0; i < categoryJsonArray.size(); i++) {
             oneJsonObject = (JsonObject) categoryJsonArray.get(i);
-            System.out.println("resultList.get(i) = " + resultList.get(i));
             if (resultList.get(i) != null) {
                 oneJsonObject.addProperty("locationCount", resultList.get(i).toString());
             } else {

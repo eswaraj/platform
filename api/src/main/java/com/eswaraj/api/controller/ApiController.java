@@ -78,7 +78,7 @@ public class ApiController extends BaseController {
     @ResponseBody
     public String getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
-        int end = getIntParameter(httpServletRequest, "end", 20);
+        int end = getIntParameter(httpServletRequest, "end", 10);
 
         String locationComplaintKey = appKeyService.getLocationComplaintsKey(locationId);
         logger.info("locationComplaintKey : {}", locationComplaintKey);
@@ -91,7 +91,7 @@ public class ApiController extends BaseController {
     public String getComplaintsOfLocationAndCategory(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId, @PathVariable Long categoryId)
             throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
-        int end = getIntParameter(httpServletRequest, "end", 20);
+        int end = getIntParameter(httpServletRequest, "end", 10);
 
         String locationComplaintCategoryKey = appKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
         logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
