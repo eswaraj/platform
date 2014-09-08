@@ -79,7 +79,7 @@ $(document).ready(function(){
 	window.hash = new Object();
 	window.loc_hash = new Object();
 	var all_ltype = fetch_ltype();
-	var all_pbtype = fetch_pbtype();
+	all_pbtype = fetch_pbtype();
 	fetch_plist();
 
 
@@ -95,7 +95,7 @@ $(document).ready(function(){
 				$('#users tbody').html("");
 				for(var i=0; i<data.length; i++) {
 					$('#users tbody').append("<tr>" +
-						"<td><img src='" + data[i].profilePhoto + "' class='thumb'>/td>" +
+						"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" +
 						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Node</button>" + "</td>" +
@@ -117,7 +117,7 @@ $(document).ready(function(){
 			success: function(data){
 				$('#nodes tbody').html("");
 				for(var i=0; i<data.length; i++) {
-					$('#users tbody').append("<tr>" +
+					$('#nodes tbody').append("<tr>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
@@ -320,7 +320,7 @@ function setNNodeId(event){
 function setPNodeId(event){
 	var target = event.target || event.srcElement;
 	var personId = $('#'+target.id).attr('pid');
-	$('pbadmin_personId').val(personId);
+	$('#pbadmin_personId').val(personId);
 }
 
 function get_pbadmin(locationId,pbtypeId){
