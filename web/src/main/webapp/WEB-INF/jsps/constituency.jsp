@@ -205,12 +205,12 @@ jQuery(document).ready(function() {
                     </c:if>
                     <c:forEach items="${pages}" var="onePage">
                         <c:if test="${onePage eq currentPage}">
-                        <li class="disabled">
+                        <li class="active">
                             <a href="?page=${onePage}">${onePage}</a>
                         </li>
                         </c:if>
                         <c:if test="${onePage ne currentPage}">
-                        <li class="active">
+                        <li>
                             <a href="?page=${onePage}">${onePage}</a>
                         </li>
                         </c:if>
