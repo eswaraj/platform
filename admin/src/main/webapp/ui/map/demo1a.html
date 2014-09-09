@@ -1,0 +1,89 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>MarkerClusterer Example</title>
+
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 10px 20px 20px;
+        font-family: Arial;
+        font-size: 16px;
+      }
+
+      #map-container {
+        padding: 6px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #ccc #ccc #999 #ccc;
+        -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+        -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+        box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+        width: 800px;
+      }
+
+      #map {
+        width: 800px;
+        height: 600px;
+      }
+
+    </style>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="markerclusterer.js"></script>
+    
+   
+    <script type="text/javascript">
+	
+var data = {
+ "complaints": [{"id": 27932, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.4887, "latitude":76.8887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.7887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.3887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.12887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.1887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.7887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.2887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.187,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+,
+{"id": 27933, "category": "Water Pipes are broken", "icon": "https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png", "imgUrl": "http://mw2.google.com/mw-panoramio/photos/medium/27932.jpg", "longitude": 28.3887, "latitude": 76.3887,"upload_date": "25 June 2014", "owner_id": 4483, "owner_name": "Pradeep", "owner_url": "http://www.panoramio.com/user/4483"}
+]};
+	
+	
+      function initialize() {
+        var center = new google.maps.LatLng(28.5887,76.9887);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom:14,
+          center: center,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var markers = [];
+		console.log(data.complaints.length);
+        for (var i = 0; i < data.complaints.length; i++) {
+          var dataComplaint = data.complaints[i];
+          var latLng = new google.maps.LatLng(dataComplaint.latitude,
+              dataComplaint.longitude);
+          var marker = new google.maps.Marker({
+            position: latLng
+          });
+          markers.push(marker);
+        }
+        var markerCluster = new MarkerClusterer(map, markers);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+   
+    <div id="map-container"><div id="map"></div></div>
+  </body>
+</html>
