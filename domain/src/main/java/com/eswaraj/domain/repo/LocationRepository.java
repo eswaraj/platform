@@ -22,9 +22,7 @@ public interface LocationRepository extends GraphRepository<Location>{
 			"match (location)<-[:SERVED_BY]-(executiveBody) return executiveBody")
 	public Set<ExecutiveBody> findExecutiveBodies(Location location);
 
-    @Query("start n=node:PersonNameFt({0}) return n")
-    // @Query("start n = node(*) where n.name =~ '.*avi.*' return n")
-    // @Query("start n=node:PersonNameFt(name:*avi*) return n")
+    @Query("start n=node:LocationNameFt({0}) return n")
     Collection<Location> searchLocationByName(String name);
 	/*
 	@Query("start location=node({0}) " +
