@@ -367,7 +367,7 @@ function get_pbadmin(locationId,pbtypeId){
 	//var selected_node =  $('#js_tree').jstree('get_selected');
 	//var locationId = selected_node[0];
 
-	if($('#'+target.id).hasClass('current')){
+	//if($('#'+target.id).hasClass('current')){
 
 		$.ajax({
 			type: "GET",
@@ -380,7 +380,7 @@ function get_pbadmin(locationId,pbtypeId){
 		}
 		});
 
-	}
+	//}
 
 	//if($('#'+target.id).hasClass('person')){
 	//	$.ajax({
