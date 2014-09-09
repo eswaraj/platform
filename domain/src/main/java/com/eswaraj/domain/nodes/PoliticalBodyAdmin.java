@@ -33,6 +33,10 @@ public class PoliticalBodyAdmin extends BaseNode {
 	
 	private String email;
 	
+    private String fbPage;
+    private String fbAccount;
+    private String twitterHandle;
+
 	private String landLine1;
 	private String landLine2;
 	private String mobile1;
@@ -125,6 +129,30 @@ public class PoliticalBodyAdmin extends BaseNode {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+    public String getFbPage() {
+        return fbPage;
+    }
+
+    public void setFbPage(String fbPage) {
+        this.fbPage = fbPage;
+    }
+
+    public String getFbAccount() {
+        return fbAccount;
+    }
+
+    public void setFbAccount(String fbAccount) {
+        this.fbAccount = fbAccount;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
+    }
 	
 	
 }
