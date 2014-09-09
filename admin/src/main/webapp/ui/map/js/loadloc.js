@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    alert("here");  
+
         $("#my_map").gmap3({
           map:{
             options: {
@@ -49,9 +49,9 @@ $(document).ready(function(){
                   overlay:{
                     latLng: marker.getPosition(),
                     options:{
-                      content:  "<div class='infobulle"+(context.data.drive ? " drive" : "")+"'>" +
-                                  "<div class='bg'></div>" +
-                                  "<div class='text'>" + context.data.city + " (" + context.data.zip + ")</div>" +
+                      content:  "<div class='infobulle"+(context.data.category ? " drive" : "")+"'>" +
+                                  "<div class='bg'>Complaint by User</div>" +
+                                  "<div class='text'>" + context.data.userid + " (" + context.data.address + ")</div>" +
                                 "</div>" +
                                 "<div class='arrow'></div>",
                       offset: {

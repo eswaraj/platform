@@ -1,8 +1,8 @@
-#container{
+#map-container{
         position:relative;
         height:700px;
       }
-      #googleMap{
+      #my_map{
         border: 1px dashed #C0C0C0;
         width: 75%;
         height: 700px;
@@ -26,13 +26,13 @@
       	height: 40px;
       }
       .cluster-2{
-        background: url(images/logo60.jpg) no-repeat;
+        background: url(../images/logo60.jpg) no-repeat;
         line-height:53px;
       	width: 60px;
       	height: 48px;
       }
       .cluster-3{
-        background: url(images/logo70.jpg) no-repeat;
+        background: url(../images/logo70.jpg) no-repeat;
         line-height:66px;
       	width: 70px;
       	height: 56px;
