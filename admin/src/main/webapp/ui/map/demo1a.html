@@ -73,7 +73,8 @@ var data = {
           var latLng = new google.maps.LatLng(dataComplaint.latitude,
               dataComplaint.longitude);
           var marker = new google.maps.Marker({
-            position: latLng
+            position: latLng,
+			icon:dataComplaint.icon
           });
           markers.push(marker);
         }
