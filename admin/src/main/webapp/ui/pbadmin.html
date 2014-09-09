@@ -44,8 +44,6 @@
 
 		<div class="wrapper">
 			<div class="container">
-
-
 				<div class="row">
 					<div class="col-md-12 profile-margin">
 						<div class="col-md-4">
@@ -57,89 +55,57 @@
 						</div>
 
 						<div class="col-md-5">
-							<a href="#" class="active">
-							</a>
+							<div id="node_div">
+								<p>Location Node</p>
+								<input type="text" name="node_title" id="node_title" value="" disabled="disabled">
+								<!-- person search -->
+								<input type="text" id="node_search" placeholder="Location Name" />
+								<button class="btn btn-primary blue" type="button" id="searchButtonN" >Search Location</button>
+								<div id="searchResultsN">
+									<h1>Existing Locations:</h1>
+									<table id="nodes" class="ui-widget ui-widget-content">
+										<thead>
+											<tr class="ui-widget-header ">
+												<th>ID</th>
+												<th>Type</th>
+												<th>Name</th>
+												<th>Select</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
 
-							<div id="tab1">
-								<table style="padding:10px;">
-									<tr>
-										<td>Location Node</td>
-										<td><input type="text" name="node_title" id="node_title" value="" disabled="disabled"></td>
-									</tr>
-									<tr id="add_child_btn">
-									</tr>
-									<tr><td><input type='text' id='search_person' placeholder='Search Person' /></td>
-										<td id='search_result'></td></tr>	
-									<tr>
-										<td><a id='new-person-btn' class='btn green' href='#new-person' data-toggle='modal'>Add New Person</a></td>
+								</div>
+							</div>
+							<div id="person_div">
+								<p>Selected Person</p>
+								<input type="text" name="person_title" id="person_title" value="" disabled="disabled">
+								<!-- person search -->
+								<input type="text" id="person_search" placeholder="Person Name" />
+								<button class="btn btn-primary blue" type="button" id="searchButtonP" >Search Person</button>
+								<div id="searchResultsP">
+									<h1>Existing Persons:</h1>
+									<table id="users" class="ui-widget ui-widget-content">
+										<thead>
+											<tr class="ui-widget-header ">
+												<th>Photo</th>
+												<th>ID</th>
+												<th>Name</th>
+												<th>Select</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
 
-									</tr>							
-								</table>								
-							</div>											
-							<div aria-hidden="true" role="dialog"  class="modal fade" id="new-person" style="display: none;">
-								<div class="modal-dialog" style="top:30px;">
-									<div class="modal-content">
-										<div class="modal-header blue">
-											<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
-											<h4 class="modal-title">Add New Person</h4>
-										</div>
-										<div class="modal-body">
-
-											<input type="text" id="new_person_id" placeholder="Person ID" disabled="disabled" />
-											<input type="text" id="new_person_name" placeholder="Name" />
-											<input type="text" id="new_person_biodata" placeholder="Biodata" />
-											<input type="text" id="new_person_dob" placeholder="Date of Birth" />
-											<input type="text" id="new_person_photo" placeholder="Profile Photo" />
-											<select type="text" id="new_person_gender"><option value="Male">Male</option><option value="Female">Female</option></select>
-											<input type="text" id="new_person_email" placeholder="Email" />
-											<input type="date" id="new_person_ll1" placeholder="Landline1" />
-											<input type="date" id="new_person_ll2" placeholder="Landline2" />
-											<input type="text" id="new_person_mobile1" placeholder="Mobile1" />
-											<input type="text" id="new_person_mobile2" placeholder="Mobile2" />
-											<input type="text" id="new_person_addressId" placeholder="Address Id" disabled="disabled"/>
-											<input type="text" id="new_person_line1" placeholder="Address Line 1" />
-											<input type="text" id="new_person_line2" placeholder="Address Line 2" />
-											<input type="text" id="new_person_line3" placeholder="Address Line 3" />
-											<input type="text" id="new_person_postal" placeholder="Postal Code" />
-
-											<input type="text" id='village-list' placeholder="Village ID"/>
-											<input type="text" id='ward-list' placeholder="Ward ID"/>
-											<input type="text" id='city-list' placeholder="City ID"/>
-											<input type="text" id='district-list' placeholder="District ID"/>
-											<input type="text" id='state-list' placeholder="State ID"/>
-											<input type="text" id='country-list' placeholder="Country ID"/>
-
-										</div>					 				  
-									</div>
-									<div class="modal-footer">
-										<button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
-										<button class="btn btn-primary blue" type="button" onclick="new_person();" >Save changes</button>
-									</div>
-								</div><!-- /.modal-content -->
-							</div>	
-
-
-							<div aria-hidden="true" role="dialog"  class="modal fade" id="current_pbadmin" style="display: none;">
-								<div class="modal-dialog" style="top:30px;">
-									<div class="modal-content">
-										<div class="modal-header blue">
-											<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
-											<h4 class="modal-title">Current PB Admin</h4>
-										</div>
-										<div class="modal-body" id="current_pbadmin_content">
-
-
-
-										</div>					 				  
-									</div>
-									<div class="modal-footer">
-										<button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
-
-									</div>
-								</div><!-- /.modal-content -->
-							</div>	
-
-
+								</div>
+							</div>
+							<div id="pbadmin_list">
+							</div>
+							<div id="attach_div">
+								<a id="attach" class="btn blue" href="#assign_pbadmin" data-toggle="modal">Add PBAdmin</a>
+							</div>
 							<div aria-hidden="true" role="dialog"  class="modal fade" id="assign_pbadmin" style="display: none;">
 								<div class="modal-dialog" style="top:30px;">
 									<div class="modal-content">
@@ -195,39 +161,10 @@
 									</div>
 								</div><!-- /.modal-content -->
 							</div>
-
-							<div aria-hidden="true" role="dialog"  class="modal fade" id="pb-list" style="display: none;">
-								<div class="modal-dialog" style="top:30px;">
-									<div class="modal-content">
-										<div class="modal-header blue">
-											<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
-											<h4 class="modal-title">Existing Political Admins</h4>
-										</div>
-										<div class="modal-body">
-											<div id="all_pbadmin_content">
-											</div>					
-
-										</div>					 				  
-									</div>
-									<div class="modal-footer">
-										<button data-dismiss="modal" class="btn btn-default black close" type="button">Close</button>
-										<button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
-									</div>
-								</div><!-- /.modal-content -->
-							</div>
-
 						</div>
 					</div>
-
-
 				</div>
-			</div>
-
-
-		</div><!-- Container -->
-	</div><!-- Wrapper -->
-
-
-
-</body>
-	</html>
+			</div><!-- Container -->
+		</div><!-- Wrapper -->
+	</body>
+</html>
