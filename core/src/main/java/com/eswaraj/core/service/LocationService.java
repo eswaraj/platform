@@ -55,6 +55,8 @@ public interface LocationService {
 	
     LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException;
 
+    LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active) throws ApplicationException;
+
 	BoundaryDto saveBoundary(BoundaryDto boundaryDto) throws ApplicationException;
 	
 	GeoPointDto saveBoundaryPoint(GeoPointDto geoPointDto) throws ApplicationException;

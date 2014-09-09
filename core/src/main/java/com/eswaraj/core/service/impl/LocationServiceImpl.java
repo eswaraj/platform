@@ -137,7 +137,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         LocationBoundaryFile existingLocationBoundayrFile = locationBoundaryFileRepository.getActiveLocationBoundaryFile(location);
         String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
         if (existingLocationBoundayrFile != null) {
-            if (existingLocationBoundayrFile.getStatus().equals("Pending")) {
+            if (existingLocationBoundayrFile.getStatus().equals("Pending") || existingLocationBoundayrFile.getStatus().equals("Processing")) {
                 throw new ApplicationException("Another file is being processed you can not upload new file until the previous file is processed");
             }
             existingLocationBoundayrFile.setActive(false);
@@ -485,6 +485,25 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         Location location = locationRepository.findOne(locationId);
         Collection<LocationBoundaryFile> locationBoundaryFiles = locationBoundaryFileRepository.getAllLocationBoundaryFile(location);
         return locationBoundaryFileConvertor.convertBeanList(locationBoundaryFiles);
+    }
+
+    @Override
+    public LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active) throws ApplicationException {
+        LocationBoundaryFile locationBoundaryFile = locationBoundaryFileRepository.findOne(locationBoundaryFileId);
+        Collection<LocationBoundaryFile> allExistingLocationBoudaryFiles = locationBoundaryFileRepository.getAllLocationBoundaryFile(locationBoundaryFile.getLocation());
+        for (LocationBoundaryFile oneLocationBoundaryFile : allExistingLocationBoudaryFiles) {
+            if (oneLocationBoundaryFile.getId().equals(locationBoundaryFile.getId())) {
+                // Update it as per parameters
+                oneLocationBoundaryFile.setStatus(status);
+                oneLocationBoundaryFile.setActive(active);
+            } else {
+                oneLocationBoundaryFile.setStatus("Done");
+                if (active) {
+                    oneLocationBoundaryFile.setActive(false);
+                }
+            }
+        }
+        return null;
     }
 
 }
