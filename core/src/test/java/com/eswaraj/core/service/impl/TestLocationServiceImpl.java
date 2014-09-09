@@ -201,6 +201,7 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 		
 		//Create a location
 		String locationName = "India";
+        String filaName = "India.kml";
 		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null, true);
 		LocationDto location = createLocation(locationName, countryLocationTypeDto, null);
 		LocationDto savedLocation = locationService.saveLocation(location);
@@ -212,7 +213,7 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
             oneOf (fileService).saveFile(with(any(String.class)), with(any(String.class)), with(any(InputStream.class)));
         }});
 		
-		LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(savedLocation.getId(), inputStream, fileService);
+        LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(savedLocation.getId(), filaName, inputStream, fileService);
 		assertNotNull(locationBoundaryFileDto);
 		assertNotNull(locationBoundaryFileDto.getId());
 		assertNotNull(locationBoundaryFileDto.getFileNameAndPath());
@@ -229,10 +230,11 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 		final Long locationId = randomPositiveLong();
 		final FileService fileService = mock(FileService.class, "fileService");
 		final InputStream inputStream = mock(InputStream.class, "inputStream");
+        String filaName = "India.kml";
 		expect(new Expectations() {{
         }});
 		
-		locationService.createNewLocationBoundaryFile(locationId, inputStream, fileService);
+        locationService.createNewLocationBoundaryFile(locationId, filaName, inputStream, fileService);
 	}
 	/**
 	 * Try to save a root location type when a root location type already exist

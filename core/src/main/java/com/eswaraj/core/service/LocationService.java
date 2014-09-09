@@ -51,7 +51,7 @@ public interface LocationService {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException;
+    LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException;
 	
     LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException;
 

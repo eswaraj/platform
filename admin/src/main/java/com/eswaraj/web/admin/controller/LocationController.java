@@ -63,7 +63,8 @@ public class LocationController extends BaseController {
         if (uploadedImagePart == null) {
             throw new ApplicationException("Please choose a file");
         }
-        LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+        LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getSubmittedFileName(), uploadedImagePart.getInputStream(),
+                fileService);
 
 
         return locationBoundaryFileDto.getFileNameAndPath();
@@ -150,7 +151,8 @@ public class LocationController extends BaseController {
             if (uploadedImagePart == null) {
                 throw new ApplicationException("Please choose a file");
             }
-            LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+            LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getSubmittedFileName(), uploadedImagePart.getInputStream(),
+                    fileService);
             return locationBoundaryFileDto.getFileNameAndPath();
         } catch (Exception ex) {
             throw new ApplicationException(ex);

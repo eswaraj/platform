@@ -128,7 +128,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 	}
 
 	@Override
-	public LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException {
+    public LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException {
 		Location location = locationRepository.findOne(locationId);
 		if(location == null){
 			throw new ApplicationException("No such location exists[id="+locationId+"]");
@@ -156,6 +156,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		locationBoundaryFile.setStatus("Pending");
 		locationBoundaryFile.setUploadDate(new Date());
         locationBoundaryFile.setActive(true);
+        locationBoundaryFile.setOriginalFileName(originalFilename);
 		
 		locationBoundaryFile = locationBoundaryFileRepository.save(locationBoundaryFile);
         System.out.println("locationBoundaryFile Saved = " + locationBoundaryFile);
