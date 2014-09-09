@@ -496,14 +496,16 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 // Update it as per parameters
                 oneLocationBoundaryFile.setStatus(status);
                 oneLocationBoundaryFile.setActive(active);
+                locationBoundaryFile = oneLocationBoundaryFile;
             } else {
                 oneLocationBoundaryFile.setStatus("Done");
                 if (active) {
                     oneLocationBoundaryFile.setActive(false);
                 }
             }
+            locationBoundaryFileRepository.save(oneLocationBoundaryFile);
         }
-        return null;
+        return locationBoundaryFileConvertor.convertBean(locationBoundaryFile);
     }
 
 }
