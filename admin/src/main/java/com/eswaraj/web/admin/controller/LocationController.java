@@ -160,15 +160,11 @@ public class LocationController extends BaseController {
 
     }
 
-    @RequestMapping(value = "/api/v0/searchlocations/{name}", method = RequestMethod.GET)
-    public @ResponseBody List<LocationDto> seasrchLocation(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String name) throws ApplicationException {
-        List<LocationDto> result = locationService.searchLocationByName(name);
-        return result;
-    }
-
     @RequestMapping(value = "/ajax/location/search/name/{name}", method = RequestMethod.GET)
     public @ResponseBody List<LocationDto> searchLocation(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String name) throws ApplicationException {
+        System.out.println("Searching Location for " + name);
         List<LocationDto> result = locationService.searchLocationByName(name);
+        System.out.println("result =  " + result);
         return result;
     }
 
