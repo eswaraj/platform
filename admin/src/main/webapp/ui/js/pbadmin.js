@@ -95,7 +95,7 @@ $(document).ready(function(){
 					"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Location</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "'>Select Person</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -117,7 +117,7 @@ $(document).ready(function(){
 						"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "'>Select Location</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "'>Select Person</button>" + "</td>" +
 						"</tr>" 
 						); 
 				}
@@ -136,7 +136,7 @@ $(document).ready(function(){
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" + //change name to type when real API is available
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Location</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -158,7 +158,7 @@ $(document).ready(function(){
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "'>Select Location</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
 						"</tr>" 
 						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
