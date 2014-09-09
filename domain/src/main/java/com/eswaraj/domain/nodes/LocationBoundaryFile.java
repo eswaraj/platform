@@ -24,6 +24,7 @@ public class LocationBoundaryFile extends BaseNode {
 	private Date uploadDate;
 	private String status;
     private boolean active;
+    private String originalFileName;
 
 	public String getFileNameAndPath() {
 		return fileNameAndPath;
@@ -58,6 +59,13 @@ public class LocationBoundaryFile extends BaseNode {
         this.active = active;
     }
 
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
+
+    public void setOriginalFileName(String originalFileName) {
+        this.originalFileName = originalFileName;
+    }
     @Override
     public String toString() {
         return "LocationBoundaryFile [fileNameAndPath=" + fileNameAndPath + ", location=" + location + ", uploadDate=" + uploadDate + ", status=" + status + ", active=" + active + ", id=" + id + "]";

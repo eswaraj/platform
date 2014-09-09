@@ -22,6 +22,7 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
                 logInfo("Mesage Recieved in Spout :  " + message);
                 MessageId<String> messageId = new MessageId<>();
                 messageId.setData(message);
+                updateFileStatus(messageId, "Processing", false);
                 writeToStream(new Values(message), messageId);
                 logInfo("Mesage Emitted from :  " + messageId);
             }
@@ -32,6 +33,7 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
         }
     }
     
+
     @Override
     protected String[] getFields() {
         return new String[] { "LocationSaveMessage" };
@@ -39,14 +41,15 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
 
     @Override
     public void onAck(Object msgId) {
-
+        updateFileStatus(msgId, "Done", true);
     }
 
     @Override
     public void onFail(Object msgId) {
+        updateFileStatus(msgId, "Fail", false);
     }
 
-    private void updateFileStatus(Object msg, String status) {
+    private void updateFileStatus(Object msg, String status, boolean active) {
         if (msg instanceof MessageId) {
             MessageId<String> messageId = (MessageId) msg;
             String jsonData = messageId.getData();
@@ -54,6 +57,12 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
             JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonData);
             Long newLocationBoundaryFileId = jsonObject.get("newLocationBoundaryFileId").getAsLong();
             // Call app Service
+            try {
+                logInfo("Setting file {} status to {} and {}", newLocationBoundaryFileId, status, active);
+                getLocationService().setLocationBoundaryFileStatus(newLocationBoundaryFileId, status, active);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
         }
 
     }

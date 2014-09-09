@@ -63,7 +63,8 @@ public class LocationController extends BaseController {
         if (uploadedImagePart == null) {
             throw new ApplicationException("Please choose a file");
         }
-        LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+        LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getSubmittedFileName(), uploadedImagePart.getInputStream(),
+                fileService);
 
 
         return locationBoundaryFileDto.getFileNameAndPath();
@@ -150,7 +151,8 @@ public class LocationController extends BaseController {
             if (uploadedImagePart == null) {
                 throw new ApplicationException("Please choose a file");
             }
-            LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getInputStream(), fileService);
+            LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getSubmittedFileName(), uploadedImagePart.getInputStream(),
+                    fileService);
             return locationBoundaryFileDto.getFileNameAndPath();
         } catch (Exception ex) {
             throw new ApplicationException(ex);
@@ -158,6 +160,20 @@ public class LocationController extends BaseController {
 
 
 
+    }
+
+    @RequestMapping(value = "/ajax/location/search/name/{name}", method = RequestMethod.GET)
+    public @ResponseBody List<LocationDto> searchLocation(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String name) throws ApplicationException {
+        System.out.println("Searching Location for " + name);
+        List<LocationDto> result = locationService.searchLocationByName(name);
+        System.out.println("result =  " + result);
+        return result;
+    }
+
+    @RequestMapping(value = "/ajax/location/{locationId}/kmlfiles", method = RequestMethod.GET)
+    public @ResponseBody List<LocationBoundaryFileDto> getLocationFiles(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        List<LocationBoundaryFileDto> result = locationService.GetLocationAllBoundaryFile(locationId);
+        return result;
     }
 
 }

@@ -23,6 +23,8 @@ public interface LocationService {
 	
     List<LocationDto> getAllParents(Long locationId) throws ApplicationException;
 
+    List<LocationDto> searchLocationByName(String name) throws ApplicationException;
+
     List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException;
 
     List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException;
@@ -49,9 +51,11 @@ public interface LocationService {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException;
+    LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException;
 	
     LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException;
+
+    LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active) throws ApplicationException;
 
 	BoundaryDto saveBoundary(BoundaryDto boundaryDto) throws ApplicationException;
 	
@@ -60,5 +64,7 @@ public interface LocationService {
     void initializeData() throws ApplicationException;
 
     void updateAllLocationUrls() throws ApplicationException;
+
+    List<LocationBoundaryFileDto> GetLocationAllBoundaryFile(Long locationId) throws ApplicationException;
 
 }

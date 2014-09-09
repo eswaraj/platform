@@ -41,4 +41,5 @@ public class LocationController extends BaseController {
         List<Map> results = redisUtil.executeAll();
         return convertToJsonArray(results.get(0).values()).toString();
     }
+
 }

@@ -23,6 +23,7 @@ import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.ComplaintService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
@@ -46,6 +47,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private static ClassPathXmlApplicationContext applicationContext;
     private ComplaintService complaintService;
     private AppService appService;
+    private LocationService locationService;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
@@ -457,6 +459,17 @@ public abstract class EswarajBaseComponent implements Serializable {
             }
         }
         return appService;
+    }
+
+    protected LocationService getLocationService() {
+        if (locationService == null) {
+            synchronized (this) {
+                if (locationService == null) {
+                    locationService = getApplicationContext().getBean(LocationService.class);
+                }
+            }
+        }
+        return locationService;
     }
 
     protected ComplaintService getComplaintService() {

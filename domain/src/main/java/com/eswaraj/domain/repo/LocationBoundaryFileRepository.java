@@ -1,5 +1,7 @@
 package com.eswaraj.domain.repo;
 
+import java.util.Collection;
+
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
@@ -16,4 +18,6 @@ public interface LocationBoundaryFileRepository extends GraphRepository<Location
     @Query("start location=node({0}) match (locationBoundaryFile)-[:FOR]->(location) where locationBoundaryFile.active = 'true' return locationBoundaryFile ")
     public LocationBoundaryFile getActiveLocationBoundaryFile(Location location);
 
+    @Query("start location=node({0}) match (locationBoundaryFile)-[:FOR]->(location) return locationBoundaryFile order by location.uploadDate DESC")
+    public Collection<LocationBoundaryFile> getAllLocationBoundaryFile(Location location);
 }

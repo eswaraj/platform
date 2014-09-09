@@ -18,6 +18,7 @@ public class LocationBoundaryFileDto extends BaseDto {
 	private Long locationId;
 	private Date uploadDate;
 	private String status;
+    private String originalFileName;
 	
 	public String getFileNameAndPath() {
 		return fileNameAndPath;
@@ -43,5 +44,13 @@ public class LocationBoundaryFileDto extends BaseDto {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
+
+    public void setOriginalFileName(String originalFileName) {
+        this.originalFileName = originalFileName;
+    }
 	
 }

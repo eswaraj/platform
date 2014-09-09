@@ -128,7 +128,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 	}
 
 	@Override
-	public LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException {
+    public LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException {
 		Location location = locationRepository.findOne(locationId);
 		if(location == null){
 			throw new ApplicationException("No such location exists[id="+locationId+"]");
@@ -137,7 +137,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         LocationBoundaryFile existingLocationBoundayrFile = locationBoundaryFileRepository.getActiveLocationBoundaryFile(location);
         String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
         if (existingLocationBoundayrFile != null) {
-            if (existingLocationBoundayrFile.getStatus().equals("Pending")) {
+            if (existingLocationBoundayrFile.getStatus().equals("Pending") || existingLocationBoundayrFile.getStatus().equals("Processing")) {
                 throw new ApplicationException("Another file is being processed you can not upload new file until the previous file is processed");
             }
             existingLocationBoundayrFile.setActive(false);
@@ -156,6 +156,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 		locationBoundaryFile.setStatus("Pending");
 		locationBoundaryFile.setUploadDate(new Date());
         locationBoundaryFile.setActive(true);
+        locationBoundaryFile.setOriginalFileName(originalFilename);
 		
 		locationBoundaryFile = locationBoundaryFileRepository.save(locationBoundaryFile);
         System.out.println("locationBoundaryFile Saved = " + locationBoundaryFile);
@@ -472,6 +473,40 @@ public class LocationServiceImpl extends BaseService implements LocationService 
     public List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException {
         List<Location> locations = locationRepository.getAllPagedLocations(start, pageSize);
         return locationConvertor.convertBeanList(locations);
+    }
+
+    @Override
+    public List<LocationDto> searchLocationByName(String name) throws ApplicationException {
+        Collection<Location> locations = locationRepository.searchLocationByName("name:*" + name + "*");
+        return locationConvertor.convertBeanList(locations);
+    }
+
+    @Override
+    public List<LocationBoundaryFileDto> GetLocationAllBoundaryFile(Long locationId) throws ApplicationException {
+        Location location = locationRepository.findOne(locationId);
+        Collection<LocationBoundaryFile> locationBoundaryFiles = locationBoundaryFileRepository.getAllLocationBoundaryFile(location);
+        return locationBoundaryFileConvertor.convertBeanList(locationBoundaryFiles);
+    }
+
+    @Override
+    public LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active) throws ApplicationException {
+        LocationBoundaryFile locationBoundaryFile = locationBoundaryFileRepository.findOne(locationBoundaryFileId);
+        Collection<LocationBoundaryFile> allExistingLocationBoudaryFiles = locationBoundaryFileRepository.getAllLocationBoundaryFile(locationBoundaryFile.getLocation());
+        for (LocationBoundaryFile oneLocationBoundaryFile : allExistingLocationBoudaryFiles) {
+            if (oneLocationBoundaryFile.getId().equals(locationBoundaryFile.getId())) {
+                // Update it as per parameters
+                oneLocationBoundaryFile.setStatus(status);
+                oneLocationBoundaryFile.setActive(active);
+                locationBoundaryFile = oneLocationBoundaryFile;
+            } else {
+                oneLocationBoundaryFile.setStatus("Done");
+                if (active) {
+                    oneLocationBoundaryFile.setActive(false);
+                }
+            }
+            locationBoundaryFileRepository.save(oneLocationBoundaryFile);
+        }
+        return locationBoundaryFileConvertor.convertBean(locationBoundaryFile);
     }
 
 }
