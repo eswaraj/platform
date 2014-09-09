@@ -63,4 +63,6 @@ public interface LocationService {
 
     void updateAllLocationUrls() throws ApplicationException;
 
+    List<LocationBoundaryFileDto> GetLocationAllBoundaryFile(Long locationId) throws ApplicationException;
+
 }

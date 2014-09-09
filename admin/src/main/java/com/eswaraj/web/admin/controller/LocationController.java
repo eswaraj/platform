@@ -168,4 +168,10 @@ public class LocationController extends BaseController {
         return result;
     }
 
+    @RequestMapping(value = "/ajax/location/{locationId}/kmlfiles", method = RequestMethod.GET)
+    public @ResponseBody List<LocationBoundaryFileDto> getLocationFiles(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        List<LocationBoundaryFileDto> result = locationService.GetLocationAllBoundaryFile(locationId);
+        return result;
+    }
+
 }

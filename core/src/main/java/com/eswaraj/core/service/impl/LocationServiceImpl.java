@@ -480,4 +480,11 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         return locationConvertor.convertBeanList(locations);
     }
 
+    @Override
+    public List<LocationBoundaryFileDto> GetLocationAllBoundaryFile(Long locationId) throws ApplicationException {
+        Location location = locationRepository.findOne(locationId);
+        Collection<LocationBoundaryFile> locationBoundaryFiles = locationBoundaryFileRepository.getAllLocationBoundaryFile(location);
+        return locationBoundaryFileConvertor.convertBeanList(locationBoundaryFiles);
+    }
+
 }
