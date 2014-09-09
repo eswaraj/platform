@@ -474,4 +474,10 @@ public class LocationServiceImpl extends BaseService implements LocationService 
         return locationConvertor.convertBeanList(locations);
     }
 
+    @Override
+    public List<LocationDto> searchLocationByName(String name) throws ApplicationException {
+        Collection<Location> locations = locationRepository.searchLocationByName(name);
+        return locationConvertor.convertBeanList(locations);
+    }
+
 }

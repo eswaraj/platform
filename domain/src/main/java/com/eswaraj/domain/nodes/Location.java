@@ -3,6 +3,7 @@ package com.eswaraj.domain.nodes;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.eswaraj.domain.base.BaseNode;
 
@@ -15,7 +16,7 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class Location extends BaseNode {
 
-	@Indexed
+    @Indexed(indexName = "LocationNameFt", indexType = IndexType.FULLTEXT)
 	private String name;
 	
 	@RelatedTo(type="OF_TYPE")

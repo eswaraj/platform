@@ -23,6 +23,8 @@ public interface LocationService {
 	
     List<LocationDto> getAllParents(Long locationId) throws ApplicationException;
 
+    List<LocationDto> searchLocationByName(String name) throws ApplicationException;
+
     List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException;
 
     List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException;
