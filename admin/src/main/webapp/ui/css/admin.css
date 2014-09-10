@@ -29,7 +29,17 @@ position: absolute;
 width: 180px;
 }
 
-#pbadmin_list_current, #pbadmin_list_all, #assign_pbadmin{
+/*
+#assign_pbadmin{
+position: absolute;
+width: 200px;
+padding-left:12px;
+left: 650px;
+border-left: 1px solid black ;
+}
+*/
+
+#pbadmin_list_current{
 position: absolute;
 width: 200px;
 padding-left:12px;
@@ -37,9 +47,18 @@ left: 650px;
 border-left: 1px solid black ;
 }
 
+#pbadmin_list_all{
+position: absolute;
+width: 200px;
+padding-left:12px;
+padding-top:300px;
+left: 650px;
+border-left: 1px solid black ;
+}
+
 #searchResultsN, #searchResultsP{
 position: absolute;
-width: 450px;
+width: 400px;
 }
 
 #node_div {
