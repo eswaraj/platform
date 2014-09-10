@@ -28,9 +28,7 @@ var complaints = [
         $("#my_map").gmap3({
           map:{
             options: {
-              center:[46.578498,2.457275],
-              zoom: 7,
-              mapTypeId: google.maps.MapTypeId.TERRAIN
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
             }
           },
           marker: {
