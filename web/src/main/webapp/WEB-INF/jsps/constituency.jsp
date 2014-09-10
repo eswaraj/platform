@@ -196,7 +196,7 @@ var complaints = [
                 <a href="#" class="list-group-item active">Show All (${total})</a>
             </c:if>
             <c:if test="${!empty selectedCategory}">
-                <a href="${location.url}.html" class="list-group-item">Show All (${total})</a>
+                <a href="${location.url}.html?type=${viewType}" class="list-group-item">Show All (${total})</a>
             </c:if>
                                     
             
@@ -205,7 +205,7 @@ var complaints = [
                     <a href="#" class="list-group-item active">${oneCategory.name} (${oneCategory.locationCount})</a>
                 </c:if>
                 <c:if test="${ selectedCategory ne oneCategory.id}">
-                    <a href="${location.url}/category/${oneCategory.id}.html" class="list-group-item">${oneCategory.name} (${oneCategory.locationCount})</a>
+                    <a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="list-group-item">${oneCategory.name} (${oneCategory.locationCount})</a>
                 </c:if>
                 
             </c:forEach>
