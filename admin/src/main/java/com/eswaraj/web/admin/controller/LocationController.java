@@ -170,6 +170,15 @@ public class LocationController extends BaseController {
         return result;
     }
 
+    @RequestMapping(value = "/ajax/location/search/name", method = RequestMethod.GET)
+    public @ResponseBody List<LocationDto> searchLocation(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
+        String name = httpServletRequest.getParameter("name");
+        System.out.println("Searching Location for " + name);
+        List<LocationDto> result = locationService.searchLocationByName(name);
+        System.out.println("result =  " + result);
+        return result;
+    }
+
     @RequestMapping(value = "/ajax/location/{locationId}/kmlfiles", method = RequestMethod.GET)
     public @ResponseBody List<LocationBoundaryFileDto> getLocationFiles(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
         List<LocationBoundaryFileDto> result = locationService.GetLocationAllBoundaryFile(locationId);
