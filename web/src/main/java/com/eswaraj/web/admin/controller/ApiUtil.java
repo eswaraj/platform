@@ -59,6 +59,22 @@ public class ApiUtil {
         return getResponseFrom(httpServletRequest, urlPath, addedParams);
     }
 
+    public String getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId, Long pageSize) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId;
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("start", "0");
+        addedParams.put("end", String.valueOf(pageSize));
+        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+    }
+
+    public String getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId, Long pageSize) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("start", "0");
+        addedParams.put("end", String.valueOf(pageSize));
+        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+    }
+
     private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
         String currentPage = httpServletRequest.getParameter("page");
         Long start = 0L;

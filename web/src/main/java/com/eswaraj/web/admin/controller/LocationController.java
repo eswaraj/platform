@@ -51,6 +51,10 @@ public class LocationController extends BaseController {
             mv.getModel().put("selectedCategory", categoryId);
         }
         System.out.println("Looking up URL in redis : " + urlkey);
+
+        String view = getViewType(httpServletRequest);
+        mv.getModel().put("viewType", view);
+
         String locationIdString = stringRedisTemplate.opsForValue().get(urlkey);
         if (locationIdString != null) {
             Long locationId = Long.parseLong(locationIdString);
@@ -65,9 +69,19 @@ public class LocationController extends BaseController {
                 mv.getModel().put("rootCategories", allRootcategories);
                 String locationComplaints = null;
                 if (categoryId == null) {
-                    locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
+                    if ("list".equals(view)) {
+                        locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
+                    } else {
+                        locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId, 1000L);
+                    }
+
                 } else {
-                    locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, Long.parseLong(categoryId));
+                    if ("list".equals(view)) {
+                        locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, Long.parseLong(categoryId));
+                    } else {
+                        locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, Long.parseLong(categoryId), 1000L);
+                    }
+
                 }
                 
                 List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
@@ -82,6 +96,14 @@ public class LocationController extends BaseController {
         addGenericValues(mv);
         mv.setViewName("constituency");
         return mv;
+    }
+
+    private String getViewType(HttpServletRequest httpServletRequest) {
+        String view = httpServletRequest.getParameter("view");
+        if (!"map".equals(view) && !"analytics".equals(view)) {
+            view = "list";
+        }
+        return view;
     }
 
     private void addPaginationInfo(HttpServletRequest httpServletRequest, ModelAndView mv, long totalComplaint, String selectedCategory, List<CategoryBean> categories) {

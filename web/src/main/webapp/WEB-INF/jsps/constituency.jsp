@@ -12,6 +12,19 @@ jQuery(document).ready(function() {
   jQuery("abbr.timeago").timeago();
 });
 </script>
+<c:if test="${viewType eq 'map'}">
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor="Electricity"&amp;language=en"></script>
+    <script src="${staticHost}/js/loadloc.js"></script>
+    <script src="${staticHost}/js/gmap3.min.js"></script>
+<script>
+var complaints = [
+    <% int i=0 %>  
+  <c:forEach items="${complaintList}" var="oneComplaint">
+    <% if (i>0) out.println(","); i++ %> {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"TREMBLAY-EN-FRANCE",date: "${oneComplaint.complaintTimeIso}", userId: ${oneComplaint.loggedBy.id}, userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+  </c:forEach>
+</script>
+
+</c:if>
 <div class="container-fluid">
     <div class="banner">
     <div class="locate-on-map">
@@ -141,6 +154,8 @@ jQuery(document).ready(function() {
                 </div>
                 <div class="clearfix"></div>
             </div>
+            <c:if test="${viewType eq 'list'}">
+            
             <div class="listing">
                 <!-- .list-row  -->
                 <c:forEach items="${complaintList}" var="oneComplaint">
@@ -226,6 +241,10 @@ jQuery(document).ready(function() {
                     </ul>
                 </div>
             </div>
+            </c:if>
+            <c:if test="${viewType eq 'map'}">
+                <div id="map-container"><div id="my_map"></div></div>
+            </c:if>
         </div>
     </div>
 </div>
