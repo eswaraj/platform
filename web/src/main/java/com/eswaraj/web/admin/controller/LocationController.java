@@ -99,7 +99,7 @@ public class LocationController extends BaseController {
     }
 
     private String getViewType(HttpServletRequest httpServletRequest) {
-        String view = httpServletRequest.getParameter("view");
+        String view = httpServletRequest.getParameter("type");
         if (!"map".equals(view) && !"analytics".equals(view)) {
             view = "list";
         }
