@@ -19,6 +19,7 @@
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 		<!-- 2 load the theme CSS file -->
 		<link rel="stylesheet" href="dist/themes/default/style.min.css" />
+		<link rel="stylesheet" href='css/admin.css' />
 		<!-- 4 include the jQuery library -->
 
 		<!-- 5 include the minified jstree source -->
@@ -28,6 +29,9 @@
 
 	</head>
 	<body>
+<div class="header headerbox">
+	<h1 class="header">eSwaraj Admin Page</h1>
+</div>
 		<div class="responsive-menu">
 			<div class="responsive-menu-dropdown blue">
 				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
@@ -46,23 +50,26 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 profile-margin">
-						<div class="col-md-4">
-							<h3>Political Admin Manager</h3> 
+						<div class="col-md-2">
+							<h3 class="text-footer-extended">Constituencies</h3> 
 
 							<!-- the tree is populated via ajax -->
 							<div id="js_tree"></div>	
 
 						</div>
 
-						<div class="col-md-5">
-							<div id="node_div">
-								<p>Location Node</p>
+						<div class="col-md-10">
+							<div id="node_div" class="col-md-4 col-md-push-2 border-left">
+								<h3 class="text-footer">Enter Location</h3>
 								<input type="text" name="node_title" id="node_title" value="" disabled="disabled">
 								<!-- person search -->
-								<input type="text" id="node_search" placeholder="Location Name" />
-								<button class="btn btn-primary blue" type="button" id="searchButtonN" >Search Location</button>
-								<div id="searchResultsN">
-									<h1>Existing Locations:</h1>
+								<input type="text" id="node_search" placeholder="Location Name" class="textbox box-shadow-ligth" /><p></p>
+								<button class="btn btn-primary blue btn-round" type="button" id="searchButtonN" >Search by Location</button>
+							<div id="attach_div" class="attach1">
+								<a id="attach" class="btn btn-primary blue btn-round" href="#assign_pbadmin" data-toggle="modal">Add PBAdmin</a>
+							</div>
+							<div id="searchResultsN">
+									<h3 class="text-footer-extended">Existing Locations:</h3>
 									<table id="nodes" class="ui-widget ui-widget-content">
 										<thead>
 											<tr class="ui-widget-header ">
@@ -78,14 +85,14 @@
 
 								</div>
 							</div>
-							<div id="person_div">
-								<p>Selected Person</p>
-								<input type="text" name="person_title" id="person_title" value="" disabled="disabled">
+							<div id="person_div" class="col-md-2">
+								<h3 class="text-footer">Select Person</h3>
+								<input type="text" name="person_title" id="person_title" value="" disabled="disabled"><br>
 								<!-- person search -->
-								<input type="text" id="person_search" placeholder="Person Name" />
-								<button class="btn btn-primary blue" type="button" id="searchButtonP" >Search Person</button>
-								<div id="searchResultsP">
-									<h1>Existing Persons:</h1>
+								<input type="text" id="person_search" placeholder="Person Name" class="textbox box-shadow-ligth" /><p></p>
+								<button class="btn btn-primary blue btn-round" type="button" id="searchButtonP">Search By Name</button>
+								<div id="searchResultsP" style="visibility: hidden">
+									<h3 class="text-footer-extended">Existing Persons:</h3>
 									<table id="users" class="ui-widget ui-widget-content">
 										<thead>
 											<tr class="ui-widget-header ">
@@ -101,12 +108,9 @@
 
 								</div>
 							</div>
-							<div id="pbadmin_list_current">
+							<div id="pbadmin_list_current" class="col-md-1">
 							</div>
-							<div id="pbadmin_list_all">
-							</div>
-							<div id="attach_div">
-								<a id="attach" class="btn blue" href="#assign_pbadmin" data-toggle="modal">Add PBAdmin</a>
+							<div id="pbadmin_list_all" class="col-md-1">
 							</div>
 							<div aria-hidden="true" role="dialog"  class="modal fade" id="assign_pbadmin" style="display: none;">
 								<div class="modal-dialog" style="top:30px;">
