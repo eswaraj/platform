@@ -18,9 +18,9 @@ jQuery(document).ready(function() {
     <script src="${staticHost}/js/gmap3.min.js"></script>
 <script>
 var complaints = [
-    <% int i=0 %>  
+    <% int i=0; %>  
   <c:forEach items="${complaintList}" var="oneComplaint">
-    <% if (i>0) out.println(","); i++ %> {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"TREMBLAY-EN-FRANCE",date: "${oneComplaint.complaintTimeIso}", userId: ${oneComplaint.loggedBy.id}, userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+    <% if (i>0) out.println(","); i++; %> {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"TREMBLAY-EN-FRANCE",date: "${oneComplaint.complaintTimeIso}", userId: ${oneComplaint.loggedBy.id}, userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
   </c:forEach>
 </script>
 
