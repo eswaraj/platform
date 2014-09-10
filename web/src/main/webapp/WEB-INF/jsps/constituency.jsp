@@ -167,6 +167,7 @@ var complaints = [
                                 <option value="7">Issue</option>
                             </select>
                         </div>
+                        <%-- 
                         <div class="form-group">
                             <label>Duration</label>
                             <select class="form-control">
@@ -180,6 +181,7 @@ var complaints = [
                                 <option value="8">Last 3 Month</option>
                             </select>
                         </div>
+                        --%>
                         <div class="form-group">
                             <div class="btn btn-default btn-xs">Clear</div>
                             <div class="btn btn-primary btn-xs">Search</div>
