@@ -219,14 +219,23 @@ var complaints = [
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default active" title="List View"> <i class="glyphicon glyphicon-list"></i>
-                        </button>
-                        <button type="button" class="btn btn-default" title="Map View">
-                            <i class="glyphicon glyphicon-map-marker"></i>
-                        </button>
-                        <button type="button" class="btn btn-default" title="Analytical View">
-                            <i class="glyphicon glyphicon-signal"></i>
-                        </button>
+                        <c:if test="${viewType eq 'list'}">
+                            <a type="button" href="#" class="btn btn-default active" title="List View"> <i class="glyphicon glyphicon-list"></i></a>
+                            <a type="button" href="?type=map" class="btn btn-default" title="Map View"><i class="glyphicon glyphicon-map-marker"></i></a>
+                            <a type="button" href="?type=analytics" class="btn btn-default" title="Analytical View"><i class="glyphicon glyphicon-signal"></i></a>    
+                        </c:if>
+                        <c:if test="${viewType eq 'map'}">
+                            <a type="button" href="?type=list" class="btn btn-default" title="List View"> <i class="glyphicon glyphicon-list"></i></a>
+                            <a type="button" href="#" class="btn btn-default active" title="Map View"><i class="glyphicon glyphicon-map-marker"></i></a>
+                            <a type="button" href="?type=analytics" class="btn btn-default" title="Analytical View"><i class="glyphicon glyphicon-signal"></i></a>    
+                        </c:if>
+                        <c:if test="${viewType eq 'analytics'}">
+                            <a type="button" href="?type=list" class="btn btn-default" title="List View"> <i class="glyphicon glyphicon-list"></i></a>
+                            <a type="button" href="?type=map" class="btn btn-default" title="Map View"><i class="glyphicon glyphicon-map-marker"></i></a>
+                            <a type="button" href="#" class="btn btn-default active" title="Analytical View"><i class="glyphicon glyphicon-signal"></i></a>    
+                        </c:if>
+                        
+                        
                     </div>
                     <button class="btn btn-primary">Raise Issue</button>
                 </div>
