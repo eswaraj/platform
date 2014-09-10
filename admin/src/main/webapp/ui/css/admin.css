@@ -9,6 +9,14 @@ border-radius: 30px;
 margin-bottom:8px
  }
 
+.wrapper {
+    float: left;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-top: 3px;
+    width: 100%;
+}
+
 .text_margin_bottom{
 margin-bottom:5px;
 }
@@ -187,7 +195,7 @@ tr:nth-child(even) {
 		.tabrow {
 		    text-align: left;
 		    list-style: none;
-		    margin: 20px 0 20px;
+		    margin: 20px 0 5px;
 		    padding: 0;
 		    line-height: 24px;
 		    height: 26px;
