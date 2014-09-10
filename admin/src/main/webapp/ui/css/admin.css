@@ -39,7 +39,7 @@ border-left: 1px solid black ;
 
 #searchResultsN, #searchResultsP{
 position: absolute;
-width: 400px;
+width: 450px;
 }
 
 #node_div {
@@ -53,12 +53,12 @@ padding-left:12px
 }
 #searchResultsN {
 left: 225px;
-visibility: hidden;
+/*visibility: hidden;*/
 padding-left:12px
 }
 #searchResultsP {
 left: 225px;
-visibility: hidden;
+/*visibility: hidden;*/
 padding-left:12px
 }
 #attach_div{

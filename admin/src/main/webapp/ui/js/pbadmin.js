@@ -91,6 +91,8 @@ $(document).ready(function(){
 	window.hash = new Object();
 	window.loc_hash = new Object();
 	var all_ltype = fetch_ltype();
+	$('#searchResultsP').hide();
+	$('#searchResultsN').hide();
 	fetch_pbtype();
 	fetch_plist();
 
