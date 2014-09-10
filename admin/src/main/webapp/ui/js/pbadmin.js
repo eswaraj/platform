@@ -54,7 +54,7 @@ function fetch_plist(){
 
 			var party_list = "";
 			for(var i=0; i<data.length;i++) {
-				party_list += "<option id='"+data[i].id+"'>"+data[i].name+"</option>";
+				party_list += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
 
 			}		   
 			$("#party_list").html(party_list);		    	  
