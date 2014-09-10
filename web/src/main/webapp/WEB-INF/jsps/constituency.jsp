@@ -14,7 +14,6 @@ jQuery(document).ready(function() {
 </script>
 <c:if test="${viewType eq 'map'}">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor="Electricity"&amp;language=en"></script>
-    <script src="${staticHost}/js/loadloc.js"></script>
     <script src="${staticHost}/js/gmap3.min.js"></script>
 <script>
 var complaints = [
@@ -24,6 +23,7 @@ var complaints = [
   </c:forEach>
 </script>
 
+<script src="${staticHost}/js/loadloc.js"></script>
 </c:if>
 <div class="container-fluid">
     <div class="banner">
