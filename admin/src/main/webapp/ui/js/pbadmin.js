@@ -64,7 +64,6 @@ function fetch_plist(){
 }
 
 function get_pbtypeForLocationType(pbtypes,selected_loc_typeid){
-	console.log(selected_loc_typeid+"line 33");
 	var result = new Array();
 	for (var i=0; i < pbtypes.length; i++){
 		if(pbtypes[i].locationTypeId == selected_loc_typeid){
@@ -126,7 +125,7 @@ $(document).ready(function(){
 	});
 
 	$("#node_search").autocomplete({		
-		source: "/ajax/person/search/name/",
+		source: "/ajax/location/search/name/",
 		minLength: 3,
 		response: function( event, ui ) {
 			data = ui.content;
@@ -134,9 +133,9 @@ $(document).ready(function(){
 			for(var i=0; i<data.length; i++) {
 				$('#nodes tbody').append("<tr>" +
 					"<td>" + data[i].id + "</td>" +
-					"<td>" + data[i].name + "</td>" + //change name to type when real API is available
+					"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -147,7 +146,7 @@ $(document).ready(function(){
 		var s = $('#node_search').val();
 		$.ajax({
 			type: "GET",
-			url:"/ajax/person/search/name/"+s,
+			url:"/ajax/location/search/name/"+s,
 			data: "",
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
@@ -156,9 +155,9 @@ $(document).ready(function(){
 				for(var i=0; i<data.length; i++) {
 					$('#nodes tbody').append("<tr>" +
 						"<td>" + data[i].id + "</td>" +
-						"<td>" + data[i].name + "</td>" + //change name to type when real API is available
+						"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].id + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
 						"</tr>" 
 						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
@@ -335,12 +334,14 @@ function populate(loc_typeid, loc_id) {
 	//console.log(pbtype_list);
 	var pbtype_list_content = "";
 	$('#pbadmin_locationId').val(loc_id);
-	$('#pbadmin_list').html('');
+	$('#pbadmin_list_all').html('');
+	$('#pbadmin_list_current').html('');
 
 	for(var i=0;i < pbtype_list.length; i++){
 
 		pbtype_list_content += "<option id='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
-		$('#pbadmin_list').append('<h2>Current'+pbtype_list[i].shortName+'</h2>');
+		$('#pbadmin_list_current').append('<h2>Current '+pbtype_list[i].shortName+'</h2>');
+		$('#pbadmin_list_all').append('<h2>All '+pbtype_list[i].shortName+'</h2>');
 		get_pbadmin(loc_id,pbtype_list[i].id);
 	}
 
@@ -371,15 +372,27 @@ function get_pbadmin(locationId,pbtypeId){
 
 		$.ajax({
 			type: "GET",
-		url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
+		url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
 		dataType: "JSON",
+		async: false,
 		success: function(data){
 			if(data){
-				$('#pbadmin_list').append('<p>'+data.name+'</p>');
+				$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
 			}
 		}
 		});
 
+		$.ajax({
+			type: "GET",
+		url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
+		dataType: "JSON",
+		async: false,
+		success: function(data){
+			if(data){
+				$('#pbadmin_list_all').append('<p>'+data.name+'</p>');
+			}
+		}
+		});
 	//}
 
 	//if($('#'+target.id).hasClass('person')){
