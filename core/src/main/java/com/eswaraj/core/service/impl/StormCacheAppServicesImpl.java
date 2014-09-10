@@ -87,6 +87,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         jsonObject.addProperty("totalNumberOfHouses", location.getTotalNumberOfHouses());
         jsonObject.addProperty("totalPopulation", location.getTotalPopulation());
         jsonObject.addProperty("totalWorkingPopulation", location.getTotalWorkingPopulation());
+        jsonObject.addProperty("kml", location.getBoundaryFile());
         jsonObject.addProperty("url", location.getUrlIdentifier());
 
         // Read LocationType Object

@@ -31,6 +31,14 @@ var complaints = [
                   mapTypeId: google.maps.MapTypeId.ROADMAP
             }
           },
+          kmllayer:{
+            options:{
+              url: "${location.kml}",
+              opts:{
+                suppressInfoWindows: true
+              }
+            }
+          },
           marker: {
             values: complaints,
             cluster:{

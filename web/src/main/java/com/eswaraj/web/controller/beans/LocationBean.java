@@ -17,6 +17,7 @@ public class LocationBean {
     private Long totalPopulation;
     private Long totalWorkingPopulation;
     private String locationType;
+    private String kml;
 
     public String getName() {
         return name;
@@ -144,6 +145,14 @@ public class LocationBean {
 
     public void setLocationType(String locationType) {
         this.locationType = locationType;
+    }
+
+    public String getKml() {
+        return kml;
+    }
+
+    public void setKml(String kml) {
+        this.kml = kml;
     }
 
 }
