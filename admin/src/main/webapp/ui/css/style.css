@@ -9,7 +9,7 @@ body {
 display:none;
 }
 #node_info{
-position:fixed;
+/*position:fixed;*/
 left:40%;
 }
 .save{
