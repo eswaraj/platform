@@ -21,7 +21,7 @@ var complaints = [
   <c:forEach items="${complaintList}" var="oneComplaint">
     <% if (i>0) out.println(","); i++; %> {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"TREMBLAY-EN-FRANCE",date: "${oneComplaint.complaintTimeIso}", userId: 1${oneComplaint.loggedBy.id}, userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
   </c:forEach>
-  ]
+  ];
 </script>
 
 <script src="${staticHost}/js/loadloc.js"></script>
