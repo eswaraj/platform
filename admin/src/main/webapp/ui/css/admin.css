@@ -127,7 +127,6 @@ h1.header {
 	padding: 5px;
 	margin: 0;
 	text-align:center;
-	position: relative;
 }
 
 .border-lr {
@@ -153,6 +152,11 @@ h1.header {
 	border-color: #727272;
 	color: #FF9933;
 	text-decoration: none;
+	position:relative;
+}
+
+.header{
+	position:relative;
 }
 
 .textbox { 
