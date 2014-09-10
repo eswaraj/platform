@@ -56,7 +56,7 @@ $(document).ready(function(){
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	c = map.getCenter();
 	myMarker = new google.maps.Marker({
-		//position: new google.maps.LatLng(c.lat(), c.lng()),
+		position: c,
 		draggable: true
 	});
 	myMarker.setMap(map);
@@ -163,40 +163,37 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
-
 				var btn_html = "";
-
 				for(var i=0;i < data.length; i++){
 					btn_html += "<td><a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+data[i].id+"' class='btn blue add_child' href='#add-node' data-toggle='modal'>Add "+data[i].name+"</a></td>";
-
 				}
-
 				$('#add_child_btn').html(btn_html);   
+			}
+		});
 
-
+		$.ajax({
+			type: "GET",
+			url:"/ajax/location/"+$('#'+parent).attr('id')+"/kmlfiles",
+			contentType: "application/json; charset=utf-8",
+			dataType: "JSON",
+			success: function(data){
+				$("#files tbody").html("");
+				for(var i=0;i < data.length; i++){
+					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn blue' href='#' onclick='update_map('"+data[i].fileNameAndPath+"');'>ShowOnMap</a></td><td><a class'btn blue' href='#' onclick='set_current("+data[i].fileNameAndPath+");'>ChooseAsCurrent</a></td></tr>");
+				}
 			}
 		});
 
 		if(!($('#'+parent).hasClass('jstree-open')) && !window.hash.hasOwnProperty('fake_node'+$('#'+parent).attr('id'))){
-			//if(!($('#'+parent).hasClass('jstree-open')) || $('#'+parent).closest("li").children("ul").length ==0){
-			//if(!($('#'+parent).hasClass('jstree-open')) && $('#fake_node'+$('#'+parent).attr('id')).length == 0){
-			//var tree = jQuery.jstree._reference('#js_tree');
-			//var children = tree._get_children(parent);
-			//if(!($('#'+parent).hasClass('jstree-open')) && children.length == 0){
-			//alert("Dummy Node created");	
 			new_node = {'text':'fake','id':'fake_node'+$('#'+parent).attr('id')};
 			$('#js_tree').jstree(true).create_node(parent, new_node);
 			window.hash['fake_node'+$('#'+parent).attr('id')] = 1;
 
 		}
 		}).bind("open_node.jstree",function(e,data){
-			//var parent = $('#js_tree').jstree('get_selected');
 			var parent = data.node.id;
-			//$('#'+parent).jstree("destroy").empty();
 			$("#js_tree").jstree("delete_node", $('#fake_node'+$('#'+parent).attr('id')));
-
 			if($('#'+parent).closest("li").children("ul").length ==0){
-
 				var selected_node = data.node.id;
 				var new_node;
 				var sel;
@@ -327,9 +324,12 @@ $(document).ready(function(){
 	}
 
 	function runMyFunction(event){
-
 		var target = event.target || event.srcElement;
 		$('#new_node_loc_typeid').val($('#'+target.id).attr('value'));
 		return true;
 		console.log($('#new_node_loc_typeid').attr('value'));
+	}
+
+	function set_current(filepath){
+		console.log("Set file "+filepath+" as current by API call");
 	}

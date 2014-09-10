@@ -54,7 +54,7 @@ function fetch_plist(){
 
 			var party_list = "";
 			for(var i=0; i<data.length;i++) {
-				party_list += "<option id='"+data[i].id+"'>"+data[i].name+"</option>";
+				party_list += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
 
 			}		   
 			$("#party_list").html(party_list);		    	  
@@ -90,11 +90,11 @@ $(document).ready(function(){
 			data = ui.content;
 			$('#users tbody').html("");
 			for(var i=0; i<data.length; i++) {
-				$('#users tbody').append("<tr>" +
+				$('#users tbody').append("<tr'>" +
 					"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "'>Select Person</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "' title='" + data[i].name + "'>Select Person</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -116,7 +116,7 @@ $(document).ready(function(){
 						"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "'>Select Person</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "' title='" + data[i].name + "'>Select Person</button>" + "</td>" +
 						"</tr>" 
 						); 
 				}
@@ -135,7 +135,7 @@ $(document).ready(function(){
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select Location</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -157,7 +157,7 @@ $(document).ready(function(){
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select Location</button>" + "</td>" +
 						"</tr>" 
 						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
@@ -339,7 +339,7 @@ function populate(loc_typeid, loc_id) {
 
 	for(var i=0;i < pbtype_list.length; i++){
 
-		pbtype_list_content += "<option id='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
+		pbtype_list_content += "<option value='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
 		$('#pbadmin_list_current').append('<h2>Current '+pbtype_list[i].shortName+'</h2>');
 		$('#pbadmin_list_all').append('<h2>All '+pbtype_list[i].shortName+'</h2>');
 		get_pbadmin(loc_id,pbtype_list[i].id);
@@ -352,12 +352,14 @@ function setNNodeId(event){
 	var target = event.target || event.srcElement;
 	var locationId = $('#'+target.id).attr('pid');
 	var pbtypeId = $('#'+target.id).attr('tid');
-	populate(locationId, pbtypeId);
+	$('#node_title').val($('#'+target.id).attr('title'));
+	populate(pbtypeId, locationId);
 }
 
 function setPNodeId(event){
 	var target = event.target || event.srcElement;
 	var personId = $('#'+target.id).attr('pid');
+	$('#person_title').val($('#'+target.id).attr('title'));
 	$('#pbadmin_personId').val(personId);
 }
 
@@ -377,7 +379,8 @@ function get_pbadmin(locationId,pbtypeId){
 		async: false,
 		success: function(data){
 			if(data){
-				$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
+				//$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
+				$('#pbadmin_list_current').append('<p>'+data.id+'</p>');
 			}
 		}
 		});
@@ -389,7 +392,10 @@ function get_pbadmin(locationId,pbtypeId){
 		async: false,
 		success: function(data){
 			if(data){
-				$('#pbadmin_list_all').append('<p>'+data.name+'</p>');
+				for(var i=0; i<data.length; i++){
+					//$('#pbadmin_list_all').append('<p>'+data[i].name+'</p>');
+					$('#pbadmin_list_all').append('<p>'+data[i].id+'</p>'); //MAke a get request with this id to get the person name and display that
+				}
 			}
 		}
 		});

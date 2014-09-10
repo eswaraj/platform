@@ -55,34 +55,22 @@
 			<div class="responsive-menu-dropdown blue">
 				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
 			</div>
-
 		</div>
 		<header>
-
 		</header><!-- Header -->
-
 		<div id="menu" class="menu">
-
 		</div><!-- Right Menu -->
-
 		<div class="wrapper">
 			<div class="container">
-
-
 				<div class="row">
 					<div class="col-md-12 profile-margin">
 						<div class="col-md-4">
 							<h3>Location Node Manager</h3> 
-
 							<!-- the tree is populated via ajax -->
 							<div id="js_tree"></div>	
-
 						</div>
-
 						<div class="col-md-5" id="node_info">
-							<a href="#" class="active">
-							</a>
-
+							<a href="#" class="active"> </a>
 							<div id="tab1">
 								<table style="padding:10px;">
 									<tr>
@@ -108,27 +96,33 @@
 										<td id ="kml_status"></td>
 										<td>
 											<form method="post" enctype="multipart/form-data" id="form1" method="post" action="">
-
 												<input type="file" id="file" name="file" />
 												<input type="submit" value="Upload KML" />
-
-										</form></td>
+											</form>
+										</td>
 										<!-- <td><a id="upload_btn" class="btn pink">Upload</a></td> -->
 									</tr>
-
 									<tr>
 										<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
 										<td><a id="save_btn" class="btn green" href="#">Update Node</a></td>
-
 									</tr>						
-
 								</table>
-
 							</div>	
+							<div>
+								<h3 class="text-footer-extended">Existing KML files:</h3>
+								<table id="files" class="ui-widget ui-widget-content">
+									<thead>
+										<tr class="ui-widget-header ">
+											<th>FileName</th>
+											<th>ShowOnMap</th>
+											<th>ChooseAsCurrent</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 							<div id="map-canvas" width="500px;" height="500px;"></div>
-
-
-
 							<div aria-hidden="true" role="dialog"  class="modal fade" id="add-node" style="display: none;">
 								<div class="modal-dialog" style="top:30px;">
 									<div class="modal-content">
@@ -141,7 +135,6 @@
 											<input type="text" id="new_node_lat" placeholder="Latitude" />
 											<input type="text" id="new_node_long" placeholder="Longitude" />
 											<input type="text" id="new_node_loc_typeid" disabled="disabled"/>
-
 										</div>					 				  
 									</div>
 									<div class="modal-footer">
@@ -153,20 +146,12 @@
 							<!-- <div class="">
 								<div id="map-canvas"></div>	
 							</div> -->
-
 						</div>
 					</div>
-
-
 				</div>
 			</div>
-
-
 		</div><!-- Container -->
 	</div><!-- Wrapper -->
-
-
-
 	<script type="text/javascript" src="js/loc.js"></script><!-- Script -->
 </body>
 </html>

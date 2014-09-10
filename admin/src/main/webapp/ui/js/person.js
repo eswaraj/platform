@@ -80,6 +80,19 @@ $(document).ready(function(){
 		new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
 		);
 	map.fitBounds(defaultBounds);
+
+	if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			map.setCenter(pos);
+			map.setZoom(14);
+		}, function() {
+			//User didnt give permission to use location
+		});
+	} else {
+		// Browser doesn't support Geolocation
+	}
+
 	myMarker = new google.maps.Marker({
 		position: myLatlng,
 		 draggable: true
@@ -272,3 +285,4 @@ $(document).ready(function(){
 		});
 	});
 });
+

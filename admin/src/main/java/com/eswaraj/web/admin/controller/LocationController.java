@@ -172,7 +172,7 @@ public class LocationController extends BaseController {
 
     @RequestMapping(value = "/ajax/location/search/name", method = RequestMethod.GET)
     public @ResponseBody List<LocationDto> searchLocation(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
-        String name = httpServletRequest.getParameter("name");
+        String name = httpServletRequest.getParameter("term");
         System.out.println("Searching Location for " + name);
         List<LocationDto> result = locationService.searchLocationByName(name);
         System.out.println("result =  " + result);
