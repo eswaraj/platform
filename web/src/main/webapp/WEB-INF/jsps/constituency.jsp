@@ -12,8 +12,8 @@ jQuery(document).ready(function() {
   jQuery("abbr.timeago").timeago();
 });
 </script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <c:if test="${viewType eq 'map'}">
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor="Electricity"&amp;language=en"></script>
     <script src="${staticHost}/js/gmap3.min.js"></script>
 <script>
 var complaints = [
@@ -21,6 +21,7 @@ var complaints = [
   <c:forEach items="${complaintList}" var="oneComplaint">
     <% if (i>0) out.println(","); i++; %> {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"TREMBLAY-EN-FRANCE",date: "${oneComplaint.complaintTimeIso}", userId: 1${oneComplaint.loggedBy.id}, userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
   </c:forEach>
+  ]
 </script>
 
 <script src="${staticHost}/js/loadloc.js"></script>
@@ -28,7 +29,6 @@ var complaints = [
 <div class="container-fluid">
     <div class="banner">
     <div class="locate-on-map">
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <div style="overflow:hidden;height:100%;width:100%;">
             <div id="gmap_canvas" style="height:100%;width:100%;"></div>
         </div>
