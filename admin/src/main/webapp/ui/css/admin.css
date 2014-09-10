@@ -17,6 +17,10 @@ margin-bottom:8px
     width: 100%;
 }
 
+#menu_new {
+	top-padding: 55px;
+}
+
 .text_margin_bottom{
 margin-bottom:5px;
 }
