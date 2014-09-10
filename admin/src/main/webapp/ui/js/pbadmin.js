@@ -1,5 +1,16 @@
 var all_pbtype = new Object();
 
+$(window).scroll(function () {
+	$( "#header1" ).css( "display","inline");
+	$( "#header1" ).css( "position","fixed");
+});
+
+$(window).scroll(function(){
+	if ($(this).scrollTop() ==0) {
+		$("#header1").css( "display","none");
+	}
+});
+
 $(function(){
 	$("#menu").load("../ui/sidebar_menu.html"); 
 });
@@ -47,18 +58,18 @@ function fetch_plist(){
 	//Populate party list
 	$.ajax({
 		type: "GET",
-		url:"/ajax/party/getall",
-		dataType: "JSON",
-		success: function(data){
-			//alert(JSON.stringify(data));	
+	url:"/ajax/party/getall",
+	dataType: "JSON",
+	success: function(data){
+		//alert(JSON.stringify(data));	
 
-			var party_list = "";
-			for(var i=0; i<data.length;i++) {
-				party_list += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+		var party_list = "";
+		for(var i=0; i<data.length;i++) {
+			party_list += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
 
-			}		   
-			$("#party_list").html(party_list);		    	  
-		}
+		}		   
+		$("#party_list").html(party_list);		    	  
+	}
 
 	});
 }
@@ -87,6 +98,8 @@ $(document).ready(function(){
 		source: "/ajax/person/search/name/",
 		minLength: 3,
 		response: function( event, ui ) {
+			$('#searchResultsP').show();
+			$('#searchResultsN').hide();
 			data = ui.content;
 			$('#users tbody').html("");
 			for(var i=0; i<data.length; i++) {
@@ -110,6 +123,8 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
+				$('#searchResultsP').show();
+				$('#searchResultsN').hide();
 				$('#users tbody').html("");
 				for(var i=0; i<data.length; i++) {
 					$('#users tbody').append("<tr>" +
@@ -128,6 +143,8 @@ $(document).ready(function(){
 		source: "/ajax/location/search/name/",
 		minLength: 3,
 		response: function( event, ui ) {
+			$('#searchResultsN').show();
+			$('#searchResultsP').hide();
 			data = ui.content;
 			$('#nodes tbody').html("");
 			for(var i=0; i<data.length; i++) {
@@ -151,6 +168,8 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
+				$('#searchResultsN').show();
+				$('#searchResultsP').hide();
 				$('#nodes tbody').html("");
 				for(var i=0; i<data.length; i++) {
 					$('#nodes tbody').append("<tr>" +
@@ -372,21 +391,21 @@ function get_pbadmin(locationId,pbtypeId){
 
 	//if($('#'+target.id).hasClass('current')){
 
-		$.ajax({
-			type: "GET",
-		url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
-		dataType: "JSON",
-		async: false,
-		success: function(data){
-			if(data){
-				//$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
-				$('#pbadmin_list_current').append('<p>'+data.id+'</p>');
-			}
+	$.ajax({
+		type: "GET",
+	url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
+	dataType: "JSON",
+	async: false,
+	success: function(data){
+		if(data){
+			//$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
+			$('#pbadmin_list_current').append('<p>'+data.id+'</p>');
 		}
-		});
+	}
+	});
 
-		$.ajax({
-			type: "GET",
+	$.ajax({
+		type: "GET",
 		url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
 		dataType: "JSON",
 		async: false,
@@ -398,7 +417,7 @@ function get_pbadmin(locationId,pbtypeId){
 				}
 			}
 		}
-		});
+	});
 	//}
 
 	//if($('#'+target.id).hasClass('person')){

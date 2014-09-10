@@ -32,12 +32,13 @@
 		<div class="header headerbox">
 			<h1 class="header">eSwaraj Admin Page</h1>
 		</div>
-		<div class="responsive-menu">
+	
+		<!--<div class="responsive-menu">
 			<div class="responsive-menu-dropdown blue">
 				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
 			</div>
-
-		</div>
+		</div> -->
+		
 		<header>
 
 		</header><!-- Header -->
@@ -50,7 +51,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 profile-margin">
-						<div class="col-md-2">
+						<div class="col-md-4">
 							<h3 class="text-footer-extended">Constituencies</h3> 
 
 							<!-- the tree is populated via ajax -->
@@ -58,61 +59,65 @@
 
 						</div>
 
-						<div class="col-md-10">
-							<div id="node_div" class="col-md-4 col-md-push-2 border-left">
-								<h3 class="text-footer">Enter Location</h3>
-								<input type="text" name="node_title" id="node_title" value="" disabled="disabled">
-								<!-- person search -->
-								<input type="text" id="node_search" placeholder="Location Name" class="textbox box-shadow-ligth" /><p></p>
-								<button class="btn btn-primary blue btn-round" type="button" id="searchButtonN" >Search by Location</button>
-								<div id="attach_div" class="attach1">
-									<a id="attach" class="btn btn-primary blue btn-round" href="#assign_pbadmin" data-toggle="modal">Add PBAdmin</a>
-								</div>
-								<div id="searchResultsN">
-									<h3 class="text-footer-extended">Existing Locations:</h3>
-									<table id="nodes" class="ui-widget ui-widget-content">
-										<thead>
-											<tr class="ui-widget-header ">
-												<th>ID</th>
-												<th>Type</th>
-												<th>Name</th>
-												<th>Select</th>
-											</tr>
-										</thead>
-										<tbody class="table table-striped table-bordered table-hover">
-										</tbody>
-									</table>
-
-								</div>
+						<div class="col-md-8">
+								
+							<div id="attach_div" class="border-left">
+									<a id="attach" class="btn btn-primary blue btn_round" href="#assign_pbadmin" data-toggle="modal">Add PBAdmin</a>
 							</div>
-							<div id="person_div" class="col-md-1">
+
+							<div id="person_div" class="border-left">
 								<h3 class="text-footer">Select Person</h3>
-								<input type="text" name="person_title" id="person_title" value="" disabled="disabled"><br>
+								<input type="text" name="person_title" id="person_title" value="" disabled="disabled" class="textbox_disabled text_margin_bottom" />
 								<!-- person search -->
-								<input type="text" id="person_search" placeholder="Person Name" class="textbox box-shadow-ligth" /><p></p>
-								<button class="btn btn-primary blue btn-round" type="button" id="searchButtonP">Search By Name</button>
-								<div id="searchResultsP" style="visibility: hidden">
-									<h3 class="text-footer-extended">Existing Persons:</h3>
-									<table id="users" class="ui-widget ui-widget-content">
-										<thead>
-											<tr class="ui-widget-header ">
-												<th>Photo</th>
-												<th>ID</th>
-												<th>Name</th>
-												<th>Select</th>
-											</tr>
-										</thead>
-										<tbody class="table table-striped table-bordered table-hover">
-										</tbody>
-									</table>
+								<input type="text" id="person_search" placeholder="Person Name" class="textbox box_shadow_dim text_margin_bottom" />
+								<button class="btn btn-primary blue btn_round" type="button" id="searchButtonP">Search By Name</button>
+							</div>
 
-								</div>
+							<div id="node_div" class="border-left">
+								<h3 class="text-footer">Enter Location</h3>
+								<input type="text" name="node_title" id="node_title" value="" disabled="disabled" class="textbox_disabled text_margin_bottom" />
+								<!-- person search -->
+								<input type="text" id="node_search" placeholder="Location Name" class="textbox box_shadow_dim text_margin_bottom" />
+								<button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Location</button>
 							</div>
-							<div id="pbadmin_list_current" class="col-md-1">
+							
+							<div id="searchResultsN" class="border-left">
+								<h3 class="text-footer-extended">Existing Locations:</h3>
+								<table id="nodes" class="ui-widget ui-widget-content">
+									<thead>
+										<tr class="ui-widget-header ">
+											<th>ID</th>
+											<th>Type</th>
+											<th>Name</th>
+											<th>Select</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
-							<div id="pbadmin_list_all" class="col-md-1">
+
+							<div id="searchResultsP" class="border-left">
+								<h3 class="text-footer-extended">Existing Persons:</h3>
+								<table id="users" class="ui-widget ui-widget-content">
+									<thead>
+										<tr class="ui-widget-header ">
+											<th>Photo</th>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Select</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
-							<div aria-hidden="true" role="dialog"  class="modal fade" id="assign_pbadmin" style="display: none;">
+
+							<div id="pbadmin_list_current" class="col-md-1 saffron_text">
+							</div>
+							<div id="pbadmin_list_all" class="col-md-1 saffron_text">
+							</div>
+							<div aria-hidden="true" role="dialog"  class="modal fade saffron_text" id="assign_pbadmin" style="display: none;">
 								<div class="modal-dialog" style="top:30px;">
 									<div class="modal-content">
 										<div class="modal-header blue">
@@ -167,7 +172,6 @@
 									</div>
 								</div><!-- /.modal-content -->
 							</div>
-						</div>
 					</div>
 				</div>
 			</div><!-- Container -->
