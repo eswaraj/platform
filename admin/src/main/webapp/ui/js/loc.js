@@ -179,7 +179,7 @@ $(document).ready(function(){
 			success: function(data){
 				$("#files tbody").html("");
 				for(var i=0;i < data.length; i++){
-					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn blue' href='#' onclick='update_map('"+data[i].fileNameAndPath+"');'>ShowOnMap</a></td><td><a class'btn blue' href='#' onclick='set_current("+data[i].fileNameAndPath+");'>ChooseAsCurrent</a></td></tr>");
+					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn blue' href='#' onclick='update_map(\""+data[i].fileNameAndPath+"\");'>ShowOnMap</a></td><td><a class='btn blue' href='#' onclick='set_current("+data[i].fileNameAndPath+");'>ChooseAsCurrent</a></td></tr>");
 				}
 			}
 		});
