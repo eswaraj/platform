@@ -12,7 +12,8 @@ $(window).scroll(function(){
 });
 
 $(function(){
-	$("#menu").load("../ui/sidebar_menu.html"); 
+	//$("#menu").load("../ui/sidebar_menu.html"); 
+	$("#menu_new").load("../ui/menu.html"); 
 });
 
 function addLocation(node)
