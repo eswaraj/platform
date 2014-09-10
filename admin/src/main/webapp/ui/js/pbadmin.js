@@ -157,7 +157,7 @@ $(document).ready(function(){
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "'>Select Location</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select Location</button>" + "</td>" +
 						"</tr>" 
 						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
@@ -353,7 +353,7 @@ function setNNodeId(event){
 	var locationId = $('#'+target.id).attr('pid');
 	var pbtypeId = $('#'+target.id).attr('tid');
 	$('#node_title').val($('#'+target.id).attr('title'));
-	populate(locationId, pbtypeId);
+	populate(pbtypeId, locationId);
 }
 
 function setPNodeId(event){
