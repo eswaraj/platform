@@ -339,7 +339,7 @@ function populate(loc_typeid, loc_id) {
 
 	for(var i=0;i < pbtype_list.length; i++){
 
-		pbtype_list_content += "<option id='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
+		pbtype_list_content += "<option value='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
 		$('#pbadmin_list_current').append('<h2>Current '+pbtype_list[i].shortName+'</h2>');
 		$('#pbadmin_list_all').append('<h2>All '+pbtype_list[i].shortName+'</h2>');
 		get_pbadmin(loc_id,pbtype_list[i].id);
