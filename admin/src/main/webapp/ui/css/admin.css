@@ -24,7 +24,7 @@ margin-right:2px;
 margin-left:10px;
 position: relative}
 
-#node_div, #person_div , #attach_div, #assign_pbadmin{
+#node_div, #person_div , #attach_div{
 position: absolute;
 width: 180px;
 }
