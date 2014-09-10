@@ -90,7 +90,7 @@ $(document).ready(function(){
 			data = ui.content;
 			$('#users tbody').html("");
 			for(var i=0; i<data.length; i++) {
-				$('#users tbody').append("<tr>" +
+				$('#users tbody').append("<tr'>" +
 					"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" +
