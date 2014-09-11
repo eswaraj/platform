@@ -360,7 +360,7 @@ var complaints = [
                 <div id="map-container"><div id="my_map"></div></div>
             </c:if>
             <c:if test="${viewType eq 'analytics'}">
-                <div id="map-container"><div id="category_3d_pie"></div></div>
+                <div id="category_3d_pie" style="height:600px, width:98%;"></div>
             </c:if>
         </div>
     </div>
