@@ -33,13 +33,6 @@ public class LocationController extends BaseController {
     @Autowired
     private ApiUtil apiUtil;
 
-    @RequestMapping(value = "/const.html", method = RequestMethod.GET)
-    public ModelAndView showIndexPage(ModelAndView mv) {
-        addGenericValues(mv);
-        mv.setViewName("constituency");
-        return mv;
-    }
-
     @RequestMapping(value = "/state/**", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
@@ -67,26 +60,36 @@ public class LocationController extends BaseController {
                 }.getType());
                 Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories);
                 mv.getModel().put("rootCategories", allRootcategories);
-                String locationComplaints = null;
+                List<ComplaintBean> locationComplaints = null;
                 if (categoryId == null) {
-                    if ("list".equals(view)) {
+                    switch (view) {
+                    case "list":
                         locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId);
-                    } else {
+                        mv.getModel().put("complaintList", locationComplaints);
+                        break;
+                    case "map":
                         locationComplaints = apiUtil.getLocationComplaints(httpServletRequest, locationId, 1000L);
+                        mv.getModel().put("complaintList", locationComplaints);
+                        break;
+                    case "analytics":
+                        break;
                     }
 
                 } else {
-                    if ("list".equals(view)) {
+                    switch (view) {
+                    case "list":
                         locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, Long.parseLong(categoryId));
-                    } else {
+                        mv.getModel().put("complaintList", locationComplaints);
+                        break;
+                    case "map":
                         locationComplaints = apiUtil.getLocationCategoryComplaints(httpServletRequest, locationId, Long.parseLong(categoryId), 1000L);
+                        mv.getModel().put("complaintList", locationComplaints);
+                        break;
+                    case "analytics":
+                        break;
                     }
-
                 }
                 
-                List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
-                }.getType());
-                mv.getModel().put("complaintList", list);
 
                 addPaginationInfo(httpServletRequest, mv, totalComplaints, categoryId, allRootcategories);
             } catch (ApplicationException e) {

@@ -104,6 +104,31 @@ var complaints = [
 </script>
 
 </c:if>
+
+<c:if test="${viewType eq 'analytics'}">
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Category', 'Complaints']
+      <c:forEach items="${rootCategories}" var="oneCategory">
+        ,[${oneCategory.name},    ${oneCategory.locationCount}]
+      </c:forEach>
+        ]);
+
+        var options = {
+          title: 'Categories wise',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('category_3d_pie'));
+        chart.draw(data, options);
+      }
+    </script>
+</c:if>
 <div class="container-fluid">
     <div class="banner">
     <div class="locate-on-map">
@@ -333,6 +358,9 @@ var complaints = [
             </c:if>
             <c:if test="${viewType eq 'map'}">
                 <div id="map-container"><div id="my_map"></div></div>
+            </c:if>
+            <c:if test="${viewType eq 'analytics'}">
+                <div id="map-container"><div id="category_3d_pie"></div></div>
             </c:if>
         </div>
     </div>

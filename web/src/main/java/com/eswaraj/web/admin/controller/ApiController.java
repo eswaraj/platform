@@ -1,5 +1,7 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
+import com.eswaraj.web.controller.beans.ComplaintBean;
 
 @Controller
 public class ApiController {
@@ -41,7 +44,7 @@ public class ApiController {
 
     @RequestMapping(value = "/api/complaint/location/{locationId}", method = RequestMethod.GET)
     @ResponseBody
-    public String getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
+    public List<ComplaintBean> getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
         return apiUtil.getLocationComplaints(httpServletRequest, locationId);
     }
 

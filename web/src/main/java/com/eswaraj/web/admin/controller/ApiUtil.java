@@ -2,6 +2,7 @@ package com.eswaraj.web.admin.controller;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -21,6 +22,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.controller.beans.ComplaintBean;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 @Component
 public class ApiUtil {
@@ -31,6 +35,8 @@ public class ApiUtil {
 
     @Value("api_host")
     private String apiHost;
+
+    private Gson gson = new Gson();
 
     public ApiUtil() {
         poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager();
@@ -47,32 +53,40 @@ public class ApiUtil {
         return httpClientBuilder.build();
     }
 
-    public String getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
+    public List<ComplaintBean> getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId;
         Map<String, String> addedParams = getPagingInfo(httpServletRequest);
-        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
+        return list;
     }
 
-    public String getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId) throws ApplicationException {
+    public List<ComplaintBean> getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
         Map<String, String> addedParams = getPagingInfo(httpServletRequest);
-        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
+        return list;
     }
 
-    public String getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId, Long pageSize) throws ApplicationException {
+    public List<ComplaintBean> getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId, Long pageSize) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", "0");
         addedParams.put("end", String.valueOf(pageSize));
-        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
+        return list;
     }
 
-    public String getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId, Long pageSize) throws ApplicationException {
+    public List<ComplaintBean> getLocationCategoryComplaints(HttpServletRequest httpServletRequest, Long locationId, Long categoryId, Long pageSize) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", "0");
         addedParams.put("end", String.valueOf(pageSize));
-        return getResponseFrom(httpServletRequest, urlPath, addedParams);
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
+        return list;
     }
 
     private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
