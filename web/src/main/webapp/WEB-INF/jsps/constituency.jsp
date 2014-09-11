@@ -136,7 +136,7 @@ var complaints = [
         <div style="overflow:hidden;height:100%;width:100%;">
             <div id="gmap_canvas" style="height:100%;width:100%;"></div>
          </div>
-        <script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(19.0344647,73.01100959999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.0344647, 73.01100959999997)});infowindow = new google.maps.InfoWindow({content:"<b></b><br/><br/>400706 " });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});}google.maps.event.addDomListener(window, 'load', init_map);</script>
+        <script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(${location.latitude},${location.longitude}),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.0344647, 73.01100959999997)});infowindow = new google.maps.InfoWindow({content:"<b></b><br/><br/>400706 " });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});}google.maps.event.addDomListener(window, 'load', init_map);</script>
      </div>
      <div class="row">
            <div class="col-sm-8"></div>
