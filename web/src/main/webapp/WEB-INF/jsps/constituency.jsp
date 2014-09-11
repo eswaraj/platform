@@ -147,7 +147,7 @@ var complaints = [
                        <div class="carousel-inner">
                            <div class="item active">
                                <div class="mla-profile">
-                                   <img src="images/issues/issues.png"  alt="mla image">
+                                   <img src="http://uxgraphy.com/eswaraj/v7/images/issues/issues.png"  alt="mla image">
                                    <p> <a href="#"><strong>Rahuram Desai, MLA</strong></a>
                                        <span>In Office since Jan, 2014</span>
                                    </p>
@@ -155,7 +155,7 @@ var complaints = [
                            </div>
                            <div class="item">
                                <div class="mla-profile">
-                                   <img src="images/profile-pic.jpg" alt="mla image">
+                                   <img src="http://uxgraphy.com/eswaraj/v7/images/profile-pic.jpg" alt="mla image">
                                    <p> <a href="#"><strong>Rahuram Desai, MLA</strong></a>
                                        <span>In Office since Jan, 2014</span>
                                    </p>
@@ -163,7 +163,7 @@ var complaints = [
                            </div>
                            <div class="item">
                                <div class="mla-profile">
-                                   <img src="images/issues/issues.png"  alt="mla image">
+                                   <img src="http://uxgraphy.com/eswaraj/v7/images/issues/issues.png"  alt="mla image">
                                    <p>
                                        <a href="#"><strong>Rahuram Desai, MLA</strong></a>
                                        <span>In Office since Jan, 2014</span>
