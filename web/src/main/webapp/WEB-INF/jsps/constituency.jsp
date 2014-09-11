@@ -132,19 +132,60 @@ var complaints = [
 <div class="container-fluid">
     <div class="banner">
     <div class="locate-on-map">
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <div style="overflow:hidden;height:100%;width:100%;">
             <div id="gmap_canvas" style="height:100%;width:100%;"></div>
-        </div>
+         </div>
         <script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(19.0344647,73.01100959999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.0344647, 73.01100959999997)});infowindow = new google.maps.InfoWindow({content:"<b></b><br/><br/>400706 " });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});}google.maps.event.addDomListener(window, 'load', init_map);</script>
-    </div>
-    <div class="row">
-        <div class="col-sm-9"></div>
-        <div class="col-sm-3">
-            <div class="mla-profile">
-                <img src="${staticHost}/images/issues/issues.png"  alt="mla image">
-                <p> <strong>Rahuram Desai, MLA</strong>
-                    <span>In Office since Jan, 2014</span>
-                </p>
+     </div>
+     <div class="row">
+           <div class="col-sm-8"></div>
+           <div class="col-sm-4">
+               <div class="banner-widget">
+                   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                       <!-- Wrapper for slides -->
+                       <div class="carousel-inner">
+                           <div class="item active">
+                               <div class="mla-profile">
+                                   <img src="images/issues/issues.png"  alt="mla image">
+                                   <p> <a href="#"><strong>Rahuram Desai, MLA</strong></a>
+                                       <span>In Office since Jan, 2014</span>
+                                   </p>
+                               </div>
+                           </div>
+                           <div class="item">
+                               <div class="mla-profile">
+                                   <img src="images/profile-pic.jpg" alt="mla image">
+                                   <p> <a href="#"><strong>Rahuram Desai, MLA</strong></a>
+                                       <span>In Office since Jan, 2014</span>
+                                   </p>
+                               </div>
+                           </div>
+                           <div class="item">
+                               <div class="mla-profile">
+                                   <img src="images/issues/issues.png"  alt="mla image">
+                                   <p>
+                                       <a href="#"><strong>Rahuram Desai, MLA</strong></a>
+                                       <span>In Office since Jan, 2014</span>
+                                   </p>
+                               </div>
+                           </div>
+                        </div>
+                       <!-- Controls -->
+                       <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                           <span class="glyphicon glyphicon-chevron-left"></span>
+                       </a>
+                       <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                           <span class="glyphicon glyphicon-chevron-right"></span>
+                       </a>
+                       <!-- Indicators -->
+                       <ol class="carousel-indicators">
+                           <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                           <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                           <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                       </ol>
+                   </div>
+                </div>
             </div>
         </div>
     </div>
