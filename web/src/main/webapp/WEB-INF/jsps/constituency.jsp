@@ -115,7 +115,7 @@ var complaints = [
         var data = google.visualization.arrayToDataTable([
         ['Category', 'Complaints']
       <c:forEach items="${rootCategories}" var="oneCategory">
-        ,[${oneCategory.name},    ${oneCategory.locationCount}]
+        ,['${oneCategory.name}',    ${oneCategory.locationCount}]
       </c:forEach>
         ]);
 
