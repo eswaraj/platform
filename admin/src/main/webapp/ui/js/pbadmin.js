@@ -1,7 +1,19 @@
 var all_pbtype = new Object();
 
+$(window).scroll(function () {
+	$( "#header1" ).css( "display","inline");
+	$( "#header1" ).css( "position","fixed");
+});
+
+$(window).scroll(function(){
+	if ($(this).scrollTop() ==0) {
+		$("#header1").css( "display","none");
+	}
+});
+
 $(function(){
-	$("#menu").load("../ui/sidebar_menu.html"); 
+	//$("#menu").load("../ui/sidebar_menu.html"); 
+	$("#menu_new").load("../ui/menu.html"); 
 });
 
 function addLocation(node)
@@ -47,18 +59,18 @@ function fetch_plist(){
 	//Populate party list
 	$.ajax({
 		type: "GET",
-		url:"/ajax/party/getall",
-		dataType: "JSON",
-		success: function(data){
-			//alert(JSON.stringify(data));	
+	url:"/ajax/party/getall",
+	dataType: "JSON",
+	success: function(data){
+		//alert(JSON.stringify(data));	
 
-			var party_list = "";
-			for(var i=0; i<data.length;i++) {
-				party_list += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+		var party_list = "";
+		for(var i=0; i<data.length;i++) {
+			party_list += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
 
-			}		   
-			$("#party_list").html(party_list);		    	  
-		}
+		}		   
+		$("#party_list").html(party_list);		    	  
+	}
 
 	});
 }
@@ -80,6 +92,8 @@ $(document).ready(function(){
 	window.hash = new Object();
 	window.loc_hash = new Object();
 	var all_ltype = fetch_ltype();
+	$('#searchResultsP').hide();
+	$('#searchResultsN').hide();
 	fetch_pbtype();
 	fetch_plist();
 
@@ -87,6 +101,8 @@ $(document).ready(function(){
 		source: "/ajax/person/search/name/",
 		minLength: 3,
 		response: function( event, ui ) {
+			$('#searchResultsP').show();
+			$('#searchResultsN').hide();
 			data = ui.content;
 			$('#users tbody').html("");
 			for(var i=0; i<data.length; i++) {
@@ -94,7 +110,7 @@ $(document).ready(function(){
 					"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "' title='" + data[i].name + "'>Select Person</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "' title='" + data[i].name + "'>Select</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -110,13 +126,15 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
+				$('#searchResultsP').show();
+				$('#searchResultsN').hide();
 				$('#users tbody').html("");
 				for(var i=0; i<data.length; i++) {
 					$('#users tbody').append("<tr>" +
 						"<td><img src='" + data[i].profilePhoto + "' class='thumb'></td>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "' title='" + data[i].name + "'>Select Person</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setPNodeId(event);' pid='" + data[i].id + "' id='P" + data[i].id + "' title='" + data[i].name + "'>Select</button>" + "</td>" +
 						"</tr>" 
 						); 
 				}
@@ -128,6 +146,8 @@ $(document).ready(function(){
 		source: "/ajax/location/search/name/",
 		minLength: 3,
 		response: function( event, ui ) {
+			$('#searchResultsN').show();
+			$('#searchResultsP').hide();
 			data = ui.content;
 			$('#nodes tbody').html("");
 			for(var i=0; i<data.length; i++) {
@@ -135,7 +155,7 @@ $(document).ready(function(){
 					"<td>" + data[i].id + "</td>" +
 					"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 					"<td>" + data[i].name + "</td>" +
-					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select Location</button>" + "</td>" +
+					"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select</button>" + "</td>" +
 					"</tr>" 
 					);
 			}
@@ -151,13 +171,15 @@ $(document).ready(function(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "JSON",
 			success: function(data){
+				$('#searchResultsN').show();
+				$('#searchResultsP').hide();
 				$('#nodes tbody').html("");
 				for(var i=0; i<data.length; i++) {
 					$('#nodes tbody').append("<tr>" +
 						"<td>" + data[i].id + "</td>" +
 						"<td>" + loc_hash[data[i].locationTypeId] + "</td>" + //change name to type when real API is available
 						"<td>" + data[i].name + "</td>" +
-						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select Location</button>" + "</td>" +
+						"<td>" + "<button class='btn btn-primary blue' type='button' onClick='setNNodeId(event);' pid='" + data[i].id + "' tid='" + data[i].locationTypeId + "' id='N" + data[i].id + "' title='" + data[i].name + "'>Select</button>" + "</td>" +
 						"</tr>" 
 						);//Change data[i].id to data[i].locationTypeId for tid when real API is available
 				}
@@ -372,21 +394,21 @@ function get_pbadmin(locationId,pbtypeId){
 
 	//if($('#'+target.id).hasClass('current')){
 
-		$.ajax({
-			type: "GET",
-		url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
-		dataType: "JSON",
-		async: false,
-		success: function(data){
-			if(data){
-				//$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
-				$('#pbadmin_list_current').append('<p>'+data.id+'</p>');
-			}
+	$.ajax({
+		type: "GET",
+	url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
+	dataType: "JSON",
+	async: false,
+	success: function(data){
+		if(data){
+			//$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
+			$('#pbadmin_list_current').append('<p>'+data.id+'</p>');
 		}
-		});
+	}
+	});
 
-		$.ajax({
-			type: "GET",
+	$.ajax({
+		type: "GET",
 		url:"/ajax/pbadmin/get/"+locationId+"/"+pbtypeId,
 		dataType: "JSON",
 		async: false,
@@ -398,7 +420,7 @@ function get_pbadmin(locationId,pbtypeId){
 				}
 			}
 		}
-		});
+	});
 	//}
 
 	//if($('#'+target.id).hasClass('person')){
