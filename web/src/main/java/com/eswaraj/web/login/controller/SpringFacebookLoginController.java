@@ -1,7 +1,5 @@
 package com.eswaraj.web.login.controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.google.gdata.util.common.base.StringUtil;
-
 @Controller
 public class SpringFacebookLoginController extends BaseSocialLoginController<Facebook> {
 
@@ -32,7 +28,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 	//private static final String appPermissions = "email,user_birthday,user_hometown,user_location,user_photos,offline_access";
 	private static final String appPermissions = "email,user_birthday,offline_access";
 
-    @Value("${eswarj_facebook_app_id}")
+    @Value("${eswaraj_facebook_app_id}")
 	private String facebokAppId;
     @Value("${server_domain_and_context}/web/login/facebooksuccess")
 	private String facebookRedirectUrl;
