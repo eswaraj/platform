@@ -82,11 +82,11 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 			UserDto loggedInUser = getLoggedInUserFromSesion(httpServletRequest);
 			Date userCreationDate = loggedInUser.getDateCreated();
 
-			RedirectView rv = new RedirectView(redirectUrl);
-			logger.info("url= {}", redirectUrl);
-			mv.setView(rv);
 			CookieUtil.setLastLoggedInAccountAsFacebookCookie(httpServletResponse);
 			*/
+            RedirectView rv = new RedirectView(redirectUrl);
+            logger.info("url= {}", redirectUrl);
+            mv.setView(rv);
 
 		} catch (Exception ex) {
 			logger.error("unable to complete facebook login", ex);
