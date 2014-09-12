@@ -187,7 +187,7 @@ var complaints = [
             </div>
         </div>
     </div>
-</div>
+
 <div class="row">
     <div class="col-sm-3">
         <p> <strong>Refine Search</strong>
@@ -403,6 +403,7 @@ var complaints = [
             </c:if>
         </div>
     </div>
+</div>
 </div>
 </div>
 <jsp:include page="footer.jsp" />
