@@ -88,7 +88,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 
 		} catch (Exception ex) {
 			logger.error("unable to complete facebook login", ex);
-			String redirectUrl = httpServletRequest.getContextPath()+"/login/facebookfail";
+            String redirectUrl = httpServletRequest.getContextPath() + "/web/login/facebookfail";
 			RedirectView rv = new RedirectView(redirectUrl);
 			logger.info("url= {}", redirectUrl);
 			mv.setView(rv);
