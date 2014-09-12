@@ -65,6 +65,8 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 			FacebookConnectionFactory facebookConnectionFactory = (FacebookConnectionFactory)connectionFactoryLocator.getConnectionFactory(Facebook.class);
 			OAuth2Operations oauthOperations = facebookConnectionFactory.getOAuthOperations();
 			String authorizationCode = httpServletRequest.getParameter("code");
+            logger.info("authorizationCode= {}", authorizationCode);
+            logger.info("facebookRedirectUrl= {}", facebookRedirectUrl);
 			AccessGrant accessGrant = oauthOperations.exchangeForAccess(authorizationCode, facebookRedirectUrl, null);
 			Connection<Facebook> facebookConnection = facebookConnectionFactory.createConnection(accessGrant);
 			
