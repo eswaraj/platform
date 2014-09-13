@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
 <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
 <link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+<link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
 <link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
 
  
@@ -26,74 +27,27 @@
   <script src="dist/jstree.min.js"></script>
 </head>
 <body>
-		<div class="responsive-menu">
-			<div class="responsive-menu-dropdown blue">
-				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
-			</div>
-			
-	</div>
-	<header>
+	
+		<header id="headerul" class="header headerbox">
+		<ul>
+			<li class="header fa-3x ">eSwaraj</li>
+			<li class="subscript">Categories</li>
+		</ul>
+		</header>
 		
-	</header><!-- Header -->
-
-	<div id="menu" class="menu">
+		<div id="menu" class="menu">
+		</div><!-- Right Menu -->
 		
-	</div><!-- Right Menu -->
+		
+		<div id="instruction_hover">
+			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+			<br> 2. We can update this page as needed
+			<br> 3. What are you doing?
+			<br> 4. You can follow these steps to understand the functionality of this page	
+			<br> 5. Please ask the admin if there are any doubts</span>	
+		</div>
 
-<div class="wrapper">
-	<div class="container">
-		<h3>Category Manager</h3>	
-		<a class="btn pink" href="#add-root" data-toggle="modal"><i class="fa fa-plus"></i> ROOT Category</a>		
-		<div class="row">
-			<div class="col-md-12 profile-margin">
-			<div class="col-md-4">
-
- <!-- the tree is populated via ajax -->
-			<div id="js_tree">		
-				
-			</div>	
-					
-			</div>
-			
-				<div class="col-md-5">
-					
-						
-							<div id="tab1">
-								<table style="padding:10px;">
-								<tr>
-								<td>Name :</td>
-								<td><input type="text" name="cat_name" id="cat_name" value="" ></td>
-								</tr>
-								<tr>
-								<td>Description:</td>
-								<td><textarea name="cat_desc" id="cat_desc" value="" ></textarea> </td>
-								</tr>
-								<tr><td>Img url:</td>
-								<td><input type="text" name="cat_img" id="cat_img" value="" /></td>
-								<td><img style="display:none;" name="image" id="image" src="" width="100px;"/></td>
-								</tr>
-								<tr><td>Hearder Img url:</td>
-								<td><input type="text" name="cat_headerImg" id="cat_headerImg" value="" /></td>
-								<td><img style="display:none;" name="headerImg" id="headerImg" src="" width="100px;"/></td>
-								</tr>
-								<tr><td>Video url:</td>
-								<td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value="" /></td>
-								<td>
-								<iframe style="display:none;" id="video" width="200" height="200" src="" frameborder="0" allowfullscreen></iframe>
-								
-								</td>
-								</tr>
-														
-								<tr><td><a id="cat_btn" class="btn blue" href="#add-cat" data-toggle="modal">Add Child Category</a></td>
-								<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
-								<td><a id="save_btn" class="btn green" href="#">Update Category</a></td>
-								<td></td>
-								</tr>
-								
-								</table>
-								
-							</div>					
-					
 		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-root" style="display: none;">
 			<div class="modal-dialog" style="top:30px;">
 				<div class="modal-content">
@@ -138,6 +92,59 @@
 					</div>
 				</div><!-- /.modal-content -->
 			</div>
+
+<div class="wrapper">
+	<div class="container">
+		<a class="btn btn-primary blue btn_round" href="#add-root" data-toggle="modal">Add Root Category</a>		
+		<div class="row">
+			<div class="col-md-12 profile-margin">
+			<div class="col-md-4">
+			<h3 class="text-footer-extended">Categories List</h3> 
+
+ <!-- the tree is populated via ajax -->
+			<div id="js_tree" class="scrollcontainer">		
+			</div>	
+		</div>
+			
+				<div class="col-md-8">
+							<h3 class="text-footer-extended">Details</h3> 
+
+							<div id="category1">
+								<table>
+								<tr>
+								<td style="width: 30%">Name</td>
+								<td><input type="text" name="cat_name" id="cat_name" value="" class="tablewidth50pc"></td>
+								</tr>
+								<tr>
+								<td>Description</td>
+								<td><textarea name="cat_desc" id="cat_desc" value="" class="tablewidth50pc"></textarea> </td>
+								</tr>
+								<tr><td>Img url</td>
+								<td><input type="text" name="cat_img" id="cat_img" value="" class="tablewidth50pc"/></td>
+								<td><img style="display:none;" name="image" id="image" src="" width="100px;"/></td>
+								</tr>
+								<tr><td>Hearder Img url</td>
+								<td><input type="text" name="cat_headerImg" id="cat_headerImg" value=""  class="tablewidth50pc"/></td>
+								<td><img style="display:none;" name="headerImg" id="headerImg" src="" width="100px;"/></td>
+								</tr>
+								<tr><td>Video url</td>
+								<td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value=""  class="tablewidth50pc"/></td>
+								<td>
+								<iframe style="display:none;" id="video" width="200" height="200" src="" frameborder="0" allowfullscreen></iframe>
+								
+								</td>
+								</tr>
+														
+								<tr><td><a id="cat_btn" class="btn btn-primary blue btn_round" href="#add-cat" data-toggle="modal">Add Child Category</a></td>
+								<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
+								<td><a id="save_btn" class="btn btn-primary blue btn_round" href="#">Update Category</a></td>
+								<td></td>
+								</tr>
+								
+								</table>
+								
+							</div>					
+					
 			<div class="">
 				<div id="map-canvas"></div>	
 			</div>
