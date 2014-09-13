@@ -32,7 +32,7 @@
     </bean>
     <!-- App beans -->
     <import resource="classpath:eswaraj-core.xml" />
-    <import resource="classpath:eswaraj-neo4j-db-context.xml" />
+    <import resource="eswaraj-neo4j-db-context.xml" />
     
     
 	<!-- Redis related -->
