@@ -15,7 +15,7 @@ var mylocation = {
 };
 
 $(function(){
-	$("#menu").load("../ui/sidebar_menu.html"); 
+	$("#menu_new").load("../ui/menu.html"); 
 });
 
 function setNodeId(event) {

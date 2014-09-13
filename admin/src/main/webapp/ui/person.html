@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
 		<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+		<link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
 		<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
 		<style>
 			html, body {
@@ -21,8 +22,8 @@
 				margin-left: auto;
 				margin-right: auto;
 				padding: 0;
-				width: 1200px;
-				height: 800px;
+				width: 600px;
+				height: 400px;
 			}
 			.controls {
 				margin-top: 16px;
@@ -75,19 +76,27 @@
 
 	</head>
 	<body>
-		<div class="responsive-menu">
-			<div class="responsive-menu-dropdown blue">
-				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
-			</div>
 
-		</div>
-		<header>
-
-		</header><!-- Header -->
-
-		<div id="menu" class="menu">
-
+	
+		<header id="headerul" class="header headerbox">
+		<ul>
+			<li class="header fa-3x ">eSwaraj</li>
+			<li class="subscript">Person Database</li>
+		</ul>
+		</header>
+		
+		<div id="menu_new" class="menu_new">
 		</div><!-- Right Menu -->
+		
+		
+		<div id="instruction_hover">
+			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+			<br> 2. We can update this page as needed
+			<br> 3. What are you doing?
+			<br> 4. You can follow these steps to understand the functionality of this page	
+			<br> 5. Please ask the admin if there are any doubts</span>	
+		</div>
 
 		<div class="wrapper">
 			<div class="container">
@@ -152,15 +161,48 @@
 						</div><!-- /.modal-content -->
 					</div>	
 				</div>	
-				<input type="text" name="node_lat" id="node_lat" value="" readonly>
-				<input type="text" name="node_long" id="node_long" value="" readonly>
-				<button type="button" id="pick" class="btn btn-primary blue">Pick location</button>
-				<button type="button" id="submit" class="btn btn-primary blue">Save Person</button>
+
+<div class="wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 profile-margin">
+			<div class="col-md-4">
+								<h3 class="text-footer-extended">Database Search</h3>
+				<input type="text" id="person_search" placeholder="Person Name" class="left_float"/>
+				<button class="btn btn-primary blue btn_round" style="margin-left:10px; margin-top: -5px;" type="button" id="searchButton" >Search Person</button>
+				<div id="searchResults">
+					<br><h3 class="text-footer-extended">Existing Persons:</h3>
+
+					<table id="users">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Update</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+
+				<br><a id="addPerson" class="btn btn-primary blue btn_round" href="#new-person" data-toggle="modal" onClick="setNodeId(event)">Add Person</a>
+				</div>
+
+			</div>
+			<div class="col-md-8">
+				<b style="color: #FF9933">Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
+				<b style="color: #FF9933">Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
 				<p name="rev_geo" id="rev_geo"></p>
 				<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-				<div id="map-canvas" width="500px;" height="500px;"></div>
-			</div><!-- Container -->
-		</div><!-- Wrapper -->
+				<div id="map-canvas_person" width="400px;" height="400px;"></div>
+				<br><button type="button" id="pick" class="btn btn-primary blue btn_round">Pick location</button>
+				<button type="button" id="submit" class="btn btn-primary blue btn_round">Save Person</button>
+				</div>
+			</div>	
+		</div>
+	</div><!-- Container -->
+</div><!-- Wrapper -->
 
 
 
