@@ -1,5 +1,5 @@
 $(function(){
-      $("#menu").load("../ui/menu.html"); 
+      $("#menu_new").load("../ui/menu.html"); 
 });
 
 $(document).ready(function(){

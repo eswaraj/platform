@@ -11,23 +11,24 @@
 		<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
 		<link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
 		<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
-		<!--
 		<style>
+			/*
 			html, body {
 				height: 100%;
 				margin: 0px;
 				padding: 0px
 			}
+			*/
 
 			#map-canvas {
 				margin-left: auto;
 				margin-right: auto;
+				margin-top: 310px;
 				padding: 0;
-				width: 600px;
+				width: 500px;
 				height: 400px;
 			}
 		</style>
-		-->
 		<!-- Script -->
 		<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
 		<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
@@ -59,41 +60,41 @@
 			<li class="subscript">Location Node</li>
 		</ul>
 		</header>
-		
-		<div id="menu" class="menu">
+
+		<div id="menu_new" class="menu_new">
 		</div><!-- Right Menu -->
-		
-		
+
+
 		<div id="instruction_hover">
 			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
 			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
-			<br> 2. We can update this page as needed
-			<br> 3. What are you doing?
-			<br> 4. You can follow these steps to understand the functionality of this page	
-			<br> 5. Please ask the admin if there are any doubts</span>	
+				<br> 2. We can update this page as needed
+				<br> 3. What are you doing?
+				<br> 4. You can follow these steps to understand the functionality of this page	
+				<br> 5. Please ask the admin if there are any doubts</span>	
 		</div>
 
 
-			<div aria-hidden="true" role="dialog"  class="modal fade" id="add-node" style="display: none;">
-					<div class="modal-dialog" style="top:30px;">
-						<div class="modal-content">
-							<div class="modal-header blue">
-								<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
-									<h4 class="modal-title">Add Child Node</h4>
-							</div>
-							<div class="modal-body">
-								<input type="text" id="new_node_title" placeholder="Node Title" />
-								<input type="text" id="new_node_lat" placeholder="Latitude" />
-								<input type="text" id="new_node_long" placeholder="Longitude" />
-								<input type="text" id="new_node_loc_typeid" disabled="disabled"/>
-							</div>					 				  
-						</div>
-						<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-								<button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
-						</div>
-					</div><!-- /.modal-content -->
-			</div>
+		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-node" style="display: none;">
+			<div class="modal-dialog" style="top:30px;">
+				<div class="modal-content">
+					<div class="modal-header blue">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+						<h4 class="modal-title">Add Child Node</h4>
+					</div>
+					<div class="modal-body">
+						<input type="text" id="new_node_title" placeholder="Node Title" />
+						<input type="text" id="new_node_lat" placeholder="Latitude" />
+						<input type="text" id="new_node_long" placeholder="Longitude" />
+						<input type="text" id="new_node_loc_typeid" disabled="disabled"/>
+					</div>					 				  
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+					<button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div>
 
 		<div class="wrapper">
 			<div class="container">
@@ -101,25 +102,25 @@
 					<div class="col-md-12 profile-margin">
 						<div class="col-md-4">
 							<h3 class="text-footer-extended">Constituencies</h3> 
-							
+
 							<!-- the tree is populated via ajax -->
 							<div id="js_tree" class="scrollcontainer"></div>	
 						</div>
 						<div class="col-md-8" id="node_info">
-							<a href="#" class="active"> </a>
+							<div id="map-canvas"><h3 class="text-footer-extended">Google Maps Location</h3></div>
 
-						<div id="kml_files">
-								
+							<div id="kml_files">
+
 								<h3 class="text-footer">Upload KML?</h3>
-											<form method="post" enctype="multipart/form-data" id="form1" method="post" action="">
-												<input type="file" style = "float: left;" id="file" name="file" /><br><br>
-												<input type="submit" class="btn btn-primary blue kml_inp_btn" value="Upload KML" />
-											</form><br>
+								<form method="post" enctype="multipart/form-data" id="form1" method="post" action="">
+									<input type="file" style = "float: left;" id="file" name="file" /><br><br>
+									<input type="submit" class="btn btn-primary blue kml_inp_btn" value="Upload KML" />
+								</form><br>
 
 								<h3 class="text-footer">KML Status:</h3>
 
 								<table id="files">
-									
+
 									<thead>
 										<tr>
 											<th>Name</th>
@@ -131,25 +132,23 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 							<div id="tab1" class="border-left">
 								<h3 class="text-footer">Node Details</h3>
 
-							<p>Node Name <input type="text" style="border: 0px solid name="node_title" id="node_title" value=""></p>
-							<p>Latitude <input type="text" name="node_lat" id="node_lat" disabled="disabled" value="" readonly></p>
-							<p>Longitude <input type="text" name="node_long" id="node_long" disabled="disabled" value="" readonly></p>
-							<p>URL Identifier <input type="text" name="node_urliden" id="node_urliden" disabled="disabled" value="" readonly></p>
+								<p>Node Name <input type="text" style="border: 0px solid" name="node_title" id="node_title" value=""></p>
+								<p>Latitude <input type="text" name="node_lat" id="node_lat" disabled="disabled" value="" readonly></p>
+								<p>Longitude <input type="text" name="node_long" id="node_long" disabled="disabled" value="" readonly></p>
+								<p>URL Identifier <input type="text" name="node_urliden" id="node_urliden" disabled="disabled" value="" readonly></p>
 
 							</div>	
-			
+
 							<div id="useronclickbtn">
 								<h3 class="text-footer">Add/Update</h3>
 								<div id="add_child_btn">"
 								</div>
-							    <a id="save_btn" class="btn btn-primary blue btn_round" href="#">Update Node</a>
+								<a id="save_btn" class="btn btn-primary blue btn_round" href="#">Update Node</a>
 							</div>
-							
-							<div id="map-canvas"><h3 class="text-footer-extended">Google Maps Location</h3></div>
 						</div>
 					</div>
 				</div>

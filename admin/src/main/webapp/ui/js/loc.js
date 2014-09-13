@@ -15,7 +15,7 @@ var mylocation = {
 
 //
 $(function(){
-	$("#menu").load("../ui/menu.html"); 
+	$("#menu_new").load("../ui/menu.html"); 
 });
 
 //var locationTypeSet;
@@ -179,7 +179,7 @@ $(document).ready(function(){
 			success: function(data){
 				$("#files tbody").html("");
 				for(var i=0;i < data.length; i++){
-					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn btn-primary blue kml-inp-btn' href='#' onclick='update_map(\""+data[i].fileNameAndPath+"\");'>OnMap</a></td><td><a class='btn btn-primary blue kml-inp-btn' href='#' onclick='set_current(\""+data[i].fileNameAndPath+"\");'>SetCurrent</a></td></tr>");
+					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn btn-primary blue kml_inp_btn' href='#' onclick='update_map(\""+data[i].fileNameAndPath+"\");'>OnMap</a></td><td><a class='btn btn-primary blue kml_inp_btn' href='#' onclick='set_current(\""+data[i].fileNameAndPath+"\");'>SetCurrent</a></td></tr>");
 				}
 			}
 		});
