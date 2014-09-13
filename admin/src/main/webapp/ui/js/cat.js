@@ -1,5 +1,5 @@
 $(function(){
-      $("#menu").load("../ui/sidebar_menu.html"); 
+      $("#menu_new").load("../ui/menu.html"); 
 });
 
 $(document).ready(function(){
@@ -101,7 +101,7 @@ $.ajax({
 $("#edit_btn").click(function() {
 		$("#save_btn").css('display','block');
 		$("#edit_btn").css('display','none');
-		$('#tab1 input').toggleDisabled();
+		$('#category1 input').toggleDisabled();
 		
 });	
 $("#save_btn").click(function() {

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
 <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
 <link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+<link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
 <link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
 
  
@@ -26,30 +27,29 @@
   <script src="dist/jstree.min.js"></script>
 </head>
 <body>
-		<div class="responsive-menu">
-			<div class="responsive-menu-dropdown blue">
-				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
-			</div>
-			
-	</div>
-	<div id="menu" class="menu">
-		
-	</div><!-- Right Menu -->
 
-<div class="wrapper">
-	<div class="container">
-		<h3>Departments Manager</h3>	
-			
-		<div class="row">
+		<header id="headerul" class="header headerbox">
+		<ul>
+			<li class="header fa-3x ">eSwaraj</li>
+			<li class="subscript">Executive Departments</li>
+		</ul>
+		</header>
 		
-			<div class="col-md-12 profile-margin" style="float:left !important;position:relative;">
-			<h6>Choose Category</h6>
-			<div id="js_tree">		
-				
-		    </div>
-						
-					
-		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-dept" style="display: none;">
+		<div id="menu_new" class="menu_new">
+		</div><!-- Right Menu -->
+		
+		
+		<div id="instruction_hover">
+			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+			<br> 2. We can update this page as needed
+			<br> 3. What are you doing?
+			<br> 4. You can follow these steps to understand the functionality of this page	
+			<br> 5. Please ask the admin if there are any doubts</span>	
+		</div>
+
+
+				<div aria-hidden="true" role="dialog"  class="modal fade" id="add-dept" style="display: none;">
 			<div class="modal-dialog" style="top:30px;">
 				<div class="modal-content">
 					<div class="modal-header blue">
@@ -70,30 +70,62 @@
 					  <button class="btn btn-primary blue" type="button" onclick="add_update_dept();" >Save changes</button>
 					</div>
 				</div><!-- /.modal-content -->
-			</div>
+			</div>		
+
+<div class="wrapper">
+	<div class="container">
 			
-		</div>
-			</div>
-			<div style="float: right; position: relative; right: 0px; left: -400px; top: -200px;;">
-					<h3>List of Departments in selected Category <span id="cat-id"></span></h3><a class='btn pink' href='#add-dept' onclick='return runMyFunction(event);' data-toggle='modal'><i class='fa fa-plus'></i> New Department</a>
+		<div class="row">
+		
+			<div class="col-md-12 profile-margin" style="float:left !important;position:relative;">
+
+				<div class="col-md-4">
+					<h3 class="text-footer-extended">Departments List</h3>
+
+						<div id="js_tree">		
+						</div>
+			    </div>
+
+				<div class="col-md-8">
+						<h3 class="text-footer-extended">Selected Category <span id="cat-id"></span></h3>
 						
-							<div id="tab1">
-								<table id="dept_data">
+							<div id="executive_departments_div">
+								<table id="dept_data" class="table_topdown_border">
+								<thead>
 								<tr>
-								<td>S.No</td>
-								<td>Name</td>
-								<td>Description</td>
+								<th>S.No</th>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Edit</th>
+								</tr>		
+								</thead>
+								<tbody>
+								
+								<tr>
+								<td>1</td>
+								<td>Department1</td>
+								<td>xyz</td>
 								<td>Edit</td>
 								</tr>	
-														
+								
+								<tr>
+								<td>2</td>
+								<td>Department2</td>
+								<td>xyz</td>
+								<td>Edit</td>
+								</tr>	
+								
+								
+								</tbody>
 							    </table>
 								
+						<br><a class='btn btn-primary blue btn_round' href='#add-dept' onclick='return runMyFunction(event);' data-toggle='modal'>Add Department</a>
 					</div>	
-			
+				</div>
 				
 			</div>
-		</div>
 		
+		</div>
 		
 		</div><!-- Container -->
 	</div><!-- Wrapper -->

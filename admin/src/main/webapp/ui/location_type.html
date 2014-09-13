@@ -1,114 +1,110 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Location Type Manager</title>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Location Type Manager</title>
 
-<!-- Styles -->
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
-<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
-<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
-<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+		<!-- Styles -->
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+		<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+		<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+		<link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
+		<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
 
- 
-<!-- Script -->
-<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
-<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
-<script type="text/javascript" src="js/script.js"></script><!-- Script -->
-<script type="text/javascript" src="js/loc_type.js"></script><!-- Script -->
 
-  <!-- 2 load the theme CSS file -->
-  <link rel="stylesheet" href="dist/themes/default/style.min.css" />
-   <!-- 4 include the jQuery library -->
+		<!-- Script -->
+		<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+		<script type="text/javascript" src="js/script.js"></script><!-- Script -->
+		<script type="text/javascript" src="js/loc_type.js"></script><!-- Script -->
 
-  <!-- 5 include the minified jstree source -->
-  <script src="dist/jstree.min.js"></script>
-</head>
-<body>
-		<div class="responsive-menu">
-			<div class="responsive-menu-dropdown blue">
-				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
-			</div>
-			
-	</div>
-	<header>
-		
-	</header><!-- Header -->
+		<!-- 2 load the theme CSS file -->
+		<link rel="stylesheet" href="dist/themes/default/style.min.css" />
+		<!-- 4 include the jQuery library -->
 
-	<div id="menu" class="menu">
-	
-	</div><!-- Right Menu -->
+		<!-- 5 include the minified jstree source -->
+		<script src="dist/jstree.min.js"></script>
+	</head>
+	<body>
 
-<div class="wrapper">
-	<div class="container">
-		<h3>Location Type Manager</h3>	
-			
-		<div class="row">
-			<div class="col-md-12 profile-margin">
-			<div class="col-md-4">
+		<header id="headerul" class="header headerbox">
+		<ul>
+			<li class="header fa-3x ">eSwaraj</li>
+			<li class="subscript">Location Type</li>
+		</ul>
+		</header>
 
- <!-- the tree is populated via ajax -->
-			<div id="js_tree">		
-				
-			</div>	
-					
-			</div>
-			
-				<div class="col-md-5">
-					
-						
-							<div id="tab1">
-								<table style="padding:10px;">
-								<tr>
-								<td>Location Type Name :</td>
-								<td><input type="text" name="location_type_name" id="location_type_name" value="" disabled="disabled"></td>
-								</tr>
-														
-								<tr><td><a id="location_type_btn" class="btn blue" href="#add-location-type" data-toggle="modal">Add Child Node</a></td>
-								<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
-								<td><a id="save_btn" class="btn green" href="#">Update Node</a></td>
-								<td><button id="edit_btn" class="edit"></td>
-								</tr>
-								
-								</table>
-								
-							</div>					
-					
-					
+		<div id="menu_new" class="menu_new">
+		</div><!-- Right Menu -->
+
+
+		<div id="instruction_hover">
+			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+				<br> 2. We can update this page as needed
+				<br> 3. What are you doing?
+				<br> 4. You can follow these steps to understand the functionality of this page	
+				<br> 5. Please ask the admin if there are any doubts</span>	
+		</div>
+
 		<div aria-hidden="true" role="dialog"  class="modal fade" id="add-location-type" style="display: none;">
 			<div class="modal-dialog" style="top:30px;">
 				<div class="modal-content">
 					<div class="modal-header blue">
-					  <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
-					  <h4 class="modal-title">Add Child Location Type</h4>
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+						<h4 class="modal-title">Add Child Location Type</h4>
 					</div>
 					<div class="modal-body">
-					  <input type="text" id="child_location_type_name" placeholder="Node Title" /> 
-					  
+						<input type="text" id="child_location_type_name" placeholder="Node Title" /> 
 					</div>
-					 				  
-					</div>
-					<div class="modal-footer">
-					  <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-					  <button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
-					</div>
-				</div><!-- /.modal-content -->
-			</div>
-			<div class="">
-				<div id="map-canvas"></div>	
-			</div>
-			
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+					<button class="btn btn-primary blue" type="button" onclick="add_child_node();" >Save changes</button>
+				</div>
+			</div><!-- /.modal-content -->
+
 		</div>
-			</div>
-			
-				
+
+		<div class="wrapper">
+			<div class="container">	
+				<div class="row">
+					<div class="col-md-12 profile-margin">
+						<div class="col-md-4">
+							<h3 class="text-footer-extended">Constituencies</h3> 
+							<!-- the tree is populated via ajax -->
+							<div id="js_tree" class="scrollcontainer">				
+							</div>	
+
+						</div>
+
+						<div class="col-md-8 border-left">		
+							<div id="loc_type">
+								<h3 class="text-footer">Location</h3>
+								<p>Location Name <input type="text" name="location_type_name" id="location_type_name" value="" disabled="disabled"></p><br>
+
+								<a id="location_type_btn" class="btn btn-primary blue btn_round" href="#add-location-type" data-toggle="modal">Add Child Node</a></td>
+							<!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
+							<a id="save_btn" class="btn btn-primary blue btn_round" href="#" style="display:none">Update Node</a>
+							<a id="edit_btn" class="btn btn-primary blue btn_round" href="#">Edit Node</a>
+							<!--button id="edit_btn" class="edit btn btn-primary blue btn_round"-->
+
+						</div>					
+
+						<div class="">
+							<div id="map-canvas" style="padding-top: 80px;"></div>	
+						</div>
+
+					</div>
+				</div>
+
 			</div>
 		</div>
-		
-		
-		</div><!-- Container -->
-	</div><!-- Wrapper -->
+
+
+	</div><!-- Container -->
+</div><!-- Wrapper -->
 
 
 

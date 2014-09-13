@@ -15,7 +15,7 @@ var mylocation = {
 
 //
 $(function(){
-	$("#menu").load("../ui/sidebar_menu.html"); 
+	$("#menu_new").load("../ui/menu.html"); 
 });
 
 //var locationTypeSet;
@@ -165,7 +165,7 @@ $(document).ready(function(){
 			success: function(data){
 				var btn_html = "";
 				for(var i=0;i < data.length; i++){
-					btn_html += "<td><a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+data[i].id+"' class='btn blue add_child' href='#add-node' data-toggle='modal'>Add "+data[i].name+"</a></td>";
+					btn_html += "<a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+data[i].id+"' class='btn btn-primary blue btn_round' href='#add-node' data-toggle='modal'>Add "+data[i].name+"</a><br>";
 				}
 				$('#add_child_btn').html(btn_html);   
 			}
@@ -179,7 +179,7 @@ $(document).ready(function(){
 			success: function(data){
 				$("#files tbody").html("");
 				for(var i=0;i < data.length; i++){
-					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn blue' href='#' onclick='update_map(\""+data[i].fileNameAndPath+"\");'>ShowOnMap</a></td><td><a class='btn blue' href='#' onclick='set_current(\""+data[i].fileNameAndPath+"\");'>ChooseAsCurrent</a></td></tr>");
+					$("#files tbody").append("<tr><td>"+data[i].originalFileName+"</td><td><a class='btn btn-primary blue kml_inp_btn' href='#' onclick='update_map(\""+data[i].fileNameAndPath+"\");'>OnMap</a></td><td><a class='btn btn-primary blue kml_inp_btn' href='#' onclick='set_current(\""+data[i].fileNameAndPath+"\");'>SetCurrent</a></td></tr>");
 				}
 			}
 		});
