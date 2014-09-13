@@ -140,6 +140,10 @@ border-left: 1px solid black ;
 	border-left: 1px solid #D2D2D2 ;
 }
 
+.shift_left {
+	left: 55px;
+}
+
 .headerbox{
 	margin-top:0px;
 	margin-bottom:5px;
