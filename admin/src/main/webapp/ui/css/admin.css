@@ -56,7 +56,7 @@ border-left: 1px solid black ;
 		width: 200px;
 		padding-left:12px;
 		left: 650px;
-		border-left: 1px solid #D2D2D2 ;
+		border-left: 1px solid black ;
 }
 
 #pbadmin_list_all{
@@ -65,7 +65,7 @@ border-left: 1px solid black ;
 	padding-left:12px;
 	padding-top:250px;
 	left: 650px;
-	border-left: 1px solid #D2D2D2 ;
+	border-left: 1px solid black ;
 }
 
 #searchResultsN, #searchResultsP{
@@ -85,22 +85,17 @@ border-left: 1px solid black ;
 #searchResultsN {
 	left: 225px;
 	/*visibility: hidden;*/
-	padding-left:12px;
-	padding-right:12px;
-	padding-bottom:40px
+	padding-left:12px
 }
 #searchResultsP {
 	left: 225px;
-	visibility: hidden;
-	padding-left:12px;
-	padding-right:12px;
-	padding-bottom:40px
+	/*visibility: hidden;*/
+	padding-left:12px
 }
 #attach_div{
 	left: 0px;
 	padding-top:420px;
-	padding-left:12px;
-	padding-bottom:12px
+	padding-left:12px
 }
 
 .box_shadow_dim{
@@ -110,7 +105,7 @@ border-left: 1px solid black ;
 .text-footer{
 	padding-bottom:9px;
 	width:180px;
-	margin:0px 0 10px;
+	margin:40px 0 10px;
 	border-bottom:2px solid #ccc;
 	color:#FF9933;
 }
@@ -118,7 +113,7 @@ border-left: 1px solid black ;
 .text-footer-extended{
 	padding-bottom:9px;
 	width:250px;
-	margin:0px 0 20px;
+	margin:40px 0 20px;
 	border-bottom:2px solid #ccc;
 	color:#FF9933;
 }
@@ -128,49 +123,40 @@ border-left: 1px solid black ;
 	font-size: 18px;
 }
 
+h1.header {
+	padding: 5px;
+	margin: 0;
+	text-align:center;
+}
+
 .border-lr {
-	border-left: 1px solid #D2D2D2 ;
-	border-right: 1px solid #D2D2D2 ;
+	border-left: 1px solid black ;
+	border-right: 1px solid black ;
   }
 
   .border-right{
-	  border-right: 1px solid #D2D2D2 ;
+	  border-right: 1px solid black ;
 }
 .border-left{
-	border-left: 1px solid #D2D2D2 ;
+	border-left: 1px solid black ;
 }
 
 .headerbox{
-	margin-top:0px;
-	margin-bottom:5px;
+	margin-top:20px;
+	margin-bottom:10px;
 	border: 1px solid black;
-	border-left:0;
-	border-right:0;
-	border-top: 0;
-	box-shadow: 0px 5px 5px #888888;
-	/*background-color: #EEEEE2;*/
-	background-color: #FF9933;
+	box-shadow: 5px 5px 5px #888888;
+	background-color: #EEEEE2;
 	border-width:2px;
-	border-radius: 0px;
+	border-radius: 30px;
 	border-color: #727272;
-	color: #D2D2D2;
+	color: #FF9933;
 	text-decoration: none;
 	position:relative;
 }
 
-#headerul ul
-{
-margin: 0;
-padding: 0;
-list-style-type: none;
-}
-
-#headerul ul li { display: inline; }
-
-
 .header{
 	position:relative;
-	padding-left: 20px;
 }
 
 .textbox { 
@@ -191,6 +177,7 @@ list-style-type: none;
  } 
 
  table, th, td {
+	 border: 1px solid black;
 	 border-collapse: collapse;
 	 table-layout: fixed;
 	 text-overflow: ellipsis;
@@ -198,44 +185,27 @@ list-style-type: none;
 	 width:100%
 }
 
-table td, table th {
-border: 1px solid #D2D2D2;
-}
-	 
-table tr:first-child th {
-  border-top: 0;
-}
-table tr:last-child td {
-  border-bottom: 0;
-}
-table tr td:first-child,
-table tr th:first-child {
-  border-left: 0;
-}
-table tr td:last-child,
-table tr th:last-child {
-  border-right: 0;
-}
-
-.scrollcontainer{
-        height: 800px; 
-        overflow-y: auto;  
-        overflow-x: hidden;  
- }
- 
 th, td {
 	padding: 5px;
 	text-align: left;
-	overflow-x: hidden;
+	overflow-x: hidden
 }
 
-/* td:hover {
+td:hover {
+	display: block;
 	color: #FF6622;
+	display:inline-block;
 	word-wrap: break-word;
-} */
-/*tr:nth-child(even) {
-	background-color: #EEEEEE;
-}*/
+}
+tr:nth-child(even) {
+	background-color: #E2E2E2;
+}
+
+
+tbody {
+	overflow-y: auto;    /* Trigger vertical scroll    */
+	overflow-x: auto;  /* Hide the horizontal scroll */
+}
 
 /*
 
@@ -270,164 +240,3 @@ th, td {
 	animation-play-state: running;
 }
  */
- 
- /* location-node page settings */
-
-#useronclickbtn{
-	position: absolute;
-	width: 150px;
-	left: 310px;
-	padding-left:12px
-}
-
-#tab1 {
-	position: absolute;
-	width: 200px;	
-	left: 75px;
-	padding-left:12px
-}
-
-#kml_files {
-	position: absolute;
-	width: 350px;
-	left: 525px;
-	padding-left:12px
-}
-
-#map-canvas {
-	left: 0px;
-	margin-left:70px;
-	padding-top: 310px;
-	/*visibility: hidden;*/
-	padding-left:0px;
-	width: 500px;
-	height: 500px ;
-}
-
-.kml_inp_btn{
-	width: 100px; !important;
-	border-radius: 30px; 
-	-moz-border-radius: 30px; 
-	-webkit-border-radius: 30px;
-	text-align:center;
-	margin-bottom:8px
-}
-
-#loc_type{
-	position: absolute;
-	width: 800px;	
-	left: 0px;
-	padding-left:12px
-}
-
-#category1{
-	position: absolute;
-	left: 0px;
-	width: 700px;
-	padding-left:12px
-}
-
-#party_div{
-	position: absolute;
-	left: 0px;
-	width: 700px;
-	padding-left:12px
-}
-
-#political_admin_type_div{
-	position: absolute;
-	left: 0px;
-	width: 800px;
-	padding-left:12px
-}
-
-#executive_departments_div{
-	position: absolute;
-	left: 0px;
-	width: 800px;
-	padding-left:12px
-}
-
-table.table_topdown_border tr:last-child td {
-    border-style: solid;
-    border-bottom-width: 2px;
-}
-
-table.table_topdown_border tr:first-child th{
-    border-style: solid;
-    border-top-width: 2px;
-}
-
-.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
-background-color: #FF9933;
-border-bottom-left-radius: 15px;
-border-bottom-right-radius: 15px;
-box-shadow: 0px 4px 4px #888888;
-}
-
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover {
-background-color: #FF9933;
-border-bottom-left-radius: 15px;
-border-bottom-right-radius: 15px;
-box-shadow: 0px 4px 4px #888888;
-}
-
-.navbar-nav>li>.dropdown-menu {
-margin-top: 0;
-border-radius: 20px;
-}
-
-.tablewidth50pc{
- width: 50%;
- table-layout: fixed;
-border: 1px solid #D2D2D2;
-border-top: 0;
-border-left: 0;
-border-right: 0;
-}
-
-.tablewidth50pc:hover, .tablewidth50pc:active{
-width: 50%;
-table-layout: fixed;
-border: 1px solid #22D2D2;
-border-top: 0;
-border-left: 0;
-border-right: 0;
-}
-
-.left_float{
-float:left;
-}
-
-
-/* updates */
-
-.instruction_hover span{
-    float:right;
-	text-align: right;
-	padding:2px 6px;
-	background-color:#78CCD2;
-	color:#186C72;
-	border-radius:30px;
-	margin:3px;
-	cursor:default;
-}
-
-/* Pseudo elements can even access attributes of their parent element */
-
-#guidelines_span {
-  display: none;
-  font-size: 12px;
-  margin-top: 5px;
-  padding: 5px;
-}
-
-#instruction_hover:hover #guidelines_span {
-  display: block;
-}
-
-.subscript {
-/*    vertical-align:bottom; */
-    font-size:1.6em;
-	color: #C5C5C5;
-    }
