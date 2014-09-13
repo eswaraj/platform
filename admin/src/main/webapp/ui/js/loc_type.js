@@ -1,5 +1,5 @@
 $(function(){
-      $("#menu").load("../ui/sidebar_menu.html"); 
+      $("#menu_new").load("../ui/menu.html"); 
 });
 
 $(document).ready(function(){
@@ -70,14 +70,14 @@ $.ajax({
 $("#edit_btn").click(function() {
 		$("#save_btn").css('display','block');
 		$("#edit_btn").css('display','none');
-		$('#tab1 input').toggleDisabled();
+		$('#loc_type input').toggleDisabled();
 		
 });	
 $("#save_btn").click(function() {
 		$("#edit_btn").css('display','block');
 		$("#save_btn").css('display','none');
 		update_selected_node();
-		$('#tab1 input').toggleDisabled();
+		$('#loc_type input').toggleDisabled();
 		
 });
 
