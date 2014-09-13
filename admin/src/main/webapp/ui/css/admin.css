@@ -2,8 +2,8 @@ body {
 	min-width: 750px;
 }
 .thumb {
-	width: 25px;
-	height: 25px;
+	width: 30px;
+	height: 30px;
 }
 
 .btn_round{
@@ -407,6 +407,7 @@ border: 1px solid #D2D2D2;
 border-top: 0;
 border-left: 0;
 border-right: 0;
+vertical-align: bottom;
 }
 
 .tablewidth50pc:hover, .tablewidth50pc:active{
