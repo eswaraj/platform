@@ -145,7 +145,7 @@ public class ApiUtil {
     }
 
     public UserDto saveFacebookUser(HttpServletRequest httpServletRequest, Connection<Facebook> facebookConnection) throws ApplicationException {
-        String urlPath = "/api/v0/user/facebook";
+        String urlPath = "/api/v0/web/user/facebook";
         RegisterFacebookAccountWebRequest registerFacebookAccountWebRequest = new RegisterFacebookAccountWebRequest();
         ConnectionData facebookConnectionData = facebookConnection.createData();
         if(facebookConnectionData.getExpireTime() != null){
