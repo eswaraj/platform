@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,42 +7,65 @@
 		<title>Political Admin Manager</title>
 
 		<!-- Styles -->
-		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
-		<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
-		<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
-		<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/bootstrap.min.css' type="text/css" /><!-- Bootstrap -->
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/font-awesome.css' type="text/css" /><!-- Font Awesome -->
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/style.css' type="text/css" /><!-- Style -->	
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/responsive.css' type="text/css" /><!-- Responsive -->	
 
 		<!-- Script -->
-		<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
-		<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
-		<script type="text/javascript" src="js/script.js"></script><!-- Script -->
-		<script type="text/javascript" src="js/pbadmin.js"></script><!-- Script -->
+		<script src='c:/Python27/project/eSwaraj/js/jquery-1.10.2.js'></script><!-- Jquery -->
+		<script type="text/javascript" src='c:/Python27/project/eSwaraj/js/bootstrap.min.js'></script><!-- Bootstrap -->
+		<script type="text/javascript" src='c:/Python27/project/eSwaraj/js/script.js'></script><!-- Script -->
+		<script type="text/javascript" src='c:/Python27/project/eSwaraj/js/pbadmin.js'></script><!-- Script -->
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 		<!-- 2 load the theme CSS file -->
-		<link rel="stylesheet" href="dist/themes/default/style.min.css" />
-		<link rel="stylesheet" href='css/admin.css' />
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/style.min.css' />
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/test.css' />
 		<!-- 4 include the jQuery library -->
 
 		<!-- 5 include the minified jstree source -->
-		<script src="dist/jstree.min.js"></script>
-		<link rel="stylesheet" href="css/jquery-ui.min.css" />
-		<script src="js/jquery-ui.min.js"></script>
+		<script src='c:/Python27/project/eSwaraj/js/jstree.min.js'></script>
+		<link rel="stylesheet" href='c:/Python27/project/eSwaraj/css/jquery-ui.min.css' />
 
 	</head>
 	<body>
-		<header class="header headerbox">
-			<h1 class="header">eSwaraj Admin Page</h1>
+		<header id="headerul" class="header headerbox">
+		<ul>
+			<li class="header fa-3x ">eSwaraj</li>
+			<li class="subscript">Political Admin</li>
+		</ul>
 		</header>
-	
+		
+		<div id="menu" class="menu">
+		</div><!-- Right Menu -->
+		
+		
+		<div id="instruction_hover">
+			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+			<br> 2. We can update this page as needed
+			<br> 3. What are you doing?
+			<br> 4. You can follow these steps to understand the functionality of this page	
+			<br> 5. Please ask the admin if there are any doubts</span>	
+		</div>
+
+		<style>
+			tr:nth-child(even) {
+			background-color: #EEEEEE;
+			}
+			
+			td:hover {
+			color: #FF6622;
+			word-wrap: break-word;
+			}
+		</style>
+		
 		<!--<div class="responsive-menu">
 			<div class="responsive-menu-dropdown blue">
 				<a title="" class="blue">MENU <i class="fa fa-align-justify"></i></a>
 			</div>
 		</div> -->
 		
-		<div id="menu_new" class="menu_new">
-		</div><!-- Right Menu -->
-
 		<div aria-hidden="true" role="dialog"  class="modal fade saffron_text" id="assign_pbadmin" style="display: none;">
 			<div class="modal-dialog" style="top:30px;">
 				<div class="modal-content">
@@ -106,7 +130,7 @@
 							<h3 class="text-footer-extended">Constituencies</h3> 
 
 							<!-- the tree is populated via ajax -->
-							<div id="js_tree"></div>	
+							<div id="js_tree" class="scrollcontainer"></div>	
 
 						</div>
 
@@ -137,11 +161,11 @@
 								<button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Location</button>
 							</div>
 
-							<div id="searchResultsN" class="border-left">
+							<div id="searchResultsN" class="scrollcontainer">
 								<h3 class="text-footer-extended">Existing Locations:</h3>
-								<table id="nodes" class="ui-widget ui-widget-content">
+								<table id="nodes">
 									<thead>
-										<tr class="ui-widget-header ">
+										<tr>
 											<th>ID</th>
 											<th>Type</th>
 											<th>Name</th>
@@ -161,12 +185,18 @@
 											<td>hhhhaaaaaaaaaaaaaa</td> 
 											<td>94</td>
 										</tr>
+										<tr>
+											<td>hhhhaaaaaaaaaaaaaa</td>
+											<td>hhhhaaaaaaaaaaaaaa</td>
+											<td>hhhhaaaaaaaaaaaaaa</td> 
+											<td>50</td>
+										</tr>
 
 									</tbody>
 								</table>
 							</div>
 
-							<div id="searchResultsP" class="border-left">
+							<div id="searchResultsP" class="scrollcontainer">
 								<h3 class="text-footer-extended">Existing Persons:</h3>
 								<table id="users" class="ui-widget ui-widget-content">
 									<thead>
