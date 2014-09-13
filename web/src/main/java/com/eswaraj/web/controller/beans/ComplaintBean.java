@@ -6,9 +6,9 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 
-public class ComplaintBean {
+public class ComplaintBean extends BaseBean {
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
     private Long complaintTime;
     private String complaintTimeIso;
     private String title;
@@ -108,14 +108,6 @@ public class ComplaintBean {
 
     public void setPhotos(PhotoBean[] photos) {
         this.photos = photos;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public PersonBean getLoggedBy() {

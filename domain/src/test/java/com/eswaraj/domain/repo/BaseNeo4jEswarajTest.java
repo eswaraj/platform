@@ -1,10 +1,12 @@
 package com.eswaraj.domain.repo;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Before;
-import static org.junit.Assert.assertEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 
@@ -12,12 +14,16 @@ import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
 import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.DataClient;
+import com.eswaraj.domain.nodes.Device;
+import com.eswaraj.domain.nodes.Device.DeviceType;
+import com.eswaraj.domain.nodes.relationships.UserDevice;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.User;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 
@@ -113,6 +119,41 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		person = personRepository.save(person);
 		return person;
 	}
+
+    protected User createUser(UserRepository userRepository, PersonRepository personRepository, String name) {
+        Person person = createPerson(personRepository, name);
+
+        User user = new User();
+        user.setPerson(person);
+        user.setExternalId(UUID.randomUUID().toString());
+        user = userRepository.save(user);
+        return user;
+    }
+
+
+    protected User createUserRandom(UserRepository userRepository, PersonRepository personRepository) {
+        return createUser(userRepository, personRepository, randomAlphaString(10));
+    }
+
+    protected Device createDeviceRandom(DeviceRepository deviceRepository, DeviceType deviceType) {
+        return createDevice(deviceRepository, randomAlphaNumericString(32), deviceType);
+    }
+
+    protected Device createDevice(DeviceRepository deviceRepository, String deviceId, DeviceType deviceType) {
+        Device device = new Device();
+        device.setDeviceId(deviceId);
+        device.setDeviceType(deviceType);
+        device = deviceRepository.save(device);
+        return device;
+    }
+
+    protected UserDevice createUserDevice(UserDeviceRepository userDeviceRepository, User user, Device device) {
+        UserDevice userDevice = new UserDevice();
+        userDevice.setDevice(device);
+        userDevice.setUser(user);
+        userDevice = userDeviceRepository.save(userDevice);
+        return userDevice;
+    }
 
 
 	protected void assertLocationTypeEquals(LocationType expected, LocationType actual, boolean compareId){

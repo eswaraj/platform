@@ -1,6 +1,7 @@
 package com.eswaraj.web.controller.beans;
 
-public class LocationBean {
+public class LocationBean extends BaseBean {
+    private static final long serialVersionUID = 1L;
     private String name;
     private String externalId;
     private String url;

@@ -2,9 +2,9 @@ package com.eswaraj.web.controller.beans;
 
 import java.util.List;
 
-public class CategoryBean {
+public class CategoryBean extends BaseBean {
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
     private String externalId;
     private String headerImageurl;
     private String imageUrl;
@@ -14,14 +14,6 @@ public class CategoryBean {
     private Long globalCount;
     private boolean root;
     private List<CategoryBean> childCategories;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getExternalId() {
         return externalId;

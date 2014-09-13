@@ -3,6 +3,7 @@ package com.eswaraj.domain.base;
 import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
 
 public class BaseNode {
 
@@ -12,6 +13,7 @@ public class BaseNode {
 	protected Date dateModified;
 	protected Long creatorId;
 	protected Long modifierId;
+    @Indexed(indexName = "externalId")
 	protected String externalId;
 	
 	public Long getId() {

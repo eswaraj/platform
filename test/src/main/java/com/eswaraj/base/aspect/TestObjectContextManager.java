@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Component;
@@ -42,9 +42,17 @@ public class TestObjectContextManager {
 		Set<Object> allDbSavedObjects = getDbSavedObjectSetForThread(); 
 		for(Object oneObject: allDbSavedObjects){
 			try{
-				logger.trace("Deleting : "+oneObject);
-				if(!dontDeleteForThisTest){
-					neo4jTemplate.delete(oneObject);	
+                if (dontDeleteForThisTest) {
+                    logger.trace("Not Deleting : " + oneObject);
+                } else {
+
+                    if (neo4jTemplate.isRelationshipEntity(oneObject.getClass())) {
+                        logger.trace("Not Deleting Relationship Entity: " + oneObject);
+                    } else {
+                        logger.trace("Deleting : " + oneObject);
+                        neo4jTemplate.delete(oneObject);
+                    }
+
 				}
 				
 			}catch(Exception ex){

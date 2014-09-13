@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class BaseDto implements Serializable {
 
-	protected Long id;
+    private static final long serialVersionUID = 1L;
+    protected Long id;
 	protected String externalId;
 
 	public Long getId() {

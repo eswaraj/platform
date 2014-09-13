@@ -26,8 +26,7 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
 			"order by complaint.dateCreated DESC")
 	public List<Complaint> getAllComplaintsLodgedByPerson(Person person);
 	
-	@Query("start person=node({0}) " +
-			"match (person)<-[:LODGED_BY]-(complaint) return complaint " +
+    @Query("start person=node({0}) match (person)<-[:LODGED_BY]-(complaint) return complaint " +
 			"order by complaint.dateCreated DESC " +
 			"skip {1} limit {2}")
 	public List<Complaint> getPagedComplaintsLodgedByPerson(Person person, int start, int end);

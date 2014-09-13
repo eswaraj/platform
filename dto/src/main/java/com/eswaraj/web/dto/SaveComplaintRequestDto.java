@@ -12,40 +12,23 @@ package com.eswaraj.web.dto;
 public class SaveComplaintRequestDto extends ComplaintDto {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String deviceId;
-	private String userId;
-	private String deviceTypeRef;//Android or Iphone
-	private String name;
-	public String getDeviceId() {
-		return deviceId;
-	}
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getDeviceTypeRef() {
-		return deviceTypeRef;
-	}
-	public void setDeviceTypeRef(String deviceTypeRef) {
-		this.deviceTypeRef = deviceTypeRef;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	@Override
-	public String toString() {
-		return "SaveComplaintRequestDto [deviceId=" + deviceId + ", userId="
-				+ userId + ", deviceTypeRef=" + deviceTypeRef + ", name="
-				+ name + ", toString()=" + super.toString() + "]";
-	}
+    private String userExternalid;
+    private boolean anonymous;
+
+    public String getUserExternalid() {
+        return userExternalid;
+    }
+
+    public void setUserExternalid(String userExternalid) {
+        this.userExternalid = userExternalid;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
 	
 }

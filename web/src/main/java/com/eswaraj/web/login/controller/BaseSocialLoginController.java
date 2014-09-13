@@ -14,10 +14,8 @@ public abstract class BaseSocialLoginController<T> extends BaseController {
 	@Autowired 
 	protected ConnectionFactoryLocator connectionFactoryLocator;
 	
-    protected abstract void saveSocialUser(Connection<T> socialConnection) throws Exception;
 
 	protected void afterSuccesfullLogin(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Connection<T> socialConnection) throws Exception{
-        saveSocialUser(socialConnection);
         // setLoggedInUserInSesion(httpServletRequest, user);
 		/*
 		LoginAccountDto userLoginAccounts = aapService.getUserLoginAccounts(user.getId());

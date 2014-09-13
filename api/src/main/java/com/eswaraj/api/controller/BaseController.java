@@ -1,6 +1,7 @@
 package com.eswaraj.api.controller;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,6 +45,10 @@ public class BaseController {
             return defaultValue;
         }
         return Long.parseLong(paramValue);
+    }
+
+    protected String getFileName(String submittedFileName) {
+        return UUID.randomUUID().toString() + submittedFileName.substring(submittedFileName.lastIndexOf("."));
     }
 
 }

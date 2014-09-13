@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -8,6 +9,7 @@ import com.eswaraj.domain.base.BaseNode;
 public class FacebookApp extends BaseNode {
 
 	private String appName;
+    @Indexed(indexName = "FacebookAppIdIdx", unique = true)
 	private String appId;
 	private String appSecret;
 

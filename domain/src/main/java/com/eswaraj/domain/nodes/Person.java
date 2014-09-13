@@ -99,11 +99,10 @@ public class Person extends BaseNode {
     }
 
     @Override
-	public String toString() {
-		return "Person [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="
-				+ landlineNumber1 + ", \nlandlineNumber2=" + landlineNumber2 + ", \nmobileNumber1=" + mobileNumber1 + ", \nmobileNumber2=" + mobileNumber2
-				+ ", \naddress=" + address + ", \nid=" + id + "]";
-	}
+    public String toString() {
+        return "Person [name=" + name + ", biodata=" + biodata + ", dob=" + dob + ", gender=" + gender + ", email=" + email + ", landlineNumber1=" + landlineNumber1 + ", landlineNumber2="
+                + landlineNumber2 + ", mobileNumber1=" + mobileNumber1 + ", mobileNumber2=" + mobileNumber2 + ", profilePhoto=" + profilePhoto + ", address=" + address + ", id=" + id + "]";
+    }
 	
 	
 

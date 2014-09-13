@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.eswaraj.web.admin.controller.ApiUtil;
+
 @Controller
 public class SpringFacebookLoginController extends BaseSocialLoginController<Facebook> {
 
@@ -32,6 +35,9 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 	private String facebokAppId;
     @Value("${server_domain_and_context}/web/login/facebooksuccess")
 	private String facebookRedirectUrl;
+
+    @Autowired
+    private ApiUtil apiUtil;
 
     @RequestMapping(value = "/web/login/facebook", method = RequestMethod.GET)
 	public ModelAndView login(ModelAndView mv,
@@ -70,20 +76,16 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 			AccessGrant accessGrant = oauthOperations.exchangeForAccess(authorizationCode, facebookRedirectUrl, null);
 			Connection<Facebook> facebookConnection = facebookConnectionFactory.createConnection(accessGrant);
 			
-			afterSuccesfullLogin(httpServletRequest, httpServletResponse, facebookConnection);
+            afterSuccesfullLogin(httpServletRequest, httpServletResponse, facebookConnection);
 			
 			/*
 			ConnectionRepository facebookConnectionRepository = usersConnectionRepository.createConnectionRepository(user.getExternalId());
 			facebookConnectionRepository.updateConnection(connection);
 			*/
-			String redirectUrl = getAndRemoveRedirectUrlFromSession(httpServletRequest);
-			logger.info("redirectUrl= {}", redirectUrl);
-			/*
-			UserDto loggedInUser = getLoggedInUserFromSesion(httpServletRequest);
-			Date userCreationDate = loggedInUser.getDateCreated();
+            apiUtil.saveFacebookUser(httpServletRequest, facebookConnection);
 
-			CookieUtil.setLastLoggedInAccountAsFacebookCookie(httpServletResponse);
-			*/
+            String redirectUrl = getAndRemoveRedirectUrlFromSession(httpServletRequest);
+            logger.info("redirectUrl= {}", redirectUrl);
             RedirectView rv = new RedirectView(redirectUrl);
             logger.info("url= {}", redirectUrl);
             mv.setView(rv);
@@ -97,20 +99,5 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 		}
 		return mv;
 	}
-
-	@Override
-    protected void saveSocialUser(Connection<Facebook> socialConnection) throws Exception {
-	    /*
-		UserDto user;
-		if(loggedInUser == null){
-			user = aapService.saveFacebookUser(null, socialConnection, appFacebokAppId);	
-		}else{
-			user = aapService.saveFacebookUser(loggedInUser.getId(), socialConnection, appFacebokAppId);
-		}
-		return user;
-		*/
-	}
-
-	
 
 }

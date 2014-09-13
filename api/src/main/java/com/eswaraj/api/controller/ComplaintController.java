@@ -1,4 +1,4 @@
-package com.eswaraj.web.admin.controller;
+package com.eswaraj.api.controller;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -45,7 +45,7 @@ public class ComplaintController extends BaseController{
 	@Value("${aws_s3_directory_for_complaint_photo}") 
 	private String awsDirectoryForComplaintPhoto;
 
-	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
 	public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {
 		if(start == null){
 			return complaintService.getAllUserComplaints(userId);	
@@ -54,7 +54,8 @@ public class ComplaintController extends BaseController{
 		}
 		
 	}
-	@RequestMapping(value = "/device/complaints/{userId}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/api/v0/device/complaints/{userId}", method = RequestMethod.GET)
 	public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {
 		if(start == null){
 			return complaintService.getAllUserComplaints(deviceId);	
@@ -64,7 +65,7 @@ public class ComplaintController extends BaseController{
 		
 	}
 	
-	@RequestMapping(value = "/mobile/complaint", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v0/complaint", method = RequestMethod.POST)
 	public @ResponseBody ComplaintDto saveComplaint(HttpServletRequest httpServletRequest) throws ApplicationException, IOException, ServletException {
 		
 		printInfo(httpServletRequest);
