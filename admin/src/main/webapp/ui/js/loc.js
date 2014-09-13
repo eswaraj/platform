@@ -15,7 +15,7 @@ var mylocation = {
 
 //
 $(function(){
-	$("#menu").load("../ui/sidebar_menu.html"); 
+	$("#menu").load("../ui/menu.html"); 
 });
 
 //var locationTypeSet;
@@ -165,7 +165,7 @@ $(document).ready(function(){
 			success: function(data){
 				var btn_html = "";
 				for(var i=0;i < data.length; i++){
-					btn_html += "<td><a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+data[i].id+"' class='btn btn-primary blue btn_round' href='#add-node' data-toggle='modal'>Add "+data[i].name+"</a></td>";
+					btn_html += "<a id='node_add_btn"+i+"' onclick='return runMyFunction(event);' value='"+data[i].id+"' class='btn btn-primary blue btn_round' href='#add-node' data-toggle='modal'>Add "+data[i].name+"</a><br>";
 				}
 				$('#add_child_btn').html(btn_html);   
 			}
