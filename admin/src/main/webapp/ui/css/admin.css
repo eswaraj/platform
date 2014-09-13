@@ -1,6 +1,11 @@
 body {
 	min-width: 750px;
 }
+.thumb {
+	width: 25px;
+	height: 25px;
+}
+
 .btn_round{
 	width: 150px; !important;
 	border-radius: 30px; 
@@ -222,6 +227,12 @@ table tr th:last-child {
 }
 
 .scrollcontainer{
+        height: 600px; 
+        overflow-y: auto;  
+        overflow-x: hidden;  
+ }
+ 
+.modal-body{
         height: 800px; 
         overflow-y: auto;  
         overflow-x: hidden;  
