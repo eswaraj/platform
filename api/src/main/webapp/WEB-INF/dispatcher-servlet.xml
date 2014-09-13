@@ -32,6 +32,8 @@
     </bean>
     <!-- App beans -->
     <import resource="classpath:eswaraj-core.xml" />
+    <import resource="classpath:eswaraj-neo4j-db-context.xml" />
+    
     
 	<!-- Redis related -->
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
