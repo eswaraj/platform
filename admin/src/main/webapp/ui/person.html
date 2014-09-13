@@ -98,27 +98,6 @@
 			<br> 5. Please ask the admin if there are any doubts</span>	
 		</div>
 
-		<div class="wrapper">
-			<div class="container">
-				<input type="text" id="person_search" placeholder="Person Name" />
-				<button class="btn btn-primary blue" type="button" id="searchButton" >Search Person</button>
-				<div id="searchResults">
-					<h1>Existing Persons:</h1>
-					<table id="users" class="ui-widget ui-widget-content">
-						<thead>
-							<tr class="ui-widget-header ">
-								<th>Name</th>
-								<th>Email</th>
-								<th>Addr</th>
-								<th>Update</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-
-				</div>
-				<a id="addPerson" class="btn blue" href="#new-person" data-toggle="modal" onClick="setNodeId(event)">Add Person</a>
 				<div aria-hidden="true" role="dialog"  class="modal fade" id="new-person" style="display: none;">
 					<div class="modal-dialog" style="top:30px;">
 						<div class="modal-content">
@@ -195,7 +174,7 @@
 				<b style="color: #FF9933">Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
 				<p name="rev_geo" id="rev_geo"></p>
 				<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-				<div id="map-canvas_person" width="400px;" height="400px;"></div>
+				<div id="map-canvas" width="400px;" height="400px;"></div>
 				<br><button type="button" id="pick" class="btn btn-primary blue btn_round">Pick location</button>
 				<button type="button" id="submit" class="btn btn-primary blue btn_round">Save Person</button>
 				</div>
