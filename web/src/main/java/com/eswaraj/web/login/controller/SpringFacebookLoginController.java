@@ -52,7 +52,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 		params.setScope(appPermissions);
 		String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
 		
-		setRedirectUrlInSessiom(httpServletRequest, getRedirectUrlForRedirectionAfterLogin(httpServletRequest));
+        sessionUtil.setRedirectUrlInSessiom(httpServletRequest);
 
 		RedirectView rv = new RedirectView(authorizeUrl);
 		logger.info("url= {}", authorizeUrl);
@@ -84,8 +84,8 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 			facebookConnectionRepository.updateConnection(connection);
 			*/
             UserDto user = apiUtil.saveFacebookUser(httpServletRequest, facebookConnection);
-            setLoggedInUserinSession(httpServletRequest, user);
-            String redirectUrl = getAndRemoveRedirectUrlFromSession(httpServletRequest);
+            sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
+            String redirectUrl = sessionUtil.getAndRemoveRedirectUrlFromSession(httpServletRequest);
             logger.info("redirectUrl= {}", redirectUrl);
             RedirectView rv = new RedirectView(redirectUrl);
             logger.info("url= {}", redirectUrl);
