@@ -47,7 +47,7 @@ import com.eswaraj.web.dto.UserDto;
 public class PersonServiceImpl extends BaseService implements PersonService {
 
     private static final long serialVersionUID = 1L;
-    @Autowired
+    // @Autowired
     private FacebookAccountRepository facebookAccountRepository;
     @Autowired
     private FacebookAccountConvertor facebookAccountConvertor;

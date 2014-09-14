@@ -3,7 +3,6 @@ package com.eswaraj.core.convertors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -16,7 +15,7 @@ public class FacebookAccountConvertor extends BaseConvertor<FacebookAccount, Fac
 
     private static final long serialVersionUID = 1L;
 
-    @Autowired
+    // @Autowired
     private FacebookAccountRepository facebookAccountRepository;
 	
 	private Logger Logger = LoggerFactory.getLogger(this.getClass());
