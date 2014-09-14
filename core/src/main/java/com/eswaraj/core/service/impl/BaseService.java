@@ -173,7 +173,7 @@ public class BaseService implements Serializable {
     }
 
     protected FacebookApp getOrCreateFacebookApp(String facebookAppId) {
-        FacebookApp facebookApp = null;// facebookAppRepository.getFacebookAppByFacebookAppId(facebookAppId);
+        FacebookApp facebookApp = facebookAppRepository.getFacebookAppByFacebookAppId(facebookAppId);
         if (facebookApp == null) {
             facebookApp = new FacebookApp();
             facebookApp.setAppId(facebookAppId);
