@@ -5,7 +5,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<jsp:include page="header.jsp" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<jsp:include page="include.jsp" />
+</head>
+<body>
+    <div class="outerwrapper">
+        <jsp:include page="header.jsp" />
 
 <div class="right-pane fixed">
     <h2>My Profile</h2>
@@ -45,3 +52,5 @@
 </div>
 </div>
 <jsp:include page="footer.jsp" />
+</body>
+</html>
