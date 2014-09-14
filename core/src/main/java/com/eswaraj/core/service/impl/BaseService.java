@@ -32,7 +32,7 @@ import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.web.dto.UserDto;
 
-public abstract class BaseService implements Serializable {
+public class BaseService implements Serializable {
 
     /**
      * 
