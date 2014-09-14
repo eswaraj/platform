@@ -346,8 +346,14 @@ function add_pbadmin(){
 	contentType: "application/json; charset=utf-8",
 	dataType: "JSON",
 	success: function(data){
-		console.log(JSON.stringify(data, null, 4));
-		alert("PbAdmin Added"+data.personId);
+		//console.log(JSON.stringify(data, null, 4));
+		var error = data.message.length > 0;
+		if(error) {
+			alert("Error in admin creation: " + data.message);
+		}
+		else {
+			alert("PbAdmin Added"+data.personId);
+		}
 	}
 	});
 }
