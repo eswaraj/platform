@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -172,7 +171,9 @@ public class ApiUtil {
 
             URI uri = uriBuilder.build();
             HttpPost httppost = new HttpPost(uri);
-            HttpEntity httpEntity = new StringEntity(postData);
+
+            StringEntity httpEntity = new StringEntity(postData);
+            httpEntity.setContentType("application/json");
             httppost.setEntity(httpEntity);
 
             logger.info("Posting request {} to {}", postData, httppost.getURI());
