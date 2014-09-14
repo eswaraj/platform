@@ -348,6 +348,7 @@ function add_pbadmin(){
 	success: function(data){
 		//console.log(JSON.stringify(data, null, 4));
 		var error = data.hasOwnProperty('message');
+		var error = data.message != null;
 		if(error) {
 			alert("Error in admin creation: " + data.message);
 		}
