@@ -5,10 +5,10 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-    <bean id="springLoginFilter" class="com.eswaraj.web.login.controller.SpringLoginFilter">
+    <bean id="springLoginFilter" class="com.eswaraj.web.login.controller.SpringLoginFilter" autowire="true">
     </bean>
 
-    <bean id="sessionUtil" class="com.eswaraj.web.login.controller.SessionUtil">
+    <bean id="sessionUtil" class="com.eswaraj.web.login.controller.SessionUtil" autowire-candidate="true">
     </bean>
     
 	<!--
