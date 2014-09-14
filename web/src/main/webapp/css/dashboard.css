@@ -472,3 +472,8 @@ html,body {
     margin: 5px 0 0 0;
     width: 100%;
 }
+.home-profile-pic
+{border: 1px solid #ccc;
+ border-radius: 50%;
+ max-width: 50px;"
+ }
