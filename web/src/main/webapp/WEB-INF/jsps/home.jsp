@@ -55,7 +55,7 @@
 							<div class="for-user">
 							     <c:if test="${loggedIn}">
 							         <%--If User is Logged in --%>
-							         Welcome "${user.person.name}"
+							         Welcome "${user.person.name}"<img class="home-profile-pic" src="${user.person.profilePhoto}"/>
 							     </c:if><%--If User is Logged in --%>
 							     
 							     <c:if test="${!loggedIn}">
