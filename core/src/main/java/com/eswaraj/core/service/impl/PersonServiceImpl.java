@@ -174,7 +174,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         } else {
             // Retrieve user attached to Facebook account and merge it to user
             // userExternalId
-            User facebookAccountExistingUser = userRepository.getUserByFacebookUserId(facebookUserId);
+            User facebookAccountExistingUser = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
             // facebookAccountExistingUser will become main user(anonymous) and
             // user will be merged into it
             user = mergeUser(facebookAccountExistingUser, user);
@@ -247,7 +247,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             Person person = personRepository.getPersonByUser(user);
             updatePersonInfoFromFacebook(person, facebookUserProfile);
         } else {
-            user = userRepository.getUserByFacebookUserId(facebookUserId);
+            user = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
             FacebookAppPermission facebookAppPermission = facebookAppPermissionRepository.getFacebookAccountAndAppRelation(facebookAccount, facebookApp);
             if (facebookAppPermission == null) {
                 logger.error("No Relation found between facebook App and Facebook account");

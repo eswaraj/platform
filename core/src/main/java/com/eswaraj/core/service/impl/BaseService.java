@@ -83,7 +83,7 @@ public class BaseService implements Serializable {
         Collection<User> existingDeviceUsers = null;
         User returnUniqueUser = null;
         if (userDto.getFacebookAccount() != null && !StringUtils.isEmpty(userDto.getFacebookAccount().getFacebookUserId())) {
-            existingFacebookUser = userRepository.getUserByFacebookUserId(userDto.getFacebookAccount().getFacebookUserId());
+            existingFacebookUser = userRepository.getUserByFacebookUserId("facebookUserId: " + userDto.getFacebookAccount().getFacebookUserId());
         }
         if (userDto.getDevice() != null && !StringUtils.isEmpty(userDto.getDevice().getDeviceId())) {
             existingDeviceUsers = userRepository.getUserByDevice(userDto.getDevice().getDeviceId());
