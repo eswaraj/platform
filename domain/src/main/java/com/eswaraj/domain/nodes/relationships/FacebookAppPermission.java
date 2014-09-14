@@ -63,4 +63,9 @@ public class FacebookAppPermission {
 		this.facebookApp = facebookApp;
 	}
 
+    @Override
+    public String toString() {
+        return "FacebookAppPermission [id=" + id + ", token=" + token + ", expireTime=" + expireTime + ", FacebookAccount=" + FacebookAccount + ", facebookApp=" + facebookApp + "]";
+    }
+
 }
