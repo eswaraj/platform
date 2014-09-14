@@ -38,8 +38,8 @@ public class BaseService implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
-    @Autowired
-    protected FacebookAccountRepository facebookAccountRepository;
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     protected FacebookAccountConvertor facebookAccountConvertor;
     @Autowired
@@ -56,8 +56,9 @@ public class BaseService implements Serializable {
     protected DeviceRepository deviceRepository;
     @Autowired
     protected FacebookAppRepository facebookAppRepository;
+    @Autowired
+    protected FacebookAccountRepository facebookAccountRepository;
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected <DbType> DbType getObjectIfExistsElseThrowExcetpion(Long id, String objectName, GraphRepository<DbType> repository) throws ApplicationException {
 		DbType dbObject = null;
