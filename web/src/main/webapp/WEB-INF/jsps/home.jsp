@@ -53,15 +53,24 @@
 								</a>
 							</div>
 							<div class="for-user">
-								<div class="btn-group"
-									onclick="location.href='/web/login/facebook';">
-									<button type="button" class="btn btn-primary btn-lg"
-										onclick="location.href='/web/login/facebook';">
-										<i class="icomoon icomoon-facebook"></i>
-									</button>
-									<button type="button" class="btn btn-primary btn-lg">Log
-										in with Facebook</button>
-								</div>
+							     <c:if test="${loggedId}">
+							         <%--If User is Logged in --%>
+							         Welcome "${user.person.name}"
+							     </c:if><%--If User is Logged in --%>
+							     
+							     <c:if test="${!loggedId}">
+							     <%--If User is NOT Logged in --%>
+							     <div class="btn-group"
+                                    onclick="location.href='/web/login/facebook';">
+                                    <button type="button" class="btn btn-primary btn-lg"
+                                        onclick="location.href='/web/login/facebook';">
+                                        <i class="icomoon icomoon-facebook"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-lg">Log
+                                        in with Facebook</button>
+                                </div>
+							     </c:if><%--If User is NOT Logged in --%>
+								
 							</div>
 						</div>
 					</div>
@@ -94,36 +103,22 @@
 									<li><a class="scroll-to" href="#team">Team</a></li>
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
-									<!-- <li class="download">
-                                <a href="#">
-                                    <span>
-                                        <img src="${staticHost}/images/android-icon.png"  alt=""></span>
-                                </a>
-                            </li>
-                            <li class="download">
-                                <a href="#">
-                                    <span>
-                                        <img src="${staticHost}/images/apple-icon.png" alt=""></span>
-                                </a>
-                            </li>
-                            -->
-									<!-- <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-open"></i>
-                                Sign Up
-                            </a>
-                        </li>
-                        -->
-									<li>
-										<div class="btn-group"
-											onclick="location.href='/web/login/facebook';">
-											<button type="button" class="btn btn-primary btn-sm">
-												<i class="icomoon icomoon-facebook"></i>
-											</button>
-											<button type="button" class="btn btn-primary btn-sm">Log
-												in with Facebook</button>
-										</div>
-									</li>
+								    <c:if test="${loggedId}">
+								    Welcome "${user.person.name}"
+								    </c:if>
+								    <c:if test="${!loggedId}">
+								    <li>
+                                        <div class="btn-group"
+                                            onclick="location.href='/web/login/facebook';">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                                <i class="icomoon icomoon-facebook"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm">Log
+                                                in with Facebook</button>
+                                        </div>
+                                    </li>
+                                    </c:if>
+									
 								</ul>
 							</div>
 							<!-- /.nav-collapse -->

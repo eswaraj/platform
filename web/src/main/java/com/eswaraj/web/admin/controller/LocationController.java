@@ -96,7 +96,7 @@ public class LocationController extends BaseController {
                 e.printStackTrace();
             }
         }
-        addGenericValues(mv);
+        addGenericValues(mv, httpServletRequest);
         mv.setViewName("constituency");
         return mv;
     }

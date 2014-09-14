@@ -16,6 +16,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.ErrorMessageDto;
+import com.eswaraj.web.dto.UserDto;
 import com.google.gdata.util.common.base.StringUtil;
 
 public class BaseController {
@@ -24,6 +25,7 @@ public class BaseController {
 	protected AppService appService;
 	
     protected static final String REDIRECT_URL_PARAM_ID = "redirect_url";
+    protected static final String LOGGED_IN_USER_SESSION_PARAM = "LIUSP";
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -59,8 +61,15 @@ public class BaseController {
 		return errorMessageDto;
 	}
 
-    protected void addGenericValues(ModelAndView mv) {
+    protected void addGenericValues(ModelAndView mv, HttpServletRequest httpServletRequest) {
         mv.getModel().put("staticHost", staticContentHost);
+        UserDto loggeInUser = getLoggedInUserinSession(httpServletRequest);
+        mv.getModel().put("user", loggeInUser);
+        if (loggeInUser == null) {
+            mv.getModel().put("loggedIn", false);
+        } else {
+            mv.getModel().put("loggedIn", true);
+        }
     }
 
 	protected String getFileName(String submittedFileName) {
@@ -96,6 +105,14 @@ public class BaseController {
         }
 
         return redirectUrl;
+    }
+
+    protected void setLoggedInUserinSession(HttpServletRequest httpServletRequest, UserDto user) {
+        httpServletRequest.getSession(true).setAttribute(LOGGED_IN_USER_SESSION_PARAM, user);
+    }
+
+    protected UserDto getLoggedInUserinSession(HttpServletRequest httpServletRequest) {
+        return (UserDto) httpServletRequest.getSession().getAttribute(LOGGED_IN_USER_SESSION_PARAM);
     }
 
 }

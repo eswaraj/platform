@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.eswaraj.web.admin.controller.ApiUtil;
+import com.eswaraj.web.dto.UserDto;
 
 @Controller
 public class SpringFacebookLoginController extends BaseSocialLoginController<Facebook> {
@@ -82,7 +83,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 			ConnectionRepository facebookConnectionRepository = usersConnectionRepository.createConnectionRepository(user.getExternalId());
 			facebookConnectionRepository.updateConnection(connection);
 			*/
-            apiUtil.saveFacebookUser(httpServletRequest, facebookConnection);
+            UserDto user = apiUtil.saveFacebookUser(httpServletRequest, facebookConnection);
 
             String redirectUrl = getAndRemoveRedirectUrlFromSession(httpServletRequest);
             logger.info("redirectUrl= {}", redirectUrl);
