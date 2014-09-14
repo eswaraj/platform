@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("springLoginFilter")
 public class SpringLoginFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -25,6 +25,7 @@ public class SpringLoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         // TODO Auto-generated method stub
+        logger.info("*****Creating springLoginFilter");
 
     }
 
