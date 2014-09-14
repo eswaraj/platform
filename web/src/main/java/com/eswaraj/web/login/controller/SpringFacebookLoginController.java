@@ -84,7 +84,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 			facebookConnectionRepository.updateConnection(connection);
 			*/
             UserDto user = apiUtil.saveFacebookUser(httpServletRequest, facebookConnection);
-
+            setLoggedInUserinSession(httpServletRequest, user);
             String redirectUrl = getAndRemoveRedirectUrlFromSession(httpServletRequest);
             logger.info("redirectUrl= {}", redirectUrl);
             RedirectView rv = new RedirectView(redirectUrl);
