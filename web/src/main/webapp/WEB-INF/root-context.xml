@@ -5,6 +5,9 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
+    <bean id="springLoginFilter" class="com.eswaraj.web.login.controller.SpringLoginFilter">
+    </bean>
+
 	<!--
 		CSRF protection. Here we only include the CsrfFilter instead of all of Spring Security.
 		See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf for more information on
