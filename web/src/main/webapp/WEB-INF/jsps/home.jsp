@@ -103,9 +103,13 @@
 									<li><a class="scroll-to" href="#team">Team</a></li>
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
-								    <c:if test="${loggedIn}">
-								    Welcome "${user.person.name}"
+								    
+									<c:if test="${loggedIn}">
+									<li>Welcome ${user.person.name}</li>
+									<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>
+									<li onclick="location.href='/web/logout';"><i class="glyphicon glyphicon-off"></i></li>
 								    </c:if>
+								
 								    <c:if test="${!loggedIn}">
 								    <li>
                                         <div class="btn-group"

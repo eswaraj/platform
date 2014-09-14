@@ -122,3 +122,8 @@ footer .sep{
 	position: absolute;
 	left: 0;
 	bottom: 0;}
+.home-profile-pic
+{border: 1px solid #ccc;
+ border-radius: 50%;
+ max-width: 50px;"
+ }
