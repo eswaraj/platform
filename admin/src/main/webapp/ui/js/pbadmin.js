@@ -299,7 +299,7 @@ function add_pbadmin(){
 
 	var post_data = {
 		"politicalBodyTypeId":$("#pbtype_list").val(),
-		"locationId": $("#pbtype_list").val(),
+		"locationId": $("#pbadmin_locationId").val(),
 		"personId": $("#pbadmin_personId").val(),
 		"partyId": $("#party_list").val(),
 		"email": $("#pbadmin_email").val(),

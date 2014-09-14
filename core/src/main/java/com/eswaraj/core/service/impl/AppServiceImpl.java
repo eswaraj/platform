@@ -192,6 +192,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 
     private void validateLocation(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
         if (politicalBodyAdmin.getLocation() != null && politicalBodyAdmin.getPoliticalBodyType() != null) {
+            logger.info("checking if LocationTuypes are same for loxation {} and admin {}", politicalBodyAdmin.getLocation(), politicalBodyAdmin);
             if (!politicalBodyAdmin.getLocation().getLocationType().getId().equals(politicalBodyAdmin.getPoliticalBodyType().getLocationType().getId())) {
                 throw new ApplicationException("You can not create political Admin of type [" + politicalBodyAdmin.getPoliticalBodyType().getName() + "] at location ["
                         + politicalBodyAdmin.getLocation().getName() + "," + politicalBodyAdmin.getLocation().getId() + "]");
