@@ -310,7 +310,8 @@ function add_pbadmin(){
 		"startDate": $("#pbadmin_startdate").val(), //date as milliseonds
 		"endDate": $("#pbadmin_enddate").val(), //date as milliseonds
 		"officeAddressDto": {
-			"id": 33132,     
+			//"id": 33132,     
+			"id" : "",
 			"line1":$("#pbadmin_oaLine1").val(),
 			"line2":$("#pbadmin_oaLine2").val(),
 			"line3":$("#pbadmin_oaLine3").val(),
@@ -323,7 +324,8 @@ function add_pbadmin(){
 			"countryId":$("#pbadmin_ocountry-list").val()
 		},
 		"homeAddressDto": {
-			"id": $("#pbtype_list").val(),     
+			//"id": $("#pbtype_list").val(),     
+			"id" : "",
 			"line1":$("#pbadmin__haLine1").val(),
 			"line2":$("#pbadmin__haLine2").val(),
 			"line3":$("#pbadmin__haLine3").val(),
