@@ -18,10 +18,10 @@ public class SpringLoginFilter extends OncePerRequestFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private SessionUtil sessionutil;
+    private SessionUtil sessionUtil;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (sessionutil.getLoggedInUserFromSession(request) == null) {
+        if (sessionUtil.getLoggedInUserFromSession(request) == null) {
             // No user logegd In
             String redirectUrl = "/web/login/facebook?redirect_url=" + request.getRequestURI();
             logger.info("User Not logged In Redirecting to {}", redirectUrl);
