@@ -1,13 +1,12 @@
 package com.eswaraj.web.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class RegisterFacebookAccountWebRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String token;
-    private Date expireTime;
+    private Long expireTime;
     private String facebookAppId;
 
     public String getToken() {
@@ -18,11 +17,11 @@ public class RegisterFacebookAccountWebRequest implements Serializable {
         this.token = token;
     }
 
-    public Date getExpireTime() {
+    public Long getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Date expireTime) {
+    public void setExpireTime(Long expireTime) {
         this.expireTime = expireTime;
     }
 

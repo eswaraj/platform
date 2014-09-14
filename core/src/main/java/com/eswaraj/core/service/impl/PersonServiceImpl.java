@@ -237,7 +237,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             facebookAppPermission.setFacebookAccount(facebookAccount);
             facebookAppPermission.setFacebookApp(facebookApp);
             if (registerFacebookAccountWebRequest.getExpireTime() != null) {
-                facebookAppPermission.setExpireTime(registerFacebookAccountWebRequest.getExpireTime());
+                facebookAppPermission.setExpireTime(new Date(registerFacebookAccountWebRequest.getExpireTime()));
             }
             facebookAppPermission.setToken(registerFacebookAccountWebRequest.getToken());
 
@@ -254,7 +254,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             } else {
                 logger.error("Updating facebook App Permission");
                 if (registerFacebookAccountWebRequest.getExpireTime() != null) {
-                    facebookAppPermission.setExpireTime(registerFacebookAccountWebRequest.getExpireTime());
+                    facebookAppPermission.setExpireTime(new Date(registerFacebookAccountWebRequest.getExpireTime()));
                 }
                 facebookAppPermission.setToken(registerFacebookAccountWebRequest.getToken());
                 facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);

@@ -1,7 +1,6 @@
 package com.eswaraj.web.admin.controller;
 
 import java.net.URI;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -148,9 +146,7 @@ public class ApiUtil {
         String urlPath = "/api/v0/web/user/facebook";
         RegisterFacebookAccountWebRequest registerFacebookAccountWebRequest = new RegisterFacebookAccountWebRequest();
         ConnectionData facebookConnectionData = facebookConnection.createData();
-        if(facebookConnectionData.getExpireTime() != null){
-            registerFacebookAccountWebRequest.setExpireTime(new Date(facebookConnectionData.getExpireTime()));    
-        }
+        registerFacebookAccountWebRequest.setExpireTime(facebookConnectionData.getExpireTime());
         registerFacebookAccountWebRequest.setFacebookAppId(facebookAppId);
         registerFacebookAccountWebRequest.setToken(facebookConnectionData.getAccessToken());
         String requestPayload = gson.toJson(registerFacebookAccountWebRequest);
