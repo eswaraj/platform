@@ -42,7 +42,7 @@ public class ApiUtil {
     PoolingHttpClientConnectionManager poolingHttpClientConnectionManager;
     private HttpClientBuilder httpClientBuilder;
 
-    @Value("api_host")
+    @Value("${api_host}")
     private String apiHost;
     @Value("${eswaraj_facebook_app_id}")
     private String facebookAppId;
