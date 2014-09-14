@@ -41,6 +41,9 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+			<c:if test="${loggedIn}">
+			<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>                
+			</c:if>	
                 <li>
                     <a href="05-constituency.php">My Constituency</a>
                 </li>
@@ -53,7 +56,12 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
+				<c:if test="${!loggedIn}">
+                    <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-user"></i>
+					</c:if>
+					<c:if test="${loggedIn}">
                     <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-off"></i>
+					</c:if>
                     </a>
                 </li>
             </ul>

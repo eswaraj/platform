@@ -1,5 +1,7 @@
 package com.eswaraj.web.login.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +15,16 @@ import com.eswaraj.web.admin.controller.BaseController;
 public class LoginController extends BaseController {
 
     @RequestMapping(value = "/web/login", method = RequestMethod.GET)
-    public ModelAndView getAllCategories(ModelAndView mv) throws ApplicationException {
+    public ModelAndView login(ModelAndView mv) throws ApplicationException {
         RedirectView rv = new RedirectView("/web/login/facebook");
+        mv.setView(rv);
+        return mv;
+    }
+
+    @RequestMapping(value = "/web/logout", method = RequestMethod.GET)
+    public ModelAndView logout(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
+        httpServletRequest.getSession().invalidate();
+        RedirectView rv = new RedirectView("/index.html");
         mv.setView(rv);
         return mv;
     }
