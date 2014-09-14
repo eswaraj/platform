@@ -27,6 +27,7 @@ public class ProfileController extends BaseController {
     @RequestMapping(value = "/editprofile.html", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
+        addGenericValues(mv, httpServletRequest);
         mv.setViewName("editprofile");
         return mv;
     }
