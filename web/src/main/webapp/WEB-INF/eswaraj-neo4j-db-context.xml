@@ -17,6 +17,15 @@
 	<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
 		<constructor-arg index="0" value="${db_url}" />
 	</bean>
+	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="searchSystemEnvironment" value="true" />
+        <property name="properties">
+            <util:properties>
+                <prop key="Devloper">Ravi</prop>
+            </util:properties>
+        </property>
+    </bean>
 
 
 

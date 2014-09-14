@@ -29,7 +29,6 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.UserDevice;
-import com.eswaraj.domain.repo.FacebookAccountRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.UserDeviceRepository;
 import com.eswaraj.domain.repo.UserRepository;
@@ -47,8 +46,6 @@ import com.eswaraj.web.dto.UserDto;
 public class PersonServiceImpl extends BaseService implements PersonService {
 
     private static final long serialVersionUID = 1L;
-    // @Autowired
-    private FacebookAccountRepository facebookAccountRepository;
     @Autowired
     private FacebookAccountConvertor facebookAccountConvertor;
     @Autowired
