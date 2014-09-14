@@ -177,7 +177,9 @@ public class ApiUtil {
 
             logger.info("Posting request {} to {}", postData, httppost.getURI());
             HttpResponse httpResponse = getHttpClient().execute(httppost);
-            return EntityUtils.toString(httpResponse.getEntity());
+            String response = EntityUtils.toString(httpResponse.getEntity());
+            logger.info("Response = {}", response);
+            return response;
         } catch (Exception ex) {
             throw new ApplicationException(ex);
         }
