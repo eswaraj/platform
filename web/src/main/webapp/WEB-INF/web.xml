@@ -79,16 +79,20 @@
 		<servlet-name>webServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<filter>
-       <filter-name>SpringLoginFilter</filter-name>
-       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
 
-    <filter-mapping>
-       <filter-name>SpringLoginFilter</filter-name>
-       <url-pattern>/editprofile.html</url-pattern>
-    </filter-mapping>
+	<filter>
+		<filter-name>SpringLoginFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>springLoginFilter</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>SpringLoginFilter</filter-name>
+		<url-pattern>/editprofile.html</url-pattern>
+	</filter-mapping>
 
 	<!-- Disables Servlet Container welcome file handling. Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->
 	<welcome-file-list>
