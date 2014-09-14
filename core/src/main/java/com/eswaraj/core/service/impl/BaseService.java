@@ -56,7 +56,6 @@ public class BaseService implements Serializable {
     protected DeviceRepository deviceRepository;
     @Autowired
     protected FacebookAppRepository facebookAppRepository;
-    @Autowired
     protected FacebookAccountRepository facebookAccountRepository;
 
 
