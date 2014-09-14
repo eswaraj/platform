@@ -143,7 +143,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         Facebook facebook = new FacebookTemplate(registerFacebookAccountRequest.getToken());
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
-        FacebookAccount facebookAccount = facebookAccountRepository.getFacebookAccountByFacebookUserId(facebookUserId);
+        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
         if (facebookAccount == null) {
             // Create a new new afcebook account and attach it to user
             facebookAccount = new FacebookAccount();
@@ -213,7 +213,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
-        FacebookAccount facebookAccount = facebookAccountRepository.getFacebookAccountByFacebookUserId(facebookUserId);
+        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
         User user;
         FacebookApp facebookApp = getOrCreateFacebookApp(registerFacebookAccountWebRequest.getFacebookAppId());
         if (facebookAccount == null) {
