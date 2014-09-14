@@ -53,7 +53,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
-                    <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-user"></i>
+                    <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-off"></i>
                     </a>
                 </li>
             </ul>
