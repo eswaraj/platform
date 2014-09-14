@@ -35,13 +35,15 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="index.php">
-                <img src="${user.person.name}${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
+                <img src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
                 <span pull-left="">e-Swaraj</span>
             </a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-			
+			<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>
+                <li>
+                <li>
                     <a href="05-constituency.php">My Constituency</a>
                 </li>
                 <li>
