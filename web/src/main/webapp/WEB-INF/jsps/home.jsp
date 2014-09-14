@@ -53,12 +53,12 @@
 								</a>
 							</div>
 							<div class="for-user">
-							     <c:if test="${loggedId}">
+							     <c:if test="${loggedIn}">
 							         <%--If User is Logged in --%>
 							         Welcome "${user.person.name}"
 							     </c:if><%--If User is Logged in --%>
 							     
-							     <c:if test="${!loggedId}">
+							     <c:if test="${!loggedIn}">
 							     <%--If User is NOT Logged in --%>
 							     <div class="btn-group"
                                     onclick="location.href='/web/login/facebook';">
@@ -103,10 +103,10 @@
 									<li><a class="scroll-to" href="#team">Team</a></li>
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
-								    <c:if test="${loggedId}">
+								    <c:if test="${loggedIn}">
 								    Welcome "${user.person.name}"
 								    </c:if>
-								    <c:if test="${!loggedId}">
+								    <c:if test="${!loggedIn}">
 								    <li>
                                         <div class="btn-group"
                                             onclick="location.href='/web/login/facebook';">

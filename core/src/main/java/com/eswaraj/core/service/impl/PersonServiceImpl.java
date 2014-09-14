@@ -262,7 +262,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         }
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);
-        userDto.setPerson(personConvertor.convertBean(user.getPerson()));
+        userDto.setPerson(personConvertor.convertBean(personRepository.findOne(user.getPerson().getId())));
         userDto.setFacebookAccount(facebookAccountConvertor.convertBean(facebookAccount));
         return userDto;
     }

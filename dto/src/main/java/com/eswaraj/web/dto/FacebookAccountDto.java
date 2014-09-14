@@ -49,4 +49,10 @@ public class FacebookAccountDto extends BaseDto {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "FacebookAccountDto [userName=" + userName + ", facebookUserId=" + facebookUserId + ", name=" + name + ", gender=" + gender + ", email=" + email + ", id=" + id + ", externalId="
+                + externalId + "]";
+    }
 }

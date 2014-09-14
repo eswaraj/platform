@@ -63,7 +63,7 @@ public class BaseController {
 
     protected void addGenericValues(ModelAndView mv, HttpServletRequest httpServletRequest) {
         mv.getModel().put("staticHost", staticContentHost);
-        UserDto loggeInUser = getLoggedInUserinSession(httpServletRequest);
+        UserDto loggeInUser = getLoggedInUserFromSession(httpServletRequest);
         mv.getModel().put("user", loggeInUser);
         if (loggeInUser == null) {
             mv.getModel().put("loggedIn", false);
@@ -111,7 +111,7 @@ public class BaseController {
         httpServletRequest.getSession(true).setAttribute(LOGGED_IN_USER_SESSION_PARAM, user);
     }
 
-    protected UserDto getLoggedInUserinSession(HttpServletRequest httpServletRequest) {
+    protected UserDto getLoggedInUserFromSession(HttpServletRequest httpServletRequest) {
         return (UserDto) httpServletRequest.getSession().getAttribute(LOGGED_IN_USER_SESSION_PARAM);
     }
 
