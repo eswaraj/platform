@@ -35,7 +35,7 @@ public class FacebookAppPermissionConvertor extends BaseConvertor<FacebookAppPer
 		}
         BeanUtils.copyProperties(facebookAppPermissionDto, facebookAppPermission);
         if (!StringUtils.isEmpty(facebookAppPermissionDto.getFacebookAppId())) {
-            FacebookApp facebookApp = facebookAppRepository.getFacebookAppByFacebookAppId(facebookAppPermissionDto.getFacebookAppId());
+            FacebookApp facebookApp = facebookAppRepository.findByPropertyValue("appId", facebookAppPermissionDto.getFacebookAppId());
             if (facebookApp == null) {
                 facebookApp = new FacebookApp();
                 facebookApp.setAppId(facebookAppPermissionDto.getFacebookAppId());
