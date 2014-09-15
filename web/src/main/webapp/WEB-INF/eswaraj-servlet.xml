@@ -9,15 +9,15 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd'">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-        <property name="searchSystemEnvironment" value="true" />
-        <property name="properties">
+	<beans:bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <beans:property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <beans:property name="searchSystemEnvironment" value="true" />
+        <beans:property name="properties">
             <util:properties>
-                <prop key="dev">ravi</prop>
+                <beans:prop key="dev">ravi</beans:prop>
             </util:properties>
-        </property>
-    </bean>
+        </beans:property>
+    </beans:bean>
      <beans:import resource="controllers.xml" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
