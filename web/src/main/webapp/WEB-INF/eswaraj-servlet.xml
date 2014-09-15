@@ -80,9 +80,5 @@
 	</beans:bean>
 
 	<task:annotation-driven />
-	<!-- Imports user-defined @Controller beans that process client requests -->
-	<beans:beans profile="prod,tomcat">
-		<beans:import resource="controllers.xml" />
-		<beans:import resource="eswaraj-neo4j-db-context.xml" />
-	</beans:beans>
+	
 </beans:beans>
