@@ -45,7 +45,7 @@ public class ProfileController extends BaseController {
             LocalDate birthdate = new LocalDate(1970, 1, 20);
             LocalDate now = new LocalDate();
             Years age = Years.yearsBetween(birthdate, now);
-            mv.getModel().put("age", age);
+            mv.getModel().put("age", age.getYears());
         }
 
     }
