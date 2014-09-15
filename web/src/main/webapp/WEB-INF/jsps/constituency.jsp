@@ -90,28 +90,7 @@ var complaints = [
                   overlay:{
                     latLng: marker.getPosition(),
                     options:{
-                      content:"<div class='gmap-marker arrow-box'><div class='complaint-image'><img alt='' src='"+context.data.complaintImgUrl+ "'></div>
-							<div class='marker-content'>
-								<div class='media'>
-									<a href='#' class='pull-left'>
-										<img alt='' src='" + context.data.userImgUrl + "' class='media-object'></a>
-									<div class='media-body'>
-										<strong>" + context.data.userName + "
-											<small>Says</small></strong> 
-										<br>
-										<small>
-											" + context.data.category + "
-										</small>
-									</div>
-								</div>
-								<div class='other-info'>
-									<span> <strong>Location - </strong>
-										" + context.data.address + "
-									</span>
-									<span><strong>Date -</strong> " + context.data.date + "</span>
-								</div>
-							</div>
-						</div>",
+                      content:"",
                       offset: {
                         x:-46,
                         y:-73
