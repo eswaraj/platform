@@ -35,12 +35,24 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+			 <li class="download">
+				<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&hl=en">
+					<span>
+						<img alt="" src="images/android-icon.png"></span>
+				</a>
+			</li>
+			<li class="download">
+				<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8">
+					<span>
+						<img alt="" src="images/apple-icon.png"></span>
+				</a>
+			</li> 
                 <li class="active">
 				<c:if test="${!loggedIn}">
                     <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-user"></i>
 					</c:if>
 					<c:if test="${loggedIn}">
-                    <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-off"></i>
+                    <a href="/web/logout"> <i class="glyphicon glyphicon-off"></i>
 					</c:if>
                     </a>
                 </li>

@@ -106,7 +106,18 @@
 									<li><a class="scroll-to" href="#team">Team</a></li>
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
-								    
+								 <li class="download">
+										<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&hl=en">
+											<span>
+												<img alt="" src="images/android-icon.png"></span>
+										</a>
+									</li>
+									<li class="download">
+										<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8">
+											<span>
+												<img alt="" src="images/apple-icon.png"></span>
+										</a>
+									</li>   
 									<c:if test="${loggedIn}">
 									<li style="padding: 20px;">Welcome <strong>${user.person.name}</strong></li>
 									
