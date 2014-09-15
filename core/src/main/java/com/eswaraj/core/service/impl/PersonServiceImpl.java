@@ -3,6 +3,7 @@
  */
 package com.eswaraj.core.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +59,8 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     private UserDeviceRepository userDeviceRepository;
     @Autowired
     private DeviceConvertor deviceConvertor;
+
+    private SimpleDateFormat facebookDobFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 	@Override
 	public PersonDto savePerson(PersonDto personDto) throws ApplicationException {
@@ -202,6 +205,16 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         if (StringUtils.isEmpty(person.getName()) || person.getName().equals("anonymous")) {
             person.setName(facebookUserProfile.getName());
         }
+        if (person.getDob() == null) {
+            String dobStr = facebookUserProfile.getBirthday(); // mm/dd/yyyy format
+            if (dobStr != null) {
+                try{
+                    person.setDob(facebookDobFormat.parse(dobStr));
+                } catch (Exception ex) {
+                    logger.error("unable to parse date of birthe String {}", dobStr);
+                }
+            }
+        }
 
         person.setProfilePhoto("http://graph.facebook.com/" + facebookUserProfile.getId() + "/picture");
         person = personRepository.save(person);
@@ -259,6 +272,8 @@ public class PersonServiceImpl extends BaseService implements PersonService {
                 facebookAppPermission.setToken(registerFacebookAccountWebRequest.getToken());
                 facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);
             }
+            Person person = personRepository.getPersonByUser(user);
+            updatePersonInfoFromFacebook(person, facebookUserProfile);
         }
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);

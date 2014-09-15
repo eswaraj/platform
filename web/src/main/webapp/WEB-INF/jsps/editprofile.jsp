@@ -21,7 +21,11 @@
             <img src="${user.person.profilePhoto}" alt="profile-pic" class="profile-pic">
             <p class="read"> <strong>${user.person.name}</strong>
                 <br>
-                <span>25 Yrs, ${user.person.gender}</span>
+                <span>
+                <c:if test="${!empty age}">
+                ${age} Yrs,
+                </c:if>
+                 ${user.person.gender}</span>
             </p>
         </div>
         <div class="innerblock">

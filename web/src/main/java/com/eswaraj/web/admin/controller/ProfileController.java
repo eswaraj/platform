@@ -1,7 +1,11 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -11,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.UserDto;
 
 @Controller
 public class ProfileController extends BaseController {
@@ -28,8 +33,21 @@ public class ProfileController extends BaseController {
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
+        addLoggedInUserAge(mv, httpServletRequest);
         mv.setViewName("editprofile");
         return mv;
+    }
+
+    protected void addLoggedInUserAge(ModelAndView mv, HttpServletRequest httpServletRequest) {
+        UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        Date dob = loggedInUser.getPerson().getDob();
+        if (dob != null) {
+            LocalDate birthdate = new LocalDate(1970, 1, 20);
+            LocalDate now = new LocalDate();
+            Years age = Years.yearsBetween(birthdate, now);
+            mv.getModel().put("age", age);
+        }
+
     }
 
 }
