@@ -17,7 +17,7 @@ import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.ErrorMessageDto;
 import com.eswaraj.web.dto.UserDto;
-import com.eswaraj.web.login.controller.SessionUtil;
+import com.eswaraj.web.session.SessionUtil;
 
 public class BaseController {
 
