@@ -3,7 +3,6 @@
  */
 package com.eswaraj.core.service.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -205,12 +204,6 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         }
         if (StringUtils.isEmpty(person.getName()) || person.getName().equals("anonymous")) {
             person.setName(facebookUserProfile.getName());
-        }
-        logger.info("Date of Borth From Facebook : {}", facebookUserProfile.getBirthday());
-        try {
-            logger.info("Date of Borth in eswaraj : {}", facebookDobFormat.parse(facebookUserProfile.getBirthday()));
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
         if (person.getDob() == null) {
             String dobStr = facebookUserProfile.getBirthday(); // mm/dd/yyyy format

@@ -42,7 +42,7 @@ public class ProfileController extends BaseController {
         UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         Date dob = loggedInUser.getPerson().getDob();
         if (dob != null) {
-            LocalDate birthdate = new LocalDate(1970, 1, 20);
+            LocalDate birthdate = new LocalDate(dob);
             LocalDate now = new LocalDate();
             Years age = Years.yearsBetween(birthdate, now);
             mv.getModel().put("age", age.getYears());
