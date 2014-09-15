@@ -1,6 +1,8 @@
 package com.eswaraj.web.admin.controller;
 
+import java.lang.reflect.Type;
 import java.net.URI;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,14 @@ import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 @Component
 public class ApiUtil {
@@ -45,7 +55,21 @@ public class ApiUtil {
     @Value("${eswaraj_facebook_app_id}")
     private String facebookAppId;
 
-    private Gson gson = new Gson();
+    JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+        @Override
+        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return json == null ? null : new Date(json.getAsLong());
+        }
+    };
+    JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+
+        @Override
+        public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+            return src == null ? null : new JsonPrimitive(src.getTime());
+        }
+    };
+
+    private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
 
     public ApiUtil() {
         poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager();

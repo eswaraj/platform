@@ -52,7 +52,7 @@
         <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
         <a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
     </div>
-    <script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(19.0300657,73.03511379999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.0300657, 73.03511379999998)});infowindow = new google.maps.InfoWindow({content:"<b>Somnath Nabajja</b><br/>CBD Belapur<br/>400706 Navi Mumbai" });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+    <script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(19.0300657,73.03511379999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.0300657, 73.03511379999998)});infowindow = new google.maps.InfoWindow({content:"<b>${user.person.name}</b><br/>CBD Belapur<br/>400706 Navi Mumbai" });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
 </div>
 </div>
 <jsp:include page="footer.jsp" />
