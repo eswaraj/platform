@@ -96,6 +96,9 @@
 							</div>
 							<div class="collapse navbar-collapse">
 								<ul class="nav navbar-nav">
+								<c:if test="${loggedIn}">
+								<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>
+								</c:if>
 									<li><a class="scroll-to" href="#landing-screen">Download</a>
 									</li>
 									<li class="active"><a href="#know-more" class="scroll-to">Know
@@ -105,9 +108,9 @@
 								<ul class="nav navbar-nav navbar-right">
 								    
 									<c:if test="${loggedIn}">
-									<li>Welcome ${user.person.name}</li>
-									<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>
-									<li onclick="location.href='/web/logout';"><i class="glyphicon glyphicon-off"></i></li>
+									<li style="padding: 20px;">Welcome <strong>${user.person.name}</strong></li>
+									
+									<li onclick="location.href='/web/logout';"><i style="padding: 20px;" class="glyphicon glyphicon-off"></i></li>
 								    </c:if>
 								
 								    <c:if test="${!loggedIn}">
