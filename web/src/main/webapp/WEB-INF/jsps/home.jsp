@@ -114,10 +114,13 @@
 								    </c:if>
 								
 								    <c:if test="${!loggedIn}">
-								    <li class="active">
-                                        <a href="/web/login/facebook">
-                                          <i class="glyphicon glyphicon-facebook"></i>  Log in with Facebook
-                                        </a>
+								    <li>
+                                    <div onclick="location.href='/web/login/facebook';" class="btn-group">
+								<button class="btn btn-fb btn-sm" type="button">
+									<i class="icomoon icomoon-facebook"></i>
+								</button>
+								<button class="btn btn-fb btn-sm" type="button">Log in with Facebook</button>
+							</div>
                                     </li>
                                     </c:if>
 									
