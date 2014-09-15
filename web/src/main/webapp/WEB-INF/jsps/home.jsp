@@ -110,7 +110,7 @@
 									<c:if test="${loggedIn}">
 									<li style="padding: 20px;">Welcome <strong>${user.person.name}</strong></li>
 									
-									<li onclick="location.href='/web/logout';"><i style="padding: 20px;" class="glyphicon glyphicon-off"></i></li>
+									<li onclick="location.href='/web/logout';" class="active"><i style="padding: 20px;" class="glyphicon glyphicon-off"></i></li>
 								    </c:if>
 								
 								    <c:if test="${!loggedIn}">
