@@ -110,19 +110,14 @@
 									<c:if test="${loggedIn}">
 									<li style="padding: 20px;">Welcome <strong>${user.person.name}</strong></li>
 									
-									<li onclick="location.href='/web/logout';" class="active"><i style="padding: 20px;" class="glyphicon glyphicon-off"></i></li>
+									<li class="active"><a href="/web/logout"><i class="glyphicon glyphicon-off"></i></a></li>
 								    </c:if>
 								
 								    <c:if test="${!loggedIn}">
-								    <li>
-                                        <div class="btn-group"
-                                            onclick="location.href='/web/login/facebook';">
-                                            <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="icomoon icomoon-facebook"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary btn-sm">Log
-                                                in with Facebook</button>
-                                        </div>
+								    <li class="active">
+                                        <a href="/web/login/facebook">
+                                          <i class="glyphicon glyphicon-facebook"></i>  Log in with Facebook
+                                        </a>
                                     </li>
                                     </c:if>
 									
