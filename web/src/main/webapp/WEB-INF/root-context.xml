@@ -13,7 +13,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
     <context:component-scan base-package="com.eswaraj.web.session" />
-    <bean id="springLoginFilter" class="com.eswaraj.web.login.controller.SpringLoginFilter" autowire="byName">
+    <bean id="springLoginFilter" class="com.eswaraj.web.filters.SpringLoginFilter" autowire="byName">
     </bean>
     <!-- Imports user-defined @Controller beans that process client requests -->
      <import resource="classpath:eswaraj-core.xml" />
