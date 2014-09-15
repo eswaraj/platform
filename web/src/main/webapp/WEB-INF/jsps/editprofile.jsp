@@ -18,10 +18,10 @@
     <h2>My Profile</h2>
     <div class="profile">
         <div class="innerblock">
-            <img src="images/profile-pic.jpg" alt="profile-pic" class="profile-pic">
-            <p class="read"> <strong>Somnath Nabajja</strong>
+            <img src="${user.person.profilePhoto}" alt="profile-pic" class="profile-pic">
+            <p class="read"> <strong>${user.person.name}</strong>
                 <br>
-                <span>25 Yrs, Male</span>
+                <span>25 Yrs, ${user.person.gender}</span>
             </p>
         </div>
         <div class="innerblock">
