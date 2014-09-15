@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd'">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-     <import resource="controllers.xml" />
+     <beans:import resource="controllers.xml" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven conversion-service="conversionService" enableMatrixVariables="true">
