@@ -33,7 +33,7 @@ public class CitizenServiceController extends BaseController {
         Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories, true);
         mv.getModel().put("rootCategories", allRootcategories);
 
-        mv.setViewName("home");
+        mv.setViewName("citizenservices");
         return mv;
     }
 }
