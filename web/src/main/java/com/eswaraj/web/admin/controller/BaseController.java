@@ -1,5 +1,6 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.domain.validator.exception.ValidationException;
+import com.eswaraj.web.controller.beans.CategoryBean;
 import com.eswaraj.web.dto.ErrorMessageDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.session.SessionUtil;
@@ -78,6 +80,19 @@ public class BaseController {
 				+ submittedFileName.substring(submittedFileName
 						.lastIndexOf("."));
 	}
+
+    protected Long addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
+        if (allRootcategories == null) {
+            mv.getModel().put("total", 0);
+            return 0L;
+        }
+        Long total = 0L;
+        for (CategoryBean oneCategoryBean : allRootcategories) {
+            total = oneCategoryBean.getLocationCount() + total;
+        }
+        mv.getModel().put("total", total);
+        return total;
+    }
 
 
 }

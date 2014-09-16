@@ -153,7 +153,9 @@ public class ApiUtil {
         if (getGlobalCount) {
             extraParams.put("counter", "global");
         }
-        extraParams.put("locationId", String.valueOf(locationId));
+        if (locationId != null) {
+            extraParams.put("locationId", String.valueOf(locationId));
+        }
         String urlPath = "/api/v0/categories";
         return getResponseFrom(httpServletRequest, urlPath, extraParams);
     }

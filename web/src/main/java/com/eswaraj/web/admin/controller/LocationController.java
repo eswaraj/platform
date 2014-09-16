@@ -156,17 +156,4 @@ public class LocationController extends BaseController {
         mv.getModel().put("currentPage", currentPage);
     }
 
-    private Long addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
-        if (allRootcategories == null) {
-            mv.getModel().put("total", 0);
-            return 0L;
-        }
-        Long total = 0L;
-        for (CategoryBean oneCategoryBean : allRootcategories) {
-            total = oneCategoryBean.getLocationCount() + total;
-        }
-        mv.getModel().put("total", total);
-        return total;
-    }
-
 }
