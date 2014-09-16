@@ -96,6 +96,9 @@
 							</div>
 							<div class="collapse navbar-collapse">
 								<ul class="nav navbar-nav">
+								<c:if test="${loggedIn}">
+								<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>
+								</c:if>
 									<li><a class="scroll-to" href="#landing-screen">Download</a>
 									</li>
 									<li class="active"><a href="#know-more" class="scroll-to">Know
@@ -103,23 +106,32 @@
 									<li><a class="scroll-to" href="#team">Team</a></li>
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
-								    
+								 <li class="download">
+										<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&hl=en">
+											<span>
+												<img alt="" src="images/android-icon.png"></span>
+										</a>
+									</li>
+									<li class="download">
+										<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8">
+											<span>
+												<img alt="" src="images/apple-icon.png"></span>
+										</a>
+									</li>   
 									<c:if test="${loggedIn}">
-									<li>Welcome ${user.person.name}</li>
-									<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>
-									<li onclick="location.href='/web/logout';"><i class="glyphicon glyphicon-off"></i></li>
+									<li style="padding: 20px;">Welcome <strong>${user.person.name}</strong></li>
+									
+									<li class="active"><a href="/web/logout"><i class="glyphicon glyphicon-off"></i></a></li>
 								    </c:if>
 								
 								    <c:if test="${!loggedIn}">
 								    <li>
-                                        <div class="btn-group"
-                                            onclick="location.href='/web/login/facebook';">
-                                            <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="icomoon icomoon-facebook"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary btn-sm">Log
-                                                in with Facebook</button>
-                                        </div>
+                                    <div onclick="location.href='/web/login/facebook';" class="btn-group">
+								<button class="btn btn-fb btn-sm" type="button">
+									<i class="icomoon icomoon-facebook"></i>
+								</button>
+								<button class="btn btn-fb btn-sm" type="button">Log in with Facebook</button>
+							</div>
                                     </li>
                                     </c:if>
 									

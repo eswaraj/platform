@@ -90,7 +90,7 @@ var complaints = [
                   overlay:{
                     latLng: marker.getPosition(),
                     options:{
-                      content:"",
+                      content:"this is test",
                       offset: {
                         x:-46,
                         y:-73
