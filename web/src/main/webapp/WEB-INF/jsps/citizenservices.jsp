@@ -189,7 +189,6 @@
 						<tr>
 							<th>Name</th>
 							<th>Description</th>
-							<th>parentCategoryId</th>
 							<th>root</th>
 							<th>Image</th>
 							<th>headerImageUrl</th>
@@ -201,7 +200,6 @@
 
 								<td>${oneCategory.name}</td>
 								<td>${oneCategory.description}</td>
-								<td>${oneCategory.parentCategoryId}</td>
 								<td>${oneCategory.root}</td>
 								<td><img src="${oneCategory.imageUrl}" width="100" /></td>
 								<td><img src="${oneCategory.headerImageUrl}" height="100" /></td>
@@ -211,14 +209,13 @@
 								<%--Now look into child categories --%>
 								<c:if test="${!empty oneCategory.childCategories}">
 									<tr>
-										<td colspan="8">
+										<td colspan="7">
 											<table>
 												<c:forEach items="${oneCategory.childCategories}"
 													var="oneChildCategory">
 													<tr>
 														<td>${oneChildCategory.name}</td>
 														<td>${oneChildCategory.description}</td>
-														<td>${oneChildCategory.parentCategoryId}</td>
 														<td>${oneChildCategory.root}</td>
 														<td><img src="${oneChildCategory.imageUrl}" width="100" /></td>
 														<td><img src="${oneChildCategory.headerImageUrl}"
