@@ -13,6 +13,7 @@ public class CategoryBean extends BaseBean {
     private Long locationCount;
     private Long globalCount;
     private boolean root;
+    private String description;
     private List<CategoryBean> childCategories;
 
     public String getExternalId() {
@@ -85,5 +86,13 @@ public class CategoryBean extends BaseBean {
 
     public void setChildCategories(List<CategoryBean> childCategories) {
         this.childCategories = childCategories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
