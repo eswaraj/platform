@@ -6,7 +6,7 @@ public class CategoryBean extends BaseBean {
 
     private static final long serialVersionUID = 1L;
     private String externalId;
-    private String headerImageurl;
+    private String headerImageUrl;
     private String imageUrl;
     private String name;
     private String videoUrl;
@@ -22,14 +22,6 @@ public class CategoryBean extends BaseBean {
 
     public void setExternalId(String externalId) {
         this.externalId = externalId;
-    }
-
-    public String getHeaderImageurl() {
-        return headerImageurl;
-    }
-
-    public void setHeaderImageurl(String headerImageurl) {
-        this.headerImageurl = headerImageurl;
     }
 
     public String getImageUrl() {
@@ -94,5 +86,13 @@ public class CategoryBean extends BaseBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getHeaderImageUrl() {
+        return headerImageUrl;
+    }
+
+    public void setHeaderImageUrl(String headerImageUrl) {
+        this.headerImageUrl = headerImageUrl;
     }
 }
