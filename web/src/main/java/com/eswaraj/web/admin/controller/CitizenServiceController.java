@@ -30,7 +30,7 @@ public class CitizenServiceController extends BaseController {
         String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest, null, true);
         List<CategoryBean> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryBean>>() {
         }.getType());
-        Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories);
+        Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories, true);
         mv.getModel().put("rootCategories", allRootcategories);
 
         mv.setViewName("home");

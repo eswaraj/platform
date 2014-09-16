@@ -58,7 +58,7 @@ public class LocationController extends BaseController {
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest, locationId, false);
                 List<CategoryBean> allRootcategories = gson.fromJson(allCategoriesString, new TypeToken<List<CategoryBean>>() {
                 }.getType());
-                Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories);
+                Long totalComplaints = addTotalComplaintCountToModel(mv, allRootcategories, false);
                 mv.getModel().put("rootCategories", allRootcategories);
                 List<ComplaintBean> locationComplaints = null;
                 if (categoryId == null) {

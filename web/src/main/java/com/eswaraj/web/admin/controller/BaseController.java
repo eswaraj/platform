@@ -81,14 +81,20 @@ public class BaseController {
 						.lastIndexOf("."));
 	}
 
-    protected Long addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories) {
+
+    protected Long addTotalComplaintCountToModel(ModelAndView mv, List<CategoryBean> allRootcategories, boolean countGlobal) {
         if (allRootcategories == null) {
             mv.getModel().put("total", 0);
             return 0L;
         }
         Long total = 0L;
         for (CategoryBean oneCategoryBean : allRootcategories) {
-            total = oneCategoryBean.getLocationCount() + total;
+            if (countGlobal) {
+                total = oneCategoryBean.getGlobalCount() + total;
+            } else {
+                total = oneCategoryBean.getLocationCount() + total;
+            }
+
         }
         mv.getModel().put("total", total);
         return total;
