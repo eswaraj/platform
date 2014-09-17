@@ -1,6 +1,5 @@
 body {
     padding: 51px 0 40px 0;
-    font-family: "Lato",helvetica;
 }
 .right-pane, .left-pane {
     width: 250px;
@@ -108,6 +107,7 @@ footer .sep {
     width: 100%;
 }
 .listing-wrapper {
+
 }
 .listing-wrapper h1 {
     margin: 0;
@@ -148,6 +148,7 @@ footer .sep {
     width: 100%;
     padding-left: 50px;
     margin: 0 0 0 -45px;
+
 }
 .connector {
     color: #aaa;
@@ -171,31 +172,11 @@ footer .sep {
     white-space: nowrap;
     max-width: 100%;
 }
-.classify .badge{
+.badge-infra {
+    background: #FF5151;
     font-weight: normal;
     padding: 4px 12px;
-    margin-right: 5px;
-}
-.badge-infra {
-    background: #ff001a;
-}
-.badge-maintainance {
-    background: #F8BA00;
-}
-.badge-pricing {
-    background: #c04f50;
-}
-.badge-awareness {
-    background: #00b05d;
-}
-.badge-others {
-    background: #676767;
-}
-.badge-default {
-    background: transparent;
-    border: 1px solid #C7C7C7;
-    color: #8F8F8F;
-    line-height: 9px;
+    /*color: #fff;*/
 }
 .issue-id {
     color: #ee592a;
@@ -214,6 +195,7 @@ footer .sep {
 .whenwhere .location {
     color: #646464;
 }
+
 /*list row ends*/
 input[type="checkbox"],input[type="radio"] {
     position: relative;
@@ -266,7 +248,7 @@ label {
     text-decoration: underline;
     }
 .banner .mla-profile a {
-    color:#fff;
+	color:#fff;
 }
 .banner .mla-profile p {
     color: #fff;
@@ -349,6 +331,98 @@ label {
 .eswaraj-int-twitter iframe {
     width: 100% !important;
 }
+
+
+#map-container{
+        position:relative;
+        min-height:700px;
+        height:100%;
+      }
+      #my_map{
+        border: 1px dashed #C0C0C0;
+        width: 95%;
+        min-height: 700px;
+        height: 100%;
+      }
+      
+      /* cluster */
+      .cluster{
+      	color: #FFFFFF;
+      	text-align:center;
+      	font-family: Verdana;
+      	font-size:14px;
+      	font-weight:bold;
+      	text-shadow: 0 0 2px #000;
+        -moz-text-shadow: 0 0 2px #000;
+        -webkit-text-shadow: 0 0 2px #000;
+      }
+      .cluster-1{
+        background: url(../images/logo50.jpg) no-repeat;
+        line-height:50px;
+      	width: 50px;
+      	height: 40px;
+      }
+      .cluster-2{
+        background: url(../images/logo60.jpg) no-repeat;
+        line-height:53px;
+      	width: 60px;
+      	height: 48px;
+      }
+      .cluster-3{
+        background: url(../images/logo70.jpg) no-repeat;
+        line-height:66px;
+      	width: 70px;
+      	height: 56px;
+      }
+      
+      /* infobulle */
+      .infobulle{
+        overflow: hidden; 
+        cursor: default; 
+        clear: both; 
+        position: relative; 
+        height: 34px; 
+        padding: 0; 
+        background-color: rgb(57, 57, 57);
+        border-radius: 4px 4px; 
+        -moz-border-radius: 4px 4px;
+        -webkit-border-radius: 4px 4px;
+        border: 1px solid #2C2C2C;
+      }
+      .infobulle .bg{
+        font-size:1px;
+        height:16px;
+        border:0px;
+        width:100%;
+        padding: 0px;
+        margin:0px;
+        background-color: #5E5E5E;
+      }
+      .infobulle .text{
+        color:#FFFFFF;
+        font-family: Verdana;
+        font-size:11px;
+        font-weight:bold;
+        line-height:25px;
+        padding:4px 20px;
+        text-shadow:0 -1px 0 #000000;
+        white-space: nowrap;
+        margin-top: -17px;
+      }
+      .infobulle.drive .text{
+        
+        padding:4px 20px 4px 36px;
+      }
+      .arrow{
+        position: absolute; 
+        left: 45px; 
+        height: 0; 
+        width: 0; 
+        margin-left: 0; 
+        border-width: 10px 10px 0 0; 
+        border-color: #2C2C2C transparent transparent; 
+        border-style: solid;
+      }
 .sub-header {
     background: #e2e2e2;
     padding: 10px 15px;
@@ -398,56 +472,18 @@ html,body {
     margin: 5px 0 0 0;
     width: 100%;
 }
-.gmap-marker {
-    max-width:280px;
-    border-radius: 3px;
-    border-radius: 3px;
-    border:1px solid #ccc;
-}
-.gmap-marker .complaint-image{
-    background: #F0F0F0;
-    padding: 10px 5px;
-    text-align: center;
-    border-bottom: 1px solid #E6E6E6;
-}
-.gmap-marker .marker-content {
-    padding: 10px;}
-.gmap-marker .marker-content .media-object{
-    max-width: 40px;
-    border-radius: 50%;}
-.gmap-marker .marker-content .other-info{
-    font-size: 85%;
-    color: #888;
-    margin-top: 10px;}
-.gmap-marker .marker-content .other-info span{
-    display: block;
-    line-height: 16px;
-    border-top: 1px solid #ccc;
-    padding: 5px 0;}
-.arrow-box {
-    position: relative;
-    background: #;
-    border: 4px solid #cccccc;
-}
-.arrow-box:after, .arrow-box:before {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-.arrow-box:after {
-    border-color: rgba(0, 0, 0, 0);
-    border-top-color: #;
-    border-width: 10px;
-    margin-left: -10px;
-}
-.arrow-box:before {
-    border-color: rgba(204, 204, 204, 0);
-    border-top-color: #cccccc;
-    border-width: 16px;
-    margin-left: -16px;
-}
+.home-profile-pic
+{border: 1px solid #ccc;
+ border-radius: 50%;
+ max-width: 50px;"
+ }
+#map-container{
+        position:relative;
+        height:100%;
+      }
+      #my_map{
+        border: 1px dashed #C0C0C0;
+        width: 95%;
+        height: 100%;
+		min-height:700px;
+      }
