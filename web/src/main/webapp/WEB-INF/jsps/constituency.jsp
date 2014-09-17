@@ -90,7 +90,11 @@ var complaints = [
                   overlay:{
                     latLng: marker.getPosition(),
                     options:{
-                      content:"this is test",
+                      content:  "<div style='background:#fff;'>" +
+                                  "<div class='bg'>Complaint by User</div>" +
+                                  "<div class='text'>" + context.data.userid + " (" + context.data.address + ")</div>" +
+                                "</div>" +
+                                "<div class='arrow'></div>",
                       offset: {
                         x:-46,
                         y:-73
