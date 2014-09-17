@@ -84,14 +84,7 @@ console.log("at line 37");
             },
             events:{
               mouseover: function(marker, event, context){
-			  console.log("at line 87");
-                $(this).gmap3(
-                  {clear:"overlay"},
-                  {
-                  overlay:{
-                    latLng: marker.getPosition(),
-                    options:{
-                      content:  "<div class='gmap-marker arrow-box'>
+			  var html_marker = "<div class='gmap-marker arrow-box'>
     <div class='complaint-image'>
 	<img src='"+ context.data.complaintImgUrl + "'/>
 	</div>
@@ -115,7 +108,18 @@ console.log("at line 37");
 			<span><strong>Date -</strong> " + context.data.date + "</span>
 		</div>
 	</div>
-</div>",
+</div>";
+
+
+
+			  console.log("at line 87");
+                $(this).gmap3(
+                  {clear:"overlay"},
+                  {
+                  overlay:{
+                    latLng: marker.getPosition(),
+                    options:{
+                      content:html_marker,
                       offset: {
                         x:-46,
                         y:-73
