@@ -34,7 +34,7 @@ var complaints = [
   ];
   
   $(document).ready(function(){
-
+console.log("at line 37");
         $("#my_map").gmap3({
           map:{
             options: {
@@ -84,6 +84,7 @@ var complaints = [
             },
             events:{
               mouseover: function(marker, event, context){
+			  console.log("at line 87");
                 $(this).gmap3(
                   {clear:"overlay"},
                   {
@@ -104,7 +105,9 @@ var complaints = [
                 });
               },
               mouseout: function(){
+			  console.log("at line 107");
                 $(this).gmap3({clear:"overlay"});
+				
               }
             }
           }
