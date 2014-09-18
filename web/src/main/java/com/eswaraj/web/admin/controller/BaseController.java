@@ -29,7 +29,7 @@ public class BaseController {
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${static_content_host}")
+    @Value("${static_content_host:http://dev.eswaraj.com}")
     private String staticContentHost;
 
     @Autowired
