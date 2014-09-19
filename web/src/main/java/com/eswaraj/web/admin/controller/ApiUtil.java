@@ -49,6 +49,7 @@ public class ApiUtil {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     PoolingHttpClientConnectionManager poolingHttpClientConnectionManager;
     private HttpClientBuilder httpClientBuilder;
+	
 
     @Value("${api_host}")
     private String apiHost;
