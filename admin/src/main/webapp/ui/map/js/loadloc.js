@@ -49,7 +49,7 @@ $(document).ready(function(){
                   overlay:{
                     latLng: marker.getPosition(),
                     options:{
-                      content:  "<div class='infobulle"+(context.data.category ? " drive" : "")+"'>" +
+                      content:  "<div style='background:#fff;'>" +
                                   "<div class='bg'>Complaint by User</div>" +
                                   "<div class='text'>" + context.data.userid + " (" + context.data.address + ")</div>" +
                                 "</div>" +

@@ -1,20 +1,9 @@
-var data = { 
- "complaints": [
-
-{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924, "width": 500, "height": 375, "upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
-{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924, "width": 500, "height": 375, "upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
-{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924, "width": 500, "height": 375, "upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
-{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924, "width": 500, "height": 375, "upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
-
-
-{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924, "width": 500, "height": 375, "upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
-
-
-
-
-{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924, "width": 500, "height": 375, "upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"}
-
-
+var data = {"complaints": [
+{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924,"upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
+{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924,"upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
+{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924,"upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
+{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924,"upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
+{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924,"upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
+{"id": 27932, "parentCategoryId": 72832,icon:'https://s3-us-west-2.amazonaws.com/eswaraj-dev/mobile/images/ic_issue_water.png', "imUrl": "http://www.panoramio.com/photo/27932", "longitude": -64.404945, "latitude": -32.202924,"upload_date": "25 June 2006", "owner_id": 4483, "owner_name": "Miguel Coranti", "owner_url": "http://www.panoramio.com/user/4483"},
 ]
-
 }

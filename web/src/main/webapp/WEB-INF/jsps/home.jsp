@@ -107,13 +107,13 @@
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
 								 <li class="download">
-										<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&hl=en">
+										<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&hl=en" target="_blank">
 											<span>
 												<img alt="" src="images/android-icon.png"></span>
 										</a>
 									</li>
 									<li class="download">
-										<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8">
+										<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8" target="_blank">
 											<span>
 												<img alt="" src="images/apple-icon.png"></span>
 										</a>
