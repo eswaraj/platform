@@ -50,9 +50,9 @@ public class ApiUtil {
     PoolingHttpClientConnectionManager poolingHttpClientConnectionManager;
     private HttpClientBuilder httpClientBuilder;
 
-    @Value("${api_host:http://dev.api.eswaraj.com}")
+    @Value("${api_host}")
     private String apiHost;
-    @Value("${eswaraj_facebook_app_id:0123456789}")
+    @Value("${eswaraj_facebook_app_id}")
     private String facebookAppId;
 
     JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
