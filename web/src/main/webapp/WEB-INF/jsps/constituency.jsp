@@ -84,34 +84,6 @@ console.log("at line 37");
             },
             events:{
               mouseover: function(marker, event, context){
-			  var html_marker = "<div class='gmap-marker arrow-box'>
-    <div class='complaint-image'>
-	<img src='"+ context.data.complaintImgUrl + "'/>
-	</div>
-	<div class='marker-content'>
-		<div class='media'>
-			<a href='#' class='pull-left'>
-				<img src='" + context.data.userImgUrl + "' class='media-object'/></a>
-			<div class='media-body'>
-				<strong>" + context.data.userName + "
-					<small>Says</small></strong> 
-				<br>
-				<small>
-					" + context.data.category + "
-				</small>
-			</div>
-		</div>
-		<div class='other-info'>
-			<span> <strong>Location - </strong>
-				" + context.data.address + "
-			</span>
-			<span><strong>Date -</strong> " + context.data.date + "</span>
-		</div>
-	</div>
-</div>";
-
-
-
 			  console.log("at line 87");
                 $(this).gmap3(
                   {clear:"overlay"},
@@ -119,7 +91,7 @@ console.log("at line 37");
                   overlay:{
                     latLng: marker.getPosition(),
                     options:{
-                      content:html_marker,
+                      content: "<div class='gmap-marker arrow-box'><div class='complaint-image'><img src='" + context.data.complaintImgUrl + "'/></div><div class='marker-content'><div class='media'><a href='#' class='pull-left'><img src='" + context.data.userImgUrl + "' class='media-object'/></a><div class='media-body'><strong>" + context.data.userName + "<small>Says</small></strong><br><small>" + context.data.category + "</small></div></div><div class='other-info'><span> <strong>Location - </strong>" + context.data.address + "</span><span><strong>Date -</strong> " + context.data.date + "</span></div></div></div>",
                       offset: {
                         x:-46,
                         y:-73
