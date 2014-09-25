@@ -19,13 +19,37 @@
 							</a>
 						</li>
 						<li class="active">
-							<a href="05-constituency.php">My Constituency</a>
+							<a href="05-constituency.php" class="dropdown-toggle" data-toggle="dropdown">My Constituency
+							<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">AC</a>
+								</li>
+								
+								<li>
+									<a href="#">PC</a>
+								</li>
+								
+							</ul>
+							
 						</li>
 						<li>
-							<a href="07-my-mla.php">My MLA</a>
+							<a href="07-my-mla.php" class="dropdown-toggle" data-toggle="dropdown">My MLA
+							<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">MP</a>
+								</li>
+								
+								<li>
+									<a href="#">MLA</a>
+								</li>
+								
+							</ul>
 						</li>
 						<li>
-							<a href="08-citizen-services.php">Citizen Services</a>
+							<a href="08-citizen-services.php" >Citizen Services</a>
+							
 						</li>
 					</ul>
 					
