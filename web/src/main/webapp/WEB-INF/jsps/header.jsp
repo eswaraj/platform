@@ -44,7 +44,7 @@
 								</a>
 							</li>		
 						<li>
-							<div onclick="location.href='05-constituency.php';" class="btn-group">
+							<div onclick="location.href='/web/login/facebook';" class="btn-group">
 								<button class="btn btn-fb btn-sm" type="button">
 									<i class="icomoon icomoon-facebook"></i>
 								</button>
