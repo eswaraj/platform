@@ -28,6 +28,33 @@
 							<a href="08-citizen-services.php">Citizen Services</a>
 						</li>
 					</ul>
+					
+					<c:if test="${!loggedIn}">					
+					<ul class="nav navbar-nav navbar-right">
+								 <li class="download">
+								<a href="#">
+									<span>
+										<img src="images/android-icon.png"  alt=""></span>
+								</a>
+							</li>
+							<li class="download">
+								<a href="#">
+									<span>
+										<img src="images/apple-icon.png" alt=""></span>
+								</a>
+							</li>		
+						<li>
+							<div onclick="location.href='05-constituency.php';" class="btn-group">
+								<button class="btn btn-fb btn-sm" type="button">
+									<i class="icomoon icomoon-facebook"></i>
+								</button>
+								<button class="btn btn-fb btn-sm" type="button">Log in with Facebook</button>
+							</div>
+						</li>
+					</ul>					
+					</c:if>
+					
+					<c:if test="${loggedIn}">
 					<ul class="nav navbar-nav navbar-right">
 								 <li class="download">
 								<a href="#">
@@ -41,20 +68,6 @@
 										<img src="images/apple-icon.png" alt=""></span>
 								</a>
 							</li>
-					<c:if test="${!loggedIn}">					
-							
-						<li>
-							<div onclick="location.href='05-constituency.php';" class="btn-group">
-								<button class="btn btn-fb btn-sm" type="button">
-									<i class="icomoon icomoon-facebook"></i>
-								</button>
-								<button class="btn btn-fb btn-sm" type="button">Log in with Facebook</button>
-							</div>
-						</li>
-					</ul>					
-					</c:if>
-					
-					<c:if test="${loggedIn}">
 					<li class="dropdown user-profile">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="${user.person.profilePhoto}" alt="profile-pic">
@@ -67,7 +80,7 @@
 								</li>
 								
 								<li>
-									<a href="#">Logout</a>
+									<a href="/web/logout">Logout</a>
 								</li>
 								
 							</ul>
