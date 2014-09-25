@@ -1,5 +1,13 @@
+body{
+	font-family: "Arimo",helvetica;
+	position: relative;
+}
+body, html,.outerwrapper,.container{
+	height: 100%;
+}
 header{
 	text-align: center;
+	min-height: 100%;
 }
 .logo{
 	margin-top: 12%;
@@ -17,6 +25,12 @@ header{
 	}
 img{
 	max-width: 100%;
+}
+.heading p a{
+	text-decoration: underline;
+	font-style: italic;
+	font-family:helvetica;
+	color: #f15a24;
 }
 .highlight{
 	margin-bottom: 80px;
@@ -36,7 +50,11 @@ img{
 	margin-bottom: 80px;
 }
 .dwld{
-	margin: 20px 0 50px 0;
+	margin: 20px 0 40px 0;
+}
+.dwld a{
+	display: inline-block;
+	margin: 5px;
 }
 .contentwrapper{
 	padding-top: 70px;
@@ -104,6 +122,9 @@ footer{
 	padding: 10px;
 	background:#ee592a;
 	text-align: center;
+	position: absolute;
+	left: 0;
+	right: 0;
 }
 footer, footer a{
 	color: #fff;
@@ -115,15 +136,35 @@ footer .sep{
 	margin: 0 8px;
 }
 .mobile-anim{
-	height:542px;
+	height:542px;
+
 	position: relative;
 }
 .mobile-anim img{
 	position: absolute;
 	left: 0;
 	bottom: 0;}
-.home-profile-pic
-{border: 1px solid #ccc;
- border-radius: 50%;
- max-width: 50px;"
- }
+.nav .btn-group{
+	margin: 11px 10px 0 0;
+	height: 28px;
+}
+@media (max-width: 767px) {
+	.mobile-anim{
+		height: auto;
+		padding-bottom: 80px;
+	}
+	.mobile-anim img{
+		position: static;
+	}
+}
+.btn-fb {
+  border-color: #4669B3;
+  background: #3b5998;
+  color: #fff;
+}
+.btn-fb:hover,
+.btn-fb:focus {
+  background-color: #314A80;
+  background-position: 0 -15px;
+  color: #fff;
+}

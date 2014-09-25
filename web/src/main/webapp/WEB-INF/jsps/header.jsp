@@ -1,65 +1,81 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.php">
-                <img src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
-                <span pull-left="">e-Swaraj</span>
-            </a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-			<c:if test="${loggedIn}">
-			<li><img class="home-profile-pic" src="${user.person.profilePhoto}"/></li>                
-			</c:if>	
-                <li>
-                    <a href="05-constituency.php">My Constituency</a>
-                </li>
-                <li>
-                    <a href="07-my-mla.php">My MLA</a>
-                </li>
-                <li>
-                    <a href="home.php">Page</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-			 <li class="download">
-				<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&hl=en" target="_blank">
-					<span>
-						<img alt="" src="images/android-icon.png"></span>
-				</a>
-			</li>
-			<li class="download">
-				<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8" target="_blank">
-					<span>
-						<img alt="" src="images/apple-icon.png"></span>
-				</a>
-			</li> 
-                <li class="active">
-				<c:if test="${!loggedIn}">
-                    <a href="10-profile-pending.php"> <i class="glyphicon glyphicon-user"></i>
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.php">
+						<img src="images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
+						<span pull-left="">e-Swaraj</span>
+					</a>
+				</div>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="index.php"> <i class="glyphicon glyphicon-home"></i>
+							</a>
+						</li>
+						<li class="active">
+							<a href="05-constituency.php">My Constituency</a>
+						</li>
+						<li>
+							<a href="07-my-mla.php">My MLA</a>
+						</li>
+						<li>
+							<a href="08-citizen-services.php">Citizen Services</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+								 <li class="download">
+								<a href="#">
+									<span>
+										<img src="images/android-icon.png"  alt=""></span>
+								</a>
+							</li>
+							<li class="download">
+								<a href="#">
+									<span>
+										<img src="images/apple-icon.png" alt=""></span>
+								</a>
+							</li>
+					<c:if test="${!loggedIn}">					
+							
+						<li>
+							<div onclick="location.href='05-constituency.php';" class="btn-group">
+								<button class="btn btn-fb btn-sm" type="button">
+									<i class="icomoon icomoon-facebook"></i>
+								</button>
+								<button class="btn btn-fb btn-sm" type="button">Log in with Facebook</button>
+							</div>
+						</li>
+					</ul>					
 					</c:if>
+					
 					<c:if test="${loggedIn}">
-                    <a href="/web/logout"> <i class="glyphicon glyphicon-off"></i>
-					</c:if>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.nav-collapse -->
-    </div>
-</div>
-<!-- /.navbar -->
-
+					<li class="dropdown user-profile">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<img src="${user.person.profilePhoto}" alt="profile-pic">
+								${user.person.name}
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="10-profile-pending.php">View Profile</a>
+								</li>
+								
+								<li>
+									<a href="#">Logout</a>
+								</li>
+								
+							</ul>
+						</li>
+					</ul>
+					</c:if>	
+				</div>
+				<!-- /.nav-collapse -->
+			</div>
+		</div>
+		<!-- /.navbar -->
