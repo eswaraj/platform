@@ -11,7 +11,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>e-Swaraj - User Profile</title>
+	<title>eSwaraj</title>
 	<!-- css starts -->
 	<link rel="stylesheet" href="${staticHost}/css/bootstrap.css">
 	<link rel="stylesheet" href="${staticHost}/css/bootstrap-theme.css">
@@ -37,10 +37,7 @@
 			<jsp:include page="header.jsp" />
 				<div class="row">
 					<div class="col-sm-7">
-						<div class="logo">
-							<a href="">
-								<img src="images/eswaraj-logo.png" alt="logo"></a>
-						</div>
+						
 						<div class="heading">
 							<h1>
 								<span>eSwaraj -</span>
