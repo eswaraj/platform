@@ -54,13 +54,6 @@
 									<img src="images/app-store.png" height="65" width="200" alt="android link"></a>
 							</div>
 							<div class="for-user">
-								
-							<div class="btn-group" onclick="location.href='05-constituency.php';">
-								<button type="button" class="btn btn-fb btn-lg" onclick="location.href='05-constituency.php';">
-									<i class="icomoon icomoon-facebook"></i>
-								</button>
-								<button type="button" class="btn btn-fb btn-lg">Log in with Facebook</button>
-							</div>
 							
 						</div>
 					</div>
