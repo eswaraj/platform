@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="${staticHost}/css/bootstrap.css">
 	<link rel="stylesheet" href="${staticHost}/css/bootstrap-theme.css">
 	<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+	<link rel="stylesheet" href="${staticHost}/css/public.css">
 	<link rel="stylesheet" href="${staticHost}/css/jquery.selectBoxIt.css">
 	<link rel="stylesheet" href="${staticHost}/css/jquery.mobile-1.2.0.min.css">
 	<link rel="stylesheet" href="${staticHost}/css/bootstrap-tagsinput.css">
