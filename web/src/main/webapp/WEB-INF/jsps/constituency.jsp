@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>eSwaraj</title>
 <jsp:include page="include.jsp" />
 </head>
 <body>
