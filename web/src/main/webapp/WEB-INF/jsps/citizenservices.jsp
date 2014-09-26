@@ -20,7 +20,7 @@
 		<div class="col-sm-3">
 			<div class="panel panel-default">
 				<div class="panel-body user-profile">
-					<img src="${user.person.profilePhoto}" alt="profile-image">
+					<img src="${user.person.profilePhoto}/picture?type=large" alt="profile-image">
 					<a href="editprofile.html" title="Edit Profile"> <i class="glyphicon glyphicon-pencil"></i>
 						
 					</a>
