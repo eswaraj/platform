@@ -1,7 +1,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!-- css starts -->
+    <!-- css starts -->
     <link rel="stylesheet" href="${staticHost}/css/bootstrap.css">
     <link rel="stylesheet" href="${staticHost}/css/bootstrap-theme.css">
     <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
@@ -19,6 +19,6 @@
     <script src="${staticHost}/js/jquery.selectBoxIt.min.js"></script>
     <script src="${staticHost}/js/bootstrap-tagsinput.js"></script>
     <script src="${staticHost}/js/jquery.tocify.min.js"></script>
-
+     <script src="${staticHost}/js/jquery.timeago.js"></script>
 
     
