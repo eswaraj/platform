@@ -20,8 +20,8 @@
 		<div class="col-sm-3">
 			<div class="panel panel-default">
 				<div class="panel-body user-profile">
-					<img src="images/profile-pic.jpg" alt="mla image">
-					<a href="10-profile-pending.php" title="Edit Profile"> <i class="glyphicon glyphicon-pencil"></i>
+					<img src="${user.person.profilePhoto}" alt="profile-image">
+					<a href="editprofile.html" title="Edit Profile"> <i class="glyphicon glyphicon-pencil"></i>
 						
 					</a>
 				</div>
