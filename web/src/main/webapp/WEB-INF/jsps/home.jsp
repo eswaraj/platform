@@ -38,6 +38,10 @@
 			<jsp:include page="header.jsp" />
 				<div class="row">
 					<div class="col-sm-7">
+					<div class="logo">
+							<a href="">
+								<img src="images/eswaraj-logo.png" alt="logo"></a>
+						</div>
 						
 						<div class="heading">
 							<h1>
