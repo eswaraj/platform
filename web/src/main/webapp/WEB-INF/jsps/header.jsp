@@ -117,7 +117,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="10-profile-pending.php">View Profile</a>
+									<a href="editprofile.html">View Profile</a>
 								</li>
 								
 								<li>
