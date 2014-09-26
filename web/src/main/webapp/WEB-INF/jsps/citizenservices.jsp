@@ -13,6 +13,9 @@
 </head>
 <body>
 	<div class="container-fluid cs-wrapper">
+	<header>
+			<jsp:include page="header.jsp" />
+	</header>		
 	<div class="row">
 		<div class="col-sm-3">
 			<div class="panel panel-default">
