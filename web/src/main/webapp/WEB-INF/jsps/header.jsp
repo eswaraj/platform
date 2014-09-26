@@ -15,7 +15,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="index.php"> <i class="glyphicon glyphicon-home"></i>
+							<a href="index.html"> <i class="glyphicon glyphicon-home"></i>
 							</a>
 						</li>
 						<li class="active">
@@ -48,7 +48,18 @@
 							</ul>
 						</li>
 						<li>
-							<a href="08-citizen-services.php" >Citizen Services</a>
+							<a href="08-citizen-services.php" class="dropdown-toggle" data-toggle="dropdown" >My Citizen Services</a>
+							<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#water">Water</a>
+								</li>
+								
+								<li>
+									<a href="#electricity">Electricity</a>
+								</li>
+								
+							</ul>
 							
 						</li>
 					</ul>
