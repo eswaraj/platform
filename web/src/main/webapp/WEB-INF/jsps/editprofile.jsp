@@ -134,20 +134,10 @@
 							);
 							map.fitBounds(defaultBounds);
 
-							if(navigator.geolocation) {
-								navigator.geolocation.getCurrentPosition(function(position) {
-									var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-									map.setCenter(pos);
-									map.setZoom(14);
-									}, function() {
-									//User didnt give permission to use location
-								});
-								} else {
-								// Browser doesn't support Geolocation
-							}
-
 							<c:if test="${!empty user.person.pc}">
 								myLatlng = new google.maps.LatLng( ${user.person.latitude}, ${user.person.longitude} );
+								map.setCenter(myLatlng);
+								map.setZoom(14);
 							</c:if>
 
 							myMarker = new google.maps.Marker({
