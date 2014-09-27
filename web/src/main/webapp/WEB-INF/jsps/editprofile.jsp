@@ -58,7 +58,7 @@
 			<h2>My Profile</h2>
 			<div class="profile">
 				<div class="innerblock">
-					<img src="${user.person.profilePhoto}" alt="profile-pic" class="profile-pic">
+					<img src="${user.person.profilePhoto}?type=square&width=300&height=300" alt="profile-pic" class="profile-pic">
 					<p class="read"> <strong>${user.person.name}</strong>
 					<br>
 					<span>
