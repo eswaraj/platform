@@ -126,11 +126,10 @@
 							);
 							map.fitBounds(defaultBounds);
 
-							<c:if test="${!empty user.person.pc}">
-								myLatlng = new google.maps.LatLng( ${user.person.latitude}, ${user.person.longitude} );
-								map.setCenter(myLatlng);
-								map.setZoom(14);
-							</c:if>
+							//Test here is user.person.latitude and user.person.longitude are defined and then do the following
+								//myLatlng = new google.maps.LatLng( user.person.latitude, user.person.longitude );
+								//map.setCenter(myLatlng);
+								//map.setZoom(14);
 
 							myMarker = new google.maps.Marker({
 								position: myLatlng,
