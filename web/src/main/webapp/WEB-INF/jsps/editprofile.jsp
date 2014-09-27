@@ -238,36 +238,37 @@
 									</div>\
 									';
 								});
-								showGeoLocation();
-								}); //edit button click
-							}); //document ready
-
-							function showGeoLocation(){
 								if(navigator.geolocation) {
 									navigator.geolocation.getCurrentPosition(function(position) {
 										var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 										map.setCenter(pos);
 										map.setZoom(14);
-										//Show reverse geocoded value
-										var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
-										geocoder.geocode({'latLng': latlng}, function(results, status) {
-											if (status == google.maps.GeocoderStatus.OK) {
-												if (results[1]) {
-													$('#rev_geo').html(results[1].formatted_address);
-													} else {
-														alert('No results found');
-													}
-											} else {
-											//alert('Geocoder failed due to: ' + status);
-											}
-										});
-										//end
+										showGeoLocation();
 										}, function() {
 											//User didnt give permission to use location
 										});
 								} else {
 									// Browser doesn't support Geolocation
 								}
+								}); //edit button click
+							}); //document ready
+
+							function showGeoLocation(){
+								if(navigator.geolocation) {
+									//Show reverse geocoded value
+									var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+									geocoder.geocode({'latLng': latlng}, function(results, status) {
+										if (status == google.maps.GeocoderStatus.OK) {
+											if (results[1]) {
+												$('#rev_geo').html(results[1].formatted_address);
+												} else {
+													alert('No results found');
+												}
+										} else {
+										//alert('Geocoder failed due to: ' + status);
+										}
+									});
+									//end
 							}
 						</script>
 					</div>
