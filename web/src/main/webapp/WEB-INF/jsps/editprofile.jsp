@@ -73,24 +73,16 @@
 					</p>
 				</div>
 				<div class="innerblock">
-					<c:if test="${!empty user.person.ward}">
-					<p class="read"> <strong>${user.person.ward}</strong>
+					<p class="read"> <strong>My Ward</strong>
 					</p>
 					, 
-					</c:if>
-					<c:if test="${!empty user.person.ac}">
-					<p class="read"> <strong>${user.person.ac}</strong>
+					<p class="read"> <strong>My AC</strong>
 					</p>
 					<br>
-					</c:if>
-					<c:if test="${!empty user.person.pc}">
-					<p class="read"> <strong>${user.person.pc}</strong>
+					<p class="read"> <strong>My PC</strong>
 					</p>
-					</c:if>
-					<c:if test="${!empty user.person.voterid}">
-					<p class="read"> <strong>Voter ID: ${user.person.voterid}</strong>
+					<p class="read"> <strong>Voter ID: 420</strong>
 					</p>
-					</c:if>
 					<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
 			</div>
@@ -248,7 +240,7 @@
 											<div class="innerblock">
 												<form id="profile_form" class="" action="">
 													<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">
-													<input type="text" class="form-control" placeholder="Voter Card No" value="${user.person.voterid}">
+													<input type="text" class="form-control" placeholder="Voter Card No" value="420">
 													<input type="submit" class="form-control" value="Save Profile">
 												</form>
 											</div>
