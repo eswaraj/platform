@@ -207,12 +207,14 @@
 									myMarker.setPosition(c);
 									$('#node_lat').val(c.lat());
 									$('#node_long').val(c.lng());
+									showGeoLocation();
 								});
 								google.maps.event.addListener(map, "zoom_changed", function() {
 									c = map.getCenter();
 									myMarker.setPosition(c);
 									$('#node_lat').val(c.lat());
 									$('#node_long').val(c.lng());
+									showGeoLocation();
 								});
 
 								//Change the right panel to display a form
