@@ -252,12 +252,23 @@
 										</div>\
 									</div>\
 									';
-								});
-							});
-						});
-					</script>
+									});
+									if(navigator.geolocation) {
+										navigator.geolocation.getCurrentPosition(function(position) {
+											var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+											map.setCenter(pos);
+											map.setZoom(14);
+										}, function() {
+											//User didnt give permission to use location
+										});
+									} else {
+										// Browser doesn't support Geolocation
+									}
+								}); //edit button click
+							}); //document ready
+						</script>
+					</div>
 				</div>
-			</div>
-			<jsp:include page="footer.jsp" />
-		</body>
-	</html>
+				<jsp:include page="footer.jsp" />
+			</body>
+		</html>
