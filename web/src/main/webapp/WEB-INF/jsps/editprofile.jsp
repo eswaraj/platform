@@ -232,7 +232,7 @@
 
 								//Change the right panel to display a form
 								$("#profile_show").replaceWith(function() {		
-									return '
+									return `
 									<div class="right-pane fixed" id="profile_edit">
 										<h2>My Profile</h2>
 										<div class="profile">
@@ -251,7 +251,7 @@
 											</div>
 										</div>
 									</div>
-									';
+									`;
 								});
 							});
 						});
