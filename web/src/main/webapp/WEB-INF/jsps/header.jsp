@@ -85,7 +85,7 @@
 								</a>
 							</li>		
 						<li>
-							<div onclick="location.href='/web/login/facebook';" class="btn-group">
+							<div onclick="location.href='/web/login/facebook?redirect_url=${currentUrl}';" class="btn-group">
 								<button class="btn btn-fb btn-sm" type="button">
 									<i class="icomoon icomoon-facebook"></i>
 								</button>
@@ -117,7 +117,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="editprofile.html">View Profile</a>
+									<a href="/editprofile.html">View Profile</a>
 								</li>
 								
 								<li>

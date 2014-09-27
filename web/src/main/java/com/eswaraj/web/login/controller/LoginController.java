@@ -15,8 +15,12 @@ import com.eswaraj.web.admin.controller.BaseController;
 public class LoginController extends BaseController {
 
     @RequestMapping(value = "/web/login", method = RequestMethod.GET)
-    public ModelAndView login(ModelAndView mv) throws ApplicationException {
-        RedirectView rv = new RedirectView("/web/login/facebook");
+    public ModelAndView login(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
+        String facebookUrl = "/web/login/facebook";
+        if (httpServletRequest.getQueryString() != null) {
+            facebookUrl = facebookUrl + "?" + httpServletRequest.getQueryString();
+        }
+        RedirectView rv = new RedirectView(facebookUrl);
         mv.setView(rv);
         return mv;
     }
