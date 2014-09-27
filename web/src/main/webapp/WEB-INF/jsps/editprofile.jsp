@@ -226,7 +226,7 @@
 													Name:<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">\
 													Voter ID:<input type="text" class="form-control" placeholder="Voter Card No" value="420">\
 													<input type="submit" class="form-control" value="Save Profile">\
-													<input type="button" class="form-control" value="Cancel">\
+													<input type="button" class="form-control" value="Cancel" id="cancel_button">\
 												</form>\
 											</div>\
 											<hr>\
@@ -239,6 +239,11 @@
 									</div>\
 									';
 								});
+
+								$("#cancel_btn").click(function() {		
+									window.location = "http://dev.eswaraj.com/editprofile.hml";
+								});
+
 								if(navigator.geolocation) {
 									navigator.geolocation.getCurrentPosition(function(position) {
 										var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
