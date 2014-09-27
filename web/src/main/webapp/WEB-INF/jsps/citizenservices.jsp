@@ -56,7 +56,7 @@
 							<p>
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus veritatis repudiandae velit qui necessitatibus, ipsa, dicta quasi saepe illum facilis, ut quas. Quidem excepturi, nobis blanditiis ipsum libero!
 							</p>
-							<iframe width="420" height="315" src="//www.youtube.com/embed/QtNImqwB7DY" frameborder="0" allowfullscreen></iframe>
+							<iframe width="630" height="470" src="//www.youtube.com/embed/QtNImqwB7DY" frameborder="0" allowfullscreen></iframe>
 							<div class="share-plugin">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default disabled">
