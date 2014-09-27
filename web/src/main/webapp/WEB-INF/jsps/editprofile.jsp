@@ -232,26 +232,26 @@
 
 								//Change the right panel to display a form
 								$("#profile_show").replaceWith(function() {		
-									return `
-									<div class="right-pane fixed" id="profile_edit">
-										<h2>My Profile</h2>
-										<div class="profile">
-											<div class="innerblock">
-												<form id="profile_form" class="" action="">
-													<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">
-													<input type="text" class="form-control" placeholder="Voter Card No" value="420">
-													<input type="submit" class="form-control" value="Save Profile">
-												</form>
-											</div>
-											<hr>
-											<div class="innerblock">
-												<b>Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
-												<b>Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
-												<p name="rev_geo" id="rev_geo"></p>
-											</div>
-										</div>
-									</div>
-									`;
+									return '
+									<div class="right-pane fixed" id="profile_edit">\
+										<h2>My Profile</h2>\
+										<div class="profile">\
+											<div class="innerblock">\
+												<form id="profile_form" class="" action="">\
+													<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">\
+													<input type="text" class="form-control" placeholder="Voter Card No" value="420">\
+													<input type="submit" class="form-control" value="Save Profile">\
+												</form>\
+											</div>\
+											<hr>\
+											<div class="innerblock">\
+												<b>Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>\
+												<b>Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>\
+												<p name="rev_geo" id="rev_geo"></p>\
+											</div>\
+										</div>\
+									</div>\
+									';
 								});
 							});
 						});
