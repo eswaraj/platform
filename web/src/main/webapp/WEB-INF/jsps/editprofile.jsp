@@ -52,8 +52,137 @@
         <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
         <a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
     </div>
-    <script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(19.0300657,73.03511379999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.0300657, 73.03511379999998)});infowindow = new google.maps.InfoWindow({content:"<b>${user.person.name}</b><br/>CBD Belapur<br/>400706 Navi Mumbai" });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
-</div>
+    <script>
+	    //Google Maps variables
+	    var map;
+	    var layer;
+	    var kmlPath;
+	    var myMarker;
+	    var set = true;
+	    var urlSuffix;
+	    var c;
+	    var geocoder;
+	    var mylocation = {
+		    'latitude': 28.61,
+		    'longitude': 77.23
+	    };
+
+	    $ = $.noConflict();
+	    $(document).ready(function(){
+		    var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
+		    var mapOptions = {
+			    //	zoom: 5,
+			    //center: myLatlng,
+			    mapTypeId: google.maps.MapTypeId.ROADMAP
+		    }
+		    map = new google.maps.Map(document.getElementById('gmap_canvas'), mapOptions);
+		    var defaultBounds = new google.maps.LatLngBounds(
+		    new google.maps.LatLng(37.19705959279532, 64.02147375000004),
+		    new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
+		    );
+		    map.fitBounds(defaultBounds);
+
+		    if(navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(function(position) {
+				    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				    map.setCenter(pos);
+				    map.setZoom(14);
+				    }, function() {
+				    //User didnt give permission to use location
+			    });
+			    } else {
+			    // Browser doesn't support Geolocation
+		    }
+
+		    myMarker = new google.maps.Marker({
+			    position: myLatlng,
+			    draggable: true
+		    });
+		    myMarker.setMap(map);
+		    urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
+
+		    google.maps.event.addListener(myMarker, 'dragend', function(evt){
+			    $('#node_lat').val(evt.latLng.lat());
+			    $('#node_long').val(evt.latLng.lng());
+		    });
+		    google.maps.event.addListener(map, "center_changed", function() {
+			    c = map.getCenter();
+			    myMarker.setPosition(c);
+			    $('#node_lat').val(c.lat());
+			    $('#node_long').val(c.lng());
+		    });
+		    google.maps.event.addListener(map, "zoom_changed", function() {
+			    c = map.getCenter();
+			    myMarker.setPosition(c);
+			    $('#node_lat').val(c.lat());
+			    $('#node_long').val(c.lng());
+		    });
+		    //map new
+		    var markers = [];
+		    // Create the search box and link it to the UI element.
+		    var input = /** @type {HTMLInputElement} */(
+		    document.getElementById('pac-input'));
+		    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+		    var searchBox = new google.maps.places.SearchBox(
+		    /** @type {HTMLInputElement} */(input));
+
+		    // Listen for the event fired when the user selects an item from the
+		    // pick list. Retrieve the matching places for that item.
+		    google.maps.event.addListener(searchBox, 'places_changed', function() {
+			    var places = searchBox.getPlaces();
+
+			    if (places.length == 0) {
+				    return;
+			    }
+			    for (var i = 0, marker; marker = markers[i]; i++) {
+				    marker.setMap(null);
+			    }
+
+			    // For each place, get the icon, place name, and location.
+			    markers = [];
+			    var bounds = new google.maps.LatLngBounds();
+			    for (var i = 0, place; place = places[i]; i++) {
+				    var image = {
+					    url: place.icon,
+					    size: new google.maps.Size(71, 71),
+					    origin: new google.maps.Point(0, 0),
+					    anchor: new google.maps.Point(17, 34),
+					    scaledSize: new google.maps.Size(25, 25)
+				    };
+
+				    // Create a marker for each place.
+				    var marker = new google.maps.Marker({
+					    map: map,
+					    icon: image,
+					    title: place.name,
+					    position: place.geometry.location
+				    });
+
+				    markers.push(marker);
+
+				    bounds.extend(place.geometry.location);
+			    }
+
+			    map.fitBounds(bounds);
+			    map.setZoom(17);
+		    });
+
+		    // Bias the SearchBox results towards places that are within the bounds of the
+		    // current map's viewport.
+		    google.maps.event.addListener(map, 'bounds_changed', function() {
+			    var bounds = map.getBounds();
+			    searchBox.setBounds(bounds);
+		    });
+
+		    //$('#new-person').on('shown', function () {
+			    //	    google.maps.event.trigger(map, "resize");
+			    //});
+		    geocoder = new google.maps.Geocoder();
+
+		    //map end
+	    </script>
+    </div>
 </div>
 <jsp:include page="footer.jsp" />
 </body>
