@@ -51,7 +51,7 @@
     </div>
     <!-- /.right-pane -->
     <div class="locate-user">
-	    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	    <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp&libraries=places"></script>
 	    <div style="overflow:hidden;height:100%;width:100%;">
 		    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		    <div id="gmap_canvas" style="height:100%;width:100%;"></div>
@@ -185,46 +185,47 @@
 				    //	    google.maps.event.trigger(map, "resize");
 				    //});
 			    geocoder = new google.maps.Geocoder();
+
+			    $("#pick").click(function() {		
+				    //Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
+				    //Show reverse geocoded value
+				    var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+				    geocoder.geocode({'latLng': latlng}, function(results, status) {
+					    if (status == google.maps.GeocoderStatus.OK) {
+						    if (results[1]) {
+							    $('#rev_geo').html(results[1].formatted_address);
+							    } else {
+							    alert('No results found');
+						    }
+						    } else {
+						    alert('Geocoder failed due to: ' + status);
+					    }
+				    });
+				    //end
+			    });
+
+			    $("#submit").click(function() {		
+				    //$.ajax({
+					    //	type: "POST",
+					    //	url:"/ajax/person/save",
+					    //	data: JSON.stringify(window.person),
+					    //	contentType: "application/json; charset=utf-8",
+					    //	dataType: "JSON",
+					    //	success: function(data){
+						    //		if(data.message){
+							    //			alert("Error: Check POST response");
+							    //		}
+						    //		else{
+							    //			alert("Person Added"+data.name);
+							    //			$( "#searchButton" ).trigger( "click" );
+							    //		}
+						    //	}
+					    //});
+			    });
 		    });
 
 		    //map end
 
-		    $("#pick").click(function() {		
-			    //Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
-			    //Show reverse geocoded value
-			    var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
-			    geocoder.geocode({'latLng': latlng}, function(results, status) {
-				    if (status == google.maps.GeocoderStatus.OK) {
-				    	if (results[1]) {
-				    	        $('#rev_geo').html(results[1].formatted_address);
-				    	} else {
-				    	        alert('No results found');
-				    	}
-				    } else {
-					    alert('Geocoder failed due to: ' + status);
-				    }
-			    });
-			    //end
-		    });
-
-		    $("#submit").click(function() {		
-		    	//$.ajax({
-		    	//	type: "POST",
-		    	//	url:"/ajax/person/save",
-		    	//	data: JSON.stringify(window.person),
-		    	//	contentType: "application/json; charset=utf-8",
-		    	//	dataType: "JSON",
-		    	//	success: function(data){
-		    	//		if(data.message){
-			//			alert("Error: Check POST response");
-		    	//		}
-		    	//		else{
-			//			alert("Person Added"+data.name);
-			//			$( "#searchButton" ).trigger( "click" );
-		    	//		}
-		    	//	}
-		    	//});
-		    });
 	    </script>
     </div>
 </div>
