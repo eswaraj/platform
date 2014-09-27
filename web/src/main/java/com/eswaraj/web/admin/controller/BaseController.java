@@ -73,6 +73,11 @@ public class BaseController {
         } else {
             mv.getModel().put("loggedIn", true);
         }
+        mv.getModel().put("currentUrl", getCurrentUrl(httpServletRequest));
+    }
+
+    private String getCurrentUrl(HttpServletRequest httpServletRequest){
+        return httpServletRequest.getRequestURI() + "?" + httpServletRequest.getQueryString();
     }
 
 	protected String getFileName(String submittedFileName) {

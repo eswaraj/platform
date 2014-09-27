@@ -48,6 +48,10 @@
 		.pac-container {
 		font-family: Roboto;
 		}
+		#gmap_canvas img{
+		max-width:none!important;
+		background:none!important
+		}
 	</style>
 </head>
 <body>
@@ -58,7 +62,7 @@
 			<h2>My Profile</h2>
 			<div class="profile">
 				<div class="innerblock">
-					<img src="${user.person.profilePhoto}" alt="profile-pic" class="profile-pic">
+					<img src="${user.person.profilePhoto}?type=square&width=300&height=300" alt="profile-pic" class="profile-pic">
 					<p class="read"> <strong>${user.person.name}</strong>
 					<br>
 					<span>
@@ -97,7 +101,7 @@
 					<div style="overflow:hidden;height:100%;width:100%;">
 						<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 						<div id="gmap_canvas" style="height:100%;width:100%;"></div>
-						<style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+						
 						<a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
 					</div>
 					<script>

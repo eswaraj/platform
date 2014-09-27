@@ -89,7 +89,12 @@
 		<filter-name>springLoginFilter</filter-name>
 		<url-pattern>/editprofile.html</url-pattern>
 		<url-pattern>/dashboard.html</url-pattern>
-		
+		<url-pattern>/myac</url-pattern>
+		<url-pattern>/mypc</url-pattern>
+		<url-pattern>/myward</url-pattern>
+		<url-pattern>/mymp</url-pattern>
+		<url-pattern>/mymla</url-pattern>
+		<url-pattern>/mywardmember</url-pattern>
 	</filter-mapping>
 
 	<!-- Disables Servlet Container welcome file handling. Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->

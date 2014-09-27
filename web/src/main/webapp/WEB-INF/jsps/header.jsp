@@ -13,8 +13,8 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.php">
-						<img src="images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
+					<a class="navbar-brand" href="index.html">
+						<img src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
 						<span pull-left="">e-Swaraj</span>
 					</a>
 				</div>
@@ -25,48 +25,41 @@
 							</a>
 						</li>
 						<li class="active">
-							<a href="05-constituency.php" class="dropdown-toggle" data-toggle="dropdown">My Constituency
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Area
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="#">AC</a>
+									<a href="/myac">Assembly Constituency</a>
 								</li>
 								
 								<li>
-									<a href="#">PC</a>
+									<a href="/mypc">Parliament Constituency</a>
 								</li>
-								
+								<li>
+                                    <a href="/myward">Local/Ward</a>
+                                </li>
 							</ul>
 							
 						</li>
 						<li>
-							<a href="07-my-mla.php" class="dropdown-toggle" data-toggle="dropdown">My MLA
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Leaders
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="#">MP</a>
+									<a href="/mymp">MP</a>
 								</li>
 								
 								<li>
-									<a href="#">MLA</a>
+									<a href="/mymla">MLA</a>
 								</li>
+								<li>
+                                    <a href="/mywardmember">Ward Member</a>
+                                </li>
 								
 							</ul>
 						</li>
 						<li>
-							<a href="08-citizen-services.php" class="dropdown-toggle" data-toggle="dropdown" >My Citizen Services</a>
-							<span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a href="#water">Water</a>
-								</li>
-								
-								<li>
-									<a href="#electricity">Electricity</a>
-								</li>
-								
-							</ul>
-							
+							<a href="/citizenservices.html">My Citizen Services</a>
 						</li>
 					</ul>
 					
@@ -75,17 +68,17 @@
 								 <li class="download">
 								<a href="#">
 									<span>
-										<img src="images/android-icon.png"  alt=""></span>
+										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
 							<li class="download">
 								<a href="#">
 									<span>
-										<img src="images/apple-icon.png" alt=""></span>
+										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>
 							</li>		
 						<li>
-							<div onclick="location.href='/web/login/facebook';" class="btn-group">
+							<div onclick="location.href='/web/login/facebook?redirect_url=${currentUrl}';" class="btn-group">
 								<button class="btn btn-fb btn-sm" type="button">
 									<i class="icomoon icomoon-facebook"></i>
 								</button>
@@ -100,13 +93,13 @@
 								 <li class="download">
 								<a href="#">
 									<span>
-										<img src="images/android-icon.png"  alt=""></span>
+										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
 							<li class="download">
 								<a href="#">
 									<span>
-										<img src="images/apple-icon.png" alt=""></span>
+										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>
 							</li>
 					<li class="dropdown user-profile">
@@ -117,7 +110,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="editprofile.html">View Profile</a>
+									<a href="/editprofile.html">View/Edit Profile</a>
 								</li>
 								
 								<li>

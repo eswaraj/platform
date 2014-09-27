@@ -23,7 +23,7 @@
 					<div class="col-sm-7">
 					<div class="logo">
 							<a href="">
-								<img src="images/eswaraj-logo.png" alt="logo"></a>
+								<img src="${staticHost}/images/eswaraj-logo.png" alt="logo"></a>
 						</div>
 						
 						<div class="heading">
@@ -37,9 +37,9 @@
 							</p>
 							<div class="dwld">
 								<a href="#">
-									<img src="images/android.png" alt="android link"></a>
+									<img src="${staticHost}/images/android.png" alt="android link"></a>
 								<a href="#">
-									<img src="images/app-store.png" height="65" width="200" alt="android link"></a>
+									<img src="${staticHost}/images/app-store.png" height="65" width="200" alt="android link"></a>
 							</div>
 							<div class="for-user">
 							
@@ -47,14 +47,14 @@
 					</div>
 				</div>
 				<div class="col-sm-5 mobile-anim">
-					<img src="images/mobile.png" alt=""></div>
+					<img src="${staticHost}/images/mobile.png" alt=""></div>
 			</div>
 			
 </header>
 <div class="poster"  id="know-more">
 	<div class="row">
 		<div class="col-xs-12">
-			<img src="images/eswaraj-poster.png" alt="banner"></div>
+			<img src="${staticHost}/images/eswaraj-poster.png" alt="banner"></div>
 	</div>
 	<div class="highlight">
 		<h2>
@@ -67,7 +67,7 @@
 	<div class="content">
 		<div class="row">
 			<div class="col-sm-6">
-				<img src="images/eswaraj-01.png" alt=""></div>
+				<img src="${staticHost}/images/eswaraj-01.png" alt=""></div>
 			<div class="col-sm-6">
 				<h3>Signing the constitution.</h3>
 				<p>
@@ -77,7 +77,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6 col-sm-push-6">
-				<img src="images/eswaraj-02.png" alt=""></div>
+				<img src="${staticHost}/images/eswaraj-02.png" alt=""></div>
 			<div class="col-sm-6 col-sm-pull-6">
 				<h3>Administrative structure.</h3>
 				<p>
@@ -87,7 +87,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
-				<img src="images/eswaraj-03.png" alt=""></div>
+				<img src="${staticHost}/images/eswaraj-03.png" alt=""></div>
 			<div class="col-sm-6">
 				<h3>The need for social audit.</h3>
 				<p>
@@ -97,7 +97,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6 col-sm-push-6">
-				<img src="images/eswaraj-04.png" alt=""></div>
+				<img src="${staticHost}/images/eswaraj-04.png" alt=""></div>
 			<div class="col-sm-6 col-sm-pull-6">
 				<h3>Analytics and more.</h3>
 				<p>
@@ -105,21 +105,21 @@
 				</p>
 				<ul class="analytics-plus">
 					<li>
-						<img src="images/eswaraj-analytics.png" alt="">
+						<img src="${staticHost}/images/eswaraj-analytics.png" alt="">
 						<span>Train Administrative staff</span>
 					</li>
 					<li>
-						<img src="images/eswaraj-spending.png" alt="">
+						<img src="${staticHost}/images/eswaraj-spending.png" alt="">
 						<span>Locate areas &amp; amenities that need more spending.</span>
 					</li>
 					<li>
-						<img src="images/eswaraj-improvements.png" alt="">
+						<img src="${staticHost}/images/eswaraj-improvements.png" alt="">
 						<span>
 							Find areas and amenities that need quality improvement and maintenance.
 						</span>
 					</li>
 					<li>
-						<img src="images/eswaraj-awareness.png" alt="">
+						<img src="${staticHost}/images/eswaraj-awareness.png" alt="">
 						<span>Find out amenities and areas that need awareness programme.</span>
 					</li>
 				</ul>
