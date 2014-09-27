@@ -12,7 +12,7 @@
 <jsp:include page="include.jsp" />
 </head>
 <body>
-	<div class="container-fluid cs-wrapper">
+	<div class="outerwrapper">
 		<header>
 			<jsp:include page="header.jsp" />
 		</header>
