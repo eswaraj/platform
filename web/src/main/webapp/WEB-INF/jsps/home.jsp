@@ -174,18 +174,9 @@
 		</div>
 	</div>
 </div>
-<footer>
-	&copy;
-	<a href="#">www.eswaraj.com</a>
-	<span class="sep">|</span>
-	<a href="#">Team</a>
-	<span class="sep">|</span>
-	<a href="#">Media Releases</a>
-	<span class="sep">|</span>
-	<a href="#">Privacy policy</a>
-</footer>
-</div>
-</div>
 
+</div>
+</div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>
