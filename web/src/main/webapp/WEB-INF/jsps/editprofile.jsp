@@ -190,40 +190,40 @@
 		    //map end
 
 		    $("#pick").click(function() {		
-		    //Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
-		    //Show reverse geocoded value
-		    var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
-		    geocoder.geocode({'latLng': latlng}, function(results, status) {
-		    if (status == google.maps.GeocoderStatus.OK) {
-		    if (results[1]) {
-		    $('#rev_geo').html(results[1].formatted_address);
-		    } else {
-		    alert('No results found');
-		    }
-		    } else {
-		    alert('Geocoder failed due to: ' + status);
-		    }
-		    });
-		    //end
+			    //Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
+			    //Show reverse geocoded value
+			    var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+			    geocoder.geocode({'latLng': latlng}, function(results, status) {
+				    if (status == google.maps.GeocoderStatus.OK) {
+				    	if (results[1]) {
+				    	        $('#rev_geo').html(results[1].formatted_address);
+				    	} else {
+				    	        alert('No results found');
+				    	}
+				    } else {
+					    alert('Geocoder failed due to: ' + status);
+				    }
+			    });
+			    //end
 		    });
 
 		    $("#submit").click(function() {		
-		    $.ajax({
-		    type: "POST",
-		    url:"/ajax/person/save",
-		    data: JSON.stringify(window.person),
-		    contentType: "application/json; charset=utf-8",
-		    dataType: "JSON",
-		    success: function(data){
-		    if(data.message){
-		    alert("Error: Check POST response");
-		    }
-		    else{
-		    alert("Person Added"+data.name);
-		    $( "#searchButton" ).trigger( "click" );
-		    }
-		    }
-		    });
+		    	//$.ajax({
+		    	//	type: "POST",
+		    	//	url:"/ajax/person/save",
+		    	//	data: JSON.stringify(window.person),
+		    	//	contentType: "application/json; charset=utf-8",
+		    	//	dataType: "JSON",
+		    	//	success: function(data){
+		    	//		if(data.message){
+			//			alert("Error: Check POST response");
+		    	//		}
+		    	//		else{
+			//			alert("Person Added"+data.name);
+			//			$( "#searchButton" ).trigger( "click" );
+		    	//		}
+		    	//	}
+		    	//});
 		    });
 	    </script>
     </div>
