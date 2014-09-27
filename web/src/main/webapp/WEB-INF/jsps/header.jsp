@@ -25,7 +25,7 @@
 							</a>
 						</li>
 						<li class="active">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Area
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Constituency
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
