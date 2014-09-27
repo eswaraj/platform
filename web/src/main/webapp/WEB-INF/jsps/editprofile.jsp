@@ -48,6 +48,10 @@
 		.pac-container {
 		font-family: Roboto;
 		}
+		#gmap_canvas img{
+		max-width:none!important;
+		background:none!important
+		}
 	</style>
 </head>
 <body>
@@ -82,11 +86,11 @@
 					Add your Voter ID details
 					</p>
 					<input type="text" class="form-control" placeholder="Voter Card No"></div>
-				<b style="color: #FF9933">Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
+				<b style="color: #FF9933">Latitude : </b><input type="text" name="node_lat" id="node_lat" value="" readonly>
 						<b style="color: #FF9933">Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
 						<p name="rev_geo" id="rev_geo"></p>
 						<br><button type="button" id="pick" class="btn btn-primary blue btn_round">Pick location</button>
-						<button type="button" id="submit" class="btn btn-primary blue btn_round">Save Person</button>
+						<button type="button" id="submit" class="btn btn-primary blue btn_round">Save Profile</button>
 					</div>
 				</div>
 				<!-- /.right-pane -->
@@ -95,7 +99,7 @@
 					<div style="overflow:hidden;height:100%;width:100%;">
 						<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 						<div id="gmap_canvas" style="height:100%;width:100%;"></div>
-						<style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+						
 						<a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
 					</div>
 					<script>

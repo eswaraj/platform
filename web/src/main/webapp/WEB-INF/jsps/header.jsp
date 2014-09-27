@@ -123,7 +123,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="/editprofile.html">View Profile</a>
+									<a href="/editprofile.html">View/Edit Profile</a>
 								</li>
 								
 								<li>
