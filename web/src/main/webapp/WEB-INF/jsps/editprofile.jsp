@@ -241,7 +241,7 @@
 								});
 
 								$("#cancel_btn").click(function() {		
-									window.location = "http://dev.eswaraj.com/editprofile.hml";
+									window.location = "http://dev.eswaraj.com/editprofile.html";
 								});
 
 								if(navigator.geolocation) {
