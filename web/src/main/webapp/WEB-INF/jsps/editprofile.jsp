@@ -179,6 +179,7 @@
 			    //	    google.maps.event.trigger(map, "resize");
 			    //});
 		    geocoder = new google.maps.Geocoder();
+	});
 
 		    //map end
 	    </script>
