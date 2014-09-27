@@ -54,7 +54,7 @@
 	<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 
-		<div class="right-pane fixed">
+		<div class="right-pane fixed" id="profile_show">
 			<h2>My Profile</h2>
 			<div class="profile">
 				<div class="innerblock">
@@ -69,26 +69,28 @@
 					</p>
 				</div>
 				<div class="innerblock">
-					<p class="read"> <strong>CBD-Belapur Constituency</strong>
+					<c:if test="${!empty user.person.ward}">
+					<p class="read"> <strong>${user.person.ward}</strong>
+					</p>
+					, 
+					</c:if>
+					<c:if test="${!empty user.person.ac}">
+					<p class="read"> <strong>${user.person.ac}</strong>
+					</p>
 					<br>
-					<span>Thane District, Maharashtra</span>
-					<a href="10-profile-edit.php" class="edit-fields" title="Edit"> <i class="glyphicon glyphicon-pencil"></i>
-					</a>
+					</c:if>
+					<c:if test="${!empty user.person.pc}">
+					<p class="read"> <strong>${user.person.pc}</strong>
 					</p>
-				</div>
-				<div class="innerblock">
-					<p class="edit">
-					<i class="glyphicon glyphicon-plus-sign"></i>
-					Add your Voter ID details
+					</c:if>
+					<c:if test="${!empty user.person.voterid}">
+					<p class="read"> <strong>Voter ID: ${user.person.voterid}</strong>
 					</p>
-					<input type="text" class="form-control" placeholder="Voter Card No"></div>
-				<b style="color: #FF9933">Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
-						<b style="color: #FF9933">Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
-						<p name="rev_geo" id="rev_geo"></p>
-						<br><button type="button" id="pick" class="btn btn-primary blue btn_round">Pick location</button>
-						<button type="button" id="submit" class="btn btn-primary blue btn_round">Save Person</button>
-					</div>
+					</c:if>
+					<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
+			</div>
+		</div>
 				<!-- /.right-pane -->
 				<div class="locate-user">
 					<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp&libraries=places"></script>
@@ -123,8 +125,8 @@
 							}
 							map = new google.maps.Map(document.getElementById('gmap_canvas'), mapOptions);
 							var defaultBounds = new google.maps.LatLngBounds(
-							new google.maps.LatLng(37.19705959279532, 64.02147375000004),
-							new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
+								new google.maps.LatLng(37.19705959279532, 64.02147375000004),
+								new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
 							);
 							map.fitBounds(defaultBounds);
 
@@ -140,6 +142,10 @@
 								// Browser doesn't support Geolocation
 							}
 
+							<c:if test="${!empty user.person.pc}">
+								myLatlng = new google.maps.LatLng( ${user.person.latitude}, ${user.person.longitude} );
+							</c:if>
+
 							myMarker = new google.maps.Marker({
 								position: myLatlng,
 								draggable: true
@@ -147,22 +153,6 @@
 							myMarker.setMap(map);
 							urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
 
-							google.maps.event.addListener(myMarker, 'dragend', function(evt){
-								$('#node_lat').val(evt.latLng.lat());
-								$('#node_long').val(evt.latLng.lng());
-							});
-							google.maps.event.addListener(map, "center_changed", function() {
-								c = map.getCenter();
-								myMarker.setPosition(c);
-								$('#node_lat').val(c.lat());
-								$('#node_long').val(c.lng());
-							});
-							google.maps.event.addListener(map, "zoom_changed", function() {
-								c = map.getCenter();
-								myMarker.setPosition(c);
-								$('#node_lat').val(c.lat());
-								$('#node_long').val(c.lng());
-							});
 							//map new
 							var markers = [];
 							// Create the search box and link it to the UI element.
@@ -221,51 +211,65 @@
 								searchBox.setBounds(bounds);
 							});
 
-							//$('#new-person').on('shown', function () {
-								//	    google.maps.event.trigger(map, "resize");
-								//});
 							geocoder = new google.maps.Geocoder();
 
-							$("#pick").click(function() {		
-								//Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
-								//Show reverse geocoded value
-								var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
-								geocoder.geocode({'latLng': latlng}, function(results, status) {
-									if (status == google.maps.GeocoderStatus.OK) {
-										if (results[1]) {
-											$('#rev_geo').html(results[1].formatted_address);
+							$("#edit_btn").click(function() {		
+								google.maps.event.addListener(myMarker, 'dragend', function(evt){
+									$('#node_lat').val(evt.latLng.lat());
+									$('#node_long').val(evt.latLng.lng());
+									//Show reverse geocoded value
+									var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+									geocoder.geocode({'latLng': latlng}, function(results, status) {
+										if (status == google.maps.GeocoderStatus.OK) {
+											if (results[1]) {
+												$('#rev_geo').html(results[1].formatted_address);
+												} else {
+												alert('No results found');
+											}
 											} else {
-											alert('No results found');
+											alert('Geocoder failed due to: ' + status);
 										}
-										} else {
-										alert('Geocoder failed due to: ' + status);
-									}
+									});
+									//end
 								});
-								//end
-							});
+								google.maps.event.addListener(map, "center_changed", function() {
+									c = map.getCenter();
+									myMarker.setPosition(c);
+									$('#node_lat').val(c.lat());
+									$('#node_long').val(c.lng());
+								});
+								google.maps.event.addListener(map, "zoom_changed", function() {
+									c = map.getCenter();
+									myMarker.setPosition(c);
+									$('#node_lat').val(c.lat());
+									$('#node_long').val(c.lng());
+								});
 
-							$("#submit").click(function() {		
-								//$.ajax({
-									//	type: "POST",
-									//	url:"/ajax/person/save",
-									//	data: JSON.stringify(window.person),
-									//	contentType: "application/json; charset=utf-8",
-									//	dataType: "JSON",
-									//	success: function(data){
-										//		if(data.message){
-											//			alert("Error: Check POST response");
-											//		}
-										//		else{
-											//			alert("Person Added"+data.name);
-											//			$( "#searchButton" ).trigger( "click" );
-											//		}
-										//	}
-									//});
+								//Change the right panel to display a form
+								$("#profile_show").replaceWith(function() {		
+									return '
+									<div class="right-pane fixed" id="profile_edit">
+										<h2>My Profile</h2>
+										<div class="profile">
+											<div class="innerblock">
+												<form id="profile_form" class="" action="">
+													<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">
+													<input type="text" class="form-control" placeholder="Voter Card No" value="${user.person.voterid}">
+													<input type="submit" class="form-control" value="Save Profile">
+												</form>
+											</div>
+											<hr>
+											<div class="innerblock">
+												<b>Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
+												<b>Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
+												<p name="rev_geo" id="rev_geo"></p>
+											</div>
+										</div>
+									</div>
+									';
+								});
 							});
 						});
-
-						//map end
-
 					</script>
 				</div>
 			</div>
