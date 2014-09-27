@@ -226,7 +226,7 @@
 													Name:<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">\
 													Voter ID:<input type="text" class="form-control" placeholder="Voter Card No" value="420">\
 													<input type="submit" class="form-control" value="Save Profile">\
-													<input type="button" class="form-control" value="Cancel" id="cancel_button">\
+													<input type="button" class="form-control" value="Cancel" id="cancel_btn">\
 												</form>\
 											</div>\
 											<hr>\
