@@ -41,147 +41,190 @@
                 <i class="glyphicon glyphicon-plus-sign"></i>
                 Add your Voter ID details
             </p>
-            <input type="text" class="form-control" placeholder="Voter Card No"></div>
+	    <input type="text" class="form-control" placeholder="Voter Card No"></div>
+	    <b style="color: #FF9933">Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
+	    <b style="color: #FF9933">Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
+	    <p name="rev_geo" id="rev_geo"></p>
+	    <br><button type="button" id="pick" class="btn btn-primary blue btn_round">Pick location</button>
+	    <button type="button" id="submit" class="btn btn-primary blue btn_round">Save Person</button>
+	    </div>
     </div>
-</div>
-<!-- /.right-pane -->
-<div class="locate-user">
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <div style="overflow:hidden;height:100%;width:100%;">
-        <div id="gmap_canvas" style="height:100%;width:100%;"></div>
-        <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
-        <a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
-    </div>
-    <script>
-	    //Google Maps variables
-	    var map;
-	    var layer;
-	    var kmlPath;
-	    var myMarker;
-	    var set = true;
-	    var urlSuffix;
-	    var c;
-	    var geocoder;
-	    var mylocation = {
-		    'latitude': 28.61,
-		    'longitude': 77.23
-	    };
+    <!-- /.right-pane -->
+    <div class="locate-user">
+	    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	    <div style="overflow:hidden;height:100%;width:100%;">
+		    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		    <div id="gmap_canvas" style="height:100%;width:100%;"></div>
+		    <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+		    <a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
+	    </div>
+	    <script>
+		    //Google Maps variables
+		    var map;
+		    var layer;
+		    var kmlPath;
+		    var myMarker;
+		    var set = true;
+		    var urlSuffix;
+		    var c;
+		    var geocoder;
+		    var mylocation = {
+			    'latitude': 28.61,
+			    'longitude': 77.23
+		    };
 
-	    $ = $.noConflict();
-	    $(document).ready(function(){
-		    var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
-		    var mapOptions = {
-			    //	zoom: 5,
-			    //center: myLatlng,
-			    mapTypeId: google.maps.MapTypeId.ROADMAP
-		    }
-		    map = new google.maps.Map(document.getElementById('gmap_canvas'), mapOptions);
-		    var defaultBounds = new google.maps.LatLngBounds(
-		    new google.maps.LatLng(37.19705959279532, 64.02147375000004),
-		    new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
-		    );
-		    map.fitBounds(defaultBounds);
-
-		    if(navigator.geolocation) {
-			    navigator.geolocation.getCurrentPosition(function(position) {
-				    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				    map.setCenter(pos);
-				    map.setZoom(14);
-				    }, function() {
-				    //User didnt give permission to use location
-			    });
-			    } else {
-			    // Browser doesn't support Geolocation
-		    }
-
-		    myMarker = new google.maps.Marker({
-			    position: myLatlng,
-			    draggable: true
-		    });
-		    myMarker.setMap(map);
-		    urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
-
-		    google.maps.event.addListener(myMarker, 'dragend', function(evt){
-			    $('#node_lat').val(evt.latLng.lat());
-			    $('#node_long').val(evt.latLng.lng());
-		    });
-		    google.maps.event.addListener(map, "center_changed", function() {
-			    c = map.getCenter();
-			    myMarker.setPosition(c);
-			    $('#node_lat').val(c.lat());
-			    $('#node_long').val(c.lng());
-		    });
-		    google.maps.event.addListener(map, "zoom_changed", function() {
-			    c = map.getCenter();
-			    myMarker.setPosition(c);
-			    $('#node_lat').val(c.lat());
-			    $('#node_long').val(c.lng());
-		    });
-		    //map new
-		    var markers = [];
-		    // Create the search box and link it to the UI element.
-		    var input = /** @type {HTMLInputElement} */(
-		    document.getElementById('pac-input'));
-		    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-		    var searchBox = new google.maps.places.SearchBox(
-		    /** @type {HTMLInputElement} */(input));
-
-		    // Listen for the event fired when the user selects an item from the
-		    // pick list. Retrieve the matching places for that item.
-		    google.maps.event.addListener(searchBox, 'places_changed', function() {
-			    var places = searchBox.getPlaces();
-
-			    if (places.length == 0) {
-				    return;
+		    $ = $.noConflict();
+		    $(document).ready(function(){
+			    var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
+			    var mapOptions = {
+				    //	zoom: 5,
+				    //center: myLatlng,
+				    mapTypeId: google.maps.MapTypeId.ROADMAP
 			    }
-			    for (var i = 0, marker; marker = markers[i]; i++) {
-				    marker.setMap(null);
-			    }
+			    map = new google.maps.Map(document.getElementById('gmap_canvas'), mapOptions);
+			    var defaultBounds = new google.maps.LatLngBounds(
+			    new google.maps.LatLng(37.19705959279532, 64.02147375000004),
+			    new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
+			    );
+			    map.fitBounds(defaultBounds);
 
-			    // For each place, get the icon, place name, and location.
-			    markers = [];
-			    var bounds = new google.maps.LatLngBounds();
-			    for (var i = 0, place; place = places[i]; i++) {
-				    var image = {
-					    url: place.icon,
-					    size: new google.maps.Size(71, 71),
-					    origin: new google.maps.Point(0, 0),
-					    anchor: new google.maps.Point(17, 34),
-					    scaledSize: new google.maps.Size(25, 25)
-				    };
-
-				    // Create a marker for each place.
-				    var marker = new google.maps.Marker({
-					    map: map,
-					    icon: image,
-					    title: place.name,
-					    position: place.geometry.location
+			    if(navigator.geolocation) {
+				    navigator.geolocation.getCurrentPosition(function(position) {
+					    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					    map.setCenter(pos);
+					    map.setZoom(14);
+					    }, function() {
+					    //User didnt give permission to use location
 				    });
-
-				    markers.push(marker);
-
-				    bounds.extend(place.geometry.location);
+				    } else {
+				    // Browser doesn't support Geolocation
 			    }
 
-			    map.fitBounds(bounds);
-			    map.setZoom(17);
-		    });
+			    myMarker = new google.maps.Marker({
+				    position: myLatlng,
+				    draggable: true
+			    });
+			    myMarker.setMap(map);
+			    urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
 
-		    // Bias the SearchBox results towards places that are within the bounds of the
-		    // current map's viewport.
-		    google.maps.event.addListener(map, 'bounds_changed', function() {
-			    var bounds = map.getBounds();
-			    searchBox.setBounds(bounds);
-		    });
+			    google.maps.event.addListener(myMarker, 'dragend', function(evt){
+				    $('#node_lat').val(evt.latLng.lat());
+				    $('#node_long').val(evt.latLng.lng());
+			    });
+			    google.maps.event.addListener(map, "center_changed", function() {
+				    c = map.getCenter();
+				    myMarker.setPosition(c);
+				    $('#node_lat').val(c.lat());
+				    $('#node_long').val(c.lng());
+			    });
+			    google.maps.event.addListener(map, "zoom_changed", function() {
+				    c = map.getCenter();
+				    myMarker.setPosition(c);
+				    $('#node_lat').val(c.lat());
+				    $('#node_long').val(c.lng());
+			    });
+			    //map new
+			    var markers = [];
+			    // Create the search box and link it to the UI element.
+			    var input = /** @type {HTMLInputElement} */(
+			    document.getElementById('pac-input'));
+			    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-		    //$('#new-person').on('shown', function () {
-			    //	    google.maps.event.trigger(map, "resize");
-			    //});
-		    geocoder = new google.maps.Geocoder();
-	});
+			    var searchBox = new google.maps.places.SearchBox(
+			    /** @type {HTMLInputElement} */(input));
+
+			    // Listen for the event fired when the user selects an item from the
+			    // pick list. Retrieve the matching places for that item.
+			    google.maps.event.addListener(searchBox, 'places_changed', function() {
+				    var places = searchBox.getPlaces();
+
+				    if (places.length == 0) {
+					    return;
+				    }
+				    for (var i = 0, marker; marker = markers[i]; i++) {
+					    marker.setMap(null);
+				    }
+
+				    // For each place, get the icon, place name, and location.
+				    markers = [];
+				    var bounds = new google.maps.LatLngBounds();
+				    for (var i = 0, place; place = places[i]; i++) {
+					    var image = {
+						    url: place.icon,
+						    size: new google.maps.Size(71, 71),
+						    origin: new google.maps.Point(0, 0),
+						    anchor: new google.maps.Point(17, 34),
+						    scaledSize: new google.maps.Size(25, 25)
+					    };
+
+					    // Create a marker for each place.
+					    var marker = new google.maps.Marker({
+						    map: map,
+						    icon: image,
+						    title: place.name,
+						    position: place.geometry.location
+					    });
+
+					    markers.push(marker);
+
+					    bounds.extend(place.geometry.location);
+				    }
+
+				    map.fitBounds(bounds);
+				    map.setZoom(17);
+			    });
+
+			    // Bias the SearchBox results towards places that are within the bounds of the
+			    // current map's viewport.
+			    google.maps.event.addListener(map, 'bounds_changed', function() {
+				    var bounds = map.getBounds();
+				    searchBox.setBounds(bounds);
+			    });
+
+			    //$('#new-person').on('shown', function () {
+				    //	    google.maps.event.trigger(map, "resize");
+				    //});
+			    geocoder = new google.maps.Geocoder();
+		    });
 
 		    //map end
+
+		    $("#pick").click(function() {		
+		    //Call the get api with lat/long from the box. Use it to populate rest of the fields in person variable and then call post api to save person
+		    //Show reverse geocoded value
+		    var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+		    geocoder.geocode({'latLng': latlng}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+		    if (results[1]) {
+		    $('#rev_geo').html(results[1].formatted_address);
+		    } else {
+		    alert('No results found');
+		    }
+		    } else {
+		    alert('Geocoder failed due to: ' + status);
+		    }
+		    });
+		    //end
+		    });
+
+		    $("#submit").click(function() {		
+		    $.ajax({
+		    type: "POST",
+		    url:"/ajax/person/save",
+		    data: JSON.stringify(window.person),
+		    contentType: "application/json; charset=utf-8",
+		    dataType: "JSON",
+		    success: function(data){
+		    if(data.message){
+		    alert("Error: Check POST response");
+		    }
+		    else{
+		    alert("Person Added"+data.name);
+		    $( "#searchButton" ).trigger( "click" );
+		    }
+		    }
+		    });
+		    });
 	    </script>
     </div>
 </div>
