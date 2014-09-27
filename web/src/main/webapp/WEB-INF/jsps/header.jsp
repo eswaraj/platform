@@ -14,7 +14,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="index.php">
-						<img src="/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
+						<img src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
 						<span pull-left="">e-Swaraj</span>
 					</a>
 				</div>
@@ -75,13 +75,13 @@
 								 <li class="download">
 								<a href="#">
 									<span>
-										<img src="/images/android-icon.png"  alt=""></span>
+										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
 							<li class="download">
 								<a href="#">
 									<span>
-										<img src="/images/apple-icon.png" alt=""></span>
+										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>
 							</li>		
 						<li>
@@ -100,13 +100,13 @@
 								 <li class="download">
 								<a href="#">
 									<span>
-										<img src="/images/android-icon.png"  alt=""></span>
+										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
 							<li class="download">
 								<a href="#">
 									<span>
-										<img src="/images/apple-icon.png" alt=""></span>
+										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>
 							</li>
 					<li class="dropdown user-profile">

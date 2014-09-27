@@ -109,7 +109,7 @@
 						<div class="tab-pane" id="messages-1">
 							<button class="btn btn-default btn-xs">Download</button>
 							<button class="btn btn-default btn-xs">Large View</button>
-							<img src="images/infographic.jpg" alt="infographic" class="small-img infographic">
+							<img src="${staticHost}/images/infographic.jpg" alt="infographic" class="small-img infographic">
 							<div class="share-plugin">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default disabled">
