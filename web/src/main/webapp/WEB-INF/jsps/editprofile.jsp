@@ -108,11 +108,11 @@
 						<hr>
 						<b>Latitude : </b>
 						<form:input class="form-control" path="lattitude" name="node_lat"
-							id="node_lat" placeholder="Latitude" disabled="true" />
+							id="node_lat" placeholder="Latitude" readonly="true" />
 
 						<b>Longitude : </b>
 						<form:input class="form-control" path="longitude" name="node_long"
-							id="node_long" placeholder="Lattitude" disabled="true" />
+							id="node_long" placeholder="Lattitude" readonly="true" />
 						<p name="rev_geo" id="rev_geo"></p>
 
 						<input type="submit" class="form-control" value="Save Profile">
