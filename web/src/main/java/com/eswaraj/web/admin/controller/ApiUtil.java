@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
+import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -177,6 +178,13 @@ public class ApiUtil {
         registerFacebookAccountWebRequest.setFacebookAppId(facebookAppId);
         registerFacebookAccountWebRequest.setToken(facebookConnectionData.getAccessToken());
         String requestPayload = gson.toJson(registerFacebookAccountWebRequest);
+        String response = postRequest(httpServletRequest, urlPath, requestPayload);
+        return gson.fromJson(response, UserDto.class);
+    }
+
+    public UserDto updateUserProfile(HttpServletRequest httpServletRequest, UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
+        String urlPath = "/api/v0/web/user";
+        String requestPayload = gson.toJson(updateUserRequestWebDto);
         String response = postRequest(httpServletRequest, urlPath, requestPayload);
         return gson.fromJson(response, UserDto.class);
     }
