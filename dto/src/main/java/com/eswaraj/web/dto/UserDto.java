@@ -5,11 +5,20 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     protected String externalId;
     private PersonDto person;
     private FacebookAccountDto facebookAccount;
     private DeviceDto device;
     private FacebookAppPermissionDto facebookAppPermission;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getExternalId() {
         return externalId;

@@ -14,7 +14,6 @@ import com.eswaraj.core.service.PersonService;
 import com.eswaraj.web.dto.RegisterDeviceRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
-import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 
 @Controller
@@ -41,9 +40,5 @@ public class UserController extends BaseController {
         return userDto;
     }
 
-    @RequestMapping(value = "/api/v0/web/user", method = RequestMethod.POST)
-    public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
-        return personService.updateUserInfo(updateUserRequestWebDto);
-    }
 
 }
