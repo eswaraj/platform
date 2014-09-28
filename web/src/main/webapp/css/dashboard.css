@@ -2,11 +2,9 @@ body {
     padding: 51px 0 40px 0;
     font-family: "Arimo",helvetica;
 }
-/*
 img{
     max-width: 100%;
 }
-*/
 .right-pane, .left-pane {
     width: 250px;
     top: 51px;
@@ -541,4 +539,8 @@ html,body {
 	background-color: #fff;
 	padding: 5px;
 	border: 1px solid #999;
+}
+#map-canvas img {
+	max-width: none !important;
+	background: none !important
 }
