@@ -23,6 +23,11 @@ public class UserController extends BaseController {
     @Autowired
     private PersonService personService;
 
+    @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
+    public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
+        return personService.updateUserInfo(updateUserRequestWebDto);
+    }
+
     @RequestMapping(value = "/api/v0/user/facebook", method = RequestMethod.POST)
     public @ResponseBody UserDto registerFacebookUser(HttpServletRequest httpServletRequest, @RequestBody RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
         return personService.registerFacebookAccount(registerFacebookAccountRequest);
@@ -41,9 +46,5 @@ public class UserController extends BaseController {
         return userDto;
     }
 
-    @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
-    public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
-        return personService.updateUserInfo(updateUserRequestWebDto);
-    }
 
 }
