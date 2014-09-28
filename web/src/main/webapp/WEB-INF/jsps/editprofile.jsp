@@ -11,8 +11,7 @@
 <head>
 <jsp:include page="include.jsp" />
 
-<script type="text/javascript"
-	src="${staticHost}/js/slide_notification.js"></script>
+<script type="text/javascript" src="${staticHost}/js/slide_notification.js"></script>
 <!-- Script -->
 <link rel="stylesheet" href="${staticHost}/css/editprofile.css">
 </head>
@@ -87,6 +86,7 @@
 
 					</form:form>
 				</div>
+			</div>
 			</div>
 			<!-- /.right-pane -->
 			<div class="locate-user">
@@ -306,7 +306,6 @@
 									</script>
 			</div>
 		</div>
-	</div>
 	<div id="top_slide_notification"></div>
 	<jsp:include page="footer.jsp" />
 </body>
