@@ -324,6 +324,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             address.setLattitude(updateUserRequestWebDto.getLattitude());
 
             updateAddressLocationBasedOnLatLong(address);
+            person.setAddress(address);
             address = addressRepository.save(address);
         }
         person = personRepository.save(person);
