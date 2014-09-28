@@ -12,13 +12,12 @@ function initialize() {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 
-	map = new google.maps.Map(document.getElementById('map-canvas'),
-			mapOptions);
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	//Default map view set to heatmap
 	//setMapData(taxiData);
 	//createHeatmap();
-	getData('72848');
+	getData('${location.id}');
 }
 
 function setMapData(data) {
