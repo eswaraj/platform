@@ -18,6 +18,7 @@ function initialize() {
 	//setMapData(taxiData);
 	//createHeatmap();
 	//getData('${location.id}');
+	getData('72848');
 }
 
 function setMapData(data) {
