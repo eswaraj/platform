@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
@@ -51,11 +52,14 @@ public class ProfileController extends BaseController {
     }
 
     @RequestMapping(value = "/editprofile.html", method = RequestMethod.POST)
-    public ModelAndView saveUser(ModelAndView mv, HttpServletRequest httpServletRequest, @ModelAttribute("profile") UpdateUserRequestWebDto updateUserRequestWebDto, BindingResult result) {
+    public ModelAndView saveUser(ModelAndView mv, HttpServletRequest httpServletRequest, @ModelAttribute("profile") UpdateUserRequestWebDto updateUserRequestWebDto, BindingResult result)
+            throws ApplicationException {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
         addLoggedInUserAge(mv, httpServletRequest);
         logger.info("Saving user : {}", updateUserRequestWebDto);
+        UserDto user = apiUtil.updateUserProfile(httpServletRequest, updateUserRequestWebDto);
+        sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
         mv.getModel().put("profile", updateUserRequestWebDto);
         mv.setViewName("editprofile");
         return mv;
