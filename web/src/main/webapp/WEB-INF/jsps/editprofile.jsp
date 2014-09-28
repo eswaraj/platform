@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -8,43 +8,49 @@ pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<jsp:include page="include.jsp" />
+<head>
+<jsp:include page="include.jsp" />
 
-		<script type="text/javascript" src="${staticHost}/js/slide_notification.js"></script><!-- Script -->
-		<link rel="stylesheet" href="${staticHost}/css/editprofile.css">
-	</head>
-	<body>
-		<div class="outerwrapper">
-			<jsp:include page="header.jsp" />
+<script type="text/javascript"
+	src="${staticHost}/js/slide_notification.js"></script>
+<!-- Script -->
+<link rel="stylesheet" href="${staticHost}/css/editprofile.css">
+</head>
+<body>
+	<div class="outerwrapper">
+		<jsp:include page="header.jsp" />
 
-			<div class="right-pane fixed" id="profile_show">
-				<h3>My Profile</h3>
-				<div class="profile">
-					<div class="innerblock">
-						<img
+		<div class="right-pane fixed" id="profile_show">
+			<h3>My Profile</h3>
+			<div class="profile">
+				<div class="innerblock">
+					<img
 						src="${user.person.profilePhoto}?type=square&width=300&height=300"
 						alt="profile-pic" class="profile-pic">
-					<p class="read center-align"> <strong>${user.person.name}</strong>
-					<br>
-					<span>
-						<c:if test="${!empty age}">
+					<p class="read center-align">
+						<strong>${user.person.name}</strong> <br> <span> <c:if
+								test="${!empty age}">
 						${age} Yrs,
-						</c:if>
-						${user.person.gender}</span>
+						</c:if> ${user.person.gender}
+						</span>
 					</p>
 				</div>
 				<div class="innerblock">
 					<p class="political_details">Political Details :</p>
-					<p class="read" >Ward : <strong id="ward_details">${user.person.personAddress.ward.name}</strong>
+					<p class="read">
+						Ward : <strong id="ward_details">${user.person.personAddress.ward.name}</strong>
 					</p>
-					<p class="read">AC : <strong>${user.person.personAddress.ac.name}</strong>
+					<p class="read">
+						AC : <strong>${user.person.personAddress.ac.name}</strong>
 					</p>
-					<p class="read">PC : <strong>${user.person.personAddress.pc.name}</strong>
+					<p class="read">
+						PC : <strong>${user.person.personAddress.pc.name}</strong>
 					</p>
-					<p class="read">Voter ID Number : <strong>${user.person.voterId}</strong>
+					<p class="read">
+						Voter ID Number : <strong>${user.person.voterId}</strong>
 					</p>
-					<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
+					<button type="button" id="edit_btn"
+						class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
 			</div>
 			<div class="right-pane fixed" id="profile_edit">
@@ -55,40 +61,47 @@ pageEncoding="UTF-8"%>
 						<div class="innerblock">
 							Name:
 							<form:input class="form-control" path="name" placeholder="Name" />
-								Voter ID:
-								<form:input class="form-control" path="voterId"
-									placeholder="Voter Card No" />
-									<hr>
-									Latitude :
-									<form:input class="form-control" path="lattitude" name="node_lat" id="node_lat" placeholder="Latitude" readonly="true" disabled="disabled"/>
+							Voter ID:
+							<form:input class="form-control" path="voterId"
+								placeholder="Voter Card No" />
+							<hr>
+							Latitude :
+							<form:input class="form-control" path="lattitude" name="node_lat"
+								id="node_lat" placeholder="Latitude" readonly="true"
+								disabled="disabled" />
 
-										Longitude :
-										<form:input class="form-control" path="longitude" name="node_long" id="node_long" placeholder="Lattitude" readonly="true" disabled="disabled"/>
-											<p name="rev_geo" id="rev_geo"></p>
+							Longitude :
+							<form:input class="form-control" path="longitude"
+								name="node_long" id="node_long" placeholder="Lattitude"
+								readonly="true" disabled="disabled" />
+							<p name="rev_geo" id="rev_geo"></p>
 
-											<input type="submit" class="form-control btn btn-primary blue btn_round" value="Save Profile">
-											<input type="button" class="form-control btn btn-primary blue btn_round" value="Cancel"
-											id="cancel_btn">
+							<input type="submit"
+								class="form-control btn btn-primary blue btn_round"
+								value="Save Profile"> <input type="button"
+								class="form-control btn btn-primary blue btn_round"
+								value="Cancel" id="cancel_btn">
 
 
-										</div>
+						</div>
 
-										</form:form>
-									</div>
-								</div>
-								<!-- /.right-pane -->
-								<div class="locate-user">
-									<script type="text/javascript"
-										src="http://maps.google.com/maps/api/js?v=3.exp&libraries=places"></script>
-									<div style="overflow: hidden; height: 100%; width: 100%;">
-										<input id="pac-input" class="controls" type="text"
-										placeholder="Search Box">
-										<div id="gmap_canvas" style="height: 100%; width: 100%;"></div>
+					</form:form>
+				</div>
+			</div>
+			<!-- /.right-pane -->
+			<div class="locate-user">
+				<script type="text/javascript"
+					src="http://maps.google.com/maps/api/js?v=3.exp&libraries=places"></script>
+				<div style="overflow: hidden; height: 100%; width: 100%;">
+					<input id="pac-input" class="controls" type="text"
+						placeholder="Search Box">
+					<div id="gmap_canvas" style="height: 100%; width: 100%;"></div>
 
-										<a class="google-map-code"
-											href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
-									</div>
-									<script>
+					<a class="google-map-code"
+						href="http://www.mapsembed.com/conrad-gutschein/"
+						id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
+				</div>
+				<script>
 										//Google Maps variables
 										var map;
 										var layer;
@@ -292,10 +305,10 @@ pageEncoding="UTF-8"%>
 											}
 										}
 									</script>
-								</div>
-							</div>
-							<div id="top_slide_notification">
-							</div>
-							<jsp:include page="footer.jsp" />
-						</body>
-					</html>
+			</div>
+		</div>
+		<div id="top_slide_notification"></div>
+	</div>
+	<jsp:include page="footer.jsp" />
+</body>
+</html>
