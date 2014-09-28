@@ -98,7 +98,7 @@
 			<h2>My Profile</h2>
 			<div class="profile">
 				<div class="innerblock">
-					<form:form id="profile_form" method="post" action="/profile">
+					<form:form id="profile_form" commandName="profile" method="post" action="/profile">
 					   Name:
                         <form:input class="form-control" path="name" placeholder="Name" />
                         Voter ID:
