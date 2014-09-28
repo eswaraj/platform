@@ -85,13 +85,32 @@
 				</div>
 			</div>
 		</div>
+		<div class="right-pane fixed" id="profile_edit">
+			<h2>My Profile</h2>
+			<div class="profile">
+				<div class="innerblock">
+					<form id="profile_form" class="" action="">
+						Name:<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">
+						Voter ID:<input type="text" class="form-control" placeholder="Voter Card No" value="420">
+						<input type="submit" class="form-control" value="Save Profile">
+						<input type="button" class="form-control" value="Cancel" id="cancel_btn">
+					</form>
+				</div>
+				<hr>
+				<div class="innerblock">
+					<b>Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
+					<b>Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
+					<p name="rev_geo" id="rev_geo"></p>
+				</div>
+			</div>
+		</div>
 				<!-- /.right-pane -->
 				<div class="locate-user">
 					<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp&libraries=places"></script>
 					<div style="overflow:hidden;height:100%;width:100%;">
 						<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 						<div id="gmap_canvas" style="height:100%;width:100%;"></div>
-						
+
 						<a class="google-map-code" href="http://www.mapsembed.com/conrad-gutschein/" id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
 					</div>
 					<script>
@@ -111,6 +130,8 @@
 
 						$ = $.noConflict();
 						$(document).ready(function(){
+							$("#profile_edit").hide();		
+
 							var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
 							var mapOptions = {
 								//	zoom: 5,
@@ -119,15 +140,15 @@
 							}
 							map = new google.maps.Map(document.getElementById('gmap_canvas'), mapOptions);
 							var defaultBounds = new google.maps.LatLngBounds(
-								new google.maps.LatLng(37.19705959279532, 64.02147375000004),
-								new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
+							new google.maps.LatLng(37.19705959279532, 64.02147375000004),
+							new google.maps.LatLng(5.7668215619781575, 99.66112218750004)
 							);
 							map.fitBounds(defaultBounds);
 
 							//Test here is user.person.latitude and user.person.longitude are defined and then do the following
-								//myLatlng = new google.maps.LatLng( user.person.latitude, user.person.longitude );
-								//map.setCenter(myLatlng);
-								//map.setZoom(14);
+							//myLatlng = new google.maps.LatLng( user.person.latitude, user.person.longitude );
+							//map.setCenter(myLatlng);
+							//map.setZoom(14);
 
 							myMarker = new google.maps.Marker({
 								position: myLatlng,
@@ -218,70 +239,51 @@
 								});
 
 								//Change the right panel to display a form
-								$("#profile_show").replaceWith(function() {		
-									return '\
-									<div class="right-pane fixed" id="profile_edit">\
-										<h2>My Profile</h2>\
-										<div class="profile">\
-											<div class="innerblock">\
-												<form id="profile_form" class="" action="">\
-													Name:<input type="text" class="form-control" placeholder="Name" value="${user.person.name}">\
-													Voter ID:<input type="text" class="form-control" placeholder="Voter Card No" value="420">\
-													<input type="submit" class="form-control" value="Save Profile">\
-													<input type="button" class="form-control" value="Cancel" id="cancel_btn">\
-												</form>\
-											</div>\
-											<hr>\
-											<div class="innerblock">\
-												<b>Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>\
-												<b>Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>\
-												<p name="rev_geo" id="rev_geo"></p>\
-											</div>\
-										</div>\
-									</div>\
-									';
-								});
+								$("#profile_show").hide();		
+								$("#profile_edit").show();		
 
 								$("#cancel_btn").click(function() {		
-									window.location = "http://dev.eswaraj.com/editprofile.html";
+								//window.location = "http://dev.eswaraj.com/editprofile.html";
+								$("#profile_edit").hide();		
+								$("#profile_show").show();		
 								});
 
 								if(navigator.geolocation) {
-									navigator.geolocation.getCurrentPosition(function(position) {
-										var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-										map.setCenter(pos);
-										map.setZoom(14);
-										showGeoLocation();
-										}, function() {
-											//User didnt give permission to use location
-										});
+								navigator.geolocation.getCurrentPosition(function(position) {
+								var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+								map.setCenter(pos);
+								map.setZoom(14);
+								showGeoLocation();
+								}, function() {
+								//User didnt give permission to use location
+								});
 								} else {
-									// Browser doesn't support Geolocation
+								// Browser doesn't support Geolocation
 								}
 								}); //edit button click
-							}); //document ready
+								}); //document ready
 
-							function showGeoLocation(){
+								function showGeoLocation(){
 								if(navigator.geolocation) {
-									//Show reverse geocoded value
-									var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
-									geocoder.geocode({'latLng': latlng}, function(results, status) {
-										if (status == google.maps.GeocoderStatus.OK) {
-											if (results[1]) {
-												$('#rev_geo').html(results[1].formatted_address);
-												} else {
-													alert('No results found');
-												}
-										} else {
-										//alert('Geocoder failed due to: ' + status);
-										}
-									});
-									//end
+								//Show reverse geocoded value
+								var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+								geocoder.geocode({'latLng': latlng}, function(results, status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+								if (results[1]) {
+								$('#rev_geo').html(results[1].formatted_address);
+								} else {
+								alert('No results found');
 								}
-							}
-						</script>
+								} else {
+								//alert('Geocoder failed due to: ' + status);
+								}
+								});
+								//end
+								}
+								}
+							</script>
+						</div>
 					</div>
-				</div>
-				<jsp:include page="footer.jsp" />
-			</body>
-		</html>
+					<jsp:include page="footer.jsp" />
+				</body>
+			</html>
