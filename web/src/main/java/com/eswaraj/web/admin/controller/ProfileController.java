@@ -57,6 +57,8 @@ public class ProfileController extends BaseController {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
         addLoggedInUserAge(mv, httpServletRequest);
+        UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        updateUserRequestWebDto.setUserId(loggedInUser.getId());
         logger.info("Saving user : {}", updateUserRequestWebDto);
         UserDto user = apiUtil.updateUserProfile(httpServletRequest, updateUserRequestWebDto);
         sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
