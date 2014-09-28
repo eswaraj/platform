@@ -10,92 +10,46 @@
 <html lang="en">
 <head>
 <jsp:include page="include.jsp" />
-<style>
-#gmap_canvas {
-	margin-left: 0px;
-	margin-right: auto;
-	padding: 0;
-	width: 600px;
-	height: 400px;
-}
 
-.controls {
-	margin-top: 16px;
-	border: 1px solid transparent;
-	border-radius: 2px 0 0 2px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	height: 32px;
-	outline: none;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#pac-input {
-	background-color: #fff;
-	padding: 0 11px 0 13px;
-	width: 400px;
-	font-family: Roboto;
-	font-size: 15px;
-	font-weight: 300;
-	text-overflow: ellipsis;
-}
-
-#pac-input:focus {
-	border-color: #4d90fe;
-	margin-left: -1px;
-	padding-left: 14px; /* Regular padding-left + 1. */
-	width: 401px;
-}
-
-.pac-container {
-	font-family: Roboto;
-}
-
-#gmap_canvas img {
-	max-width: none !important;
-	background: none !important
-}
-</style>
+	<script type="text/javascript" src="${staticHost}/js/slide_notification.js"></script><!-- Script -->
+        <link rel="stylesheet" href="${staticHost}/css/editprofile.css">
 </head>
 <body>
 	<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 
 		<div class="right-pane fixed" id="profile_show">
-			<h2>My Profile</h2>
+			<h3>My Profile</h3>
 			<div class="profile">
 				<div class="innerblock">
 					<img
 						src="${user.person.profilePhoto}?type=square&width=300&height=300"
 						alt="profile-pic" class="profile-pic">
-					<p class="read">
-						<strong>${user.person.name}</strong> <br> <span> <c:if
-								test="${!empty age}">
+					<p class="read center-align"> <strong>${user.person.name}</strong>
+					<br>
+					<span>
+						<c:if test="${!empty age}">
 						${age} Yrs,
-						</c:if> ${user.person.gender}
-						</span>
+						</c:if>
+						${user.person.gender}</span>
 					</p>
 				</div>
 				<div class="innerblock">
-					<p class="read">
-						<strong>My Ward</strong>
+					<p class="political_details">Political Details :</p>
+					<p class="read" >Ward : <strong id="ward_details">My Ward</strong>
 					</p>
-					<p class="read">
-						<strong>My AC</strong>
+					<p class="read">AC : <strong>My AC</strong>
 					</p>
-					<p class="read">
-						<strong>My PC</strong>
+					<p class="read">PC : <strong>My PC</strong>
 					</p>
-					<p class="read">
-						<strong>Voter ID: 420</strong>
+					<p class="read">Voter ID Number : <strong>42015140</strong>
 					</p>
-					<button type="button" id="edit_btn"
-						class="btn btn-primary blue btn_round">Edit Profile</button>
+					<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
 			</div>
 		</div>
 		<div class="right-pane fixed" id="profile_edit">
-			<h2>My Profile</h2>
+			<h3>Edit Profile</h3>
 			<div class="profile">
 				<form:form id="profile_form" commandName="profile" method="post"
 					action="/editprofile.html">
@@ -106,17 +60,15 @@
 						<form:input class="form-control" path="voterId"
 							placeholder="Voter Card No" />
 						<hr>
-						<b>Latitude : </b>
-						<form:input class="form-control" path="lattitude" name="node_lat"
-							id="node_lat" placeholder="Latitude" readonly="true" />
+						Latitude :
+						<form:input class="form-control" path="lattitude" name="node_lat" id="node_lat" placeholder="Latitude" readonly="true" disabled="disabled"/>
 
-						<b>Longitude : </b>
-						<form:input class="form-control" path="longitude" name="node_long"
-							id="node_long" placeholder="Lattitude" readonly="true" />
+						Longitude :
+						<form:input class="form-control" path="longitude" name="node_long" id="node_long" placeholder="Lattitude" readonly="true" disabled="disabled"/>
 						<p name="rev_geo" id="rev_geo"></p>
 
-						<input type="submit" class="form-control" value="Save Profile">
-						<input type="button" class="form-control" value="Cancel"
+						<input type="submit" class="form-control btn btn-primary blue btn_round" value="Save Profile">
+						<input type="button" class="form-control btn btn-primary blue btn_round" value="Cancel"
 							id="cancel_btn">
 
 
@@ -394,6 +346,8 @@
 				}
 			</script>
 		</div>
+	</div>
+	<div id="top_slide_notification">
 	</div>
 	<jsp:include page="footer.jsp" />
 </body>
