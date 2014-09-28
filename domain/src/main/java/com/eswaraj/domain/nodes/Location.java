@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -20,6 +21,7 @@ public class Location extends BaseNode {
 	private String name;
 	
 	@RelatedTo(type="OF_TYPE")
+    @Fetch
 	private LocationType locationType;
 	
 	@RelatedTo(type="PART_OF")

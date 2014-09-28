@@ -25,27 +25,26 @@ pageEncoding="UTF-8"%>
 						<img
 						src="${user.person.profilePhoto}?type=square&width=300&height=300"
 						alt="profile-pic" class="profile-pic">
-						<p class="read center-align"> <strong>${user.person.name}</strong>
-						<br>
-						<span>
-							<c:if test="${!empty age}">
-							${age} Yrs,
-							</c:if>
-							${user.person.gender}</span>
-						</p>
-					</div>
-					<div class="innerblock">
-						<p class="political_details">Political Details :</p>
-						<p class="read" >Ward : <strong id="ward_details">My Ward</strong>
-						</p>
-						<p class="read">AC : <strong>My AC</strong>
-						</p>
-						<p class="read">PC : <strong>My PC</strong>
-						</p>
-						<p class="read">Voter ID Number : <strong>42015140</strong>
-						</p>
-						<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
-					</div>
+					<p class="read center-align"> <strong>${user.person.name}</strong>
+					<br>
+					<span>
+						<c:if test="${!empty age}">
+						${age} Yrs,
+						</c:if>
+						${user.person.gender}</span>
+					</p>
+				</div>
+				<div class="innerblock">
+					<p class="political_details">Political Details :</p>
+					<p class="read" >Ward : <strong id="ward_details">${user.person.address.ward.name}</strong>
+					</p>
+					<p class="read">AC : <strong>${user.person.address.ac.name}</strong>
+					</p>
+					<p class="read">PC : <strong>${user.person.address.pc.name}</strong>
+					</p>
+					<p class="read">Voter ID Number : <strong>${user.person.voterId}</strong>
+					</p>
+					<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
 			</div>
 			<div class="right-pane fixed" id="profile_edit">
