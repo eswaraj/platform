@@ -11,23 +11,6 @@ pageEncoding="UTF-8"%>
 	<head>
 		<title>eSwaraj</title>
 		<jsp:include page="include.jsp" />
-		<style>
-			#map-canvas {
-				height: 100%;
-				margin: 0px;
-				padding: 0px
-			}
-			#panel {
-				position: absolute;
-				top: 5px;
-				left: 50%;
-				margin-left: -180px;
-				z-index: 5;
-				background-color: #fff;
-				padding: 5px;
-				border: 1px solid #999;
-			}
-		</style>
 	</head>
 	<body>
 		<div class="outerwrapper">
