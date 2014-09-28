@@ -52,6 +52,7 @@
 						class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
 			</div>
+			</div>
 			<div class="right-pane fixed" id="profile_edit">
 				<h3>Edit Profile</h3>
 				<div class="profile">
@@ -87,7 +88,6 @@
 					</form:form>
 				</div>
 			</div>
-			</div>
 			<!-- /.right-pane -->
 			<div class="locate-user">
 				<script type="text/javascript"
@@ -101,209 +101,186 @@
 						id="get-map-data">http://www.mapsembed.com/conrad-gutschein/</a>
 				</div>
 				<script>
-										//Google Maps variables
-										var map;
-										var layer;
-										var kmlPath;
-										var myMarker;
-										var set = true;
-										var urlSuffix;
-										var c;
-										var geocoder;
-										var mylocation = {
-											'latitude' : 28.61,
-											'longitude' : 77.23
-										};
+					//Google Maps variables
+					var map;
+					var layer;
+					var kmlPath;
+					var myMarker;
+					var set = true;
+					var urlSuffix;
+					var c;
+					var geocoder;
+					var mylocation = {
+						'latitude' : 28.61,
+						'longitude' : 77.23
+					};
 
-										$ = $.noConflict();
-										$(document)
-										.ready(
-										function() {
-											$("#profile_edit").hide();
+					$ = $.noConflict();
+					$(document)
+					.ready(
+					function() {
+						$("#profile_edit").hide();
 
-											var myLatlng = new google.maps.LatLng(
-											mylocation.latitude,
-											mylocation.longitude);
-											var mapOptions = {
-												//	zoom: 5,
-												//center: myLatlng,
-												mapTypeId : google.maps.MapTypeId.ROADMAP
-											}
-											map = new google.maps.Map(document
-											.getElementById('gmap_canvas'),
-											mapOptions);
-											var defaultBounds = new google.maps.LatLngBounds(
-											new google.maps.LatLng(
-											37.19705959279532,
-											64.02147375000004),
-											new google.maps.LatLng(
-											5.7668215619781575,
-											99.66112218750004));
-											map.fitBounds(defaultBounds);
+						var myLatlng = new google.maps.LatLng(
+						mylocation.latitude,
+						mylocation.longitude);
+						var mapOptions = {
+							//	zoom: 5,
+							//center: myLatlng,
+							mapTypeId : google.maps.MapTypeId.ROADMAP
+						}
+						map = new google.maps.Map(document .getElementById('gmap_canvas'), mapOptions);
+						var defaultBounds = new google.maps.LatLngBounds( new google.maps.LatLng( 37.19705959279532, 64.02147375000004),
+						new google.maps.LatLng( 5.7668215619781575, 99.66112218750004));
+						map.fitBounds(defaultBounds);
 
-											//Test here is user.person.personAddress.lattitude and user.person.personAddress.longitude are defined and then do the following
-											<c:if test="${!empty user.person.personAddress.lattitude}">
-											myLatlng = new google.maps.LatLng( ${user.person.personAddress.lattitude}, ${user.person.personAddress.longitude} );
-											map.setCenter(myLatlng);
-											map.setZoom(14);
-											</c:if>
+						<c:if test="${!empty user.person.personAddress.lattitude}">
+						myLatlng = new google.maps.LatLng( ${user.person.personAddress.lattitude}, ${user.person.personAddress.longitude} );
+						map.setCenter(myLatlng);
+						map.setZoom(14);
+						</c:if>
 
-											myMarker = new google.maps.Marker({
-												position : myLatlng,
-												draggable : true
-											});
-											myMarker.setMap(map);
-											urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
+						myMarker = new google.maps.Marker({
+							position : myLatlng,
+							draggable : true
+						});
+						myMarker.setMap(map);
+						urlSuffix = (new Date).getTime().toString(); //Will be used for KML layer
 
-											//map new
-											var markers = [];
-											// Create the search box and link it to the UI element.
-											var input = /** @type {HTMLInputElement} */
-											(document.getElementById('pac-input'));
-											map.controls[google.maps.ControlPosition.TOP_LEFT]
-											.push(input);
+						//map new
+						var markers = [];
+						// Create the search box and link it to the UI element.
+						var input = /** @type {HTMLInputElement} */
+						(document.getElementById('pac-input'));
+						map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-											var searchBox = new google.maps.places.SearchBox(
-											/** @type {HTMLInputElement} */
-											(input));
+						var searchBox = new google.maps.places.SearchBox(
+						/** @type {HTMLInputElement} */
+						(input));
 
-											// Listen for the event fired when the user selects an item from the
-											// pick list. Retrieve the matching places for that item.
-											google.maps.event
-											.addListener(
-											searchBox,
-											'places_changed',
-											function() {
-												var places = searchBox
-												.getPlaces();
+						// Listen for the event fired when the user selects an item from the
+						// pick list. Retrieve the matching places for that item.
+						google.maps.event .addListener( searchBox, 'places_changed', function() {
+							var places = searchBox .getPlaces();
 
-												if (places.length == 0) {
-													return;
-												}
-												for (var i = 0, marker; marker = markers[i]; i++) {
-													marker.setMap(null);
-												}
+							if (places.length == 0) {
+								return;
+							}
+							for (var i = 0, marker; marker = markers[i]; i++) {
+								marker.setMap(null);
+							}
 
-												// For each place, get the icon, place name, and location.
-												markers = [];
-												var bounds = new google.maps.LatLngBounds();
-												for (var i = 0, place; place = places[i]; i++) {
-													var image = {
-														url : place.icon,
-														size : new google.maps.Size(
-														71, 71),
-														origin : new google.maps.Point(
-														0, 0),
-														anchor : new google.maps.Point(
-														17, 34),
-														scaledSize : new google.maps.Size(
-														25, 25)
-													};
+							// For each place, get the icon, place name, and location.
+							markers = [];
+							var bounds = new google.maps.LatLngBounds();
+							for (var i = 0, place; place = places[i]; i++) {
+								var image = {
+									url : place.icon,
+									size : new google.maps.Size( 71, 71),
+									origin : new google.maps.Point( 0, 0),
+									anchor : new google.maps.Point( 17, 34),
+									scaledSize : new google.maps.Size( 25, 25)
+								};
 
-													// Create a marker for each place.
-													var marker = new google.maps.Marker(
-													{
-														map : map,
-														icon : image,
-														title : place.name,
-														position : place.geometry.location
-													});
+								// Create a marker for each place.
+								var marker = new google.maps.Marker(
+								{
+									map : map,
+									icon : image,
+									title : place.name,
+									position : place.geometry.location
+								});
 
-													markers
-													.push(marker);
+								markers.push(marker);
 
-													bounds
-													.extend(place.geometry.location);
-												}
+								bounds.extend(place.geometry.location);
+							}
 
-												map.fitBounds(bounds);
-												map.setZoom(17);
-											});
+							map.fitBounds(bounds);
+							map.setZoom(17);
+						});
 
-											// Bias the SearchBox results towards places that are within the bounds of the
-											// current map's viewport.
-											google.maps.event.addListener(map,
-											'bounds_changed', function() {
-												var bounds = map.getBounds();
-												searchBox.setBounds(bounds);
-											});
+						// Bias the SearchBox results towards places that are within the bounds of the
+						// current map's viewport.
+						google.maps.event.addListener(map,
+						'bounds_changed', function() {
+							var bounds = map.getBounds();
+							searchBox.setBounds(bounds);
+						});
 
-											geocoder = new google.maps.Geocoder();
+						geocoder = new google.maps.Geocoder();
 
-											$("#edit_btn")
-											.click(
-											function() {
-												google.maps.event .addListener( myMarker, 'dragend', function( evt) {
-													$( '#node_lat') .val( evt.latLng .lat());
-													$( '#node_long') .val( evt.latLng .lng());
-													showGeoLocation();
-												});
-												google.maps.event .addListener( map, "center_changed", function() {
-													c = map .getCenter();
-													myMarker .setPosition(c);
-													$( '#node_lat') .val( c .lat());
-													$( '#node_long') .val( c .lng());
-													showGeoLocation();
-												});
-												google.maps.event .addListener( map, "zoom_changed", function() {
-													c = map .getCenter();
-													myMarker .setPosition(c);
-													$( '#node_lat') .val( c .lat());
-													$( '#node_long') .val( c .lng());
-													showGeoLocation();
-												});
+						$("#edit_btn") .click( function() {
+							google.maps.event.addListener( myMarker, 'dragend', function( evt) {
+								$('#node_lat').val(evt.latLng.lat());
+								$('#node_long').val(evt.latLng.lng());
+								showGeoLocation();
+							});
+							google.maps.event.addListener( map, "center_changed", function() {
+								c = map.getCenter();
+								myMarker.setPosition(c);
+								$('#node_lat').val(c.lat());
+								$('#node_long').val(c.lng());
+								showGeoLocation();
+							});
+							google.maps.event.addListener( map, "zoom_changed", function() {
+								c = map.getCenter();
+								myMarker.setPosition(c);
+								$('#node_lat').val(c.lat());
+								$('#node_long').val(c.lng());
+								showGeoLocation();
+							});
 
-												//Change the right panel to display a form
-												$("#profile_show") .hide();
-												$("#profile_edit") .show();
+							//Change the right panel to display a form
+							$("#profile_show").hide();
+							$("#profile_edit").show();
 
-												$("#cancel_btn") .click( function() {
-													//window.location = "http://dev.eswaraj.com/editprofile.html";
-													$( "#profile_edit") .hide();
-													$( "#profile_show") .show();
-												});
+							$("#cancel_btn").click( function() {
+								//window.location = "http://dev.eswaraj.com/editprofile.html";
+								$("#profile_edit").hide();
+								$("#profile_show").show();
+							});
 
-												<c:if test="${empty user.person.personAddress.lattitude}">
-												if (navigator.geolocation) {
-													navigator.geolocation .getCurrentPosition( function( position) {
-														var pos = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
-														map .setCenter(pos);
-														map .setZoom(14);
-														showGeoLocation();
-													},
-													function() {
-														//User didnt give permission to use location
-													});
-												} else {
-													// Browser doesn't support Geolocation
-												}
-												</c:if>
-											}); //edit button click
-										}); //document ready
+							<c:if test="${empty user.person.personAddress.lattitude}">
+							if (navigator.geolocation) {
+								navigator.geolocation.getCurrentPosition( function( position) {
+									var pos = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
+									map.setCenter(pos);
+									map.setZoom(14);
+									showGeoLocation();
+								},
+								function() {
+									//User didnt give permission to use location
+								});
+							} else {
+								// Browser doesn't support Geolocation
+							}
+							</c:if>
+						}); //edit button click
+					}); //document ready
 
-										function showGeoLocation() {
-											if (navigator.geolocation) {
-												//Show reverse geocoded value
-												var latlng = new google.maps.LatLng($('#node_lat')
-												.val(), $('#node_long').val());
-												geocoder.geocode({
-													'latLng' : latlng
-													}, function(results, status) {
-													if (status == google.maps.GeocoderStatus.OK) {
-														if (results[1]) {
-															$('#rev_geo').html(
-															results[1].formatted_address);
-															} else {
-															alert('No results found');
-														}
-														} else {
-														//alert('Geocoder failed due to: ' + status);
-													}
-												});
-												//end
-											}
-										}
-									</script>
+					function showGeoLocation() {
+						if (navigator.geolocation) {
+							//Show reverse geocoded value
+							var latlng = new google.maps.LatLng($('#node_lat').val(), $('#node_long').val());
+							geocoder.geocode({
+								'latLng' : latlng
+								}, function(results, status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									if (results[1]) {
+										$('#rev_geo').html(
+										results[1].formatted_address);
+										} else {
+										alert('No results found');
+									}
+									} else {
+									//alert('Geocoder failed due to: ' + status);
+								}
+							});
+							//end
+						}
+					}
+				</script>
 			</div>
 		</div>
 	<div id="top_slide_notification"></div>
