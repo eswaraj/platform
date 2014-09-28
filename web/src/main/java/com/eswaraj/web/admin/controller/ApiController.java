@@ -56,4 +56,11 @@ public class ApiController {
 
     }
 
+    @RequestMapping(value = "/api/user/save", method = RequestMethod.GET)
+    @ResponseBody
+    public String saveUser(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
+        return apiUtil.getResponseFrom(httpServletRequest, "/api/v0/complaint/location/");
+
+    }
+
 }

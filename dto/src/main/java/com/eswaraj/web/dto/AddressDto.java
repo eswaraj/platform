@@ -15,6 +15,8 @@ public class AddressDto extends BaseDto {
 	private Long districtId;
 	private Long stateId;
 	private Long countryId;
+    private Double lattitude;
+    private Double longitude;
 	public String getLine1() {
 		return line1;
 	}
@@ -75,5 +77,21 @@ public class AddressDto extends BaseDto {
 	public void setCountryId(Long countryId) {
 		this.countryId = countryId;
 	}
+
+    public Double getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(Double lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 	
 }

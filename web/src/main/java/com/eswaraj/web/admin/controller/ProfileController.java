@@ -9,12 +9,15 @@ import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 
 @Controller
@@ -34,6 +37,17 @@ public class ProfileController extends BaseController {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
         addLoggedInUserAge(mv, httpServletRequest);
+        mv.getModel().put("profile", new UpdateUserRequestWebDto());
+        mv.setViewName("editprofile");
+        return mv;
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView saveUser(ModelAndView mv, HttpServletRequest httpServletRequest, @ModelAttribute("profile") UpdateUserRequestWebDto updateUserRequestWebDto, BindingResult result) {
+        System.out.println("Request URI : " + httpServletRequest.getRequestURI());
+        addGenericValues(mv, httpServletRequest);
+        addLoggedInUserAge(mv, httpServletRequest);
+        logger.info("Saving user : {}", updateUserRequestWebDto);
         mv.setViewName("editprofile");
         return mv;
     }
