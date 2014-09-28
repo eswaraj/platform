@@ -14,10 +14,16 @@ import com.eswaraj.web.dto.AddressDto;
 @Component
 public class AddressConvertor extends BaseConvertor<Address, AddressDto> {
 
-	@Autowired
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private AddressRepository addressRepository;
 	@Autowired
 	private LocationRepository locationRepository; 
+    @Autowired
+    private LocationConvertor locationConvertor;
 
 	
 	@Override
@@ -50,12 +56,30 @@ public class AddressConvertor extends BaseConvertor<Address, AddressDto> {
 		
 	}
 	@Override
-	protected AddressDto convertBeanInternal(Address dbDto) {
+    protected AddressDto convertBeanInternal(Address dbDto) throws ApplicationException {
 		AddressDto addressDto = new AddressDto();
 		BeanUtils.copyProperties(dbDto, addressDto);
         if (dbDto.getLocations() != null && !dbDto.getLocations().isEmpty()) {
             // Flaten all Locations
             for (Location oneLocation : dbDto.getLocations()) {
+                if (oneLocation.getLocationType().getName().equalsIgnoreCase("Country")) {
+                    addressDto.setCountry(locationConvertor.convertBean(oneLocation));
+                }
+                if (oneLocation.getLocationType().getName().equalsIgnoreCase("State")) {
+                    addressDto.setState(locationConvertor.convertBean(oneLocation));
+                }
+                if (oneLocation.getLocationType().getName().equalsIgnoreCase("District")) {
+                    addressDto.setDistrict(locationConvertor.convertBean(oneLocation));
+                }
+                if (oneLocation.getLocationType().getName().equalsIgnoreCase("Assembly Constituency")) {
+                    addressDto.setAc(locationConvertor.convertBean(oneLocation));
+                }
+                if (oneLocation.getLocationType().getName().equalsIgnoreCase("Parliament Constituency")) {
+                    addressDto.setPc(locationConvertor.convertBean(oneLocation));
+                }
+                if (oneLocation.getLocationType().getName().equalsIgnoreCase("Ward")) {
+                    addressDto.setWard(locationConvertor.convertBean(oneLocation));
+                }
                 System.out.println("oneLocation : " + oneLocation);
             }
         }

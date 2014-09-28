@@ -36,13 +36,13 @@
 				</div>
 				<div class="innerblock">
 					<p class="political_details">Political Details :</p>
-					<p class="read" >Ward : <strong id="ward_details">My Ward</strong>
+					<p class="read" >Ward : <strong id="ward_details">${user.person.address.ward.name}</strong>
 					</p>
-					<p class="read">AC : <strong>My AC</strong>
+					<p class="read">AC : <strong>${user.person.address.ac.name}</strong>
 					</p>
-					<p class="read">PC : <strong>My PC</strong>
+					<p class="read">PC : <strong>${user.person.address.pc.name}</strong>
 					</p>
-					<p class="read">Voter ID Number : <strong>42015140</strong>
+					<p class="read">Voter ID Number : <strong>${user.person.voterId}</strong>
 					</p>
 					<button type="button" id="edit_btn" class="btn btn-primary blue btn_round">Edit Profile</button>
 				</div>
