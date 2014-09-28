@@ -28,6 +28,7 @@ public class Person extends BaseNode {
 	private String mobileNumber1;
 	private String mobileNumber2;
     private String profilePhoto;
+    private String voterId;
 	private Address address;
 	public String getName() {
 		return name;
@@ -83,7 +84,16 @@ public class Person extends BaseNode {
 	public void setMobileNumber2(String mobileNumber2) {
 		this.mobileNumber2 = mobileNumber2;
 	}
-	public Address getAddress() {
+
+    public String getVoterId() {
+        return voterId;
+    }
+
+    public void setVoterId(String voterId) {
+        this.voterId = voterId;
+    }
+
+    public Address getAddress() {
 		return address;
 	}
 	public void setAddress(Address address) {

@@ -9,12 +9,15 @@ import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 
 @Controller
@@ -34,6 +37,26 @@ public class ProfileController extends BaseController {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
         addLoggedInUserAge(mv, httpServletRequest);
+        UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        UpdateUserRequestWebDto updateUserRequestWebDto = new UpdateUserRequestWebDto();
+        updateUserRequestWebDto.setName(loggedInUser.getPerson().getName());
+        updateUserRequestWebDto.setVoterId(loggedInUser.getPerson().getVoterId());
+        if (loggedInUser.getPerson().getPersonAddress() != null) {
+            updateUserRequestWebDto.setLattitude(loggedInUser.getPerson().getPersonAddress().getLattitude());
+            updateUserRequestWebDto.setLongitude(loggedInUser.getPerson().getPersonAddress().getLongitude());
+        }
+        mv.getModel().put("profile", updateUserRequestWebDto);
+        mv.setViewName("editprofile");
+        return mv;
+    }
+
+    @RequestMapping(value = "/editprofile.html", method = RequestMethod.POST)
+    public ModelAndView saveUser(ModelAndView mv, HttpServletRequest httpServletRequest, @ModelAttribute("profile") UpdateUserRequestWebDto updateUserRequestWebDto, BindingResult result) {
+        System.out.println("Request URI : " + httpServletRequest.getRequestURI());
+        addGenericValues(mv, httpServletRequest);
+        addLoggedInUserAge(mv, httpServletRequest);
+        logger.info("Saving user : {}", updateUserRequestWebDto);
+        mv.getModel().put("profile", updateUserRequestWebDto);
         mv.setViewName("editprofile");
         return mv;
     }

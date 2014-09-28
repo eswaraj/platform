@@ -95,6 +95,7 @@
 		<url-pattern>/mymp</url-pattern>
 		<url-pattern>/mymla</url-pattern>
 		<url-pattern>/mywardmember</url-pattern>
+		
 	</filter-mapping>
 
 	<!-- Disables Servlet Container welcome file handling. Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->

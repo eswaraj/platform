@@ -7,10 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
@@ -21,15 +23,21 @@ import com.eswaraj.core.convertors.DeviceConvertor;
 import com.eswaraj.core.convertors.FacebookAccountConvertor;
 import com.eswaraj.core.convertors.PersonConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.PersonService;
+import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Device.DeviceType;
 import com.eswaraj.domain.nodes.FacebookAccount;
 import com.eswaraj.domain.nodes.FacebookApp;
+import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.UserDevice;
+import com.eswaraj.domain.repo.AddressRepository;
+import com.eswaraj.domain.repo.LocationRepository;
+import com.eswaraj.domain.repo.LocationTypeRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.UserDeviceRepository;
 import com.eswaraj.domain.repo.UserRepository;
@@ -37,6 +45,7 @@ import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
+import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 
 /**
@@ -59,6 +68,16 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     private UserDeviceRepository userDeviceRepository;
     @Autowired
     private DeviceConvertor deviceConvertor;
+    @Autowired
+    private AppKeyService appKeyService;
+    @Autowired
+    private LocationRepository locationRepository;
+    @Autowired
+    private LocationTypeRepository locationTypeRepository;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private AddressRepository addressRepository;
 
     private SimpleDateFormat facebookDobFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -275,11 +294,62 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             Person person = personRepository.getPersonByUser(user);
             updatePersonInfoFromFacebook(person, facebookUserProfile);
         }
+        return convertUser(user);
+    }
+
+    private UserDto convertUser(User user) throws ApplicationException {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);
         userDto.setPerson(personConvertor.convertBean(personRepository.findOne(user.getPerson().getId())));
+        FacebookAccount facebookAccount = facebookAccountRepository.getFacebookAccountByUser(user);
         userDto.setFacebookAccount(facebookAccountConvertor.convertBean(facebookAccount));
         return userDto;
     }
+    @Override
+    public UserDto updateUserInfo(UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
+        User user = userRepository.findOne(updateUserRequestWebDto.getUserId());
+        Person person = personRepository.getPersonByUser(user);
+        if (updateUserRequestWebDto.getName() != null) {
+            person.setName(updateUserRequestWebDto.getName());
+        }
+        if (updateUserRequestWebDto.getVoterId() != null) {
+            person.setVoterId(updateUserRequestWebDto.getVoterId());
+        }
+        if (updateUserRequestWebDto.getLattitude() != null && updateUserRequestWebDto.getLongitude() != null) {
+            Address address = person.getAddress();
+            if (address == null) {
+                address = new Address();
+            }
+            address.setLongitude(updateUserRequestWebDto.getLongitude());
+            address.setLattitude(updateUserRequestWebDto.getLattitude());
 
+            updateAddressLocationBasedOnLatLong(address);
+            address = addressRepository.save(address);
+        }
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user, userDto);
+        return convertUser(user);
+    }
+
+    private void updateAddressLocationBasedOnLatLong(Address address) throws ApplicationException {
+        String redisKey = appKeyService.buildLocationKey(address.getLattitude(), address.getLongitude());
+        logger.info("Redis Key = " + redisKey);
+        Set<String> locations = stringRedisTemplate.opsForSet().members(redisKey);
+        if(locations == null || locations.isEmpty()){
+            return;
+        }
+
+        Location location;
+        for (String oneLocation : locations) {
+            try{
+                location = locationRepository.findOne(Long.parseLong(oneLocation));
+                address.getLocations().add(location);
+            }catch(Exception ex){
+                logger.error("Unable to add location to address", ex);
+            }
+            
+            
+        }
+
+    }
 }

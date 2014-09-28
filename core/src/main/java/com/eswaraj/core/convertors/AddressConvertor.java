@@ -28,12 +28,14 @@ public class AddressConvertor extends BaseConvertor<Address, AddressDto> {
 		}
 
 		BeanUtils.copyProperties(addressDto, address);
+		/*
 		address.setCountry(getLocation(addressDto.getCountryId(), "Country"));
 		address.setState(getLocation(addressDto.getStateId(), "State"));
 		address.setDistrict(getLocation(addressDto.getDistrictId(), "District"));
 		address.setCity(getLocation(addressDto.getCityId(), "City"));
 		address.setVillage(getLocation(addressDto.getVillageId(), "Village"));
 		address.setWard(getLocation(addressDto.getWardId(), "Ward"));
+		*/
 		return address;
 	}
 	private Location getLocation(Long locationId, String locationName) throws ApplicationException{
@@ -51,6 +53,12 @@ public class AddressConvertor extends BaseConvertor<Address, AddressDto> {
 	protected AddressDto convertBeanInternal(Address dbDto) {
 		AddressDto addressDto = new AddressDto();
 		BeanUtils.copyProperties(dbDto, addressDto);
+        if (dbDto.getLocations() != null && !dbDto.getLocations().isEmpty()) {
+            // Flaten all Locations
+            for (Location oneLocation : dbDto.getLocations()) {
+                System.out.println("oneLocation : " + oneLocation);
+            }
+        }
 		return addressDto;
 	}
 
