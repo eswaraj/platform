@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
 			<script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
 			<script src="${staticHost}/js/mapview.js" type="text/javascript"></script>
 			<script>
-				var kml_path = ${location.kml};
+				var kml_path = "${location.kml}";
 				var complaints = [
 				    <%int i = 0;%>  
 					    <c:forEach items="${complaintList}" var="oneComplaint">
