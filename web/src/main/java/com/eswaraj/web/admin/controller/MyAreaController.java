@@ -17,7 +17,7 @@ public class MyAreaController {
     @Autowired
     private SessionUtil sessionUtil;
 
-    @RequestMapping(value = "/state/**", method = RequestMethod.GET)
+    @RequestMapping(value = "/myac", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         return mv;
