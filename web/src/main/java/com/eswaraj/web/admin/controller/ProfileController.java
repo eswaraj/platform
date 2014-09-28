@@ -55,13 +55,13 @@ public class ProfileController extends BaseController {
     public ModelAndView saveUser(ModelAndView mv, HttpServletRequest httpServletRequest, @ModelAttribute("profile") UpdateUserRequestWebDto updateUserRequestWebDto, BindingResult result)
             throws ApplicationException {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
-        addGenericValues(mv, httpServletRequest);
-        addLoggedInUserAge(mv, httpServletRequest);
         UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         updateUserRequestWebDto.setUserId(loggedInUser.getId());
         logger.info("Saving user : {}", updateUserRequestWebDto);
         UserDto user = apiUtil.updateUserProfile(httpServletRequest, updateUserRequestWebDto);
         sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
+        addGenericValues(mv, httpServletRequest);
+        addLoggedInUserAge(mv, httpServletRequest);
         mv.getModel().put("profile", updateUserRequestWebDto);
         mv.setViewName("editprofile");
         return mv;
