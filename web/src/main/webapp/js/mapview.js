@@ -17,7 +17,7 @@ function initialize() {
 	//Default map view set to heatmap
 	//setMapData(taxiData);
 	//createHeatmap();
-	getData('${location.id}');
+	//getData('${location.id}');
 }
 
 function setMapData(data) {
