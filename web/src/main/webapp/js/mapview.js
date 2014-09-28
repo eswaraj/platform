@@ -15,10 +15,7 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	//Default map view set to heatmap
-	//setMapData(taxiData);
-	//createHeatmap();
-	//getData('${location.id}');
-	getData('72848');
+	createData();
 }
 
 function setMapData(data) {
@@ -117,6 +114,15 @@ function getData(url) {
 			createHeatmap();
 		}
 	});
+}
+
+function createData(){
+	var currentData = [];
+	for(var i=0; i<complaints.length; i++){
+		currentData.push(new google.maps.LatLng(complaints[i].lat,complaint[i].lng));
+	}
+	setMapData(currentData);
+	createHeatmap();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
