@@ -115,10 +115,7 @@
 						'longitude' : 77.23
 					};
 
-					$ = $.noConflict();
-					$(document)
-					.ready(
-					function() {
+					$ = $.noConflict(); $(document) .ready( function() {
 						$("#profile_edit").hide();
 
 						var myLatlng = new google.maps.LatLng(
@@ -160,8 +157,8 @@
 
 						// Listen for the event fired when the user selects an item from the
 						// pick list. Retrieve the matching places for that item.
-						google.maps.event .addListener( searchBox, 'places_changed', function() {
-							var places = searchBox .getPlaces();
+						google.maps.event.addListener( searchBox, 'places_changed', function() {
+							var places = searchBox.getPlaces();
 
 							if (places.length == 0) {
 								return;
@@ -255,6 +252,11 @@
 							} else {
 								// Browser doesn't support Geolocation
 							}
+							</c:if>
+							<c:if test="${!empty user.person.personAddress.lattitude}">
+							var pos = new google.maps.LatLng( ${user.person.personAddress.lattitude}, ${user.person.personAddress.longitude});
+							map.setCenter(pos);
+							map.setZoom(14);
 							</c:if>
 						}); //edit button click
 					}); //document ready
