@@ -93,8 +93,7 @@
 				<script type="text/javascript"
 					src="http://maps.google.com/maps/api/js?v=3.exp&libraries=places"></script>
 				<div style="overflow: hidden; height: 100%; width: 100%;">
-					<input id="pac-input" class="controls" type="text"
-						placeholder="Search Box">
+					<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 					<div id="gmap_canvas" style="height: 100%; width: 100%;"></div>
 
 					<a class="google-map-code"
@@ -307,8 +306,8 @@
 									</script>
 			</div>
 		</div>
-		<div id="top_slide_notification"></div>
 	</div>
+	<div id="top_slide_notification"></div>
 	<jsp:include page="footer.jsp" />
 </body>
 </html>
