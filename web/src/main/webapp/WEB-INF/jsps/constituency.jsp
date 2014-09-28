@@ -235,9 +235,9 @@ title: 'Categories wise',
 					</c:forEach>
 				</c:if>
 				<c:if test="${viewType eq 'map'}">
-					<a href="#!" url="${location.id}" class="list-group-item">Show All (${total})</a>
+					<a href="#!" class="list-group-item" onclick="getData('${location.id}')">Show All (${total})</a>
 					<c:forEach items="${rootCategories}" var="oneCategory">
-					<a href="#!" url="${location.id}/${oneCategory.id}" class="list-group-item">${oneCategory.name} (${oneCategory.locationCount}) </a>
+						<a href="#!" class="list-group-item" onclick="getData('${location.id}/${oneCategory.id}')">${oneCategory.name} (${oneCategory.locationCount}) </a>
 					</c:forEach>
 				</c:if>
 				<c:if test="${viewType eq 'analytics'}">
