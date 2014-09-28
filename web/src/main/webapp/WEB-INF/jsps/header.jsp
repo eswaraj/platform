@@ -29,19 +29,19 @@
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 							<c:if test="${!empty user.person.personAddress.ac}">
-							    <li><a href="/${user.person.personAddress.ac.urlIdentifier}.html">${user.person.personAddress.ac.name}(Assembly Constituency)</a></li>
+							    <li><a href="${user.person.personAddress.ac.urlIdentifier}.html">${user.person.personAddress.ac.name}(Assembly Constituency)</a></li>
                             </c:if>
                             <c:if test="${empty user.person.personAddress.ac}">
                                 <li><a href="/myac">Assembly Constituency</a></li>
                             </c:if>
                             <c:if test="${!empty user.person.personAddress.pc}">
-                                <li><a href="/${user.person.personAddress.pc.urlIdentifier}.html">${user.person.personAddress.pc.name}(Parliament Constituency)</a></li>
+                                <li><a href="${user.person.personAddress.pc.urlIdentifier}.html">${user.person.personAddress.pc.name}(Parliament Constituency)</a></li>
                             </c:if>
                             <c:if test="${empty user.person.personAddress.pc}">
                                 <li><a href="/myac">Parliament Constituency</a></li>
                             </c:if>
                             <c:if test="${!empty user.person.personAddress.ward}">
-                                <li><a href="/${user.person.personAddress.ward.urlIdentifier}.html">${user.person.personAddress.ward.name}(Parliament Constituency)</a></li>
+                                <li><a href="${user.person.personAddress.ward.urlIdentifier}.html">${user.person.personAddress.ward.name}(Parliament Constituency)</a></li>
                             </c:if>
                             <c:if test="${empty user.person.personAddress.ward}">
                                 <li><a href="/myward">Local/Ward</a></li>
