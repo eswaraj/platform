@@ -326,6 +326,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             updateAddressLocationBasedOnLatLong(address);
             address = addressRepository.save(address);
         }
+        person = personRepository.save(person);
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);
         return convertUser(user);
@@ -335,6 +336,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         String redisKey = appKeyService.buildLocationKey(address.getLattitude(), address.getLongitude());
         logger.info("Redis Key = " + redisKey);
         Set<String> locations = stringRedisTemplate.opsForSet().members(redisKey);
+        logger.info("Redis Values = " + locations);
         if(locations == null || locations.isEmpty()){
             return;
         }
@@ -343,6 +345,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         for (String oneLocation : locations) {
             try{
                 location = locationRepository.findOne(Long.parseLong(oneLocation));
+                logger.info("location = " + location);
                 address.getLocations().add(location);
             }catch(Exception ex){
                 logger.error("Unable to add location to address", ex);
