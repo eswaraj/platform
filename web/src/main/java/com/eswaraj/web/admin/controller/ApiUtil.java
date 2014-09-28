@@ -183,7 +183,7 @@ public class ApiUtil {
     }
 
     public UserDto updateUserProfile(HttpServletRequest httpServletRequest, UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
-        String urlPath = "/api/v0/web/user/profile";
+        String urlPath = "/api/v0/user/profile";
         String requestPayload = gson.toJson(updateUserRequestWebDto);
         String response = postRequest(httpServletRequest, urlPath, requestPayload);
         return gson.fromJson(response, UserDto.class);

@@ -23,7 +23,7 @@ public class UserController extends BaseController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v0/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
         return personService.updateUserInfo(updateUserRequestWebDto);
     }
