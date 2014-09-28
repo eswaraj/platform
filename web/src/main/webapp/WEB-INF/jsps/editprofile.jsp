@@ -129,9 +129,9 @@ pageEncoding="UTF-8"%>
 											99.66112218750004));
 											map.fitBounds(defaultBounds);
 
-											//Test here is user.person.address.lattitude and user.person.address.longitude are defined and then do the following
-											<c:if test="${!empty user.person.address.lattitude}">
-											myLatlng = new google.maps.LatLng( ${user.person.address.lattitude}, ${user.person.address.longitude} );
+											//Test here is user.person.personAddress.lattitude and user.person.personAddress.longitude are defined and then do the following
+											<c:if test="${!empty user.person.personAddress.lattitude}">
+											myLatlng = new google.maps.LatLng( ${user.person.personAddress.lattitude}, ${user.person.personAddress.longitude} );
 											map.setCenter(myLatlng);
 											map.setZoom(14);
 											</c:if>
@@ -251,7 +251,7 @@ pageEncoding="UTF-8"%>
 													$( "#profile_show") .show();
 												});
 
-												<c:if test="${empty user.person.address.lattitude}">
+												<c:if test="${empty user.person.personAddress.lattitude}">
 												if (navigator.geolocation) {
 													navigator.geolocation .getCurrentPosition( function( position) {
 														var pos = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
