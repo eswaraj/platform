@@ -3,6 +3,7 @@ var mapData;
 var markerClusterer;
 var markerList = [];
 var bounds;
+var layer;
 var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&' + 'chco=FFFFFF,008CFF,000000&ext=.png';
 
 function initialize() {
@@ -20,11 +21,14 @@ function initialize() {
 
 function setMapData(data) {
 	mapData = data;
-	bounds = new google.maps.LatLngBounds ();
-	for(var i=0; i<mapData.length; i++) {
-		bounds.extend (mapData[i]);
-	}
-	map.fitBounds(bounds);
+	layer = new google.maps.KmlLayer(kml_path);
+	layer.setMap(map);
+	//Disabling bounds because map has to zoom based on kml layer
+	//bounds = new google.maps.LatLngBounds ();
+	//for(var i=0; i<mapData.length; i++) {
+	//	bounds.extend (mapData[i]);
+	//}
+	//map.fitBounds(bounds);
 }
 
 function clearMap() {
