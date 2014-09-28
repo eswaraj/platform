@@ -36,11 +36,11 @@
 				</div>
 				<div class="innerblock">
 					<p class="political_details">Political Details :</p>
-					<p class="read" >Ward : <strong id="ward_details">${user.person.address.ward.name}</strong>
+					<p class="read" >Ward : <strong id="ward_details">${user.person.personAddress.ward.name}</strong>
 					</p>
-					<p class="read">AC : <strong>${user.person.address.ac.name}</strong>
+					<p class="read">AC : <strong>${user.person.personAddress.ac.name}</strong>
 					</p>
-					<p class="read">PC : <strong>${user.person.address.pc.name}</strong>
+					<p class="read">PC : <strong>${user.person.personAddress.pc.name}</strong>
 					</p>
 					<p class="read">Voter ID Number : <strong>${user.person.voterId}</strong>
 					</p>
