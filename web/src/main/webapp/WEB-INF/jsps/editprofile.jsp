@@ -127,9 +127,8 @@
 							mapTypeId : google.maps.MapTypeId.ROADMAP
 						}
 						map = new google.maps.Map(document .getElementById('gmap_canvas'), mapOptions);
-						var defaultBounds = new google.maps.LatLngBounds( new google.maps.LatLng( 37.19705959279532, 64.02147375000004),
-						new google.maps.LatLng( 5.7668215619781575, 99.66112218750004));
-						map.fitBounds(defaultBounds);
+						//var defaultBounds = new google.maps.LatLngBounds( new google.maps.LatLng( 37.19705959279532, 64.02147375000004), new google.maps.LatLng( 5.7668215619781575, 99.66112218750004));
+						//map.fitBounds(defaultBounds);
 
 						<c:if test="${!empty user.person.personAddress.lattitude}">
 						myLatlng = new google.maps.LatLng( ${user.person.personAddress.lattitude}, ${user.person.personAddress.longitude} );
@@ -236,6 +235,11 @@
 								//window.location = "http://dev.eswaraj.com/editprofile.html";
 								$("#profile_edit").hide();
 								$("#profile_show").show();
+								<c:if test="${!empty user.person.personAddress.lattitude}">
+								var pos = new google.maps.LatLng( ${user.person.personAddress.lattitude}, ${user.person.personAddress.longitude});
+								map.setCenter(pos);
+								map.setZoom(14);
+								</c:if>
 							});
 
 							<c:if test="${empty user.person.personAddress.lattitude}">
