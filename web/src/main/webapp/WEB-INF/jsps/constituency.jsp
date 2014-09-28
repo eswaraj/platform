@@ -24,6 +24,18 @@ pageEncoding="UTF-8"%>
 			<c:if test="${viewType eq 'map'}">
 			<script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
 			<script src="${staticHost}/js/mapview.js" type="text/javascript"></script>
+			<script>
+				var complaints = [
+				    <%int i = 0;%>  
+					    <c:forEach items="${complaintList}" var="oneComplaint">
+						    <%if (i > 0)
+							out.println(",");
+						        i++;
+						    %>
+						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy.id}", userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+				  </c:forEach>
+				  ];
+			</script>
 			</c:if>
 
 			<c:if test="${viewType eq 'analytics'}">
@@ -192,43 +204,29 @@ title: 'Categories wise',
 			<strong>Filter Issues by category</strong>
 			</p>
 			<div class="list-group">
-				<c:if test="${viewType eq 'list'}">
-					<c:if test="${empty selectedCategory}">
-					<a href="#" class="list-group-item active">Show All
-						(${total})</a>
-					</c:if>
-					<c:if test="${!empty selectedCategory}">
-					<a href="${location.url}.html?type=${viewType}"
-						class="list-group-item">Show All (${total})</a>
-					</c:if>
+				<c:if test="${empty selectedCategory}">
+				<a href="#" class="list-group-item active">Show All
+					(${total})</a>
+				</c:if>
+				<c:if test="${!empty selectedCategory}">
+				<a href="${location.url}.html?type=${viewType}"
+					class="list-group-item">Show All (${total})</a>
+				</c:if>
 
 
-					<c:forEach items="${rootCategories}" var="oneCategory">
-					<c:if test="${selectedCategory eq oneCategory.id}">
-					<a href="#" class="list-group-item active">${oneCategory.name}
-						(${oneCategory.locationCount})</a>
-					</c:if>
-					<c:if test="${ selectedCategory ne oneCategory.id}">
-					<a
-						href="${location.url}/category/${oneCategory.id}.html?type=${viewType}"
-						class="list-group-item">${oneCategory.name}
-						(${oneCategory.locationCount}) </a>
-					</c:if>
+				<c:forEach items="${rootCategories}" var="oneCategory">
+				<c:if test="${selectedCategory eq oneCategory.id}">
+				<a href="#" class="list-group-item active">${oneCategory.name}
+					(${oneCategory.locationCount})</a>
+				</c:if>
+				<c:if test="${ selectedCategory ne oneCategory.id}">
+				<a
+					href="${location.url}/category/${oneCategory.id}.html?type=${viewType}"
+					class="list-group-item">${oneCategory.name}
+					(${oneCategory.locationCount}) </a>
+				</c:if>
 
-					</c:forEach>
-				</c:if>
-				<c:if test="${viewType eq 'map'}">
-					<a href="#!" class="list-group-item" onclick="getData('${location.id}')">Show All (${total})</a>
-					<c:forEach items="${rootCategories}" var="oneCategory">
-						<a href="#!" class="list-group-item" onclick="getData('${location.id}/${oneCategory.id}')">${oneCategory.name} (${oneCategory.locationCount}) </a>
-					</c:forEach>
-				</c:if>
-				<c:if test="${viewType eq 'analytics'}">
-					<a href="#!" url="${location.id}" class="list-group-item">Show All (${total})</a>
-					<c:forEach items="${rootCategories}" var="oneCategory">
-					<a href="#!" url="${location.id}/${oneCategory.id}" class="list-group-item">${oneCategory.name} (${oneCategory.locationCount}) </a>
-					</c:forEach>
-				</c:if>
+				</c:forEach>
 			</div>
 		</div>
 		<div class="col-sm-9">
