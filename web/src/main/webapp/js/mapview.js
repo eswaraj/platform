@@ -3,6 +3,7 @@ var mapData;
 var markerClusterer;
 var markerList = [];
 var bounds;
+var layer;
 var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&' + 'chco=FFFFFF,008CFF,000000&ext=.png';
 
 function initialize() {
@@ -15,19 +16,19 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	//Default map view set to heatmap
-	//setMapData(taxiData);
-	//createHeatmap();
-	//getData('${location.id}');
-	getData('72848');
+	createData();
 }
 
 function setMapData(data) {
 	mapData = data;
-	bounds = new google.maps.LatLngBounds ();
-	for(var i=0; i<mapData.length; i++) {
-		bounds.extend (mapData[i]);
-	}
-	map.fitBounds(bounds);
+	layer = new google.maps.KmlLayer(kml_path);
+	layer.setMap(map);
+	//Disabling bounds because map has to zoom based on kml layer
+	//bounds = new google.maps.LatLngBounds ();
+	//for(var i=0; i<mapData.length; i++) {
+	//	bounds.extend (mapData[i]);
+	//}
+	//map.fitBounds(bounds);
 }
 
 function clearMap() {
@@ -117,6 +118,15 @@ function getData(url) {
 			createHeatmap();
 		}
 	});
+}
+
+function createData(){
+	var currentData = [];
+	for(var i=0; i<complaints.length; i++){
+		currentData.push(new google.maps.LatLng(complaints[i].lat,complaints[i].lng));
+	}
+	setMapData(currentData);
+	createHeatmap();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
