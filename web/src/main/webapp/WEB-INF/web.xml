@@ -95,7 +95,6 @@
 		<url-pattern>/mymp</url-pattern>
 		<url-pattern>/mymla</url-pattern>
 		<url-pattern>/mywardmember</url-pattern>
-		<url-pattern>/profile</url-pattern>
 		
 	</filter-mapping>
 

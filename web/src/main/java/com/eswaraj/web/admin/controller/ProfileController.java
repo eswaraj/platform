@@ -37,17 +37,26 @@ public class ProfileController extends BaseController {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
         addLoggedInUserAge(mv, httpServletRequest);
-        mv.getModel().put("profile", new UpdateUserRequestWebDto());
+        UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        UpdateUserRequestWebDto updateUserRequestWebDto = new UpdateUserRequestWebDto();
+        updateUserRequestWebDto.setName(loggedInUser.getPerson().getName());
+        updateUserRequestWebDto.setVoterId(loggedInUser.getPerson().getVoterId());
+        if (loggedInUser.getPerson().getPersonAddress() != null) {
+            updateUserRequestWebDto.setLattitude(loggedInUser.getPerson().getPersonAddress().getLattitude());
+            updateUserRequestWebDto.setLongitude(loggedInUser.getPerson().getPersonAddress().getLongitude());
+        }
+        mv.getModel().put("profile", updateUserRequestWebDto);
         mv.setViewName("editprofile");
         return mv;
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/editprofile.html", method = RequestMethod.POST)
     public ModelAndView saveUser(ModelAndView mv, HttpServletRequest httpServletRequest, @ModelAttribute("profile") UpdateUserRequestWebDto updateUserRequestWebDto, BindingResult result) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         addGenericValues(mv, httpServletRequest);
         addLoggedInUserAge(mv, httpServletRequest);
         logger.info("Saving user : {}", updateUserRequestWebDto);
+        mv.getModel().put("profile", updateUserRequestWebDto);
         mv.setViewName("editprofile");
         return mv;
     }

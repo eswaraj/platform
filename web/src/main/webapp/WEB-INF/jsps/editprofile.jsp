@@ -97,36 +97,32 @@
 		<div class="right-pane fixed" id="profile_edit">
 			<h2>My Profile</h2>
 			<div class="profile">
-				<div class="innerblock">
-					<form:form id="profile_form" commandName="profile" method="post" action="/profile">
-					   Name:
-                        <form:input class="form-control" path="name" placeholder="Name" />
-                        Voter ID:
-                        <form:input class="form-control" path="voterId" placeholder="Voter Card No" />
-                        
-                        <input type="submit" class="form-control" value="Save Profile">
-                        <input type="button" class="form-control" value="Cancel"
-                            id="cancel_btn">
+				<form:form id="profile_form" commandName="profile" method="post"
+					action="/editprofile.html">
+					<div class="innerblock">
+						Name:
+						<form:input class="form-control" path="name" placeholder="Name" />
+						Voter ID:
+						<form:input class="form-control" path="voterId"
+							placeholder="Voter Card No" />
+						<hr>
+						<b>Latitude : </b>
+						<form:input class="form-control" path="lattitude" name="node_lat"
+							id="node_lat" placeholder="Latitude" disabled="true" />
 
-					</form:form>
-    <%--
-					<form id="profile_form" class="" action="">
-						Name:<input type="text" class="form-control" placeholder="Name"
-							value="${user.person.name}"> Voter ID:<input type="text"
-							class="form-control" placeholder="Voter Card No" value="420">
+						<b>Longitude : </b>
+						<form:input class="form-control" path="longitude" name="node_long"
+							id="node_long" placeholder="Lattitude" disabled="true" />
+						<p name="rev_geo" id="rev_geo"></p>
+
 						<input type="submit" class="form-control" value="Save Profile">
 						<input type="button" class="form-control" value="Cancel"
 							id="cancel_btn">
-					</form>
-					 --%>
-				</div>
-				<hr>
-				<div class="innerblock">
-					<b>Latitude : <b /><input type="text" name="node_lat"
-						id="node_lat" value="" readonly> <b>Longitude : </b><input
-						type="text" name="node_long" id="node_long" value="" readonly>
-						<p name="rev_geo" id="rev_geo"></p>
-				</div>
+
+
+					</div>
+
+				</form:form>
 			</div>
 		</div>
 		<!-- /.right-pane -->
