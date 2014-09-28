@@ -119,7 +119,7 @@ function getData(url) {
 function createData(){
 	var currentData = [];
 	for(var i=0; i<complaints.length; i++){
-		currentData.push(new google.maps.LatLng(complaints[i].lat,complaint[i].lng));
+		currentData.push(new google.maps.LatLng(complaints[i].lat,complaints[i].lng));
 	}
 	setMapData(currentData);
 	createHeatmap();
