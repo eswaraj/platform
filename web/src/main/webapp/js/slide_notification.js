@@ -2,7 +2,7 @@
 $( window ).load(function() {
 var ward = $.trim($("#ward_details").html());
 if ( ward == '') {
-slideNotice('Do you want to mark your location on the Map ?');
+slideNotice('Mark your location on the Map to select AC/PC and ward');
 } else if ( ward == "My Ward") {
 slideNotice('Welcome ' + ward );
 }

@@ -99,7 +99,7 @@
 					<c:if test="${loggedIn}">
 					<ul class="nav navbar-nav navbar-right">
 								 <li class="download">
-								<a href="#">
+								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj">
 									<span>
 										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
