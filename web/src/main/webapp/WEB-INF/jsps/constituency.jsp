@@ -370,7 +370,6 @@ pageEncoding="UTF-8"%>
 				</div>
 				</c:if>
 				<c:if test="${viewType eq 'analytics'}">
-				<div class="col-sm-9">
 					<div class="listing-wrapper">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
@@ -402,7 +401,6 @@ pageEncoding="UTF-8"%>
 							</div>
 						</div>
 					</div>
-				</div>
 				</c:if>
 			</div>
 		</div>
