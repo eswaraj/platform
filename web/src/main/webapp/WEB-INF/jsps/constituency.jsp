@@ -42,6 +42,8 @@ pageEncoding="UTF-8"%>
 			<c:if test="${viewType eq 'analytics'}">
 			<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 			<script src="${staticHost}/js/analytics.js" type="text/javascript"></script>
+			<script src="${staticHost}/js/d3.min.js" type="text/javascript"></script>
+			<script src="${staticHost}/js/nv.d3.min.js" type="text/javascript"></script>
 			<link rel="stylesheet" href="${staticHost}/css/nv.d3.css">
 			<link rel="stylesheet" href="${staticHost}/css/analytics.css">
 			<script type="text/javascript">
