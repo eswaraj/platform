@@ -24,7 +24,8 @@
 							<a href="index.html"> <i class="glyphicon glyphicon-home"></i>
 							</a>
 						</li>
-						<li class="active">
+						<%--<li class="active"> --%>
+						<li>
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Constituency
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
