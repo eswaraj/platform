@@ -55,14 +55,14 @@
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="/mymp">MP</a>
+									<a href="/leader.html">MP</a>
 								</li>
 								
 								<li>
-									<a href="/mymla">MLA</a>
+									<a href="/leader.html">MLA</a>
 								</li>
 								<li>
-                                    <a href="/mywardmember">Ward Member</a>
+                                    <a href="/leader.html">Ward Member</a>
                                 </li>
 								
 							</ul>
