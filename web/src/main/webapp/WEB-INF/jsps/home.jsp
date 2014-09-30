@@ -22,7 +22,7 @@
 				<div class="row">
 					<div class="col-sm-7">
 					<div class="logo">
-							<a href="">
+							<a href="index.html">
 								<img src="${staticHost}/images/eswaraj-logo.png" alt="logo"></a>
 						</div>
 						
@@ -36,9 +36,9 @@
 								<a href="#know-more" class="scroll-to">know More</a>
 							</p>
 							<div class="dwld">
-								<a href="#">
+								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj">
 									<img src="${staticHost}/images/android.png" alt="android link"></a>
-								<a href="#">
+								<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8">
 									<img src="${staticHost}/images/app-store.png" height="65" width="200" alt="android link"></a>
 							</div>
 							<div class="for-user">
@@ -174,9 +174,9 @@
 		</div>
 	</div>
 </div>
-
-</div>
-</div>
 <jsp:include page="footer.jsp" />
+</div>
+</div>
+
 </body>
 </html>
