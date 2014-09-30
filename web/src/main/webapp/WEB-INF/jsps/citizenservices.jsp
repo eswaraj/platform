@@ -49,12 +49,9 @@
 							<!-- Tab panes -->
 							<div class="tab-content">
 								<div class="tab-pane active" id="home-1">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Delectus veritatis repudiandae velit qui necessitatibus,
-										ipsa, dicta quasi saepe illum facilis, ut quas. Quidem
-										excepturi, nobis blanditiis ipsum libero!</p>
+									<p>${oneCategory.description}</p>
 									<iframe width="630" height="470"
-										src="//www.youtube.com/embed/QtNImqwB7DY" frameborder="0"
+										src="${oneCategory.videoUrl}" frameborder="0"
 										allowfullscreen></iframe>
 									<div class="share-plugin">
 										<div class="btn-group">
