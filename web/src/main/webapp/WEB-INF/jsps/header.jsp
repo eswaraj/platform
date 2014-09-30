@@ -13,7 +13,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.html">
+					<a class="navbar-brand" href="/index.html">
 						<img src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
 						<span pull-left="">e-Swaraj</span>
 					</a>
@@ -21,7 +21,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="index.html"> <i class="glyphicon glyphicon-home"></i>
+							<a href="/index.html"> <i class="glyphicon glyphicon-home"></i>
 							</a>
 						</li>
 						<%--<li class="active"> --%>
