@@ -14,37 +14,7 @@
 </head>
 <body>
 	<div class="outerwrapper">
-		<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="index.php"> <img
-						src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
-						<span pull-left="">e-Swaraj</span>
-					</a>
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="index.php"><i
-								class="glyphicon glyphicon-home"></i></a></li>
-						<li class="active"><a href="05-constituency.php">My
-								Constituency</a></li>
-						<li><a href="07-my-mla.php">My MLA</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="10-profile-pending.php"> <i
-								class="glyphicon glyphicon-user"></i>
-						</a></li>
-					</ul>
-				</div>
-				<!-- /.nav-collapse -->
-			</div>
-		</div>
+		<jsp:include page="header.jsp" />
 		<!-- /.navbar -->
 		<div class="container-fluid">
 			<div class="row">
