@@ -152,7 +152,7 @@
 			</div>
 			<div class="col-xs-6 col-sm-4 placeholder">
 				<img  data-src="holder.js/200x200/auto/vine" class="img-responsive img-default" alt="200x200" src="${staticHost}/images/vaibhav.jpg">
-				<h4>Vaibhav Sinha/h4>
+				<h4>Vaibhav Sinha</h4>
 				<span class="text-muted">
 					Socialist and Technolgist at heart, working towards making india a better place 
 				</span>
