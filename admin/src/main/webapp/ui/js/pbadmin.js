@@ -294,7 +294,6 @@ $(document).ready(function(){
 
 /*******************Add a new Child Node***********************************/
 
-
 function add_pbadmin(){
 
     var post_data = {
@@ -362,6 +361,61 @@ function add_pbadmin(){
     });
 }
 
+function showEdit(event) {
+    var target = event.target || event.srcElement;
+    var locationId = $('#'+target.id).attr('location_id');
+    var pbtypeId = $('#'+target.id).attr('pbtype_id');
+
+    $.ajax({
+        type: "GET",
+        url:"/ajax/pbadmin/getcurrent/"+locationId+"/"+pbtypeId,
+        dataType: "JSON",
+        async: false,
+        success: function(data){
+            if(data){
+                $("#pbtype_list").val(data.politicalBodyTypeId);
+                $("#pbadmin_locationId").val(data.locationId);
+                $("#pbadmin_personId").val(data.personId);
+                $("#party_list").val(data.partyId);
+                $("#pbadmin_email").val(data.email);
+                $("#pbadmin_llandline1").val(data.landLine1);
+                $("#pbadmin_llandline2").val(data.landLine2);
+                $("#pbadmin_mobile1").val(data.mobile1);
+                $("#pbadmin_mobile2").val(data.mobile2);
+                $("pbadmin_fbpage").val(data.fbPage);
+                $("pbadmin_fbaccount").val(data.fbAccount);
+                $("pbadmin_twitterhandle").val(data.twitterHandle);
+                $("#pbadmin_startdate").val(data.startDate); //date as milliseonds
+                $("#pbadmin_enddate").val(data.endDate); //date as milliseonds
+
+                $("#pbadmin_oaId").val(data.officeAddressDto.id);
+                $("#pbadmin_oaLine1").val(data.officeAddressDto.line1);
+                $("#pbadmin_oaLine2").val(data.officeAddressDto.line2);
+                $("#pbadmin_oaLine3").val(data.officeAddressDto.line3);
+                $("#pbadmin_oapostal").val(data.officeAddressDto.postalCode);
+                $("#pbadmin_ovillage-list").val(data.officeAddressDto.villageId);
+                $("#pbadmin_oward-list").val(data.officeAddressDto.wardId);
+                $("#pbadmin_ocity-list").val(data.officeAddressDto.cityId);
+                $("#pbadmin_odistrict-list").val(data.officeAddressDto.districtId);
+                $("#pbadmin_ostate-list").val(data.officeAddressDto.stateId);
+                $("#pbadmin_ocountry-list").val(data.officeAddressDto.countryId);
+                
+                $("#pbadmin_haId").val(data.homeAddressDto.id);
+                $("#pbadmin_haLine1").val(data.homeAddressDto.line1);
+                $("#pbadmin_haLine2").val(data.homeAddressDto.line2);
+                $("#pbadmin_haLine3").val(data.homeAddressDto.line3);
+                $("#pbadmin_hapostal").val(data.homeAddressDto.postalCode);
+                $("#pbadmin_hvillage-list").val(data.homeAddressDto.villageId);
+                $("#pbadmin_hward-list").val(data.homeAddressDto.wardId);
+                $("#pbadmin_hcity-list").val(data.homeAddressDto.cityId);
+                $("#pbadmin_hdistrict-list").val(data.homeAddressDto.districtId);
+                $("#pbadmin_hstate-list").val(data.homeAddressDto.stateId);
+                $("#pbadmin_hcountry-list").val(data.homeAddressDto.countryId);
+            }
+        }
+    });
+}
+
 
 function populate(loc_typeid, loc_id) {
     var pbtype_list = get_pbtypeForLocationType(all_pbtype,loc_typeid);
@@ -414,7 +468,7 @@ function get_pbadmin(locationId,pbtypeId){
         success: function(data){
             if(data){
                 //$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
-                $('#pbadmin_list_current').append('<p>'+data.id+'</p>');
+                $('#pbadmin_list_current').append('<p>'+data.id+'</p><button class="admin_edit" onclick="showEdit(event)" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'">');
             }
         }
     });
