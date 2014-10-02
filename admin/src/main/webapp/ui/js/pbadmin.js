@@ -429,7 +429,6 @@ function populate(loc_typeid, loc_id) {
     $('#pbadmin_list_current').html('');
 
     for(var i=0;i < pbtype_list.length; i++){
-
         pbtype_list_content += "<option value='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
         $('#pbadmin_list_current').append('Current '+pbtype_list[i].shortName);
         $('#pbadmin_list_all').append('All '+pbtype_list[i].shortName);
@@ -477,7 +476,7 @@ function get_pbadmin(locationId,pbtypeId){
                     async: false,
                     success: function(d){
                         if(d){
-                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><button class="admin_edit" onclick="showEdit(event)" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'">');
+                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><button class="admin_edit" onclick="showEdit(event)" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'" >Edit</button>');
                         }
                     }
                 });
