@@ -373,6 +373,7 @@ function showEdit(event) {
         async: false,
         success: function(data){
             if(data){
+                $("#pbadmin_id").val(data.id);
                 $("#pbtype_list").val(data.politicalBodyTypeId);
                 $("#pbadmin_locationId").val(data.locationId);
                 $("#pbadmin_personId").val(data.personId);
@@ -476,7 +477,7 @@ function get_pbadmin(locationId,pbtypeId){
                     async: false,
                     success: function(d){
                         if(d){
-                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><input type="button" class="admin_edit" onclick="showEdit(event);" id="admin_'+data.personId+'" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'" value="Edit"></input>');
+                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><input type="button" class="admin_edit" onclick="showEdit(event);" id="admin_'+data.personId+pbtypeId'" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'" value="Edit"></input>';);
                         }
                     }
                 });
@@ -499,7 +500,7 @@ function get_pbadmin(locationId,pbtypeId){
                         async: false,
                         success: function(d){
                             if(d){
-                                $('#pbadmin_list_current').append('<p>'+d.name+'</p>');
+                                $('#pbadmin_list_all').append('<p>'+d.name+'</p>');
                             }
                         }
                     });
