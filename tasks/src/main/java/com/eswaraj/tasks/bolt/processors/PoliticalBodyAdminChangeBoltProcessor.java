@@ -39,9 +39,9 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             
             JsonObject politicalBodyJsonObject = stormCacheAppServices.getPoliticalBodyAdmin(politicalBodyAdminId);
             String redisKey = appKeyService.getPoliticalBodyAdminObjectKey(String.valueOf(politicalBodyAdminId));
+            String hashKey = appKeyService.getEnityInformationHashKey();
             String redisValue = politicalBodyJsonObject.toString();
-            logInfo("Writing Key {} to redis with Value as {}", redisKey, redisValue);
-            stringRedisTemplate.opsForValue().set(redisKey, redisValue);
+            writeToMemoryStoreHash(redisKey, hashKey, redisValue);
             
             //Now send a message to process all complaint of this Location
 
