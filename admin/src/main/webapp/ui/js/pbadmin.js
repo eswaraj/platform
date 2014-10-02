@@ -399,7 +399,7 @@ function showEdit(event) {
                 $("#pbadmin_odistrict-list").val(data.officeAddressDto.districtId);
                 $("#pbadmin_ostate-list").val(data.officeAddressDto.stateId);
                 $("#pbadmin_ocountry-list").val(data.officeAddressDto.countryId);
-                
+
                 $("#pbadmin_haId").val(data.homeAddressDto.id);
                 $("#pbadmin_haLine1").val(data.homeAddressDto.line1);
                 $("#pbadmin_haLine2").val(data.homeAddressDto.line2);
@@ -412,8 +412,8 @@ function showEdit(event) {
                 $("#pbadmin_hstate-list").val(data.homeAddressDto.stateId);
                 $("#pbadmin_hcountry-list").val(data.homeAddressDto.countryId);
 
-		//Show the modal form
-		$("#assign_pbadmin").modal('show');
+                //Show the modal form
+                $("#assign_pbadmin").modal('show');
             }
         }
     });
@@ -470,8 +470,17 @@ function get_pbadmin(locationId,pbtypeId){
         async: false,
         success: function(data){
             if(data){
-                //$('#pbadmin_list_current').append('<p>'+data.name+'</p>');
-                $('#pbadmin_list_current').append('<p>'+data.id+'</p><button class="admin_edit" onclick="showEdit(event)" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'">');
+                $.ajax({
+                    type: "GET",
+                    url:"/ajax/person/get/"+data.personId,
+                    dataType: "JSON",
+                    async: false,
+                    success: function(d){
+                        if(d){
+                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><button class="admin_edit" onclick="showEdit(event)" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'">');
+                        }
+                    }
+                });
             }
         }
     });
@@ -484,8 +493,17 @@ function get_pbadmin(locationId,pbtypeId){
         success: function(data){
             if(data){
                 for(var i=0; i<data.length; i++){
-                    //$('#pbadmin_list_all').append('<p>'+data[i].name+'</p>');
-                    $('#pbadmin_list_all').append('<p>'+data[i].id+'</p>'); //MAke a get request with this id to get the person name and display that
+                    $.ajax({
+                        type: "GET",
+                        url:"/ajax/person/get/"+data[i].personId,
+                        dataType: "JSON",
+                        async: false,
+                        success: function(d){
+                            if(d){
+                                $('#pbadmin_list_current').append('<p>'+d.name+'</p>');
+                            }
+                        }
+                    });
                 }
             }
         }
