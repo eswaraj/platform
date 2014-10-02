@@ -411,6 +411,9 @@ function showEdit(event) {
                 $("#pbadmin_hdistrict-list").val(data.homeAddressDto.districtId);
                 $("#pbadmin_hstate-list").val(data.homeAddressDto.stateId);
                 $("#pbadmin_hcountry-list").val(data.homeAddressDto.countryId);
+
+		//Show the modal form
+		$("#assign_pbadmin").modal('show');
             }
         }
     });
