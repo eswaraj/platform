@@ -75,13 +75,13 @@
 					<c:if test="${!loggedIn}">					
 					<ul class="nav navbar-nav navbar-right">
 								 <li class="download">
-								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj">
+								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj" target="_blank">
 									<span>
 										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
 							<li class="download">
-								<a href="#">
+								<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8" target="_blank">
 									<span>
 										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>
@@ -100,13 +100,13 @@
 					<c:if test="${loggedIn}">
 					<ul class="nav navbar-nav navbar-right">
 								 <li class="download">
-								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj">
+								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj" target="_blank">
 									<span>
 										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
 							<li class="download">
-								<a href="#">
+								<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8" target="_blank">
 									<span>
 										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>

@@ -22,7 +22,7 @@
 				<div class="row">
 					<div class="col-sm-7">
 					<div class="logo">
-							<a href="">
+							<a href="index.html">
 								<img src="${staticHost}/images/eswaraj-logo.png" alt="logo"></a>
 						</div>
 						
@@ -36,9 +36,9 @@
 								<a href="#know-more" class="scroll-to">know More</a>
 							</p>
 							<div class="dwld">
-								<a href="#">
+								<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj" target="_blank">
 									<img src="${staticHost}/images/android.png" alt="android link"></a>
-								<a href="#">
+								<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8" target="_blank">
 									<img src="${staticHost}/images/app-store.png" height="65" width="200" alt="android link"></a>
 							</div>
 							<div class="for-user">
@@ -130,31 +130,31 @@
 		<div class="team placeholder-wrapper" id="team">
 			<h3>Our Team</h3>
 			<div class="col-xs-6 col-sm-4 placeholder">
-				<img  data-src="holder.js/200x200/auto/sky" class="img-responsive img-default" alt="200x200" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjEwMCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojZmZmO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEzcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L3N2Zz4=">
-				<h4>Label</h4>
+				<img  data-src="holder.js/200x200/auto/sky" class="img-responsive img-default" alt="200x200" src="${staticHost}/images/rakesh.jpg">
+				<h4>Rakesh Pratap Singh</h4>
 				<span class="text-muted">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita nesciunt beatae libero.
+					I am a technologist with special interest in politics , education and finance.
 				</span>
 			</div>
 			<div class="col-xs-6 col-sm-4 placeholder">
-				<img  data-src="holder.js/200x200/auto/vine" class="img-responsive img-default" alt="200x200" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjEwMCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojMUUyOTJDO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEzcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L3N2Zz4=">
-				<h4>Label</h4>
+				<img  data-src="holder.js/200x200/auto/vine" class="img-responsive img-default" alt="200x200" src="${staticHost}/images/ravi.jpg">
+				<h4>Ravi Sharma</h4>
 				<span class="text-muted">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde maiores magnam repudiandae!
+					Socialist and Technolgist at heart, working towards making india a better place 
 				</span>
 			</div>
 			<div class="col-xs-6 col-sm-4 placeholder">
-				<img  data-src="holder.js/200x200/auto/sky" class="img-responsive img-default" alt="200x200" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjEwMCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojZmZmO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEzcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L3N2Zz4=">
-				<h4>Label</h4>
+				<img  data-src="holder.js/200x200/auto/sky" class="img-responsive img-default" alt="200x200" src="${staticHost}/images/pradeep.jpg">
+				<h4>Pradeeo Kumar Sonkar</h4>
 				<span class="text-muted">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque voluptatibus, alias perferendis.
+					Socialist and Technolgist at heart, working towards making india a better place 
 				</span>
 			</div>
 			<div class="col-xs-6 col-sm-4 placeholder">
-				<img  data-src="holder.js/200x200/auto/vine" class="img-responsive img-default" alt="200x200" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjEwMCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojMUUyOTJDO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEzcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L3N2Zz4=">
-				<h4>Label</h4>
+				<img  data-src="holder.js/200x200/auto/vine" class="img-responsive img-default" alt="200x200" src="${staticHost}/images/vaibhav.jpg">
+				<h4>Vaibhav Sinha</h4>
 				<span class="text-muted">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio rerum, repellat harum!
+					Socialist and Technolgist at heart, working towards making india a better place 
 				</span>
 			</div>
 			<div class="col-xs-6 col-sm-4 placeholder">
@@ -174,9 +174,9 @@
 		</div>
 	</div>
 </div>
-
-</div>
-</div>
 <jsp:include page="footer.jsp" />
+</div>
+</div>
+
 </body>
 </html>
