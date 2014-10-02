@@ -477,7 +477,7 @@ function get_pbadmin(locationId,pbtypeId){
                     async: false,
                     success: function(d){
                         if(d){
-                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><input type="button" class="admin_edit" onclick="showEdit(event);" id="admin_'+data.personId+'_'+pbtypeId'" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'" value="Edit"></input>';);
+                            $('#pbadmin_list_current').append('<p>'+d.name+'</p><input type="button" class="admin_edit" onclick="showEdit(event);" id="admin_'+data.personId+'_'+pbtypeId+'" location_id="'+locationId+'" pbtype_id="'+pbtypeId+'" value="Edit"></input>';;);
                         }
                     }
                 });
