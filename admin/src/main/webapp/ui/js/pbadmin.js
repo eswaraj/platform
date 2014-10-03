@@ -299,6 +299,16 @@ $(document).ready(function(){
 
 function add_pbadmin(){
 
+    var start, end;
+    if($("#pbadmin_startdate").val() != "") {
+        var d = new Date($("#pbadmin_startdate").val());
+        start = d.getTime();
+    }
+    if($("#pbadmin_enddate").val() != "") {
+        var d = new Date($("#pbadmin_enddate").val());
+        end = d.getTime();
+    }
+    
     var post_data = {
         "id":$("#pbadmin_id").val(),
         "politicalBodyTypeId":$("#pbtype_list").val(),
