@@ -363,14 +363,14 @@ function add_pbadmin(){
         dataType: "JSON",
         success: function(data){
             //console.log(JSON.stringify(data, null, 4));
-            var error = data.hasOwnProperty('message');
-            var error = data.message !== null;
-            if(error) {
-                alert("Error in admin creation: " + data.message);
-            }
-            else {
+            //var error = data.hasOwnProperty('message');
+            //var error = data.message !== null;
+            //if(error) {
+            //    alert("Error in admin creation: " + data.message);
+            //}
+            //else {
                 alert("PbAdmin Added"+data.personId);
-            }
+            //}
         }
     });
 }
@@ -446,7 +446,9 @@ function populate(loc_typeid, loc_id) {
     for(var i=0;i < pbtype_list.length; i++){
         pbtype_list_content += "<option value='"+pbtype_list[i].id+"'>"+pbtype_list[i].shortName+"</option>";
         $('#pbadmin_list_current').append('Current '+pbtype_list[i].shortName);
+        $('#pbadmin_list_current').append('<br>');
         $('#pbadmin_list_all').append('All '+pbtype_list[i].shortName);
+        $('#pbadmin_list_all').append('<br>');
         get_pbadmin(loc_id,pbtype_list[i].id);
     }
 
