@@ -323,8 +323,8 @@ function add_pbadmin(){
         "fbPage": $("pbadmin_fbpage").val(),
         "fbAccount": $("pbadmin_fbaccount").val(),
         "twitterHandle": $("pbadmin_twitterhandle").val(),
-        "startDate": getMilliseconds($("#pbadmin_startdate").val()), //date as milliseonds
-        "endDate": getMilliseconds($("#pbadmin_enddate").val()), //date as milliseonds
+        "startDate": start, //date as milliseonds
+        "endDate": end, //date as milliseonds
         "officeAddressDto": {
             //"id": 33132,     
             "id" : "",
