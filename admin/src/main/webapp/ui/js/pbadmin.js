@@ -97,6 +97,9 @@ $(document).ready(function(){
     fetch_pbtype();
     fetch_plist();
 
+    $("#pbadmin_startdate").datepicker();
+    $("#pbadmin_enddate").datepicker();
+
     $("#person_search").autocomplete({		
         source: "/ajax/person/search/name/",
         minLength: 3,
@@ -310,8 +313,8 @@ function add_pbadmin(){
         "fbPage": $("pbadmin_fbpage").val(),
         "fbAccount": $("pbadmin_fbaccount").val(),
         "twitterHandle": $("pbadmin_twitterhandle").val(),
-        "startDate": $("#pbadmin_startdate").val(), //date as milliseonds
-        "endDate": $("#pbadmin_enddate").val(), //date as milliseonds
+        "startDate": getMilliseconds($("#pbadmin_startdate").val()), //date as milliseonds
+        "endDate": getMilliseconds($("#pbadmin_enddate").val()), //date as milliseonds
         "officeAddressDto": {
             //"id": 33132,     
             "id" : "",
