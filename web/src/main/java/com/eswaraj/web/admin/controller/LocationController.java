@@ -17,6 +17,7 @@ import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.controller.beans.CategoryBean;
 import com.eswaraj.web.controller.beans.ComplaintBean;
+import com.eswaraj.web.controller.beans.Leader;
 import com.eswaraj.web.controller.beans.LocationBean;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -32,13 +33,14 @@ public class LocationController extends BaseController {
     private AppService appService;
     @Autowired
     private ApiUtil apiUtil;
+    Gson gson = new Gson();
 
     @RequestMapping(value = "/india.html", method = RequestMethod.GET)
-    public ModelAndView showIndiaPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
+    public ModelAndView showIndiaPage(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         return showLocationPage(mv, httpServletRequest);
     }
     @RequestMapping(value = "/state/**", method = RequestMethod.GET)
-    public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
+    public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         String urlkey = httpServletRequest.getRequestURI().replace(".html", "");
         String categoryId = null;
@@ -60,7 +62,6 @@ public class LocationController extends BaseController {
         if (locationIdString != null) {
             Long locationId = Long.parseLong(locationIdString);
             try {
-                Gson gson = new Gson();
                 String locationString = apiUtil.getLocation(httpServletRequest, locationId);
                 mv.getModel().put("location", gson.fromJson(locationString, LocationBean.class));
                 String allCategoriesString = apiUtil.getAllCategopries(httpServletRequest, locationId, false);
@@ -103,10 +104,19 @@ public class LocationController extends BaseController {
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
+            addLocationLeaders(httpServletRequest, mv, locationId);
         }
+
         addGenericValues(mv, httpServletRequest);
         mv.setViewName("constituency");
         return mv;
+    }
+
+    private void addLocationLeaders(HttpServletRequest httpServletRequest, ModelAndView mv, Long locationId) throws ApplicationException {
+        String leaderResponse = apiUtil.getLocationLeaders(httpServletRequest, locationId);
+        logger.info("leaderResponse = {}", leaderResponse);
+        List<Leader> leaders = gson.fromJson(leaderResponse, new TypeToken<List<Leader>>() {}.getType());
+        mv.getModel().put("leaders", leaders);
     }
 
     private String getViewType(HttpServletRequest httpServletRequest) {

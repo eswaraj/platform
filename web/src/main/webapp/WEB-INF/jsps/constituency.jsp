@@ -88,6 +88,18 @@ pageEncoding="UTF-8"%>
 						data-ride="carousel">
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
+						<c:forEach items="${leaders}" var="oneLeader">
+						  <div class="item">
+                                <div class="mla-profile">
+                                    <img src="${oneLeader.profilePhoto}" alt="Leader image">
+                                    <p>
+                                    <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a> <span>In
+                                        Office since ${oneLeader.since}</span>
+                                    </p>
+                                </div>
+                            </div>
+						</c:forEach>
+						<%--
 							<div class="item active">
 								<div class="mla-profile">
 									<img
@@ -121,6 +133,7 @@ pageEncoding="UTF-8"%>
 									</p>
 								</div>
 							</div>
+							 --%>
 						</div>
 						<!-- Controls -->
 						<a class="left carousel-control"

@@ -173,6 +173,11 @@ public class ApiUtil {
         String urlPath = "/api/v0/location/" + locationId + "/info";
         return getResponseFrom(httpServletRequest, urlPath);
     }
+
+    public String getLocationLeaders(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
+        String urlPath = "/api/v0/location/" + locationId + "/leaders";
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
         return getResponseFrom(httpServletRequest, urlPath, null);
     }
