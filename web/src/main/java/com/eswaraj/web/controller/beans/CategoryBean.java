@@ -5,7 +5,6 @@ import java.util.List;
 public class CategoryBean extends BaseBean {
 
     private static final long serialVersionUID = 1L;
-    private String externalId;
     private String headerImageUrl;
     private String imageUrl;
     private String name;
@@ -15,14 +14,6 @@ public class CategoryBean extends BaseBean {
     private boolean root;
     private String description;
     private List<CategoryBean> childCategories;
-
-    public String getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
-    }
 
     public String getImageUrl() {
         return imageUrl;

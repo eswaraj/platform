@@ -3,7 +3,6 @@ package com.eswaraj.web.controller.beans;
 public class LocationBean extends BaseBean {
     private static final long serialVersionUID = 1L;
     private String name;
-    private String externalId;
     private String url;
     private Double latitude;
     private Double longitude;
@@ -26,14 +25,6 @@ public class LocationBean extends BaseBean {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
     }
 
     public String getUrl() {
