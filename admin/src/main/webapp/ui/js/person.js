@@ -205,6 +205,7 @@ $(document).ready(function(){
 		}
 	});
 	$("#searchButton").click(function() {		
+		var d;
 		var s = $('#person_search').val();
 		$.ajax({
 			type: "GET",
@@ -215,13 +216,19 @@ $(document).ready(function(){
 			success: function(data){
 				$('#users tbody').html("");
 				for(var i=0; i<data.length; i++) {
-					$('#users tbody').append("<tr>" +
-						"<td>" + data[i].name + "</td>" +
-						"<td>" + data[i].email + "</td>" +
-						"<td>" + data[i].line1 + "</td>" +
-						"<td>" + "<a id='update" + i + "' class='btn blue' href='#new-person' data-toggle='modal' onClick='setNodeId(event);'" +"pid='"+data[i].id+"' pname='"+data[i].name+"' biodata='"+data[i].biodata+"' dob='"+data[i].dob+"' gender='"+data[i].gender+"' photo='"+data[i].profilePhoto+"' email='"+data[i].email+"' ll1='"+data[i].landlineNumber1+"' ll2='"+data[i].landlineNumber2+"' mobile1='"+data[i].mobileNumber1+"' mobile2='"+data[i].mobileNumber2+"' addressId='"+data[i].personAddress.id+"' line1='"+data[i].personAddress.line1+"' line2='"+data[i].personAddress.line2+"' line3='"+data[i].personAddress.line3+"' value='"+data[i].id+"' postal='"+data[i].personAddress.postalCode+"' villageId='"+data[i].personAddress.villageId+"' wardId='"+data[i].personAddress.wardId+"' cityId='"+data[i].personAddress.cityId+"' districtId='"+data[i].personAddress.districtId+"' stateId='"+data[i].personAddress.stateId+"' countryId='"+data[i].personAddress.countryId+"'"  + '>Edit</a>' + "</td>" +
-						"</tr>" 
-						);
+					if(data[i].personAddress !=null) {
+						d = "<td>" + "<a id='update" + i + "' class='btn blue' href='#new-person' data-toggle='modal' onClick='setNodeId(event);'" +"pid='"+data[i].id+"' pname='"+data[i].name+"' biodata='"+data[i].biodata+"' dob='"+data[i].dob+"' gender='"+data[i].gender+"' photo='"+data[i].profilePhoto+"' email='"+data[i].email+"' ll1='"+data[i].landlineNumber1+"' ll2='"+data[i].landlineNumber2+"' mobile1='"+data[i].mobileNumber1+"' mobile2='"+data[i].mobileNumber2+"' addressId='"+data[i].personAddress.id+"' line1='"+data[i].personAddress.line1+"' line2='"+data[i].personAddress.line2+"' line3='"+data[i].personAddress.line3+"' value='"+data[i].id+"' postal='"+data[i].personAddress.postalCode+"' villageId='"+data[i].personAddress.villageId+"' wardId='"+data[i].personAddress.wardId+"' cityId='"+data[i].personAddress.cityId+"' districtId='"+data[i].personAddress.districtId+"' stateId='"+data[i].personAddress.stateId+"' countryId='"+data[i].personAddress.countryId+"'"  + '>Edit</a>' + "</td>" ;
+					}
+					else {
+						d = "<td>" + "<a id='update" + i + "' class='btn blue' href='#new-person' data-toggle='modal' onClick='setNodeId(event);'" +"pid='"+data[i].id+"' pname='"+data[i].name+"' biodata='"+data[i].biodata+"' dob='"+data[i].dob+"' gender='"+data[i].gender+"' photo='"+data[i].profilePhoto+"' email='"+data[i].email+"' ll1='"+data[i].landlineNumber1+"' ll2='"+data[i].landlineNumber2+"' mobile1='"+data[i].mobileNumber1+"' mobile2='"+data[i].mobileNumber2+"' addressId='' line1='' line2='' line3='' value='' postal='' villageId='' wardId='' cityId='' districtId='' stateId='' countryId=''"  + '>Edit</a>' + "</td>" ;
+					}
+		$('#users tbody').append("<tr>" +
+			"<td>" + data[i].name + "</td>" +
+			"<td>" + data[i].email + "</td>" +
+			"<td>" + data[i].line1 + "</td>" +
+			d +
+			"</tr>" 
+			);
 				}
 			}
 		});

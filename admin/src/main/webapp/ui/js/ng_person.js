@@ -187,6 +187,7 @@ personApp.controller('personController', function ($scope, $http) {
                 var oldText = $scope.searchText;
                 $scope.searchText = "";
                 $scope.searchText = oldText;
+                $("person_search").autocomplete('search', $scope.searchText);
             }
         }).error(function () {
             alert("Request failed.");
