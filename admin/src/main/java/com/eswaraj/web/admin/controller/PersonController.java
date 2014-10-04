@@ -49,6 +49,7 @@ public class PersonController extends BaseController{
 	public @ResponseBody PersonDto savePerson(ModelAndView mv, @RequestBody PersonDto personDto) throws ApplicationException {
         logger.info("Saving Person : {}", personDto);
 		personDto = personService.savePerson(personDto);
+        logger.info("Saved Person : {}", personDto);
 		return personDto;
 	}
 
