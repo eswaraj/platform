@@ -1,6 +1,7 @@
 package com.eswaraj.core.service.impl;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.eswaraj.core.convertors.PoliticalBodyAdminConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.ExecutiveBody;
@@ -175,6 +177,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 	@Override
 	public PoliticalBodyAdminDto savePoliticalBodyAdmin(PoliticalBodyAdminDto politicalBodyAdminDto) throws ApplicationException {
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminConvertor.convert(politicalBodyAdminDto);
+        politicalBodyAdmin.setActive(isActive(politicalBodyAdmin));
 		validateWithExistingData(politicalBodyAdmin);
         validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
@@ -182,6 +185,18 @@ public class AppServiceImpl extends BaseService implements AppService {
         queueService.sendPoliticalBodyAdminUpdateMessage(politicalBodyAdmin.getLocation().getId(), politicalBodyAdmin.getId());
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);	
 	}
+
+    private boolean isActive(PoliticalBodyAdmin politicalBodyAdmin) {
+        boolean active = false;
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(politicalBodyAdmin.getStartDate());
+        startDate = DateUtil.getStartOfDay(startDate);
+        Calendar today = Calendar.getInstance();
+        if (today.after(startDate) && (politicalBodyAdmin.getEndDate() == null || politicalBodyAdmin.getEndDate().after(today.getTime()))) {
+            active = true;
+        }
+        return active;
+    }
 	private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException{
 		if(politicalBodyAdmin.getLocation() != null && politicalBodyAdmin.getPoliticalBodyType() != null){
 			Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(politicalBodyAdmin.getLocation(), politicalBodyAdmin.getPoliticalBodyType());
