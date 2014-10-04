@@ -405,7 +405,7 @@ function showEdit(event) {
                 $("pbadmin_fbaccount").val(data.fbAccount);
                 $("pbadmin_twitterhandle").val(data.twitterHandle);
                 $("#pbadmin_startdate").val(new Date(data.startDate)); //date as milliseonds
-                $("#pbadmin_enddate").val(data.endDate); //date as milliseonds
+                $("#pbadmin_enddate").val(new Date(data.endDate)); //date as milliseonds
 
                 $("#pbadmin_oaId").val(data.officeAddressDto.id);
                 $("#pbadmin_oaLine1").val(data.officeAddressDto.line1);
