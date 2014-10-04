@@ -168,7 +168,7 @@ personApp.controller('personController', function ($scope, $http) {
     //Form handling
     $scope.selectPerson = function (event) {
         var model = $scope.acData[event.target.attributes['input-id'].value + 'Data'];
-        $scope.person = model[event.target.attributes.index.value];
+        for(var k in $scope.person) $scope.person.k = model[event.target.attributes.index.value].k;
     };
     
     $scope.savePerson = function () {
