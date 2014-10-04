@@ -33,7 +33,7 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             String pbAdminChangeMessage = (String) inputTuple.getValue(0);
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject)jsonParser.parse(pbAdminChangeMessage);
-            Long locationId = jsonObject.get("jsonObject").getAsLong();
+            Long locationId = jsonObject.get("locationId").getAsLong();
             Long politicalBodyAdminId = jsonObject.get("politicalBodyAdminId").getAsLong();
             
             
