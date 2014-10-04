@@ -259,7 +259,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             addPropertyIfNotNull(partyJsonObject, "externalId", party.getExternalId());
             addPropertyIfNotNull(partyJsonObject, "name", party.getName());
             addPropertyIfNotNull(partyJsonObject, "shortName", party.getShortName());
-            addPropertyIfNotNull(partyJsonObject, "id", party.getShortName());
+            addPropertyIfNotNull(partyJsonObject, "id", party.getId());
             politicalBodyJsonObject.add("party", partyJsonObject);
         }
 

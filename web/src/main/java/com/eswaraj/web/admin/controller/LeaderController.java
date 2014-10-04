@@ -36,10 +36,11 @@ public class LeaderController extends BaseController {
         System.out.println("urlkey : " + urlkey);
         System.out.println("urlkeyWithoutLocationType : " + urlkeyWithoutLocationType);
         String pbInfo = apiUtil.getLeaderInfo(httpServletRequest, urlkey);
+        System.out.println("pbInfo : " + pbInfo);
         Leader leader = gson.fromJson(pbInfo, Leader.class);
         mv.getModel().put("leader", leader);
         mv.getModel().put("leaderJson", pbInfo);
-        System.out.println("pbInfo : " + pbInfo);
+
         mv.setViewName("leader");
         return mv;
     }
