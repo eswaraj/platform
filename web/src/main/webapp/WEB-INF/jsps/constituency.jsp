@@ -98,7 +98,7 @@ pageEncoding="UTF-8"%>
 						  i++;
 						  %>
                                 <div class="mla-profile">
-                                    <img src="${oneLeader.profilePhoto}" alt="Leader image">
+                                    <img src="${oneLeader.profilePhoto}?type=square&height=300&width=300" alt="Leader image">
                                     <p>
                                     <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a> <span>In
                                         Office since ${oneLeader.since}</span>
