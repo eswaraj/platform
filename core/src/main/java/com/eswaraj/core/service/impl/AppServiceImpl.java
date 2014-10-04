@@ -179,7 +179,12 @@ public class AppServiceImpl extends BaseService implements AppService {
 	public PoliticalBodyAdminDto savePoliticalBodyAdmin(PoliticalBodyAdminDto politicalBodyAdminDto) throws ApplicationException {
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminConvertor.convert(politicalBodyAdminDto);
         politicalBodyAdmin.setActive(isActive(politicalBodyAdmin));
-        politicalBodyAdmin.setUrlIdentifier("leader/" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        if (politicalBodyAdmin.getLocation().getUrlIdentifier().startsWith("/")) {
+            politicalBodyAdmin.setUrlIdentifier("/leader" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        } else {
+            politicalBodyAdmin.setUrlIdentifier("/leader/" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        }
+
 		validateWithExistingData(politicalBodyAdmin);
         validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
