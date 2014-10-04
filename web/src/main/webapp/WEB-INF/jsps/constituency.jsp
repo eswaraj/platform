@@ -89,7 +89,7 @@ pageEncoding="UTF-8"%>
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
 						<c:forEach items="${leaders}" var="oneLeader">
-						  <div class="item">
+						  <div class="item active">
                                 <div class="mla-profile">
                                     <img src="${oneLeader.profilePhoto}" alt="Leader image">
                                     <p>
@@ -136,15 +136,10 @@ pageEncoding="UTF-8"%>
 							 --%>
 						</div>
 						<!-- Controls -->
-						<a class="left carousel-control"
-							href="#carousel-example-generic" role="button"
-							data-slide="prev"> <span
-								class="glyphicon glyphicon-chevron-left"></span>
-							</a> <a class="right carousel-control"
-							href="#carousel-example-generic" role="button"
-							data-slide="next"> <span
-								class="glyphicon glyphicon-chevron-right"></span>
-						</a>
+						<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
+						<span class="glyphicon glyphicon-chevron-left"></span></a> 
+						<a class="right carousel-control"href="#carousel-example-generic" role="button" data-slide="next"> 
+						<span class="glyphicon glyphicon-chevron-right"></span> </a>
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
 						<% int i=0; %>
