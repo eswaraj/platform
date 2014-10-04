@@ -44,6 +44,7 @@ import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -187,6 +188,9 @@ public class AppServiceImpl extends BaseService implements AppService {
 	}
 
     private boolean isActive(PoliticalBodyAdmin politicalBodyAdmin) {
+        if (politicalBodyAdmin.getStartDate() == null) {
+            throw new ValidationException("Start date can not be null");
+        }
         boolean active = false;
         Calendar startDate = Calendar.getInstance();
         startDate.setTime(politicalBodyAdmin.getStartDate());
