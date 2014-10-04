@@ -33,6 +33,10 @@ public class LocationController extends BaseController {
     @Autowired
     private ApiUtil apiUtil;
 
+    @RequestMapping(value = "/india.html", method = RequestMethod.GET)
+    public ModelAndView showIndiaPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
+        return showLocationPage(mv, httpServletRequest);
+    }
     @RequestMapping(value = "/state/**", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
