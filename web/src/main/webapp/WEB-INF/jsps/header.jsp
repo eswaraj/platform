@@ -54,17 +54,24 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Leaders
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a href="/leader.html">MP</a>
-								</li>
-								
-								<li>
-									<a href="/leader.html">MLA</a>
-								</li>
-								<li>
-                                    <a href="/leader.html">Ward Member</a>
-                                </li>
-								
+							<c:if test="${!empty user.person.personAddress.ac}">
+                                <li><a href="/leader${user.person.personAddress.ac.urlIdentifier}/mla.html">MLA</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.ac}">
+                                <li><a href="/mymla">MLA</a></li>
+                            </c:if>
+                            <c:if test="${!empty user.person.personAddress.pc}">
+                                <li><a href="/leader${user.person.personAddress.pc.urlIdentifier}/mp.html">MP</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.pc}">
+                                <li><a href="/mymp">MP</a></li>
+                            </c:if>
+                            <c:if test="${!empty user.person.personAddress.ward}">
+                                <li><a href="/leader${user.person.personAddress.ward.urlIdentifier}./ward.html">Local/Ward Member</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.ward}">
+                                <li><a href="/myward">Local/Ward Member</a></li>
+                            </c:if>
 							</ul>
 						</li>
 						<li>
