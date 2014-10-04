@@ -1,6 +1,6 @@
 var personApp = angular.module('personApp', ['customDirectives']);
 
-personApp.controller('personController', function ($scope, $http) {
+personApp.controller('personController', function ($scope, $http, $timeout) {
     "use strict";
     //window.scope = $scope;
     $scope.acData = {};
@@ -186,8 +186,10 @@ personApp.controller('personController', function ($scope, $http) {
                 alert("Person Added"+data.name);
                 var oldText = $scope.searchText;
                 $scope.searchText = "";
-                $scope.searchText = oldText;
-                $("person_search").autocomplete('search', $scope.searchText);
+                $timeout(function() {
+                    $scope.searchText = oldText;
+                },500);
+                //$("person_search").autocomplete('search', $scope.searchText);
             }
         }).error(function () {
             alert("Request failed.");
