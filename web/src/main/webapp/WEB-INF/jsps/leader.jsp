@@ -22,10 +22,10 @@
 					<div class="panel panel-default mla-placeholder">
 						<div class="panel-body">
 							<div class="mla-profile">
-								<img src="${staticHost}/images/issues/issues.png" alt="mla image">
+								<img src="${leader.profilePic}" alt="mla image">
 								<p>
-									<strong>Rahuram Desai, MLA</strong> <span>In Office
-										since Jan, 2014</span> <a href="#" class="badge badge-default">Know
+									<strong>${leader.name}, ${leader.politicalAdminType.shortName}</strong> <span>In Office
+										since ${leader.since}</span> <a href="#" class="badge badge-default">Know
 										your MLA</a>
 								</p>
 								<div class="visible-xs">
@@ -112,7 +112,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 								<div class="fb-like-box"
-									data-href="https://www.facebook.com/FacebookDevelopers"
+									data-href="https://www.facebook.com/${leader.fbPage}"
 									data-show-border="false" data-height="400"
 									data-colorscheme="light" data-show-faces="true"
 									data-header="false" data-stream="true" data-show-border="true"></div>
@@ -121,8 +121,8 @@
 						<div class="col-sm-6">
 							<div class="eswaraj-int-twitter">
 								<a class="twitter-timeline"
-									href="https://twitter.com/somnath_sn"
-									data-widget-id="505705935222747136">Tweets by @somnath_sn</a>
+									href="https://twitter.com/${leader.twitterHandle}"
+									data-widget-id="505705935222747136">Tweets by @${leader.twitterHandle}</a>
 								<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 							</div>
 						</div>

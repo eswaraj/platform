@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.controller.beans.Leader;
+import com.google.gson.Gson;
 
 /**
  * Leader url will be like this /leader/state/{stateId}/{locationType}.html
@@ -22,6 +24,7 @@ public class LeaderController extends BaseController {
 
     @Autowired
     private ApiUtil apiUtil;
+    private Gson gson = new Gson();
 
     @RequestMapping(value = "/leader/**/{locationType}.html", method = RequestMethod.GET)
     public ModelAndView showIndexPage(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable String locationType) throws ApplicationException {
@@ -33,6 +36,9 @@ public class LeaderController extends BaseController {
         System.out.println("urlkey : " + urlkey);
         System.out.println("urlkeyWithoutLocationType : " + urlkeyWithoutLocationType);
         String pbInfo = apiUtil.getLeaderInfo(httpServletRequest, urlkey);
+        Leader leader = gson.fromJson(pbInfo, Leader.class);
+        mv.getModel().put("leader", leader);
+        mv.getModel().put("leaderJson", pbInfo);
         System.out.println("pbInfo : " + pbInfo);
         mv.setViewName("leader");
         return mv;
