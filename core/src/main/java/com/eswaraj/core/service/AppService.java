@@ -53,6 +53,8 @@ public interface AppService {
 	
 	PoliticalBodyAdminDto getCurrentPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
+    List<PoliticalBodyAdminDto> getAllCurrentPoliticalBodyAdminByLocationId(Long locationId) throws ApplicationException;
+
 	List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
     List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException;

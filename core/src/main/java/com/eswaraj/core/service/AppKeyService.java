@@ -82,4 +82,6 @@ public interface AppKeyService {
     String getPoliticalBodyAdminTypeHashKey(Long pbTypeId);
 
     String getPoliticalBodyAdminUrlsKey();
+
+    String getPoliticalBodyAdminHashKey();
 }

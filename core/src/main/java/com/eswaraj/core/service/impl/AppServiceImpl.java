@@ -287,6 +287,13 @@ public class AppServiceImpl extends BaseService implements AppService {
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);
 	}
 
+    @Override
+    public List<PoliticalBodyAdminDto> getAllCurrentPoliticalBodyAdminByLocationId(Long locationId) throws ApplicationException {
+        Location location = getObjectIfExistsElseThrowExcetpion(locationId, "Location", locationRepository);
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllCurrentPoliticalAdminByLocationAndPoliticalBodyType(location);
+        return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
+    }
+
 	@Override
 	public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException {
 		Location location = getObjectIfExistsElseThrowExcetpion(locationId, "Location", locationRepository);

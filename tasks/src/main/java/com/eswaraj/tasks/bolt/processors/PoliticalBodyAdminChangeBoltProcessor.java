@@ -1,15 +1,25 @@
 package com.eswaraj.tasks.bolt.processors;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import backtype.storm.tuple.Tuple;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
+import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
+import com.eswaraj.web.dto.LocationDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -24,6 +34,10 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private QueueService queueService;
+    @Autowired
+    private AppService appService;
+    @Autowired
+    private LocationService locationService;
 
 
 
@@ -48,6 +62,27 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             String url = politicalBodyJsonObject.get("urlIdentifier").getAsString();
             writeToMemoryStoreHash(allPoliticalAdminUrlRedisKey, url, politicalBodyAdminId);
 
+            // Save Location Id with Political Admin Body
+
+            Set<Long> pbAdminIds = new HashSet<>();
+            processLocationCurrentAdmins(pbAdminIds, locationId);
+            List<LocationDto> allParentLocations = locationService.getAllParents(locationId);
+            if (allParentLocations != null) {
+                for (LocationDto oneLocationDto : allParentLocations) {
+                    processLocationCurrentAdmins(pbAdminIds, oneLocationDto.getId());
+                }
+            }
+
+            String locationRedisKey = appKeyService.getLocationKey(locationId);
+            String pbaListHashKey = appKeyService.getPoliticalBodyAdminHashKey();
+            stringRedisTemplate.opsForHash().delete(locationRedisKey, pbaListHashKey);
+
+            if (!pbAdminIds.isEmpty()) {
+                String locationAllCurrentAdmins = StringUtils.collectionToCommaDelimitedString(pbAdminIds);
+                stringRedisTemplate.opsForHash().put(locationRedisKey, pbaListHashKey, locationAllCurrentAdmins);
+            }
+
+
             //Now send a message to process all complaint of this Location
 
             queueService.sendReprocesAllComplaintOfLocation(locationId);
@@ -56,5 +91,16 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             logError("Unable to refresh Political Body Admin ", ex);
         }
         return Result.Failed;
+    }
+
+    private void processLocationCurrentAdmins(Set<Long> pbAdminIds, Long locationId) throws ApplicationException {
+        List<PoliticalBodyAdminDto> allCurrentPoliticalAdmins = appService.getAllCurrentPoliticalBodyAdminByLocationId(locationId);
+
+        if (allCurrentPoliticalAdmins != null && !allCurrentPoliticalAdmins.isEmpty()) {
+            for (PoliticalBodyAdminDto onePoliticalBodyAdminDto : allCurrentPoliticalAdmins) {
+                pbAdminIds.add(onePoliticalBodyAdminDto.getId());
+            }
+        }
+
     }
 }
