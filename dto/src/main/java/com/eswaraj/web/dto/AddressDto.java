@@ -166,5 +166,12 @@ public class AddressDto extends BaseDto {
     public void setCity(LocationDto city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "AddressDto [line1=" + line1 + ", line2=" + line2 + ", line3=" + line3 + ", postalCode=" + postalCode + ", villageId=" + villageId + ", wardId=" + wardId + ", cityId=" + cityId
+                + ", districtId=" + districtId + ", stateId=" + stateId + ", countryId=" + countryId + ", lattitude=" + lattitude + ", longitude=" + longitude + ", country=" + country + ", state="
+                + state + ", district=" + district + ", ac=" + ac + ", pc=" + pc + ", ward=" + ward + ", village=" + village + ", city=" + city + ", id=" + id + ", externalId=" + externalId + "]";
+    }
 	
 }

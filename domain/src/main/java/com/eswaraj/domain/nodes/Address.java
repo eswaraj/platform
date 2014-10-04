@@ -72,4 +72,10 @@ public class Address extends BaseNode {
         this.locations = locations;
     }
 
+    @Override
+    public String toString() {
+        return "Address [line1=" + line1 + ", line2=" + line2 + ", line3=" + line3 + ", postalCode=" + postalCode + ", lattitude=" + lattitude + ", longitude=" + longitude + ", locations="
+                + locations + ", id=" + id + ", externalId=" + externalId + "]";
+    }
+
 }
