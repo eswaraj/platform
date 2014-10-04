@@ -164,7 +164,7 @@ public class ApiUtil {
 
     public String getLeaderInfo(HttpServletRequest httpServletRequest, String urlKey) throws ApplicationException {
         Map<String, String> extraParams = new HashMap<String, String>();
-        extraParams.put("urlKey", urlKey);
+        extraParams.put("urlkey", urlKey);
         String urlPath = "/api/v0/leader";
         return getResponseFrom(httpServletRequest, urlPath, extraParams);
     }
