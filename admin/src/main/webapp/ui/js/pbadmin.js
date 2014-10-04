@@ -401,9 +401,9 @@ function showEdit(event) {
                 $("#pbadmin_llandline2").val(data.landLine2);
                 $("#pbadmin_mobile1").val(data.mobile1);
                 $("#pbadmin_mobile2").val(data.mobile2);
-                $("pbadmin_fbpage").val(data.fbPage);
-                $("pbadmin_fbaccount").val(data.fbAccount);
-                $("pbadmin_twitterhandle").val(data.twitterHandle);
+                $("#pbadmin_fbpage").val(data.fbPage);
+                $("#pbadmin_fbaccount").val(data.fbAccount);
+                $("#pbadmin_twitterhandle").val(data.twitterHandle);
                 $("#pbadmin_startdate").val(new Date(data.startDate)); //date as milliseonds
                 $("#pbadmin_enddate").val(new Date(data.endDate)); //date as milliseonds
 
