@@ -1,8 +1,5 @@
 package com.eswaraj.api.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 
 @Controller
 public class PoliticalBodyAdminController extends BaseController {
@@ -28,18 +26,24 @@ public class PoliticalBodyAdminController extends BaseController {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private AppKeyService appKeyService;
 
     @RequestMapping(value = "/api/v0/leader", method = RequestMethod.GET)
     public @ResponseBody String getLeader(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
         String urlKey = httpServletRequest.getParameter("urlkey");
         String locationType = httpServletRequest.getParameter("locationType");
-        logger.info("urlkey = " + urlKey);
-        logger.info("locationType = " + locationType);
+        logger.info("urlkey = {}", urlKey);
+        logger.info("locationType = {}", locationType);
         // First Redis Operation
-        String locationIdString = stringRedisTemplate.opsForValue().get(urlKey);
+        String pbAdminIdString = String.valueOf(stringRedisTemplate.opsForHash().get(appKeyService.getPoliticalBodyAdminUrlsKey(), urlKey));
+        logger.info("pbAdminIdString = {}", locationType);
         // Second Redis operation
-        List<Map> results = redisUtil.executeAll();
-        return convertToJsonArray(results.get(0).values()).toString();
+        String pbRedisKey = appKeyService.getPoliticalBodyAdminObjectKey(String.valueOf(pbAdminIdString));
+        logger.info("pbRedisKey = {}", pbRedisKey);
+        String hashKey = appKeyService.getEnityInformationHashKey();
+        String pbInfo = (String) stringRedisTemplate.opsForHash().get(pbRedisKey, hashKey);
+        return pbInfo;
     }
 
 }
