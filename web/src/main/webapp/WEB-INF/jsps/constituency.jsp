@@ -88,8 +88,15 @@ pageEncoding="UTF-8"%>
 						data-ride="carousel">
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
+						<% int i=0; %>
 						<c:forEach items="${leaders}" var="oneLeader">
+						  <% if(i == 0){ %>
 						  <div class="item active">
+						  <% }else{ %>
+						  <div class="item">
+						  <% }
+						  i++;
+						  %>
                                 <div class="mla-profile">
                                     <img src="${oneLeader.profilePhoto}" alt="Leader image">
                                     <p>
@@ -142,7 +149,7 @@ pageEncoding="UTF-8"%>
 						<span class="glyphicon glyphicon-chevron-right"></span> </a>
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
-						<% int i=0; %>
+						<% i=0; %>
 						<c:forEach items="${leaders}" var="oneLeader">
 						  <% if(i == 0){ %>
 						  <li data-target="#carousel-example-generic" data-slide-to="$i" class="active"></li>
