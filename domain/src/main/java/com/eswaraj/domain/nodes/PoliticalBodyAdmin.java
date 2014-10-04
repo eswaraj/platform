@@ -44,6 +44,7 @@ public class PoliticalBodyAdmin extends BaseNode {
 	private Date startDate;
 	private Date endDate;
 	private boolean active;
+    private String urlIdentifier;
 	
 	public PoliticalBodyType getPoliticalBodyType() {
 		return politicalBodyType;
@@ -152,6 +153,14 @@ public class PoliticalBodyAdmin extends BaseNode {
 
     public void setTwitterHandle(String twitterHandle) {
         this.twitterHandle = twitterHandle;
+    }
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
     }
 	
 	
