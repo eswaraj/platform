@@ -51,8 +51,12 @@ public class LocationController extends BaseController {
 
         String view = getViewType(httpServletRequest);
         mv.getModel().put("viewType", view);
+        if (urlkey.equals("/india")) {
+            urlkey = "india";
+        }
 
         String locationIdString = stringRedisTemplate.opsForValue().get(urlkey);
+        System.out.println("locationIdString : " + locationIdString);
         if (locationIdString != null) {
             Long locationId = Long.parseLong(locationIdString);
             try {
