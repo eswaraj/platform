@@ -21,7 +21,10 @@ public class LeaderController extends BaseController {
     public ModelAndView showIndexPage(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable String locationType) {
         addGenericValues(mv, httpServletRequest);
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
+        System.out.println("locationType : " + locationType);
         String urlkey = httpServletRequest.getRequestURI().replace(".html", "");
+        urlkey = urlkey.replace("/" + locationType, "");
+        System.out.println("urlkey : " + urlkey);
 
         mv.setViewName("leader");
         return mv;
