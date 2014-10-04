@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.StormCacheAppServices;
@@ -238,6 +239,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         addPropertyIfNotNull(politicalBodyJsonObject, "fbPage", onePoliticalBodyAdmin.getFbPage());
         addPropertyIfNotNull(politicalBodyJsonObject, "twitterHandle", onePoliticalBodyAdmin.getTwitterHandle());
         addPropertyIfNotNull(politicalBodyJsonObject, "officeEmail", onePoliticalBodyAdmin.getEmail());
+        addPropertyIfNotNull(politicalBodyJsonObject, "urlIdentifier", onePoliticalBodyAdmin.getUrlIdentifier());
         addAddress(politicalBodyJsonObject, "homeAddress", onePoliticalBodyAdmin.getHomeAddress());
         addAddress(politicalBodyJsonObject, "officeAddress", onePoliticalBodyAdmin.getOfficeAddress());
 
@@ -297,7 +299,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         jsonObject.add(propertyName, addressJsonObject);
     }
     private void addPropertyIfNotNull(JsonObject jsonObject, String propertyName, String value) {
-        if (value != null) {
+        if (!StringUtils.isEmpty(value)) {
             jsonObject.addProperty(propertyName, value);
         }
     }
