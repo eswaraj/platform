@@ -220,7 +220,7 @@ public class AppServiceImpl extends BaseService implements AppService {
     }
 	private void checkForDateOverlap(PoliticalBodyAdmin politicalBodyAdmin, Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation) throws ApplicationException{
 		for(PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation){
-			if(!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin)){
+            if (!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin.getId())) {
 				//We need to check political admin being saved with other admins only
 				if(checkIfDatesAreOverlapped(onePoliticalBodyAdmin.getStartDate(), onePoliticalBodyAdmin.getEndDate(), politicalBodyAdmin.getStartDate(), politicalBodyAdmin.getEndDate())){
 					throw new ApplicationException("Start date and end dates of two Political admin for this location overallped [id1="+onePoliticalBodyAdmin.getId()+", startDate="+onePoliticalBodyAdmin.getStartDate()
