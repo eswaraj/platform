@@ -147,10 +147,16 @@ pageEncoding="UTF-8"%>
 						</a>
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
-							<li data-target="#carousel-example-generic" data-slide-to="0"
-							class="active"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+						<% int i=0; %>
+						<c:forEach items="${leaders}" var="oneLeader">
+						  <% if(i == 0){ %>
+						  <li data-target="#carousel-example-generic" data-slide-to="$i" class="active"></li>
+						  <% }else{ %>
+						  <li data-target="#carousel-example-generic" data-slide-to="$i"></li>
+						  <% }
+						  i++;
+						  %>
+						</c:forEach>
 						</ol>
 					</div>
 				</div>
