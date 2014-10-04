@@ -72,6 +72,13 @@
                             <c:if test="${empty user.person.personAddress.ward}">
                                 <li><a href="/myward">Local/Ward Member</a></li>
                             </c:if>
+                            <c:if test="${!empty user.person.personAddress.state}">
+                                <li><a href="/leader${user.person.personAddress.state.urlIdentifier}./cm.html">Chief Minister</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.ward}">
+                                <li><a href="/mycm">Chief Minister</a></li>
+                            </c:if>
+                            <li><a href="/leader/india/pm.html">Prime Minister</a></li>
 							</ul>
 						</li>
 						<li>
