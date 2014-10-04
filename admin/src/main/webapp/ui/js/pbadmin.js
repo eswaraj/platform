@@ -300,7 +300,6 @@ $(document).ready(function(){
 function add_pbadmin(){
 
     var start, end;
-    alert('Start Date : '+ $("#pbadmin_startdate").val());
     if($("#pbadmin_startdate").val() === "") {
     	alert('Please enter Start Date');
     	return;
@@ -405,7 +404,6 @@ function showEdit(event) {
                 $("pbadmin_fbpage").val(data.fbPage);
                 $("pbadmin_fbaccount").val(data.fbAccount);
                 $("pbadmin_twitterhandle").val(data.twitterHandle);
-                alert("Start date from server : " + data.startDate);
                 $("#pbadmin_startdate").val(new Date(data.startDate)); //date as milliseonds
                 $("#pbadmin_enddate").val(data.endDate); //date as milliseonds
 
