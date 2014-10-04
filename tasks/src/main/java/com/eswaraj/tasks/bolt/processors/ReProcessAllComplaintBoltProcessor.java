@@ -19,7 +19,7 @@ public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
     private ComplaintService complaintService;
-    private JsonParser jsonParser;
+    private JsonParser jsonParser = new JsonParser();
 
 	@Override
     public Result processTuple(Tuple input) {
@@ -67,7 +67,7 @@ public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
         try {
             return (JsonObject) jsonParser.parse(jsonString);
         } catch (Exception ex) {
-            logWarning("Not a valid Json : {}", jsonString);
+            logError("Not a valid Json :" + jsonString, ex);
         }
         return null;
     }

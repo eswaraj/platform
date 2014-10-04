@@ -29,7 +29,10 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     private final String CATEGORY_PREFIX = "CG.";
 
+    private final String POLITICAL_ADMIN_URL_KEY = "PBA_URLS";
+    private final String POLITICAL_ADMIN_HASH_KEY = "PBA_LIST";
     private final String POLITICAL_ADMIN_PREFIX = "PBA.";
+    private final String POLITICAL_ADMIN_TYPE_PREFIX = "PBAT.";
     private final String EXECUTIVE_ADMIN_PREFIX = "EBA.";
     private final String CATEGORY_ALL_KEY = CATEGORY_PREFIX + "ALL";
 
@@ -341,5 +344,20 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     @Override
     public String getLocationCategoryComplaintsKey(Long locationId, long categoryId) {
         return LOCATION_PREFIX + locationId + "." + CATEGORY_PREFIX + categoryId + ".complaints";
+    }
+
+    @Override
+    public String getPoliticalBodyAdminTypeHashKey(Long pbTypeId) {
+        return POLITICAL_ADMIN_TYPE_PREFIX + pbTypeId;
+    }
+
+    @Override
+    public String getPoliticalBodyAdminUrlsKey() {
+        return POLITICAL_ADMIN_URL_KEY;
+    }
+
+    @Override
+    public String getPoliticalBodyAdminHashKey() {
+        return POLITICAL_ADMIN_HASH_KEY;
     }
 }

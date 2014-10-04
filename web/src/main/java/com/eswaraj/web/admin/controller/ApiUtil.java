@@ -162,6 +162,13 @@ public class ApiUtil {
         return getResponseFrom(httpServletRequest, urlPath, extraParams);
     }
 
+    public String getLeaderInfo(HttpServletRequest httpServletRequest, String urlKey) throws ApplicationException {
+        Map<String, String> extraParams = new HashMap<String, String>();
+        extraParams.put("urlkey", urlKey);
+        String urlPath = "/api/v0/leader";
+        return getResponseFrom(httpServletRequest, urlPath, extraParams);
+    }
+
     public String getLocation(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
         String urlPath = "/api/v0/location/" + locationId + "/info";
         return getResponseFrom(httpServletRequest, urlPath);

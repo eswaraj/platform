@@ -179,6 +179,12 @@ public class AppServiceImpl extends BaseService implements AppService {
 	public PoliticalBodyAdminDto savePoliticalBodyAdmin(PoliticalBodyAdminDto politicalBodyAdminDto) throws ApplicationException {
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminConvertor.convert(politicalBodyAdminDto);
         politicalBodyAdmin.setActive(isActive(politicalBodyAdmin));
+        if (politicalBodyAdmin.getLocation().getUrlIdentifier().startsWith("/")) {
+            politicalBodyAdmin.setUrlIdentifier("/leader" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        } else {
+            politicalBodyAdmin.setUrlIdentifier("/leader/" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        }
+
 		validateWithExistingData(politicalBodyAdmin);
         validateLocation(politicalBodyAdmin);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
@@ -255,7 +261,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 		}
 		
 		for(PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation){
-			if(!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin)){
+            if (!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin.getId())) {
 				if(onePoliticalBodyAdmin.isActive()){
 					//throw new ApplicationException("Another Active Political Admin exists [id="+onePoliticalBodyAdmin.getId()+"], please make him/her inactive first and then make this active");
 					//instead of throwing exception we are just turning other active Admin to inactive
@@ -280,6 +286,13 @@ public class AppServiceImpl extends BaseService implements AppService {
 		PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBean(politicalBodyAdmin);
 	}
+
+    @Override
+    public List<PoliticalBodyAdminDto> getAllCurrentPoliticalBodyAdminByLocationId(Long locationId) throws ApplicationException {
+        Location location = getObjectIfExistsElseThrowExcetpion(locationId, "Location", locationRepository);
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllCurrentPoliticalAdminByLocationAndPoliticalBodyType(location);
+        return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
+    }
 
 	@Override
 	public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException {

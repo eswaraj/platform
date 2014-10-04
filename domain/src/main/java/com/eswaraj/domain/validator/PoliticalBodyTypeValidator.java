@@ -14,15 +14,20 @@ public class PoliticalBodyTypeValidator extends BaseValidator<PoliticalBodyType>
 		super(PoliticalBodyType.class, validationManager);
 	}
 
-	public void validateBeforeSave(PoliticalBodyType politicalBodyType) throws ValidationException {
+	@Override
+    public void validateBeforeSave(PoliticalBodyType politicalBodyType) throws ValidationException {
 		checkIfEmpty("Name", politicalBodyType.getName(), "Political Body Type name can not be null or empty");
 		checkIfEmpty("ShortName", politicalBodyType.getShortName(), "Political Body Type ShortName can not be null or empty");
+        if (politicalBodyType.getShortName().contains(" ")) {
+            throw new ValidationException("A political Body Type shortname can not contain space");
+        }
 		if(politicalBodyType.getLocationType() == null){
 			throw new ValidationException("A political Body Type must be associated with a LocationType");
 		}
 		
 	}
 
-	public void validateBeforeDelete(PoliticalBodyType politicalBodyType) throws ValidationException {
+	@Override
+    public void validateBeforeDelete(PoliticalBodyType politicalBodyType) throws ValidationException {
 	}
 }

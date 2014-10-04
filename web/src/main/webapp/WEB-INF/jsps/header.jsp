@@ -29,6 +29,12 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Constituency
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
+                            <c:if test="${!empty user.person.personAddress.ward}">
+                                <li><a href="${user.person.personAddress.ward.urlIdentifier}.html">${user.person.personAddress.ward.name}(Parliament Constituency)</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.ward}">
+                                <li><a href="/myward">Local/Ward</a></li>
+                            </c:if>
 							<c:if test="${!empty user.person.personAddress.ac}">
 							    <li><a href="${user.person.personAddress.ac.urlIdentifier}.html">${user.person.personAddress.ac.name}(Assembly Constituency)</a></li>
                             </c:if>
@@ -41,11 +47,11 @@
                             <c:if test="${empty user.person.personAddress.pc}">
                                 <li><a href="/myac">Parliament Constituency</a></li>
                             </c:if>
-                            <c:if test="${!empty user.person.personAddress.ward}">
-                                <li><a href="${user.person.personAddress.ward.urlIdentifier}.html">${user.person.personAddress.ward.name}(Parliament Constituency)</a></li>
+                            <c:if test="${!empty user.person.personAddress.state}">
+                                <li><a href="${user.person.personAddress.state.urlIdentifier}.html">${user.person.personAddress.state.name}(State)</a></li>
                             </c:if>
-                            <c:if test="${empty user.person.personAddress.ward}">
-                                <li><a href="/myward">Local/Ward</a></li>
+                            <c:if test="${empty user.person.personAddress.state}">
+                                <li><a href="/mystate">State</a></li>
                             </c:if>
 							</ul>
 							
@@ -54,17 +60,31 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Leaders
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a href="/leader.html">MP</a>
-								</li>
-								
-								<li>
-									<a href="/leader.html">MLA</a>
-								</li>
-								<li>
-                                    <a href="/leader.html">Ward Member</a>
-                                </li>
-								
+                            <c:if test="${!empty user.person.personAddress.ward}">
+                                <li><a href="/leader${user.person.personAddress.ward.urlIdentifier}./ward.html">Local/Ward Member</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.ward}">
+                                <li><a href="/myward">Local/Ward Member</a></li>
+                            </c:if>
+							<c:if test="${!empty user.person.personAddress.ac}">
+                                <li><a href="/leader${user.person.personAddress.ac.urlIdentifier}/mla.html">MLA</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.ac}">
+                                <li><a href="/mymla">MLA</a></li>
+                            </c:if>
+                            <c:if test="${!empty user.person.personAddress.pc}">
+                                <li><a href="/leader${user.person.personAddress.pc.urlIdentifier}/mp.html">MP</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.pc}">
+                                <li><a href="/mymp">MP</a></li>
+                            </c:if>
+                            <c:if test="${!empty user.person.personAddress.state}">
+                                <li><a href="/leader${user.person.personAddress.state.urlIdentifier}./cm.html">Chief Minister</a></li>
+                            </c:if>
+                            <c:if test="${empty user.person.personAddress.state}">
+                                <li><a href="/mycm">Chief Minister</a></li>
+                            </c:if>
+                            <li><a href="/leader/india/pm.html">Prime Minister</a></li>
 							</ul>
 						</li>
 						<li>

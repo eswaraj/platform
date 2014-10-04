@@ -18,7 +18,10 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 	@Query("start location=node({0}),politicalBodyType=node({1})  match (location)<-[:BELONGS_TO]-(PoliticalAdmin)-[:OF_TYPE]->politicalBodyType where PoliticalAdmin.active=true return PoliticalAdmin")
 	PoliticalBodyAdmin getCurrentPoliticalAdminByLocationAndPoliticalBodyType(Location location, PoliticalBodyType politicalBodyType);
 
-	//@Query("start location=node({0}) match (location)<-[:BELONGS_TO]-(PoliticalAdmin) return PoliticalAdmin")
+    @Query("start location=node({0})  match (location)<-[:BELONGS_TO]-(PoliticalAdmin) where PoliticalAdmin.active=true return PoliticalAdmin")
+    Collection<PoliticalBodyAdmin> getAllCurrentPoliticalAdminByLocationAndPoliticalBodyType(Location location);
+
+    // @Query("start location=node({0}) match (location)<-[:BELONGS_TO]-(PoliticalAdmin) return PoliticalAdmin")
 	//Collection<PoliticalBodyAdmin> getAllPoliticalAdminByLocation(Location location);
 
 	@Query("start location=node({0}),politicalBodyType=node({1})  match (location)<-[:BELONGS_TO]-(PoliticalAdmin)-[:OF_TYPE]->politicalBodyType return PoliticalAdmin")

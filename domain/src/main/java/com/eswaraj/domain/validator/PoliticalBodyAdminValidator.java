@@ -14,11 +14,13 @@ public class PoliticalBodyAdminValidator extends BaseValidator<PoliticalBodyAdmi
 		super(PoliticalBodyAdmin.class, validationManager);
 	}
 
-	public void validateBeforeSave(PoliticalBodyAdmin politicalBodyAdmin) throws ValidationException {
+	@Override
+    public void validateBeforeSave(PoliticalBodyAdmin politicalBodyAdmin) throws ValidationException {
 		checkIfNull("Location", politicalBodyAdmin.getLocation(), "Can not create a political Admin without a Location attached to it");
 		checkIfNull("Party", politicalBodyAdmin.getParty(), "Can not create a political Admin without a Party attached to it");
 		checkIfNull("PoliticalBodyType", politicalBodyAdmin.getPoliticalBodyType(), "Can not create a political Admin without a PoliticalBodyType attached to it");
 		checkIfNull("StartDate", politicalBodyAdmin.getStartDate(), "You must provide a start Date for political Admin");
+        checkIfNull("UrlIdentifier", politicalBodyAdmin.getUrlIdentifier(), "Url identifier can not be null");
 		if(politicalBodyAdmin.getEndDate() != null){
 			if(politicalBodyAdmin.getEndDate().before(politicalBodyAdmin.getStartDate())){
 				throw new ValidationException("End Date can not be before Start Date");
@@ -39,7 +41,8 @@ public class PoliticalBodyAdminValidator extends BaseValidator<PoliticalBodyAdmi
 		*/
 	}
 
-	public void validateBeforeDelete(PoliticalBodyAdmin politicalBodyAdmin) throws ValidationException {
+	@Override
+    public void validateBeforeDelete(PoliticalBodyAdmin politicalBodyAdmin) throws ValidationException {
 		
 	}
 }

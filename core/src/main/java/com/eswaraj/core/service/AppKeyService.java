@@ -78,4 +78,10 @@ public interface AppKeyService {
     List<String> getMonthComplaintKeysForTheYear(String prefix, Date date);
 
     List<String> getYearComplaintKeysForEternitySinceStart(String prefix);
+
+    String getPoliticalBodyAdminTypeHashKey(Long pbTypeId);
+
+    String getPoliticalBodyAdminUrlsKey();
+
+    String getPoliticalBodyAdminHashKey();
 }

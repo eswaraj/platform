@@ -2,14 +2,19 @@ package com.eswaraj.core.service.impl;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
@@ -21,6 +26,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
@@ -60,6 +66,8 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     private CategoryRepository categoryRepository;
     @Autowired
     private PhotoRepository photoRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Override
     public JsonObject getCompleteLocationInfo(Long locationId) throws ApplicationException {
@@ -224,28 +232,116 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         PoliticalBodyAdmin onePoliticalBodyAdmin = politicalBodyAdminRepository.findOne(politicalBodyAdminId);
 
         JsonObject politicalBodyJsonObject = new JsonObject();
-        politicalBodyJsonObject.addProperty("externalId", onePoliticalBodyAdmin.getExternalId());
-        politicalBodyJsonObject.addProperty("startDate", onePoliticalBodyAdmin.getStartDate().getTime());
+        addPropertyIfNotNull(politicalBodyJsonObject, "externalId", onePoliticalBodyAdmin.getExternalId());
+        addPropertyIfNotNull(politicalBodyJsonObject, "id", onePoliticalBodyAdmin.getId());
+        addPropertyIfNotNull(politicalBodyJsonObject, "startDate", onePoliticalBodyAdmin.getStartDate().getTime());
+        addPropertyIfNotNull(politicalBodyJsonObject, "fbAccount", onePoliticalBodyAdmin.getFbAccount());
+        addPropertyIfNotNull(politicalBodyJsonObject, "fbPage", onePoliticalBodyAdmin.getFbPage());
+        addPropertyIfNotNull(politicalBodyJsonObject, "twitterHandle", onePoliticalBodyAdmin.getTwitterHandle());
+        addPropertyIfNotNull(politicalBodyJsonObject, "officeEmail", onePoliticalBodyAdmin.getEmail());
+        addPropertyIfNotNull(politicalBodyJsonObject, "urlIdentifier", onePoliticalBodyAdmin.getUrlIdentifier());
+        addAddress(politicalBodyJsonObject, "homeAddress", onePoliticalBodyAdmin.getHomeAddress());
+        addAddress(politicalBodyJsonObject, "officeAddress", onePoliticalBodyAdmin.getOfficeAddress());
 
         Person person = personRepository.findOne(onePoliticalBodyAdmin.getPerson().getId());
         politicalBodyJsonObject.addProperty("name", person.getName());
         politicalBodyJsonObject.addProperty("personExternalId", person.getExternalId());
         politicalBodyJsonObject.addProperty("gender", person.getGender());
         politicalBodyJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+        addPropertyIfNotNull(politicalBodyJsonObject, "landlineNumber1", person.getLandlineNumber1());
+        addPropertyIfNotNull(politicalBodyJsonObject, "landlineNumber2", person.getLandlineNumber2());
+        addPropertyIfNotNull(politicalBodyJsonObject, "mobileNumber1", person.getMobileNumber1());
+        addPropertyIfNotNull(politicalBodyJsonObject, "mobileNumber2", person.getMobileNumber2());
 
         if (onePoliticalBodyAdmin.getParty() != null) {
             Party party = partyRepository.findOne(onePoliticalBodyAdmin.getParty().getId());
-            politicalBodyJsonObject.addProperty("partyExternalId", party.getExternalId());
-            politicalBodyJsonObject.addProperty("partyName", party.getName());
-            politicalBodyJsonObject.addProperty("partyShortName", party.getShortName());
+            JsonObject partyJsonObject = new JsonObject();
+            addPropertyIfNotNull(partyJsonObject, "externalId", party.getExternalId());
+            addPropertyIfNotNull(partyJsonObject, "name", party.getName());
+            addPropertyIfNotNull(partyJsonObject, "shortName", party.getShortName());
+            addPropertyIfNotNull(partyJsonObject, "id", party.getId());
+            politicalBodyJsonObject.add("party", partyJsonObject);
         }
 
-        PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(onePoliticalBodyAdmin.getPoliticalBodyType().getId());
-        politicalBodyJsonObject.addProperty("politicalAdminType", politicalBodyType.getName());
-        politicalBodyJsonObject.addProperty("politicalAdminTypeShort", politicalBodyType.getShortName());
-        politicalBodyJsonObject.addProperty("politicalAdminTypeExternalId", politicalBodyType.getExternalId());
+        if (onePoliticalBodyAdmin.getPoliticalBodyType() != null) {
+            PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(onePoliticalBodyAdmin.getPoliticalBodyType().getId());
+            JsonObject politicalBodyAdminTypeJsonObject = new JsonObject();
+            addPropertyIfNotNull(politicalBodyAdminTypeJsonObject, "name", politicalBodyType.getName());
+            addPropertyIfNotNull(politicalBodyAdminTypeJsonObject, "shortName", politicalBodyType.getShortName());
+            addPropertyIfNotNull(politicalBodyAdminTypeJsonObject, "externalId", politicalBodyType.getExternalId());
+            addPropertyIfNotNull(politicalBodyAdminTypeJsonObject, "id", politicalBodyType.getId());
+            addPropertyIfNotNull(politicalBodyAdminTypeJsonObject, "description", politicalBodyType.getDescription());
+            politicalBodyJsonObject.add("politicalAdminType", politicalBodyAdminTypeJsonObject);
+        }
+
 
         return politicalBodyJsonObject;
+    }
+
+    private void addAddress(JsonObject jsonObject, String propertyName, Address address) {
+        if (address == null) {
+            return;
+        }
+        Address addressFromDb = addressRepository.findOne(address.getId());
+        JsonObject addressJsonObject = new JsonObject();
+        addPropertyIfNotNull(addressJsonObject, "externalId", addressFromDb.getExternalId());
+        addPropertyIfNotNull(addressJsonObject, "id", addressFromDb.getId());
+        addPropertyIfNotNull(addressJsonObject, "line1", addressFromDb.getLine1());
+        addPropertyIfNotNull(addressJsonObject, "line2", addressFromDb.getLine2());
+        addPropertyIfNotNull(addressJsonObject, "line3", addressFromDb.getLine3());
+        addPropertyIfNotNull(addressJsonObject, "postalCode", addressFromDb.getPostalCode());
+        Set<Location> locations = addressFromDb.getLocations();
+        if (locations != null) {
+            List<Long> locationIds = new ArrayList<>(locations.size());
+            for (Location oneLocation : locations) {
+                locationIds.add(oneLocation.getId());
+            }
+            Iterable<Location> locationsFromDb = locationRepository.findAll(locationIds);
+            String locationType;
+            String jsonPropertyName;
+            for (Location oneLocation : locationsFromDb) {
+                locationType = oneLocation.getLocationType().getName();
+                jsonPropertyName = locationType.toLowerCase();
+                switch (jsonPropertyName) {
+                case "country":
+                    jsonPropertyName = "country";
+                    break;
+                case "state":
+                    jsonPropertyName = "state";
+                    break;
+                case "assembly constituency":
+                    jsonPropertyName = "ac";
+                    break;
+                case "parliament constituency":
+                    jsonPropertyName = "pc";
+                    break;
+                case "ward":
+                    jsonPropertyName = "ward";
+                    break;
+                case "city":
+                    jsonPropertyName = "city";
+                    break;
+                case "village":
+                    jsonPropertyName = "village";
+                    break;
+                }
+                addPropertyIfNotNull(addressJsonObject, jsonPropertyName, oneLocation.getName());
+                addPropertyIfNotNull(addressJsonObject, jsonPropertyName + "Url", oneLocation.getUrlIdentifier());
+            }
+        }
+        jsonObject.add(propertyName, addressJsonObject);
+    }
+
+    private void addPropertyIfNotNull(JsonObject jsonObject, String propertyName, String value) {
+        if (!StringUtils.isEmpty(value)) {
+            jsonObject.addProperty(propertyName, value);
+        }
+    }
+
+    private void addPropertyIfNotNull(JsonObject jsonObject, String propertyName, Long value) {
+        if (value != null) {
+            jsonObject.addProperty(propertyName, value);
+        }
     }
 
     @Override

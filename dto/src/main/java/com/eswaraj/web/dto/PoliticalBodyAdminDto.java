@@ -35,6 +35,7 @@ public class PoliticalBodyAdminDto extends BaseDto {
     private String fbPage;
     private String fbAccount;
     private String twitterHandle;
+    private String urlIdentifier;
 	
 	public Long getPoliticalBodyTypeId() {
 		return politicalBodyTypeId;
@@ -145,6 +146,13 @@ public class PoliticalBodyAdminDto extends BaseDto {
         this.twitterHandle = twitterHandle;
     }
 
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
     @Override
     public String toString() {
         return "PoliticalBodyAdminDto [politicalBodyTypeId=" + politicalBodyTypeId + ", locationId=" + locationId + ", personId=" + personId + ", partyId=" + partyId + ", officeAddressDto="

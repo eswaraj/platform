@@ -324,9 +324,9 @@ function add_pbadmin(){
         "landLine2": $("#pbadmin_llandline2").val(),
         "mobile1": $("#pbadmin_mobile1").val(),
         "mobile2": $("#pbadmin_mobile2").val(),
-        "fbPage": $("pbadmin_fbpage").val(),
-        "fbAccount": $("pbadmin_fbaccount").val(),
-        "twitterHandle": $("pbadmin_twitterhandle").val(),
+        "fbPage": $("#pbadmin_fbpage").val(),
+        "fbAccount": $("#pbadmin_fbaccount").val(),
+        "twitterHandle": $("#pbadmin_twitterhandle").val(),
         "startDate": start, //date as milliseonds
         "endDate": end, //date as milliseonds
         "officeAddressDto": {
@@ -401,11 +401,11 @@ function showEdit(event) {
                 $("#pbadmin_llandline2").val(data.landLine2);
                 $("#pbadmin_mobile1").val(data.mobile1);
                 $("#pbadmin_mobile2").val(data.mobile2);
-                $("pbadmin_fbpage").val(data.fbPage);
-                $("pbadmin_fbaccount").val(data.fbAccount);
-                $("pbadmin_twitterhandle").val(data.twitterHandle);
+                $("#pbadmin_fbpage").val(data.fbPage);
+                $("#pbadmin_fbaccount").val(data.fbAccount);
+                $("#pbadmin_twitterhandle").val(data.twitterHandle);
                 $("#pbadmin_startdate").val(new Date(data.startDate)); //date as milliseonds
-                $("#pbadmin_enddate").val(data.endDate); //date as milliseonds
+                $("#pbadmin_enddate").val(new Date(data.endDate)); //date as milliseonds
 
                 $("#pbadmin_oaId").val(data.officeAddressDto.id);
                 $("#pbadmin_oaLine1").val(data.officeAddressDto.line1);
