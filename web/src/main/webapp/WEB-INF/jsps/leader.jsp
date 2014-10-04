@@ -22,7 +22,7 @@
 					<div class="panel panel-default mla-placeholder">
 						<div class="panel-body">
 							<div class="mla-profile">
-								<img src="${leader.profilePic}" alt="mla image">
+								<img src="${leader.profilePhoto}" alt="mla image">
 								<p>
 									<strong>${leader.name}, ${leader.politicalAdminType.shortName}</strong> <span>In Office
 										since ${leader.since}</span> <a href="#" class="badge badge-default">Know
