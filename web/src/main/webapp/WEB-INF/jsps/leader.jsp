@@ -55,7 +55,7 @@
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="#" target="_blank" class="btn btn-info btn-block">Constituency
+							<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency
 								Link</a>
 							<hr>
 							<div class="widget-wrapper">
