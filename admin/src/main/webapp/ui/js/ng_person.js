@@ -175,7 +175,7 @@ personApp.controller('personController', function ($scope, $http) {
         $http({
             method: 'POST',
             url: "/ajax/person/save",
-            data: JSON.stringify($scope.person),
+            data: angular.toJson($scope.person),
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         }).success(function (data) {
             if(data.message){
