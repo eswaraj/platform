@@ -19,7 +19,7 @@ public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
     private ComplaintService complaintService;
-    private JsonParser jsonParser;
+    private JsonParser jsonParser = new JsonParser();
 
 	@Override
     public Result processTuple(Tuple input) {
