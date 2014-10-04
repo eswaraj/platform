@@ -35,6 +35,7 @@
                 <value>LocationUpdatedStream</value>
                 <value>RefreshAllLocationStream</value>
                 <value>PoliticalBodyAdminUpdatedStream</value>
+                <value>PoliticalBodyAdminTypeUpdatedStream</value>
             </list>
         </property>
 		<!-- Properties define which services will be available for spout -->
@@ -43,7 +44,18 @@
 		<property name="initializeDbServices" value="false" />
 		
 	</bean>
+	
+	
 
+    <bean id="PoliticalBodyAdminTypeUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="PoliticalBodyAdminTypeUpdateBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.PoliticalBodyAdminTypeUpdateBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="PoliticalBodyAdminTypeUpdatedStream" />
+            </map>
+        </property>
+    </bean>
 	<bean id="CatageoryUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />

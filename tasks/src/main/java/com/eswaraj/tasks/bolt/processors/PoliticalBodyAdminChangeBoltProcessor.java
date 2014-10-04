@@ -43,6 +43,11 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             String redisValue = politicalBodyJsonObject.toString();
             writeToMemoryStoreHash(redisKey, hashKey, redisValue);
             
+            // Save Location Id with Political Admin Body
+            String allPoliticalAdminUrlRedisKey = appKeyService.getPoliticalBodyAdminUrlsKey();
+            String url = politicalBodyJsonObject.get("urlIdentifier").getAsString();
+            writeToMemoryStoreHash(allPoliticalAdminUrlRedisKey, url, politicalBodyAdminId);
+
             //Now send a message to process all complaint of this Location
 
             queueService.sendReprocesAllComplaintOfLocation(locationId);
