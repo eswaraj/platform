@@ -300,6 +300,11 @@ $(document).ready(function(){
 function add_pbadmin(){
 
     var start, end;
+    alert('Start Date : '+ $("#pbadmin_startdate").val());
+    if($("#pbadmin_startdate").val() === "") {
+    	alert('Please enter Start Date');
+    	return;
+    }
     if($("#pbadmin_startdate").val() != "") {
         var d = new Date($("#pbadmin_startdate").val());
         start = d.getTime();
@@ -400,7 +405,8 @@ function showEdit(event) {
                 $("pbadmin_fbpage").val(data.fbPage);
                 $("pbadmin_fbaccount").val(data.fbAccount);
                 $("pbadmin_twitterhandle").val(data.twitterHandle);
-                $("#pbadmin_startdate").val(data.startDate); //date as milliseonds
+                alert("Start date from server : " + data.startDate);
+                $("#pbadmin_startdate").val(new Date(data.startDate)); //date as milliseonds
                 $("#pbadmin_enddate").val(data.endDate); //date as milliseonds
 
                 $("#pbadmin_oaId").val(data.officeAddressDto.id);
