@@ -77,6 +77,7 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             String pbaListHashKey = appKeyService.getPoliticalBodyAdminHashKey();
             stringRedisTemplate.opsForHash().delete(locationRedisKey, pbaListHashKey);
 
+            logInfo("pbAdminIds = {}", pbAdminIds);
             if (!pbAdminIds.isEmpty()) {
                 String locationAllCurrentAdmins = StringUtils.collectionToCommaDelimitedString(pbAdminIds);
                 stringRedisTemplate.opsForHash().put(locationRedisKey, pbaListHashKey, locationAllCurrentAdmins);
@@ -94,6 +95,7 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
     }
 
     private void processLocationCurrentAdmins(Set<Long> pbAdminIds, Long locationId) throws ApplicationException {
+        logInfo("Processing location {}", locationId);
         List<PoliticalBodyAdminDto> allCurrentPoliticalAdmins = appService.getAllCurrentPoliticalBodyAdminByLocationId(locationId);
 
         if (allCurrentPoliticalAdmins != null && !allCurrentPoliticalAdmins.isEmpty()) {
