@@ -31,6 +31,7 @@ public class PoliticalBodyAdminController extends BaseController {
 
 	@RequestMapping(value = "/ajax/pbadmin/save", method = RequestMethod.POST)
 	public @ResponseBody PoliticalBodyAdminDto savePoliticalBodyAdmin(ModelAndView mv, @RequestBody PoliticalBodyAdminDto politicalBodyAdminDto) throws ApplicationException {
+        logger.info("Saving Political Body Admin : {}", politicalBodyAdminDto);
 		politicalBodyAdminDto = appService.savePoliticalBodyAdmin(politicalBodyAdminDto);
 		return politicalBodyAdminDto;
 	}
