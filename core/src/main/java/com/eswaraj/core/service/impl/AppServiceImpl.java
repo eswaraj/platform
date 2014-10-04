@@ -255,7 +255,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 		}
 		
 		for(PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation){
-			if(!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin)){
+            if (!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin.getId())) {
 				if(onePoliticalBodyAdmin.isActive()){
 					//throw new ApplicationException("Another Active Political Admin exists [id="+onePoliticalBodyAdmin.getId()+"], please make him/her inactive first and then make this active");
 					//instead of throwing exception we are just turning other active Admin to inactive
