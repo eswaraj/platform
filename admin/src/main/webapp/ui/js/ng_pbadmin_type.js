@@ -1,4 +1,4 @@
-var pbAdminTypeApp = angular.modeule("pbAdminTypeApp", []);
+var pbAdminTypeApp = angular.module("pbAdminTypeApp", []);
 
 pbAdminTypeApp.controller('pbAdminTypeController', function($scope, $http) {
     $scope.locationOptions = [];
