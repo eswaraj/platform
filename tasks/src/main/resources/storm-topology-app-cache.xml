@@ -57,6 +57,8 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="DataChangeSpout" value="RefreshAllChildLocationPBAListStream" />
+                <entry key="PoliticalBodyAdminChangeBolt" value="RefreshAllChildLocationPBAListStream" />
+                
             </map>
         </property>
     </bean>

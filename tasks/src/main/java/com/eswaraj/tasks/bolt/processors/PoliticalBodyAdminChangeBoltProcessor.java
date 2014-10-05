@@ -68,7 +68,7 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
 
             //Now send a message to process all complaint of this Location
 
-            queueService.sendReprocesAllComplaintOfLocation(locationId);
+            // queueService.sendReprocesAllComplaintOfLocation(locationId);
             return Result.Success;
         }catch(Exception ex){
             logError("Unable to refresh Political Body Admin ", ex);
