@@ -85,8 +85,10 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 	public PersonDto savePerson(PersonDto personDto) throws ApplicationException {
 		Person person = personConvertor.convert(personDto);
         logger.info("Address is {}", person.getAddress());
+        Address address = addressRepository.save(person.getAddress());
+        person.setAddress(address);
+        logger.info("1 Address after save is {}", address);
 		person = personRepository.save(person);
-        addressRepository.save(person.getAddress());
         logger.info("Address after save is {}", person.getAddress());
 		return personConvertor.convertBean(person);
 	}

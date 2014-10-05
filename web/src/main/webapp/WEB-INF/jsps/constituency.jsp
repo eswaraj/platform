@@ -88,6 +88,25 @@ pageEncoding="UTF-8"%>
 						data-ride="carousel">
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
+						<% int i=0; %>
+						<c:forEach items="${leaders}" var="oneLeader">
+						  <% if(i == 0){ %>
+						  <div class="item active">
+						  <% }else{ %>
+						  <div class="item">
+						  <% }
+						  i++;
+						  %>
+                                <div class="mla-profile">
+                                    <img src="${oneLeader.profilePhoto}?type=square&height=300&width=300" alt="Leader image">
+                                    <p>
+                                    <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a> <span>In
+                                        Office since ${oneLeader.since}</span>
+                                    </p>
+                                </div>
+                            </div>
+						</c:forEach>
+						<%--
 							<div class="item active">
 								<div class="mla-profile">
 									<img
@@ -121,23 +140,25 @@ pageEncoding="UTF-8"%>
 									</p>
 								</div>
 							</div>
+							 --%>
 						</div>
 						<!-- Controls -->
-						<a class="left carousel-control"
-							href="#carousel-example-generic" role="button"
-							data-slide="prev"> <span
-								class="glyphicon glyphicon-chevron-left"></span>
-							</a> <a class="right carousel-control"
-							href="#carousel-example-generic" role="button"
-							data-slide="next"> <span
-								class="glyphicon glyphicon-chevron-right"></span>
-						</a>
+						<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
+						<span class="glyphicon glyphicon-chevron-left"></span></a> 
+						<a class="right carousel-control"href="#carousel-example-generic" role="button" data-slide="next"> 
+						<span class="glyphicon glyphicon-chevron-right"></span> </a>
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
-							<li data-target="#carousel-example-generic" data-slide-to="0"
-							class="active"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+						<% i=0; %>
+						<c:forEach items="${leaders}" var="oneLeader">
+						  <% if(i == 0){ %>
+						  <li data-target="#carousel-example-generic" data-slide-to="$i" class="active"></li>
+						  <% }else{ %>
+						  <li data-target="#carousel-example-generic" data-slide-to="$i"></li>
+						  <% }
+						  i++;
+						  %>
+						</c:forEach>
 						</ol>
 					</div>
 				</div>

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +46,28 @@ public class ApiController extends BaseController {
         String infoHashKey = appKeyService.getEnityInformationHashKey();
         String locationInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, infoHashKey);
         return locationInfo;
+    }
+
+    @RequestMapping(value = "/api/v0/location/{locationId}/leaders", method = RequestMethod.GET)
+    @ResponseBody
+    public String getLocationLeaders(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        String redisKey = appKeyService.getLocationKey(locationId);
+        String hashKey = appKeyService.getPoliticalBodyAdminHashKey();
+        String pbAdminCommaSepratedList = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
+        if (StringUtils.isEmpty(pbAdminCommaSepratedList)) {
+            return "[]";
+        }
+        String[] pbAdmiIds = pbAdminCommaSepratedList.split(",");
+        String infoHashKey = appKeyService.getEnityInformationHashKey();
+        JsonObject jsonObject;
+        JsonArray jsonArray = new JsonArray();
+        for (String oneString : pbAdmiIds) {
+            String pbAdminRedisKey = appKeyService.getPoliticalAdminKey(Long.parseLong(oneString));
+            String oneAdmin = (String) stringRedisTemplate.opsForHash().get(pbAdminRedisKey, infoHashKey);
+            jsonObject = (JsonObject) jsonParser.parse(oneAdmin);
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray.toString();
     }
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
     @ResponseBody
