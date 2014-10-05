@@ -169,6 +169,7 @@ personApp.controller('personController', function ($scope, $http, $timeout) {
     $scope.selectPerson = function (event) {
         var model = $scope.acData[event.target.attributes['input-id'].value + 'Data'];
         $scope.person = $.extend(true,$scope.person,model[event.target.attributes.index.value]);
+        $scope.selectedPerson = model[event.target.attributes.index.value];
         //for(var k in model[event.target.attributes.index.value]) $scope.person.k = model[event.target.attributes.index.value].k;
     };
     
@@ -184,12 +185,13 @@ personApp.controller('personController', function ($scope, $http, $timeout) {
             }
             else{
                 alert("Person Added"+data.name);
-                var oldText = $scope.searchText;
-                $scope.searchText = "";
-                $timeout(function() {
-                    $scope.searchText = oldText;
-                },500);
+                //var oldText = $scope.searchText;
+                //$scope.searchText = "";
+                //$timeout(function() {
+                    //$scope.searchText = oldText;
+                //},500);
                 //$("person_search").autocomplete('search', $scope.searchText);
+                $scope.selectedPerson = $.extend(true,$scope.selectedPerson,data);
             }
         }).error(function () {
             alert("Request failed.");
