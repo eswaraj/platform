@@ -23,6 +23,8 @@
 				<ref bean="LocationUpdatedBoltBean" />
 				<ref bean="PoliticalBodyAdminChangeBean" />
 				<ref bean="RefreshAllLocationBean" />
+				<ref bean="PreprocessAllChildLocationForPBAListBoltProcessorBean" />
+				<ref bean="RefreshPoliticalBodyAdminListForALocationBoltProcessorBean" />
 			</list>
 		</property>
 	</bean>
@@ -36,6 +38,7 @@
                 <value>RefreshAllLocationStream</value>
                 <value>PoliticalBodyAdminUpdatedStream</value>
                 <value>PoliticalBodyAdminTypeUpdatedStream</value>
+                <value>RefreshAllChildLocationPBAListStream</value>
             </list>
         </property>
 		<!-- Properties define which services will be available for spout -->
@@ -47,7 +50,26 @@
 	
 	
 
-    <bean id="PoliticalBodyAdminTypeUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+	<bean id="PreprocessAllChildLocationForPBAListBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="PreprocessAllChildLocationForPBAListBoltProcessorBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.ReprocessAllChildLocationForPBAListBoltProcessor" />
+        <property name="outputStream" value="RefreshLocationPBAListStream" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="RefreshAllChildLocationPBAListStream" />
+            </map>
+        </property>
+    </bean>
+    <bean id="RefreshPoliticalBodyAdminListForALocationBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshPoliticalBodyAdminListForALocationBoltProcessorBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPoliticalBodyAdminListForALocationBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="PreprocessAllChildLocationForPBAListBoltProcessorBolt" value="RefreshLocationPBAListStream" />
+            </map>
+        </property>
+    </bean>
+	<bean id="PoliticalBodyAdminTypeUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="PoliticalBodyAdminTypeUpdateBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.PoliticalBodyAdminTypeUpdateBoltProcessor" />
         <property name="sourceComponentStreams">
@@ -78,6 +100,7 @@
     <bean id="PoliticalBodyAdminChangeBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="PoliticalBodyAdminChangeBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.PoliticalBodyAdminChangeBoltProcessor" />
+        <property name="outputStream" value="RefreshAllChildLocationPBAListStream" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="DataChangeSpout" value="PoliticalBodyAdminUpdatedStream" />
