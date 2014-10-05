@@ -63,7 +63,7 @@
                             <tr><td>Full Name</td><td><input type="text" id="full_name" placeholder="Full Name" ng-model="formData.name"/></td></tr>
                             <tr><td>Admin Description</td><td><textarea id="admin_description" ng-model="formData.description"></textarea> </td></tr> 
                             <tr><td>Admin Type ID</td><td><input type="text" id="admin_type_id" disabled="disabled" placeholder="Admin Type ID" ng-model="formData.id"/></td></tr>
-                            <tr><td>Location Type</td><td><select id="location_type_id" ng-model="formData.locationTypeId" ng-repeat="t in pbTypeList"> <option value="{{t.id}}" >{{t.name}}</option> </select> </td></tr>
+                            <tr><td>Location Type</td><td><select id="location_type_id" ng-model="formData.locationTypeId"> <option ng-repeat="t in pbTypeList" value="{{t.id}}" >{{t.name}}</option> </select> </td></tr>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -101,7 +101,7 @@
                                     <td>{{t.shortName}}</td>
                                     <td>{{t.description}}</td>
                                     <td>{{t.locationTypeId}}</td>
-                                    <td><a class='btn pink' index={{$index}} href='#add-admin-type' on-click='openForm(event);' data-toggle='modal'></a></td>
+                                    <td><a class='btn pink' index={{$index}} href='#add-admin-type' ng-click='openForm(event);' data-toggle='modal'></a></td>
                                     </tr>
                                 </tbody>
                                 </table>
