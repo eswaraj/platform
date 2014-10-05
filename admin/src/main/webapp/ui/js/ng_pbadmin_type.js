@@ -20,12 +20,18 @@ pbAdminTypeApp.controller('pbAdminTypeController', function($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         saveRequest.success(function(data){
-            if($scope.selectedData.id) {
-                $scope.selectedData = $.extend(true, $scope.selectedData, data);
-                $scope.selectedData = {};
+            var error = data.message.length > 0;
+            if(error) {
+                alert("Error in node creation: " + data.message);
             }
             else {
-                $scope.pbtypeList.push(data);
+                if($scope.selectedData.id) {
+                    $scope.selectedData = $.extend(true, $scope.selectedData, data);
+                    $scope.selectedData = {};
+                }
+                else {
+                    $scope.pbtypeList.push(data);
+                }
             }
         });
         saveRequest.error(function() {
@@ -59,7 +65,7 @@ pbAdminTypeApp.controller('pbAdminTypeController', function($scope, $http) {
     request.error(function() {
         alert("Request failed.");
     });
-    
+
     var pbtypeRequest = $http({
         mrthod: "GET",
         url:"/ajax/pbtype/get",
