@@ -16,19 +16,13 @@ partyApp.controller('partyController', function($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         saveRequest.success(function(data){
-            var error = data.message.length > 0;
-            if(error) {
-                alert("Error in node creation: " + data.message);
+            if($scope.selectedParty.id) {
+                $scope.selectedParty = $.extend(true, $scope.selectedParty, data);
+                $scope.selectedParty = {};
             }
             else {
-                if($scope.selectedParty.id) {
-                    $scope.selectedParty = $.extend(true, $scope.selectedParty, data);
-                    $scope.selectedParty = {};
-                }
-                else {
-                    $scope.partyList.push(data);
-                }
-            }
+                $scope.partyList.push(data);
+            }   
         });
         saveRequest.error(function() {
             alert("Request failed");
@@ -38,7 +32,7 @@ partyApp.controller('partyController', function($scope, $http) {
         $scope.party = {};
         $scope.selectedParty = {};
     };
-    
+
     $("#menu_new").load("../ui/menu.html");
     var request = $http({
         mrthod: "GET",
