@@ -184,12 +184,12 @@ personApp.controller('personController', function ($scope, $http, $timeout) {
             }
             else{
                 alert("Person Added"+data.name);
-                var oldText = $scope.searchText;
-                $scope.searchText = "";
-                $timeout(function() {
-                    $scope.searchText = oldText;
-                },500);
-                //$("person_search").autocomplete('search', $scope.searchText);
+                //var oldText = $scope.searchText;
+                //$scope.searchText = "";
+                //$timeout(function() {
+                    //$scope.searchText = oldText;
+                //},500);
+                $("person_search").autocomplete('search', $scope.searchText);
             }
         }).error(function () {
             alert("Request failed.");
