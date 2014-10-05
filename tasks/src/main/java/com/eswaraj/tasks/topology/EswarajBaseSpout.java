@@ -134,7 +134,13 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     @Override
     public final void ack(Object msgId) {
         logInfo("********************************");
-        logInfo("Message {} has been processed", msgId + " , " + msgId.getClass());
+        if (msgId instanceof MessageId) {
+            long endTime = System.currentTimeMillis();
+            logInfo("Message {} has been processed", msgId + " , " + msgId.getClass() + ", total time takes is " + (endTime - ((MessageId) msgId).getStartTime()) + " ms");
+        } else {
+            logInfo("Message {} has been processed", msgId + " , " + msgId.getClass());
+        }
+
         onAck(msgId);
         logInfo("********************************");
 
