@@ -52,7 +52,7 @@ app.directive('jstree', function($timeout, $http) {
                     });
                 }
             });
-            
+
             scope.$on('addChild', function(event, data) {
                 if(data.id === attrs.id) {
                     console.log(attrs.id + "Got data " + data.data);
@@ -65,7 +65,7 @@ app.directive('jstree', function($timeout, $http) {
                     });
                 }
             });
-            
+
             scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
                     console.log(attrs.id + "Got data " + data.data);
@@ -80,7 +80,7 @@ app.directive('jstree', function($timeout, $http) {
                     }
                 }
             });
-            
+
             var request = $http({
                 method: "GET",
                 url:attrs.rootUrl,
@@ -115,26 +115,28 @@ app.directive('jstree', function($timeout, $http) {
                             scope.selectedNode.li_attr = n.li_attr;
                             scope.selectedNode.text = n.text;
                         }
-                        var childRequest = $http({
-                            method: "GET",
-                            url:attrs.childUrl+'/'+n.id,
-                            headers: {'Content-Type': 'application/json; charset=utf-8'}
-                        });
-                        childRequest.success(function (data) {
-                            for(var i=0; i< data.length;i++){
-                                var new_node = {
-                                    'text': data[i].name,
-                                    'id': data[i].id,
-                                    'li_attr': ""
-                                };
-                                new_node.li_attr = $.extend(true, new_node.li_attr, data[i]);
-                                element.jstree(true).create_node(n, new_node);
-                            }
-                            element.jstree('open_node', n);
-                        });
-                        childRequest.error(function () {
-                            console.error('jstree directive child url request failed. Url = ' + attrs.childUrl);
-                        });
+                        if($('#'+n.id).closest("li").children("ul").length == 0) {
+                            var childRequest = $http({
+                                method: "GET",
+                                url:attrs.childUrl+'/'+n.id,
+                                headers: {'Content-Type': 'application/json; charset=utf-8'}
+                            });
+                            childRequest.success(function (data) {
+                                for(var i=0; i< data.length;i++){
+                                    var new_node = {
+                                        'text': data[i].name,
+                                        'id': data[i].id,
+                                        'li_attr': ""
+                                    };
+                                    new_node.li_attr = $.extend(true, new_node.li_attr, data[i]);
+                                    element.jstree(true).create_node(n, new_node);
+                                }
+                                element.jstree('open_node', n);
+                            });
+                            childRequest.error(function () {
+                                console.error('jstree directive child url request failed. Url = ' + attrs.childUrl);
+                            });
+                        }
                     });
                 });
             });
