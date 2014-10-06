@@ -1,4 +1,4 @@
-var categoriesApp = angular.module('categoriesApp',[]);
+var categoriesApp = angular.module('categoriesApp',['customDirectives']);
 
 categoriesApp.controller('categoriesController', function ($scope, $http) {
     "use strict";
