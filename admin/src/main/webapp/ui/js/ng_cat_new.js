@@ -32,6 +32,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
         'headerImageUrl' : "",
         'videoUrl' : ""
     };
+    $scope.selectedNode = $scope.selectedNode || {};
     var root_node;
     var hash = {};
 
