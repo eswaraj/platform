@@ -22,21 +22,15 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
         'headerImageUrl' : "",
         'videoUrl' : ""
     };
-    $scope.cat = {
-        'id' : "",
-        'name' : "",
-        'root' : "",
-        'parentCategoryId' : "",
-        'description' : "",
-        'imageUrl' : "",
-        'headerImageUrl' : "",
-        'videoUrl' : ""
-    };
     $scope.selectedNode = $scope.selectedNode || {};
     var root_node;
     var hash = {};
 
     $("#menu_new").load("../ui/menu.html");
+    
+    $scope.$watch('selectedNode', function() {
+        $scope.child.parentCategoryId = $scope.selectedNode.id;
+    });
 
     $scope.addRootNode = function () {
         var selected_node =  $('#js_tree').jstree('get_selected');
@@ -75,7 +69,6 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
 
     $scope.addChildNode = function () {
         var selected_node =  $('#js_tree').jstree('get_selected');
-        $scope.child.parentCategoryId = $scope.selectedNode.id;
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
@@ -114,7 +107,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
-            data: angular.toJson($scope.cat),
+            data: angular.toJson($scope.selectedNode),
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         }).success(function (data) {
             if(data.message){

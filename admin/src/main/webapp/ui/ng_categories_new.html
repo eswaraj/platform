@@ -121,35 +121,35 @@
                                 <table>
                                     <tr>
                                         <td style="width: 30%">ID</td>
-                                        <td><input type="text" name="cat_id" id="cat_id" value="" class="tablewidth50pc" disabled ng-model="cat.id"></td>
+                                        <td><input type="text" name="cat_id" id="cat_id" value="" class="tablewidth50pc" disabled ng-model="selectedNode.id"></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%">Name</td>
-                                        <td><input type="text" name="cat_name" id="cat_name" value="" class="tablewidth50pc" ng-model="cat.name"></td>
+                                        <td><input type="text" name="cat_name" id="cat_name" value="" class="tablewidth50pc" ng-model="selectedNode.name"></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%">Root?</td>
-                                        <td><input type="text" name="cat_root" id="cat_root" value="" class="tablewidth50pc" disabled ng-model="cat.root"></td>
+                                        <td><input type="text" name="cat_root" id="cat_root" value="" class="tablewidth50pc" disabled ng-model="selectedNode.root"></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%">Parent ID?</td>
-                                        <td><input type="text" name="cat_cat_parent_id" id="cat_cat_parent_id" value="" class="tablewidth50pc" disabled ng-model="cat.parentCategoryId"></td>
+                                        <td><input type="text" name="cat_cat_parent_id" id="cat_cat_parent_id" value="" class="tablewidth50pc" disabled ng-model="selectedNode.parentCategoryId"></td>
                                     </tr>
 
                                     <tr>
                                         <td>Description</td>
-                                        <td><textarea name="cat_desc" id="cat_desc" value="" class="tablewidth50pc" ng-model="cat.description"></textarea> </td>
+                                        <td><textarea name="cat_desc" id="cat_desc" value="" class="tablewidth50pc" ng-model="selectedNode.description"></textarea> </td>
                                     </tr>
                                     <tr><td>Img url</td>
-                                        <td><input type="text" name="cat_img" id="cat_img" value="" class="tablewidth50pc" ng-model="cat.imageUrl"/></td>
+                                        <td><input type="text" name="cat_img" id="cat_img" value="" class="tablewidth50pc" ng-model="selectedNode.imageUrl"/></td>
                                         <td><img style="display:none;" name="image" id="image" src="" width="35px;"/></td>
                                     </tr>
                                     <tr><td>Hearder Img url</td>
-                                        <td><input type="text" name="cat_headerImg" id="cat_headerImg" value=""  class="tablewidth50pc" ng-model="cat.headerImageUrl"/></td>
+                                        <td><input type="text" name="cat_headerImg" id="cat_headerImg" value=""  class="tablewidth50pc" ng-model="selectedNode.headerImageUrl"/></td>
                                         <td><img style="display:none;" name="headerImg" id="headerImg" src="" width="35px;"/></td>
                                     </tr>
                                     <tr><td>Video url</td>
-                                        <td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value=""  class="tablewidth50pc" ng-model="cat.videoUrl"/></td>
+                                        <td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value=""  class="tablewidth50pc" ng-model="selectedNode.videoUrl"/></td>
                                         <td>
                                             <iframe style="display:none;" id="video" width="200" height="200" src="" frameborder="0" allowfullscreen></iframe>
 
