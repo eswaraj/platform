@@ -71,7 +71,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
-            data: angular.toJson($scope.selectedNode.li_attr),
+            data: angular.toJson($scope.selectedNode),
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         }).success(function (data) {
             if(data.message){
@@ -80,7 +80,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
             else{
                 alert("Category Updated: "+data.name);
                 var new_node = {
-                    'text': data.name+'-'+data.id,
+                    'text': data.name,
                     'id': data.id,
                     'li_attr': data
                 };

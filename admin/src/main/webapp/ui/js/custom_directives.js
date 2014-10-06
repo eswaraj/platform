@@ -44,7 +44,7 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('addRoot', function(event, data) {
                 if(data.id === attrs.id) {
-                    console.log(attrs.id + "Got data " + data.data);
+                    //console.log(attrs.id + "Got data " + data.data);
                     element.jstree(true).create_node('#', {
                         id : data.child.id,
                         text : data.child.name,
@@ -55,7 +55,7 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('addChild', function(event, data) {
                 if(data.id === attrs.id) {
-                    console.log(attrs.id + "Got data " + data.data);
+                    //console.log(attrs.id + "Got data " + data.data);
                     var n = element.jstree('get_selected', true);
                     n = n[0];
                     element.jstree(true).create_node(n, {
@@ -68,7 +68,7 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
-                    console.log(attrs.id + "Got data " + data.data);
+                    //console.log(attrs.id + "Got data " + data.data);
                     var n = element.jstree('get_selected', true);
                     n = n[0];
                     //n.text = data.child.name;
@@ -110,10 +110,10 @@ app.directive('jstree', function($timeout, $http) {
                         var n = element.jstree('get_selected', true);
                         if(n) {
                             n = n[0];
-                            scope.selectedNode = scope.selectedNode || {};
-                            scope.selectedNode.id = n.id;
-                            scope.selectedNode.li_attr = n.li_attr;
-                            scope.selectedNode.text = n.text;
+                            scope.selectedNode = n.li_attr;
+                            //scope.selectedNode.id = n.id;
+                            //scope.selectedNode.li_attr = n.li_attr;
+                            //scope.selectedNode.text = n.text;
                         }
                         if($('#'+n.id).closest("li").children("ul").length == 0) {
                             var childRequest = $http({
