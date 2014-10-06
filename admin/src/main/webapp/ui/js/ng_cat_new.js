@@ -74,7 +74,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
 
     $scope.addChildNode = function () {
         var selected_node =  $('#js_tree').jstree('get_selected');
-        //$scope.child.parentCategoryId = selected_node[0];
+        $scope.child.parentCategoryId = $scope.selectedNode.id;
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
