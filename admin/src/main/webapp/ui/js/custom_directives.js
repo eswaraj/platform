@@ -37,7 +37,8 @@ app.directive('jstree', function($timeout, $http) {
     "use strict";
     return {
         restrict: 'A',
-        scope: {selectedNode : '='},
+        //scope: {selectedNode : '='},
+        scope: false,
         link: function (scope, element, attrs) {
             var root_node_array = [];
 
