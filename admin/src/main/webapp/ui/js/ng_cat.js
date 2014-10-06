@@ -46,7 +46,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
     r.success( function(data){
         var root_node_array = [];
         for(var i=0; i< data.length;i++){
-            new_node = {
+            var new_node = {
                 'text':data[i].name+'-'+data[i].id,
                 'id':data[i].id,
                 'li_attr':{
