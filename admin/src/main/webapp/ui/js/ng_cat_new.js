@@ -71,7 +71,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
-            data: angular.toJson($scope.selectedNode),
+            data: angular.toJson($scope.selectedNode.li_attr),
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         }).success(function (data) {
             if(data.message){
