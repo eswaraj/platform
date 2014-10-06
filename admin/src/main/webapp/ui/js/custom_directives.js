@@ -31,6 +31,7 @@ app.directive('ngAutocomplete', function ($timeout) {
 //$scope.$broadcast('addRoot',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //$scope.$broadcast('addChild',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //'tree1' above is the id of the jstree to which you want to add the new node. Also, the payload has to be in 'child'. The child node is added to currently selected node.
+//parent scope will get a "selectedNode" field which will have the node object with id,text and li_attr
 app.directive('jstree', function($timeout, $http) {
     "use strict";
     return {
@@ -38,7 +39,6 @@ app.directive('jstree', function($timeout, $http) {
         scope: true,
         link: function (scope, element, attrs) {
             var root_node_array = [];
-            var hash = {};
             
             $scope.$on('addRoot', function(event, data) {
                 if(data.id === attrs.id) {
