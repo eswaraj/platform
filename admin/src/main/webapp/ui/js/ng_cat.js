@@ -85,7 +85,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
             $scope.cat.videoUrl = $('#'+parent).attr('videoUrl');
 
             $scope.child.id = $('#'+parent).attr('id');
-            $scope.$apply();
+            //$scope.$apply();
 
             if($('#'+parent).attr('img')!= null){
                 $('#image').css("display","block");
@@ -105,7 +105,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
                 $('#js_tree').jstree(true).create_node(parent, new_node);
                 hash['fake_node'+$('#'+parent).attr('id')] = 1;
             }
-            $scope.$apply();
+            //$scope.$apply();
         }); //select_node binding ends
 
         tree.bind("open_node.jstree",function(e,data){
@@ -196,7 +196,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
                 };
                 var sel = $('#js_tree').jstree(true).create_node('#', new_node);
                 $('#js_tree').jstree("select_node",data.id);
-                $scope.$apply();
+                //$scope.$apply();
             }
         }).error(function () {
             alert("Request failed.");
@@ -232,7 +232,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
                         'root':data.root
                     }
                 };
-                $scope.$apply();
+                //$scope.$apply();
                 var sel = $('#js_tree').jstree(true).create_node(selected_node, new_node);
                 $('#js_tree').jstree("select_node",data.id);
             }
