@@ -109,6 +109,7 @@ app.directive('jstree', function($timeout, $http) {
                         var n = element.jstree('get_selected', true);
                         if(n) {
                             n = n[0];
+                            scope.selectedNode = scope.selectedNode || {};
                             scope.selectedNode.id = n.id;
                             scope.selectedNode.li_attr = n.li_attr;
                             scope.selectedNode.text = n.text;
