@@ -105,7 +105,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
                 $('#js_tree').jstree(true).create_node(parent, new_node);
                 hash['fake_node'+$('#'+parent).attr('id')] = 1;
             }
-            //$scope.$apply();
+            $scope.$apply();
         }); //select_node binding ends
 
         tree.bind("open_node.jstree",function(e,data){
