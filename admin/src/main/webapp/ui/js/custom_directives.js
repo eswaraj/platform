@@ -64,6 +64,21 @@ app.directive('jstree', function($timeout, $http) {
                 }
             });
             
+            $scope.$on('updateNode', function(event, data) {
+                if(data.id === attrs.id) {
+                    console.log(attrs.id + "Got data " + data.data);
+                    var n = element.jstree('get_selected', true);
+                    n = n[0];
+                    //n.text = data.child.name;
+                    //n.li_attr = $.extend(true,n.li_attr,data.child);
+                    //element.jstree('redraw');
+                    element.jstree('set_text',n.id, data.child.name);
+                    for (var key in data.child) {
+                        $('#'+n.id).attr(key,data.child[key]);
+                    }
+                }
+            });
+            
             var request = $http({
                 method: "GET",
                 url:attrs.rootUrl,
