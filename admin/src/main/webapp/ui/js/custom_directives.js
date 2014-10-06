@@ -40,8 +40,8 @@ app.directive('jstree', function($timeout, $http) {
         scope: true,
         link: function (scope, element, attrs) {
             var root_node_array = [];
-            
-            $scope.$on('addRoot', function(event, data) {
+
+            scope.$on('addRoot', function(event, data) {
                 if(data.id === attrs.id) {
                     console.log(attrs.id + "Got data " + data.data);
                     element.jstree(true).create_node('#', {
@@ -52,7 +52,7 @@ app.directive('jstree', function($timeout, $http) {
                 }
             });
             
-            $scope.$on('addChild', function(event, data) {
+            scope.$on('addChild', function(event, data) {
                 if(data.id === attrs.id) {
                     console.log(attrs.id + "Got data " + data.data);
                     var n = element.jstree('get_selected', true);
@@ -65,7 +65,7 @@ app.directive('jstree', function($timeout, $http) {
                 }
             });
             
-            $scope.$on('updateNode', function(event, data) {
+            scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
                     console.log(attrs.id + "Got data " + data.data);
                     var n = element.jstree('get_selected', true);
@@ -115,7 +115,7 @@ app.directive('jstree', function($timeout, $http) {
                         }
                         var childRequest = $http({
                             method: "GET",
-                            url:attrs.childUrl,
+                            url:attrs.childUrl+'/'+n.id,
                             headers: {'Content-Type': 'application/json; charset=utf-8'}
                         });
                         childRequest.success(function (data) {
