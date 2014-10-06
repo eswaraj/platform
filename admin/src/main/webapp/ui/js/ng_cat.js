@@ -1,6 +1,6 @@
-var categoryApp = angular.module('categoryApp',[]);
+var categoriesApp = angular.module('categoriesApp',[]);
 
-categoryApp.controller('categoryController', function ($scope, $http) {
+categoriesApp.controller('categoriesController', function ($scope, $http) {
     "use strict";
     $scope.root = {
         'id' : "",
