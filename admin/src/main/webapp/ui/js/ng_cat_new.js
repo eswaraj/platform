@@ -10,7 +10,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
 
     $("#menu_new").load("../ui/menu.html");
     
-    $scope.$watch('selectedNode.li_attr', function() {
+    $scope.$watch('selectedNode', function() {
         $scope.child.parentCategoryId = $scope.selectedNode.id;
     });
 

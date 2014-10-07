@@ -44,7 +44,6 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('addRoot', function(event, data) {
                 if(data.id === attrs.id) {
-                    //console.log(attrs.id + "Got data " + data.data);
                     element.jstree(true).create_node('#', {
                         id : data.child.id,
                         text : data.child.name,
@@ -55,7 +54,6 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('addChild', function(event, data) {
                 if(data.id === attrs.id) {
-                    //console.log(attrs.id + "Got data " + data.data);
                     var n = element.jstree('get_selected', true);
                     n = n[0];
                     element.jstree(true).create_node(n, {
@@ -68,12 +66,6 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
-                    //console.log(attrs.id + "Got data " + data.data);
-                    var n = element.jstree('get_selected', true);
-                    n = n[0];
-                    //n.text = data.child.name;
-                    //n.li_attr = $.extend(true,n.li_attr,data.child);
-                    //element.jstree('redraw');
                     element.jstree('set_text',data.child.id, data.child.name);
                     for (var key in data.child) {
                         $('#'+data.child.id).attr(key,data.child[key]);
