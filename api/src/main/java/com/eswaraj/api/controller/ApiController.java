@@ -155,6 +155,7 @@ public class ApiController extends BaseController {
         String categoryHashKeyPrefix = appKeyService.getCategoryKey(category.getId());
         List redisKeyForLocation365DaysCounter = appKeyService.getHourComplaintKeysForLastNDays(categoryHashKeyPrefix, new Date(), 365);
         logger.info("getting data from Redis for keys {}", redisKeyForLocation365DaysCounter);
+        logger.info("categoryHashKeyPrefix :  {}", categoryHashKeyPrefix);
         List<Object> data = stringRedisTemplate.opsForHash().multiGet(redisKey, redisKeyForLocation365DaysCounter);
         Long totalComplaints = 0L;
         int count = 0;
@@ -165,6 +166,8 @@ public class ApiController extends BaseController {
         Map<Long, Long> counterMapByDate = new LinkedHashMap<>();
         for (Object oneCounter : data) {
             oneKey = (String)redisKeyForLocation365DaysCounter.get(count);
+            oneKey.replace(categoryHashKeyPrefix, "");
+            logger.info("oneKey :  {}", oneKey);
             try {
                 date = dayFormat.parse(oneKey);
             } catch (ParseException e) {
