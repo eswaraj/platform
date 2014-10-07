@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html ng-app="locationNodeApp">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Location Node Manager</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+        <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+        <link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+        <link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
+        <link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+        <style>
+            /*
+            html, body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+            }
+            */
+
+            #map-canvas {
+                margin-left: 40px;
+                margin-right: auto;
+                margin-top: 290px;
+                padding: 0;
+                width: 470px;
+                height: 400px;
+            }
+        </style>
+        <!-- Script -->
+        <script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+        <script type="text/javascript" src="js/script.js"></script><!-- Script -->
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <script type="text/javascript" src="js/defiant.js"></script>
+        <script type="text/javascript" src="js/string.js"></script>
+        <script type="text/javascript" src="js/ie.polyfill.js"></script>
+        <script type="text/javascript" src="js/json.js"></script>
+        <script type="text/javascript" src="js/json.search.js"></script>
+        <script type="text/javascript" src="js/json.toXML.js"></script>
+        <script type="text/javascript" src="js/node.toJSON.js"></script>
+        <script type="text/javascript" src="js/node.select.js"></script>
+        <script type="text/javascript" src="js/node.serialize.js"></script>
+        <script src="js/angular.min.js"></script>
+
+
+        <!-- 2 load the theme CSS file -->
+        <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+        <!-- 4 include the jQuery library -->
+
+        <!-- 5 include the minified jstree source -->
+        <script src="dist/jstree.min.js"></script>
+
+    </head>
+    <body ng-controller="locationNodeController">
+        <header id="headerul" class="header headerbox">
+            <ul>
+                <li class="header fa-3x ">eSwaraj</li>
+                <li class="subscript">Location Node</li>
+            </ul>
+        </header>
+
+        <div id="menu_new" class="menu_new">
+        </div><!-- Right Menu -->
+
+
+        <div id="instruction_hover">
+            <h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+            <span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+                <br> 2. We can update this page as needed
+                <br> 3. What are you doing?
+                <br> 4. You can follow these steps to understand the functionality of this page	
+                <br> 5. Please ask the admin if there are any doubts</span>	
+        </div>
+
+
+        <div aria-hidden="true" role="dialog"  class="modal fade" id="add-node" style="display: none;">
+            <div class="modal-dialog" style="top:30px;">
+                <div class="modal-content">
+                    <div class="modal-header blue">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+                        <h4 class="modal-title">Add Child Node</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="new_node_loc_id" disabled="disabled" ng-model="newNode.id"/>
+                        <input type="text" id="new_node_name" placeholder="Node Title" ng-model="newNode.name"/>
+                        <input type="text" id="new_node_lat" placeholder="Latitude" ng-model="newNode.latitude"/>
+                        <input type="text" id="new_node_long" placeholder="Longitude" ng-model="newNode.longitude"/>
+                        <input type="text" id="new_node_loc_typeid" disabled="disabled" ng-model="newNode.locationTypeId"/>
+                        <input type="text" id="new_node_loc_parentLocationId" disabled="disabled" ng-model="newNode.parentLocationId"/>
+                        <input type="text" id="new_node_loc_urlIdentifier" disabled="disabled" ng-model="newNode.urlIdentifier"/>
+                        <input type="text" id="new_node_loc_boundaryFile" disabled="disabled" ng-model="newNode.boundaryFile"/>
+                    </div>					 				  
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+                    <button class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+
+        <div class="wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 profile-margin">
+                        <div class="col-md-4">
+                            <h3 class="text-footer-extended">Constituencies</h3> 
+
+                            <!-- the tree is populated via ajax -->
+                            <div id="js_tree" class="scrollcontainer"></div>	
+                        </div>
+                        <div class="col-md-8" id="node_info">
+
+                            <div id="kml_files">
+
+                                <h3 class="text-footer">Upload KML?</h3>
+                                <form method="post" enctype="multipart/form-data" id="form1" method="post" action="">
+                                    <input type="file" style = "float: left;" id="file" name="file" /><br><br>
+                                    <input type="submit" class="btn btn-primary blue kml_inp_btn" value="Upload KML" />
+                                </form><br>
+
+                                <h3 class="text-footer">KML Status:</h3>
+
+                                <table id="files">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>ShowOnMap</th>
+                                            <th>SetCurrent</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="file in kmlList">
+                                        <tr>
+                                        <td>{{file.originalFileName}}</td>
+                                        <td><a class='btn btn-primary blue kml_inp_btn' href='#' ng-click='update_map({{file.fileNameAndPath}});'>OnMap</a></td>
+                                        <td><a class='btn btn-primary blue kml_inp_btn' href='#' ng-click='setCurrent({{file.fileNameAndPath}});'>SetCurrent</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="tab1" class="border-left shift_left">
+                                <h3 class="text-footer">Node Details</h3>
+
+                                <p>Node ID <input type="text" style="border: 0px solid" name="node_id" id="node_id" value="" readonly ng-model="node.id"></p>
+                                <p>Node Name <input type="text" style="border: 0px solid" name="node_name" id="node_name" value="" ng-model="node.name"></p>
+                                <p>Latitude <input type="text" name="node_lat" id="node_lat" disabled="disabled" value="" readonly ng-model="node.latitude"></p>
+                                <p>Longitude <input type="text" name="node_long" id="node_long" disabled="disabled" value="" readonly ng-model="node.longitude"></p>
+                                <p>Location Type ID <input type="text" name="node_locationTypeId" id="node_locationTypeId" disabled="disabled" value="" readonly ng-model="node.locationTypeId"></p>
+                                <p>Parent Location Type ID <input type="text" name="node_parentLocId" id="node_parentLocId" disabled="disabled" value="" readonly ng-model="node.parentLocationId"></p>
+                                <p>URL Identifier <input type="text" name="node_urliden" id="node_urliden" disabled="disabled" value="" readonly ng-model="urlIdentifier"></p>
+                                <p>KML File <input type="text" name="node_boundaryFile" id="node_boundaryFile" disabled="disabled" value="" readonly ng-model="node.boundaryFile"></p>
+
+                            </div>	
+
+                            <div id="useronclickbtn">
+                                <h3 class="text-footer">Add/Update</h3>
+                                <div id="add_child_btn" ng-repeat="t in buttonData">
+                                    <a id='node_add_btn{{$index}}' ng-click='setLocationTypeId($event);' value='{{t.id}}' index='{{$index}}' class='btn btn-primary blue btn_round' href='#add-node' data-toggle='modal'>Add {{t.name}}</a><br>
+                                </div>
+                                <a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateNode()">Update Node</a>
+                            </div>
+
+                            <div id="map-canvas"><h3 class="text-footer-extended">Google Maps Location</h3></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Container -->
+        </div><!-- Wrapper -->
+    <script type="text/javascript" src="js/ng_loc.js"></script><!-- Script -->
+    </body>
+</html>
