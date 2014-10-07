@@ -12,7 +12,6 @@
 	</organization>
 	<inceptionYear>2014</inceptionYear>
 
-
 	<modules>
             <module>parent</module>
             <module>test</module>
