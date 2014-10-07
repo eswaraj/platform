@@ -28,12 +28,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
             else{
                 alert("Category Added"+data.name);
                 $scope.root = {};
-                var new_node = {
-                    'text': data.name+'-'+data.id,
-                    'id': data.id,
-                    'li_attr': data
-                };
-                $scope.$broadcast('addRoot',{id:"js_tree",child:new_node});
+                $scope.$broadcast('addRoot',{id:"js_tree",child:data});
             }
         }).error(function () {
             alert("Request failed.");
@@ -54,12 +49,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
             else{
                 alert("Category Added"+data.name);
                 $scope.child = {};
-                var new_node = {
-                    'text': data.name+'-'+data.id,
-                    'id': data.id,
-                    'li_attr': data
-                };
-                $scope.$broadcast('addChild',{id:"js_tree",child:new_node});
+                $scope.$broadcast('addChild',{id:"js_tree",child:data});
             }
         }).error(function () {
             alert("Request failed.");
@@ -79,12 +69,7 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
             }
             else{
                 alert("Category Updated: "+data.name);
-                var new_node = {
-                    'text': data.name,
-                    'id': data.id,
-                    'li_attr': data
-                };
-                $scope.$broadcast('updateNode',{id:"js_tree",child:new_node});
+                $scope.$broadcast('updateNode',{id:"js_tree",child:data});
             }
         }).error(function () {
             alert("Request failed.");
