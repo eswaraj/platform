@@ -2,7 +2,7 @@ var categoriesApp = angular.module('categoriesApp',['customDirectives']);
 
 categoriesApp.factory('postService', function ($http) {
     return {
-        run : function(url, obj, clearObj, event) {
+        run : function(scope, url, obj, clearObj, event) {
             $http({
                 method: 'POST',
                 url: url,
@@ -17,7 +17,7 @@ categoriesApp.factory('postService', function ($http) {
                     if(clearObj) {
                         obj = {};
                     }
-                    $scope.$broadcast(event,{id:"js_tree",child:data});
+                    scope.$broadcast(event,{id:"js_tree",child:data});
                 }
             }).error(function () {
                 alert("Request failed.");
@@ -41,14 +41,14 @@ categoriesApp.controller('categoriesController', function ($scope, postService) 
     });
 
     $scope.addRootNode = function () {
-        postService.run('/ajax/categories/save', $scope.root, true, 'addRoot');
+        postService.run($scope, '/ajax/categories/save', $scope.root, true, 'addRoot');
     };
 
     $scope.addChildNode = function () {
-        postService.run('/ajax/categories/save', $scope.child, true, 'addChild');
+        postService.run($scope, '/ajax/categories/save', $scope.child, true, 'addChild');
     };
 
     $scope.updateCategory = function () {
-        postService.run('/ajax/categories/save', $scope.selectedNode, false, 'updateNode');
+        postService.run($scope, '/ajax/categories/save', $scope.selectedNode, false, 'updateNode');
     };
 });
