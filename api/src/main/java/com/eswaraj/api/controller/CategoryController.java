@@ -81,14 +81,13 @@ public class CategoryController extends BaseController {
         Long categoryId;
         
         String locationRedisKey = appKeyService.getLocationKey(locationId);
-        
         List<Object> hashKeys = new ArrayList<>(categoryJsonArray.size());
         for (int i = 0; i < categoryJsonArray.size(); i++) {
             oneJsonObject = (JsonObject) categoryJsonArray.get(i);
             categoryId = oneJsonObject.get("id").getAsLong();
             hashKeys.add(appKeyService.getTotalComplaintCounterKey(appKeyService.getCategoryKey(categoryId)));
         }
-        System.out.println("redisKey = " + locationRedisKey + ", hashKeys =" + hashKeys);
+        logger.info("redisKey = " + locationRedisKey + ", hashKeys =" + hashKeys);
         List<Object> resultList = stringRedisTemplate.opsForHash().multiGet(locationRedisKey, hashKeys);
 
         for (int i = 0; i < categoryJsonArray.size(); i++) {

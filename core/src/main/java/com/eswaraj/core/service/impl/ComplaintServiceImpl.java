@@ -232,9 +232,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private ComplaintMessage updateLocationAndAdmins(Complaint complaint) throws ApplicationException {
         // Get all Locations and attach to it.
         String rediskey = appKeyService.buildLocationKey(complaint.getLattitude(), complaint.getLongitude());
-        System.out.println("Get Locations for Key : " + rediskey);
+        logger.info("Get Locations for Key : " + rediskey);
         Set<String> complaintLocations = stringRedisTemplate.opsForSet().members(rediskey);
-        System.out.println("Founds Locations for Key : " + complaintLocations);
+        logger.info("Founds Locations for Key : " + complaintLocations);
         if (complaintLocations.isEmpty()) {
             complaintLocations.add("78340");
         }
@@ -270,17 +270,17 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
     private void addAllParentLocationsToComplaint(Set<Location> locations, Location location, Set<String> complaintLocations) {
         if (location.getParentLocation() == null) {
-            System.out.println("No Parent for location " + location.getId());
+            logger.debug("No Parent for location {}", location.getId());
             return;
         }
-        System.out.println("Parent for location " + location.getId() + " is " + location.getParentLocation());
+        logger.debug("Parent for location {} is {} ", location.getId(), location.getParentLocation());
         if (complaintLocations.contains(String.valueOf(location.getParentLocation().getId()))) {
-            System.out.println("Not processing Parent location " + location.getParentLocation().getId());
+            logger.debug("Not processing Parent location {}", location.getParentLocation().getId());
             return;// No need to do naything
         }
-        System.out.println("Find location with Id " + location.getParentLocation().getId());
+        logger.debug("Find location with Id {}", location.getParentLocation().getId());
         Location location2 = locationRepository.findOne(location.getParentLocation().getId());
-        System.out.println("Found " + location2);
+        logger.debug("Found : {}", location2);
         locations.add(location2);
         addAllParentLocationsToComplaint(locations, location2, complaintLocations);
 
