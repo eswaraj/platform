@@ -74,9 +74,9 @@ app.directive('jstree', function($timeout, $http) {
                     //n.text = data.child.name;
                     //n.li_attr = $.extend(true,n.li_attr,data.child);
                     //element.jstree('redraw');
-                    element.jstree('set_text',n.id, data.child.name);
+                    element.jstree('set_text',data.id, data.child.name);
                     for (var key in data.child) {
-                        $('#'+n.id).attr(key,data.child[key]);
+                        $('#'+data.id).attr(key,data.child[key]);
                     }
                 }
             });
