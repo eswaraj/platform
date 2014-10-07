@@ -58,6 +58,7 @@ public class CategoryController extends BaseController {
             categoryId = oneJsonObject.get("id").getAsLong();
             String redisKey = appKeyService.getCategoryKey(categoryId);
             String hashKey = appKeyService.getTotalComplaintCounterKey("");
+            logger.info("Getting Redis key = {} , HashKey ={}", redisKey, hashKey);
             String value = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
             if (value != null) {
                 oneJsonObject.addProperty("globalCount", value);

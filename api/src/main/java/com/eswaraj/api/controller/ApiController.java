@@ -1,8 +1,13 @@
 package com.eswaraj.api.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,6 +42,7 @@ public class ApiController extends BaseController {
     @Autowired
     private RedisUtil redisUtil;
     private JsonParser jsonParser = new JsonParser();
+    private Gson gson = new Gson();
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -48,6 +57,13 @@ public class ApiController extends BaseController {
         return locationInfo;
     }
 
+    /**
+     * 
+     * @param mv
+     * @param locationId
+     * @return
+     * @throws ApplicationException
+     */
     @RequestMapping(value = "/api/v0/location/{locationId}/leaders", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationLeaders(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
@@ -95,6 +111,90 @@ public class ApiController extends BaseController {
         returnObject.addProperty("totalComplaints", totalComplaints);
         returnObject.add("dayWise", jsonArray);
         return returnObject.toString();
+    }
+
+    /**
+     * {
+          "ts":  [
+                  {
+                    "key": "No water", 
+                    "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -60.3382185140371]}
+                   }
+                 }
+        } 
+     * @param mv
+     * @param locationId
+     * @return
+     * @throws ApplicationException
+     */
+    @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last365", method = RequestMethod.GET)
+    @ResponseBody
+    public String getLocationComplaintCountForLast365Days(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        String redisKey = appKeyService.getLocationKey(locationId);
+        List<CategoryWithChildCategoryDto> allCategories = getAllCategories();
+        JsonArray ts = new JsonArray();
+        JsonArray categoryArray = new JsonArray();
+        for (CategoryWithChildCategoryDto oneCategory : allCategories) {
+            JsonObject oneCategoryResult = processOneCategory(redisKey, oneCategory);
+            ts.add(oneCategoryResult);
+            
+            JsonObject catObject = new JsonObject();
+            catObject.addProperty("name", oneCategory.getName());
+            catObject.addProperty("count", 0);
+            catObject.addProperty("color", "#98abc5");
+            categoryArray.add(catObject);
+        }
+
+        JsonObject returnObject = new JsonObject();
+        returnObject.add("ts", ts);
+        returnObject.add("cat", categoryArray);
+        return returnObject.toString();
+    }
+
+    private JsonObject processOneCategory(String redisKey, CategoryWithChildCategoryDto category) throws ApplicationException {
+        String categoryHashKeyPrefix = appKeyService.getCategoryKey(category.getId());
+        List redisKeyForLocation365DaysCounter = appKeyService.getHourComplaintKeysForLastNDays(categoryHashKeyPrefix, new Date(), 365);
+        logger.info("getting data from Redis for keys {}", redisKeyForLocation365DaysCounter);
+        logger.info("categoryHashKeyPrefix :  {}", categoryHashKeyPrefix);
+        List<Object> data = stringRedisTemplate.opsForHash().multiGet(redisKey, redisKeyForLocation365DaysCounter);
+        Long totalComplaints = 0L;
+        int count = 0;
+        String oneKey;
+        Long value;
+        DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date;
+        Map<Long, Long> counterMapByDate = new LinkedHashMap<>();
+        for (Object oneCounter : data) {
+            oneKey = (String)redisKeyForLocation365DaysCounter.get(count);
+            oneKey = oneKey.replace(categoryHashKeyPrefix + ".", "");
+            logger.info("oneKey :  {}", oneKey);
+            try {
+                date = dayFormat.parse(oneKey);
+            } catch (ParseException e) {
+                throw new ApplicationException(e);
+            }
+            if (oneCounter != null) {
+                value = Long.parseLong((String) oneCounter);
+                counterMapByDate.put(date.getTime(), value);
+                totalComplaints = totalComplaints + value;
+            } else {
+                counterMapByDate.put(date.getTime(), 0L);
+            }
+            count++;
+        }
+        JsonObject returnJsonObject = new JsonObject();
+        returnJsonObject.addProperty("key", category.getName());
+        returnJsonObject.addProperty("values", gson.toJson(counterMapByDate));
+
+        return returnJsonObject;
+    }
+
+    List<CategoryWithChildCategoryDto> getAllCategories() {
+        String allCategoriesKey = appKeyService.getAllCategoriesKey();
+        String allCategories = stringRedisTemplate.opsForValue().get(allCategoriesKey);
+        List<CategoryWithChildCategoryDto> list = gson.fromJson(allCategories, new TypeToken<List<CategoryWithChildCategoryDto>>() {
+        }.getType());
+        return list;
     }
 
     @RequestMapping(value = "/api/v0/complaint/location/{locationId}", method = RequestMethod.GET)

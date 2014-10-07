@@ -75,6 +75,8 @@ public interface AppKeyService {
 
     List<String> getHourComplaintKeysForLast30Days(String prefix, Date date);
 
+    List<String> getHourComplaintKeysForLastNDays(String prefix, Date date, int n);
+
     List<String> getMonthComplaintKeysForTheYear(String prefix, Date date);
 
     List<String> getYearComplaintKeysForEternitySinceStart(String prefix);

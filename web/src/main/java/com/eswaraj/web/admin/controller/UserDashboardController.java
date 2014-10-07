@@ -97,7 +97,7 @@ public class UserDashboardController extends BaseController {
             }
         }
         addGenericValues(mv, httpServletRequest);
-        mv.setViewName("constituency");
+        mv.setViewName("user");
         return mv;
     }
 
