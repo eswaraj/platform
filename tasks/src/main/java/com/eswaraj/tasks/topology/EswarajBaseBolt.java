@@ -105,7 +105,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         } else {
             logDebug("Writing To Stream {}", outputStream);
             List<Integer> taskIds = outputCollector.emit(outputStream, anchor, tuple);
-            logDebug("Sent to taks {}", taskIds);
+            logDebug("Sent to task {}", taskIds);
         }
     }
 
