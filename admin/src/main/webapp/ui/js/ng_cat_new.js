@@ -15,7 +15,6 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
     });
 
     $scope.addRootNode = function () {
-        var selected_node =  $('#js_tree').jstree('get_selected');
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
@@ -36,7 +35,6 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
     };
 
     $scope.addChildNode = function () {
-        var selected_node =  $('#js_tree').jstree('get_selected');
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
@@ -57,7 +55,6 @@ categoriesApp.controller('categoriesController', function ($scope, $http) {
     };
 
     $scope.updateCategory = function () {
-        var selected_node =  $('#js_tree').jstree('get_selected');
         $http({
             method: 'POST',
             url: "/ajax/categories/save",
