@@ -29,16 +29,8 @@ locationTypeApp.factory('postService', function ($http) {
 locationTypeApp.controller('locationTypeController', function ($scope, postService) {
     $("#menu_new").load("../ui/menu.html");
     $scope.selectedNode = $scope.selectedNode || {};
-    $scope.child = {
-        'id' : "",
-        'name' : "",
-        'parentLocationTypeId' : ""
-    };
-    $scope.loc = {
-        'id' : "",
-        'name' : "",
-        'parentLocationTypeId' : ""
-    };
+    $scope.child = {};
+    $scope.loc = {};
     $scope.$watch('selectedNode', function() {
         $scope.child.parentLocationTypeId = $scope.selectedNode.id;
         $('#location_type_name').disabled = true;
