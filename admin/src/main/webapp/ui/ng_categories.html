@@ -18,7 +18,8 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
         <script type="text/javascript" src="js/script.js"></script><!-- Script -->
         <script src="js/angular.min.js"></script>
-        <script type="text/javascript" src="js/ng_cat.js"></script><!-- Script -->
+        <script src="js/custom_directives.js"></script>
+        <script type="text/javascript" src="js/ng_cat_new.js"></script><!-- Script -->
 
         <!-- 2 load the theme CSS file -->
         <link rel="stylesheet" href="dist/themes/default/style.min.css" />
@@ -70,7 +71,7 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-                    <button class="btn btn-primary blue" type="button" ng-click="addRootNode();" >Save changes</button>
+                    <button data-dismiss="modal" class="btn btn-primary blue" type="button" ng-click="addRootNode();" >Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div>			
@@ -82,9 +83,9 @@
                         <h4 class="modal-title">Add Child Category</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="child_cat_id" placeholder="Category Name" disabled ng-model="child.id"/> 
+                        <input type="text" id="child_cat_id" placeholder="Category ID" disabled ng-model="child.id"/> 
                         <input type="text" id="child_cat_name" placeholder="Category Name" ng-model="child.name" /> 
-                        <input type="text" id="child_cat_root" placeholder="Category Name" disabled ng-model="child.root"/> 
+                        <input type="text" id="child_cat_root" placeholder="Root node?" disabled ng-model="child.root"/> 
                         <input type="text" id="child_cat_parent_id" placeholder="Parent Category ID" disabled ng-model="child.parentCategoryId"/>
                         <textarea type="textarea" id="child_desc" placeholder="Category Description" ng-model="child.description" > </textarea> 
                         <input type="text" id="child_cat_img" placeholder="Category Image Url"  ng-model="child.imageUrl"/>
@@ -95,7 +96,7 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-                    <button class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
+                    <button data-dismiss="modal" class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div>
@@ -109,8 +110,8 @@
                             <h3 class="text-footer-extended">Categories List</h3> 
 
                             <!-- the tree is populated via ajax -->
-                            <div id="js_tree" class="scrollcontainer">		
-                            </div>	
+                            <div jstree id="js_tree" class="scrollcontainer" root-url="/ajax/categories/getroot" child-url="/ajax/categories/getchild"></div>
+
                         </div>
 
                         <div class="col-md-8">
@@ -120,35 +121,35 @@
                                 <table>
                                     <tr>
                                         <td style="width: 30%">ID</td>
-                                        <td><input type="text" name="cat_id" id="cat_id" value="" class="tablewidth50pc" disabled ng-model="cat.id"></td>
+                                        <td><input type="text" name="cat_id" id="cat_id" value="" class="tablewidth50pc" disabled ng-model="selectedNode.id"></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%">Name</td>
-                                        <td><input type="text" name="cat_name" id="cat_name" value="" class="tablewidth50pc" ng-model="cat.name"></td>
+                                        <td><input type="text" name="cat_name" id="cat_name" value="" class="tablewidth50pc" ng-model="selectedNode.name"></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%">Root?</td>
-                                        <td><input type="text" name="cat_root" id="cat_root" value="" class="tablewidth50pc" disabled ng-model="cat.root"></td>
+                                        <td><input type="text" name="cat_root" id="cat_root" value="" class="tablewidth50pc" disabled ng-model="selectedNode.root"></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%">Parent ID?</td>
-                                        <td><input type="text" name="cat_cat_parent_id" id="cat_cat_parent_id" value="" class="tablewidth50pc" disabled ng-model="cat.parentCategoryId"></td>
+                                        <td><input type="text" name="cat_cat_parent_id" id="cat_cat_parent_id" value="" class="tablewidth50pc" disabled ng-model="selectedNode.parentCategoryId"></td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <td>Description</td>
-                                        <td><textarea name="cat_desc" id="cat_desc" value="" class="tablewidth50pc" ng-model="cat.description"></textarea> </td>
+                                        <td><textarea name="cat_desc" id="cat_desc" value="" class="tablewidth50pc" ng-model="selectedNode.description"></textarea> </td>
                                     </tr>
                                     <tr><td>Img url</td>
-                                        <td><input type="text" name="cat_img" id="cat_img" value="" class="tablewidth50pc" ng-model="cat.imageUrl"/></td>
+                                        <td><input type="text" name="cat_img" id="cat_img" value="" class="tablewidth50pc" ng-model="selectedNode.imageUrl"/></td>
                                         <td><img style="display:none;" name="image" id="image" src="" width="35px;"/></td>
                                     </tr>
                                     <tr><td>Hearder Img url</td>
-                                        <td><input type="text" name="cat_headerImg" id="cat_headerImg" value=""  class="tablewidth50pc" ng-model="cat.headerImageUrl"/></td>
+                                        <td><input type="text" name="cat_headerImg" id="cat_headerImg" value=""  class="tablewidth50pc" ng-model="selectedNode.headerImageUrl"/></td>
                                         <td><img style="display:none;" name="headerImg" id="headerImg" src="" width="35px;"/></td>
                                     </tr>
                                     <tr><td>Video url</td>
-                                        <td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value=""  class="tablewidth50pc" ng-model="cat.videoUrl"/></td>
+                                        <td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value=""  class="tablewidth50pc" ng-model="selectedNode.videoUrl"/></td>
                                         <td>
                                             <iframe style="display:none;" id="video" width="200" height="200" src="" frameborder="0" allowfullscreen></iframe>
 
