@@ -190,10 +190,15 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public List<String> getHourComplaintKeysForLast30Days(String prefix, Date date) {
+        return getHourComplaintKeysForLastNDays(prefix, date, 30);
+    }
+
+    @Override
+    public List<String> getHourComplaintKeysForLastNDays(String prefix, Date date, int n) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         Date endDate = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, -30);
+        calendar.add(Calendar.DAY_OF_MONTH, 0 - n);
         Date startDate = calendar.getTime();
         return getDayComplaintKeys(prefix, startDate, endDate);
     }

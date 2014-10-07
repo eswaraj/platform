@@ -95,6 +95,9 @@ public class LocationController extends BaseController {
                         mv.getModel().put("complaintList", locationComplaints);
                         break;
                     case "analytics":
+                        String locationCounters = apiUtil.getLocationCountersFor365Days(httpServletRequest, locationId);
+                        logger.info("locationCounters = {}", locationCounters);
+                        mv.getModel().put("locationCounters", locationCounters);
                         break;
                     }
                 }

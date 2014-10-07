@@ -124,6 +124,30 @@ public class ApiUtil {
         return list;
     }
 
+    public String getLocationCountersFor365Days(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
+        String urlPath = "/api/v0/location/" + locationId+"/complaintcounts/last365";
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath);
+        return locationComplaints;
+    }
+
+    public String getLocationAnalytics(HttpServletRequest httpServletRequest, Long locationId, Long pageSize) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId;
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("start", "0");
+        addedParams.put("end", String.valueOf(pageSize));
+        String locationAnalytics = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        return locationAnalytics;
+    }
+
+    public String getLocationCastegoryAnalytics(HttpServletRequest httpServletRequest, Long locationId, Long categoryId, Long pageSize) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("start", "0");
+        addedParams.put("end", String.valueOf(pageSize));
+        String locationCategoryAnalytics = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        return locationCategoryAnalytics;
+    }
+
     private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
         String currentPage = httpServletRequest.getParameter("page");
         Long start = 0L;
