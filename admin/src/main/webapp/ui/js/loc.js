@@ -18,31 +18,17 @@ $(function(){
 	$("#menu_new").load("../ui/menu.html"); 
 });
 
-//var locationTypeSet;
-function setValue(data){
-	data = {root:data};
-	window.locationTypeSet = data;
-	//alert("Values Set one Time");
-
-}
-
-function getValue(){
-	//alert(window.locationTypeSet);
-	return window.locationTypeSet; 
-
-}
-
-function searchLocationTypeName(id){
-	var list_data = getValue();
-	if(list_data){
-		var valList =list_data,res = JSON.search(valList, '//root[id="'+id+'"]');
-		if (!res || res == '') {
-			res = JSON.search(valList, '//children[id="'+id+'"]');
-		}
-
-		return res[0].name;
-	}
-}
+function addLocation(node)
+{
+    loc_hash[node.id] = node.name;
+    if(node.children)
+    {   
+        for(var i=0; i<node.children.length; i++)
+        {   
+            addLocation(node.children[i]);
+        }   
+    }   
+};
 
 $ = $.noConflict();
 $(document).ready(function(){
@@ -76,7 +62,8 @@ $(document).ready(function(){
 	//map end
 
 	var root_node,new_node,sel;
-	window.hash = new Object();
+	window.hash = {};
+	window.loc_hash = {};
 
 	$.ajax({
 		type: "GET",
@@ -84,8 +71,7 @@ $(document).ready(function(){
 		contentType: "application/json; charset=utf-8",
 		dataType: "JSON",
 		success: function(data){
-			setValue(data);
-
+			addLocation(data);
 		}
 	});
 
@@ -205,7 +191,7 @@ $(document).ready(function(){
 					success: function(data){
 						if(data.length ==0){alert("No Children found");}		   			   
 						for(var i=0; i< data.length;i++){
-							new_node = {'text':data[i].name+" Type :"+searchLocationTypeName(data[i].locationTypeId),'id':data[i].id,'li_attr':{'title':data[i].name,'loc_typeid':data[i].locationTypeId,'p_id':data[i].parentLocationId,'center_lat':data[i].latitude,'center_long':data[i].longitude,'boundaryFile':data[i].boundaryFile, 'UrlIden':data[i].urlIdentifier}};
+							new_node = {'text':data[i].name+" Type :"+loc_hash[data[i].locationTypeId],'id':data[i].id,'li_attr':{'title':data[i].name,'loc_typeid':data[i].locationTypeId,'p_id':data[i].parentLocationId,'center_lat':data[i].latitude,'center_long':data[i].longitude,'boundaryFile':data[i].boundaryFile, 'UrlIden':data[i].urlIdentifier}};
 							sel = $('#js_tree').jstree(true).create_node(selected_node, new_node);
 
 						}
