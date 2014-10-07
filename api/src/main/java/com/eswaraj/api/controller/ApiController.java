@@ -166,7 +166,7 @@ public class ApiController extends BaseController {
         Map<Long, Long> counterMapByDate = new LinkedHashMap<>();
         for (Object oneCounter : data) {
             oneKey = (String)redisKeyForLocation365DaysCounter.get(count);
-            oneKey.replace(categoryHashKeyPrefix, "");
+            oneKey = oneKey.replace(categoryHashKeyPrefix + ".", "");
             logger.info("oneKey :  {}", oneKey);
             try {
                 date = dayFormat.parse(oneKey);
