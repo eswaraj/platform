@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html ng-app="categoriesApp">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Category Manager</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+        <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+        <link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+        <link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
+        <link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+
+
+        <!-- Script -->
+        <script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+        <script type="text/javascript" src="js/script.js"></script><!-- Script -->
+        <script src="js/angular.min.js"></script>
+        <script src="js/custom_directives.js"></script>
+        <script type="text/javascript" src="js/ng_cat_new.js"></script><!-- Script -->
+
+        <!-- 2 load the theme CSS file -->
+        <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+        <!-- 4 include the jQuery library -->
+
+        <!-- 5 include the minified jstree source -->
+        <script src="dist/jstree.min.js"></script>
+    </head>
+    <body ng-controller="categoriesController">
+
+        <header id="headerul" class="header headerbox">
+            <ul>
+                <li class="header fa-3x ">eSwaraj</li>
+                <li class="subscript">Categories</li>
+            </ul>
+        </header>
+
+        <div id="menu_new" class="menu_new">
+        </div><!-- Right Menu -->
+
+
+        <div id="instruction_hover">
+            <h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+            <span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+                <br> 2. We can update this page as needed
+                <br> 3. What are you doing?
+                <br> 4. You can follow these steps to understand the functionality of this page	
+                <br> 5. Please ask the admin if there are any doubts</span>	
+        </div>
+
+        <div aria-hidden="true" role="dialog"  class="modal fade" id="add-root" style="display: none;">
+            <div class="modal-dialog" style="top:30px;">
+                <div class="modal-content">
+                    <div class="modal-header blue">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+                        <h4 class="modal-title">Add Root Category</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="root_cat_id" placeholder="Category Name" disabled ng-model="root.id"/>
+                        <input type="text" id="root_cat_name" placeholder="Category Name" ng-model="root.name"/> 
+                        <input type="text" id="root_cat_root" placeholder="Category Name" disabled ng-model="root.root"/> 
+                        <input type="text" id="root_cat_parent_id" placeholder="Parent Category ID" disabled ng-model="root.parentCategoryId"/>
+                        <textarea type="textarea" id="root_cat_desc" placeholder="Category Description" ng-model="root.description"> </textarea> 
+                        <input type="text" id="root_cat_img" placeholder="Category Image" ng-model="root.imageUrl"/>
+                        <input type="text" id="root_cat_headerImg" placeholder="Category Header Image" ng-model="root.headerImageUrl"/>
+                        <input type="text" id="root_cat_videoUrl" placeholder="Category Youtube Url" ng-model="root.videoUrl"/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+                    <button class="btn btn-primary blue" type="button" ng-click="addRootNode();" >Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>			
+        <div aria-hidden="true" role="dialog"  class="modal fade" id="add-cat" style="display: none;">
+            <div class="modal-dialog" style="top:30px;">
+                <div class="modal-content">
+                    <div class="modal-header blue">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+                        <h4 class="modal-title">Add Child Category</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="child_cat_id" placeholder="Category Name" disabled ng-model="child.id"/> 
+                        <input type="text" id="child_cat_name" placeholder="Category Name" ng-model="child.name" /> 
+                        <input type="text" id="child_cat_root" placeholder="Category Name" disabled ng-model="child.root"/> 
+                        <input type="text" id="child_cat_parent_id" placeholder="Parent Category ID" disabled ng-model="child.parentCategoryId"/>
+                        <textarea type="textarea" id="child_desc" placeholder="Category Description" ng-model="child.description" > </textarea> 
+                        <input type="text" id="child_cat_img" placeholder="Category Image Url"  ng-model="child.imageUrl"/>
+                        <input type="text" id="child_cat_headerImg" placeholder="Category Header Image Url" ng-model="child.headerImageUrl" />
+                        <input type="text" id="child_cat_videoUrl" placeholder="Category Youtube Url" ng-model="child.videoUrl" />					  
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+                    <button class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+
+        <div class="wrapper">
+            <div class="container">
+                <a class="btn btn-primary blue btn_round" href="#add-root" data-toggle="modal">Add Root Category</a>		
+                <div class="row">
+                    <div class="col-md-12 profile-margin">
+                        <div class="col-md-4">
+                            <h3 class="text-footer-extended">Categories List</h3> 
+
+                            <!-- the tree is populated via ajax -->
+                            <div jstree id="js_tree" class="scrollcontainer" root-url="/ajax/categories/getroot" child-url="/ajax/categories/getchild"></div>
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <h3 class="text-footer-extended">Details</h3> 
+
+                            <div id="category1">
+                                <table>
+                                    <tr>
+                                        <td style="width: 30%">ID</td>
+                                        <td><input type="text" name="cat_id" id="cat_id" value="" class="tablewidth50pc" disabled ng-model="selectedNode.id"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Name</td>
+                                        <td><input type="text" name="cat_name" id="cat_name" value="" class="tablewidth50pc" ng-model="selectedNode.name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Root?</td>
+                                        <td><input type="text" name="cat_root" id="cat_root" value="" class="tablewidth50pc" disabled ng-model="selectedNode.root"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Parent ID?</td>
+                                        <td><input type="text" name="cat_cat_parent_id" id="cat_cat_parent_id" value="" class="tablewidth50pc" disabled ng-model="selectedNode.parentCategoryId"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Description</td>
+                                        <td><textarea name="cat_desc" id="cat_desc" value="" class="tablewidth50pc" ng-model="selectedNode.description"></textarea> </td>
+                                    </tr>
+                                    <tr><td>Img url</td>
+                                        <td><input type="text" name="cat_img" id="cat_img" value="" class="tablewidth50pc" ng-model="selectedNode.imageUrl"/></td>
+                                        <td><img style="display:none;" name="image" id="image" src="" width="35px;"/></td>
+                                    </tr>
+                                    <tr><td>Hearder Img url</td>
+                                        <td><input type="text" name="cat_headerImg" id="cat_headerImg" value=""  class="tablewidth50pc" ng-model="selectedNode.headerImageUrl"/></td>
+                                        <td><img style="display:none;" name="headerImg" id="headerImg" src="" width="35px;"/></td>
+                                    </tr>
+                                    <tr><td>Video url</td>
+                                        <td><input type="text" name="cat_videoUrl" id="cat_videoUrl" value=""  class="tablewidth50pc" ng-model="selectedNode.videoUrl"/></td>
+                                        <td>
+                                            <iframe style="display:none;" id="video" width="200" height="200" src="" frameborder="0" allowfullscreen></iframe>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr><td><a id="cat_btn" class="btn btn-primary blue btn_round" href="#add-cat" data-toggle="modal">Add Child Category</a></td>
+                                        <!--td><a id="delete_btn" class="btn pink" href="#">Delete Node</a></td-->
+                                        <td><a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateCategory()">Update Category</a></td>
+                                        <td></td>
+                                    </tr>
+
+                                </table>
+
+                            </div>					
+
+                            <div class="">
+                                <div id="map-canvas"></div>	
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div><!-- Container -->
+        </div><!-- Wrapper -->
+
+
+
+    </body>
+</html>
