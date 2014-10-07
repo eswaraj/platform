@@ -1,4 +1,4 @@
-var locationTypeApp = angular.module('locationTypeApp', []);
+var locationTypeApp = angular.module('locationTypeApp', ['customDirectives']);
 
 locationTypeApp.factory('postService', function ($http) {
     return {
