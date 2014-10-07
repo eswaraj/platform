@@ -174,7 +174,7 @@ public class ApiController extends BaseController {
                 throw new ApplicationException(e);
             }
             if (oneCounter != null) {
-                value = (Long)oneCounter;
+                value = Long.parseLong((String) oneCounter);
                 counterMapByDate.put(date.getTime(), value);
                 totalComplaints = totalComplaints + value;
             } else {
