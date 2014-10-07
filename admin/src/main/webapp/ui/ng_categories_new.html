@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-                    <button class="btn btn-primary blue" type="button" ng-click="addRootNode();" >Save changes</button>
+                    <button data-dismiss="modal" class="btn btn-primary blue" type="button" ng-click="addRootNode();" >Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div>			
@@ -83,9 +83,9 @@
                         <h4 class="modal-title">Add Child Category</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="child_cat_id" placeholder="Category Name" disabled ng-model="child.id"/> 
+                        <input type="text" id="child_cat_id" placeholder="Category ID" disabled ng-model="child.id"/> 
                         <input type="text" id="child_cat_name" placeholder="Category Name" ng-model="child.name" /> 
-                        <input type="text" id="child_cat_root" placeholder="Category Name" disabled ng-model="child.root"/> 
+                        <input type="text" id="child_cat_root" placeholder="Root node?" disabled ng-model="child.root"/> 
                         <input type="text" id="child_cat_parent_id" placeholder="Parent Category ID" disabled ng-model="child.parentCategoryId"/>
                         <textarea type="textarea" id="child_desc" placeholder="Category Description" ng-model="child.description" > </textarea> 
                         <input type="text" id="child_cat_img" placeholder="Category Image Url"  ng-model="child.imageUrl"/>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
-                    <button class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
+                    <button data-dismiss="modal" class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div>
