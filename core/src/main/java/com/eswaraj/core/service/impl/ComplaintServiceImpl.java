@@ -208,6 +208,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 			complaint.setPhotos(new LinkedHashSet<Photo>());
 		}
 		complaint.getPhotos().add(photo);
+        complaint = complaintRepository.save(complaint);
 		return photoConvertor.convertBean(photo);
 	}
 
