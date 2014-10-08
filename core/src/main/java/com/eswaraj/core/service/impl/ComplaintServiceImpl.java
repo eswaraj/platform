@@ -96,13 +96,15 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
 	@Override
 	public ComplaintDto saveComplaint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
-        logger.info("Saving Complaint : {}" + saveComplaintRequestDto);
+        logger.info("Saving Complaint : {}", saveComplaintRequestDto);
 		Complaint complaint = complaintConvertor.convert(saveComplaintRequestDto);
-        logger.info("Converted  Complaint : {}" + complaint);
+        logger.info("Converted  Complaint : {}", complaint);
 
         complaint.setComplaintTime(Calendar.getInstance().getTimeInMillis());
-        logger.info("Searching person by User external Id : {}" + saveComplaintRequestDto.getUserExternalid());
-        Person person = personRepository.getPersonByUser(saveComplaintRequestDto.getUserExternalid());
+        logger.info("Searching person by User external Id : {}", saveComplaintRequestDto.getUserExternalid());
+        User user = userRepository.findByPropertyValue("externalId", saveComplaintRequestDto.getUserExternalid());
+        logger.info("User : {}", saveComplaintRequestDto.getUserExternalid());
+        Person person = personRepository.getPersonByUser(user);
 		complaint.setPerson(person);
 		boolean newComplaint = true;
         if (complaint.getId() != null && complaint.getId() > 0) {
