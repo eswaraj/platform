@@ -30,5 +30,10 @@ public class SaveComplaintRequestDto extends ComplaintDto {
     public void setAnonymous(boolean anonymous) {
         this.anonymous = anonymous;
     }
+
+    @Override
+    public String toString() {
+        return "SaveComplaintRequestDto [userExternalid=" + userExternalid + ", anonymous=" + anonymous + ", toString()=" + super.toString() + "]";
+    }
 	
 }

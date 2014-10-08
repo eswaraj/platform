@@ -79,13 +79,24 @@ app.directive('jstree', function($timeout, $http) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             request.success(function(data) {
-                for(var i=0; i< data.length;i++){
+                if(data instanceof Array) {
+                    for(var i=0; i< data.length;i++){
+                        var new_node = {
+                            'text': data[i].name,
+                            'id': data[i].id,
+                            'li_attr': ""
+                        };
+                        new_node.li_attr = $.extend(true, new_node.li_attr, data[i]);
+                        root_node_array.push(new_node);
+                    }
+                }
+                else {
                     var new_node = {
-                        'text': data[i].name,
-                        'id': data[i].id,
+                        'text': data.name,
+                        'id': data.id,
                         'li_attr': ""
                     };
-                    new_node.li_attr = $.extend(true, new_node.li_attr, data[i]);
+                    new_node.li_attr = $.extend(true, new_node.li_attr, data);
                     root_node_array.push(new_node);
                 }
                 var tree = element.jstree(
