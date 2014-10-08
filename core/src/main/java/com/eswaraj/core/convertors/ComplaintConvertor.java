@@ -18,7 +18,8 @@ import com.eswaraj.web.dto.ComplaintDto;
 @Component
 public class ComplaintConvertor extends BaseConvertor<Complaint, ComplaintDto> {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private ComplaintRepository complaintRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
