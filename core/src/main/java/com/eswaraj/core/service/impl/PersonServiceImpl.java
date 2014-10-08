@@ -119,7 +119,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
     @Override
     public UserDto registerDevice(DeviceDto deviceDto, String userExternalId) throws ApplicationException {
-        Device device = deviceRepository.getDeviceByDeviceId(deviceDto.getDeviceId());
+        Device device = deviceRepository.findByPropertyValue("deviceId", deviceDto.getDeviceId());
         if (device == null) {
             // This means we have never seen this device so create new one
             device = new Device();

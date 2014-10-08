@@ -16,9 +16,6 @@ import com.eswaraj.domain.nodes.User;
  */
 public interface DeviceRepository extends GraphRepository<Device> {
 
-    @Query("start Device=node:Device(deviceId={0}) return Device")
-    public Device getDeviceByDeviceId(String deviceId);
-
     @Query("start user=node({0}) match (user)-[:USER_DEVICE]->(device) where device.__type__ = 'com.eswaraj.domain.nodes.Device' return device")
     public List<Device> getAllDevicesOfUser(User user);
 
