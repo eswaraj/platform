@@ -32,7 +32,7 @@ app.directive('ngAutocomplete', function ($timeout) {
 //$scope.$broadcast('addChild',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //$scope.$broadcast('updateNode',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //'tree1' above is the id of the jstree to which you want to add the new node. Also, the payload has to be in 'child'. The child node is added to currently selected node.
-//parent scope will get a "selectedNode" field which will have the node object with id,text and li_attr
+//parent scope will get a "selectedNode" field which will have the node object
 app.directive('jstree', function($timeout, $http) {
     "use strict";
     return {
@@ -44,7 +44,6 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('addRoot', function(event, data) {
                 if(data.id === attrs.id) {
-                    //console.log(attrs.id + "Got data " + data.data);
                     element.jstree(true).create_node('#', {
                         id : data.child.id,
                         text : data.child.name,
@@ -55,7 +54,6 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('addChild', function(event, data) {
                 if(data.id === attrs.id) {
-                    //console.log(attrs.id + "Got data " + data.data);
                     var n = element.jstree('get_selected', true);
                     n = n[0];
                     element.jstree(true).create_node(n, {
@@ -68,15 +66,9 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
-                    //console.log(attrs.id + "Got data " + data.data);
-                    var n = element.jstree('get_selected', true);
-                    n = n[0];
-                    //n.text = data.child.name;
-                    //n.li_attr = $.extend(true,n.li_attr,data.child);
-                    //element.jstree('redraw');
-                    element.jstree('set_text',data.id, data.child.name);
+                    element.jstree('set_text',data.child.id, data.child.name);
                     for (var key in data.child) {
-                        $('#'+data.id).attr(key,data.child[key]);
+                        $('#'+data.child.id).attr(key,data.child[key]);
                     }
                 }
             });
@@ -87,13 +79,24 @@ app.directive('jstree', function($timeout, $http) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             request.success(function(data) {
-                for(var i=0; i< data.length;i++){
+                if(data instanceof Array) {
+                    for(var i=0; i< data.length;i++){
+                        var new_node = {
+                            'text': data[i].name,
+                            'id': data[i].id,
+                            'li_attr': ""
+                        };
+                        new_node.li_attr = $.extend(true, new_node.li_attr, data[i]);
+                        root_node_array.push(new_node);
+                    }
+                }
+                else {
                     var new_node = {
-                        'text': data[i].name,
-                        'id': data[i].id,
+                        'text': data.name,
+                        'id': data.id,
                         'li_attr': ""
                     };
-                    new_node.li_attr = $.extend(true, new_node.li_attr, data[i]);
+                    new_node.li_attr = $.extend(true, new_node.li_attr, data);
                     root_node_array.push(new_node);
                 }
                 var tree = element.jstree(
