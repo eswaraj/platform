@@ -1,0 +1,43 @@
+package com.eswaraj.web.admin.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
+
+@Controller
+public class PoliticalBodyAdminStaffController extends BaseController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private ApiUtil apiUtil;
+
+    @RequestMapping(value = "/ajax/leader/staff", method = RequestMethod.POST)
+    public @ResponseBody String saveLeaderStaff(HttpServletRequest httpServletRequest, ModelAndView mv,
+            @RequestBody SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException {
+        return apiUtil.savePoliticalAdminStaff(httpServletRequest, savePoliticalAdminStaffRequestDto);
+    }
+
+    @RequestMapping(value = "/ajax/leader/staff/{politicalAdminId}", method = RequestMethod.GET)
+    public @ResponseBody String getLeaderStaff(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long politicalAdminId) throws ApplicationException {
+        return apiUtil.getPoliticalAdminStaff(httpServletRequest, politicalAdminId);
+    }
+
+    @RequestMapping(value = "/ajax/leader/staff/{politicalAdminStaffId}", method = RequestMethod.DELETE)
+    public @ResponseBody String deleteLeaderStaff(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long politicalAdminStaffId)
+            throws ApplicationException {
+        return apiUtil.deletePoliticalAdminStaff(httpServletRequest, politicalAdminStaffId);
+    }
+
+}

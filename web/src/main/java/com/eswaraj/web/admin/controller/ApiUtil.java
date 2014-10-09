@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
+import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 import com.google.common.reflect.TypeToken;
@@ -146,6 +148,24 @@ public class ApiUtil {
         addedParams.put("end", String.valueOf(pageSize));
         String locationCategoryAnalytics = getResponseFrom(httpServletRequest, urlPath, addedParams);
         return locationCategoryAnalytics;
+    }
+
+    public String getPoliticalAdminStaff(HttpServletRequest httpServletRequest, Long politicalAdminId) throws ApplicationException {
+        String urlPath = "/api/v0/leader/staff/" + politicalAdminId;
+        String locationCategoryAnalytics = getResponseFrom(httpServletRequest, urlPath);
+        return locationCategoryAnalytics;
+    }
+
+    public String deletePoliticalAdminStaff(HttpServletRequest httpServletRequest, Long politicalAdminStaffId) throws ApplicationException {
+        String urlPath = "/api/v0/leader/staff/" + politicalAdminStaffId;
+        String locationCategoryAnalytics = delete(httpServletRequest, urlPath);
+        return locationCategoryAnalytics;
+    }
+
+    public String savePoliticalAdminStaff(HttpServletRequest httpServletRequest, SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException {
+        String urlPath = "/api/v0/leader/staff";
+        String saveResponse = postRequest(httpServletRequest, urlPath, gson.toJson(savePoliticalAdminStaffRequestDto));
+        return saveResponse;
     }
 
     private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
@@ -276,6 +296,38 @@ public class ApiUtil {
             HttpGet httpget = new HttpGet(uri);
             
             logger.info("Getting Results from " + httpget.getURI());
+            HttpResponse httpResponse = getHttpClient().execute(httpget);
+            return EntityUtils.toString(httpResponse.getEntity());
+        } catch (Exception ex) {
+            throw new ApplicationException(ex);
+        }
+    }
+
+    public String delete(HttpServletRequest httpServletRequest, String urlPath) throws ApplicationException {
+        return delete(httpServletRequest, urlPath, null);
+    }
+    public String delete(HttpServletRequest httpServletRequest, String urlPath, Map<String, String> addedParameters) throws ApplicationException {
+        try {
+            logger.info("Getting Results from " + urlPath);
+            URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost(apiHost).setPath(urlPath);
+            Map<String, String[]> parameters = httpServletRequest.getParameterMap();
+            for (Entry<String, String[]> oneParameterEntry : parameters.entrySet()) {
+                for (String oneValue : oneParameterEntry.getValue()) {
+                    uriBuilder.addParameter(oneParameterEntry.getKey(), oneValue);
+                }
+            }
+            if (addedParameters != null) {
+                for (Entry<String, String> oneParameterEntry : addedParameters.entrySet()) {
+                    uriBuilder.addParameter(oneParameterEntry.getKey(), oneParameterEntry.getValue());
+                }
+            }
+
+            // TODO add hear params and authentication paramaters
+
+            URI uri = uriBuilder.build();
+            HttpDelete httpget = new HttpDelete(uri);
+
+            logger.info("Deleting from " + httpget.getURI());
             HttpResponse httpResponse = getHttpClient().execute(httpget);
             return EntityUtils.toString(httpResponse.getEntity());
         } catch (Exception ex) {
