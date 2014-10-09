@@ -15,7 +15,7 @@ import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
  */
 public interface ComplaintPoliticalAdminRepository extends GraphRepository<ComplaintPoliticalAdmin> {
 	
-    @Query("start complaint=node({0}), politicalBodyAdmin=node({1}) match (complaint)-[complaintPoliticalAdmin]-(politicalBodyAdmin) return complaintPoliticalAdmin")
+    @Query("start complaint=node({0}), politicalBodyAdmin=node({1}) match (complaint)-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]->(politicalBodyAdmin) return complaintPoliticalAdmin")
     ComplaintPoliticalAdmin getComplaintPoliticalAdminRelation(Complaint complaint, PoliticalBodyAdmin politicalBodyAdmin);
 
 }
