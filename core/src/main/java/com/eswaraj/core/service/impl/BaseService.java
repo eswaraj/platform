@@ -156,7 +156,7 @@ public class BaseService implements Serializable {
         Device device = null;
         if (userDto.getDevice() != null) {
             
-            device = deviceRepository.getDeviceByDeviceId(userDto.getDevice().getDeviceId());
+            device = deviceRepository.findByPropertyValue("deviceId", userDto.getDevice().getDeviceId());
             if (device == null) {
                 device = new Device();
                 device.setDeviceId(userDto.getDevice().getDeviceId());
