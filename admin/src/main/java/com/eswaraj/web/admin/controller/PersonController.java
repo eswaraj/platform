@@ -39,6 +39,12 @@ public class PersonController extends BaseController{
 		return personService.searchPersonWithName(term);
 	}
 
+    @RequestMapping(value = "/ajax/person/search/email", method = RequestMethod.GET)
+    @ResponseBody
+    public List<PersonDto> searchPersonByEmailRequestParam(ModelAndView mv, @RequestParam("term") String term) throws ApplicationException {
+        return personService.searchPersonWithName(term);
+    }
+
 	@RequestMapping(value = "/ajax/person/get/{personId}", method = RequestMethod.GET)
 	@ResponseBody
 	public PersonDto getPersonByid(ModelAndView mv, @PathVariable Long personId) throws ApplicationException {

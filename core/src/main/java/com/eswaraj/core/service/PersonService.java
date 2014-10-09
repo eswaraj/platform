@@ -26,6 +26,8 @@ public interface PersonService {
 	
 	List<PersonDto> searchPersonWithName(String name) throws ApplicationException;
 	
+    List<PersonDto> searchPersonWithEmail(String email) throws ApplicationException;
+
     UserDto saveUser(UserDto userDto) throws ApplicationException;
 
     UserDto registerDevice(DeviceDto deviceDto, String userExternalId) throws ApplicationException;

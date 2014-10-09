@@ -16,14 +16,15 @@ import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Device.DeviceType;
-import com.eswaraj.domain.nodes.relationships.UserDevice;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.User;
+import com.eswaraj.domain.nodes.relationships.UserDevice;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 
@@ -69,7 +70,8 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	
 	protected PoliticalBodyAdmin createPoliticalBodyAdmin(PoliticalBodyAdminRepository politicalBodyAdminRepository, boolean active, String email, 
 			Date startDate, Date endDate, Address homeAddress, Address officeAddress, String landLine1, String landLine2,Location location,
-			String mobile1, String mobile2, Party party, Person person, PoliticalBodyType politicalBodyType){
+ String mobile1, String mobile2, Party party, Person person, PoliticalBodyType politicalBodyType,
+            String urlIdentifier) {
 		PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
 		politicalBodyAdmin.setActive(active);
 		politicalBodyAdmin.setEmail(email);
@@ -85,7 +87,9 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		politicalBodyAdmin.setParty(party);
 		politicalBodyAdmin.setPerson(person);
 		politicalBodyAdmin.setPoliticalBodyType(politicalBodyType);
+        politicalBodyAdmin.setUrlIdentifier(urlIdentifier);
 		politicalBodyAdmin = politicalBodyAdminRepository.save(politicalBodyAdmin);
+
 		return politicalBodyAdmin;
 	}
 	
@@ -213,4 +217,13 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		assertEquals(expected, actual);
 		
 	}
+
+    protected void assertPoliticalBodyAdminStaffEquals(PoliticalBodyAdminStaff expected, PoliticalBodyAdminStaff actual, boolean compareId) {
+        if (compareId) {
+            assertEquals(expected.getId(), actual.getId());
+        }
+        assertEquals(expected.getPost(), actual.getPost());
+        assertEquals(expected.getPerson().getId(), actual.getPerson().getId());
+        assertEquals(expected.getPoliticalBodyAdmin().getId(), actual.getPoliticalBodyAdmin().getId());
+    }
 }

@@ -20,6 +20,7 @@ import com.eswaraj.core.convertors.ExecutiveBodyConvertor;
 import com.eswaraj.core.convertors.ExecutivePostConvertor;
 import com.eswaraj.core.convertors.PartyConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyAdminConvertor;
+import com.eswaraj.core.convertors.PoliticalBodyAdminStaffConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
@@ -33,6 +34,7 @@ import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
@@ -43,6 +45,7 @@ import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminStaffRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.queue.service.QueueService;
@@ -54,7 +57,9 @@ import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
+import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -79,6 +84,8 @@ public class AppServiceImpl extends BaseService implements AppService {
 	private PartyConvertor partyConvertor;
 	@Autowired
 	private PoliticalBodyAdminRepository politicalBodyAdminRepository;
+    @Autowired
+    private PoliticalBodyAdminStaffRepository politicalBodyAdminStaffRepository;
 	@Autowired
 	private PoliticalBodyAdminConvertor politicalBodyAdminConvertor;
 	@Autowired
@@ -103,6 +110,8 @@ public class AppServiceImpl extends BaseService implements AppService {
     private PersonRepository personRepository;
     @Autowired
     private QueueService queueService;
+    @Autowired
+    private PoliticalBodyAdminStaffConvertor politicalBodyAdminStaffConvertor;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -453,6 +462,47 @@ public class AppServiceImpl extends BaseService implements AppService {
             }
         }
 
+    }
+
+    @Override
+    public void savePoliticalBodyAdminStaff(SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) {
+        PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.findOne(savePoliticalAdminStaffRequestDto.getPoliticalAdminId());
+        Collection<PoliticalBodyAdminStaff> existingStaff = politicalBodyAdminStaffRepository.getAllPoliticalAdminStaffByPoliticalBodyAdmin(politicalBodyAdmin);
+
+        PoliticalBodyAdminStaff dbPoliticalBodyAdminStaff = null;
+        if (existingStaff != null) {
+            for (PoliticalBodyAdminStaff onePoliticalBodyAdminStaff : existingStaff) {
+                if (onePoliticalBodyAdminStaff.getPerson().getId().equals(savePoliticalAdminStaffRequestDto.getPersonId())) {
+                    dbPoliticalBodyAdminStaff = onePoliticalBodyAdminStaff;
+                }
+            }
+        }
+
+        if (dbPoliticalBodyAdminStaff == null) {
+            dbPoliticalBodyAdminStaff = new PoliticalBodyAdminStaff();
+            Person person = personRepository.findOne(savePoliticalAdminStaffRequestDto.getPersonId());
+            dbPoliticalBodyAdminStaff.setPoliticalBodyAdmin(politicalBodyAdmin);
+            dbPoliticalBodyAdminStaff.setPerson(person);
+        }
+
+        dbPoliticalBodyAdminStaff.setPost(savePoliticalAdminStaffRequestDto.getPost());
+
+        dbPoliticalBodyAdminStaff = politicalBodyAdminStaffRepository.save(dbPoliticalBodyAdminStaff);
+    }
+
+    @Override
+    public List<PoliticalBodyAdminStaffDto> getAllStaffOfPoliticalAdmin(Long politicalAdminId) throws ApplicationException {
+        PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
+        politicalBodyAdmin.setId(politicalAdminId);
+        Collection<PoliticalBodyAdminStaff> staff = politicalBodyAdminStaffRepository.getAllPoliticalAdminStaffByPoliticalBodyAdmin(politicalBodyAdmin);
+        return politicalBodyAdminStaffConvertor.convertBeanList(staff);
+    }
+
+    @Override
+    public PoliticalBodyAdminStaffDto deletePoliticalAdminStaff(Long politicalAdminStaffId) throws ApplicationException {
+        PoliticalBodyAdminStaff politicalBodyAdminStaff = politicalBodyAdminStaffRepository.findOne(politicalAdminStaffId);
+        politicalBodyAdminStaffRepository.delete(politicalAdminStaffId);
+        return politicalBodyAdminStaffConvertor.convertBean(politicalBodyAdminStaff);
     }
 
 }

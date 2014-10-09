@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.FacebookProfile;
@@ -360,5 +361,11 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             
         }
 
+    }
+
+    @Override
+    public List<PersonDto> searchPersonWithEmail(String email) throws ApplicationException {
+        EndResult<Person> persons = personRepository.findAllByPropertyValue("email", email.toLowerCase());
+        return personConvertor.convertBeanList(persons);
     }
 }

@@ -11,7 +11,9 @@ import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
+import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 
 public interface AppService {
 
@@ -94,4 +96,10 @@ public interface AppService {
     void initializeData() throws ApplicationException;
 
     void updateAllUrls() throws ApplicationException;
+
+    void savePoliticalBodyAdminStaff(SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException;
+
+    List<PoliticalBodyAdminStaffDto> getAllStaffOfPoliticalAdmin(Long politicalAdminId) throws ApplicationException;
+
+    PoliticalBodyAdminStaffDto deletePoliticalAdminStaff(Long politicalAdminStaffId) throws ApplicationException;
 }

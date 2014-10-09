@@ -19,22 +19,25 @@ import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class TestPoliticalAdminRepository extends BaseNeo4jEswarajTest{
+public class TestPoliticalAdminStaffRepository extends BaseNeo4jEswarajTest{
 
 	@Autowired LocationRepository locationRepository;
 	@Autowired LocationTypeRepository locationTypeRepository;
 	@Autowired PoliticalBodyTypeRepository politicalBodyTypeRepository;
 	@Autowired PoliticalBodyAdminRepository politicalBodyAdminRepository;
+    @Autowired
+    PoliticalBodyAdminStaffRepository politicalBodyAdminStaffRepository;
 	@Autowired DataClientRepository dataClientRepository;
 	@Autowired PartyRepository partyRepository;
 	@Autowired PersonRepository personRepository;
 	@Test
-	public void test01_getAllPoliticalAdminByLocationAndPbType(){
+    public void test01_getAllPoliticalAdminStaffByPoliticalAdmin() {
 		final String countryName = "Country";
 		final boolean isRoot = true;
 		DataClient dataClient = createDataClient(dataClientRepository, randomAlphaString(16));
@@ -60,26 +63,18 @@ public class TestPoliticalAdminRepository extends BaseNeo4jEswarajTest{
  startDateForCountryAdmin, endDateForCountryAdmin, null, null,
                 null, null, state, null, null, party, person, politicalBodyTypeAtState, "/leader2");
 
+        PoliticalBodyAdminStaff politicalBodyAdminStaff = new PoliticalBodyAdminStaff();
+        Person staffPerson = createPerson(personRepository, randomAlphaString(16));
+        politicalBodyAdminStaff.setPerson(staffPerson);
+        politicalBodyAdminStaff.setPost("PA");
+        politicalBodyAdminStaff.setPoliticalBodyAdmin(politicalBodyAdminAtCountry);
+        politicalBodyAdminStaff = politicalBodyAdminStaffRepository.save(politicalBodyAdminStaff);
+
 		//Now search country admin and state admin seprately
-		Collection<PoliticalBodyAdmin> dbPoliticalBodyAdminAtCountry = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(country, politicalBodyTypeAtCountry);
+        Collection<PoliticalBodyAdminStaff> dbPoliticalBodyAdminAtCountry = politicalBodyAdminStaffRepository.getAllPoliticalAdminStaffByPoliticalBodyAdmin(politicalBodyAdminAtCountry);
 		assertNotNull(dbPoliticalBodyAdminAtCountry);
 		assertEquals(1, dbPoliticalBodyAdminAtCountry.size());
-		assertPoliticalBodyAdminEquals(politicalBodyAdminAtCountry, dbPoliticalBodyAdminAtCountry.iterator().next(), true);
-		
-		Collection<PoliticalBodyAdmin> dbPoliticalBodyAdminAtState = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(state, politicalBodyTypeAtState);
-		assertNotNull(dbPoliticalBodyAdminAtState);
-		assertEquals(1, dbPoliticalBodyAdminAtState.size());
-		assertPoliticalBodyAdminEquals(politicalBodyAdminAtState, dbPoliticalBodyAdminAtState.iterator().next(), true);
-		
-		//Now try to find State Body Type admin at Country Level
-		Collection<PoliticalBodyAdmin> dbPoliticalBodyAdminAtCountryForStateType = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(country, politicalBodyTypeAtState);
-		assertNotNull(dbPoliticalBodyAdminAtCountryForStateType);
-		assertEquals(0, dbPoliticalBodyAdminAtCountryForStateType.size());
-		//Now try to find Country Body Type admin at State Level
-		Collection<PoliticalBodyAdmin> dbPoliticalBodyAdminAtStateForCountryType = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(state, politicalBodyTypeAtCountry);
-		assertNotNull(dbPoliticalBodyAdminAtStateForCountryType);
-		assertEquals(0, dbPoliticalBodyAdminAtStateForCountryType.size());
-
+        assertPoliticalBodyAdminStaffEquals(politicalBodyAdminStaff, dbPoliticalBodyAdminAtCountry.iterator().next(), true);
 		
 	}
 	
