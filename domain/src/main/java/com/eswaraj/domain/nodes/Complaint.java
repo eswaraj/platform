@@ -33,8 +33,6 @@ public class Complaint extends BaseNode {
     private Status status;
     @RelatedTo(type = "ENDORSED_BY", elementClass = Person.class)
     private Set<Person> endorsements;
-    @RelatedTo(type = "POLITICAL_SERVED_BY")
-    private Set<PoliticalBodyAdmin> servants;
     @RelatedTo(type = "PHOTOS_OF_COMPLAINT")
     private Set<Photo> photos;
     @RelatedTo(type = "VIDEOS_OF_COMPLAINT")
@@ -101,14 +99,6 @@ public class Complaint extends BaseNode {
 
     public void setEndorsements(Set<Person> endorsements) {
         this.endorsements = endorsements;
-    }
-
-    public Set<PoliticalBodyAdmin> getServants() {
-        return servants;
-    }
-
-    public void setServants(Set<PoliticalBodyAdmin> servants) {
-        this.servants = servants;
     }
 
     public Set<Photo> getPhotos() {
@@ -189,7 +179,7 @@ public class Complaint extends BaseNode {
     @Override
     public String toString() {
         return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories + ", person=" + person
-                + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements + ", servants=" + servants + ", photos=" + photos + ", videos=" + videos + ", id=" + id
+                + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements + ", photos=" + photos + ", videos=" + videos + ", id=" + id
                 + "]";
     }
 

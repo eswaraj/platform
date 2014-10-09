@@ -26,9 +26,12 @@ import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
+import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.User;
+import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.DeviceRepository;
 import com.eswaraj.domain.repo.LocationRepository;
@@ -55,6 +58,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private static final long serialVersionUID = 1L;
     @Autowired
 	private ComplaintRepository complaintRepository;
+    @Autowired
+    private ComplaintPoliticalAdminRepository complaintPoliticalAdminRepository;
 	@Autowired
 	private ComplaintConvertor complaintConvertor;
 	@Autowired
@@ -165,7 +170,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaintCreatedMessage.setPersonId(complaint.getPerson().getId());
 
 
-        Set<PoliticalBodyAdmin> politicalAdmins = complaint.getServants();
+        Collection<PoliticalBodyAdmin> politicalAdmins = politicalBodyAdminRepository.getAllPoliticalAdminOfComplaint(complaint);
         if (politicalAdmins != null) {
             List<Long> politicalAdminIds = new ArrayList<>(politicalAdmins.size());
             for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalAdmins) {
@@ -263,7 +268,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                 }
             }
             complaint.setLocations(locations);
-            complaint.setServants(politicalBodyAdmins);
+            addPoliticalAdmins(complaint, politicalBodyAdmins);
 
             // TODO find Executive Admin based on Location and Category and
             // attach it to complaint
@@ -271,6 +276,24 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaint.setNearByKey(appKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
         complaint = complaintRepository.save(complaint);
         return buildComplaintMessage(complaint);
+    }
+
+    private void addPoliticalAdmins(Complaint complaint, Set<PoliticalBodyAdmin> politicalBodyAdmins) {
+        if (politicalBodyAdmins.isEmpty()) {
+            return;
+        }
+        ComplaintPoliticalAdmin complaintPoliticalAdmin;
+        for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalBodyAdmins) {
+            complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(complaint, onePoliticalBodyAdmin);
+            if (complaintPoliticalAdmin == null) {
+                complaintPoliticalAdmin = new ComplaintPoliticalAdmin();
+                complaintPoliticalAdmin.setComplaint(complaint);
+                complaintPoliticalAdmin.setPoliticalBodyAdmin(onePoliticalBodyAdmin);
+                complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.PENDING);
+                complaintPoliticalAdmin.setViewed(false);
+                complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
+            }
+        }
     }
 
     private void addAllParentLocationsToComplaint(Set<Location> locations, Location location, Set<String> complaintLocations) {

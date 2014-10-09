@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
+import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
@@ -32,4 +33,8 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 
     @Query("start person=node({0}) match (location)<-[:IS]-(PoliticalAdmin) where PoliticalAdmin.active=true return PoliticalAdmin")
     Collection<PoliticalBodyAdmin> getActivePoliticalAdminHistoryByPerson(Person person);
+
+    @Query("start complaint=node({0}) match (complaint)-[PSB:POLITICAL_SERVED_BY]->(PoliticalAdmin) return PoliticalAdmin")
+    Collection<PoliticalBodyAdmin> getAllPoliticalAdminOfComplaint(Complaint complaint);
+
 }

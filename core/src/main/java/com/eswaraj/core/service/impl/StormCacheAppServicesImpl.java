@@ -163,9 +163,10 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             complaintJsonObject.add("eba", ebaIds);
         }
 
-        if (!CollectionUtils.isEmpty(complaint.getServants())) {
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminOfComplaint(complaint);
+        if (politicalBodyAdmins != null && !CollectionUtils.isEmpty(politicalBodyAdmins)) {
             JsonArray jsonArray = new JsonArray();
-            for (PoliticalBodyAdmin onePoliticalBodyAdmin : complaint.getServants()) {
+            for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalBodyAdmins) {
                 JsonObject pbaJsonObject = new JsonObject();
                 pbaJsonObject.addProperty("id", onePoliticalBodyAdmin.getId());
                 jsonArray.add(pbaJsonObject);
