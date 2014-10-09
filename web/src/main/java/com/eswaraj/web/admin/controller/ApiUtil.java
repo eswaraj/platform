@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.controller.beans.ComplaintBean;
+import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
@@ -123,6 +124,16 @@ public class ApiUtil {
         addedParams.put("end", String.valueOf(pageSize));
         String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
         List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
+        return list;
+    }
+
+    public List<PoliticalPositionDto> getPersonPoliticalPositions(HttpServletRequest httpServletRequest, Long personId, boolean activeOnly) throws ApplicationException {
+        String urlPath = "/api/v0/person/politicalpositions/" + personId;
+        Map<String, String> addedParams = new HashMap<>();
+        addedParams.put("active_only", String.valueOf(activeOnly));
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        List<PoliticalPositionDto> list = gson.fromJson(locationComplaints, new TypeToken<List<PoliticalPositionDto>>() {
+        }.getType());
         return list;
     }
 

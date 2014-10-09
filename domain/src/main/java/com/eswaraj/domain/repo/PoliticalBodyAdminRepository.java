@@ -28,6 +28,8 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 	Collection<PoliticalBodyAdmin> getAllPoliticalAdminByLocationAndPoliticalBodyType(Location location, PoliticalBodyType politicalBodyType);
 
     @Query("start person=node({0}) match (location)<-[:IS]-(PoliticalAdmin) return PoliticalAdmin")
-    Collection<PoliticalBodyAdmin> getPoliticalAdminHistoryByPerson(Person person);
+    Collection<PoliticalBodyAdmin> getAllPoliticalAdminHistoryByPerson(Person person);
 
+    @Query("start person=node({0}) match (location)<-[:IS]-(PoliticalAdmin) where PoliticalAdmin.active=true return PoliticalAdmin")
+    Collection<PoliticalBodyAdmin> getActivePoliticalAdminHistoryByPerson(Person person);
 }

@@ -1,16 +1,22 @@
 package com.eswaraj.api.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
+import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.RegisterDeviceRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
@@ -22,6 +28,8 @@ public class UserController extends BaseController {
 
     @Autowired
     private PersonService personService;
+    @Autowired
+    private AppService appService;
 
     @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
@@ -45,6 +53,16 @@ public class UserController extends BaseController {
         UserDto userDto = personService.registerFacebookAccountWebUser(registerFacebookAccountWebRequest);
         return userDto;
     }
+
+    @RequestMapping(value = "/api/v0/person/politicalpositions/{personId}", method = RequestMethod.DELETE)
+    public @ResponseBody List<PoliticalPositionDto> getPersonPoliticalPositions(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long personId)
+            throws ApplicationException {
+        boolean activeOnly = getBooleanParameter(httpServletRequest, "active_only", false);
+
+        List<PoliticalPositionDto> politicalPositionDtos = appService.getAllPoliticalPositionsOfPerson(personId, activeOnly);
+        return politicalPositionDtos;
+    }
+
 
 
 }

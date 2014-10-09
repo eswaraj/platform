@@ -1,6 +1,7 @@
 package com.eswaraj.core.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -59,6 +60,7 @@ import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
+import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -437,7 +439,7 @@ public class AppServiceImpl extends BaseService implements AppService {
     @Override
     public List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException {
         Person person = getObjectIfExistsElseThrowExcetpion(personId, "Location", personRepository);
-        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getPoliticalAdminHistoryByPerson(person);
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminHistoryByPerson(person);
         return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
     }
 
@@ -503,6 +505,35 @@ public class AppServiceImpl extends BaseService implements AppService {
         PoliticalBodyAdminStaff politicalBodyAdminStaff = politicalBodyAdminStaffRepository.findOne(politicalAdminStaffId);
         politicalBodyAdminStaffRepository.delete(politicalAdminStaffId);
         return politicalBodyAdminStaffConvertor.convertBean(politicalBodyAdminStaff);
+    }
+
+    @Override
+    public List<PoliticalPositionDto> getAllPoliticalPositionsOfPerson(Long personId, boolean activeOnly) throws ApplicationException {
+        Person person = getObjectIfExistsElseThrowExcetpion(personId, "Person", personRepository);
+        Collection<PoliticalBodyAdmin> politicalBodyAdmins = null;
+        if (activeOnly) {
+            politicalBodyAdmins = politicalBodyAdminRepository.getActivePoliticalAdminHistoryByPerson(person);
+        } else {
+            politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminHistoryByPerson(person);
+        }
+        // Convert
+        List<PoliticalPositionDto> returnList = new ArrayList<>();
+        if (politicalBodyAdmins == null || politicalBodyAdmins.isEmpty()) {
+            return returnList;
+        }
+        PoliticalPositionDto politicalPositionDto;
+        for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalBodyAdmins) {
+            politicalPositionDto = new PoliticalPositionDto();
+            politicalPositionDto.setId(onePoliticalBodyAdmin.getId());
+            politicalPositionDto.setExternalId(onePoliticalBodyAdmin.getExternalId());
+            Location location = locationRepository.findOne(onePoliticalBodyAdmin.getLocation().getId());
+            politicalPositionDto.setLocationName(location.getName());
+            PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findOne(onePoliticalBodyAdmin.getPoliticalBodyType().getId());
+            politicalPositionDto.setPoliticalBodyType(politicalBodyType.getName());
+            politicalPositionDto.setPoliticalBodyTypeShort(politicalBodyType.getShortName());
+            returnList.add(politicalPositionDto);
+        }
+        return returnList;
     }
 
 }

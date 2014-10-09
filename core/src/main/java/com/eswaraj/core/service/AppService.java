@@ -13,6 +13,7 @@ import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
+import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 
 public interface AppService {
@@ -60,6 +61,8 @@ public interface AppService {
 	List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
     List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException;
+
+    List<PoliticalPositionDto> getAllPoliticalPositionsOfPerson(Long personId, boolean activeOnly) throws ApplicationException;
 
 	//Executive Body APIs
 	ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException;

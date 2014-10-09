@@ -47,6 +47,20 @@ public class BaseController {
         return Long.parseLong(paramValue);
     }
 
+    protected boolean getBooleanParameter(HttpServletRequest httpServletRequest, String parameter, boolean defaultValue) {
+        String paramValue = httpServletRequest.getParameter(parameter);
+        if (paramValue == null) {
+            return defaultValue;
+        }
+        boolean returnValue = defaultValue;
+        try {
+            returnValue = Boolean.parseBoolean(paramValue);
+        } catch (Exception ex) {
+            logger.warn("Unable to parser {} as boolean", paramValue);
+        }
+        return returnValue;
+    }
+
     protected String getFileName(String submittedFileName) {
         return UUID.randomUUID().toString() + submittedFileName.substring(submittedFileName.lastIndexOf("."));
     }

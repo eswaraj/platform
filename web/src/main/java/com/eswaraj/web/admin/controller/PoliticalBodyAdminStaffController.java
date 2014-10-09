@@ -1,5 +1,7 @@
 package com.eswaraj.web.admin.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
+import com.eswaraj.web.dto.UserDto;
 
 @Controller
 public class PoliticalBodyAdminStaffController extends BaseController {
@@ -25,6 +29,9 @@ public class PoliticalBodyAdminStaffController extends BaseController {
 
     @RequestMapping(value = "/staff.html", method = RequestMethod.GET)
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
+        UserDto user = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        List<PoliticalPositionDto> politicalPositionDtos = apiUtil.getPersonPoliticalPositions(httpServletRequest, user.getPerson().getId(), false);
+        mv.getModel().put("positions", politicalPositionDtos);
         mv.setViewName("politicaladminstaff");
         return mv;
     }
