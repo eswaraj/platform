@@ -32,6 +32,7 @@ public class PoliticalBodyAdminStaffController extends BaseController {
         UserDto user = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         List<PoliticalPositionDto> politicalPositionDtos = apiUtil.getPersonPoliticalPositions(httpServletRequest, user.getPerson().getId(), false);
         mv.getModel().put("positions", politicalPositionDtos);
+        addGenericValues(mv, httpServletRequest);
         mv.setViewName("politicaladminstaff");
         return mv;
     }

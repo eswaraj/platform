@@ -1,6 +1,7 @@
 package com.eswaraj.web.dto;
 
 
+
 /**
  * A political elected representative
  * 
