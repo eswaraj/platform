@@ -54,7 +54,7 @@ public class UserController extends BaseController {
         return userDto;
     }
 
-    @RequestMapping(value = "/api/v0/person/politicalpositions/{personId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/v0/person/politicalpositions/{personId}", method = RequestMethod.GET)
     public @ResponseBody List<PoliticalPositionDto> getPersonPoliticalPositions(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long personId)
             throws ApplicationException {
         boolean activeOnly = getBooleanParameter(httpServletRequest, "active_only", false);
