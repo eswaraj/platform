@@ -248,11 +248,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (complaintLocations.isEmpty()) {
             complaintLocations.add("78340");
         }
+        Set<PoliticalBodyAdmin> politicalBodyAdmins = new HashSet<>();
         if (complaintLocations != null && !complaintLocations.isEmpty()) {
 
             Set<Location> locations = new HashSet<>();
 
-            Set<PoliticalBodyAdmin> politicalBodyAdmins = new HashSet<>();
             Collection<PoliticalBodyAdmin> oneLocationPoliticalBodyAdmins;
 
             Long locationId;
@@ -268,13 +268,13 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                 }
             }
             complaint.setLocations(locations);
-            addPoliticalAdmins(complaint, politicalBodyAdmins);
 
             // TODO find Executive Admin based on Location and Category and
             // attach it to complaint
         }
         complaint.setNearByKey(appKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
         complaint = complaintRepository.save(complaint);
+        addPoliticalAdmins(complaint, politicalBodyAdmins);
         return buildComplaintMessage(complaint);
     }
 
