@@ -23,6 +23,11 @@ public class PoliticalBodyAdminStaffController extends BaseController {
     @Autowired
     private ApiUtil apiUtil;
 
+    @RequestMapping(value = "/staff.html", method = RequestMethod.GET)
+    public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
+        mv.setViewName("politicaladminstaff");
+        return mv;
+    }
     @RequestMapping(value = "/ajax/leader/staff", method = RequestMethod.POST)
     public @ResponseBody String saveLeaderStaff(HttpServletRequest httpServletRequest, ModelAndView mv,
             @RequestBody SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException {
