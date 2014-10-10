@@ -6,14 +6,15 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.Device.DeviceType;
-import com.eswaraj.domain.nodes.relationships.UserDevice;
 import com.eswaraj.domain.nodes.User;
+import com.eswaraj.domain.nodes.relationships.UserDevice;
 
 /**
  * Test for LocationType repository
@@ -68,8 +69,8 @@ public class TestDeviceRepository extends BaseNeo4jEswarajTest {
         // get users by device Id
         List<User> users = userRepository.getUserByDevice(device);
         System.out.println("users=" + users);
-        users = userRepository.getUserByDevice(device.getDeviceId());
-        System.out.println("users=" + users);
+        EndResult<User> usersFound = userRepository.findAllByPropertyValue("deviceId", device.getDeviceId());
+        System.out.println("users=" + usersFound);
 
         List<Device> devicesA = deviceRepository.getAllDevicesOfUser(userA);
         System.out.println("devicesA=" + devicesA);

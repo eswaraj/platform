@@ -13,7 +13,9 @@ public abstract class BaseValidator<T> {
 	
 	public abstract void validateBeforeSave(T entity) throws ValidationException;
 	
-	public abstract void validateBeforeDelete(T entity) throws ValidationException;
+    public void validateBeforeDelete(T entity) throws ValidationException {
+
+    }
 	
 	protected void checkIfEmpty(String fieldName, String fieldValue) throws ValidationException{
 		checkIfEmpty(fieldName, fieldValue, fieldName +" can not be null or empty");

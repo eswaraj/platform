@@ -322,7 +322,6 @@ public class ApiUtil {
 
     public String getResponseFrom(HttpServletRequest httpServletRequest, String urlPath, Map<String, String> addedParameters) throws ApplicationException {
         try {
-            logger.info("Getting Results from " + urlPath);
             URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost(apiHost).setPath(urlPath);
             Map<String, String[]> parameters = httpServletRequest.getParameterMap();
             for(Entry<String, String[]> oneParameterEntry : parameters.entrySet()){
@@ -343,7 +342,9 @@ public class ApiUtil {
             
             logger.info("Getting Results from " + httpget.getURI());
             HttpResponse httpResponse = getHttpClient().execute(httpget);
-            return EntityUtils.toString(httpResponse.getEntity());
+            String response = EntityUtils.toString(httpResponse.getEntity());
+            logger.info("Response : " + response);
+            return response;
         } catch (Exception ex) {
             throw new ApplicationException(ex);
         }

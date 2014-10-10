@@ -1,6 +1,7 @@
 package com.eswaraj.domain.repo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.UUID;
@@ -193,6 +194,8 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		assertEquals(expected.getLine1(), actual.getLine1());
 		assertEquals(expected.getLine2(), actual.getLine2());
 		assertEquals(expected.getLine3(), actual.getLine3());
+        assertEquals(expected.getPostalCode(), actual.getPostalCode());
+        assertTrue(expected.getLocations().equals(actual.getLocations()));
 	}
 	
 	protected void assertPoliticalBodyAdminEquals(PoliticalBodyAdmin expected, PoliticalBodyAdmin actual, boolean compareId){

@@ -58,8 +58,8 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 		
 		
 		Location countryLocation = createLocation(locationRepository, countryName, countryLocationType, null);
-		Location dbCountryLocation = locationRepository.getLocationFromName(countryName);
-		
+        Location dbCountryLocation = locationRepository.findByPropertyValue("name", countryName);
+
 		assertNotNull(dbCountryLocation);
 		assertEquals(countryLocation, dbCountryLocation);
 		
