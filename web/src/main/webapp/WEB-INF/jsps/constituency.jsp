@@ -281,7 +281,7 @@ pageEncoding="UTF-8"%>
 						<div class="innerblock">
 							<div class="col-sm-1 profile-info profile_pic_adjust">
 								<div class="profile-pic">
-									<a href="#" ><img src="images/profile-pic.jpg" alt=""></a>
+									<a href="#" ><img src="${staticHost}/images/profile-pic.jpg" alt=""></a>
 								</div>
 							</div>
 							<div class="col-sm-10 profile-info profile_info_adjust">
@@ -290,14 +290,14 @@ pageEncoding="UTF-8"%>
 								<span class="connector">raised by</span>
 								<a href="#" class="username">${oneComplaint.loggedBy.name}</a>
 								<!-- social media share buttons -->								
-								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
 								<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-								<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+								<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
 								</p>
 
 								<p class="whenwhere">
 								<span>
-									<img src = "images/time.png" class="posttimestatus" alt="">
+									<img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
 									<a href="#" class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></a>
 								</span>
 								<span class="connector">at</span>
@@ -306,7 +306,7 @@ pageEncoding="UTF-8"%>
 									<a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
 								</span>
 								<span>
-									<a href="#"><img src = "images/underreview.png" class="postcurrentstatus" alt=""></a>
+									<a href="#"><img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>
 								</span>
 								</p>
 							</div>
@@ -315,7 +315,7 @@ pageEncoding="UTF-8"%>
 								<p>
 								<a href="#" class="issue-scope">${oneComplaint.categoryTitle}</a>
 								<a href="#" class="issue-scope-type">
-									<img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">
+									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 									<c:if test="${oneCategory.root}">
 									Type - ${oneCategory.name}
