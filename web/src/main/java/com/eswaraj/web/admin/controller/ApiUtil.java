@@ -131,13 +131,18 @@ public class ApiUtil {
     }
 
     public List<PoliticalPositionDto> getPersonPoliticalPositions(HttpServletRequest httpServletRequest, Long personId, boolean activeOnly) throws ApplicationException {
+        String locationComplaints = getPersonPoliticalPositionsString(httpServletRequest, personId, activeOnly);
+        List<PoliticalPositionDto> list = gson.fromJson(locationComplaints, new TypeToken<List<PoliticalPositionDto>>() {
+        }.getType());
+        return list;
+    }
+
+    public String getPersonPoliticalPositionsString(HttpServletRequest httpServletRequest, Long personId, boolean activeOnly) throws ApplicationException {
         String urlPath = "/api/v0/person/politicalpositions/" + personId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("active_only", String.valueOf(activeOnly));
         String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
-        List<PoliticalPositionDto> list = gson.fromJson(locationComplaints, new TypeToken<List<PoliticalPositionDto>>() {
-        }.getType());
-        return list;
+        return locationComplaints;
     }
 
     public String getLocationCountersFor365Days(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
