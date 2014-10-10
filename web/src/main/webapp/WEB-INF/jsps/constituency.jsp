@@ -11,6 +11,7 @@ pageEncoding="UTF-8"%>
 	<head>
 		<title>eSwaraj</title>
 		<jsp:include page="include.jsp" />
+		<link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
 	</head>
 	<body>
 		<div class="outerwrapper">
@@ -273,63 +274,73 @@ pageEncoding="UTF-8"%>
 				<c:if test="${viewType eq 'list'}">
 
 				<div class="listing">
-					<!-- .list-row  -->
+					<!-- new_div starts -->
 					<c:forEach items="${complaintList}" var="oneComplaint">
 					<div class="list-row">
-						<div class="issue-pic">
-							<c:if test="${!empty oneComplaint.photos}">
-							<img src="${oneComplaint.photos[0].orgUrl}" alt="">
-							</c:if>
-
-							<c:if test="${empty oneComplaint.photos}">
-							<img src="${staticHost}/images/issues/issues.png" alt="">
-							</c:if>
-						</div>
+						<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"--> <!-- not working as expected -->
 						<div class="innerblock">
-							<div class="profile-info">
+							<div class="col-sm-1 profile-info profile_pic_adjust">
 								<div class="profile-pic">
-									<img src="${staticHost}/images/profile-pic.jpg" alt="">
+									<a href="#" ><img src="images/profile-pic.jpg" alt=""></a>
 								</div>
+							</div>
+							<div class="col-sm-10 profile-info profile_info_adjust">
 								<p class="whom">
 								<strong class="issue-id">Issue #${oneComplaint.id}</strong>
-								<span class="connector">raised by</span> <a href="#"
-									class="username">${oneComplaint.loggedBy.name}</a>
+								<span class="connector">raised by</span>
+								<a href="#" class="username">${oneComplaint.loggedBy.name}</a>
+								<!-- social media share buttons -->								
+								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+								<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+								<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
 								</p>
+
 								<p class="whenwhere">
-								<span><abbr class="timeago"
-										title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></span>
-								<span class="connector">at</span> <span> <i
-										class="glyphicon glyphicon-map-marker"></i> <a href="#"
-										class="location">TODO</a>
+								<span>
+									<img src = "images/time.png" class="posttimestatus" alt="">
+									<a href="#" class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></a>
+								</span>
+								<span class="connector">at</span>
+								<span>
+									<i class="glyphicon glyphicon-map-marker"></i>
+									<a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
+								</span>
+								<span>
+									<a href="#"><img src = "images/underreview.png" class="postcurrentstatus" alt=""></a>
 								</span>
 								</p>
 							</div>
-							<div class="issue-info">
-								<p class="desc elipsis">
-								<c:if test="${empty oneComplaint.description}">
-								${oneComplaint.categoryTitle}
-								</c:if>
+							<div class="issue-info" >
+
+								<p>
+								<a href="#" class="issue-scope">${oneComplaint.categoryTitle}</a>
+								<a href="#" class="issue-scope-type">
+									<img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">
+									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+									<c:if test="${oneCategory.root}">
+									Type - ${oneCategory.name}
+									</c:if>
+									</c:forEach>
+								</a>
+								</p>
+
 								<c:if test="${!empty oneComplaint.description}">
+								<p class="desc elipsis">
 								${oneComplaint.description}
-								</c:if>
 								</p>
-								<p class="classify">
-								<c:forEach items="${oneComplaint.categories}"
-								var="oneCategory">
-								<c:if test="${oneCategory.root}">
-								<small class="badge badge-infra">Type -
-									${oneCategory.name}</small>
 								</c:if>
 
-								</c:forEach>
+								<c:if test="${!empty oneComplaint.photos}">
+								<div class="issue-pic">
+									<a href="#" ><img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle"></a>
+								</div>
+								</c:if>
 
-								</p>
 							</div>
 						</div>
 					</div>
-					<!-- /.list-row  -->
 					</c:forEach>
-
+					<!-- new_div ends  -->
 					<div class="pagination-wrapper">
 						<ul class="pagination">
 							<c:if test="${enableFirst}">
@@ -370,37 +381,37 @@ pageEncoding="UTF-8"%>
 				</div>
 				</c:if>
 				<c:if test="${viewType eq 'analytics'}">
-					<div class="listing-wrapper">
-						<div class="secondary-wrapper">
-							<div class="pull-left">
-								<h1><strong>Analytics</strong></h1><br/>
-							</div>
-							<div id="filter_list">
-							</div>
+				<div class="listing-wrapper">
+					<div class="secondary-wrapper">
+						<div class="pull-left">
+							<h1><strong>Analytics</strong></h1><br/>
+						</div>
+						<div id="filter_list">
+						</div>
 
-							<div id="chart_ts">
-								<svg>
-								</svg>
-							</div>
-							<div id="chart_bar_c">
-								<svg>
-								</svg>
-							</div>
-							<div id="chart_bar_s">
-								<svg>
-								</svg>
-							</div>
+						<div id="chart_ts">
+							<svg>
+							</svg>
+						</div>
+						<div id="chart_bar_c">
+							<svg>
+							</svg>
+						</div>
+						<div id="chart_bar_s">
+							<svg>
+							</svg>
+						</div>
 
-							<div id="chart_pie_c">
-								<svg>
-								</svg>
-							</div>
-							<div id="chart_pie_s">
-								<svg>
-								</svg>
-							</div>
+						<div id="chart_pie_c">
+							<svg>
+							</svg>
+						</div>
+						<div id="chart_pie_s">
+							<svg>
+							</svg>
 						</div>
 					</div>
+				</div>
 				</c:if>
 			</div>
 		</div>
