@@ -47,6 +47,7 @@ import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.PoliticalAdminComplaintDto;
@@ -435,5 +436,21 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         BeanUtils.copyProperties(commentRequestDto, commentSaveResponseDto);
         commentSaveResponseDto.setId(comment.getId());
         return commentSaveResponseDto;
+    }
+
+    @Override
+    public PoliticalAdminComplaintDto updateComplaintPoliticalAdminStatus(ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto) throws ApplicationException {
+        Complaint complaint = complaintRepository.findOne(complaintStatusChangeByPoliticalAdminRequestDto.getComplaintId());
+        PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.findOne(complaintStatusChangeByPoliticalAdminRequestDto.getPoliticalAdminId());
+
+        ComplaintPoliticalAdmin complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(complaint, politicalBodyAdmin);
+        if (complaintPoliticalAdmin == null) {
+            throw new ApplicationException("You can not update this complaint status, as its not assigned to you");
+        }
+
+        complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.valueOf(complaintStatusChangeByPoliticalAdminRequestDto.getStatus()));
+        complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
+
+        return buildPoliticalAdminComplaint(complaint, complaintPoliticalAdmin);
     }
 }

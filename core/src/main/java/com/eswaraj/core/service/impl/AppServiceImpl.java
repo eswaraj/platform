@@ -503,6 +503,9 @@ public class AppServiceImpl extends BaseService implements AppService {
     @Override
     public PoliticalBodyAdminStaffDto deletePoliticalAdminStaff(Long politicalAdminStaffId) throws ApplicationException {
         PoliticalBodyAdminStaff politicalBodyAdminStaff = politicalBodyAdminStaffRepository.findOne(politicalAdminStaffId);
+        if (politicalBodyAdminStaff == null) {
+            throw new ApplicationException("No such Political Admin Staff found : " + politicalAdminStaffId);
+        }
         politicalBodyAdminStaffRepository.delete(politicalAdminStaffId);
         return politicalBodyAdminStaffConvertor.convertBean(politicalBodyAdminStaff);
     }

@@ -26,6 +26,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.PoliticalAdminComplaintDto;
@@ -105,9 +106,9 @@ public class ComplaintController extends BaseController{
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/status", method = RequestMethod.POST)
     public @ResponseBody PoliticalAdminComplaintDto getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest,
-            @RequestBody ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException,
+            @RequestBody ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto) throws ApplicationException,
             IOException, ServletException {
-        return complaintService.updateComplaintViewStatus(complaintViewdByPoliticalAdminRequestDto);
+        return complaintService.updateComplaintPoliticalAdminStatus(complaintStatusChangeByPoliticalAdminRequestDto);
     }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/comment", method = RequestMethod.POST)
