@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
 import com.eswaraj.domain.validator.exception.ValidationException;
 
 
@@ -36,6 +37,7 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 	@Autowired CategoryRepository categoryRepository;
 	@Autowired DepartmentRepository departmentRepository;
 	@Autowired PersonRepository personRepository;
+	@Autowired ComplaintLoggedByPersonRepository complaintLoggedByPersonRepository;
 	
 	@Test
 	public void shouldSaveComplaint() {
@@ -45,12 +47,6 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
         Set<Category> categories = new HashSet<>();
         categories.add(category);
         complaint.setCategories(categories);
-		
-		Person person = new Person();
-		person.setName("Foo Bar");
-		person.setEmail("foo@bar.com");
-		person = personRepository.save(person);
-		complaint.setPerson(person);
 		
 		complaint = complaintRepository.save(complaint);
 		Complaint expectedComplaint = complaintRepository.findOne(complaint.getId());
@@ -66,12 +62,6 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
         categories.add(category);
         complaint.setCategories(categories);
 		
-		Person person = new Person();
-		person.setName("Foo Bar");
-		person.setEmail("foo@bar.com");
-		person = personRepository.save(person);
-		complaint.setPerson(person);
-		
 		complaint = complaintRepository.save(complaint);
 	}
 	
@@ -85,12 +75,6 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
         categories.add(category);
         complaint.setCategories(categories);
 		
-		Person person = new Person();
-		person.setName("Foo Bar");
-		person.setEmail("foo@bar.com");
-		person = personRepository.save(person);
-		complaint.setPerson(person);
-
 		complaint = complaintRepository.save(complaint);
 		
         Category category1 = categoryRepository.getById(complaint.getCategories().iterator().next().getId());
@@ -135,15 +119,9 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
         categories.add(category);
         complaint.setCategories(categories);
 		
-		Person person = new Person();
-		person.setName("Foo Bar");
-		person.setEmail("foo@bar.com");
-		person = personRepository.save(person);
-		complaint.setPerson(person);
-
 		complaint = complaintRepository.save(complaint);
 		Complaint expectedComplaint = complaintRepository.findOne(complaint.getId());
-		assertEquals(expectedComplaint.getStatus(), Complaint.Status.PENDING);
+		assertEquals(expectedComplaint.getStatus(), Complaint.Status.Pending);
 	}
 	
 	@Test
@@ -174,14 +152,25 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		person.setEmail("foo@bar.com");
 		person = personRepository.save(person);
 		
-		complaint1.setPerson(person);
-		complaint2.setPerson(person);
-		complaint3.setPerson(person);
+        complaint1 = complaintRepository.save(complaint1);
+        complaint2 = complaintRepository.save(complaint2);
+        complaint3 = complaintRepository.save(complaint3);
 
-		complaint1 = complaintRepository.save(complaint1);
-		complaint2 = complaintRepository.save(complaint2);
-		complaint3 = complaintRepository.save(complaint3);
-		
+        ComplaintLoggedByPerson complaintLoggedByPerson1 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson1.setComplaint(complaint1);
+        complaintLoggedByPerson1.setPerson(person);
+        complaintLoggedByPerson1 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson1);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson2 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson2.setComplaint(complaint2);
+        complaintLoggedByPerson2.setPerson(person);
+        complaintLoggedByPerson2 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson2);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson3 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson3.setComplaint(complaint3);
+        complaintLoggedByPerson3.setPerson(person);
+        complaintLoggedByPerson3 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson3);
+
 		List<Complaint> allComplaints = complaintRepository.getAllComplaintsLodgedByPerson(person);
 		assertEquals(allComplaints.size(), 3);
 	}
@@ -219,13 +208,24 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		person2.setEmail("foo1@bar.com");
 		person2 = personRepository.save(person2);
 		
-		complaint1.setPerson(person);
-		complaint2.setPerson(person);
-		complaint3.setPerson(person);
-		
-		complaint1 = complaintRepository.save(complaint1);
-		complaint2 = complaintRepository.save(complaint2);
-		complaint3 = complaintRepository.save(complaint3);
+        complaint1 = complaintRepository.save(complaint1);
+        complaint2 = complaintRepository.save(complaint2);
+        complaint3 = complaintRepository.save(complaint3);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson1 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson1.setComplaint(complaint1);
+        complaintLoggedByPerson1.setPerson(person);
+        complaintLoggedByPerson1 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson1);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson2 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson2.setComplaint(complaint2);
+        complaintLoggedByPerson2.setPerson(person);
+        complaintLoggedByPerson2 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson2);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson3 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson3.setComplaint(complaint3);
+        complaintLoggedByPerson3.setPerson(person);
+        complaintLoggedByPerson3 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson3);
 		
 		List<Complaint> allComplaints = complaintRepository.getAllComplaintsLodgedByPerson(person2);
 		assertEquals(allComplaints.size(), 0);
@@ -264,19 +264,72 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 		person.setEmail("foo@bar.com");
 		person = personRepository.save(person);
 		
-		complaint1.setPerson(person);
-		complaint2.setPerson(person);
-		complaint3.setPerson(person);
-		complaint4.setPerson(person);
-		complaint5.setPerson(person);
-		
-		complaint1 = complaintRepository.save(complaint1);
-		complaint2 = complaintRepository.save(complaint2);
-		complaint3 = complaintRepository.save(complaint3);
-		complaint4 = complaintRepository.save(complaint4);
-		complaint5 = complaintRepository.save(complaint5);
-		
+        complaint1 = complaintRepository.save(complaint1);
+        complaint2 = complaintRepository.save(complaint2);
+        complaint3 = complaintRepository.save(complaint3);
+        complaint4 = complaintRepository.save(complaint4);
+        complaint5 = complaintRepository.save(complaint5);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson1 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson1.setComplaint(complaint1);
+        complaintLoggedByPerson1.setPerson(person);
+        complaintLoggedByPerson1 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson1);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson2 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson2.setComplaint(complaint2);
+        complaintLoggedByPerson2.setPerson(person);
+        complaintLoggedByPerson2 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson2);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson3 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson3.setComplaint(complaint3);
+        complaintLoggedByPerson3.setPerson(person);
+        complaintLoggedByPerson3 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson3);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson4 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson4.setComplaint(complaint4);
+        complaintLoggedByPerson4.setPerson(person);
+        complaintLoggedByPerson4 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson4);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson5 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson5.setComplaint(complaint5);
+        complaintLoggedByPerson5.setPerson(person);
+        complaintLoggedByPerson5 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson5);
+
 		List<Complaint> allComplaints = complaintRepository.getPagedComplaintsLodgedByPerson(person, 0, 3);
 		assertEquals(allComplaints.size(), 3);
+        allComplaints = complaintRepository.getPagedComplaintsLodgedByPerson(person, 3, 3);
+        assertEquals(allComplaints.size(), 2);
 	}
+
+    @Test
+    public void createTwoRelationsOfSameComplaintAndPerson() {
+        Category category = new Category("cat1");
+        category.setRoot(true);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+
+        Complaint complaint = new Complaint("Test Complaint1");
+        complaint.setDateCreated(new Date(1403023364816L));
+        complaint.setCategories(categories);
+
+        Person person = new Person();
+        person.setName("Foo Bar");
+        person.setEmail("foo@bar.com");
+        person = personRepository.save(person);
+
+        complaint = complaintRepository.save(complaint);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson1 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson1.setComplaint(complaint);
+        complaintLoggedByPerson1.setPerson(person);
+        complaintLoggedByPerson1 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson1);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson2 = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson2.setComplaint(complaint);
+        complaintLoggedByPerson2.setPerson(person);
+        complaintLoggedByPerson2 = complaintLoggedByPersonRepository.save(complaintLoggedByPerson2);
+        
+        System.out.println("complaintLoggedByPerson1=" + complaintLoggedByPerson1.getId());
+        System.out.println("complaintLoggedByPerson2=" + complaintLoggedByPerson2.getId());
+    }
 }

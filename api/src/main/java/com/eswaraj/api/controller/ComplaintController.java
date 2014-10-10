@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,8 +26,12 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PhotoDto;
+import com.eswaraj.web.dto.PoliticalAdminComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
+import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
+import com.eswaraj.web.dto.comment.CommentSaveResponseDto;
 import com.google.gson.Gson;
 
 /**
@@ -82,6 +87,34 @@ public class ComplaintController extends BaseController{
 		
 		return savedComplaintDto;
 	}
+
+    @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}", method = RequestMethod.GET)
+    public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException, IOException, ServletException {
+        long start = getLongParameter(httpServletRequest, "start", 0);
+        long end = getLongParameter(httpServletRequest, "end", 10);
+
+        List<PoliticalAdminComplaintDto> politicalAdminComplaints = complaintService.getAllComplaintsOfPoliticalAdmin(politicalAdminId, start, end);
+        return politicalAdminComplaints;
+    }
+
+    @RequestMapping(value = "/api/v0/complaint/politicaladmin/view", method = RequestMethod.POST)
+    public @ResponseBody PoliticalAdminComplaintDto updateComplaintViewStatus(HttpServletRequest httpServletRequest,
+            @RequestBody ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException, IOException, ServletException {
+        return complaintService.updateComplaintViewStatus(complaintViewdByPoliticalAdminRequestDto);
+    }
+
+    @RequestMapping(value = "/api/v0/complaint/politicaladmin/status", method = RequestMethod.POST)
+    public @ResponseBody PoliticalAdminComplaintDto getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest,
+            @RequestBody ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException,
+            IOException, ServletException {
+        return complaintService.updateComplaintViewStatus(complaintViewdByPoliticalAdminRequestDto);
+    }
+
+    @RequestMapping(value = "/api/v0/complaint/politicaladmin/comment", method = RequestMethod.POST)
+    public @ResponseBody CommentSaveResponseDto postComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto)
+            throws ApplicationException, IOException, ServletException {
+        return complaintService.commentOnComplaint(commentRequestDto);
+    }
 
     private void updateRandomDelhiPoint(SaveComplaintRequestDto saveComplaintRequestDto) {
         Double[][] delhiPoints = { { 77.04124994150143, 28.623132677360626 }, { 77.03290098437007, 28.62572366266242 }, { 77.02688134045275, 28.631229145737702 },

@@ -31,11 +31,14 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.controller.beans.ComplaintBean;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
+import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -167,6 +170,38 @@ public class ApiUtil {
         return locationCategoryAnalytics;
     }
 
+    public String getPoliticalAdminComplaints(HttpServletRequest httpServletRequest, Long politicalAdminId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/politicaladmin/" + politicalAdminId;
+        Map<String, String> params = getPagingInfo(httpServletRequest);
+        String complaints = getResponseFrom(httpServletRequest, urlPath, params);
+        return complaints;
+    }
+
+    public String updateComplaintViewStatus(HttpServletRequest httpServletRequest, ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/politicaladmin/view";
+        String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(complaintViewdByPoliticalAdminRequestDto));
+        return complaints;
+    }
+
+    public String updateComplaintStatus(HttpServletRequest httpServletRequest, ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto)
+            throws ApplicationException {
+        String urlPath = "/api/v0/complaint/politicaladmin/status";
+        String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(complaintStatusChangeByPoliticalAdminRequestDto));
+        return complaints;
+    }
+
+    public String mergeComplaints(HttpServletRequest httpServletRequest, List<Long> complaintIds) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/politicaladmin/merge";
+        String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(complaintIds));
+        return complaints;
+    }
+
+    public String commentOn(HttpServletRequest httpServletRequest, CommentSaveRequestDto commentRequestDto) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/politicaladmin/comment";
+        String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(commentRequestDto));
+        return complaints;
+    }
+
     public String deletePoliticalAdminStaff(HttpServletRequest httpServletRequest, Long politicalAdminStaffId) throws ApplicationException {
         String urlPath = "/api/v0/leader/staff/" + politicalAdminStaffId;
         String locationCategoryAnalytics = delete(httpServletRequest, urlPath);
@@ -178,7 +213,7 @@ public class ApiUtil {
         String saveResponse = postRequest(httpServletRequest, urlPath, gson.toJson(savePoliticalAdminStaffRequestDto));
         return saveResponse;
     }
-
+    
     private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
         String currentPage = httpServletRequest.getParameter("page");
         Long start = 0L;

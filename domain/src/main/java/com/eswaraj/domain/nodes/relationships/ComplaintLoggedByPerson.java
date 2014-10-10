@@ -9,19 +9,11 @@ import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 
 @RelationshipEntity(type="LODGED_BY")
-public class ComplaintPerson extends BaseRelationship {
+public class ComplaintLoggedByPerson extends BaseRelationship {
 
-	private int weight;
-	
 	@StartNode Complaint complaint;
 	@EndNode Person person;
 	
-	public int getWeight() {
-		return weight;
-	}
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
 	public Complaint getComplaint() {
 		return complaint;
 	}
@@ -34,4 +26,10 @@ public class ComplaintPerson extends BaseRelationship {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
+    @Override
+    public String toString() {
+        return "ComplaintLoggedByPerson [complaint=" + complaint + ", person=" + person + ", id=" + id + "]";
+    }
+
 }

@@ -71,14 +71,6 @@ public class ComplaintMessage implements Serializable {
         this.categoryIds = categoryIds;
     }
 
-    public Long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Long personId) {
-        this.personId = personId;
-    }
-
     public Long getUserId() {
         return userId;
     }

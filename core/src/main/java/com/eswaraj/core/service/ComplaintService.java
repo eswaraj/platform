@@ -5,8 +5,12 @@ import java.util.List;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PhotoDto;
+import com.eswaraj.web.dto.PoliticalAdminComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
+import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
+import com.eswaraj.web.dto.comment.CommentSaveResponseDto;
 
 /**
  * Complaint service for complaint related calls
@@ -28,8 +32,16 @@ public interface ComplaintService {
 
     List<ComplaintDto> getAllComplaintsOfLocation(Long locationId, Long start, Long totalComplaints) throws ApplicationException;
 
+    List<PoliticalAdminComplaintDto> getAllComplaintsOfPoliticalAdmin(Long politicalAdmin, Long start, Long totalComplaints) throws ApplicationException;
+
+    PoliticalAdminComplaintDto updateComplaintViewStatus(ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException;
+
+    CommentSaveResponseDto commentOnComplaint(CommentSaveRequestDto commentRequestDto) throws ApplicationException;
+
 	ComplaintDto getComplaintById(Long complaintId) throws ApplicationException;
 	
+    void mergeComplaints(List<Long> complaintIds) throws ApplicationException;
+
 	ComplaintDto saveComplaint(SaveComplaintRequestDto complaintDto) throws ApplicationException;
 	
     ComplaintMessage updateLocationAndAdmins(Long complaintId) throws ApplicationException;

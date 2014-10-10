@@ -3,19 +3,17 @@ package com.eswaraj.domain.nodes.relationships;
 import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.EndNode;
-import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
+import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 
 @RelationshipEntity(type = "POLITICAL_SERVED_BY")
-public class ComplaintPoliticalAdmin {
+public class ComplaintPoliticalAdmin extends BaseRelationship {
 
-    @GraphId
-    private Long id;
     @StartNode
     private Complaint complaint;
     @EndNode
@@ -23,14 +21,6 @@ public class ComplaintPoliticalAdmin {
     private PoliticalAdminComplaintStatus status;
     private boolean viewed;
     private Date viewDate;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Complaint getComplaint() {
         return complaint;

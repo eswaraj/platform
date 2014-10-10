@@ -24,12 +24,8 @@ public class Complaint extends BaseNode {
     private double longitude;
     @RelatedTo(type = "BELONGS_TO")
     private Set<Category> categories;
-    @RelatedTo(type = "LODGED_BY")
-    private Person person;
     @RelatedTo(type = "SERVED_BY")
     private ExecutiveBodyAdmin administrator;
-    // @RelatedTo(type="IS_IN")
-    // @Fetch
     private Status status;
     @RelatedTo(type = "ENDORSED_BY", elementClass = Person.class)
     private Set<Person> endorsements;
@@ -45,12 +41,12 @@ public class Complaint extends BaseNode {
     private String nearByKey;
 
     public Complaint() {
-        this.status = Status.PENDING;
+        this.status = Status.Pending;
     }
 
     public Complaint(String title) {
         this.title = title;
-        this.status = Status.PENDING;
+        this.status = Status.Pending;
     }
 
     public String getTitle() {
@@ -67,14 +63,6 @@ public class Complaint extends BaseNode {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public ExecutiveBodyAdmin getAdministrator() {
@@ -119,11 +107,10 @@ public class Complaint extends BaseNode {
 
     public enum Status {
 
-        PENDING("Complaint has not been looked upon by an Administrator yet"), ACKNOWLEDGED("Complaint has been looked upon and understood by an Administrator"), QUERY(
-                "An Administrator has a query about this complaint"), DUPLICATE("Administrator thinks this is a duplicate of another complaint"), ASSIGNED(
-                "Administrator has assigned a task force to this complaint"), IN_PROGRESS("Your complaint is being worked upon"), IN_REVIEW(
-                "Your complaint has been worked upon waiting for your review."), DONE("This complaint has been resolved!"), UNFINISHED(
-                "This complaint has been neglected far too long. Name and shame time!"), ESCLATED("Your complaint has been escalated");
+        Pending("Complaint has not been looked upon by an Administrator yet"),  
+        Duplicate("Administrator thinks this is a duplicate of another complaint"), 
+        Merged("This complaint has one or more Complaint merged into"), 
+        Done("This complaint has been resolved!");
 
         private String description;
 
@@ -178,7 +165,7 @@ public class Complaint extends BaseNode {
 
     @Override
     public String toString() {
-        return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories + ", person=" + person
+        return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories
                 + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements + ", photos=" + photos + ", videos=" + videos + ", id=" + id
                 + "]";
     }

@@ -34,7 +34,6 @@ public class ComplaintConvertor extends BaseConvertor<Complaint, ComplaintDto> {
 		}
 		BeanUtils.copyProperties(complaintDto, complaint);
         complaint.setCategories(getAllCategories(getObjectIfExists(complaintDto.getCategoryId(), "Catgeory", categoryRepository)));
-		complaint.setPerson(getObjectIfExists(complaintDto.getPersonId(), "Person", personRepository));
 		return complaint;
 	}
 
@@ -43,7 +42,6 @@ public class ComplaintConvertor extends BaseConvertor<Complaint, ComplaintDto> {
 		ComplaintDto complaintDto = new ComplaintDto();
 		BeanUtils.copyProperties(dbDto, complaintDto);
         // complaintDto.setCategoryId(getAllCategories(category));
-		complaintDto.setPersonId(getNodeId(dbDto.getPerson()));
 		return complaintDto;
 	}
 	

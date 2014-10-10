@@ -20,7 +20,7 @@ public class ComplaintBean extends BaseBean {
     private CategoryBean[] categories;
     private LocationBean[] locations;
     private PhotoBean[] photos;
-    private PersonBean loggedBy;
+    private List<PersonBean> loggedBy;
     
     public Long getComplaintTime() {
         return complaintTime;
@@ -110,11 +110,11 @@ public class ComplaintBean extends BaseBean {
         this.photos = photos;
     }
 
-    public PersonBean getLoggedBy() {
+    public List<PersonBean> getLoggedBy() {
         return loggedBy;
     }
 
-    public void setLoggedBy(PersonBean loggedBy) {
+    public void setLoggedBy(List<PersonBean> loggedBy) {
         this.loggedBy = loggedBy;
     }
 

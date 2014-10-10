@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
+import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.User;
 
@@ -18,7 +19,7 @@ public interface PersonRepository extends GraphRepository<Person>{
     @Query("start user=node({0}) match (user)-[:ATTACHED_TO]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
     public Person getPersonByUser(User user);
 
-    @Query("start user=node:User(externalId={0}) match (user)-[:ATTACHED_TO]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
-    public Person getPersonByUser(String userExternalId);
+    @Query("start complaint=node({0}) match (complaint)-[:LOGGED_BY]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
+    public Collection<Person> getPersonsLoggedComplaint(Complaint complaint);
 
 }
