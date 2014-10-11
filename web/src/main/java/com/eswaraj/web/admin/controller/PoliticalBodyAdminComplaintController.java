@@ -65,7 +65,7 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
         return complaints;
     }
 
-    @RequestMapping(value = "/ajax/complaint/leader/positions", method = RequestMethod.GET)
+    @RequestMapping(value = "/ajax/leader/positions", method = RequestMethod.GET)
     public @ResponseBody String getLeaderPositions(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
         UserDto user = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         String response = apiUtil.getPersonPoliticalPositionsString(httpServletRequest, user.getPerson().getId(), false);
