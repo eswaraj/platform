@@ -8,6 +8,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.loc_hash = {};
     $scope.parties = {};
     $scope.selectedNode = $scope.selectedNode || {};
+    $scope.onLocationSelected = function (index) {};
     var all_pbtype = {};
     var addLocation = function (node) {
         $scope.loc_hash[node.id] = node.name;
