@@ -25,7 +25,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
                 }
             });
             scope.handleSelection=function(selectedItem){
-                scope.model=selectedItem.title;
+                scope.model=selectedItem[scope.title];
                 scope.current=0;
                 scope.selected=true;        
                 $timeout(function(){
