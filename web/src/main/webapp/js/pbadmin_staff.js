@@ -7,7 +7,11 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
     $scope.positions = {};
     $scope.onPositionSelected = function (index) {
         $scope.new.politicalAdminId = $scope.positions[index].id;
-        var staffRequest = $http.get('/ajax/leader/staff/' + $scope.positions[index].id);
+        var staffRequest = $http({
+                method: "GET",
+		url:'/ajax/leader/staff/' + $scope.positions[index].id,
+		headers: {'Content-Type': 'application/json; charset=utf-8'}
+	});
         staffRequest.success(function (data) {
             $scope.staffs = data;
         });
@@ -30,23 +34,31 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
             console.error('Request failed for /ajax/leader/staff');
         });
     };
-    $scope.deleteStaff = function (index) {
-        var deleteRequest = $http.delete('/ajax/leader/staff/' + $scope.staffs[index].politicalAdminStaffId);
-        deleteRequest.success(function (data) {
-            if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
-                $scope.staffs.splice(index, 1);
-            }
-            else {
-                console.error('Wrong staff member deleted');
-            }
-        });
-        deleteRequest.error(function () {
-            console.error('Delete request failed');
-        });
-    };
+    //$scope.deleteStaff = function (index) {
+        //var deleteRequest = $http({
+        //    method: "DELETE",
+        //    url:"/ajax/leader/staff" + $scope.staffs[index].politicalAdminStaffId),
+        //    headers: {'Content-Type': 'application/json; charset=utf-8'}
+        //});
+        //deleteRequest.success(function (data) {
+        //    if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
+        //        $scope.staffs.splice(index, 1);
+        //    }
+        //    else {
+        //        console.error('Wrong staff member deleted');
+        //    }
+        //});
+        //deleteRequest.error(function () {
+        //    console.error('Delete request failed');
+        //});
+    //};
     
     //Get all political positions
-    var positionRequest = $http.get('/ajax/complaint/leader/positions');
+    var positionRequest = $http({
+        method: "GET",
+    	url:'/ajax/leader/positions/',
+    	headers: {'Content-Type': 'application/json; charset=utf-8'}
+    });
     positionRequest.success(function (data) {
         $scope.positions = data;
     });
