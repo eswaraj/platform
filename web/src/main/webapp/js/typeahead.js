@@ -5,6 +5,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
         restrict: 'AEC',
         scope: {
             items: '=',
+	    text: '=',
             prompt:'@',
             title: '@',
             subtitle:'@',
@@ -17,11 +18,10 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
         },
         link:function(scope,elem,attrs){
 	    scope.model = scope.model || {};
-	    scope.model[scope.title] = scope.model[scope.title] || "";
-            scope.$watch('model[title]', function () {
-		var text = scope.model[scope.title];
-                if(text.length >= scope.min) {
-                    dataFactory.get(scope.url, scope.model, scope.querystring).then(function(resp){
+	    scope.text = scope.text || "";
+            scope.$watch('text', function () {
+                if(scope.text.length >= scope.min) {
+                    dataFactory.get(scope.url, scope.text, scope.querystring).then(function(resp){
                         scope.items=resp.data;
                     });
                 }
@@ -44,9 +44,9 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             };
         },
         //templateUrl: 'templates/typeahead.html'
-	template : '<input type="text" ng-model="model[title]" placeholder="{{prompt}}" ng-keydown="selected=false"/><br/>\
-			<div class="items" ng-hide="!model.length || selected">\
-				<div class="item" ng-repeat="item in items | filter:model  track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
+	template : '<input type="text" ng-model="text" placeholder="{{prompt}}" ng-keydown="selected=false"/><br/>\
+			<div class="items" ng-hide="!text.length || selected">\
+				<div class="item" ng-repeat="item in items track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
 				    <img class="image" src="{{item[img]}}" ng-show="item[img]"></img>\
 				<p class="title">{{item[title]}}</p>\
 				<p class="subtitle">{{item[subtitle]}}</p>\
