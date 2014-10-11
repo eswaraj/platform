@@ -4,11 +4,12 @@ import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
+import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 
 @RelationshipEntity(type="BELONGS_TO")
-public class ComplaintCategory {
+public class ComplaintCategory extends BaseRelationship {
 
 	@StartNode Complaint complaint;
 	@EndNode Category category;
