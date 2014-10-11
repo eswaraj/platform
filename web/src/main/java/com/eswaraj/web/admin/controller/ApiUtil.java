@@ -277,6 +277,17 @@ public class ApiUtil {
         return getResponseFrom(httpServletRequest, urlPath, null);
     }
 
+    public String searchPersonByEmail(HttpServletRequest httpServletRequest) throws ApplicationException {
+        String urlPath = "/api/v0/person/search/email";
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
+
+    public String searchPersonByName(HttpServletRequest httpServletRequest) throws ApplicationException {
+        String urlPath = "/api/v0/person/search/name";
+        return getResponseFrom(httpServletRequest, urlPath);
+    }
+
+
     public UserDto saveFacebookUser(HttpServletRequest httpServletRequest, Connection<Facebook> facebookConnection) throws ApplicationException {
         String urlPath = "/api/v0/web/user/facebook";
         RegisterFacebookAccountWebRequest registerFacebookAccountWebRequest = new RegisterFacebookAccountWebRequest();
