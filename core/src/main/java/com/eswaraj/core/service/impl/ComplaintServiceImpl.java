@@ -125,7 +125,6 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         User user = userRepository.findByPropertyValue("externalId", saveComplaintRequestDto.getUserExternalid());
         logger.info("User : {}", saveComplaintRequestDto.getUserExternalid());
         Person person = personRepository.getPersonByUser(user);
-        creatComplaintPersonRelation(complaint, person);
 		boolean newComplaint = true;
         if (complaint.getId() != null && complaint.getId() > 0) {
             newComplaint = false;
@@ -139,6 +138,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
         ComplaintMessage complaintMessage = updateLocationAndAdmins(complaint);
 		complaint = complaintRepository.save(complaint);
+
+        creatComplaintPersonRelation(complaint, person);
+
         complaintMessage.setId(complaint.getId());
 
         if (newComplaint) {
