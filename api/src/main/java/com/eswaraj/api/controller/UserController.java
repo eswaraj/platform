@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
+import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.RegisterDeviceRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
@@ -63,6 +65,16 @@ public class UserController extends BaseController {
         return politicalPositionDtos;
     }
 
+    @RequestMapping(value = "/api/v0/person/search/email", method = RequestMethod.GET)
+    @ResponseBody
+    public List<PersonDto> searchPersonByEmailRequestParam(ModelAndView mv, @RequestParam("term") String term) throws ApplicationException {
+        return personService.searchPersonWithName(term);
+    }
 
+    @RequestMapping(value = "/api/v0/person/search/name", method = RequestMethod.GET)
+    @ResponseBody
+    public List<PersonDto> searchPersonByNameRequestParam(ModelAndView mv, @RequestParam("term") String term) throws ApplicationException {
+        return personService.searchPersonWithName(term);
+    }
 
 }

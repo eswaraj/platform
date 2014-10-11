@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -61,6 +62,18 @@ public class ApiController {
     public String saveUser(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         return apiUtil.getResponseFrom(httpServletRequest, "/api/v0/complaint/location/");
 
+    }
+
+    @RequestMapping(value = "/api/person/search/email", method = RequestMethod.GET)
+    @ResponseBody
+    public String searchPersonByEmail(ModelAndView mv, HttpServletRequest httpServletRequest, @RequestParam("term") String term) throws ApplicationException {
+        return apiUtil.searchPersonByEmail(httpServletRequest);
+    }
+
+    @RequestMapping(value = "/api/person/search/name", method = RequestMethod.GET)
+    @ResponseBody
+    public String searchPersonByName(ModelAndView mv, HttpServletRequest httpServletRequest, @RequestParam("term") String term) throws ApplicationException {
+        return apiUtil.searchPersonByName(httpServletRequest);
     }
 
 }
