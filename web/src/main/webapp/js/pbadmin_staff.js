@@ -56,7 +56,7 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
     //Get all political positions
     var positionRequest = $http({
         method: "GET",
-    	url:'/ajax/leader/positions/',
+    	url:'/ajax/complaint/leader/positions/',
     	headers: {'Content-Type': 'application/json; charset=utf-8'}
     });
     positionRequest.success(function (data) {
