@@ -28,5 +28,9 @@ public class ComplaintPhoto extends BaseRelationship {
         this.photo = photo;
     }
 
+    @Override
+    public String toString() {
+        return "ComplaintPhoto [complaint=" + complaint + ", photo=" + photo + ", id=" + id + "]";
+    }
 
 }
