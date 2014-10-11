@@ -213,7 +213,7 @@ top: 75px;
 .right_profile{
 position: fixed;
 right: 10px;
-top: 5%;
+top: 15%;
 margin-right: 30px;
 width: 250px;
 height: auto;
@@ -259,4 +259,5 @@ border: 1px solid #999;
 .loc_head_text{
 color: #C2C2C2;
 margin-bottom: 10px;
+margin-top: 10px;
 }
