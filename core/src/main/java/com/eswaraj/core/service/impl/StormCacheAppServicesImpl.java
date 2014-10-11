@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -68,6 +70,8 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     private PhotoRepository photoRepository;
     @Autowired
     private AddressRepository addressRepository;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public JsonObject getCompleteLocationInfo(Long locationId) throws ApplicationException {
@@ -204,7 +208,8 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             }
             complaintJsonObject.add("locations", jsonArray);
         }
-        System.out.println(complaint.getId() + ", " + complaint.getPhotos());
+        System.out.println("Existing Photos for COmplaint : " + complaint.getId() + ", " + complaint.getPhotos());
+        logger.info("Existing Photos for Complaint : {} = {}", complaint.getId(), complaint.getPhotos());
         if (!CollectionUtils.isEmpty(complaint.getPhotos())) {
             JsonArray photosArray = new JsonArray();
             for (Photo onePhoto : complaint.getPhotos()) {
