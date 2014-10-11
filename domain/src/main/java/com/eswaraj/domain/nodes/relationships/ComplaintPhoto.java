@@ -5,30 +5,28 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
-import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.Photo;
 
-@RelationshipEntity(type = "COMPLAINT_COMMENT")
-public class ComplaintComment extends BaseRelationship {
+@RelationshipEntity(type = "PHOTOS_OF_COMPLAINT")
+public class ComplaintPhoto extends BaseRelationship {
 
 	@StartNode Complaint complaint;
-	@EndNode Comment comment;
-
+	@EndNode Photo photo;
     public Complaint getComplaint() {
         return complaint;
     }
-
     public void setComplaint(Complaint complaint) {
         this.complaint = complaint;
     }
 
-    public Comment getComment() {
-        return comment;
+    public Photo getPhoto() {
+        return photo;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
-	
+
 
 }

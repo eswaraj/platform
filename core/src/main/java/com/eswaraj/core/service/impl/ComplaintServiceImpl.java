@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,10 +31,12 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
 import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
+import com.eswaraj.domain.nodes.relationships.ComplaintPhoto;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintLoggedByPersonRepository;
+import com.eswaraj.domain.repo.ComplaintPhotoRepository;
 import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.DeviceRepository;
@@ -69,6 +70,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private static final long serialVersionUID = 1L;
     @Autowired
 	private ComplaintRepository complaintRepository;
+    @Autowired
+    private ComplaintPhotoRepository complaintPhotoRepository;
     @Autowired
     private ComplaintPoliticalAdminRepository complaintPoliticalAdminRepository;
 	@Autowired
@@ -228,11 +231,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 		Complaint complaint = complaintRepository.findOne(complaintId);
 		Photo photo = photoConvertor.convert(photoDto);
 		photo = photoRepository.save(photo);
-		if(complaint.getPhotos() == null){
-			complaint.setPhotos(new LinkedHashSet<Photo>());
-		}
-		complaint.getPhotos().add(photo);
-        complaint = complaintRepository.save(complaint);
+
+        ComplaintPhoto complaintPhoto = new ComplaintPhoto();
+        complaintPhoto.setComplaint(complaint);
+        complaintPhoto.setPhoto(photo);
+        complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
 		return photoConvertor.convertBean(photo);
 	}
 
