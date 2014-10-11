@@ -16,9 +16,11 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             onSelect:'&'
         },
         link:function(scope,elem,attrs){
-	    scope.model = scope.model || "";
+	    scope.model = scope.model || {};
+	    scope.model[scope.title] = scope.model[scope.title] || "";
             scope.$watch('model[title]', function () {
-                if(scope.model[scope.title].length >= scope.min) {
+		var text = scope.model[scope.title];
+                if(text.length >= scope.min) {
                     dataFactory.get(scope.url, scope.model, scope.querystring).then(function(resp){
                         scope.items=resp.data;
                     });
