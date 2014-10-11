@@ -16,6 +16,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             onSelect:'&'
         },
         link:function(scope,elem,attrs){
+	    scope.model = scope.model || "";
             scope.$watch('model', function () {
                 if(scope.model.length >= scope.min) {
                     dataFactory.get(scope.url, scope.model, scope.querystring).then(function(resp){
@@ -24,7 +25,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
                 }
             });
             scope.handleSelection=function(selectedItem){
-                scope.model=selectedItem;
+                scope.model=selectedItem.title;
                 scope.current=0;
                 scope.selected=true;        
                 $timeout(function(){
