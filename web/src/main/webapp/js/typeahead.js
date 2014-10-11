@@ -40,7 +40,15 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
                 scope.current=index;
             };
         },
-        templateUrl: 'templates/typeahead.html'
+        //templateUrl: 'templates/typeahead.html'
+	template : '<input type="text" ng-model="model" placeholder="{{prompt}}" ng-keydown="selected=false"/><br/>\ 
+			<div class="items" ng-hide="!model.length || selected">\
+				<div class="item" ng-repeat="item in items | filter:model  track by $index" ng-click="handleSelection(item[title])" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
+				    <img class="image" src="{{item[img]}}" ng-show="item[img]"></img>\
+				<p class="title">{{item[title]}}</p>\
+				<p class="subtitle">{{item[subtitle]}}</p>\
+				</div>\
+			</div>'
     }
 });
 
