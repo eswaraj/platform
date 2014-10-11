@@ -31,18 +31,18 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
         });
     };
     $scope.deleteStaff = function (index) {
-        var deleteRequest = $http.delete('/ajax/leader/staff/' + $scope.staffs[index].politicalAdminStaffId);
-        deleteRequest.success(function (data) {
-            if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
-                $scope.staffs.splice(index, 1);
-            }
-            else {
-                console.error('Wrong staff member deleted');
-            }
-        });
-        deleteRequest.error(function () {
-            console.error('Delete request failed');
-        });
+        //var deleteRequest = $http.delete('/ajax/leader/staff/' + $scope.staffs[index].politicalAdminStaffId);
+        //deleteRequest.success(function (data) {
+        //    if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
+        //        $scope.staffs.splice(index, 1);
+        //    }
+        //    else {
+        //        console.error('Wrong staff member deleted');
+        //    }
+        //});
+        //deleteRequest.error(function () {
+        //    console.error('Delete request failed');
+        //});
     };
     
     //Get all political positions
