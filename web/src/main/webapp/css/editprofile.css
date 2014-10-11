@@ -49,8 +49,9 @@ border-top: 1px solid #D7D7D7;
 #top_slide_notification{
 position: absolute;
 height: 60px;
-top: 100px;
-left: 600px;
+width: 100%;
+top: 0px;
+left: 0px;
 background-color: #000;
 color: #C2C2C2;
 text-align: center;
