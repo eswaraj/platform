@@ -43,14 +43,14 @@ pageEncoding="UTF-8"%>
 					    <img src="{{staff.personDto.profilePhoto}}">
 					    <p>{{staff.personDto.name}}</p>
 					    <p>{{staff.post}}</p>
-					    <button ng-click="deleteStaff({{$index}})">Delete</button>
+					    <button ng-click="deleteStaff($index)">Delete</button>
 				    </div>
 				    </li>
 			    </ul>
 		    </div>
 		    <div>
 			    <h1>Add new Staff</h1>
-			    <typeahead items="items" prompt="Start typing a name" title="name" subtitle="biodata" img="profilePhoto" min="3" url="/ajax/person/search/name/" querystring="term" model="selected" on-select="onPersonSelected()" />
+			    <typeahead items="items" prompt="Start typing a name" title="name" subtitle="biodata" img="profilePhoto" min="3" url="/ajax/person/search/name/" querystring="term" model="selected.name" on-select="onPersonSelected()" />
 			    <input type="text" ng-model="new.post" placeholder="Enter post name"></input>
 			    <button ng-click="addStaff()">Add Staff Member</button>
 		    </div>

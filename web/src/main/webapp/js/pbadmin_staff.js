@@ -17,7 +17,7 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
         });
     };
     $scope.onPersonSelected = function() {
-        console.log('selected='+$scope.selected);
+        console.log('selected='+$scope.selected.name);
         $scope.new.personId = $scope.selected.id;
     };
     $scope.addStaff = function () {
@@ -34,29 +34,29 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
             console.error('Request failed for /ajax/leader/staff');
         });
     };
-    //$scope.deleteStaff = function (index) {
-        //var deleteRequest = $http({
-        //    method: "DELETE",
-        //    url:"/ajax/leader/staff" + $scope.staffs[index].politicalAdminStaffId),
-        //    headers: {'Content-Type': 'application/json; charset=utf-8'}
-        //});
-        //deleteRequest.success(function (data) {
-        //    if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
-        //        $scope.staffs.splice(index, 1);
-        //    }
-        //    else {
-        //        console.error('Wrong staff member deleted');
-        //    }
-        //});
-        //deleteRequest.error(function () {
-        //    console.error('Delete request failed');
-        //});
-    //};
+    $scope.deleteStaff = function (index) {
+        var deleteRequest = $http({
+            method: "DELETE",
+            url:"/ajax/leader/staff" + $scope.staffs[index].politicalAdminStaffId,
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        });
+        deleteRequest.success(function (data) {
+            if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
+                $scope.staffs.splice(index, 1);
+            }
+            else {
+                console.error('Wrong staff member deleted');
+            }
+        });
+        deleteRequest.error(function () {
+            console.error('Delete request failed');
+        });
+    };
     
     //Get all political positions
     var positionRequest = $http({
         method: "GET",
-    	url:'/ajax/leader/positions/',
+    	url:'/ajax/complaint/leader/positions/',
     	headers: {'Content-Type': 'application/json; charset=utf-8'}
     });
     positionRequest.success(function (data) {
