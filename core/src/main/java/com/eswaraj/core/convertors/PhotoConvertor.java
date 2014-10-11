@@ -12,7 +12,8 @@ import com.eswaraj.web.dto.PhotoDto;
 @Component
 public class PhotoConvertor extends BaseConvertor<Photo, PhotoDto> {
 
-	@Autowired
+    private static final long serialVersionUID = 1L;
+    @Autowired
 	private PhotoRepository photoRepository;
 
 	

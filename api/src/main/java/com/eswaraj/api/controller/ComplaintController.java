@@ -153,7 +153,13 @@ public class ComplaintController extends BaseController{
 			imageHttpUrl = fileService.saveFile(directory, fileName, uploadedImagePart.getInputStream());
 			PhotoDto photoDto = new PhotoDto();
 			photoDto.setOrgUrl(imageHttpUrl);
-			complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
+            try {
+                complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
+                logger.error("Photo added succesfully");
+            } catch (Exception ex) {
+                logger.error("Unable to attach Photo", ex);
+            }
+
 		}
 	}
 	private void printInfo(HttpServletRequest httpServletRequest){
