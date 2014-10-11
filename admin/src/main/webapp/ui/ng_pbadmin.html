@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html>
+<html ng-app="pbadminApp">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,10 +19,12 @@
         <script src='js/jstree.min.js'></script>
 
         <script type="text/javascript" src='js/angular.min.js'></script><!-- Script -->
+        <script type="text/javascript" src='js/custom_directives.js'></script>
+        <script type="text/javascript" src='js/typeahead.js'></script>
         <script type="text/javascript" src='js/ng_pbadmin.js'></script><!-- Script -->
 
     </head>
-    <body>
+    <body ng-controller="pbadminController">
         <header id="headerul" class="header headerbox">
             <ul>
                 <li class="header header_font_size ">eSwaraj</li>
@@ -70,7 +71,7 @@
                                 <div class="tab-pane" id="browse">
                                     <br /><h3 class="text-footer-extended">Constituencies</h3> 
                                     <!-- the tree is populated via ajax -->
-                                    <div id="js_tree" class="scrollcontainer"></div>	
+                                    <div jstree id="js_tree" class="scrollcontainer" root-url="/ajax/location/getroot" child-url="/ajax/location/getchild"></div>
                                 </div>
 
                                 <div class="tab-pane" id="search">
@@ -79,9 +80,8 @@
                                     <!-- Search -->
                                     <div id="node_div">
                                         <h3 class="text-footer">Enter Location</h3>
-                                        <!-- person search -->
-                                        <input type="text" id="node_search" placeholder="Location Name" class="textbox box_shadow_dim text_margin_bottom" />
-                                        <button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Location</button>
+                                        <!-- location search -->
+                                        <input type="text" id="node_search" placeholder="Location Name" class="textbox box_shadow_dim text_margin_bottom" url="/ajax/location/search/name/" ng-autocomplete ng-model="locationSearchText"/>
                                     </div>
 
                                     <div id="searchResultsN" class="scrollcontainer">
@@ -95,27 +95,14 @@
                                                     <th>Select</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody ng-repeat="t in acData.node_searchData">
                                                 <tr>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td> 
-                                                    <td><button class="btn btn-primary blue btn_round_half" type="button" onclick="setNNodeId(event);" pid="77951" tid="78337" id="N77951" title="NORTH WEST DELHI">Select</button></td>
+                                                    <td>{{t.id}}</td>
+                                                    <td>{{loc_hash[t.locationTypeId]}}</td>
+                                                    <td>{{t.name}}</td> 
+                                                    <td><button class="btn btn-primary blue btn_round_half" type="button" ng-click="onLocationSelect($index);">Select</button></td>
                                                 </tr>
-                                                <tr class"alternate">
-                                                    <td>hhhhaaaaaaaaaaaaaa</td>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td> 
-                                                    <td><button class="btn btn-primary blue btn_round_half" type="button" onclick="setNNodeId(event);" pid="77951" tid="78337" id="N77951" title="NORTH WEST DELHI">Select</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td>
-                                                    <td>hhhhaaaaaaaaaaaaaa</td> 
-                                                    <td><button class="btn btn-primary blue btn_round_half" type="button" onclick="setNNodeId(event);" pid="77951" tid="78337" id="N77951" title="NORTH WEST DELHI">Select</button></td>
-                                                </tr>
-
-                                            </tbody>
+                                                </tbody>
                                         </table>
                                     </div>
 
@@ -292,7 +279,7 @@
                         <td><label for="pbtype_list">Official Post</label></td>
                         <td><select id="pbtype_list"></select></td>
                         <td><label for="party_list">Political Party</label></td>
-                        <td><select id="party_list"></select></td>
+                        <td><select id="party_list" ng-repeat="t in parties"><option value="{{t.id}}">{{t.name}}</option></select></td>
                     </tr>
 
                     <tr>
