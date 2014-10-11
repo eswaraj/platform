@@ -1,4 +1,4 @@
-var pbadminApp = angular.module('pbadminApp', ['typeahead','customDirectives']);
+var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives']);
 
 pbadminApp.controller('pbadminController', function($scope, $http) {
     "use strict";
