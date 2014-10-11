@@ -29,10 +29,6 @@ public class Complaint extends BaseNode {
     private Status status;
     @RelatedTo(type = "ENDORSED_BY", elementClass = Person.class)
     private Set<Person> endorsements;
-    @RelatedTo(type = "PHOTOS_OF_COMPLAINT")
-    private Set<Photo> photos;
-    @RelatedTo(type = "VIDEOS_OF_COMPLAINT")
-    private Set<Video> videos;
     @RelatedTo(type = "AT")
     private Set<Location> locations;
     @Indexed
@@ -87,22 +83,6 @@ public class Complaint extends BaseNode {
 
     public void setEndorsements(Set<Person> endorsements) {
         this.endorsements = endorsements;
-    }
-
-    public Set<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(Set<Photo> photos) {
-        this.photos = photos;
-    }
-
-    public Set<Video> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(Set<Video> videos) {
-        this.videos = videos;
     }
 
     public enum Status {
@@ -165,9 +145,9 @@ public class Complaint extends BaseNode {
 
     @Override
     public String toString() {
-        return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories
-                + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements + ", photos=" + photos + ", videos=" + videos + ", id=" + id
-                + "]";
+        return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories + ", administrator="
+                + administrator + ", status=" + status + ", endorsements=" + endorsements + ", locations=" + locations + ", complaintTime=" + complaintTime + ", nearByKey=" + nearByKey + ", id=" + id
+                + ", externalId=" + externalId + "]";
     }
 
     public Set<Category> getCategories() {

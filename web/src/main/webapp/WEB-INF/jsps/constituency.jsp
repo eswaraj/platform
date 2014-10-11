@@ -86,41 +86,6 @@ pageEncoding="UTF-8"%>
                                 </div>
                             </div>
 						</c:forEach>
-						<%--
-							<div class="item active">
-								<div class="mla-profile">
-									<img
-									src="http://uxgraphy.com/eswaraj/v7/images/issues/issues.png"
-									alt="mla image">
-									<p>
-									<a href="#"><strong>Rahuram Desai, MLA</strong></a> <span>In
-										Office since Jan, 2014</span>
-									</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="mla-profile">
-									<img
-									src="http://uxgraphy.com/eswaraj/v7/images/profile-pic.jpg"
-									alt="mla image">
-									<p>
-									<a href="#"><strong>Rahuram Desai, MLA</strong></a> <span>In
-										Office since Jan, 2014</span>
-									</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="mla-profile">
-									<img
-									src="http://uxgraphy.com/eswaraj/v7/images/issues/issues.png"
-									alt="mla image">
-									<p>
-									<a href="#"><strong>Rahuram Desai, MLA</strong></a> <span>In
-										Office since Jan, 2014</span>
-									</p>
-								</div>
-							</div>
-							 --%>
 						</div>
 						<!-- Controls -->
 						<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
