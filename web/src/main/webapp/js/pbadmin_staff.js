@@ -30,7 +30,7 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
             console.error('Request failed for /ajax/leader/staff');
         });
     };
-    $scope.deleteStaff = function (index) {
+    //$scope.deleteStaff = function (index) {
         //var deleteRequest = $http.delete('/ajax/leader/staff/' + $scope.staffs[index].politicalAdminStaffId);
         //deleteRequest.success(function (data) {
         //    if($scope.staffs[index].politicalAdminStaffId == data.politicalAdminStaffId) {
@@ -43,10 +43,10 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
         //deleteRequest.error(function () {
         //    console.error('Delete request failed');
         //});
-    };
+    //};
     
     //Get all political positions
-    var positionRequest = $http.get('/ajax/complaint/leader/positions');
+    var positionRequest = $http.get('/ajax/leader/positions');
     positionRequest.success(function (data) {
         $scope.positions = data;
     });
