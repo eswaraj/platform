@@ -153,6 +153,8 @@ pageEncoding="UTF-8"%>
 		<div class="col-sm-7">
 			<div class="listing-wrapper">
 				<div class="secondary-wrapper">
+						<!--h1 class="loc_head_text">${location.name}</h1--> <!-- Not working at present, to be updated from backend -->
+						<h1 class="loc_head_text">Delhi</h1>									
 						<div class="views_div">
 
 							<c:if test="${viewType eq 'list'}">
@@ -330,8 +332,8 @@ pageEncoding="UTF-8"%>
 						  <% }
 						  i++;
 						  %>
-                        <div class="mla-profile">
-									<h1>${location.name}</h1><br />
+
+						  <div class="mla-profile">
                                     <img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
                                     <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
 									<p>In Office since ${oneLeader.since}</p>
