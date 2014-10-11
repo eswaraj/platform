@@ -156,6 +156,8 @@ public class ComplaintController extends BaseController{
             try {
                 complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
                 logger.info("Photo added succesfully");
+                logger.info("Photos : " + complaintService.getComplaintPhotos(complaintDto.getId()));
+
             } catch (Exception ex) {
                 logger.error("Unable to attach Photo", ex);
             }

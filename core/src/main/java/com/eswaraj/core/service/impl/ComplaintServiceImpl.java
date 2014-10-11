@@ -237,6 +237,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaintPhoto.setPhoto(photo);
         complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
         logger.info("complaintPhoto saved : {}", complaintPhoto);
+
 		return photoConvertor.convertBean(photo);
 	}
 
@@ -461,5 +462,12 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
 
         return buildPoliticalAdminComplaint(complaint, complaintPoliticalAdmin);
+    }
+
+    @Override
+    public List<PhotoDto> getComplaintPhotos(Long complaintId) throws ApplicationException {
+        Collection<Photo> photos = photoRepository.getComplaintPhotos(complaintId);
+        logger.info("complaintPhotos : {}", photos);
+        return photoConvertor.convertBeanList(photos);
     }
 }
