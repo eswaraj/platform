@@ -21,98 +21,11 @@ pageEncoding="UTF-8"%>
 					jQuery("abbr.timeago").timeago();
 				});
 			</script>
-			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
-			<c:if test="${viewType eq 'map'}">
-			<script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
-			<script src="${staticHost}/js/mapview.js" type="text/javascript"></script>
-			<script>
-				var kml_path = "${location.kml}";
-				var complaints = [
-				    <%int i = 0;%>  
-					    <c:forEach items="${complaintList}" var="oneComplaint">
-						    <%if (i > 0)
-							out.println(",");
-						        i++;
-						    %>
-						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy.id}", userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
-				  </c:forEach>
-				  ];
-			</script>
-			</c:if>
 
-			<c:if test="${viewType eq 'analytics'}">
-			<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-			<script src="${staticHost}/js/analytics.js" type="text/javascript"></script>
-			<script src="${staticHost}/js/d3.min.js" type="text/javascript"></script>
-			<script src="${staticHost}/js/nv.d3.min.js" type="text/javascript"></script>
-			<link rel="stylesheet" href="${staticHost}/css/nv.d3.css">
-			<link rel="stylesheet" href="${staticHost}/css/analytics.css">
-			<script type="text/javascript">
-				var analyticsData = ${locationCounters};
-
-			</script>
-			</c:if>
 <div class="container-fluid">
-	<div class="banner">
-		<div class="locate-on-map">
-			<div style="overflow: hidden; height: 100%; width: 100%;">
-				<div id="gmap_canvas" style="height: 100%; width: 100%;"></div>
-			</div>
-			<script type="text/javascript"> function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(${location.latitude},${location.longitude}),mapTypeId: google.maps.MapTypeId.ROADMAP}; var map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions); var marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(${location.latitude},${location.longitude} )}); var infowindow = new google.maps.InfoWindow({content:"<b></b><br/><br/>400706 " });google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});}google.maps.event.addDomListener(window, 'load', init_map);</script>
-		</div>
-		<div class="row">
-			<div class="col-sm-8"></div>
-			<div class="col-sm-4">
-				<div class="banner-widget">
-					<div id="carousel-example-generic" class="carousel slide"
-						data-ride="carousel">
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
-						<% int i=0; %>
-						<c:forEach items="${leaders}" var="oneLeader">
-						  <% if(i == 0){ %>
-						  <div class="item active">
-						  <% }else{ %>
-						  <div class="item">
-						  <% }
-						  i++;
-						  %>
-                                <div class="mla-profile">
-                                    <img src="${oneLeader.profilePhoto}?type=square&height=300&width=300" alt="Leader image">
-                                    <p>
-                                    <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a> <span>In
-                                        Office since ${oneLeader.since}</span>
-                                    </p>
-                                </div>
-                            </div>
-						</c:forEach>
-						</div>
-						<!-- Controls -->
-						<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
-						<span class="glyphicon glyphicon-chevron-left"></span></a> 
-						<a class="right carousel-control"href="#carousel-example-generic" role="button" data-slide="next"> 
-						<span class="glyphicon glyphicon-chevron-right"></span> </a>
-						<!-- Indicators -->
-						<ol class="carousel-indicators">
-						<% i=0; %>
-						<c:forEach items="${leaders}" var="oneLeader">
-						  <% if(i == 0){ %>
-						  <li data-target="#carousel-example-generic" data-slide-to="$i" class="active"></li>
-						  <% }else{ %>
-						  <li data-target="#carousel-example-generic" data-slide-to="$i"></li>
-						  <% }
-						  i++;
-						  %>
-						</c:forEach>
-						</ol>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="row">
-		<div class="col-sm-3">
+		<div class="col-sm-2">
+			<div class="left_filter">
 			<p>
 			<strong>Refine Search</strong>
 			</p>
@@ -205,35 +118,30 @@ pageEncoding="UTF-8"%>
 
 				</c:forEach>
 			</div>
+			</div>
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<div class="listing-wrapper">
 				<div class="secondary-wrapper">
-					<div class="pull-left">
-						<h1>${location.name}</h1>
-					</div>
-					<div class="pull-right">
-						<div class="btn-group">
+						<div class="views_div">
+
 							<c:if test="${viewType eq 'list'}">
-							<a type="button" href="#" class="btn btn-default active" title="List View"> <i class="glyphicon glyphicon-list"></i></a>
-							<a type="button" href="?type=map" class="btn btn-default" title="Map View"><i class="glyphicon glyphicon-map-marker"></i></a>
-							<a type="button" href="?type=analytics" class="btn btn-default" title="Analytics View"><i class="glyphicon glyphicon-signal"></i></a>
+							<a type="button" href="#" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
+							<a type="button" href="?type=map" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
+							<a type="button" href="?type=analytics" title="Analytics View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-signal glyphicon_margin"></span><span class="ay_view_text_margin">Analytics View</span></span></div></a>
 							</c:if>
 							<c:if test="${viewType eq 'map'}">
-							<a type="button" href="?type=list" class="btn btn-default" title="List View"> <i class="glyphicon glyphicon-list"></i></a>
-							<a type="button" href="#" class="btn btn-default active" title="Map View"><i class="glyphicon glyphicon-map-marker"></i></a>
-							<a type="button" href="?type=analytics" class="btn btn-default" title="Analytics View"><i class="glyphicon glyphicon-signal"></i></a>
+							<a type="button" href="?type=list" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
+							<a type="button" href="#" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
+							<a type="button" href="?type=analytics" title="Analytics View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-signal glyphicon_margin"></span><span class="ay_view_text_margin">Analytics View</span></span></div></a>
 							</c:if>
 							<c:if test="${viewType eq 'analytics'}">
-							<a type="button" href="?type=list" class="btn btn-default" title="List View"> <i class="glyphicon glyphicon-list"></i></a>
-							<a type="button" href="?type=map" class="btn btn-default" title="Map View"><i class="glyphicon glyphicon-map-marker"></i></a>
-							<a type="button" href="#" class="btn btn-default active" title="Analytics View"><i class="glyphicon glyphicon-signal"></i></a>
+							<a type="button" href="?type=list" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
+							<a type="button" href="?type=map" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
+							<a type="button" href="#" title="Analytics View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-signal glyphicon_margin"></span><span class="ay_view_text_margin">Analytics View</span></span></div></a>
 							</c:if>
 
-
 						</div>
-						<button class="btn btn-primary">Raise Issue</button>
-					</div>
 					<div class="clearfix"></div>
 				</div>
 				<c:if test="${viewType eq 'list'}">
@@ -380,9 +288,19 @@ pageEncoding="UTF-8"%>
 				</c:if>
 			</div>
 		</div>
+		<div class="col-sm-3">
+			<div class="right_profile">
+                        <div class="mla-profile">
+									<h1>${location.name}</h1><br />
+                                    <img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
+                                    <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
+									<p>In Office since ${oneLeader.since}</p>
+						</div>					
+			</div>
+		</div>
 	</div>
 </div>
-	</div>
-	<jsp:include page="footer.jsp" />
+</div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>
