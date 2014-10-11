@@ -21,7 +21,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             scope.$watch('model[title]', function () {
 		var text = scope.model[scope.title];
                 if(text.length >= scope.min) {
-                    dataFactory.get(scope.url, scope.model, scope.querystring).then(function(resp){
+                    dataFactory.get(scope.url, scope.model[scope.title], scope.querystring).then(function(resp){
                         scope.items=resp.data;
                     });
                 }
