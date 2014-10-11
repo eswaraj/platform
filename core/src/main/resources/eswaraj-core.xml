@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task" xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -19,30 +18,35 @@
 	<context:component-scan base-package="com.eswaraj.core.convertors" />
 	<context:component-scan base-package="com.eswaraj.core.util" />
 	<context:component-scan base-package="com.eswaraj.queue.service.aws.impl" />
-	
+
 	<!-- Do not enter db url or user name/password here, in Prod and test end these will be injected from Env in ur local env, you can define these as enviornment variables -->
 	<tx:annotation-driven />
 
-    <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton" >
-    </bean>    
-		
-	<!-- All Enviornment related beans are defined here and we dont use @Component in class
-		same way in eswaraj-core-test.xml we have defined test related beans 
-	-->
-	<beans profile="local" >
-	    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
-	    </bean>    
+
+	<!-- All Enviornment related beans are defined here and we dont use @Component in class same way in eswaraj-core-test.xml we have defined test related beans -->
+	<beans profile="local">
+		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		</bean>
+        <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+        </bean>
 	</beans>
-    <beans profile="jenkins" >
-        <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
-        </bean>    
-    </beans>
-		<beans profile="prod" >
-	    <bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
-	    </bean>    
+	<beans profile="jenkins">
+		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		</bean>
+        <bean class="com.eswaraj.core.service.impl.LocalQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+        </bean>
+				
 	</beans>
-	<beans profile="dev" >
-	    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton" >
-	    </bean>    
+	<beans profile="prod">
+		<bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		</bean>
+		<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+		</bean>
+	</beans>
+	<beans profile="dev">
+		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		</bean>
+		<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+		</bean>
 	</beans>
 </beans>

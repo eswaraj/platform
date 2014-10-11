@@ -3,13 +3,13 @@ package com.eswaraj.core.service.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.util.StringUtils;
 
@@ -80,13 +80,13 @@ public class BaseService implements Serializable {
 
     protected User createUpdateUser(UserDto userDto) throws ApplicationException {
         User existingFacebookUser = null;
-        Collection<User> existingDeviceUsers = null;
+        EndResult<User> existingDeviceUsers = null;
         User returnUniqueUser = null;
         if (userDto.getFacebookAccount() != null && !StringUtils.isEmpty(userDto.getFacebookAccount().getFacebookUserId())) {
             existingFacebookUser = userRepository.getUserByFacebookUserId("facebookUserId: " + userDto.getFacebookAccount().getFacebookUserId());
         }
         if (userDto.getDevice() != null && !StringUtils.isEmpty(userDto.getDevice().getDeviceId())) {
-            existingDeviceUsers = userRepository.getUserByDevice(userDto.getDevice().getDeviceId());
+            existingDeviceUsers = userRepository.findAllByPropertyValue("deviceId", userDto.getDevice().getDeviceId());
         }
         if (existingDeviceUsers == null && existingFacebookUser == null) {
             // Create New User and Person
@@ -167,7 +167,7 @@ public class BaseService implements Serializable {
         return device;
     }
 
-    private User mergeUser(User facebookUser, Collection<User> deviceUser) {
+    private User mergeUser(User facebookUser, EndResult<User> deviceUser) {
 
         return facebookUser;
     }

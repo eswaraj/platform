@@ -30,9 +30,6 @@ public interface LocationRepository extends GraphRepository<Location>{
 	public Set<PoliticalBody> findPoliticalBodies(Location location);
 	*/
 	
-	@Query("start location=node:Location(name={0}) return location")
-    public Location getLocationFromName(String name);
-	
 	@Query("start location=node:Location(name={0}) where location.locationType={1} return location")
     public Location getLocationByNameAndType(String name, LocationType locationType);
 

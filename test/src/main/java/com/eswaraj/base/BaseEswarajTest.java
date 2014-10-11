@@ -43,7 +43,7 @@ public class BaseEswarajTest extends BaseTest {
 	 * after every test
 	 */
 	@After
-	public final void afterEveryTest() {
+    public void afterEveryTest() {
 		mockery.assertIsSatisfied();
 	}
 
