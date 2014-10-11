@@ -15,7 +15,7 @@ import com.eswaraj.domain.base.BaseNode;
  */
 @NodeEntity
 public class PoliticalBodyAdmin extends BaseNode {
-	
+
 	@RelatedTo(type="OF_TYPE")
 	private PoliticalBodyType politicalBodyType;
 
