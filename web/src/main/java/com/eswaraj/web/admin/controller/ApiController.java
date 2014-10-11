@@ -75,5 +75,4 @@ public class ApiController {
     public String searchPersonByName(ModelAndView mv, HttpServletRequest httpServletRequest, @RequestParam("term") String term) throws ApplicationException {
         return apiUtil.searchPersonByName(httpServletRequest);
     }
-
 }
