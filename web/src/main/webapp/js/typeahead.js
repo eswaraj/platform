@@ -20,7 +20,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
 	    scope.model = scope.model || {};
 	    scope.text = scope.text || "";
             scope.$watch('text', function () {
-                if(scope.text.length >= scope.min) {
+                if(scope.text.length >= scope.min && !scope.selected) {
                     dataFactory.get(scope.url, scope.text, scope.querystring).then(function(resp){
                         scope.items=resp.data;
                     });
@@ -28,6 +28,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             });
             scope.handleSelection=function(selectedItem){
                 scope.model=selectedItem;
+		scope.text = selectedItem[scope.title];
                 scope.current=0;
                 scope.selected=true;        
                 $timeout(function(){
