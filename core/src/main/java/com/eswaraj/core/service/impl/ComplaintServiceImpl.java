@@ -149,7 +149,10 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 
     private void creatComplaintPersonRelation(Complaint complaint, Person person){
+        logger.info("comlaint = {}", complaint);
+        logger.info("person = {}", person);
         ComplaintLoggedByPerson complaintLoggedByPerson = complaintLoggedByPersonRepository.getComplaintLoggedByPersonRelation(complaint, person);
+        logger.info("complaintLoggedByPerson = {}", complaintLoggedByPerson);
         if (complaintLoggedByPerson == null) {
             complaintLoggedByPerson = new ComplaintLoggedByPerson();
             complaintLoggedByPerson.setComplaint(complaint);
