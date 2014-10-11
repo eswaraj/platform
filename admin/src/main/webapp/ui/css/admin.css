@@ -333,3 +333,7 @@ margin-top: 10px;
     float: left;
     margin-top: 10px;
 }
+
+.tab-content {
+    display: block;
+}
