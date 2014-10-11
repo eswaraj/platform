@@ -37,7 +37,7 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
     $scope.deleteStaff = function (index) {
         var deleteRequest = $http({
             method: "DELETE",
-            url:"/ajax/leader/staff" + $scope.staffs[index].politicalAdminStaffId,
+            url:"/ajax/leader/staff" + $scope.staffs[index].id,
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         deleteRequest.success(function (data) {
