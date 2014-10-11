@@ -50,4 +50,6 @@ public interface ComplaintService {
     ComplaintMessage updateLocationAndAdmins(Long complaintId) throws ApplicationException;
 
 	PhotoDto addPhotoToComplaint(Long complaintId, PhotoDto photoDto) throws ApplicationException;
+
+    List<PhotoDto> getComplaintPhotos(Long complaintId) throws ApplicationException;
 }
