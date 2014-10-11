@@ -236,6 +236,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaintPhoto.setComplaint(complaint);
         complaintPhoto.setPhoto(photo);
         complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
+        logger.info("complaintPhoto saved : {}", complaintPhoto);
 		return photoConvertor.convertBean(photo);
 	}
 
