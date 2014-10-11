@@ -51,9 +51,9 @@ pageEncoding="UTF-8"%>
 		    <div>
 			    <h1>Add new Staff</h1>
 			    <typeahead items="items" prompt="Start typing a name" title="name" subtitle="biodata" img="profilePhoto" min="3" url="/api/person/search/name/" querystring="term" model="selected.name" on-select="onPersonSelected()" />
+		    </div>
 			    <input type="text" ng-model="new.post" placeholder="Enter post name"></input>
 			    <button ng-click="addStaff()">Add Staff Member</button>
-		    </div>
 		    <!-- All Vaibhav code will go here -->
 		    <!--  and finish here -->
 
