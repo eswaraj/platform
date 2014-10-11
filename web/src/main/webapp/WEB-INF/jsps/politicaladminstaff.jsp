@@ -37,8 +37,8 @@ pageEncoding="UTF-8"%>
 		    </div>
 		    <div>
 			    <h1>Existing staff</h1>
-			    <ul ng-repeat="staff in staffs">
-				    <li index={{$index}}>
+			    <ul ng-repeat="staff in staffs track by $index">
+				    <li>
 				    <div>
 					    <img src="{{staff.personDto.profilePhoto}}">
 					    <p>{{staff.personDto.name}}</p>

@@ -17,15 +17,15 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
         },
         link:function(scope,elem,attrs){
 	    scope.model = scope.model || "";
-            scope.$watch('model', function () {
-                if(scope.model.length >= scope.min) {
+            scope.$watch('model[title]', function () {
+                if(scope.model[scope.title].length >= scope.min) {
                     dataFactory.get(scope.url, scope.model, scope.querystring).then(function(resp){
                         scope.items=resp.data;
                     });
                 }
             });
             scope.handleSelection=function(selectedItem){
-                scope.model=selectedItem[scope.title];
+                scope.model=selectedItem;
                 scope.current=0;
                 scope.selected=true;        
                 $timeout(function(){
@@ -42,7 +42,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             };
         },
         //templateUrl: 'templates/typeahead.html'
-	template : '<input type="text" ng-model="model" placeholder="{{prompt}}" ng-keydown="selected=false"/><br/>\
+	template : '<input type="text" ng-model="model[title]" placeholder="{{prompt}}" ng-keydown="selected=false"/><br/>\
 			<div class="items" ng-hide="!model.length || selected">\
 				<div class="item" ng-repeat="item in items | filter:model  track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
 				    <img class="image" src="{{item[img]}}" ng-show="item[img]"></img>\
