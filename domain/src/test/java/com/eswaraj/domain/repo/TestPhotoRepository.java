@@ -33,7 +33,7 @@ public class TestPhotoRepository {
 		Photo photo = new Photo();
 		photo.setOrgUrl("test.url");
 		photo = photoRepository.save(photo);
-		Photo expectedPhoto = photoRepository.getById(photo.getId());
+        Photo expectedPhoto = photoRepository.findOne(photo.getId());
 		assertEquals(expectedPhoto.getOrgUrl(), photo.getOrgUrl());
 	}
 	
