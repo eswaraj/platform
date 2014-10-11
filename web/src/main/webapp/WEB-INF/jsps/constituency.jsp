@@ -21,7 +21,37 @@ pageEncoding="UTF-8"%>
 					jQuery("abbr.timeago").timeago();
 				});
 			</script>
+			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
+			<c:if test="${viewType eq 'map'}">
+			<script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
+			<script src="${staticHost}/js/mapview.js" type="text/javascript"></script>
+			<script>
+				var kml_path = "${location.kml}";
+				var complaints = [
+				    <%int i = 0;%>  
+					    <c:forEach items="${complaintList}" var="oneComplaint">
+						    <%if (i > 0)
+							out.println(",");
+						        i++;
+						    %>
+						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy.id}", userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+				  </c:forEach>
+				  ];
+			</script>
+			</c:if>
 
+			<c:if test="${viewType eq 'analytics'}">
+			<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+			<script src="${staticHost}/js/analytics.js" type="text/javascript"></script>
+			<script src="${staticHost}/js/d3.min.js" type="text/javascript"></script>
+			<script src="${staticHost}/js/nv.d3.min.js" type="text/javascript"></script>
+			<link rel="stylesheet" href="${staticHost}/css/nv.d3.css">
+			<link rel="stylesheet" href="${staticHost}/css/analytics.css">
+			<script type="text/javascript">
+				var analyticsData = ${locationCounters};
+
+			</script>
+			</c:if>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-2">
@@ -290,12 +320,23 @@ pageEncoding="UTF-8"%>
 		</div>
 		<div class="col-sm-3">
 			<div class="right_profile">
+
+						<% int i=0; %>
+						<c:forEach items="${leaders}" var="oneLeader">
+						  <% if(i == 0){ %>
+						  <!--div class="item active"-->
+						  <% }else{ %>
+						  <!--div class="item"-->
+						  <% }
+						  i++;
+						  %>
                         <div class="mla-profile">
 									<h1>${location.name}</h1><br />
                                     <img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
                                     <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
 									<p>In Office since ${oneLeader.since}</p>
 						</div>					
+						</c:forEach>
 			</div>
 		</div>
 	</div>
