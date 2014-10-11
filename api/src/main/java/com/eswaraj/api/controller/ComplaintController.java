@@ -155,7 +155,7 @@ public class ComplaintController extends BaseController{
 			photoDto.setOrgUrl(imageHttpUrl);
             try {
                 complaintService.addPhotoToComplaint(complaintDto.getId(), photoDto);
-                logger.error("Photo added succesfully");
+                logger.info("Photo added succesfully");
             } catch (Exception ex) {
                 logger.error("Unable to attach Photo", ex);
             }
