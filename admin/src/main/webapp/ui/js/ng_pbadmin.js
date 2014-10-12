@@ -15,6 +15,8 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
         var locId = $scope.acData.node_searchData[index].id;
         var locTypeId = $scope.acData.node_searchData[index].locationTypeId;
         $scope.pbAdminTypeList = getPbAdminTypeForLocationType(all_pbtype, locTypeId);
+        $scope.pbAdminListAll = {};
+        $scope.pbAdminListCurrent = {};
         $scope.pbAdminTypeList.forEach(function (value, index, array) {
             var currentRequest = $http({
                 method: "GET",
@@ -23,6 +25,17 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
             });
             currentRequest.success(function (data) {
                 $scope.pbAdminListCurrent[value.shortName] = data;
+                var personRequest = $http({
+                    method: "GET",
+                    url:"/ajax/person/get/"+data.personId,
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                });
+                personRequest.success(function (resp) {
+                    data.person = resp;
+                });
+                personRequest.error(function () {
+                    console.error("Person request failed");
+                });
             });
             currentRequest.error(function () {
                 console.log("Current request failed");
@@ -35,6 +48,19 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
             });
             allRequest.success(function (data) {
                 $scope.pbAdminListAll[value.shortName] = data;
+                $scope.pbAdminListAll.forEach(function (obj, i, arr) {
+                    var personRequest = $http({
+                        method: "GET",
+                        url:"/ajax/person/get/"+obj.personId,
+                        headers: {'Content-Type': 'application/json; charset=utf-8'}
+                    });
+                    personRequest.success(function (data) {
+                        arr[i].person = data;
+                    });
+                    personRequest.error(function () {
+                        console.error("Person request failed");
+                    });
+                });
             });
             allRequest.error(function () {
                 console.log("All request failed");
