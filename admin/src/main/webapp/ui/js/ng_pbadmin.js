@@ -57,14 +57,16 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
                 }
             }
             $scope.form = {};
-            $( "#add_edit_admin_page" ).hide();
-            $( ".wrapper" ).show();
         });
         saveRequest.error(function () {
             console.error("Save request failed");
         });
+        $( "#add_edit_admin_page" ).hide();
+        $( ".wrapper" ).show();
     };
     $scope.addPbAdmin = function (position) {
+        $( "#add_edit_admin_page" ).show();
+        $( ".wrapper" ).hide();
         var positionId = "";
         $scope.pbAdminTypeList.forEach(function (value) {
             if (value.shortName == position) {
