@@ -19,6 +19,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.selectedPerson = {};
     $scope.closeForm = function () {
         $scope.form = {};
+        $scope.person = {};
         $( "#add_edit_admin_page" ).hide();
         $( ".wrapper" ).show();
     };
@@ -89,6 +90,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.onPersonSelected = function() {
         console.log($scope.selectedPerson);
         $scope.form.personId = $scope.selectedPerson.id;
+        $scope.person = $scope.selectedPerson;
     };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
