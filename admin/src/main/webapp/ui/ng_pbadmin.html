@@ -395,8 +395,8 @@
                 </div>
 
             </div>
-            <button class="btn btn-primary blue btn_round edit_page_close" type="button">Close</button>
-            <button class="btn btn-primary blue btn_round edit_page_save_changes" type="button">Save changes</button>
+            <button class="btn btn-primary blue btn_round edit_page_close" type="button" ng-click="closeForm()">Close</button>
+            <button class="btn btn-primary blue btn_round edit_page_save_changes" type="button" ng-click="savePbAdmin()">Save changes</button>
 
 
         </div>
@@ -406,18 +406,6 @@
 
             $(function () {
                 $('#s_b_tab a:first').tab('show');
-                $('#pb_admin_tab a:first').tab('show');
-            });
-
-            /*enable tabs to be selected*/
-            $('#s_b_tab a').click(function (e) {
-                e.preventDefault();
-                $(this).tab('show');
-            });
-
-            $('#pb_admin_tab a').click(function (e) {
-                e.preventDefault();
-                $(this).tab('show');
             });
 
             $(document).ready( function () {
