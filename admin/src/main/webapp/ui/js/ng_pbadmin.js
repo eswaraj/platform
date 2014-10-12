@@ -7,8 +7,40 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.locationSearchText = "";
     $scope.loc_hash = {};
     $scope.parties = {};
+    $scope.pbAdminTypeList = {};
+    $scope.pbAdminListCurrent = {};
+    $scope.pbAdminListAll = {};
     $scope.selectedNode = $scope.selectedNode || {};
-    $scope.onLocationSelected = function (index) {};
+    $scope.onLocationSelected = function (index) {
+        var locId = $scope.acData.node_searchData[index].id;
+        var locTypeId = $scope.acData.node_searchData[index].locationTypeId;
+        $scope.pbAdminTypeList = getPbAdminTypeForLocationType(locTypeId);
+        $scope.pbAdminTypeList.forEach(function (value, index, array) {
+            var currentRequest = $http({
+                method: "GET",
+                url:"/ajax/pbadmin/getcurrent/"+locId+"/"+value.id,
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            });
+            currentRequest.success(function (data) {
+                $scope.pbAdminListCurrent[value.shortName] = data;
+            });
+            currentRequest.error(function () {
+                console.log("Current request failed");
+            });
+            
+            var allRequest = $http({
+                method: "GET",
+                url:"/ajax/pbadmin/get/"+locId+"/"+value.id,
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            });
+            allRequest.success(function (data) {
+                $scope.pbAdminListAll[value.shortName] = data;
+            });
+            allRequest.error(function () {
+                console.log("All request failed");
+            });
+        });
+    };
     var all_pbtype = {};
     var addLocation = function (node) {
         $scope.loc_hash[node.id] = node.name;
@@ -20,7 +52,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
             }
         }
     };
-    var  get_pbtypeForLocationType = function (pbtypes,selected_loc_typeid){
+    var  getPbAdminTypeForLocationType = function (pbtypes,selected_loc_typeid){
         var result = [];
         for (var i=0; i < pbtypes.length; i++){
             if(pbtypes[i].locationTypeId == selected_loc_typeid) {
