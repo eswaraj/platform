@@ -173,7 +173,9 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 console.log("All request failed");
             });
         });
-        $('#pb_admin_tab a:first').tab('show');
+        $timeout(function () {
+            $('#pb_admin_tab a:first').tab('show')
+        }, 200);
     };
     $scope.tabToggle = function (event) {
         $(event.target).tab('show');
