@@ -99,6 +99,12 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
         var locTypeId = $scope.acData.node_searchData[index].locationTypeId;
+        getPbAdmins(locId, locTypeId);
+    }
+    $scope.$watch('selectedNode', function () {
+        getPbAdmins($scope.selectedNode.id, $scope.selectedNode.locationTypeId);
+    });
+    var getPbAdmins = function (locId, locTypeId) {
         $scope.form.locationId = locId;
         $scope.selectedLocation = locId;
         $scope.pbAdminTypeList = getPbAdminTypeForLocationType(all_pbtype, locTypeId);
