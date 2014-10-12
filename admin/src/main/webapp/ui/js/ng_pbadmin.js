@@ -149,7 +149,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
         });
     };
     $scope.tabToggle = function (event) {
-        event.target.tab('show');
+        $(event.target).tab('show');
     };
     var all_pbtype = {};
     var addLocation = function (node) {
