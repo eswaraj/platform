@@ -7,13 +7,21 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.locationSearchText = "";
     $scope.loc_hash = {};
     $scope.parties = {};
+    $scope.form = {};
+    $scope.form.officeAddressDto = {};
+    $scope.form.homeAddressDto = {};
+    $scope.person = {};
     $scope.pbAdminTypeList = {};
     $scope.pbAdminListCurrent = {};
     $scope.pbAdminListAll = {};
     $scope.selectedNode = $scope.selectedNode || {};
+    $scope.editPbAdmin = function (selected) {
+        console.log(selected);
+    };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
         var locTypeId = $scope.acData.node_searchData[index].locationTypeId;
+        $scope.form.locationId = locId;
         $scope.pbAdminTypeList = getPbAdminTypeForLocationType(all_pbtype, locTypeId);
         $scope.pbAdminListAll = {};
         $scope.pbAdminListCurrent = {};

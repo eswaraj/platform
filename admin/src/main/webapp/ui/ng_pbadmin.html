@@ -103,7 +103,7 @@
                                                     <td>{{t.name}}</td> 
                                                     <td><button class="btn btn-primary blue btn_round_half" type="button" ng-click="onLocationSelected($index);">Select</button></td>
                                                 </tr>
-                                                </tbody>
+                                            </tbody>
                                         </table>
                                     </div>
 
@@ -126,8 +126,8 @@
                                         <br />			
                                         <div id="political_admin_type_div">
                                             <table id="admin_type_data" class="table_topdown_border">
-                                                <tr>
-                                                    <thead>
+                                                <thead>
+                                                    <tr>
                                                         <th>S.No</th>
                                                         <th>Photo</th>
                                                         <th>Name</th>
@@ -135,330 +135,326 @@
                                                         <th>Start Date</th>
                                                         <th>End Date</th>
                                                         <th>Edit</th>
-                                                        </tr>
+                                                    </tr>
                                                 </thead>
 
-                                            <tbody ng-repeat="k in value">
-                                                <tr>
-                                                    <td>{{$index}}</td>
-                                                    <td><img src="{{k.person.profilePhoto}}" class="thumb"></td>
-                                                    <td>{{k.person.name}}</td>
-                                                    <td>{{k.person.dob}}</td>
-                                                    <td>{{k.startDate}}</td>
-                                                    <td>{{k.endDate}}</td>
-                                                    <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="edit($index)">Edit</button></td>
-                                                </tr>
-                                            </tbody>
+                                                <tbody ng-repeat="k in value">
+                                                    <tr>
+                                                        <td>{{$index}}</td>
+                                                        <td><img src="{{k.person.profilePhoto}}" class="thumb"></td>
+                                                        <td>{{k.person.name}}</td>
+                                                        <td>{{k.person.dob}}</td>
+                                                        <td>{{k.startDate}}</td>
+                                                        <td>{{k.endDate}}</td>
+                                                        <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="editPbAdmin(k)" ng-disabled="k.active" index="$index" key="{{key}}">Edit</button></td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
+                                            <br>
+                                            <button class="btn btn-primary blue btn_round add-admin-type" type="button">Add {{key}}</button>
+                                        </div>					
+                                    </div>
 
-
-
-                                        <br>
-                                        <button class="btn btn-primary blue btn_round add-admin-type" type="button">Add {{key}}</button>
-
-                                    </div>					
                                 </div>
+                            </div>
 
-                        </div>
+
+                        </div><!-- Container -->
                     </div>
 
-
-                </div><!-- Container -->
-            </div>
-
-        </div>
-        </div>
-    </div>
-
-<div id="add_edit_admin_page">
-    <h4 class="text-footer-extended shift-bottom">Add New Political Admin</h4>
-
-    <div id="edit_person">
-
-        <input type="text" id="node_search" placeholder="PbAdmin Name" class="textbox box_shadow_dim text_margin_bottom" />
-        <button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Name</button>
-        <br />
-        <br />
-
-        <div id="person_details">Personal Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
-
-        <div id="person_details_innerdiv">
-
-            <div class="col-sm-3">
-
-                <img src="images/profile-pic.jpg" class="pbadmin_pic">
-
-                <script>
-                    $(function () {
-                        $(":file").change(function () {
-                            if (this.files && this.files[0]) {
-                                var reader = new FileReader();
-                                reader.onload = imageIsLoaded;
-                                reader.readAsDataURL(this.files[0]);
-                            }
-                        });
-                    });
-
-                    function imageIsLoaded(e) {
-                        $('.pbadmin_pic').attr('src', e.target.result);
-                    };
-                </script>
-            </div>
-
-            <div class="col-sm-9">
-
-                <table>
-
-                    <tr>
-                        <td><label for="pbadmin_name">Name</label></td>
-                        <td><input type="text" id="pbadmin_name" placeholder="xyz" /></td>
-                        <td><label for="pbadmin_gender">Gender</label></td>
-                        <td><input type="text" id="pbadmin_gender" placeholder="Gender"/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbtype_list">Official Post</label></td>
-                        <td><select id="pbtype_list"></select></td>
-                        <td><label for="party_list">Political Party</label></td>
-                        <td><select id="party_list" ng-repeat="t in parties"><option value="{{t.id}}">{{t.name}}</option></select></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_startdate">Start Date</label></td>
-                        <td><input type="date" id="pbadmin_startdate" placeholder="01/01/1950" /></td>
-                        <td><label for="pbadmin_enddate">End Date</label></td>
-                        <td><input type="date" id="pbadmin_enddate" placeholder="01/01/1950" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_dob">D.O.B.</label></td>
-                        <td><input type="text" id="pbadmin_dob" placeholder="01/01/1950"/></td>
-                        <td><label for="pbadmin_id">ID</label></td>
-                        <td><input type="text" id="pbadmin_id" placeholder="ID" disabled="disabled"/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_locationId">Location ID</label></td>
-                        <td><input type="text" id="pbadmin_locationId" placeholder="Location ID" disabled="disabled"/></td>
-                        <td><label for="pbadmin_personId">Person ID</label></td>
-                        <td><input type="text" id="pbadmin_personId" placeholder="Person ID" disabled="disabled"/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_llandline1">Landline 1</label></td>
-                        <td><input type="text" id="pbadmin_llandline1" placeholder="08023452345" /></td>
-                        <td><label for="pbadmin_llandline2">Landline 2</label></td>
-                        <td><input type="text" id="pbadmin_llandline2" placeholder="08023452345" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_mobile1">Mobile 1</label></td>
-                        <td><input type="text" id="pbadmin_mobile1" placeholder="+91-9080908090" /></td>
-                        <td><label for="pbadmin_mobile2">Mobile 2</label></td>
-                        <td><input type="text" id="pbadmin_mobile2" placeholder="+91-9080908090" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_email">Email</label></td>
-                        <td><input type="text" id="pbadmin_email" placeholder="123@abc.com" /></td>
-                        <td><label for="pbadmin_fbpage">FB Page</label></td>
-                        <td><input type="text" id="pbadmin_fbpage" placeholder="facebook.com/123" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_pbaccount">FB Account</label></td>
-                        <td><input type="text" id="pbadmin_fbaccount" placeholder="123@facebook.com" /></td>
-                        <td><label for="pbadmin_twitter">Twitter Handle</label></td>
-                        <td><input type="text" id="pbadmin_twitter" placeholder="twitter.com/123" /></td>
-                    </tr>
-
-                </table>
-
-            </div>
-
-        </div>
-
-        <br />
-        <div id="home_details">Home Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
-        <div id="home_details_innerdiv">
-            <div class="col-sm-3">
-            </div>
-
-            <div class="col-sm-9">
-
-                <table>
-
-
-                    <tr>
-                        <td><label for="pbadmin_haLine1">Home Address 1</label></td>
-                        <td colspan="3"><input type="text" id="pbadmin_haLine1" placeholder="Home Address Line 1" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_haLine2">Home Address 2</label></td>
-                        <td colspan="3"><input type="text" id="pbadmin_haLine2" placeholder="Home Address Line 2" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_haLine3">Home Address 3</label></td>
-                        <td colspan="3"><input type="text" id="pbadmin_haLine3" placeholder="Home Address Line 3" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_hapostal">Home Postal Code</label></td>
-                        <td><input type="text" id="pbadmin_hapostal" placeholder="560048" /></td>
-                        <td><label for="pbadmin_hvillage">Village ID</label></td>
-                        <td><input type="text" id='pbadmin_hvillage-list' placeholder="Village ID" disabled/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_hward-list">Ward ID</label></td>
-                        <td><input type="text" id='pbadmin_hward-list' placeholder="Ward ID" disabled/></td>
-                        <td><label for="pbadmin_hcity-list">City ID</label></td>
-                        <td><input type="text" id='pbadmin_hcity-list' placeholder="City ID" disabled/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_hdistrict-list">District ID</label></td>
-                        <td><input type="text" id='pbadmin_hdistrict-list' placeholder="District ID" disabled/></td>
-                        <td><label for="pbadmin_hstate-list">State ID</label></td>
-                        <td><input type="text" id='pbadmin_hstate-list' placeholder="State ID" disabled/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_hcountry-list">Country ID</label></td>
-                        <td><input type="text" id='pbadmin_hcountry-list' placeholder="Country ID" disabled/></td>
-                        <td><label for="pbadmin_hlocation-list">ID</label></td>
-                        <td><input type="text" id='pbadmin_hlocation-list' placeholder="ID" disabled/></td>
-                    </tr>
-
-                </table>
-
+                </div>
             </div>
         </div>
 
-        <div id="office_details">Office Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
-        <div id="office_details_innerdiv">
-            <div class="col-sm-3">
+        <div id="add_edit_admin_page">
+            <h4 class="text-footer-extended shift-bottom">Add New Political Admin</h4>
+
+            <div id="edit_person">
+
+                <input type="text" id="node_search" placeholder="PbAdmin Name" class="textbox box_shadow_dim text_margin_bottom" />
+                <button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Name</button>
+                <br />
+                <br />
+
+                <div id="person_details">Personal Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
+
+                <div id="person_details_innerdiv">
+
+                    <div class="col-sm-3">
+
+                        <img src="images/profile-pic.jpg" class="pbadmin_pic">
+
+                        <script>
+                            $(function () {
+                                $(":file").change(function () {
+                                    if (this.files && this.files[0]) {
+                                        var reader = new FileReader();
+                                        reader.onload = imageIsLoaded;
+                                        reader.readAsDataURL(this.files[0]);
+                                    }
+                                });
+                            });
+
+                            function imageIsLoaded(e) {
+                                $('.pbadmin_pic').attr('src', e.target.result);
+                            };
+                        </script>
+                    </div>
+
+                    <div class="col-sm-9">
+
+                        <table>
+
+                            <tr>
+                                <td><label for="pbadmin_name">Name</label></td>
+                                <td><input type="text" id="pbadmin_name" placeholder="xyz" ng-model="person.name"/></td>
+                                <td><label for="pbadmin_gender">Gender</label></td>
+                                <td><input type="text" id="pbadmin_gender" placeholder="Gender" ng-model="person.gender"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbtype_list">Official Post</label></td>
+                                <td><select id="pbtype_list" ng-repeat="t in pbAdminTypeList" ng-model="form.politicalBodyTypeId"><option value="{{t.id}}">{{t.shortName}}</option></select></td>
+                                <td><label for="party_list">Political Party</label></td>
+                                <td><select id="party_list" ng-repeat="t in parties" ng-model="form.partyId"><option value="{{t.id}}">{{t.name}}</option></select></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_startdate">Start Date</label></td>
+                                <td><input type="date" id="pbadmin_startdate" placeholder="01/01/1950" ng-model="form.startDate" /></td>
+                                <td><label for="pbadmin_enddate">End Date</label></td>
+                                <td><input type="date" id="pbadmin_enddate" placeholder="01/01/1950" ng-model="form.endDate" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_dob">D.O.B.</label></td>
+                                <td><input type="text" id="pbadmin_dob" placeholder="01/01/1950" ng-model="person.dob"/></td>
+                                <td><label for="pbadmin_id">ID</label></td>
+                                <td><input type="text" id="pbadmin_id" placeholder="ID" disabled="disabled" ng-model="form.id"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_locationId">Location ID</label></td>
+                                <td><input type="text" id="pbadmin_locationId" placeholder="Location ID" disabled="disabled" ng-model="form.locationId"/></td>
+                                <td><label for="pbadmin_personId">Person ID</label></td>
+                                <td><input type="text" id="pbadmin_personId" placeholder="Person ID" disabled="disabled" ng-model="form.personId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_llandline1">Landline 1</label></td>
+                                <td><input type="text" id="pbadmin_llandline1" placeholder="08023452345" ng-model="form.landLine1" /></td>
+                                <td><label for="pbadmin_llandline2">Landline 2</label></td>
+                                <td><input type="text" id="pbadmin_llandline2" placeholder="08023452345" ng-model="form.landLine2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_mobile1">Mobile 1</label></td>
+                                <td><input type="text" id="pbadmin_mobile1" placeholder="+91-9080908090" ng-model="form.mobile1" /></td>
+                                <td><label for="pbadmin_mobile2">Mobile 2</label></td>
+                                <td><input type="text" id="pbadmin_mobile2" placeholder="+91-9080908090" ng-model="form.mobile2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_email">Email</label></td>
+                                <td><input type="text" id="pbadmin_email" placeholder="123@abc.com" ng-model="form.email" /></td>
+                                <td><label for="pbadmin_fbpage">FB Page</label></td>
+                                <td><input type="text" id="pbadmin_fbpage" placeholder="facebook.com/123" ng-model="form.fbPage" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_pbaccount">FB Account</label></td>
+                                <td><input type="text" id="pbadmin_fbaccount" placeholder="123@facebook.com" ng-model="form.fbAccount" /></td>
+                                <td><label for="pbadmin_twitter">Twitter Handle</label></td>
+                                <td><input type="text" id="pbadmin_twitter" placeholder="twitter.com/123" ng-model="form.twitterHandle" /></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <br />
+                <div id="home_details">Home Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
+                <div id="home_details_innerdiv">
+                    <div class="col-sm-3">
+                    </div>
+
+                    <div class="col-sm-9">
+
+                        <table>
+
+
+                            <tr>
+                                <td><label for="pbadmin_haLine1">Home Address 1</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_haLine1" placeholder="Home Address Line 1" ng-model="form.officeAddressDto.line1" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_haLine2">Home Address 2</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_haLine2" placeholder="Home Address Line 2" ng-model="form.officeAddressDto.line2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_haLine3">Home Address 3</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_haLine3" placeholder="Home Address Line 3" ng-model="form.officeAddressDto.line3" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_hapostal">Home Postal Code</label></td>
+                                <td><input type="text" id="pbadmin_hapostal" placeholder="560048" ng-model="form.officeAddressDto.postalCode" /></td>
+                                <td><label for="pbadmin_hvillage">Village ID</label></td>
+                                <td><input type="text" id='pbadmin_hvillage-list' placeholder="Village ID" disabled ng-model="form.officeAddressDto.villageId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_hward-list">Ward ID</label></td>
+                                <td><input type="text" id='pbadmin_hward-list' placeholder="Ward ID" disabled ng-model="form.officeAddressDto.wardId"/></td>
+                                <td><label for="pbadmin_hcity-list">City ID</label></td>
+                                <td><input type="text" id='pbadmin_hcity-list' placeholder="City ID" disabled ng-model="form.officeAddressDto.cityId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_hdistrict-list">District ID</label></td>
+                                <td><input type="text" id='pbadmin_hdistrict-list' placeholder="District ID" disabled ng-model="form.officeAddressDto.districtId"/></td>
+                                <td><label for="pbadmin_hstate-list">State ID</label></td>
+                                <td><input type="text" id='pbadmin_hstate-list' placeholder="State ID" disabled ng-model="form.officeAddressDto.stateId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_hcountry-list">Country ID</label></td>
+                                <td><input type="text" id='pbadmin_hcountry-list' placeholder="Country ID" disabled ng-model="form.officeAddressDto.countryId"/></td>
+                                <td><label for="pbadmin_hlocation-list">ID</label></td>
+                                <td><input type="text" id='pbadmin_hlocation-list' placeholder="ID" disabled ng-model="form.officeAddressDto.id"/></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+
+                <div id="office_details">Office Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
+                <div id="office_details_innerdiv">
+                    <div class="col-sm-3">
+                    </div>
+
+                    <div class="col-sm-9">
+
+                        <table>
+
+                            <tr>
+                                <td><label for="pbadmin_oaLine1">Office Address 1</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_oaLine1" placeholder="Office Address Line 1" ng-model="form.homeAddressDto.line1" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_oaLine2">Office Address 2</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_oaLine2" placeholder="Office Address Line 2" ng-model="form.homeAddressDto.line2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_oaLine3">Office Address 3</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_oaLine3" placeholder="Office Address Line 3" ng-model="form.homeAddressDto.line3" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_oapostal">Office Postal Code</label></td>
+                                <td><input type="text" id="pbadmin_oapostal" placeholder="560048" ng-model="form.homeAddressDto.postalCode"/></td>
+                                <td><label for="pbadmin_ovillage">Village ID</label></td>
+                                <td><input type="text" id='pbadmin_ovillage-list' placeholder="Village ID" disabled ng-model="form.homeAddressDto.villageId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_oward-list">Ward ID</label></td>
+                                <td><input type="text" id='pbadmin_oward-list' placeholder="Ward ID" disabled ng-model="form.homeAddressDto.wardId"/></td>
+                                <td><label for="pbadmin_ocity-list">City ID</label></td>
+                                <td><input type="text" id='pbadmin_ocity-list' placeholder="City ID" disabled ng-model="form.homeAddressDto.cityId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_odistrict-list">District ID</label></td>
+                                <td><input type="text" id='pbadmin_odistrict-list' placeholder="District ID" disabled ng-model="form.homeAddressDto.districtId"/></td>
+                                <td><label for="pbadmin_ostate-list">State ID</label></td>
+                                <td><input type="text" id='pbadmin_ostate-list' placeholder="State ID" disabled ng-model="form.homeAddressDto.stateId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_ocountry-list">Country ID</label></td>
+                                <td><input type="text" id='pbadmin_ocountry-list' placeholder="Country ID" disabled ng-model="form.homeAddressDto.countryId"/></td>
+                                <td><label for="pbadmin_olocation-list">ID</label></td>
+                                <td><input type="text" id='pbadmin_olocation-list' placeholder="ID" disabled ng-model="form.homeAddressDto.id"/></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+
             </div>
+            <button class="btn btn-primary blue btn_round edit_page_close" type="button">Close</button>
+            <button class="btn btn-primary blue btn_round edit_page_save_changes" type="button">Save changes</button>
 
-            <div class="col-sm-9">
 
-                <table>
-
-                    <tr>
-                        <td><label for="pbadmin_oaLine1">Office Address 1</label></td>
-                        <td colspan="3"><input type="text" id="pbadmin_oaLine1" placeholder="Office Address Line 1" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_oaLine2">Office Address 2</label></td>
-                        <td colspan="3"><input type="text" id="pbadmin_oaLine2" placeholder="Office Address Line 2" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_oaLine3">Office Address 3</label></td>
-                        <td colspan="3"><input type="text" id="pbadmin_oaLine3" placeholder="Office Address Line 3" /></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_oapostal">Office Postal Code</label></td>
-                        <td><input type="text" id="pbadmin_oapostal" placeholder="560048"/></td>
-                        <td><label for="pbadmin_ovillage">Village ID</label></td>
-                        <td><input type="text" id='pbadmin_ovillage-list' placeholder="Village ID" disabled/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_oward-list">Ward ID</label></td>
-                        <td><input type="text" id='pbadmin_oward-list' placeholder="Ward ID" disabled/></td>
-                        <td><label for="pbadmin_ocity-list">City ID</label></td>
-                        <td><input type="text" id='pbadmin_ocity-list' placeholder="City ID" disabled/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_odistrict-list">District ID</label></td>
-                        <td><input type="text" id='pbadmin_odistrict-list' placeholder="District ID" disabled/></td>
-                        <td><label for="pbadmin_ostate-list">State ID</label></td>
-                        <td><input type="text" id='pbadmin_ostate-list' placeholder="State ID" disabled/></td>
-                    </tr>
-
-                    <tr>
-                        <td><label for="pbadmin_ocountry-list">Country ID</label></td>
-                        <td><input type="text" id='pbadmin_ocountry-list' placeholder="Country ID" disabled/></td>
-                        <td><label for="pbadmin_olocation-list">ID</label></td>
-                        <td><input type="text" id='pbadmin_olocation-list' placeholder="ID" disabled/></td>
-                    </tr>
-
-                </table>
-
-            </div>
         </div>
 
-    </div>
-    <button class="btn btn-primary blue btn_round edit_page_close" type="button">Close</button>
-    <button class="btn btn-primary blue btn_round edit_page_save_changes" type="button">Save changes</button>
 
+        <script type="text/javascript">
 
-</div>
-
-
-<script type="text/javascript">
-
-    $(function () {
-        $('#s_b_tab a:first').tab('show');
-        $('#pb_admin_tab a:first').tab('show');
-    });
-
-    /*enable tabs to be selected*/
-    $('#s_b_tab a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-
-    $('#pb_admin_tab a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-
-    $(document).ready( function () {
-        $( "#add_edit_admin_page" ).hide();
-        $( ".add-admin-type" ).each(function() {
-            $( this ).bind ( "click", function(){
-                $( "#add_edit_admin_page" ).show();
-                $( ".wrapper" ).hide();
+            $(function () {
+                $('#s_b_tab a:first').tab('show');
+                $('#pb_admin_tab a:first').tab('show');
             });
-        });
 
-        $( ".edit_page_save_changes" ).click( function () {
-            $( "#add_edit_admin_page" ).hide();
-            $( ".wrapper" ).show();
-        });
+            /*enable tabs to be selected*/
+            $('#s_b_tab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
 
-        $( ".edit_page_close" ).click( function () {
-            $( "#add_edit_admin_page" ).hide();
-            $( ".wrapper" ).show();
-        });
+            $('#pb_admin_tab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
 
-        $( "#person_details" ).click( function () {
-            $( "#person_details_innerdiv" ).fadeToggle(200);
-            $( "#person_details span" ).toggleClass("glyphicon-chevron-down");
-        });
+            $(document).ready( function () {
+                $( "#add_edit_admin_page" ).hide();
+                $( ".add-admin-type" ).each(function() {
+                    $( this ).bind ( "click", function(){
+                        $( "#add_edit_admin_page" ).show();
+                        $( ".wrapper" ).hide();
+                    });
+                });
 
-        $( "#office_details" ).click( function () {
-            $( "#office_details_innerdiv" ).fadeToggle(200);
-            $( "#office_details span" ).toggleClass("glyphicon-chevron-down");
-        });
-        
-        $( "#home_details" ).click( function () {
-            $( "#home_details_innerdiv" ).fadeToggle(200);
-            $( "#home_details span" ).toggleClass("glyphicon-chevron-down");
-        });
+                $( ".edit_page_save_changes" ).click( function () {
+                    $( "#add_edit_admin_page" ).hide();
+                    $( ".wrapper" ).show();
+                });
 
-    });
+                $( ".edit_page_close" ).click( function () {
+                    $( "#add_edit_admin_page" ).hide();
+                    $( ".wrapper" ).show();
+                });
+
+                $( "#person_details" ).click( function () {
+                    $( "#person_details_innerdiv" ).fadeToggle(200);
+                    $( "#person_details span" ).toggleClass("glyphicon-chevron-down");
+                });
+
+                $( "#office_details" ).click( function () {
+                    $( "#office_details_innerdiv" ).fadeToggle(200);
+                    $( "#office_details span" ).toggleClass("glyphicon-chevron-down");
+                });
+
+                $( "#home_details" ).click( function () {
+                    $( "#home_details_innerdiv" ).fadeToggle(200);
+                    $( "#home_details span" ).toggleClass("glyphicon-chevron-down");
+                });
+
+            });
 
 
 
-</script>
+        </script>
 
-</body>
+    </body>
 </html>
