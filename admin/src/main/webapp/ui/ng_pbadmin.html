@@ -140,10 +140,10 @@
 
                                             <tbody ng-repeat="k in value">
                                                 <tr>
-                                                    <td>$index</td>
-                                                    <td><img src="{{k.profilePhoto}}" class="thumb"></td>
-                                                    <td>{{k.name}}</td>
-                                                    <td>{{k.dob}}</td>
+                                                    <td>{{$index}}</td>
+                                                    <td><img src="{{k.person.profilePhoto}}" class="thumb"></td>
+                                                    <td>{{k.person.name}}</td>
+                                                    <td>{{k.person.dob}}</td>
                                                     <td>{{k.startDate}}</td>
                                                     <td>{{k.endDate}}</td>
                                                     <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="edit($index)">Edit</button></td>
