@@ -14,7 +14,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
         var locTypeId = $scope.acData.node_searchData[index].locationTypeId;
-        $scope.pbAdminTypeList = getPbAdminTypeForLocationType(locTypeId);
+        $scope.pbAdminTypeList = getPbAdminTypeForLocationType(all_pbtype, locTypeId);
         $scope.pbAdminTypeList.forEach(function (value, index, array) {
             var currentRequest = $http({
                 method: "GET",
