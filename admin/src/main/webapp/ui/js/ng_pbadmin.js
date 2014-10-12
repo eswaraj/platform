@@ -88,8 +88,22 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         $.extend(true, $scope.form, selected);
         delete $scope.form.person;
         $.extend(true, $scope.person, selected.person);
-        $scope.form.startDate = new Date($scope.form.startDate).toDateString();
-        $scope.form.endDate = new Date($scope.form.endDate).toDateString();
+        var start = new Date($scope.form.startDate);
+        var dd = start.getDate();
+        var mm = start.getMonth()+1; //January is 0!
+        var yyyy = start.getFullYear();
+        if(dd<10){dd='0'+dd} 
+        if(mm<10){mm='0'+mm} 
+        start = yyyy+'-'+mm+'-'+dd;
+        $scope.form.startDate = start;
+        var end = new Date($scope.form.endDate);
+        var dd = end.getDate();
+        var mm = end.getMonth()+1; //January is 0!
+        var yyyy = end.getFullYear();
+        if(dd<10){dd='0'+dd} 
+        if(mm<10){mm='0'+mm} 
+        end = yyyy+'-'+mm+'-'+dd;
+        $scope.form.endDate = end;
     };
     $scope.onPersonSelected = function() {
         console.log($scope.selectedPerson);
