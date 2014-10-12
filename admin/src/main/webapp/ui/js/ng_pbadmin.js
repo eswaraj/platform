@@ -45,6 +45,9 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
                         key = value.shortName;
                     }
                 });
+                if (!$scope.pbAdminListAll[key]) {
+                    $scope.pbAdminListAll[key] = [];
+                }
                 $scope.pbAdminListAll[key].forEach(function (value, index, array) {
                     if (value.id == data.id) {
                         updateIndex = index;
@@ -76,6 +79,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
         });
         $scope.form.politicalBodyTypeId = positionId;
         $scope.form.locationId = $scope.selectedLocation;
+        $scope.person = {};
     };
     $scope.editPbAdmin = function (selected) {
         console.log(selected);
