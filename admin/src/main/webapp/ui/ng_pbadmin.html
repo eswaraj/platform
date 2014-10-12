@@ -121,7 +121,7 @@
                         <div class="col-md-8 shift_right">
                             <div id="pb_admin_page">
                                 <ul class="nav nav-tabs" id="pb_admin_tab">
-                                    <li  ng-repeat="t in pbAdminTypeList"><a href="#{{t.shortName}}">{{t.shortName}}</a></li>
+                                    <li  ng-repeat="t in pbAdminTypeList"><a href="#{{t.shortName}}" ng-click="tabToggle($event)">{{t.shortName}}</a></li>
                                 </ul>
 
                                 <div class="tab-content">
