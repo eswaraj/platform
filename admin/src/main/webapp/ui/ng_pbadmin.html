@@ -146,12 +146,12 @@
                                                         <td>{{k.person.dob}}</td>
                                                         <td>{{k.startDate}}</td>
                                                         <td>{{k.endDate}}</td>
-                                                        <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="editPbAdmin(k)" ng-disabled="k.active" index="$index" key="{{key}}">Edit</button></td>
+                                                        <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="editPbAdmin(k)" ng-disabled="!k.active">Edit</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <br>
-                                            <button class="btn btn-primary blue btn_round add-admin-type" type="button">Add {{key}}</button>
+                                            <button class="btn btn-primary blue btn_round add-admin-type" type="button" ng-click="addPbAdmin(key)">Add {{key}}</button>
                                         </div>					
                                     </div>
 

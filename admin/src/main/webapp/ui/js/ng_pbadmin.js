@@ -15,13 +15,67 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.pbAdminListCurrent = {};
     $scope.pbAdminListAll = {};
     $scope.selectedNode = $scope.selectedNode || {};
+    $scope.selectedLocation = "";
+    $scope.closeForm = function () {};
+    $scope.savePbAdmin = function () {
+        var saveRequest = $http({
+            method: 'POST',
+            url: "/ajax/pbadmin/save",
+            data: angular.toJson($scope.form),
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        });
+        saveRequest.success(function (data) {
+            var key;
+            var updateIndex;
+            if(data.message) {
+                console.error("Save failed with message: " + data.message);
+            }
+            else {
+                console.info("Pbadmin saved with id = " + data.id);
+                $scope.pbAdminTypeList.forEach(function (value) {
+                    if (value.id == data.id) {
+                        key = value.shortName;
+                    }
+                });
+                $scope.pbAdminListAll[key].forEach(function (value, index, array) {
+                    if (value.id == data.id) {
+                        updateIndex = index;
+                    }
+                });
+                if (updateIndex) {
+                    $.extend(true, $scope.pbAdminListAll[key][updateIndex], data);
+                }
+                else {
+                    $scope.pbAdminListAll[key].push(data);
+                }
+            }
+            $scope.form = {};
+            $scope.form.locationId = $scope.selectedLocation;
+        });
+        saveRequest.error(function () {
+            console.error("Save request failed");
+        });
+    };
+    $scope.addPbAdmin = function (position) {
+        var positionId = "";
+        $scope.pbAdminTypeList.forEach(function (value) {
+            if (value.shortName == position) {
+                positionId = value.id;
+            }
+        });
+        $scope.form.politicalBodyTypeId = positionId;
+    };
     $scope.editPbAdmin = function (selected) {
         console.log(selected);
+        $.extend(true, $scope.form, selected);
+        delete $scope.form.person;
+        $.extend(true, $scope.person, selected.person);
     };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
         var locTypeId = $scope.acData.node_searchData[index].locationTypeId;
         $scope.form.locationId = locId;
+        $scope.selectedLocation = locId;
         $scope.pbAdminTypeList = getPbAdminTypeForLocationType(all_pbtype, locTypeId);
         $scope.pbAdminListAll = {};
         $scope.pbAdminListCurrent = {};
@@ -48,7 +102,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
             currentRequest.error(function () {
                 console.log("Current request failed");
             });
-            
+
             var allRequest = $http({
                 method: "GET",
                 url:"/ajax/pbadmin/get/"+locId+"/"+value.id,
@@ -100,7 +154,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
         return result;
     };
     $("#menu_new").load("../ui/menu.html"); 
-    
+
     var locTypeRequest = $http({
         method: "GET",
         url:"/ajax/locationtype/get",
@@ -112,7 +166,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     locTypeRequest.error(function () {
         console.error('Location type get request failed');
     });
-    
+
     var pbTypeRequest = $http({
         method: "GET",
         url:"/ajax/pbtype/get",
@@ -124,7 +178,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     pbTypeRequest.error(function () {
         console.error('Pb type get request failed');
     });
-    
+
     var partyRequest = $http({
         method: "GET",
         url:"/ajax/party/getall",
