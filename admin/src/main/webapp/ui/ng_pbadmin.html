@@ -188,21 +188,6 @@
 
                         <img src="{{person.profilePhoto}}" class="pbadmin_pic">
 
-                        <script>
-                            $(function () {
-                                $(":file").change(function () {
-                                    if (this.files && this.files[0]) {
-                                        var reader = new FileReader();
-                                        reader.onload = imageIsLoaded;
-                                        reader.readAsDataURL(this.files[0]);
-                                    }
-                                });
-                            });
-
-                            function imageIsLoaded(e) {
-                                $('.pbadmin_pic').attr('src', e.target.result);
-                            };
-                        </script>
                     </div>
 
                     <div class="col-sm-9">
@@ -406,6 +391,11 @@
 
             $(function () {
                 $('#s_b_tab a:first').tab('show');
+                
+                $('#s_b_tab a').click(function (e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
             });
 
             $(document).ready( function () {
