@@ -48,7 +48,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
             });
             allRequest.success(function (data) {
                 $scope.pbAdminListAll[value.shortName] = data;
-                $scope.pbAdminListAll.forEach(function (obj, i, arr) {
+                $scope.pbAdminListAll[value.shortName].forEach(function (obj, i, arr) {
                     var personRequest = $http({
                         method: "GET",
                         url:"/ajax/person/get/"+obj.personId,
