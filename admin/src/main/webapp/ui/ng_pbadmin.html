@@ -416,24 +416,6 @@
             });
 
             $(document).ready( function () {
-                $( "#add_edit_admin_page" ).hide();
-                $( ".add-admin-type" ).each(function() {
-                    $( this ).bind ( "click", function(){
-                        $( "#add_edit_admin_page" ).show();
-                        $( ".wrapper" ).hide();
-                    });
-                });
-
-                $( ".edit_page_save_changes" ).click( function () {
-                    $( "#add_edit_admin_page" ).hide();
-                    $( ".wrapper" ).show();
-                });
-
-                $( ".edit_page_close" ).click( function () {
-                    $( "#add_edit_admin_page" ).hide();
-                    $( ".wrapper" ).show();
-                });
-
                 $( "#person_details" ).click( function () {
                     $( "#person_details_innerdiv" ).fadeToggle(200);
                     $( "#person_details span" ).toggleClass("glyphicon-chevron-down");
@@ -450,8 +432,6 @@
                 });
 
             });
-
-
 
         </script>
 
