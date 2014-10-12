@@ -1,6 +1,6 @@
 var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives']);
 
-pbadminApp.controller('pbadminController', function($scope, $http) {
+pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     "use strict";
     //window.scope = $scope;
     $scope.acData = {};
@@ -159,6 +159,7 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
                 console.log("All request failed");
             });
         });
+        $('#pb_admin_tab a:first').tab('show');
     };
     $scope.tabToggle = function (event) {
         $(event.target).tab('show');
