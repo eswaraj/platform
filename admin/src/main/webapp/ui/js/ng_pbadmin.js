@@ -18,6 +18,8 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.selectedLocation = "";
     $scope.closeForm = function () {
         $scope.form = {};
+        $( "#add_edit_admin_page" ).hide();
+        $( ".wrapper" ).show();
     };
     $scope.savePbAdmin = function () {
         var saveRequest = $http({
@@ -52,6 +54,8 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
                 }
             }
             $scope.form = {};
+            $( "#add_edit_admin_page" ).hide();
+            $( ".wrapper" ).show();
         });
         saveRequest.error(function () {
             console.error("Save request failed");
