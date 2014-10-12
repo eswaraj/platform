@@ -154,22 +154,24 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             allRequest.success(function (data) {
-                var start = new Date(data.startDate);
-                var dd = start.getDate();
-                var mm = start.getMonth()+1; //January is 0!
-                var yyyy = start.getFullYear();
-                if(dd<10){dd='0'+dd} 
-                if(mm<10){mm='0'+mm} 
-                start = yyyy+'-'+mm+'-'+dd;
-                data.startDate = start;
-                var end = new Date(data.endDate);
-                var dd = end.getDate();
-                var mm = end.getMonth()+1; //January is 0!
-                var yyyy = end.getFullYear();
-                if(dd<10){dd='0'+dd} 
-                if(mm<10){mm='0'+mm} 
-                end = yyyy+'-'+mm+'-'+dd;
-                data.endDate = end;
+                data.forEach(function (o, idx, a) {
+                    var start = new Date(o.startDate);
+                    var dd = start.getDate();
+                    var mm = start.getMonth()+1; //January is 0!
+                    var yyyy = start.getFullYear();
+                    if(dd<10){dd='0'+dd} 
+                    if(mm<10){mm='0'+mm} 
+                    start = yyyy+'-'+mm+'-'+dd;
+                    a[idx].startDate = start;
+                    var end = new Date(o.endDate);
+                    var dd = end.getDate();
+                    var mm = end.getMonth()+1; //January is 0!
+                    var yyyy = end.getFullYear();
+                    if(dd<10){dd='0'+dd} 
+                    if(mm<10){mm='0'+mm} 
+                    end = yyyy+'-'+mm+'-'+dd;
+                    a[idx].endDate = end;
+                });
                 $scope.pbAdminListAll[value.shortName] = data;
                 $scope.pbAdminListAll[value.shortName].forEach(function (obj, i, arr) {
                     var personRequest = $http({
