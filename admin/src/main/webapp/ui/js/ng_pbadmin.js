@@ -16,12 +16,15 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.pbAdminListAll = {};
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.selectedLocation = "";
+    $scope.selectedPerson = {};
     $scope.closeForm = function () {
         $scope.form = {};
         $( "#add_edit_admin_page" ).hide();
         $( ".wrapper" ).show();
     };
     $scope.savePbAdmin = function () {
+        $scope.form.startDate = new Date($scope.form.startDate).getTime();
+        $scope.form.endDate = new Date($scope.form.endDate).getTime();
         var saveRequest = $http({
             method: 'POST',
             url: "/ajax/pbadmin/save",
@@ -78,6 +81,12 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
         $.extend(true, $scope.form, selected);
         delete $scope.form.person;
         $.extend(true, $scope.person, selected.person);
+        $scope.form.startDate = new Date($scope.form.startDate).toDateString();
+        $scope.form.endDate = new Date($scope.form.endDate).toDateString();
+    };
+    $scope.onPersonSelected = function() {
+        console.log($scope.selected);
+        $scope.form.personId = $scope.selected.id;
     };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;

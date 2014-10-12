@@ -170,8 +170,7 @@
             <h4 class="text-footer-extended shift-bottom">Add New Political Admin</h4>
 
             <div id="edit_person">
-
-                <input type="text" id="node_search" placeholder="PbAdmin Name" class="textbox box_shadow_dim text_margin_bottom" />
+                <typeahead text="text" items="items" prompt="Start typing a name" title="name" subtitle="biodata" img="profilePhoto" min="3" url="/ajax/person/search/name/" querystring="term" model="selectedPerson" on-select="onPersonSelected()" />
                 <button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Name</button>
                 <br />
                 <br />
@@ -214,9 +213,9 @@
 
                             <tr>
                                 <td><label for="pbtype_list">Official Post</label></td>
-                                <td><select id="pbtype_list" ng-repeat="t in pbAdminTypeList" ng-model="form.politicalBodyTypeId"><option value="{{t.id}}">{{t.shortName}}</option></select></td>
+                                <td><select id="pbtype_list" ng-model="form.politicalBodyTypeId"><option ng-repeat="t in pbAdminTypeList" value="{{t.id}}">{{t.shortName}}</option></select></td>
                                 <td><label for="party_list">Political Party</label></td>
-                                <td><select id="party_list" ng-repeat="t in parties" ng-model="form.partyId"><option value="{{t.id}}">{{t.name}}</option></select></td>
+                                <td><select id="party_list" ng-model="form.partyId"><option ng-repeat="t in parties" value="{{t.id}}">{{t.name}}</option></select></td>
                             </tr>
 
                             <tr>
