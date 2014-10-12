@@ -41,7 +41,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
             else {
                 console.info("Pbadmin saved with id = " + data.id);
                 $scope.pbAdminTypeList.forEach(function (value) {
-                    if (value.id == data.id) {
+                    if (value.id == data.politicalBodyTypeId) {
                         key = value.shortName;
                     }
                 });
@@ -154,6 +154,22 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             allRequest.success(function (data) {
+                var start = new Date(data.startDate);
+                var dd = start.getDate();
+                var mm = start.getMonth()+1; //January is 0!
+                var yyyy = start.getFullYear();
+                if(dd<10){dd='0'+dd} 
+                if(mm<10){mm='0'+mm} 
+                start = yyyy+'-'+mm+'-'+dd;
+                data.startDate = start;
+                var end = new Date(data.endDate);
+                var dd = end.getDate();
+                var mm = end.getMonth()+1; //January is 0!
+                var yyyy = end.getFullYear();
+                if(dd<10){dd='0'+dd} 
+                if(mm<10){mm='0'+mm} 
+                end = yyyy+'-'+mm+'-'+dd;
+                data.endDate = end;
                 $scope.pbAdminListAll[value.shortName] = data;
                 $scope.pbAdminListAll[value.shortName].forEach(function (obj, i, arr) {
                     var personRequest = $http({
@@ -175,7 +191,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         });
         $timeout(function () {
             $('#pb_admin_tab a:first').tab('show')
-        }, 200);
+        }, 1500);
     };
     $scope.tabToggle = function (event) {
         $(event.target).tab('show');
