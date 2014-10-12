@@ -85,8 +85,8 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
         $scope.form.endDate = new Date($scope.form.endDate).toDateString();
     };
     $scope.onPersonSelected = function() {
-        console.log($scope.selected);
-        $scope.form.personId = $scope.selected.id;
+        console.log($scope.selectedPerson);
+        $scope.form.personId = $scope.selectedPerson.id;
     };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
