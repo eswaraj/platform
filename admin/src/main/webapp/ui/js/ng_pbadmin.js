@@ -40,6 +40,8 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
             }
             else {
                 console.info("Pbadmin saved with id = " + data.id);
+                data.startDate = isoToHuman(data.startDate);
+                data.endDate = isoToHuman(data.endDate);
                 $scope.pbAdminTypeList.forEach(function (value) {
                     if (value.id == data.politicalBodyTypeId) {
                         key = value.shortName;
@@ -53,10 +55,21 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                         updateIndex = index;
                     }
                 });
-                if (updateIndex) {
+                if (typeof updateIndex != 'undefined') {
                     $.extend(true, $scope.pbAdminListAll[key][updateIndex], data);
                 }
                 else {
+                    var personRequest = $http({
+                        method: "GET",
+                        url:"/ajax/person/get/"+data.personId,
+                        headers: {'Content-Type': 'application/json; charset=utf-8'}
+                    });
+                    personRequest.success(function (resp) {
+                        data.person = resp;
+                    });
+                    personRequest.error(function () {
+                        console.error("Person request failed");
+                    });
                     $scope.pbAdminListAll[key].push(data);
                 }
             }
@@ -88,22 +101,8 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         $.extend(true, $scope.form, selected);
         delete $scope.form.person;
         $.extend(true, $scope.person, selected.person);
-        var start = new Date($scope.form.startDate);
-        var dd = start.getDate();
-        var mm = start.getMonth()+1; //January is 0!
-        var yyyy = start.getFullYear();
-        if(dd<10){dd='0'+dd} 
-        if(mm<10){mm='0'+mm} 
-        start = yyyy+'-'+mm+'-'+dd;
-        $scope.form.startDate = start;
-        var end = new Date($scope.form.endDate);
-        var dd = end.getDate();
-        var mm = end.getMonth()+1; //January is 0!
-        var yyyy = end.getFullYear();
-        if(dd<10){dd='0'+dd} 
-        if(mm<10){mm='0'+mm} 
-        end = yyyy+'-'+mm+'-'+dd;
-        $scope.form.endDate = end;
+        $scope.form.startDate = isoToHuman($scope.form.startDate);
+        $scope.form.endDate = isoToHuman($scope.form.endDate);
     };
     $scope.onPersonSelected = function() {
         console.log($scope.selectedPerson);
@@ -155,22 +154,8 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
             });
             allRequest.success(function (data) {
                 data.forEach(function (o, idx, a) {
-                    var start = new Date(o.startDate);
-                    var dd = start.getDate();
-                    var mm = start.getMonth()+1; //January is 0!
-                    var yyyy = start.getFullYear();
-                    if(dd<10){dd='0'+dd} 
-                    if(mm<10){mm='0'+mm} 
-                    start = yyyy+'-'+mm+'-'+dd;
-                    a[idx].startDate = start;
-                    var end = new Date(o.endDate);
-                    var dd = end.getDate();
-                    var mm = end.getMonth()+1; //January is 0!
-                    var yyyy = end.getFullYear();
-                    if(dd<10){dd='0'+dd} 
-                    if(mm<10){mm='0'+mm} 
-                    end = yyyy+'-'+mm+'-'+dd;
-                    a[idx].endDate = end;
+                    a[idx].startDate = isoToHuman(a[idx].startDate);
+                    a[idx].endDate = isoToHuman(a[idx].endDate);
                 });
                 $scope.pbAdminListAll[value.shortName] = data;
                 $scope.pbAdminListAll[value.shortName].forEach(function (obj, i, arr) {
@@ -199,6 +184,16 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         $(event.target).tab('show');
     };
     var all_pbtype = {};
+    var isoToHuman = function (iso) {
+        var human = new Date(iso);
+        var dd = human.getDate();
+        var mm = human.getMonth()+1; //January is 0!
+        var yyyy = human.getFullYear();
+        if(dd<10){dd='0'+dd} 
+        if(mm<10){mm='0'+mm} 
+        human = yyyy+'-'+mm+'-'+dd;
+        return human;
+    }
     var addLocation = function (node) {
         $scope.loc_hash[node.id] = node.name;
         if(node.children)
