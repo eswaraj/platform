@@ -16,7 +16,9 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
     $scope.pbAdminListAll = {};
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.selectedLocation = "";
-    $scope.closeForm = function () {};
+    $scope.closeForm = function () {
+        $scope.form = {};
+    };
     $scope.savePbAdmin = function () {
         var saveRequest = $http({
             method: 'POST',
@@ -50,7 +52,6 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
                 }
             }
             $scope.form = {};
-            $scope.form.locationId = $scope.selectedLocation;
         });
         saveRequest.error(function () {
             console.error("Save request failed");
@@ -64,9 +65,12 @@ pbadminApp.controller('pbadminController', function($scope, $http) {
             }
         });
         $scope.form.politicalBodyTypeId = positionId;
+        $scope.form.locationId = $scope.selectedLocation;
     };
     $scope.editPbAdmin = function (selected) {
         console.log(selected);
+        $( "#add_edit_admin_page" ).show();
+        $( ".wrapper" ).hide();
         $.extend(true, $scope.form, selected);
         delete $scope.form.person;
         $.extend(true, $scope.person, selected.person);
