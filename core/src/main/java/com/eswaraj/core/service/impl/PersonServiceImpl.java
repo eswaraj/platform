@@ -131,7 +131,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
         User user = null;
         if (!StringUtils.isEmpty(userExternalId)) {
-            user = userRepository.getUserByUserExternalId(userExternalId);
+            user = userRepository.findByPropertyValue("externalId", userExternalId);
         }
         if (user == null) {
             user = createAnonymousUserAndPerson();
@@ -161,7 +161,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             throw new ApplicationException("User id is not provided");
         }
         // First make sure user is registered
-        User user = userRepository.getUserByUserExternalId(registerFacebookAccountRequest.getUserExternalId());
+        User user = userRepository.findByPropertyValue("externalId", registerFacebookAccountRequest.getUserExternalId());
         if (user == null) {
             logger.error("No such user exists {}", registerFacebookAccountRequest.getUserExternalId());
             throw new ApplicationException("Invalid User");
