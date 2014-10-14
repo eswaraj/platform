@@ -86,4 +86,11 @@ public class CategoryBean extends BaseBean {
     public void setHeaderImageUrl(String headerImageUrl) {
         this.headerImageUrl = headerImageUrl;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryBean [headerImageUrl=" + headerImageUrl + ", imageUrl=" + imageUrl + ", name=" + name + ", videoUrl=" + videoUrl + ", locationCount=" + locationCount + ", globalCount="
+                + globalCount + ", root=" + root + ", description=" + description + ", childCategories=" + childCategories + ", id=" + id + ", externalId=" + externalId + "]";
+    }
+
 }

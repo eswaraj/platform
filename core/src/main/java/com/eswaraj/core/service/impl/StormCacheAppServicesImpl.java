@@ -192,6 +192,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 categoryJsonObject.addProperty("name", oneCategory.getName());
                 categoryJsonObject.addProperty("videoUrl", oneCategory.getVideoUrl());
                 categoryJsonObject.addProperty("root", oneCategory.isRoot());
+                categoryJsonObject.addProperty("id", oneCategory.getId());
                 jsonArray.add(categoryJsonObject);
             }
             complaintJsonObject.add("categories", jsonArray);
