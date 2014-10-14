@@ -14,6 +14,7 @@ pageEncoding="UTF-8"%>
         <script src="${staticHost}/js/angular.min.js"></script>
         <script src="${staticHost}/js/typeahead.js"></script>
         <script src="${staticHost}/js/pbadmin_staff.js"></script>
+        <link rel="stylesheet" href="${staticHost}/css/typeahead.css">
     </head>
     <body ng-controller="pbadminStaffController">
         <div class="outerwrapper">
