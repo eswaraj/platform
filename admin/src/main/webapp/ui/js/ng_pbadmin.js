@@ -217,7 +217,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         } 
         return result;
     };
-    $("#menu_new").load("../ui/menu.html"); 
+    $("#menu_new").load("../ui/ng_menu.html"); 
     $( "#add_edit_admin_page" ).hide();
 
     var locTypeRequest = $http({
