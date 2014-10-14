@@ -218,8 +218,8 @@ pageEncoding="UTF-8"%>
 							<div class="issue-info" >
 
 								<p>
-								<a href="#" class="issue-scope">${oneComplaint.categoryTitle}</a>
-								<a href="#" class="issue-scope-type">
+								<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="issue-scope">${oneComplaint.categoryTitle}</a>
+								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type">
 									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 									<c:if test="${oneCategory.root}">
