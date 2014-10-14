@@ -34,7 +34,7 @@ categoriesApp.controller('categoriesController', function ($scope, postService) 
     var root_node;
     var hash = {};
 
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
 
     $scope.$watch('selectedNode', function() {
         $scope.child.parentCategoryId = $scope.selectedNode.id;
