@@ -13,7 +13,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalBodyAdmin>{
 	
-    @Query("start location=node({0}) match (location)<-[:BELONGS_TO]-(PoliticalAdmin) where PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' PoliticalAdmin.active=true return PoliticalAdmin")
+    @Query("start location=node({0}) match (location)<-[:BELONGS_TO]-(PoliticalAdmin) where PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' and PoliticalAdmin.active=true return PoliticalAdmin")
 	Collection<PoliticalBodyAdmin> getCurrentPoliticalAdminByLocation(Location location);
 
     @Query("start location=node({0}),politicalBodyType=node({1})  match (location)<-[:BELONGS_TO]-(PoliticalAdmin)-[:OF_TYPE]->politicalBodyType where PoliticalAdmin.active=true and PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' return PoliticalAdmin")
