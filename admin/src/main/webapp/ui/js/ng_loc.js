@@ -128,7 +128,7 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
         console.log("Set file "+filepath+" as current by API call");
     };
 
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
 
     //Create map
     var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
