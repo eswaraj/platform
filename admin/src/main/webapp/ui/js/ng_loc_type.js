@@ -27,7 +27,7 @@ locationTypeApp.factory('postService', function ($http) {
 });
 
 locationTypeApp.controller('locationTypeController', function ($scope, postService) {
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.child = {};
     $scope.loc = {};
