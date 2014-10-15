@@ -94,7 +94,7 @@
 
                                             <div class="col-sm-3">
 
-                                                <img src="images/profile-pic.jpg" class="member_pic">
+                                                <img src="selected.profilePhoto" class="member_pic">
 
                                             </div>
 

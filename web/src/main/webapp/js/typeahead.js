@@ -19,16 +19,16 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             scope.model = scope.model || {};
             scope.model[scope.title] = scope.model[scope.title] || "";
             scope.$watch('model[title]', function () {
-                if ($scope.pendingPromise) { 
-                    $timeout.cancel($scope.pendingPromise); 
+                if (scope.pendingPromise) { 
+                    $timeout.cancel(scope.pendingPromise); 
                 }
-                $scope.pendingPromise = $timeout( function () {
+                scope.pendingPromise = $timeout( function () {
                     if(scope.model[scope.title].length >= scope.min && !scope.selected) {
                         dataFactory.get(scope.url, scope.model[scope.title], scope.querystring).then(function(resp){
                             scope.items=resp.data;
                         });
                     }
-                }, 200); //wait 200ms before processing. This is to avoid search on quick typing
+                }, 100); //wait 200ms before processing. This is to avoid search on quick typing
             });
             scope.handleSelection=function(selectedItem){
                 scope.model=selectedItem;
