@@ -12,7 +12,6 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
     };
     $scope.closeForm = function () {
         $scope.addMode = false;
-        //$scope.selected = {};
         for(var i in $scope.selected) {
             $scope.selected[i] = '';
         }
@@ -51,7 +50,9 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
             console.error('Request failed for /ajax/leader/staff');
         });
         $scope.addMode = false;
-        $scope.selected = {};
+        for(var i in $scope.selected) {
+            $scope.selected[i] = '';
+        }
     };
     $scope.deleteStaff = function (index) {
         var deleteRequest = $http({
