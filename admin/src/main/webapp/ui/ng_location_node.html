@@ -148,11 +148,12 @@
                             </div>	
 
                             <div id="useronclickbtn">
-                                <h3 class="text-footer">Add/Update</h3>
+                                <h3 class="text-footer">Add</h3>
                                 <div id="add_child_btn" ng-repeat="t in buttonData">
                                     <a id='node_add_btn{{$index}}' ng-click='setLocationTypeId($event);' value='{{t.id}}' index='{{$index}}' class='btn btn-primary blue btn_round' href='#add-node' data-toggle='modal'>Add {{t.name}}</a><br>
                                 </div>
-                                <a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateNode()">Update Node</a>
+                                <h3 class="text-footer">Update</h3>
+                                <a id="save_btn" class="btn btn-primary green btn_round" href="#" ng-click="updateNode()">Update Node</a>
                             </div>
 
                             <div id="map-canvas"><h3 class="text-footer-extended">Google Maps Location</h3></div>
