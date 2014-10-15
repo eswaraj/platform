@@ -37,19 +37,19 @@ locationTypeApp.controller('locationTypeController', function ($scope, postServi
         $scope.loc.id = $scope.selectedNode.id;
         $scope.loc.name = $scope.selectedNode.name;
         $scope.loc.parentLocationTypeId = $scope.selectedNode.parentLocationTypeId;
-        $('#location_type_name').disabled = true;
+        $('#location_type_name').prop("disabled", true);
         $("#edit_btn").css('display','block');
         $("#save_btn").css('display','none');
     });
     $scope.editNode = function() {
         $("#save_btn").css('display','block');
         $("#edit_btn").css('display','none');
-        $('#location_type_name').disabled = false;
+        $('#location_type_name').prop("disabled", false);
     };
     $scope.updateNode = function() {
         $("#edit_btn").css('display','block');
         $("#save_btn").css('display','none');
-        $('#location_type_name').disabled = true;
+        $('#location_type_name').prop("disabled", true);
         postService.run($scope, '/ajax/locationtype/save', $scope.loc, false, 'updateNode');
     };
     $scope.deleteNode = function() {
