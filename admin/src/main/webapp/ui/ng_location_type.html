@@ -87,16 +87,16 @@
                                 <h3 class="text-footer">Location</h3>
                                 <p>
                                     Location ID <input type="text" name="location_type_id" id="location_type_id" value="" disabled="disabled" ng-model="loc.id">
-                                    Location Name <input type="text" name="location_type_name" id="location_type_name" value="" ng-model="loc.name">
+                                    Location Name <input type="text" name="location_type_name" id="location_type_name" value="" ng-model="loc.name" ng-disabled="!editMode">
                                     Parent Location Type <input type="text" name="location_type_parent" id="location_type_parent" value="" disabled="disabled" ng-model="loc.parentLocationTypeId">
                                 </p>
                                 <br>
 
-                                <a id="location_type_btn" class="btn btn-primary blue btn_round" href="#add-location-type" data-toggle="modal">Add Child Node</a></td>
+                                <a id="location_type_btn" class="btn btn-primary blue btn_round" href="#add-location-type" data-toggle="modal" ng-show="!editMode">Add Child Node</a></td>
                             <!--td><a id="delete_btn" class="btn pink" href="#" ng-click="deleteNode()">Delete Node</a></td-->
-                            <a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateNode()" style="display:none">Update Node</a>
-                            <a id="edit_btn" class="btn btn-primary blue btn_round" href="#" ng-click="editNode()" >Edit Node</a>
-                            <a id="cancel_btn" class="btn btn-primary blue btn_round" href="#" ng-click="cancel()" >Cancel</a>
+                            <a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateNode()" ng-show="editMode">Update Node</a>
+                            <a id="edit_btn" class="btn btn-primary blue btn_round" href="#" ng-click="editNode()" ng-show="!editMode">Edit Node</a>
+                            <a id="cancel_btn" class="btn btn-primary blue btn_round" href="#" ng-click="cancel()" ng-show="editMode">Cancel</a>
                             <!--button id="edit_btn" class="edit btn btn-primary blue btn_round"-->
 
                         </div>					
