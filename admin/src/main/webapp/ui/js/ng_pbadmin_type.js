@@ -51,7 +51,7 @@ pbAdminTypeApp.controller('pbAdminTypeController', function($scope, $http) {
             }   
         }   
     };
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
     var request = $http({
         mrthod: "GET",
         url:"/ajax/locationtype/get",

@@ -47,7 +47,7 @@ personApp.controller('personController', function ($scope, $http, $timeout) {
         'latitude': 28.61,
         'longitude': 77.23
     };
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
     
     $ = $.noConflict();
     var myLatlng = new google.maps.LatLng( mylocation.latitude, mylocation.longitude );
