@@ -12,7 +12,6 @@
         <link rel="stylesheet" href='css/admin.css' />
         <link rel="stylesheet" href='css/typeahead.css' />
         <link rel="stylesheet" href="dist/themes/default/style.min.css" />
-        <link rel="stylesheet" href="css/textAngular.min.css" />
 
         <!-- Script -->
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -71,6 +70,7 @@
                 overflow: auto;
                 font-family: inherit;
                 font-size: 100%;
+                margin:20px 0;
             }
         </style>
         
@@ -471,7 +471,8 @@
                             </tr>
                             
                         </table>
-                        <div text-angular ng-model="person.biodata"></div>
+                        <br><br>
+                        <div text-angular ng-model="person.biodata" ta-toolbar="[['bold','underline','italics','undo','redo', 'quote','p','pre','ul','ol', 'insertImage','insertLink','unlink']]"></div>
                     </div>
                 </div>
 
