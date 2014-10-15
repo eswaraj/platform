@@ -33,7 +33,7 @@ partyApp.controller('partyController', function($scope, $http) {
         $scope.selectedParty = {};
     };
 
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
     var request = $http({
         mrthod: "GET",
         url:"/ajax/party/getall",

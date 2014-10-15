@@ -27,25 +27,24 @@ locationTypeApp.factory('postService', function ($http) {
 });
 
 locationTypeApp.controller('locationTypeController', function ($scope, postService) {
-    $("#menu_new").load("../ui/menu.html");
+    $("#menu_new").load("../ui/ng_menu.html");
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.child = {};
     $scope.loc = {};
+    $scope.editMode = {}; 
     $scope.$watch('selectedNode', function() {
         $scope.child.parentLocationTypeId = $scope.selectedNode.id;
-        $('#location_type_name').disabled = true;
-        $("#edit_btn").css('display','block');
-        $("#save_btn").css('display','none');
+        //$.extend(true, $scope.loc, $scope.selectedNode);
+        $scope.loc.id = $scope.selectedNode.id;
+        $scope.loc.name = $scope.selectedNode.name;
+        $scope.loc.parentLocationTypeId = $scope.selectedNode.parentLocationTypeId;
+        $scope.editMode = false;
     });
     $scope.editNode = function() {
-        $("#save_btn").css('display','block');
-        $("#edit_btn").css('display','none');
-        $('#location_type_name').disabled = false;
+        $scope.editMode = true;
     };
     $scope.updateNode = function() {
-        $("#edit_btn").css('display','block');
-        $("#save_btn").css('display','none');
-        $('#location_type_name').disabled = true;
+        $scope.editMode = false;
         postService.run($scope, '/ajax/locationtype/save', $scope.loc, false, 'updateNode');
     };
     $scope.deleteNode = function() {
@@ -58,5 +57,9 @@ locationTypeApp.controller('locationTypeController', function ($scope, postServi
     };
     $scope.addChildNode = function() {
         postService.run($scope, '/ajax/locationtype/save', $scope.child, true, 'addChild');
+        $scope.editMode = false;
+    };
+    $scope.cancel = function() {
+        $scope.editMode = false;
     };
 });

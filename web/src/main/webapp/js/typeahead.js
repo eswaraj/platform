@@ -16,14 +16,19 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             onSelect:'&'
         },
         link:function(scope,elem,attrs){
-	    scope.model = scope.model || {};
-	    scope.model[scope.title] = scope.model[scope.title] || "";
+            scope.model = scope.model || {};
+            scope.model[scope.title] = scope.model[scope.title] || "";
             scope.$watch('model[title]', function () {
-                if(scope.model[scope.title].length >= scope.min && !scope.selected) {
-                    dataFactory.get(scope.url, scope.model[scope.title], scope.querystring).then(function(resp){
-                        scope.items=resp.data;
-                    });
+                if ($scope.pendingPromise) { 
+                    $timeout.cancel($scope.pendingPromise); 
                 }
+                $scope.pendingPromise = $timeout( function () {
+                    if(scope.model[scope.title].length >= scope.min && !scope.selected) {
+                        dataFactory.get(scope.url, scope.model[scope.title], scope.querystring).then(function(resp){
+                            scope.items=resp.data;
+                        });
+                    }
+                }, 200); //wait 200ms before processing. This is to avoid search on quick typing
             });
             scope.handleSelection=function(selectedItem){
                 scope.model=selectedItem;
@@ -43,14 +48,14 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
             };
         },
         //templateUrl: 'templates/typeahead.html'
-	template : '<input type="text" ng-model="model[title]" placeholder="{{prompt}}" ng-keydown="selected=false"/><br/>\
-			<div class="items" ng-hide="!model[title]length || selected">\
-				<div class="item" ng-repeat="item in items track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{taactive:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
-				    <img class="image" src="{{item[img]}}" ng-show="item[img]"></img>\
-				<p class="title">{{item[title]}}</p>\
-				<p class="subtitle">{{item[subtitle]}}</p>\
-				</div>\
-			</div>'
+        template : '<input type="text" ng-model="model[title]" placeholder="{{prompt}}" ng-keydown="selected=false" class="tainput"/><br/>\
+<div class="taitems" ng-hide="!model[title].length || selected">\
+<div class="taitem" ng-repeat="item in items track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{taactive:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
+<img class="taimage" src="{{item[img]}}" ng-show="item[img]"></img>\
+<p class="tatitle">{{item[title]}}</p>\
+<p class="tasubtitle">{{item[subtitle]}}</p>\
+</div>\
+</div>'
     }
 });
 
