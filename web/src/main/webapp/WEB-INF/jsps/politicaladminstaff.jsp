@@ -82,7 +82,7 @@
 
                                         <div id="search_by_email" style="margin-left: 380px;">
                                             Search by Email
-                                            <typeahead text="text" items="items" prompt="Start typing a name" title="name" subtitle="email" img="profilePhoto" min="3" url="/api/person/search/email/" querystring="term" model="selected" on-select="onPersonSelected()"></typeahead>
+                                            <typeahead text="text" items="items" prompt="Start typing a name" title="email" subtitle="name" img="profilePhoto" min="3" url="/api/person/search/email/" querystring="term" model="selected" on-select="onPersonSelected()"></typeahead>
                                         </div>
 
                                         <br />
