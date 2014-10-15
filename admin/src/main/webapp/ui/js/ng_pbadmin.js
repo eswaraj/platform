@@ -43,6 +43,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 console.info("Pbadmin saved with id = " + data.id);
                 data.startDate = isoToHuman(data.startDate);
                 data.endDate = isoToHuman(data.endDate);
+                $scope.person.personAddress = $scope.person.personAddress || {};
                 data.person = $scope.person;
                 var personSaveRequest = $http({
                     method: 'POST',
