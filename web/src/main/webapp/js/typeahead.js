@@ -28,7 +28,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
                             scope.items=resp.data;
                         });
                     }
-                }, 100); //wait 200ms before processing. This is to avoid search on quick typing
+                }, 300); //wait 300ms before processing. This is to avoid search on quick typing
             });
             scope.handleSelection=function(selectedItem){
                 scope.model=selectedItem;
