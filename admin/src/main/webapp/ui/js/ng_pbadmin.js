@@ -11,6 +11,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $scope.form.officeAddressDto = {};
     $scope.form.homeAddressDto = {};
     $scope.person = {};
+    $scope.person.personAddress = {};
     $scope.pbAdminTypeList = {};
     $scope.pbAdminListCurrent = {};
     $scope.pbAdminListAll = {};
