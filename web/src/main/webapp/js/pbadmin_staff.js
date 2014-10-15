@@ -12,7 +12,10 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
     };
     $scope.closeForm = function () {
         $scope.addMode = false;
-        $scope.selected = {};
+        //$scope.selected = {};
+        for(var i in $scope.selected) {
+            $scope.selected[i] = '';
+        }
     };
     $scope.label = function (positionType, locationName) {
         return positionType + " of " + locationName;
