@@ -33,6 +33,7 @@ locationTypeApp.controller('locationTypeController', function ($scope, postServi
     $scope.loc = {};
     $scope.$watch('selectedNode', function() {
         $scope.child.parentLocationTypeId = $scope.selectedNode.id;
+        $.extend(true, $scope.loc, $scope.selectedNode);
         $('#location_type_name').disabled = true;
         $("#edit_btn").css('display','block');
         $("#save_btn").css('display','none');
