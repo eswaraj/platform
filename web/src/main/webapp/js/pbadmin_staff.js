@@ -5,8 +5,21 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
     $scope.new = {};
     $scope.staffs = {};
     $scope.positions = {};
-    $scope.onPositionSelected = function (index) {
-        $scope.new.politicalAdminId = $scope.positions[index].id;
+    $scope.selectedPosition = {};
+    $scope.addMode = {};
+    $scope.showForm = function () {
+        $scope.addMode = true;
+    };
+    $scope.closeForm = function () {
+        $scope.addMode = false;
+    };
+    $scope.label = function (positionType, locationName) {
+        return positionType + " of " + locationName;
+    };
+    $scope.onPositionSelected = function () {
+        //$scope.new.politicalAdminId = $scope.positions[index].id;
+        $scope.addMode = false;
+        $scope.new.politicalAdminId = $scope.selectedPosition.id;
         var staffRequest = $http({
                 method: "GET",
 		url:'/ajax/leader/staff/' + $scope.positions[index].id,
@@ -33,11 +46,13 @@ pbadminStaff.controller('pbadminStaffController',function($scope, $http){
         addRequest.error(function () {
             console.error('Request failed for /ajax/leader/staff');
         });
+        $scope.addMode = false;
     };
-    $scope.deleteStaff = function (index) {
+    $scope.deleteStaff = function (staff) {
         var deleteRequest = $http({
             method: "DELETE",
-            url:"/ajax/leader/staff/" + $scope.staffs[index].id,
+            //url:"/ajax/leader/staff/" + $scope.staffs[index].id,
+            url:"/ajax/leader/staff/" + staff.id,
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         deleteRequest.success(function (data) {
