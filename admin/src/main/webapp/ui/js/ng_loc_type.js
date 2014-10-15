@@ -57,6 +57,7 @@ locationTypeApp.controller('locationTypeController', function ($scope, postServi
     };
     $scope.addChildNode = function() {
         postService.run($scope, '/ajax/locationtype/save', $scope.child, true, 'addChild');
+        $scope.editMode = false;
     };
     $scope.cancel = function() {
         $scope.editMode = false;
