@@ -42,7 +42,7 @@
                                                                         <th>S.No</th>
                                                                         <th>Photo</th>
                                                                         <th>Name</th>
-                                                                        <th>Email</th>
+                                                                        <th>Post</th>
                                                                         <th>Remove</th>
                                                                     </tr>
                                                                 </thead>
