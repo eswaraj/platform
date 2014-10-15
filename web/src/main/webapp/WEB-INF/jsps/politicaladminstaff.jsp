@@ -53,7 +53,7 @@
                                                                         <td><img src="{{staff.personDto.profilePhoto}}" class="thumb"></td>
                                                                         <td>{{staff.personDto.name}}</td>
                                                                         <td>{{staff.post}}</td>
-                                                                        <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="deleteStaff(staff)">Remove</button></td>
+                                                                        <td><button class="btn btn-primary blue btn_round_half add-admin-type" type="button" ng-click="deleteStaff($index)">Remove</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
