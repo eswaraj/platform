@@ -42,7 +42,7 @@ public class PersonController extends BaseController{
     @RequestMapping(value = "/ajax/person/search/email", method = RequestMethod.GET)
     @ResponseBody
     public List<PersonDto> searchPersonByEmailRequestParam(ModelAndView mv, @RequestParam("term") String term) throws ApplicationException {
-        return personService.searchPersonWithName(term);
+        return personService.searchPersonWithEmail(term);
     }
 
 	@RequestMapping(value = "/ajax/person/get/{personId}", method = RequestMethod.GET)
