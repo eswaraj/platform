@@ -176,14 +176,14 @@
             <h4 class="text-footer-extended shift-bottom">Add New Political Admin</h4>
 
             <div id="edit_person">
-                <typeahead text="text" items="items" prompt="Start typing a name" title="name" subtitle="biodata" img="profilePhoto" min="3" url="/ajax/person/search/name/" querystring="term" model="selectedPerson" on-select="onPersonSelected()"></typeahead>
+                <typeahead text="text" items="items" prompt="Start typing a name" title="name" subtitle="email" img="profilePhoto" min="3" url="/ajax/person/search/name/" querystring="term" model="selectedPerson" on-select="onPersonSelected()"></typeahead>
                 <button class="btn btn-primary blue btn_round" type="button" id="searchButtonN" >Search by Name</button>
                 <br />
                 <br />
 
-                <div id="person_details">Personal Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
+                <div id="pbadmin_details">Personal Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
 
-                <div id="person_details_innerdiv">
+                <div id="pbadmin_details_innerdiv">
 
                     <div class="col-sm-3">
 
@@ -198,8 +198,8 @@
                             <tr>
                                 <td><label for="pbadmin_name">Name</label></td>
                                 <td><input type="text" id="pbadmin_name" placeholder="xyz" ng-model="person.name"/></td>
-                                <td><label for="pbadmin_gender">Gender</label></td>
-                                <td><input type="text" id="pbadmin_gender" placeholder="Gender" ng-model="person.gender"/></td>
+                                <td><label for="pbadmin_id">ID</label></td>
+                                <td><input type="text" id="pbadmin_id" placeholder="ID" disabled="disabled" ng-model="form.id"/></td>    
                             </tr>
 
                             <tr>
@@ -214,13 +214,6 @@
                                 <td><input type="date" id="pbadmin_startdate" placeholder="01/01/1950" ng-model="form.startDate" /></td>
                                 <td><label for="pbadmin_enddate">End Date</label></td>
                                 <td><input type="date" id="pbadmin_enddate" placeholder="01/01/1950" ng-model="form.endDate" /></td>
-                            </tr>
-
-                            <tr>
-                                <td><label for="pbadmin_dob">D.O.B.</label></td>
-                                <td><input type="text" id="pbadmin_dob" placeholder="01/01/1950" ng-model="person.dob"/></td>
-                                <td><label for="pbadmin_id">ID</label></td>
-                                <td><input type="text" id="pbadmin_id" placeholder="ID" disabled="disabled" ng-model="form.id"/></td>
                             </tr>
 
                             <tr>
@@ -379,6 +372,97 @@
 
                     </div>
                 </div>
+                
+                <div id="person_details">Person Details<span class="glyphicon glyphicon-chevron-up right_float"></span></div>
+                <div id="person_details_innerdiv">
+                    <div class="col-sm-3">
+                    </div>
+
+                    <div class="col-sm-9">
+
+                        <table>
+
+                            <tr>
+                                <td><label for="pbadmin_dob">D.O.B.</label></td>
+                                <td><input type="text" id="pbadmin_dob" placeholder="01/01/1950" ng-model="person.dob"/></td>
+                                <td><label for="pbadmin_gender">Gender</label></td>
+                                <td><input type="text" id="pbadmin_gender" placeholder="Gender" ng-model="person.gender"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label for="pbadmin_p_llandline1">Landline 1</label></td>
+                                <td><input type="text" id="pbadmin_p_llandline1" placeholder="08023452345" ng-model="person.landlineNumber1" /></td>
+                                <td><label for="pbadmin_p_llandline2">Landline 2</label></td>
+                                <td><input type="text" id="pbadmin_p_llandline2" placeholder="08023452345" ng-model="person.landlineNumber2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_p_mobile1">Mobile 1</label></td>
+                                <td><input type="text" id="pbadmin_p_mobile1" placeholder="+91-9080908090" ng-model="person.mobileNumber1" /></td>
+                                <td><label for="pbadmin_p_mobile2">Mobile 2</label></td>
+                                <td><input type="text" id="pbadmin_p_mobile2" placeholder="+91-9080908090" ng-model="person.mobileNumber2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_p_email">Email</label></td>
+                                <td><input type="text" id="pbadmin_p_email" placeholder="123@abc.com" ng-model="person.email" /></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label for="pbadmin_p_personId">Person ID</label></td>
+                                <td><input type="text" id="pbadmin_p_personId" placeholder="Person ID" disabled="disabled" ng-model="person.id"/></td>
+                                <td><label for="pbadmin_p_Id">ID</label></td>
+                                <td><input type="text" id="pbadmin_p_Id" placeholder="ID" disabled="disabled" ng-model="person.personAddress.id"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_paLine1">Person Address 1</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_paLine1" placeholder="Person Address Line 1" ng-model="person.personAddress.line1" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_paLine2">Person Address 2</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_paLine2" placeholder="Person Address Line 2" ng-model="person.personAddress.line2" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_paLine3">Person Address 3</label></td>
+                                <td colspan="3"><input type="text" id="pbadmin_paLine3" placeholder="Person Address Line 3" ng-model="person.personAddress.line3" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_papostal">Person Postal Code</label></td>
+                                <td><input type="text" id="pbadmin_papostal" placeholder="560048" ng-model="person.personAddress.postalCode" /></td>
+                                <td><label for="pbadmin_pvillage">Village ID</label></td>
+                                <td><input type="text" id='pbadmin_pvillage-list' placeholder="Village ID" disabled ng-model="person.personAddress.villageId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_pward-list">Ward ID</label></td>
+                                <td><input type="text" id='pbadmin_pward-list' placeholder="Ward ID" disabled ng-model="person.personAddress.wardId"/></td>
+                                <td><label for="pbadmin_pcity-list">City ID</label></td>
+                                <td><input type="text" id='pbadmin_pcity-list' placeholder="City ID" disabled ng-model="person.personAddress.cityId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_pdistrict-list">District ID</label></td>
+                                <td><input type="text" id='pbadmin_pdistrict-list' placeholder="District ID" disabled ng-model="person.personAddress.districtId"/></td>
+                                <td><label for="pbadmin_pstate-list">State ID</label></td>
+                                <td><input type="text" id='pbadmin_pstate-list' placeholder="State ID" disabled ng-model="person.personAddress.stateId"/></td>
+                            </tr>
+
+                            <tr>
+                                <td><label for="pbadmin_pcountry-list">Country ID</label></td>
+                                <td><input type="text" id='pbadmin_pcountry-list' placeholder="Country ID" disabled ng-model="person.personAddress.countryId"/></td>
+                                <td><label for="pbadmin_plocation-list">ID</label></td>
+                                <td><input type="text" id='pbadmin_plocation-list' placeholder="ID" disabled ng-model="person.personAddress.id"/></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+
 
             </div>
             <button class="btn btn-primary blue btn_round edit_page_close" type="button" ng-click="closeForm()">Close</button>
@@ -400,6 +484,11 @@
             });
 
             $(document).ready( function () {
+                $( "#pbadmin_details" ).click( function () {
+                    $( "#pbadmin_details_innerdiv" ).fadeToggle(200);
+                    $( "#pbadmin_details span" ).toggleClass("glyphicon-chevron-down");
+                });
+                
                 $( "#person_details" ).click( function () {
                     $( "#person_details_innerdiv" ).fadeToggle(200);
                     $( "#person_details span" ).toggleClass("glyphicon-chevron-down");
