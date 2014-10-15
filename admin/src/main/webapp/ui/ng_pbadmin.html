@@ -22,6 +22,8 @@
         <script type="text/javascript" src='js/angular.min.js'></script><!-- Script -->
         <script type="text/javascript" src='js/custom_directives.js'></script>
         <script type="text/javascript" src='js/typeahead.js'></script>
+        <script src="js/textAngular.min.js"></script>
+        <script src="js/textAngular-sanitize.min.js"></script>
         <script type="text/javascript" src='js/ng_pbadmin.js'></script><!-- Script -->
 
     </head>
@@ -60,6 +62,15 @@
             }
             .tab-pane {
                 display: block;
+            }
+        </style>
+        <style>
+            .ta-editor {
+                min-height: 300px;
+                height: auto;
+                overflow: auto;
+                font-family: inherit;
+                font-size: 100%;
             }
         </style>
 
@@ -456,6 +467,11 @@
                                 <td><input type="text" id='pbadmin_pcountry-list' placeholder="Country ID" disabled ng-model="person.personAddress.countryId"/></td>
                                 <td><label for="pbadmin_plocation-list">ID</label></td>
                                 <td><input type="text" id='pbadmin_plocation-list' placeholder="ID" disabled ng-model="person.personAddress.id"/></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div text-angular ng-model="person.biodata"></div>
+                                </td>
                             </tr>
 
                         </table>
