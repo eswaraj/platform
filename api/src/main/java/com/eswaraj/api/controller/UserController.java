@@ -24,6 +24,7 @@ import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.web.dto.device.RegisterGcmDeviceId;
 
 @Controller
 public class UserController extends BaseController {
@@ -44,8 +45,14 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(value = "/api/v0/user/device", method = RequestMethod.POST)
-    public @ResponseBody UserDto registerFacebookUser(HttpServletRequest httpServletRequest, @RequestBody RegisterDeviceRequest registerDeviceRequest) throws ApplicationException {
+    public @ResponseBody UserDto registerDevice(HttpServletRequest httpServletRequest, @RequestBody RegisterDeviceRequest registerDeviceRequest) throws ApplicationException {
         return personService.registerDevice(registerDeviceRequest, registerDeviceRequest.getUserExternalId());
+    }
+
+    @RequestMapping(value = "/api/v0/user/device/gcm", method = RequestMethod.POST)
+    public @ResponseBody String registerdAndroidDeviceGcmId(HttpServletRequest httpServletRequest, @RequestBody RegisterGcmDeviceId registerGcmDeviceId) throws ApplicationException {
+        personService.registerAndroidDeviceGcmId(registerGcmDeviceId);
+        return "{'status':'success'}";
     }
 
     @RequestMapping(value = "/api/v0/web/user/facebook", method = RequestMethod.POST)

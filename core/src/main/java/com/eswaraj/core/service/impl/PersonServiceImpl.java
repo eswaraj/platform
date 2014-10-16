@@ -48,6 +48,7 @@ import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.web.dto.device.RegisterGcmDeviceId;
 
 /**
  * @author ravi
@@ -367,5 +368,21 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     public List<PersonDto> searchPersonWithEmail(String email) throws ApplicationException {
         EndResult<Person> persons = personRepository.findAllByPropertyValue("email", email.toLowerCase());
         return personConvertor.convertBeanList(persons);
+    }
+
+    @Override
+    public void registerAndroidDeviceGcmId(RegisterGcmDeviceId registerGcmDeviceId) throws ApplicationException {
+        User user = userRepository.findByPropertyValue("externalId", registerGcmDeviceId.getUserExternalId());
+        logger.info("User : {} ", user);
+        Device device = deviceRepository.findByPropertyValue("deviceId", registerGcmDeviceId.getDeviceId());
+        logger.info("Device : {} ", device);
+
+        UserDevice userDevice = userDeviceRepository.getUserDeviceRelation(user, device);
+        if (userDevice == null) {
+            throw new ApplicationException("No such User or device exists");
+        }
+        device.setGcmId(registerGcmDeviceId.getGcmId());
+        device = deviceRepository.save(device);
+        logger.info("Saved Device : {} ", device);
     }
 }

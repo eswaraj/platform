@@ -9,6 +9,7 @@ import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.web.dto.device.RegisterGcmDeviceId;
 
 public interface PersonService {
 
@@ -31,6 +32,8 @@ public interface PersonService {
     UserDto saveUser(UserDto userDto) throws ApplicationException;
 
     UserDto registerDevice(DeviceDto deviceDto, String userExternalId) throws ApplicationException;
+
+    void registerAndroidDeviceGcmId(RegisterGcmDeviceId registerGcmDeviceId) throws ApplicationException;
 
     UserDto registerFacebookAccount(RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException;
 

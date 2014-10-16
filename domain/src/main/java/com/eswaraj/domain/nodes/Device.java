@@ -18,6 +18,7 @@ public class Device extends BaseNode {
 	private DeviceType deviceType;
 	@Indexed(unique=true)
 	private String deviceId;
+    private String gcmId;
 
 	public DeviceType getDeviceType() {
 		return deviceType;
@@ -38,6 +39,14 @@ public class Device extends BaseNode {
 	public enum DeviceType {
 		Android, Iphone;
 	}
+
+    public String getGcmId() {
+        return gcmId;
+    }
+
+    public void setGcmId(String gcmId) {
+        this.gcmId = gcmId;
+    }
 
     @Override
     public String toString() {
