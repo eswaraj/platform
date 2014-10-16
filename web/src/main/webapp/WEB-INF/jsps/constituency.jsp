@@ -335,7 +335,7 @@ pageEncoding="UTF-8"%>
 
 						  <div class="mla-profile">
                                     <img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
-                                    <a href="#"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
+                                    <a href="${oneLeader.urlIdentifier}.html"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
 									<p>In Office since ${oneLeader.since}</p>
 						</div>					
 						</c:forEach>
