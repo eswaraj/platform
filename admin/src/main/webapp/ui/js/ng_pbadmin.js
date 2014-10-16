@@ -1,4 +1,4 @@
-var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives']);
+var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives','textAngular']);
 
 pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     "use strict";
@@ -11,6 +11,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $scope.form.officeAddressDto = {};
     $scope.form.homeAddressDto = {};
     $scope.person = {};
+    $scope.person.personAddress = {};
     $scope.pbAdminTypeList = {};
     $scope.pbAdminListCurrent = {};
     $scope.pbAdminListAll = {};
@@ -42,6 +43,20 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 console.info("Pbadmin saved with id = " + data.id);
                 data.startDate = isoToHuman(data.startDate);
                 data.endDate = isoToHuman(data.endDate);
+                $scope.person.personAddress = $scope.person.personAddress || {};
+                data.person = $scope.person;
+                var personSaveRequest = $http({
+                    method: 'POST',
+                    url: "/ajax/person/save",
+                    data: angular.toJson($scope.person),
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                });
+                personSaveRequest.success(function (presp) {
+                    console.info(presp);
+                });
+                personSaveRequest.error(function () {
+                    console.error("Person save request failed");
+                });
                 $scope.pbAdminTypeList.forEach(function (value) {
                     if (value.id == data.politicalBodyTypeId) {
                         key = value.shortName;
@@ -59,17 +74,17 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                     $.extend(true, $scope.pbAdminListAll[key][updateIndex], data);
                 }
                 else {
-                    var personRequest = $http({
-                        method: "GET",
-                        url:"/ajax/person/get/"+data.personId,
-                        headers: {'Content-Type': 'application/json; charset=utf-8'}
-                    });
-                    personRequest.success(function (resp) {
-                        data.person = resp;
-                    });
-                    personRequest.error(function () {
-                        console.error("Person request failed");
-                    });
+                    //var personRequest = $http({
+                    //    method: "GET",
+                    //    url:"/ajax/person/get/"+data.personId,
+                    //    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                    //});
+                    //personRequest.success(function (resp) {
+                    //    data.person = resp;
+                    //});
+                    //personRequest.error(function () {
+                    //    console.error("Person request failed");
+                    //});
                     $scope.pbAdminListAll[key].push(data);
                 }
             }
@@ -217,7 +232,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         } 
         return result;
     };
-    $("#menu_new").load("../ui/menu.html"); 
+    $("#menu_new").load("../ui/ng_menu.html"); 
     $( "#add_edit_admin_page" ).hide();
 
     var locTypeRequest = $http({

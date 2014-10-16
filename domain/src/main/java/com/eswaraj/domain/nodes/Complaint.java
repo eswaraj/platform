@@ -27,8 +27,6 @@ public class Complaint extends BaseNode {
     @RelatedTo(type = "SERVED_BY")
     private ExecutiveBodyAdmin administrator;
     private Status status;
-    @RelatedTo(type = "ENDORSED_BY", elementClass = Person.class)
-    private Set<Person> endorsements;
     @RelatedTo(type = "AT")
     private Set<Location> locations;
     @Indexed
@@ -75,14 +73,6 @@ public class Complaint extends BaseNode {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public Set<Person> getEndorsements() {
-        return endorsements;
-    }
-
-    public void setEndorsements(Set<Person> endorsements) {
-        this.endorsements = endorsements;
     }
 
     public enum Status {
@@ -146,7 +136,7 @@ public class Complaint extends BaseNode {
     @Override
     public String toString() {
         return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories + ", administrator="
-                + administrator + ", status=" + status + ", endorsements=" + endorsements + ", locations=" + locations + ", complaintTime=" + complaintTime + ", nearByKey=" + nearByKey + ", id=" + id
+                + administrator + ", status=" + status + ", locations=" + locations + ", complaintTime=" + complaintTime + ", nearByKey=" + nearByKey + ", id=" + id
                 + ", externalId=" + externalId + "]";
     }
 

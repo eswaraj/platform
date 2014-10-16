@@ -75,7 +75,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/api/v0/person/search/email", method = RequestMethod.GET)
     @ResponseBody
     public List<PersonDto> searchPersonByEmailRequestParam(ModelAndView mv, @RequestParam("term") String term) throws ApplicationException {
-        return personService.searchPersonWithName(term);
+        return personService.searchPersonWithEmail(term);
     }
 
     @RequestMapping(value = "/api/v0/person/search/name", method = RequestMethod.GET)

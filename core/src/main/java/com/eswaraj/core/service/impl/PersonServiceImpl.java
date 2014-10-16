@@ -218,6 +218,12 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     }
 
     private User mergeUser(User targetUser, User user) {
+        // Person
+        // Complaints
+        // Device
+        // Comment
+        // Admin Records
+        // Complaint Endorsment
         return targetUser;
     }
 

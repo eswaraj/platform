@@ -142,17 +142,18 @@
                                 <p>Longitude <input type="text" name="node_long" id="node_long" disabled="disabled" value="" readonly ng-model="node.longitude"></p>
                                 <p>Location Type ID <input type="text" name="node_locationTypeId" id="node_locationTypeId" disabled="disabled" value="" readonly ng-model="node.locationTypeId"></p>
                                 <p>Parent Location Type ID <input type="text" name="node_parentLocId" id="node_parentLocId" disabled="disabled" value="" readonly ng-model="node.parentLocationId"></p>
-                                <p>URL Identifier <input type="text" name="node_urliden" id="node_urliden" disabled="disabled" value="" readonly ng-model="urlIdentifier"></p>
+                                <p>URL Identifier <input type="text" name="node_urliden" id="node_urliden" disabled="disabled" value="" readonly ng-model="node.urlIdentifier"></p>
                                 <p>KML File <input type="text" name="node_boundaryFile" id="node_boundaryFile" disabled="disabled" value="" readonly ng-model="node.boundaryFile"></p>
 
                             </div>	
 
                             <div id="useronclickbtn">
-                                <h3 class="text-footer">Add/Update</h3>
+                                <h3 class="text-footer">Add</h3>
                                 <div id="add_child_btn" ng-repeat="t in buttonData">
                                     <a id='node_add_btn{{$index}}' ng-click='setLocationTypeId($event);' value='{{t.id}}' index='{{$index}}' class='btn btn-primary blue btn_round' href='#add-node' data-toggle='modal'>Add {{t.name}}</a><br>
                                 </div>
-                                <a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateNode()">Update Node</a>
+                                <h3 class="text-footer">Update</h3>
+                                <a id="save_btn" class="btn btn-primary green btn_round" href="#" ng-click="updateNode()">Update Node</a>
                             </div>
 
                             <div id="map-canvas"><h3 class="text-footer-extended">Google Maps Location</h3></div>
