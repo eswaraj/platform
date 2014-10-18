@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.portlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
@@ -44,6 +45,14 @@ public class ComplaintController extends BaseController{
 	private FileService fileService;
 	@Value("${aws_s3_directory_for_complaint_photo}") 
 	private String awsDirectoryForComplaintPhoto;
+
+    @RequestMapping(value = "/complaint/{complaintId}", method = RequestMethod.GET)
+    public ModelAndView showComplaint(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long complaintId)
+            throws ApplicationException {
+        // TODO get complaint Data and put it in model
+        mv.setViewName("singlecomplaint");
+        return mv;
+    }
 
 	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)
 	public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {

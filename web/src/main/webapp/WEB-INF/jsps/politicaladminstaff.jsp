@@ -18,6 +18,9 @@
                                 <link rel="stylesheet" href='${staticHost}/css/mla_staff.css' />
                             </head>
                             <body ng-controller="pbadminStaffController">
+                                <header>
+                                    <jsp:include page="header.jsp" />
+                                </header>
                                 <div class="wrapper" ng-show="!addMode">
                                     <div class="container">
                                         <div class="row">
