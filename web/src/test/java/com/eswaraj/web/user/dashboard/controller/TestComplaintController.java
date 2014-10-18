@@ -72,7 +72,8 @@ public class TestComplaintController extends BaseControllerTest{
 		List<ComplaintDto> complaints = createComplaints(count);
 		when(complaintService.getPagedUserComplaints(personId, start, end)).thenReturn(complaints);
 		
-		ResultActions response = this.mockMvc.perform(get(getUserComplaints+"/"+ personId).accept(MediaType.APPLICATION_JSON).param("start", String.valueOf(start)).param("end", String.valueOf(end)));
+        ResultActions response = this.mockMvc.perform(get(getUserComplaints + "/" + personId).accept(MediaType.APPLICATION_JSON).param("start", String.valueOf(start))
+                .param("count", String.valueOf(end)));
 		response.andExpect(status().isOk());
 		response.andExpect(content().contentType("application/json;charset=UTF-8"));
 		

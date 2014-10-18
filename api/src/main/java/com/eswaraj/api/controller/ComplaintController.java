@@ -52,7 +52,8 @@ public class ComplaintController extends BaseController{
 	private String awsDirectoryForComplaintPhoto;
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
-	public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {
+    public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
+            @RequestParam(value = "count", required = false) Integer end) throws ApplicationException {
 		if(start == null){
 			return complaintService.getAllUserComplaints(userId);	
 		}else{
@@ -62,7 +63,8 @@ public class ComplaintController extends BaseController{
 	}
 
     @RequestMapping(value = "/api/v0/device/complaints/{userId}", method = RequestMethod.GET)
-	public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {
+    public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value = "start", required = false) Integer start,
+            @RequestParam(value = "count", required = false) Integer end) throws ApplicationException {
 		if(start == null){
 			return complaintService.getAllUserComplaints(deviceId);	
 		}else{
@@ -92,9 +94,9 @@ public class ComplaintController extends BaseController{
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}", method = RequestMethod.GET)
     public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException, IOException, ServletException {
         long start = getLongParameter(httpServletRequest, "start", 0);
-        long end = getLongParameter(httpServletRequest, "end", 10);
+        long pageSize = getLongParameter(httpServletRequest, "count", 10);
 
-        List<PoliticalAdminComplaintDto> politicalAdminComplaints = complaintService.getAllComplaintsOfPoliticalAdmin(politicalAdminId, start, end);
+        List<PoliticalAdminComplaintDto> politicalAdminComplaints = complaintService.getAllComplaintsOfPoliticalAdmin(politicalAdminId, start, pageSize);
         return politicalAdminComplaints;
     }
 

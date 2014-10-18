@@ -114,7 +114,7 @@ public class ApiUtil {
         String urlPath = "/api/v0/complaint/location/" + locationId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", "0");
-        addedParams.put("end", String.valueOf(pageSize));
+        addedParams.put("count", String.valueOf(pageSize));
         String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
         List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
         return list;
@@ -124,7 +124,7 @@ public class ApiUtil {
         String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", "0");
-        addedParams.put("end", String.valueOf(pageSize));
+        addedParams.put("count", String.valueOf(pageSize));
         String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
         List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {}.getType());
         return list;
@@ -155,7 +155,7 @@ public class ApiUtil {
         String urlPath = "/api/v0/complaint/location/" + locationId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", "0");
-        addedParams.put("end", String.valueOf(pageSize));
+        addedParams.put("count", String.valueOf(pageSize));
         String locationAnalytics = getResponseFrom(httpServletRequest, urlPath, addedParams);
         return locationAnalytics;
     }
@@ -164,7 +164,7 @@ public class ApiUtil {
         String urlPath = "/api/v0/complaint/location/" + locationId + "/" + categoryId;
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", "0");
-        addedParams.put("end", String.valueOf(pageSize));
+        addedParams.put("count", String.valueOf(pageSize));
         String locationCategoryAnalytics = getResponseFrom(httpServletRequest, urlPath, addedParams);
         return locationCategoryAnalytics;
     }
@@ -221,16 +221,20 @@ public class ApiUtil {
     
     private Map<String, String> getPagingInfo(HttpServletRequest httpServletRequest) {
         String currentPage = httpServletRequest.getParameter("page");
+        String itemCount = httpServletRequest.getParameter("count");
         Long start = 0L;
-        Long end = 10L;
+        Long count = 10L;
+        if (itemCount != null) {
+            count = Long.parseLong(itemCount);
+        }
         if (currentPage != null) {
             Long page = Long.parseLong(currentPage);
-            start = (page - 1) * 10;
-            end = start + end;
+            start = (page - 1) * count;
         }
+
         Map<String, String> addedParams = new HashMap<>();
         addedParams.put("start", String.valueOf(start));
-        addedParams.put("end", String.valueOf(end));
+        addedParams.put("count", String.valueOf(count));
         return addedParams;
     }
     public String getAllCategopries(HttpServletRequest httpServletRequest) throws ApplicationException {
