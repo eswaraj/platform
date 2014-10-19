@@ -69,6 +69,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsCategoryUpdateQueueName;
     private String awsComplaintCreatedQueueName;
     private String awsReprocessAllComplaintQueueName;
+    private String awsComplaintViewedByPoliticalAdminQueueName;
 
     private void initConfigs() {
         dbUrl = System.getenv("db_url");
@@ -81,6 +82,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         awsCategoryUpdateQueueName = System.getenv("aws_category_queue_name");
         awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
         awsReprocessAllComplaintQueueName = System.getenv("aws_reprocess_all_complaint_queue_name");
+        awsComplaintViewedByPoliticalAdminQueueName = System.getenv("aws_complaint_viewed_by_political_admin_queue_name");
         
 
         logInfo("SYSTEM : dbUrl= {}", dbUrl);
@@ -92,6 +94,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         logInfo("SYSTEM : awsCategoryUpdateQueueName={}", awsCategoryUpdateQueueName);
         logInfo("SYSTEM : awsComplaintCreatedQueueName={}", awsComplaintCreatedQueueName);
         logInfo("SYSTEM : awsReprocessAllComplaintQueueName={}", awsReprocessAllComplaintQueueName);
+        logInfo("SYSTEM : awsComplaintViewedByPoliticalAdminQueueName={}", awsComplaintViewedByPoliticalAdminQueueName);
 
     }
 
@@ -152,7 +155,8 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
         AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
-        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName);
+        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName,
+                awsComplaintViewedByPoliticalAdminQueueName);
     }
 
     // Neo4j related functions
