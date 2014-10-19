@@ -99,7 +99,7 @@
 	</bean>
 	
 	<bean id="SendMobileNotificationBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="ComplaintViewByPoliticalAdminBolt" />
+        <property name="componentId" value="SendMobileNotificationBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
 
         <property name="paralellism" value="1" />
