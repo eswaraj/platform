@@ -12,11 +12,15 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.PersonService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.DeviceDto;
+import com.eswaraj.web.dto.PersonDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminDto;
+import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 import com.eswaraj.web.dto.device.NotificationMessage;
 
 @Component
@@ -28,6 +32,8 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
     private AppKeyService appKeyService;
     @Autowired
     private AppService appService;
+    @Autowired
+    private PersonService personService;
     @Override
     public Result processTuple(Tuple inputTuple) {
         ComplaintViewedByPoliticalAdminMessage complaintViewByPoliticalAdminMessage = (ComplaintViewedByPoliticalAdminMessage) inputTuple.getValue(0);
@@ -44,7 +50,15 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
                     deviceList.add(oneDeviceDto.getGcmId());
                 }
             }
-            String message = "";
+            PoliticalBodyAdminDto politicalBodyAdminDto = appService.getPoliticalBodyAdminById(complaintViewByPoliticalAdminMessage.getPoliticalAdminId());
+            PersonDto person = personService.getPersonById(complaintViewByPoliticalAdminMessage.getPersonId());
+            PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getId());
+            String message = "Your complaint has been viewed by " + politicalBodyTypeDto.getShortName() + " - " + person.getName();
+            if (!person.getId().equals(politicalBodyAdminDto.getPersonId())) {
+                PersonDto politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
+                message = "Your complaint has been viewed by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName();
+            }
+
             writeToStream(inputTuple, new Values(message, NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList));
         } catch (Exception ex) {
             logError("Unable to send message to devices ", ex);
