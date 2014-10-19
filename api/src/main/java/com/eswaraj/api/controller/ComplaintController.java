@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
+import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
@@ -50,6 +52,8 @@ public class ComplaintController extends BaseController{
 	private FileService fileService;
 	@Value("${aws_s3_directory_for_complaint_photo}") 
 	private String awsDirectoryForComplaintPhoto;
+    @Autowired
+    private QueueService queueService;
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
@@ -103,7 +107,13 @@ public class ComplaintController extends BaseController{
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/view", method = RequestMethod.POST)
     public @ResponseBody PoliticalAdminComplaintDto updateComplaintViewStatus(HttpServletRequest httpServletRequest,
             @RequestBody ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException, IOException, ServletException {
-        return complaintService.updateComplaintViewStatus(complaintViewdByPoliticalAdminRequestDto);
+        PoliticalAdminComplaintDto politicalAdminComplaintDto = complaintService.updateComplaintViewStatus(complaintViewdByPoliticalAdminRequestDto);
+        ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage = new ComplaintViewedByPoliticalAdminMessage();
+        complaintViewedByPoliticalAdminMessage.setComplaintId(complaintViewdByPoliticalAdminRequestDto.getComplaintId());
+        complaintViewedByPoliticalAdminMessage.setPersonId(complaintViewdByPoliticalAdminRequestDto.getPersonId());
+        complaintViewedByPoliticalAdminMessage.setPoliticalAdminId(complaintViewdByPoliticalAdminRequestDto.getPoliticalAdminId());
+        queueService.sendComplaintViewedByPoliticalLeaderMessage(complaintViewedByPoliticalAdminMessage);
+        return politicalAdminComplaintDto;
     }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/status", method = RequestMethod.POST)
