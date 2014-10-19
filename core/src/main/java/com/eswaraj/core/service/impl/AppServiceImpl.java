@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.core.convertors.CategoryConvertor;
 import com.eswaraj.core.convertors.DepartmentConvertor;
+import com.eswaraj.core.convertors.DeviceConvertor;
 import com.eswaraj.core.convertors.ExecutiveBodyAdminConvertor;
 import com.eswaraj.core.convertors.ExecutiveBodyConvertor;
 import com.eswaraj.core.convertors.ExecutivePostConvertor;
@@ -28,6 +29,7 @@ import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.Device;
 import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
 import com.eswaraj.domain.nodes.ExecutivePost;
@@ -39,6 +41,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
+import com.eswaraj.domain.repo.DeviceRepository;
 import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
 import com.eswaraj.domain.repo.ExecutiveBodyRepository;
 import com.eswaraj.domain.repo.ExecutivePostRepository;
@@ -53,6 +56,7 @@ import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
+import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.ExecutivePostDto;
@@ -114,6 +118,10 @@ public class AppServiceImpl extends BaseService implements AppService {
     private QueueService queueService;
     @Autowired
     private PoliticalBodyAdminStaffConvertor politicalBodyAdminStaffConvertor;
+    @Autowired
+    private DeviceRepository deviceRepository;
+    @Autowired
+    private DeviceConvertor deviceConvertor;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -537,6 +545,12 @@ public class AppServiceImpl extends BaseService implements AppService {
             returnList.add(politicalPositionDto);
         }
         return returnList;
+    }
+
+    @Override
+    public List<DeviceDto> getDevicesForComplaint(Long complaintId) throws ApplicationException {
+        List<Device> devices = deviceRepository.getDevicesForComplaint(complaintId);
+        return deviceConvertor.convertBeanList(devices);
     }
 
 }

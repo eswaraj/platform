@@ -2,6 +2,7 @@ package com.eswaraj.core.service.impl;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 
 public class LocalQueueServiceImpl implements QueueService {
@@ -64,6 +65,18 @@ public class LocalQueueServiceImpl implements QueueService {
     public void sendReprocesAllComplaintOfLocation(Long locationId) throws ApplicationException {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public ComplaintViewedByPoliticalAdminMessage receiveComplaintViewedByPoliticalLeaderMessage() throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
