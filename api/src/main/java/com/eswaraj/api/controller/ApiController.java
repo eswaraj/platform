@@ -201,12 +201,12 @@ public class ApiController extends BaseController {
     @ResponseBody
     public String getComplaintsOfLocation(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
-        int end = getIntParameter(httpServletRequest, "count", 10);
+        int count = getIntParameter(httpServletRequest, "count", 10);
 
         String locationComplaintKey = appKeyService.getLocationComplaintsKey(locationId);
-        logger.info("locationComplaintKey : {}", locationComplaintKey);
+        logger.info("locationComplaintKey : {}, start:{}, count{}", locationComplaintKey);
         
-        return getComplaintsOfKey(locationComplaintKey, start, end);
+        return getComplaintsOfKey(locationComplaintKey, start, count);
     }
 
     @RequestMapping(value = "/api/v0/complaint/location/{locationId}/{categoryId}", method = RequestMethod.GET)
@@ -214,11 +214,11 @@ public class ApiController extends BaseController {
     public String getComplaintsOfLocationAndCategory(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long locationId, @PathVariable Long categoryId)
             throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
-        int end = getIntParameter(httpServletRequest, "count", 10);
+        int count = getIntParameter(httpServletRequest, "count", 10);
 
         String locationComplaintCategoryKey = appKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
         logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
-        return getComplaintsOfKey(locationComplaintCategoryKey, start, end);
+        return getComplaintsOfKey(locationComplaintCategoryKey, start, count);
 
     }
 
@@ -233,8 +233,8 @@ public class ApiController extends BaseController {
         return jsonArray.toString();
     }
 
-    private String getComplaintsOfKey(String key, int start, int end) {
-        Set<String> complaintIds = stringRedisTemplate.opsForZSet().reverseRange(key, start, end);
+    private String getComplaintsOfKey(String key, int start, int count) {
+        Set<String> complaintIds = stringRedisTemplate.opsForZSet().reverseRange(key, start, start + count);
         logger.info("complaintIds : {}", complaintIds);
         List<String> complaintKeys = new ArrayList<>();
         for (String oneComplaintId : complaintIds) {
