@@ -20,6 +20,7 @@ public class ComplaintDto extends BaseDto {
 	private Long personId;
 	private double lattitude;
 	private double longitude;
+    private Long complaintTime;
 	private List<PhotoDto> images;
 	
 	public String getTitle() {
@@ -64,7 +65,16 @@ public class ComplaintDto extends BaseDto {
 	public void setImages(List<PhotoDto> images) {
 		this.images = images;
 	}
-	@Override
+
+    public Long getComplaintTime() {
+        return complaintTime;
+    }
+
+    public void setComplaintTime(Long complaintTime) {
+        this.complaintTime = complaintTime;
+    }
+
+    @Override
 	public String toString() {
 		return "ComplaintDto [title=" + title + ", description=" + description
 				+ ", categoryId=" + categoryId + ", personId=" + personId
