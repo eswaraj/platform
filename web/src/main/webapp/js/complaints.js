@@ -32,7 +32,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             complaintRequest.success(function (data) {
-                allComplaints.append(data);
+                allComplaints.concat(data);
                 total = total + 1;
                 
             });

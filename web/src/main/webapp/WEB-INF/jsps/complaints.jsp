@@ -178,7 +178,7 @@
 
                                                                                 <span class="status_change">
                                                                                     <label class="label_status_options">Change Status : </label>
-                                                                                    <select class="select dropdownlist status_options" ng-options="status in statuses" ng-model="selectedStatus" ng-change="onStatusSelected()">
+                                                                                    <select class="select dropdownlist status_options" ng-options="status for status in statuses" ng-model="selectedStatus" ng-change="onStatusSelected()">
                                                                                     </select>
                                                                                     <a href="#!" id="save_status_changes" class="comments_controller save_option" ng-click="saveStatus()">Save</a>
                                                                                 </span>
