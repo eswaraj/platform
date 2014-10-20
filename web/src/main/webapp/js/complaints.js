@@ -43,11 +43,13 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
 });
 complaintsApp.filter('rootCategory', function () {
     return function (categories) {
+        var out = "";
         categories.forEach(function (value, index, array) {
             if (value.root) {
-                return value.name;
+                out = value.name;
             }
         });
+        return out;
     };
 });
 complaintsApp.filter('subCategory', function () {
