@@ -50,7 +50,7 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
             + "skip {1} limit {2}")
     public List<Complaint> getAllPagedComplaintsOfLocation(long locationId, long start, long end);
 
-    @Query("start politicalAdmin=node({0}) match complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated ASC "
+    @Query("start politicalAdmin=node({0}) match complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
             + "skip {1} limit {2}")
     public List<Complaint> getAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
 }
