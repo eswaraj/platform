@@ -34,14 +34,18 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             complaintRequest.success(function (data) {
                 allComplaints = allComplaints.concat(data);
                 total = total + 1;
-                
+                current = current + 1;
+                $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+
             });
             complaintRequest.error(function () {
                 console.error("Complaint request failed");
             });
         }
-        current = current + 1;
-        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+        else {
+            current = current + 1;
+            $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+        }
     };
     $scope.getPrevious = function () {
         if (current == 1) {
