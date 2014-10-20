@@ -40,7 +40,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             data: {
                 'politicalAdminId' : $scope.selectedPosition.id,
                 'complaintId' : complaint.id,
-                'status' : $scope.selectedStatus
+                'status' : complaint.newStatus
             },
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
