@@ -81,9 +81,9 @@
                                                             <span class="glyphicon glyphicon-circle-arrow-up glyph_unread_complaints glyph_comments_right_float"></span>
                                                             <span class="comments_display_per_page"><b>Showing 2 of 2000 Complaints</b></span>
                                                         </div>	
-                                                        <div class="mla_unread_complaints"  ng-repeat="complaint in complaints">
+                                                        <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
-                                                            <div class="list-row">
+                                                            <div class="list-row"  ng-repeat="complaint in complaints">
                                                                 <!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"--> <!-- not working as expected -->
                                                                 <div class="innerblock">
                                                                     <span class="glyphicon glyphicon-fullscreen glyph_right_float"></span>
@@ -100,10 +100,10 @@
                                                                         </span>
                                                                         <span class="comment_type_adjust">
                                                                             <img src = "http://dev.eswaraj.com/images/potholeissue.jpg" class="issue-type-pic" alt="">
-                                                                            <a href="#!" class="text-limit issue-scope-type">Type - {{complaint.categoryId}}</a>
+                                                                            <a href="#!" class="text-limit issue-scope-type">Type - {{complaint.categories | rootCategory}}</a>
                                                                         </span>
                                                                         <span class="comment_content_adjust">
-                                                                            <a href="#!" class="text-limit issue-scope">{{complaint.title}}</a>
+                                                                            <a href="#!" class="text-limit issue-scope">{{complaint.categories  | subCategory}}</a>
                                                                         </span>
                                                                         <span>
                                                                             <i class="glyphicon glyphicon-map-marker glyph_adjust"></i>

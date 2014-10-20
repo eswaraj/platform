@@ -41,3 +41,21 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         console.error('Could not get positions for the leader');
     });
 });
+complaintsApp.filter('rootCategory', function () {
+    return function (categories) {
+        categories.forEach(function (value, index, array) {
+            if (value.root) {
+                return value.name;
+            }
+        });
+    };
+});
+complaintsApp.filter('subCategory', function () {
+    return function (categories) {
+        categories.forEach(function (value, index, array) {
+            if (!value.root) {
+                return value.name;
+            }
+        });
+    };
+});
