@@ -9,7 +9,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
     $scope.selectedPosition = {};
-    $scope.selectedStatus = {};
+    $scope.selectedStatus = "";
     $scope.newComment = {};
     $scope.addComment = function (complaint) {
         var commentRequest = $http({
