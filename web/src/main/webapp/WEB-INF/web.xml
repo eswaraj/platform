@@ -96,6 +96,7 @@
 		<url-pattern>/mymla</url-pattern>
 		<url-pattern>/mywardmember</url-pattern>
 		<url-pattern>/staff.html</url-pattern>
+		<url-pattern>/complaints.html</url-pattern>
 		
 		
 	</filter-mapping>
