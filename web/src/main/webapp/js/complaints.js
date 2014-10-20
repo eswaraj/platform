@@ -14,7 +14,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.addComment = function () {};
     $scope.showTab = function (event) {
         var element = $(event.currentTarget);
-        element.show('tab');
+        element.tab('show');
     };
     $scope.saveStatus = function () {};
     $scope.showDetails = function (event) {
