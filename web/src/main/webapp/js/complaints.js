@@ -28,7 +28,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 method: "POST",
                 url:"/ajax/complaint/leader/view",
                 data: {
-                    'politicalAdminId' : selectedPosition.id,
+                    'politicalAdminId' : $scope.selectedPosition.id,
                     'complaintId' : complaint.id
                 },
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
