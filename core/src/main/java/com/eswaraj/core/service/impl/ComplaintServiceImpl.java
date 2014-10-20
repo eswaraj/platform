@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.eswaraj.core.convertors.CategoryConvertor;
 import com.eswaraj.core.convertors.ComplaintConvertor;
 import com.eswaraj.core.convertors.PhotoConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -93,6 +94,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private QueueService queueService;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryConvertor categoryConvertor;
     @Autowired
     private AppKeyService appKeyService;
     @Autowired
@@ -372,6 +375,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         PoliticalAdminComplaintDto onePolitlcalAdminComplaintDto = new PoliticalAdminComplaintDto();
         BeanUtils.copyProperties(complaintDto, onePolitlcalAdminComplaintDto);
 
+        onePolitlcalAdminComplaintDto.setCategories(categoryConvertor.convertBeanList(categoryRepository.getCategoriesOfComplaints(complaint)));
         onePolitlcalAdminComplaintDto.setViewed(complaintPoliticalAdmin.isViewed());
         onePolitlcalAdminComplaintDto.setViewDate(complaintPoliticalAdmin.getViewDate());
         onePolitlcalAdminComplaintDto.setPoliticalAdminComplaintStatus(complaintPoliticalAdmin.getStatus().name());
