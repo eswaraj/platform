@@ -14,8 +14,9 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.addComment = function () {};
     $scope.saveStatus = function () {};
     $scope.showDetails = function (event) {
-        var element = $(event.target);
-        element.next( ".innerdiv-list-row" ).toggleClass("innerdiv-box-shadow").fadeToggle(500);
+        var element = $(event.currentTarget);
+        var innerdiv = $(element.next( ".innerdiv-list-row" ));
+        innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
         element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
     };
     $scope.label = function (positionType, locationName) {

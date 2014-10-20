@@ -213,14 +213,15 @@
 
                                                                 </div>
                                                             </div>
-                                                            <!-- new_div ends  -->
-                                                            <div class="pagination-wrapper">
-                                                                <ul class="pagination">
-                                                                    <li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
-                                                                    <li><a href="#!" ng-click="getNext()">&raquo;</a></li>
-                                                                </ul>
-                                                            </div>
                                                         </div>
+                                                        <!-- new_div ends  -->
+                                                        <div class="pagination-wrapper">
+                                                            <ul class="pagination">
+                                                                <li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
+                                                                <li><a href="#!" ng-click="getNext()">&raquo;</a></li>
+                                                            </ul>
+                                                        </div>
+
                                                     </div>	
 
                                                     <div class="mla_read_complaints_controller">
