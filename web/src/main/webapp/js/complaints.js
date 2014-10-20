@@ -28,7 +28,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         if(current == total) {
             var complaintRequest = $http({
                 method: "GET",
-                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + '/?page=' + current,
+                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + '/?page=' + (current+1),
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             complaintRequest.success(function (data) {
