@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Complaint;
 
 public interface CategoryRepository extends GraphRepository<Category>{
 
@@ -19,4 +20,7 @@ public interface CategoryRepository extends GraphRepository<Category>{
 
     @Query("start childCategory=node({0}) match (category)<-[:BELONGS_TO]-(childCategory) where category.__type__ = 'com.eswaraj.domain.nodes.Category' return category")
     public Category getParentCategory(Category category);
+
+    @Query("start complaint=node({0}) match (complaint)-[:BELONGS_TO]->(category) where category.__type__ = 'com.eswaraj.domain.nodes.Category' return category")
+    public Collection<Category> getCategoriesOfComplaints(Complaint complaint);
 }

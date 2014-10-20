@@ -21,6 +21,7 @@ public class PoliticalAdminComplaintDto extends ComplaintDto {
     private String politicalAdminComplaintStatus;
     private Date viewDate;
     private List<PersonDto> createdByPersons;
+    private List<CategoryDto> categories;
 
     public boolean isViewed() {
         return viewed;
@@ -52,6 +53,14 @@ public class PoliticalAdminComplaintDto extends ComplaintDto {
 
     public void setCreatedByPersons(List<PersonDto> createdByPersons) {
         this.createdByPersons = createdByPersons;
+    }
+
+    public List<CategoryDto> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryDto> categories) {
+        this.categories = categories;
     }
 	
 	
