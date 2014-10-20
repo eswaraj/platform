@@ -192,8 +192,8 @@
                                                                                     <form id="comment_form">
 
                                                                                         <a href="#!" class="profile-pic-comments"><img src="http://dev.eswaraj.com/images/profile-pic.jpg" alt=""></a>
-                                                                                        <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="newComment.commentText"/>
-                                                                                        <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment()"></input>
+                                                                                        <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="complaint.commentText"/>
+                                                                                        <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment(complaint)"></input>
 
                                                                                     </form>
 

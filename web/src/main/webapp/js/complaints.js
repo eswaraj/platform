@@ -11,7 +11,24 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.selectedPosition = {};
     $scope.selectedStatus = {};
     $scope.newComment = {};
-    $scope.addComment = function () {};
+    $scope.addComment = function (complaint) {
+        var commentRequest = $http({
+            method: "POST",
+            url:"/ajax/complaint/leader/comment",
+            data: {
+                'politicalAdminId' : $scope.selectedPosition.id,
+                'complaintId' : complaint.id,
+                'commentText' : complaint.commentText
+            },
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        });
+        commentRequest.success(function (data) {
+            //complaint.commentText = $scope.selectedStatus;
+        });
+        commentRequest.error(function () {
+            console.error('Request failed for /ajax/complaint/leader/comment');
+        });
+    };
     $scope.showTab = function (event) {
         var element = $(event.currentTarget);
         element.tab('show');
