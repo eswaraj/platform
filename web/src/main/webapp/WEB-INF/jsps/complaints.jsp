@@ -83,7 +83,8 @@
                                                         </div>	
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
-                                                            <div class="list-row"  ng-repeat="complaint in complaints">
+                                                            <div ng-repeat="complaint in complaints">
+                                                            <div class="list-row">
                                                                 <!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"--> <!-- not working as expected -->
                                                                 <div class="innerblock">
                                                                     <span class="glyphicon glyphicon-fullscreen glyph_right_float"></span>
@@ -286,6 +287,7 @@
                                                                     <li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
                                                                     <li><a href="#!" ng-click="getNext()">&raquo;</a></li>
                                                                 </ul>
+                                                            </div>
                                                             </div>
                                                         </div>	
 
