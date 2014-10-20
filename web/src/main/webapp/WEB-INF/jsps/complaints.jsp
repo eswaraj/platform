@@ -94,7 +94,7 @@
                                                                     </div>
                                                                     <div class="profile-info profile_info_adjust">
                                                                         <span>
-                                                                            <strong class="text-limit issue-id">#{{complaint.id}}</strong>
+                                                                            <strong class="text-limit issue-id">{{complaint.id}}</strong>
                                                                             <span class="text-limit connector">by</span>
                                                                             <a href="#!" class="text-limit username_adjust">{{complaint.createdByPersons[0].name}}</a>
                                                                         </span>
@@ -135,15 +135,15 @@
                                                                         </p>
 
                                                                         <div class="carousel_map_tab">
-                                                                            <ul class="nav nav-tabs" id="c_m_tab1">
-                                                                                <li><a href="#issues_images_carousel1">Complaint Pictures</a></li>
-                                                                                <li><a href="#loc_on_map1">Show on Map</a></li>
+                                                                            <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}">
+                                                                                <li><a href="#issues_images_carousel{{$index + 1}}">Complaint Pictures</a></li>
+                                                                                <li><a href="#loc_on_map{{$index + 1}}">Show on Map</a></li>
                                                                             </ul>
 
                                                                             <div class="tab-content">
 
-                                                                                <div class="tab-pane" id="issues_images_carousel1">
-                                                                                    <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+                                                                                <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
+                                                                                    <div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
                                                                                         <!-- Carousel items -->
                                                                                         <div class="carousel-inner" ng-repeat="image in complaint.images">
                                                                                             <div class="item">
@@ -151,14 +151,14 @@
                                                                                             </div>                                                                    
                                                                                         </div>
                                                                                         <!-- Carousel nav -->
-                                                                                        <a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                                                                                        <a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                                                                                        <a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                                                                                        <a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
                                                                                     </div>
                                                                                 </div>
 
-                                                                                <div class="tab-pane" id="loc_on_map1">
+                                                                                <div class="tab-pane" id="loc_on_map{{$index + 1}}">
                                                                                     <div>
-                                                                                        <div id="googleMap1"></div>
+                                                                                        <div id="googleMap{{$index + 1}}"></div>
                                                                                     </div>
                                                                                 </div>
 
@@ -178,15 +178,9 @@
 
                                                                                 <span class="status_change">
                                                                                     <label class="label_status_options">Change Status : </label>
-                                                                                    <select class="status_options">
-                                                                                        <option class="opopen" selected>Open</option>
-                                                                                        <option class="opackn">Acknowledged</option>
-                                                                                        <option class="opinprocess">In Process</option>
-                                                                                        <option class="opclosed">Closed</option>
+                                                                                    <select class="select dropdownlist status_options" ng-options="status in statuses" ng-model="selectedStatus" ng-change="onStatusSelected()">
                                                                                     </select>
-                                                                                    <select class="select dropdownlist" ng-options="status in statuses" ng-model="selectedStatus" ng-change="onStatusSelected()">
-                                                                                    </select>
-                                                                                    <a href="#!" id="save_status_changes" class="comments_controller save_option">Save</a>
+                                                                                    <a href="#!" id="save_status_changes" class="comments_controller save_option" ng-click="saveStatus()">Save</a>
                                                                                 </span>
                                                                                 <span class="status_change_tracker">
                                                                                     <span class="status_change_display_message"></span>
@@ -200,7 +194,7 @@
 
                                                                                     <a href="#!" class="profile-pic-comments"><img src="http://dev.eswaraj.com/images/profile-pic.jpg" alt=""></a>
                                                                                     <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="newComment.commentText"/>
-                                                                                    <input id="user_input_button" type="button" value="Add Comment" class="comments_controller"</input>
+                                                                                    <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment()"></input>
 
                                                                                 </form>
 

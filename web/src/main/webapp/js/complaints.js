@@ -6,6 +6,9 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
     $scope.selectedPosition = {};
     $scope.selectedStatus = {};
+    $scope.newComment = {};
+    $scope.addComment = function () {};
+    $scope.saveStatus = function () {};
     $scope.onPositionSelected = function () {
         //$scope.new.politicalAdminId = $scope.positions[index].id;
         //$scope.addMode = false;
