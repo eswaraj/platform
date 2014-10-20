@@ -41,6 +41,9 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
             @RequestBody ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto)
             throws ApplicationException {
         UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        logger.info("loggedInUser = " + loggedInUser);
+        logger.info("complaintViewdByPoliticalAdminRequestDto = " + complaintViewdByPoliticalAdminRequestDto);
+        logger.info("loggedInUser.getPerson() = " + loggedInUser.getPerson());
         complaintViewdByPoliticalAdminRequestDto.setPersonId(loggedInUser.getPerson().getId());
         return apiUtil.updateComplaintViewStatus(httpServletRequest, complaintViewdByPoliticalAdminRequestDto);
     }
