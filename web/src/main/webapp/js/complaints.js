@@ -32,7 +32,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             complaintRequest.success(function (data) {
-                $scope.allComplaints.append(data);
+                allComplaints.append(data);
                 total = total + 1;
                 
             });
@@ -41,14 +41,14 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             });
         }
         current = current + 1;
-        $scope.complaints = $scope.allComplaints.slice((current-1)*getCount, current*getCount);
+        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
     };
     $scope.getPrevious = function () {
         if (current == 1) {
             return;
         }
         current = current - 1;
-        $scope.complaints = $scope.allComplaints.slice((current-1)*getCount, current*getCount);
+        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
     };
     //Get all political positions
     var positionRequest = $http({
