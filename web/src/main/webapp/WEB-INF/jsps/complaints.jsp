@@ -215,12 +215,9 @@
                                                                                 </p>
 
                                                                                 <div class="comments-info" >
-                                                                                    <p class="desc elipsis text-content short-text">
-                                                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium nisl sit amet odio maximus, eu faucibus sem posuere. Donec eget justo sit amet elit pulvinar finibus. Vestibulum vel sem non arcu ornare hendrerit. Aenean aliquet tristique nisl, nec auctor justo. Donec in elit a quam varius lacinia id nec orci. Suspendisse et risus vel lorem sodales dictum. Aenean congue odio ut nisl maximus, vel rhoncus dolor suscipit. Integer vitae rhoncus sem. Proin at mi ex. Phasellus dignissim lacus lacus, et mollis lacus ultrices eget. Nunc sit amet risus sit amet elit tempor dictum nec eu ante. Nunc fermentum pulvinar lobortis. Praesent pulvinar id lorem non pulvinar. Mauris vestibulum nibh ligula, eget mollis diam commodo quis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.												
-                                                                                    </p>
-                                                                                    <p class="show-more">
-                                                                                        <a href="#">Show more</a>
-                                                                                    </p>
+                                                                                    <textcollapse>
+                                                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium nisl sit amet odio maximus, eu faucibus sem posuere. Donec eget justo sit amet elit pulvinar finibus. Vestibulum vel sem non arcu ornare hendrerit. Aenean aliquet tristique nisl, nec auctor justo. Donec in elit a quam varius lacinia id nec orci. Suspendisse et risus vel lorem sodales dictum. Aenean congue odio ut nisl maximus, vel rhoncus dolor suscipit. Integer vitae rhoncus sem. Proin at mi ex. Phasellus dignissim lacus lacus, et mollis lacus ultrices eget. Nunc sit amet risus sit amet elit tempor dictum nec eu ante. Nunc fermentum pulvinar lobortis. Praesent pulvinar id lorem non pulvinar. Mauris vestibulum nibh ligula, eget mollis diam commodo quis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.									
+                                                                                    </textcollapse>
                                                                                 </div>
 
                                                                             </div>
@@ -240,12 +237,9 @@
 
                                                                                 <div class="comments-info" >
 
-                                                                                    <p class="desc elipsis text-content short-text">
+                                                                                    <textcollapse>
                                                                                         Fusce ullamcorper tellus sit amet nisl faucibus pretium. Nullam eu sem lacinia nibh lacinia suscipit. Ut nec lacinia elit. Curabitur mauris quam, interdum quis mi id, dictum pulvinar nulla. Donec ac libero condimentum, consectetur eros nec, rutrum velit. Sed consequat nulla in arcu ultrices, vel tempor enim iaculis. Sed rutrum elit nunc, volutpat pulvinar ex dignissim ut. In hac habitasse platea dictumst. Aliquam ornare mauris at nisl volutpat, at rutrum ligula maximus. In hac habitasse platea dictumst. Nulla sit amet mauris diam. Sed purus nisi, consectetur condimentum mollis in, condimentum sit amet ipsum. Cras dictum non lacus non maximus. Vestibulum porta nisi ac massa fermentum, eu blandit orci ornare. Donec odio nulla, varius a elementum pretium, molestie eu felis.												
-                                                                                    </p>
-                                                                                    <p class="show-more">
-                                                                                        <a href="#">Show more</a>
-                                                                                    </p>
+                                                                                    </textcollapse>
 
                                                                                 </div>
 
@@ -266,12 +260,9 @@
 
                                                                                 <div class="comments-info" >
 
-                                                                                    <p class="desc elipsis text-content short-text">
+                                                                                    <textcollapse>
                                                                                         Pellentesque venenatis fermentum nibh vel auctor. Cras sit amet lectus non dolor rutrum vulputate id non nisl. Mauris sollicitudin tempus justo eu lacinia. Proin quam tortor, pharetra eu ex sit amet, euismod bibendum enim. Donec in felis egestas, consectetur ipsum non, volutpat ante. Sed porta nisl purus, sed dictum sapien vestibulum ac. Aenean commodo, nunc sit amet malesuada rutrum, velit ex pulvinar elit, pulvinar feugiat dui lectus id tortor. Nunc condimentum vitae magna eget blandit. Cras pharetra ligula leo. Morbi nec consequat tellus. Nullam risus magna, sagittis et arcu non, semper commodo mauris. Sed sit amet arcu vel sem sodales sollicitudin. Proin a odio eu orci placerat commodo. Sed pellentesque vestibulum mi sit amet rhoncus. Morbi non enim in tellus bibendum gravida at a arcu. Mauris porttitor nulla in leo dictum condimentum.												
-                                                                                    </p>
-                                                                                    <p class="show-more">
-                                                                                        <a href="#">Show more</a>
-                                                                                    </p>
+                                                                                    </textcollapse>
 
                                                                                 </div>
 
@@ -457,12 +448,9 @@
                                                                                 </p>
 
                                                                                 <div class="comments-info" >
-                                                                                    <p class="desc elipsis text-content short-text">
+                                                                                    <textcollapse>
                                                                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium nisl sit amet odio maximus, eu faucibus sem posuere. Donec eget justo sit amet elit pulvinar finibus. Vestibulum vel sem non arcu ornare hendrerit. Aenean aliquet tristique nisl, nec auctor justo. Donec in elit a quam varius lacinia id nec orci. Suspendisse et risus vel lorem sodales dictum. Aenean congue odio ut nisl maximus, vel rhoncus dolor suscipit. Integer vitae rhoncus sem. Proin at mi ex. Phasellus dignissim lacus lacus, et mollis lacus ultrices eget. Nunc sit amet risus sit amet elit tempor dictum nec eu ante. Nunc fermentum pulvinar lobortis. Praesent pulvinar id lorem non pulvinar. Mauris vestibulum nibh ligula, eget mollis diam commodo quis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.												
-                                                                                    </p>
-                                                                                    <p class="show-more">
-                                                                                        <a href="#">Show more</a>
-                                                                                    </p>
+                                                                                    </textcollapse>
                                                                                 </div>
 
                                                                             </div>
@@ -482,12 +470,9 @@
 
                                                                                 <div class="comments-info" >
 
-                                                                                    <p class="desc elipsis text-content short-text">
+                                                                                    <textcollapse>
                                                                                         Fusce ullamcorper tellus sit amet nisl faucibus pretium. Nullam eu sem lacinia nibh lacinia suscipit. Ut nec lacinia elit. Curabitur mauris quam, interdum quis mi id, dictum pulvinar nulla. Donec ac libero condimentum, consectetur eros nec, rutrum velit. Sed consequat nulla in arcu ultrices, vel tempor enim iaculis. Sed rutrum elit nunc, volutpat pulvinar ex dignissim ut. In hac habitasse platea dictumst. Aliquam ornare mauris at nisl volutpat, at rutrum ligula maximus. In hac habitasse platea dictumst. Nulla sit amet mauris diam. Sed purus nisi, consectetur condimentum mollis in, condimentum sit amet ipsum. Cras dictum non lacus non maximus. Vestibulum porta nisi ac massa fermentum, eu blandit orci ornare. Donec odio nulla, varius a elementum pretium, molestie eu felis.												
-                                                                                    </p>
-                                                                                    <p class="show-more">
-                                                                                        <a href="#">Show more</a>
-                                                                                    </p>
+                                                                                    </textcollapse>
 
                                                                                 </div>
 
@@ -508,12 +493,9 @@
 
                                                                                 <div class="comments-info" >
 
-                                                                                    <p class="desc elipsis text-content short-text">
+                                                                                    <textcollapse>
                                                                                         Pellentesque venenatis fermentum nibh vel auctor. Cras sit amet lectus non dolor rutrum vulputate id non nisl. Mauris sollicitudin tempus justo eu lacinia. Proin quam tortor, pharetra eu ex sit amet, euismod bibendum enim. Donec in felis egestas, consectetur ipsum non, volutpat ante. Sed porta nisl purus, sed dictum sapien vestibulum ac. Aenean commodo, nunc sit amet malesuada rutrum, velit ex pulvinar elit, pulvinar feugiat dui lectus id tortor. Nunc condimentum vitae magna eget blandit. Cras pharetra ligula leo. Morbi nec consequat tellus. Nullam risus magna, sagittis et arcu non, semper commodo mauris. Sed sit amet arcu vel sem sodales sollicitudin. Proin a odio eu orci placerat commodo. Sed pellentesque vestibulum mi sit amet rhoncus. Morbi non enim in tellus bibendum gravida at a arcu. Mauris porttitor nulla in leo dictum condimentum.												
-                                                                                    </p>
-                                                                                    <p class="show-more">
-                                                                                        <a href="#">Show more</a>
-                                                                                    </p>
+                                                                                    </textcollapse>
 
                                                                                 </div>
 
@@ -576,4 +558,71 @@
                                 </div>
                                 <jsp:include page="footer.jsp" />
                             </body>
+                            <script>
+                                $(document).ready(function(){
+                                    
+                                        $('#c_m_tab1 a:first').tab('show');
+                                        $('#c_m_tab2 a:first').tab('show');
+                                        $('#c_m_tab3 a:first').tab('show');
+                                        $('#c_m_tab4 a:first').tab('show');
+                                        $('#c_m_tab5 a:first').tab('show');
+                                        $('#c_m_tab6 a:first').tab('show');
+                                    
+
+                                    /*enable tabs to be selected*/
+                                    $('#c_m_tab1 a').click(function (e) {
+                                        e.preventDefault();
+                                        $(this).tab('show');
+                                    });
+                                    /*enable tabs to be selected*/
+                                    $('#c_m_tab2 a').click(function (e) {
+                                        e.preventDefault();
+                                        $(this).tab('show');
+                                    });
+                                    /*enable tabs to be selected*/
+                                    $('#c_m_tab3 a').click(function (e) {
+                                        e.preventDefault();
+                                        $(this).tab('show');
+                                    });
+                                    /*enable tabs to be selected*/
+                                    $('#c_m_tab4 a').click(function (e) {
+                                        e.preventDefault();
+                                        $(this).tab('show');
+                                    });
+                                    /*enable tabs to be selected*/
+                                    $('#c_m_tab5 a').click(function (e) {
+                                        e.preventDefault();
+                                        $(this).tab('show');
+                                    });
+                                    /*enable tabs to be selected*/
+                                    $('#c_m_tab6 a').click(function (e) {
+                                        e.preventDefault();
+                                        $(this).tab('show');
+                                    });
+
+                                    $( ".mla_unread_complaints_controller" ).on( 'click', function () {
+                                        $( this ).next( ".mla_unread_complaints" ).fadeToggle(500);
+                                        $( this ).find( ".glyph_unread_complaints" ).toggleClass("glyphicon-collapse-down");
+                                    });
+
+                                    $( ".mla_read_complaints_controller" ).on( 'click', function () {
+                                        $( this ).next( ".mla_read_complaints" ).fadeToggle(500);
+                                        $( this ).find( ".glyph_read_complaints" ).toggleClass("glyphicon-collapse-down");
+                                    });
+
+                                    $( ".list-row" ).not("a").each( function () {
+                                        $( this ).on( 'click', function () {
+                                            $( this ).next( ".innerdiv-list-row" ).toggleClass("innerdiv-box-shadow").fadeToggle(500);
+                                            $( this ).find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
+                                        });
+                                    });
+                                    
+                                    $( ".list-row" ).not("a").each( function () {
+                                        $( this ).on( 'click', function () {
+                                            $( this ).next( ".innerdiv-list-row" ).toggleClass("innerdiv-box-shadow").fadeToggle(500);
+                                            $( this ).find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
+                                        });
+                                    });
+                                };
+                    </script>
                         </html>

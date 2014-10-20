@@ -99,3 +99,29 @@ complaintsApp.filter('dateFormatter', function () {
         return out;
     };
 });
+
+complaintsApp.directive('textcollapse', function () {
+    return {
+        restrict : 'E',
+        transclude : true,
+        scope : {},
+        template : '<p class="desc elipsis text-content short-text" ng-transclude></p><p class="show-more"><a href="#">Show more</a></p>',
+        link : function (scope, element, attrs) {
+            var content = element.find(".text-content");
+            var link = element.find("a");
+            var visibleHeight = content.clientHeight;
+            var actualHeight = content.scrollHeight - 1;
+            if (actualHeight < visibleHeight) {
+                link.show();
+            } else {
+                link.hide();
+            }
+            
+            link.bind('click', function () {
+                content.toggleClass("short-text, full-text", 100);
+                var text = link.text() == "Show More" ? "Show less" : "Show More";
+                link.text(text);
+            });
+        }
+    };
+});
