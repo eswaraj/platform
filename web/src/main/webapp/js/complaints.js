@@ -16,7 +16,24 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         var element = $(event.currentTarget);
         element.tab('show');
     };
-    $scope.saveStatus = function () {};
+    $scope.saveStatus = function (complaint) {
+        var statusRequest = $http({
+            method: "POST",
+            url:"/ajax/complaint/leader/status",
+            data: {
+                'politicalAdminId' : $scope.selectedPosition.id,
+                'complaintId' : complaint.id,
+                'status' : $scope.selectedStatus
+            },
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        });
+        statusRequest.success(function (data) {
+            complaint.politicalAdminStatus = $scope.selectedStatus;
+        });
+        statusRequest.error(function () {
+            console.error('Request failed for /ajax/complaint/leader/status');
+        });
+    };
     $scope.showDetailsAndMarkViewed = function (event, complaint) {
         var element = $(event.currentTarget);
         var innerdiv = $(element.next( ".innerdiv-list-row" ));
@@ -37,7 +54,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 complaint.viewed = true;
             });
             viewedRequest.error(function () {
-                console.error('Request failed for /ajax/leader/staff');
+                console.error('Request failed for /ajax/complaint/leader/view');
             });
         }
     };
