@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.util.DataMessageTypes;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -27,6 +28,8 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private Gson gson = new Gson();
+
     @Autowired
     private AwsQueueManager awsQueueManager;
 
@@ -42,19 +45,23 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     @Value("${aws_reprocess_all_complaint_queue_name}")
     private String awsReProcessAllComplaintQueueName;
 
+    @Value("${aws_complaint_viewed_by_political_admin_queue_name}")
+    private String awsComplaintViewedByPoliticalAdminQueueName;
+
     // Normal Constructor to be used by Spring
     public AwsQueueServiceImpl() {
 
     }
 
     public AwsQueueServiceImpl(AwsQueueManager awsQueueManager, String awsLocationQueueName, String awsCategoryUpdateQueueName, String awsComplaintCreatedQueueName,
-            String awsReProcessAllComplaintQueueName) {
+            String awsReProcessAllComplaintQueueName, String awsComplaintViewedByPoliticalAdminQueueName) {
         super();
         this.awsQueueManager = awsQueueManager;
         this.awsLocationQueueName = awsLocationQueueName;
         this.awsCategoryUpdateQueueName = awsCategoryUpdateQueueName;
         this.awsComplaintCreatedQueueName = awsComplaintCreatedQueueName;
         this.awsReProcessAllComplaintQueueName = awsReProcessAllComplaintQueueName;
+        this.awsComplaintViewedByPoliticalAdminQueueName = awsComplaintViewedByPoliticalAdminQueueName;
     }
 
     /**
@@ -147,6 +154,20 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
         jsonObject.addProperty("locationId", locationId);
         logger.debug("Sending message {} to queue {}", jsonObject.toString(), awsReProcessAllComplaintQueueName);
         awsQueueManager.sendMessage(awsReProcessAllComplaintQueueName, jsonObject.toString());
+    }
+
+    @Override
+    public void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException {
+        String jsonMessage = gson.toJson(complaintViewedByPoliticalAdminMessage);
+        logger.debug("Sending message {} to queue {}", jsonMessage, awsComplaintViewedByPoliticalAdminQueueName);
+        awsQueueManager.sendMessage(awsComplaintViewedByPoliticalAdminQueueName, jsonMessage);
+    }
+
+    @Override
+    public ComplaintViewedByPoliticalAdminMessage receiveComplaintViewedByPoliticalLeaderMessage() throws ApplicationException {
+        String message = awsQueueManager.receiveMessage(awsComplaintViewedByPoliticalAdminQueueName);
+        return gson.fromJson(message, ComplaintViewedByPoliticalAdminMessage.class);
+
     }
 
 }

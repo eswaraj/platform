@@ -55,7 +55,8 @@ public class ComplaintController extends BaseController{
     }
 
 	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)
-	public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {
+    public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
+            @RequestParam(value = "count", required = false) Integer end) throws ApplicationException {
 		if(start == null){
 			return complaintService.getAllUserComplaints(userId);	
 		}else{
@@ -64,7 +65,8 @@ public class ComplaintController extends BaseController{
 		
 	}
 	@RequestMapping(value = "/device/complaints/{userId}", method = RequestMethod.GET)
-	public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value= "start", required=false) Integer start, @RequestParam(value= "end", required=false) Integer end) throws ApplicationException {
+    public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value = "start", required = false) Integer start,
+            @RequestParam(value = "count", required = false) Integer end) throws ApplicationException {
 		if(start == null){
 			return complaintService.getAllUserComplaints(deviceId);	
 		}else{

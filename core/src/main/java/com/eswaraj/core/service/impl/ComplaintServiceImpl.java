@@ -50,6 +50,7 @@ import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
+import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.PoliticalAdminComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
@@ -354,9 +355,16 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         for (Complaint oneComplaint : complaints) {
             ComplaintPoliticalAdmin complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(oneComplaint, politicalBodyAdmin);
             PoliticalAdminComplaintDto onePolitlcalAdminComplaintDto = buildPoliticalAdminComplaint(oneComplaint, complaintPoliticalAdmin);
+            addPersons(oneComplaint, onePolitlcalAdminComplaintDto);
             politlcalAdminComplaintDtos.add(onePolitlcalAdminComplaintDto);
         }
         return politlcalAdminComplaintDtos;
+    }
+
+    private void addPersons(Complaint complaint, PoliticalAdminComplaintDto politicalAdminComplaintDto) throws ApplicationException {
+        Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
+        List<PersonDto> personDtos = personConvertor.convertBeanList(persons);
+        politicalAdminComplaintDto.setCreatedByPersons(personDtos);
     }
 
     private PoliticalAdminComplaintDto buildPoliticalAdminComplaint(Complaint complaint, ComplaintPoliticalAdmin complaintPoliticalAdmin) throws ApplicationException {

@@ -2,6 +2,7 @@ package com.eswaraj.queue.service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 
 public interface QueueService {
 
@@ -24,4 +25,8 @@ public interface QueueService {
     void sendPoliticalBodyAdminUpdateMessage(Long locationId, Long politicalBodyAdminId) throws ApplicationException;
 
     void sendReprocesAllComplaintOfLocation(Long locationId) throws ApplicationException;
+
+    void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException;
+
+    ComplaintViewedByPoliticalAdminMessage receiveComplaintViewedByPoliticalLeaderMessage() throws ApplicationException;
 }

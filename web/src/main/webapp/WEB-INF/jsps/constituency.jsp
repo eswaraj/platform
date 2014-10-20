@@ -34,7 +34,7 @@ pageEncoding="UTF-8"%>
 							out.println(",");
 						        i++;
 						    %>
-						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy.id}", userName: "${oneComplaint.loggedBy.name}", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy.id}", userName: "TODO", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
 				  </c:forEach>
 				  ];
 			</script>
@@ -193,7 +193,12 @@ pageEncoding="UTF-8"%>
 								<p class="whom">
 								<strong class="issue-id">Issue #${oneComplaint.id}</strong>
 								<span class="connector">raised by</span>
-								<a href="#" class="username">${oneComplaint.loggedBy.name}</a>
+								
+								<a href="#" class="username">
+								<c:forEach items="${oneComplaint.loggedBy}" var="onePerson">
+								${onePerson.name}
+								</c:forEach>
+								</a>
 								<!-- social media share buttons -->								
 								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
 								<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>

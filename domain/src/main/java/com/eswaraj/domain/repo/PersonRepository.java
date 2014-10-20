@@ -19,7 +19,7 @@ public interface PersonRepository extends GraphRepository<Person>{
     @Query("start user=node({0}) match (user)-[:ATTACHED_TO]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
     public Person getPersonByUser(User user);
 
-    @Query("start complaint=node({0}) match (complaint)-[:LOGGED_BY]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
+    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person) where person.__type__ = 'com.eswaraj.domain.nodes.Person' return person")
     public Collection<Person> getPersonsLoggedComplaint(Complaint complaint);
 
 }

@@ -1,6 +1,7 @@
 package com.eswaraj.web.dto;
 
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -19,6 +20,7 @@ public class PoliticalAdminComplaintDto extends ComplaintDto {
     private boolean viewed;
     private String politicalAdminComplaintStatus;
     private Date viewDate;
+    private List<PersonDto> createdByPersons;
 
     public boolean isViewed() {
         return viewed;
@@ -42,6 +44,14 @@ public class PoliticalAdminComplaintDto extends ComplaintDto {
 
     public void setViewDate(Date viewDate) {
         this.viewDate = viewDate;
+    }
+
+    public List<PersonDto> getCreatedByPersons() {
+        return createdByPersons;
+    }
+
+    public void setCreatedByPersons(List<PersonDto> createdByPersons) {
+        this.createdByPersons = createdByPersons;
     }
 	
 	

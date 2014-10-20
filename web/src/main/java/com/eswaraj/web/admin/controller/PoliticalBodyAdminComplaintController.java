@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +43,12 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
         UserDto loggedInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         complaintViewdByPoliticalAdminRequestDto.setPersonId(loggedInUser.getPerson().getId());
         return apiUtil.updateComplaintViewStatus(httpServletRequest, complaintViewdByPoliticalAdminRequestDto);
+    }
+
+    @RequestMapping(value = "/ajax/complaint/leader/{politicalBodyAdminId}", method = RequestMethod.GET)
+    public @ResponseBody String getAdminCOmplaints(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long politicalBodyAdminId) throws ApplicationException {
+        String complaints = apiUtil.getPoliticalAdminComplaints(httpServletRequest, politicalBodyAdminId);
+        return complaints;
     }
 
     @RequestMapping(value = "/ajax/complaint/leader/status", method = RequestMethod.POST)
