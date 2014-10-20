@@ -1,6 +1,10 @@
 var complaintsApp = angular.module('complaintsApp', []);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
+    var getCount = 10;
+    var total = 0;
+    var current = 0;
+    var allComplaints = [];
     $scope.positions = {};
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
@@ -12,21 +16,39 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.label = function (positionType, locationName) {
         return positionType + " of " + locationName;
     };
+    $scope.onStatusSelected = function () {};
     $scope.onPositionSelected = function () {
-        //$scope.new.politicalAdminId = $scope.positions[index].id;
-        //$scope.addMode = false;
-        //$scope.new.politicalAdminId = $scope.selectedPosition.id;
-        var complaintRequest = $http({
-            method: "GET",
-            url:'/ajax/complaint/leader/' + $scope.selectedPosition.id,
-            headers: {'Content-Type': 'application/json; charset=utf-8'}
-        });
-        complaintRequest.success(function (data) {
-            $scope.complaints = data;
-        });
-        complaintRequest.error(function () {
-            console.error("Complaint request failed");
-        });
+        total = 0;
+        current = 0;
+        $scope.complaints = [];
+        allComplaints = [];
+        $scope.getNext();
+    };
+    $scope.getNext = function () {
+        if(current == total) {
+            var complaintRequest = $http({
+                method: "GET",
+                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + '/?page=' + current,
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            });
+            complaintRequest.success(function (data) {
+                $scope.allComplaints.append(data);
+                total = total + 1;
+                
+            });
+            complaintRequest.error(function () {
+                console.error("Complaint request failed");
+            });
+        }
+        current = current + 1;
+        $scope.complaints = $scope.allComplaints.slice((current-1)*getCount, current*getCount);
+    };
+    $scope.getPrevious = function () {
+        if (current == 1) {
+            return;
+        }
+        current = current - 1;
+        $scope.complaints = $scope.allComplaints.slice((current-1)*getCount, current*getCount);
     };
     //Get all political positions
     var positionRequest = $http({
@@ -41,6 +63,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         console.error('Could not get positions for the leader');
     });
 });
+
 complaintsApp.filter('rootCategory', function () {
     return function (categories) {
         var out = "";
@@ -52,12 +75,15 @@ complaintsApp.filter('rootCategory', function () {
         return out;
     };
 });
+
 complaintsApp.filter('subCategory', function () {
     return function (categories) {
+        var out = "";
         categories.forEach(function (value, index, array) {
             if (!value.root) {
-                return value.name;
+                out = value.name;
             }
         });
+        return out;
     };
 });

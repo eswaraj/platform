@@ -83,7 +83,7 @@
                                                         </div>	
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
-                                                            <div class="list-row"  ng-repeat="complaint in complaints">
+                                                            <div class="list-row"  ng-repeat="complaint in complaints | !complaint.viewed">
                                                                 <!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"--> <!-- not working as expected -->
                                                                 <div class="innerblock">
                                                                     <span class="glyphicon glyphicon-fullscreen glyph_right_float"></span>
@@ -292,35 +292,8 @@
                                                             <!-- new_div ends  -->
                                                             <div class="pagination-wrapper">
                                                                 <ul class="pagination">
-
-
-                                                                    <li class="disabled"><a href="#!">&laquo;</a></li>
-
-
-
-                                                                    <li class="active"><a href="?page=1">1</a>
-                                                                    </li>
-
-
-
-
-
-
-                                                                    <li><a href="?page=2">2</a></li>
-
-
-
-
-
-                                                                    <li><a href="?page=3">3</a></li>
-
-
-
-
-
-                                                                    <li class="disabled"><a href="#!">&raquo;</a></li>
-
-
+                                                                    <li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
+                                                                    <li><a href="#!" ng-click="getNext()">&raquo;</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>	
