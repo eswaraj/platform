@@ -114,7 +114,7 @@
                                                                         </span>
                                                                         <span>
                                                                             <img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus posttimestatus_adjust" alt="">
-                                                                            <a href="#!" class="location"><abbr class="text-limit timeago" title="2014-10-14T14:54:55Z">2014-10-14T14:54:55Z</abbr></a>
+                                                                            <a href="#!" class="location"><abbr class="text-limit timeago" title="2014-10-14T14:54:55Z">{{complaint.complaintTime | dateFormatter}}</abbr></a>
                                                                         </span>
                                                                     </div>
                                                                 </div>

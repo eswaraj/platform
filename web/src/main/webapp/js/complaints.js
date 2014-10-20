@@ -87,3 +87,11 @@ complaintsApp.filter('subCategory', function () {
         return out;
     };
 });
+
+complaintsApp.filter('dateFormatter', function () {
+    return function (input) {
+        var date = new Date(input);
+        out = date.toString();
+        return out;
+    };
+});
