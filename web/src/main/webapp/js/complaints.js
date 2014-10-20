@@ -17,11 +17,29 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         element.tab('show');
     };
     $scope.saveStatus = function () {};
-    $scope.showDetails = function (event) {
+    $scope.showDetailsAndMarkViewed = function (event, complaint) {
         var element = $(event.currentTarget);
         var innerdiv = $(element.next( ".innerdiv-list-row" ));
         innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
         element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
+        
+        if (!complaint.viewed) {
+            var viewedRequest = $http({
+                method: "POST",
+                url:"/ajax/complaint/leader/view",
+                data: {
+                    'politicalAdminId' : selectedPosition.id,
+                    'complaintId' : complaint.id
+                },
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            });
+            viewedRequest.success(function (data) {
+                complaint.viewed = true;
+            });
+            viewedRequest.error(function () {
+                console.error('Request failed for /ajax/leader/staff');
+            });
+        }
     };
     $scope.label = function (positionType, locationName) {
         return positionType + " of " + locationName;

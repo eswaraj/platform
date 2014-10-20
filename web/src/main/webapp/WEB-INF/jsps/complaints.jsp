@@ -84,7 +84,7 @@
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
                                                             <div ng-repeat="complaint in complaints">
-                                                                <div class="list-row" ng-click="showDetails($event)">
+                                                                <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float"></span>
                                                                         <div class="col-sm-1 profile_pic_adjust">
