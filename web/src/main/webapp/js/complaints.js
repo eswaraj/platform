@@ -9,6 +9,9 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.newComment = {};
     $scope.addComment = function () {};
     $scope.saveStatus = function () {};
+    $scope.label = function (positionType, locationName) {
+        return positionType + " of " + locationName;
+    };
     $scope.onPositionSelected = function () {
         //$scope.new.politicalAdminId = $scope.positions[index].id;
         //$scope.addMode = false;
