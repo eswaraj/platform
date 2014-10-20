@@ -134,7 +134,7 @@
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
-                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}">
+                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" ng-click="showTab($event)">
                                                                                     <li><a href="#issues_images_carousel{{$index + 1}}">Complaint Pictures</a></li>
                                                                                     <li><a href="#loc_on_map{{$index + 1}}">Show on Map</a></li>
                                                                                 </ul>
@@ -294,19 +294,6 @@
                                     $( this ).find( ".glyph_read_complaints" ).toggleClass("glyphicon-collapse-down");
                                 });
 
-                                $( ".list-row" ).not("a").each( function () {
-                                    $( this ).on( 'click', function () {
-                                        $( this ).next( ".innerdiv-list-row" ).toggleClass("innerdiv-box-shadow").fadeToggle(500);
-                                        $( this ).find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
-                                    });
-                                });
-
-                                $( ".list-row" ).not("a").each( function () {
-                                    $( this ).on( 'click', function () {
-                                        $( this ).next( ".innerdiv-list-row" ).toggleClass("innerdiv-box-shadow").fadeToggle(500);
-                                        $( this ).find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
-                                    });
-                                });
                             };
                         </script>
                         </html>
