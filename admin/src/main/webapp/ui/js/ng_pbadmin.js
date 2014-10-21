@@ -44,8 +44,9 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 data.startDate = isoToHuman(data.startDate);
                 data.endDate = isoToHuman(data.endDate);
                 $scope.person.personAddress = $scope.person.personAddress || {};
-                data.person = $scope.person;
-                data.person.dob = isoToHuman(data.person.dob);
+                //data.person = $scope.person;
+                $.extend(true, data.person, $scope.person);
+                $scope.person.dob = new Date($scope.person.dob).getTime();
                 var personSaveRequest = $http({
                     method: 'POST',
                     url: "/ajax/person/save",
@@ -119,12 +120,13 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         $.extend(true, $scope.person, selected.person);
         $scope.form.startDate = isoToHuman($scope.form.startDate);
         $scope.form.endDate = isoToHuman($scope.form.endDate);
-        $scope.person.dob = new Date($scope.person.dob).getTime();
+        //$scope.person.dob = new Date($scope.person.dob).getTime();
     };
     $scope.onPersonSelected = function() {
         console.log($scope.selectedPerson);
         $scope.form.personId = $scope.selectedPerson.id;
         $scope.person = $scope.selectedPerson;
+        $scope.person.dob = isoToHuman($scope.person.dob);
     };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
