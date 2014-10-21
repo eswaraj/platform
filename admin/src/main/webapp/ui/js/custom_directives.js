@@ -50,7 +50,7 @@ app.directive('jstree', function($timeout, $http) {
                 if(data.id === attrs.id) {
                     element.jstree(true).create_node('#', {
                         id : data.child.id,
-                        text : displayFunction(data.child),
+                        text : scope.displayFunction(data.child),
                         li_attr : data.child
                     });
                 }
@@ -62,7 +62,7 @@ app.directive('jstree', function($timeout, $http) {
                     n = n[0];
                     element.jstree(true).create_node(n, {
                         id : data.child.id,
-                        text : displayFunction(data.child),
+                        text : scope.displayFunction(data.child),
                         li_attr : data.child
                     });
                 }
@@ -70,7 +70,7 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
-                    element.jstree('set_text',data.child.id, displayFunction(data.child));
+                    element.jstree('set_text',data.child.id, scope.displayFunction(data.child));
                     for (var key in data.child) {
                         $('#'+data.child.id).attr(key,data.child[key]);
                     }
@@ -86,7 +86,7 @@ app.directive('jstree', function($timeout, $http) {
                 if(data instanceof Array) {
                     for(var i=0; i< data.length;i++){
                         var new_node = {
-                            'text': displayFunction(data[i]),
+                            'text': scope.displayFunction(data[i]),
                             'id': data[i].id,
                             'li_attr': ""
                         };
@@ -96,7 +96,7 @@ app.directive('jstree', function($timeout, $http) {
                 }
                 else {
                     var new_node = {
-                        'text': displayFunction(data),
+                        'text': scope.displayFunction(data),
                         'id': data.id,
                         'li_attr': ""
                     };
@@ -131,7 +131,7 @@ app.directive('jstree', function($timeout, $http) {
                             childRequest.success(function (data) {
                                 for(var i=0; i< data.length;i++){
                                     var new_node = {
-                                        'text': displayFunction(data[i]),
+                                        'text': scope.displayFunction(data[i]),
                                         'id': data[i].id,
                                         'li_attr': ""
                                     };
