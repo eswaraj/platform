@@ -12,6 +12,7 @@
                                 <jsp:include page="include.jsp" />
                                 <script src="${staticHost}/js/angular.min.js"></script>
                                 <script src="${staticHost}/js/complaints.js"></script>
+                                <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
                                 <link rel="stylesheet" href='${staticHost}/css/complaints.css' />
                             </head>
                             <body ng-controller="complaintsController">
@@ -157,7 +158,7 @@
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
                                                                                         <div>
-                                                                                            <div id="googleMap{{$index + 1}}"></div>
+                                                                                            <google-map id="googleMap{{$index + 1}}" lat="complaint.lattitude" lng="complaint.longitude"></google-map>
                                                                                         </div>
                                                                                     </div>
 

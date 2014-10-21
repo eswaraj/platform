@@ -186,3 +186,27 @@ complaintsApp.directive('textcollapse', function () {
         }
     };
 });
+
+complaintsApp.directive('googleMap', function () {
+    return {
+        restrict : 'E',
+        scope : {
+            lat : '@',
+            lng : '@'
+        },
+        link : function (scope, element, attrs) {
+            var myLatlng = new google.maps.LatLng(lat, lng);
+            var mapOptions = {
+                zoom: 14,
+                center: myLatlng,
+                mapTypeId : google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(element, mapOptions);
+            var myMarker = new google.maps.Marker({
+                position : myLatlng,
+                draggable : false
+            });
+            myMarker.setMap(map);
+        }
+    };
+});
