@@ -57,6 +57,8 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
     @RequestMapping(value = "/ajax/complaint/leader/status", method = RequestMethod.POST)
     public @ResponseBody String getLeaderComplaints(HttpServletRequest httpServletRequest, ModelAndView mv,
             @RequestBody ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto) throws ApplicationException {
+        UserDto loggedInuser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        complaintStatusChangeByPoliticalAdminRequestDto.setPersonId(loggedInuser.getPerson().getId());
         String complaints = apiUtil.updateComplaintStatus(httpServletRequest, complaintStatusChangeByPoliticalAdminRequestDto);
         return complaints;
     }
@@ -71,6 +73,8 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
     @RequestMapping(value = "/ajax/complaint/leader/comment", method = RequestMethod.POST)
     public @ResponseBody String commentOnComplaints(HttpServletRequest httpServletRequest, ModelAndView mv,
  @RequestBody CommentSaveRequestDto commentRequestDto) throws ApplicationException {
+        UserDto loggedInuser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        commentRequestDto.setPersonId(loggedInuser.getPerson().getId());
         String complaints = apiUtil.commentOn(httpServletRequest, commentRequestDto);
         return complaints;
     }
