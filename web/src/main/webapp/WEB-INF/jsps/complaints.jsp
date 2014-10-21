@@ -202,7 +202,7 @@
                                                                             <!-- Old Comments -->
 
                                                                             <div id="show_full_comments_page">
-                                                                                <a href="#!" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
+                                                                                <a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
                                                                                 <a href="#!" id="collapse_comments_box" class="comments_controller">Back To Top</a>
                                                                             </div>
 
