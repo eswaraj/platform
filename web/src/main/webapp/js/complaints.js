@@ -199,6 +199,8 @@ complaintsApp.directive('googleMap', function ($timeout) {
             var el = document.createElement("div");
             el.style.width = "100%";
             el.style.height = "100%";
+            element.css('display','block');
+            element.css('height','300px');
             element.prepend(el);
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
