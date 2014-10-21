@@ -177,9 +177,9 @@
 
                                                                                     <span class="status_change">
                                                                                         <label class="label_status_options">Change Status : </label>
-                                                                                        <select class="select dropdownlist status_options" ng-options="status for status in statuses" ng-model="selectedStatus" ng-change="onStatusSelected()">
+                                                                                        <select class="select dropdownlist status_options" ng-options="status for status in statuses" ng-model="complaint.newStatus" ng-change="onStatusSelected()">
                                                                                         </select>
-                                                                                        <a href="#!" id="save_status_changes" class="comments_controller save_option" ng-click="saveStatus()">Save</a>
+                                                                                        <a href="#!" id="save_status_changes" class="comments_controller save_option" ng-click="saveStatus(complaint)">Save</a>
                                                                                     </span>
                                                                                     <span class="status_change_tracker">
                                                                                         <span class="status_change_display_message"></span>
@@ -192,8 +192,8 @@
                                                                                     <form id="comment_form">
 
                                                                                         <a href="#!" class="profile-pic-comments"><img src="http://dev.eswaraj.com/images/profile-pic.jpg" alt=""></a>
-                                                                                        <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="newComment.commentText"/>
-                                                                                        <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment()"></input>
+                                                                                        <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="complaint.commentText"/>
+                                                                                        <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment(complaint)"></input>
 
                                                                                     </form>
 

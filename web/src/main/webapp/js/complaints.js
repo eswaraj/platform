@@ -9,14 +9,48 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
     $scope.selectedPosition = {};
-    $scope.selectedStatus = {};
+    $scope.selectedStatus = "";
     $scope.newComment = {};
-    $scope.addComment = function () {};
+    $scope.addComment = function (complaint) {
+        var commentRequest = $http({
+            method: "POST",
+            url:"/ajax/complaint/leader/comment",
+            data: {
+                'politicalAdminId' : $scope.selectedPosition.id,
+                'complaintId' : complaint.id,
+                'commentText' : complaint.commentText
+            },
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        });
+        commentRequest.success(function (data) {
+            //complaint.commentText = $scope.selectedStatus;
+        });
+        commentRequest.error(function () {
+            console.error('Request failed for /ajax/complaint/leader/comment');
+        });
+    };
     $scope.showTab = function (event) {
         var element = $(event.currentTarget);
         element.tab('show');
     };
-    $scope.saveStatus = function () {};
+    $scope.saveStatus = function (complaint) {
+        var statusRequest = $http({
+            method: "POST",
+            url:"/ajax/complaint/leader/status",
+            data: {
+                'politicalAdminId' : $scope.selectedPosition.id,
+                'complaintId' : complaint.id,
+                'status' : complaint.newStatus
+            },
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        });
+        statusRequest.success(function (data) {
+            complaint.politicalAdminStatus = $scope.selectedStatus;
+        });
+        statusRequest.error(function () {
+            console.error('Request failed for /ajax/complaint/leader/status');
+        });
+    };
     $scope.showDetailsAndMarkViewed = function (event, complaint) {
         var element = $(event.currentTarget);
         var innerdiv = $(element.next( ".innerdiv-list-row" ));
@@ -37,7 +71,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 complaint.viewed = true;
             });
             viewedRequest.error(function () {
-                console.error('Request failed for /ajax/leader/staff');
+                console.error('Request failed for /ajax/complaint/leader/view');
             });
         }
     };
