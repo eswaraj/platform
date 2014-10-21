@@ -19,10 +19,18 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     $scope.selectedLocation = "";
     $scope.selectedPerson = {};
     $scope.showTypeWithLocation = function (obj) {
-        deferred.promise.then(function () {
-            console.log(obj);
+        //var p = $q.defer(); 
+        //deferred.promise.then(function () {
+        //    p.resolve(obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId]);
+        //});
+        //return p.promise;
+        
+        if (promiseResolved) {
             return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
-        });
+        }
+        else {
+            return obj.name + " Type: Country";
+        }
     };
     $scope.closeForm = function () {
         $scope.form = {};
@@ -247,6 +255,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     $( "#add_edit_admin_page" ).hide();
 
     var deferred = $q.defer();
+    var promiseResolved = false;
     var locTypeRequest = $http({
         method: "GET",
         url:"/ajax/locationtype/get",
@@ -254,6 +263,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     });
     locTypeRequest.success(function (data) {
         addLocation(data);
+        promiseResolved = true;
         deferred.resolve();
     });
     locTypeRequest.error(function () {
