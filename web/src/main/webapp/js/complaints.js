@@ -195,7 +195,7 @@ complaintsApp.directive('googleMap', function () {
             lng : '@'
         },
         link : function (scope, element, attrs) {
-            var myLatlng = new google.maps.LatLng(lat, lng);
+            var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
                 center: myLatlng,
