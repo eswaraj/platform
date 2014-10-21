@@ -26,19 +26,23 @@ app.directive('ngAutocomplete', function ($timeout) {
 });
 
 //jstree directive. To use, do following:
-//<div jstree id="tree1" ng-model="text" root-url="http://demo5303989.mockable.io/person/" child-url="http://demo5303989.mockable.io/getchild"></div>
+//<div jstree id="tree1" ng-model="text" root-url="http://demo5303989.mockable.io/person/" child-url="http://demo5303989.mockable.io/getchild" selected-node="selctedNodeName" display-function="showTypeWithName()"></div>
 //To programmatically add a new root node, child node:
 //$scope.$broadcast('addRoot',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //$scope.$broadcast('addChild',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //$scope.$broadcast('updateNode',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //'tree1' above is the id of the jstree to which you want to add the new node. Also, the payload has to be in 'child'. The child node is added to currently selected node.
 //parent scope will get a "selectedNode" field which will have the node object
+//display-function should be defined. If nothing special has to be done then it should just return the input
 app.directive('jstree', function($timeout, $http) {
     "use strict";
     return {
         restrict: 'A',
-        //scope: {selectedNode : '='},
-        scope: false,
+        scope: {
+            selectedNode : '=',
+            displayFunction : '&'
+        },
+        //scope: false,
         link: function (scope, element, attrs) {
             var root_node_array = [];
 
@@ -46,7 +50,7 @@ app.directive('jstree', function($timeout, $http) {
                 if(data.id === attrs.id) {
                     element.jstree(true).create_node('#', {
                         id : data.child.id,
-                        text : data.child.name,
+                        text : displayFunction(data.child),
                         li_attr : data.child
                     });
                 }
@@ -58,7 +62,7 @@ app.directive('jstree', function($timeout, $http) {
                     n = n[0];
                     element.jstree(true).create_node(n, {
                         id : data.child.id,
-                        text : data.child.name,
+                        text : displayFunction(data.child),
                         li_attr : data.child
                     });
                 }
@@ -66,7 +70,7 @@ app.directive('jstree', function($timeout, $http) {
 
             scope.$on('updateNode', function(event, data) {
                 if(data.id === attrs.id) {
-                    element.jstree('set_text',data.child.id, data.child.name);
+                    element.jstree('set_text',data.child.id, displayFunction(data.child));
                     for (var key in data.child) {
                         $('#'+data.child.id).attr(key,data.child[key]);
                     }
@@ -82,7 +86,7 @@ app.directive('jstree', function($timeout, $http) {
                 if(data instanceof Array) {
                     for(var i=0; i< data.length;i++){
                         var new_node = {
-                            'text': data[i].name,
+                            'text': displayFunction(data[i]),
                             'id': data[i].id,
                             'li_attr': ""
                         };
@@ -92,7 +96,7 @@ app.directive('jstree', function($timeout, $http) {
                 }
                 else {
                     var new_node = {
-                        'text': data.name,
+                        'text': displayFunction(data),
                         'id': data.id,
                         'li_attr': ""
                     };
@@ -127,7 +131,7 @@ app.directive('jstree', function($timeout, $http) {
                             childRequest.success(function (data) {
                                 for(var i=0; i< data.length;i++){
                                     var new_node = {
-                                        'text': data[i].name,
+                                        'text': displayFunction(data[i]),
                                         'id': data[i].id,
                                         'li_attr': ""
                                     };

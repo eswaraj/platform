@@ -18,6 +18,9 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.selectedLocation = "";
     $scope.selectedPerson = {};
+    $scope.showTypeWithLocation = function (obj) {
+        return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
+    };
     $scope.closeForm = function () {
         $scope.form = {};
         $scope.person = {};
