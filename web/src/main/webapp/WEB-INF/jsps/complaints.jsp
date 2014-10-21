@@ -158,7 +158,7 @@
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
                                                                                         <div>
-                                                                                            <google-map id="googleMap{{$index + 1}}" lat="complaint.lattitude" lng="complaint.longitude"></google-map>
+                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}"></google-map>
                                                                                         </div>
                                                                                     </div>
 
