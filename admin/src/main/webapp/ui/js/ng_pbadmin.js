@@ -1,6 +1,6 @@
 var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives','textAngular']);
 
-pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
+pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q) {
     "use strict";
     //window.scope = $scope;
     $scope.acData = {};
