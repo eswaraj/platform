@@ -294,6 +294,6 @@
                                     $( this ).find( ".glyph_read_complaints" ).toggleClass("glyphicon-collapse-down");
                                 });
 
-                            };
+                            });
                         </script>
                         </html>

@@ -9,7 +9,6 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
     $scope.selectedPosition = {};
-    $scope.selectedStatus = "";
     $scope.newComment = {};
     $scope.addComment = function (complaint) {
         var commentRequest = $http({
@@ -45,7 +44,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         statusRequest.success(function (data) {
-            complaint.politicalAdminComplaintStatus = $scope.selectedStatus;
+            complaint.politicalAdminComplaintStatus = $scope.newStatus;
         });
         statusRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/status');
