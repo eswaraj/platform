@@ -19,7 +19,10 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $scope.selectedLocation = "";
     $scope.selectedPerson = {};
     $scope.showTypeWithLocation = function (obj) {
-        return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
+        deferred.promise.then(function () {
+            console.log(obj);
+            return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
+        });
     };
     $scope.closeForm = function () {
         $scope.form = {};
@@ -243,6 +246,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $("#menu_new").load("../ui/ng_menu.html"); 
     $( "#add_edit_admin_page" ).hide();
 
+    var deferred = $q.defer();
     var locTypeRequest = $http({
         method: "GET",
         url:"/ajax/locationtype/get",
@@ -250,9 +254,11 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     });
     locTypeRequest.success(function (data) {
         addLocation(data);
+        deferred.resolve();
     });
     locTypeRequest.error(function () {
         console.error('Location type get request failed');
+        deferred.reject();
     });
 
     var pbTypeRequest = $http({
