@@ -16,7 +16,7 @@ pageEncoding="UTF-8"%>
 
 	</head>
 	<body>
-		<div class="outerwrapper">
+		<div class="">
 			<jsp:include page="header.jsp" />
 			<script>
 				jQuery(document).ready(function() {
