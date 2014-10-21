@@ -186,8 +186,15 @@ pageEncoding="UTF-8"%>
 						<div class="innerblock">
 							<div class="col-sm-1 profile-info profile_pic_adjust">
 								<div class="profile-pic">
-									<a href="#" ><img src="${staticHost}/images/profile-pic.jpg" alt=""></a>
+								<c:if test="${!empty oneComplaint.loggedBy[0].photo}">
+								    <a href="#" ><img src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
+								</c:if>
+                                <c:if test="${empty oneComplaint.loggedBy[0].photo}">
+                                    <a href="#" ><img src="${staticHost}/images/profile-pic.jpg" alt=""></a>
+                                </c:if>
+									
 								</div>
+								http://graph.facebook.com/10152713173138627/picture
 							</div>
 							<div class="col-sm-10 profile-info profile_info_adjust">
 								<p class="whom">
