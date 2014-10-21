@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
@@ -94,6 +95,17 @@ public abstract class BaseConvertor<DbType, WebType> implements Serializable {
 		}
 		return webTypeList;
 	}
+
+    public List<WebType> convertBeanList(Page<DbType> dbTypeCollection) throws ApplicationException {
+        if (dbTypeCollection == null) {
+            return new ArrayList<WebType>();
+        }
+        List<WebType> webTypeList = new ArrayList<>();
+        for (DbType oneDbType : dbTypeCollection) {
+            webTypeList.add(convertBean(oneDbType));
+        }
+        return webTypeList;
+    }
 	protected Long getNodeId(BaseNode baseNode){
 		if(baseNode == null){
 			return null;
