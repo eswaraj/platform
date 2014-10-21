@@ -359,6 +359,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             ComplaintPoliticalAdmin complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(oneComplaint, politicalBodyAdmin);
             PoliticalAdminComplaintDto onePolitlcalAdminComplaintDto = buildPoliticalAdminComplaint(oneComplaint, complaintPoliticalAdmin);
             addPersons(oneComplaint, onePolitlcalAdminComplaintDto);
+            addImages(oneComplaint, onePolitlcalAdminComplaintDto);
             politlcalAdminComplaintDtos.add(onePolitlcalAdminComplaintDto);
         }
         return politlcalAdminComplaintDtos;
@@ -368,6 +369,12 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
         List<PersonDto> personDtos = personConvertor.convertBeanList(persons);
         politicalAdminComplaintDto.setCreatedByPersons(personDtos);
+    }
+
+    private void addImages(Complaint complaint, PoliticalAdminComplaintDto politicalAdminComplaintDto) throws ApplicationException {
+        Collection<Photo> photos = photoRepository.getComplaintPhotos(complaint);
+        List<PhotoDto> images = photoConvertor.convertBeanList(photos);
+        politicalAdminComplaintDto.setImages(images);
     }
 
     private PoliticalAdminComplaintDto buildPoliticalAdminComplaint(Complaint complaint, ComplaintPoliticalAdmin complaintPoliticalAdmin) throws ApplicationException {
