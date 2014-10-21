@@ -59,8 +59,7 @@
                                             <div class="col-sm-10 wrap_pad_left">
                                                 <div class="listing-wrapper">
                                                     <div class="secondary-wrapper">
-                                                        <!--h1 class="loc_head_text">Delhi</h1--> <!-- Not working at present, to be updated from backend -->
-                                                        <h1 class="loc_head_text">Delhi</h1>									
+                                                        <h1 class="loc_head_text">{{selectedPosition.locationName}}</h1>									
                                                         <div class="views_div">
 
 
@@ -115,7 +114,7 @@
                                                                             </span>
                                                                             <span>
                                                                                 <img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus posttimestatus_adjust" alt="">
-                                                                                <a href="#!" class="location"><abbr class="text-limit timeago" title="2014-10-14T14:54:55Z">{{complaint.complaintTime | dateFormatter}}</abbr></a>
+                                                                                <a href="#!" class="location"><abbr class="text-limit timeago" title="{{complaint.complaintTime | dateFormatter}}">{{complaint.complaintTime | dateFormatter}}</abbr></a>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -143,17 +142,11 @@
                                                                                 <div class="tab-content">
 
                                                                                     <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
-                                                                                        <div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
-                                                                                            <!-- Carousel items -->
-                                                                                            <div class="carousel-inner" ng-repeat="image in complaint.images">
-                                                                                                <div class="item">
-                                                                                                    <img src="{{image.orgUrl}}" />
-                                                                                                </div>                                                                    
-                                                                                            </div>
-                                                                                            <!-- Carousel nav -->
-                                                                                            <a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                                                                                            <a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                                                                                        </div>
+                                                                                        <carousel interval="3500">
+                                                                                            <slide ng-repeat="image in complaint.images">
+                                                                                                <img ng-src="{{image.orgUrl}}" style="margin:auto;">
+                                                                                            </slide>
+                                                                                        </carousel>
                                                                                     </div>
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
