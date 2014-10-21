@@ -45,7 +45,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         statusRequest.success(function (data) {
-            complaint.politicalAdminStatus = $scope.selectedStatus;
+            complaint.politicalAdminComplaintStatus = $scope.selectedStatus;
         });
         statusRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/status');
