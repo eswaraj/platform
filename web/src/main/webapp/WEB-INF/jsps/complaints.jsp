@@ -119,7 +119,6 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
 
                                                                 <div class="innerdiv-list-row">
@@ -164,7 +163,8 @@
 
                                                                         <!-- Comments Box -->
 
-                                                                        <div id="load_comments_box"><a href="#!" id="comments_status" class="comments_controller allcomments_expand">Comments from Users ( 140 )</a>
+                                                                        <div id="load_comments_box">
+                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand">Comments from Users ( 140 )</a>
 
                                                                             <div id="comments_box" class="div_comments_box">
 
@@ -188,107 +188,37 @@
 
                                                                                         <a href="#!" class="profile-pic-comments"><img src="${user.person.profilePhoto}" alt=""></a>
                                                                                         <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="complaint.commentText"/>
-                                                                                        <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment(complaint)"></input>
+                                                                                        <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment(complaint)"/>
 
                                                                                     </form>
 
-                                                                            </div>	
+                                                                                </div>	
 
-                                                                            <!-- Old Comments -->
+                                                                                <!-- Old Comments -->
 
-                                                                            <div id="show_full_comments_page">
-                                                                                <a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
-                                                                                <a href="#!" id="collapse_comments_box" class="comments_controller">Back To Top</a>
+                                                                                <div id="show_full_comments_page">
+                                                                                    <a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
+                                                                                    <a href="#!" id="collapse_comments_box" class="comments_controller">Back To Top</a>
+                                                                                </div>
                                                                             </div>
-
                                                                         </div>
-
-
                                                                     </div>
-
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- new_div ends  -->
-                                                        <div class="pagination-wrapper">
-                                                            <ul class="pagination">
-                                                                <li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
-                                                                <li><a href="#!" ng-click="getNext()">&raquo;</a></li>
-                                                            </ul>
-                                                        </div>
-
-                                                    </div>	
-
-                                                    <div class="mla_read_complaints_controller">
-                                                        <span class="read_complaints"><b>Read Complaints (4)</b></span>
-                                                        <span class="glyphicon glyphicon-circle-arrow-up glyph_read_complaints glyph_comments_right_float"></span>
-                                                        <span class="comments_display_per_page"><b>Showing 4 of 10000 Complaints</b></span>
+                                                            <!-- new_div ends  -->
+                                                            <div class="pagination-wrapper">
+                                                                <ul class="pagination">
+                                                                    <li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
+                                                                    <li><a href="#!" ng-click="getNext()">&raquo;</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>	
                                                     </div>
-                                                    <div class="mla_read_complaints">
-                                                        <!-- 3 -->
-                                                    </div>	
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-                            <jsp:include page="footer.jsp" />
+                                <jsp:include page="footer.jsp" />
                             </body>
-                        <script>
-                            $(document).ready(function(){
-
-                                $('#c_m_tab1 a:first').tab('show');
-                                $('#c_m_tab2 a:first').tab('show');
-                                $('#c_m_tab3 a:first').tab('show');
-                                $('#c_m_tab4 a:first').tab('show');
-                                $('#c_m_tab5 a:first').tab('show');
-                                $('#c_m_tab6 a:first').tab('show');
-
-
-                                /*enable tabs to be selected*/
-                                $('#c_m_tab1 a').click(function (e) {
-                                    e.preventDefault();
-                                    $(this).tab('show');
-                                });
-                                /*enable tabs to be selected*/
-                                $('#c_m_tab2 a').click(function (e) {
-                                    e.preventDefault();
-                                    $(this).tab('show');
-                                });
-                                /*enable tabs to be selected*/
-                                $('#c_m_tab3 a').click(function (e) {
-                                    e.preventDefault();
-                                    $(this).tab('show');
-                                });
-                                /*enable tabs to be selected*/
-                                $('#c_m_tab4 a').click(function (e) {
-                                    e.preventDefault();
-                                    $(this).tab('show');
-                                });
-                                /*enable tabs to be selected*/
-                                $('#c_m_tab5 a').click(function (e) {
-                                    e.preventDefault();
-                                    $(this).tab('show');
-                                });
-                                /*enable tabs to be selected*/
-                                $('#c_m_tab6 a').click(function (e) {
-                                    e.preventDefault();
-                                    $(this).tab('show');
-                                });
-
-                                $( ".mla_unread_complaints_controller" ).on( 'click', function () {
-                                    $( this ).next( ".mla_unread_complaints" ).fadeToggle(500);
-                                    $( this ).find( ".glyph_unread_complaints" ).toggleClass("glyphicon-collapse-down");
-                                });
-
-                                $( ".mla_read_complaints_controller" ).on( 'click', function () {
-                                    $( this ).next( ".mla_read_complaints" ).fadeToggle(500);
-                                    $( this ).find( ".glyph_read_complaints" ).toggleClass("glyphicon-collapse-down");
-                                });
-
-                            });
-                        </script>
                         </html>
