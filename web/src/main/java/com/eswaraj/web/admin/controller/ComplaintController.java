@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
@@ -50,6 +50,7 @@ public class ComplaintController extends BaseController{
     public ModelAndView showComplaint(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long complaintId)
             throws ApplicationException {
         // TODO get complaint Data and put it in model
+        addGenericValues(mv, httpServletRequest);
         mv.setViewName("singlecomplaint");
         return mv;
     }
