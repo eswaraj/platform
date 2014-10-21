@@ -134,9 +134,9 @@
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
-                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" ng-click="showTab($event)">
-                                                                                    <li><a href="#issues_images_carousel{{$index + 1}}">Complaint Pictures</a></li>
-                                                                                    <li><a href="#loc_on_map{{$index + 1}}">Show on Map</a></li>
+                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" >
+                                                                                    <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event)">Complaint Pictures</a></li>
+                                                                                    <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event)">Show on Map</a></li>
                                                                                 </ul>
 
                                                                                 <div class="tab-content">
@@ -146,7 +146,7 @@
                                                                                             <!-- Carousel items -->
                                                                                             <div class="carousel-inner" ng-repeat="image in complaint.images">
                                                                                                 <div class="item">
-                                                                                                    <img src="{{image}}" />
+                                                                                                    <img src="{{image.orgUrl}}" />
                                                                                                 </div>                                                                    
                                                                                             </div>
                                                                                             <!-- Carousel nav -->

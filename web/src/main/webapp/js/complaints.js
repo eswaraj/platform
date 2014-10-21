@@ -22,7 +22,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         commentRequest.success(function (data) {
-            //complaint.commentText = $scope.selectedStatus;
+            complaint.commentText = "";
         });
         commentRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/comment');
