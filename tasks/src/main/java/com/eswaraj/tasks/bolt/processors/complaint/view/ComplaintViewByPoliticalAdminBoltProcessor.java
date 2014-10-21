@@ -52,7 +52,7 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
             }
             PoliticalBodyAdminDto politicalBodyAdminDto = appService.getPoliticalBodyAdminById(complaintViewByPoliticalAdminMessage.getPoliticalAdminId());
             PersonDto person = personService.getPersonById(complaintViewByPoliticalAdminMessage.getPersonId());
-            PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getId());
+            PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getPoliticalBodyTypeId());
             String message = "Your complaint has been viewed by " + politicalBodyTypeDto.getShortName() + " - " + person.getName();
             if (!person.getId().equals(politicalBodyAdminDto.getPersonId())) {
                 PersonDto politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());

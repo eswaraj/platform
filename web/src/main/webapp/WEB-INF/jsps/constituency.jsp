@@ -192,9 +192,7 @@ pageEncoding="UTF-8"%>
                                 <c:if test="${empty oneComplaint.loggedBy[0].photo}">
                                     <a href="#" ><img src="${staticHost}/images/profile-pic.jpg" alt=""></a>
                                 </c:if>
-									
 								</div>
-								http://graph.facebook.com/10152713173138627/picture
 							</div>
 							<div class="col-sm-10 profile-info profile_info_adjust">
 								<p class="whom">
