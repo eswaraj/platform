@@ -11,6 +11,7 @@
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
                                 <script src="${staticHost}/js/angular.min.js"></script>
+                                <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
                                 <script src="${staticHost}/js/complaints.js"></script>
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
                                 <link rel="stylesheet" href='${staticHost}/css/complaints.css' />
