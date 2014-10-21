@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -471,8 +474,19 @@ public class LocationServiceImpl extends BaseService implements LocationService 
 
     @Override
     public List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException {
-        List<Location> locations = locationRepository.getAllPagedLocations(start, pageSize);
-        return locationConvertor.convertBeanList(locations);
+        try {
+            logger.info("Getting locations using own query, start = {}, pageSize = {}", start, pageSize);
+            List<Location> locations = locationRepository.getAllPagedLocations(start, pageSize);
+            return locationConvertor.convertBeanList(locations);
+
+        } catch (Exception ex) {
+            logger.error("Unable to get Locations", ex);
+        }
+        Pageable pageable = new PageRequest((int)(start / pageSize), (int)pageSize);
+        logger.info("Getting locations using system generated query, oage = {}, pageSize = {}, pageable={}", start / pageSize, pageSize, pageable);
+        Page<Location> pagedLocations = locationRepository.findAll(pageable);
+        return locationConvertor.convertBeanList(pagedLocations);
+
     }
 
     @Override
