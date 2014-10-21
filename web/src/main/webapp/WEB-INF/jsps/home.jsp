@@ -15,7 +15,7 @@
 	<jsp:include page="include.jsp" />
 </head>
 <body>
-	<div class="outerwrapper">
+	<div class="">
 		<div class="container">
 			<header>
 			<jsp:include page="header.jsp" />
@@ -174,8 +174,9 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="footer.jsp" />
+
 </div>
+<jsp:include page="footer.jsp" />
 </div>
 
 </body>

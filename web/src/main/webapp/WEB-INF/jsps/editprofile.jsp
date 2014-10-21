@@ -10,13 +10,13 @@
 <html lang="en">
 <head>
 <jsp:include page="include.jsp" />
-
+<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 <script type="text/javascript" src="${staticHost}/js/slide_notification.js"></script>
 <!-- Script -->
 <link rel="stylesheet" href="${staticHost}/css/editprofile.css">
 </head>
 <body>
-	<div class="outerwrapper">
+	<div class="">
 		<jsp:include page="header.jsp" />
 
 		<div class="right-pane fixed" id="profile_show">
