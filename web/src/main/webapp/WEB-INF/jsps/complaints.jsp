@@ -143,7 +143,7 @@
                                                                                 <div class="tab-content">
 
                                                                                     <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
-                                                                                        <carousel interval="3500">
+                                                                                        <carousel interval="3500" id="myCarousel{{$index + 1}}">
                                                                                             <slide ng-repeat="image in complaint.images">
                                                                                                 <img ng-src="{{image.orgUrl}}" style="margin:auto;">
                                                                                             </slide>
