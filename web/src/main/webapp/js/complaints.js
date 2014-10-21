@@ -187,21 +187,29 @@ complaintsApp.directive('textcollapse', function () {
     };
 });
 
-complaintsApp.directive('googleMap', function () {
+complaintsApp.directive('googleMap', function ($timeout) {
     return {
         restrict : 'E',
         scope : {
             lat : '@',
-            lng : '@'
+            lng : '@',
+            id : '@'
         },
         link : function (scope, element, attrs) {
+            var el = document.createElement("div");
+            el.style.width = "100%";
+            el.style.height = "100%";
+            element.prepend(el);
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
                 center: myLatlng,
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             }
-            var map = new google.maps.Map(element, mapOptions);
+            var map = new google.maps.Map(el, mapOptions);
+            $timeout(function() {
+                google.maps.event.trigger(map, "resize");
+            });
             var myMarker = new google.maps.Marker({
                 position : myLatlng,
                 draggable : false
