@@ -195,6 +195,25 @@
                                                                                 </div>	
 
                                                                                 <!-- Old Comments -->
+                                                                                <div ng-repeat="comment in complaint.comments">
+                                                                                    <div id="old_comments_block">
+
+                                                                                        <a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+
+                                                                                        <p class="comments_whom">
+                                                                                            <a href="#!" class="username">{{comment.postedBy.name}}</a>
+                                                                                            <img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
+                                                                                            <a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime}}</abbr></a>
+                                                                                        </p>
+
+                                                                                        <div class="comments-info" >
+                                                                                            <textcollapse>
+                                                                                                {{comment.text}}
+                                                                                            </textcollapse>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
 
                                                                                 <div id="show_full_comments_page">
                                                                                     <a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>

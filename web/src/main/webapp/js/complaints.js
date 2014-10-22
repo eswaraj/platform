@@ -23,6 +23,8 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         });
         commentRequest.success(function (data) {
             complaint.commentText = "";
+            complaint.comments = complaint.comments || [];
+            complaint.comments.unshift(data);
         });
         commentRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/comment');
@@ -93,6 +95,20 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             complaintRequest.success(function (data) {
+                //get comments for all fetched complaints
+                data.forEach(function (value, index, array) {
+                    var commentRequest = $http({
+                        method: "GET",
+                        url:'/ajax/complaint/' + value.id + '/comments?count=5',
+                        headers: {'Content-Type': 'application/json; charset=utf-8'}
+                    });
+                    commentRequest.success(function (resp) {
+                        array[index].comments = resp;
+                    });
+                    commentRequest.error(function () {
+                        console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
+                    });
+                });
                 allComplaints = allComplaints.concat(data);
                 total = total + 1;
                 current = current + 1;
