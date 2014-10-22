@@ -38,7 +38,6 @@ public class CommentController extends BaseController {
     private AppKeyService appKeyService;
     @Autowired
     private AppService appService;
-    @Autowired
     private JsonParser jsonParser = new JsonParser();
 
     @RequestMapping(value = "/api/v0/complaint/{complaintId}/comments", method = RequestMethod.GET)
