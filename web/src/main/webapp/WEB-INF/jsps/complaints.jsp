@@ -203,7 +203,7 @@
                                                                                         <p class="comments_whom">
                                                                                             <a href="#!" class="username">{{comment.postedBy.name}}</a>
                                                                                             <img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
-                                                                                            <a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime}}</abbr></a>
+                                                                                            <a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime | dateFormatter}}</abbr></a>
                                                                                         </p>
 
                                                                                         <div class="comments-info" >
