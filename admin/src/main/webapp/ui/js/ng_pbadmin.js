@@ -1,6 +1,6 @@
 var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives','textAngular']);
 
-pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
+pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q) {
     "use strict";
     //window.scope = $scope;
     $scope.acData = {};
@@ -18,6 +18,20 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.selectedLocation = "";
     $scope.selectedPerson = {};
+    $scope.showTypeWithLocation = function (obj) {
+        //var p = $q.defer(); 
+        //deferred.promise.then(function () {
+        //    p.resolve(obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId]);
+        //});
+        //return p.promise;
+        
+        if (promiseResolved) {
+            return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
+        }
+        else {
+            return obj.name + " Type: Country";
+        }
+    };
     $scope.closeForm = function () {
         $scope.form = {};
         $scope.person = {};
@@ -44,7 +58,9 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                 data.startDate = isoToHuman(data.startDate);
                 data.endDate = isoToHuman(data.endDate);
                 $scope.person.personAddress = $scope.person.personAddress || {};
-                data.person = $scope.person;
+                //data.person = $scope.person;
+                $.extend(true, data.person, $scope.person);
+                $scope.person.dob = new Date($scope.person.dob).getTime();
                 var personSaveRequest = $http({
                     method: 'POST',
                     url: "/ajax/person/save",
@@ -118,11 +134,13 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
         $.extend(true, $scope.person, selected.person);
         $scope.form.startDate = isoToHuman($scope.form.startDate);
         $scope.form.endDate = isoToHuman($scope.form.endDate);
+        //$scope.person.dob = new Date($scope.person.dob).getTime();
     };
     $scope.onPersonSelected = function() {
         console.log($scope.selectedPerson);
         $scope.form.personId = $scope.selectedPerson.id;
         $scope.person = $scope.selectedPerson;
+        $scope.person.dob = isoToHuman($scope.person.dob);
     };
     $scope.onLocationSelected = function (index) {
         var locId = $scope.acData.node_searchData[index].id;
@@ -180,6 +198,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
                         headers: {'Content-Type': 'application/json; charset=utf-8'}
                     });
                     personRequest.success(function (data) {
+                        data.dob = isoToHuman(data.dob);
                         arr[i].person = data;
                     });
                     personRequest.error(function () {
@@ -235,6 +254,8 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     $("#menu_new").load("../ui/ng_menu.html"); 
     $( "#add_edit_admin_page" ).hide();
 
+    var deferred = $q.defer();
+    var promiseResolved = false;
     var locTypeRequest = $http({
         method: "GET",
         url:"/ajax/locationtype/get",
@@ -242,9 +263,12 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout) {
     });
     locTypeRequest.success(function (data) {
         addLocation(data);
+        promiseResolved = true;
+        deferred.resolve();
     });
     locTypeRequest.error(function () {
         console.error('Location type get request failed');
+        deferred.reject();
     });
 
     var pbTypeRequest = $http({

@@ -146,6 +146,15 @@ footer .sep{
 	margin: 11px 10px 0 0;
 	height: 28px;
 }
+.nav .user-profile img{
+    max-height: 32px;
+    border-radius: 50%;
+    margin: 0 2px 0 0;
+    border: 2px solid #fff;
+}
+.nav .user-profile a{
+    padding: 9px 15px;
+}
 @media (max-width: 767px) {
 	.mobile-anim{
 		height: auto;

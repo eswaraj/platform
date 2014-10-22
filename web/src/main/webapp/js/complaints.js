@@ -9,7 +9,6 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
     $scope.selectedPosition = {};
-    $scope.selectedStatus = "";
     $scope.newComment = {};
     $scope.addComment = function (complaint) {
         var commentRequest = $http({
@@ -23,7 +22,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         commentRequest.success(function (data) {
-            //complaint.commentText = $scope.selectedStatus;
+            complaint.commentText = "";
         });
         commentRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/comment');
@@ -45,7 +44,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         statusRequest.success(function (data) {
-            complaint.politicalAdminComplaintStatus = $scope.selectedStatus;
+            complaint.politicalAdminComplaintStatus = $scope.newStatus;
         });
         statusRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/status');
@@ -184,6 +183,40 @@ complaintsApp.directive('textcollapse', function () {
                 var text = link.text() == "Show More" ? "Show less" : "Show More";
                 link.text(text);
             });
+        }
+    };
+});
+
+complaintsApp.directive('googleMap', function ($timeout) {
+    return {
+        restrict : 'E',
+        scope : {
+            lat : '@',
+            lng : '@',
+            id : '@'
+        },
+        link : function (scope, element, attrs) {
+            var el = document.createElement("div");
+            el.style.width = "100%";
+            el.style.height = "100%";
+            element.css('display','block');
+            element.css('height','300px');
+            element.prepend(el);
+            var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
+            var mapOptions = {
+                zoom: 14,
+                center: myLatlng,
+                mapTypeId : google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(el, mapOptions);
+            $timeout(function() {
+                google.maps.event.trigger(map, "resize");
+            });
+            var myMarker = new google.maps.Marker({
+                position : myLatlng,
+                draggable : false
+            });
+            myMarker.setMap(map);
         }
     };
 });

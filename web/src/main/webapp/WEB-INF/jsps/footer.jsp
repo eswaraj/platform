@@ -1,4 +1,4 @@
-<footer>
+<footer class="footer_class">
     &copy;
     <a href="#">www.eswaraj.com</a>
     <span class="sep">|</span>

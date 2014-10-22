@@ -39,6 +39,10 @@ categoriesApp.controller('categoriesController', function ($scope, postService) 
     $scope.$watch('selectedNode', function() {
         $scope.child.parentCategoryId = $scope.selectedNode.id;
     });
+    
+    $scope.showName = function (obj) {
+        return obj.name;
+    };
 
     $scope.addRootNode = function () {
         postService.run($scope, '/ajax/categories/save', $scope.root, true, 'addRoot');

@@ -10,9 +10,10 @@
 <html lang="en">
 <head>
 <jsp:include page="include.jsp" />
+<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 </head>
 <body>
-	<div class="outerwrapper">
+	<div class="">
 		<header>
 			<jsp:include page="header.jsp" />
 		</header>

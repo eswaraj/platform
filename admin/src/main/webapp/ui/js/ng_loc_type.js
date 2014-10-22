@@ -40,6 +40,9 @@ locationTypeApp.controller('locationTypeController', function ($scope, postServi
         $scope.loc.parentLocationTypeId = $scope.selectedNode.parentLocationTypeId;
         $scope.editMode = false;
     });
+    $scope.showName = function (obj) {
+        return obj.name;
+    };
     $scope.editNode = function() {
         $scope.editMode = true;
     };
