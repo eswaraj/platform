@@ -87,6 +87,13 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         allComplaints = [];
         $scope.getNext();
     };
+    $scope.onRefresh = function () {
+        total = 0;
+        current = 0;
+        $scope.complaints = [];
+        allComplaints = [];
+        $scope.getNext();
+    };
     $scope.getNext = function () {
         if(current == total) {
             var complaintRequest = $http({
