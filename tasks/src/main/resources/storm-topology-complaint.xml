@@ -41,6 +41,7 @@
 				<ref bean="ComplaintRefreshBoltBean" />
 				<ref bean="ComplaintViewByPoliticalAdminBoltBean" />
 				<ref bean="SendMobileNotificationBoltBean" />
+				<red bean="CommentSavedBoltBean" />
 			</list>
 		</property>
 	</bean>
