@@ -14,7 +14,6 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
-import com.eswaraj.messaging.dto.CommentSavedMessage;
+import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
@@ -57,8 +56,7 @@ public class ComplaintController extends BaseController{
     @Autowired
     private QueueService queueService;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
+    private StormCacheAppServices stormCacheAppServices;
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
@@ -100,13 +98,6 @@ public class ComplaintController extends BaseController{
 		return savedComplaintDto;
 	}
 
-    @RequestMapping(value = "/api/v0/complaint{complaintId}", method = RequestMethod.GET)
-    public @ResponseBody String getComplaintById(HttpServletRequest httpServletRequest, @PathVariable Long complaintId) throws ApplicationException, IOException, ServletException {
-        String redisKey = appKeyService.getComplaintObjectKey(complaintId);
-        String complaint = stringRedisTemplate.opsForValue().get(redisKey);
-        return complaint;
-    }
-
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}", method = RequestMethod.GET)
     public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException, IOException, ServletException {
         long start = getLongParameter(httpServletRequest, "start", 0);
@@ -136,16 +127,10 @@ public class ComplaintController extends BaseController{
     }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/comment", method = RequestMethod.POST)
-    public @ResponseBody CommentSaveResponseDto postComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto)
+    public @ResponseBody String postComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto)
             throws ApplicationException, IOException, ServletException {
         CommentSaveResponseDto commentSaveResponseDto = complaintService.commentOnComplaint(commentRequestDto);
-        CommentSavedMessage commentSavedMessage = new CommentSavedMessage();
-        commentSavedMessage.setCommentId(commentSaveResponseDto.getId());
-        commentSavedMessage.setComplaintId(commentSaveResponseDto.getComplaintId());
-        commentSavedMessage.setPersonId(commentSaveResponseDto.getPersonId());
-        commentSavedMessage.setPoliticalAdminId(commentSaveResponseDto.getPoliticalAdminId());
-        queueService.sendCommentSavedMessage(commentSavedMessage);
-        return commentSaveResponseDto;
+        return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
     }
 
     private void updateRandomDelhiPoint(SaveComplaintRequestDto saveComplaintRequestDto) {
