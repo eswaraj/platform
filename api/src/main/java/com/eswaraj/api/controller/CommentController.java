@@ -46,11 +46,18 @@ public class CommentController extends BaseController {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int count = getIntParameter(httpServletRequest, "count", 10);
         boolean adminOnly = getBooleanParameter(httpServletRequest, "admin_only", false);
+        String order = httpServletRequest.getParameter("order");
         String redisSortedSetKey = appKeyService.getCommentListIdForComplaintKey(complaintId);
         if (adminOnly) {
             redisSortedSetKey = appKeyService.getAdminCommentListIdForComplaintKey(complaintId);
         }
-        Set<String> commentIds = stringRedisTemplate.opsForZSet().range(redisSortedSetKey, start, start + count);
+        Set<String> commentIds;
+        if (order != null && order.equalsIgnoreCase("desc")) {
+            commentIds = stringRedisTemplate.opsForZSet().reverseRange(redisSortedSetKey, start, start + count);
+        } else {
+            commentIds = stringRedisTemplate.opsForZSet().range(redisSortedSetKey, start, start + count);
+        }
+
         if (commentIds == null || commentIds.isEmpty()) {
             return "[]";
         }
