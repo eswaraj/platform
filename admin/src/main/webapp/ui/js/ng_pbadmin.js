@@ -58,7 +58,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
                 data.startDate = isoToHuman(data.startDate);
                 data.endDate = isoToHuman(data.endDate);
                 $scope.person.personAddress = $scope.person.personAddress || {};
-                //data.person = $scope.person;
+                data.person = data.person || {};
                 $.extend(true, data.person, $scope.person);
                 $scope.person.dob = new Date($scope.person.dob).getTime();
                 var personSaveRequest = $http({
