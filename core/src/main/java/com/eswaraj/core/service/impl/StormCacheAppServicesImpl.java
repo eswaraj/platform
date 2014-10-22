@@ -388,7 +388,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         personJsonPbject.addProperty("name", person.getName());
         personJsonPbject.addProperty("id", person.getId());
         personJsonPbject.addProperty("externalId", person.getExternalId());
-        personJsonPbject.addProperty("profilePic", person.getProfilePhoto());
+        personJsonPbject.addProperty("profilePhoto", person.getProfilePhoto());
 
         jsonObject.add("postedBy", personJsonPbject);
 
@@ -401,7 +401,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             pbaJsonObject.addProperty("id", politicalBodyAdmin.getId());
             pbaJsonObject.addProperty("externalId", politicalBodyAdmin.getExternalId());
             pbaJsonObject.addProperty("type", "political");
-            pbaJsonObject.addProperty("profilePic", pbaPerson.getProfilePhoto());
+            pbaJsonObject.addProperty("profilePhoto", pbaPerson.getProfilePhoto());
             jsonObject.add("admin", pbaJsonObject);
 
         } else {
