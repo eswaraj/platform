@@ -35,6 +35,8 @@ public interface ComplaintService {
 
     List<PoliticalAdminComplaintDto> getAllComplaintsOfPoliticalAdmin(Long politicalAdmin, Long start, Long totalComplaints) throws ApplicationException;
 
+    List<PoliticalAdminComplaintDto> getAllComplaintsOfPoliticalAdminAndCategory(Long politicalAdmin, Long categoryId, Long start, Long totalComplaints) throws ApplicationException;
+
     PoliticalAdminComplaintDto updateComplaintViewStatus(ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException;
 
     PoliticalAdminComplaintDto updateComplaintPoliticalAdminStatus(ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto) throws ApplicationException;

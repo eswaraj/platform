@@ -53,4 +53,9 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
     @Query("start politicalAdmin=node({0}) match complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
             + "skip {1} limit {2}")
     public List<Complaint> getAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
+
+    @Query("start politicalAdmin=node({0}), category=node({1}) match category<-[:BELONGS_TO]-complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
+            + "skip {2} limit {3}")
+    public List<Complaint> getAllPagedComplaintsOfPoliticalAdminAndCategry(long politicalAdminId, long categoryId, long start, long end);
+
 }
