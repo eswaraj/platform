@@ -9,6 +9,8 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
     $scope.selectedPosition = {};
+    $scope.selectedCategory = {};
+    $scope.categories = {};
     $scope.newComment = {};
     $scope.addComment = function (complaint) {
         var commentRequest = $http({
@@ -80,6 +82,14 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         return positionType + " of " + locationName;
     };
     $scope.onStatusSelected = function () {};
+    $scope.onCategorySelected = function (category) {
+        $scope.selectedCategory = category;
+        total = 0;
+        current = 0;
+        $scope.complaints = [];
+        allComplaints = [];
+        $scope.getNext();
+    };
     $scope.onPositionSelected = function () {
         total = 0;
         current = 0;
@@ -95,10 +105,11 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         $scope.getNext();
     };
     $scope.getNext = function () {
+        var categoryString = $scope.selectedCategory ? "/" + $scope.selectedCategory.id : "";
         if(current == total) {
             var complaintRequest = $http({
                 method: "GET",
-                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + '/?page=' + (current+1),
+                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1),
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             complaintRequest.success(function (data) {
@@ -106,7 +117,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 data.forEach(function (value, index, array) {
                     var commentRequest = $http({
                         method: "GET",
-                        url:'/ajax/complaint/' + value.id + '/comments?count=5&order=DESC',
+                        url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
                         headers: {'Content-Type': 'application/json; charset=utf-8'}
                     });
                     commentRequest.success(function (resp) {
@@ -149,6 +160,18 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     });
     positionRequest.error(function () {
         console.error('Could not get positions for the leader');
+    });
+    //Get all categories for filter
+    var categoryRequest = $http({
+        method: "GET",
+        url:'/ajax/categories/',
+        headers: {'Content-Type': 'application/json; charset=utf-8'}
+    });
+    categoryRequest.success(function (data) {
+        $scope.categories = data;
+    });
+    categoryRequest.error(function () {
+        console.error('Could not get categories');
     });
 });
 

@@ -31,30 +31,14 @@
                                                     <p class="left_filter_category">
                                                         <strong>Filter Issues by category</strong>
                                                     </p>
+                                                    
                                                     <div class="list-group">
-                                                        <c:if test="${empty selectedCategory}">
-                                                            <a href="#" class="list-group-item active">Show All
-                                                                (${total})</a>
-                                                        </c:if>
-                                                        <c:if test="${!empty selectedCategory}">
-                                                            <a href="${location.url}.html?type=${viewType}"
-                                                               class="list-group-item">Show All (${total})</a>
-                                                        </c:if>
-
-
-                                                        <c:forEach items="${rootCategories}" var="oneCategory">
-                                                            <c:if test="${selectedCategory eq oneCategory.id}">
-                                                                <a href="#" class="list-group-item active">${oneCategory.name}
-                                                                    (${oneCategory.locationCount})</a>
-                                                            </c:if>
-                                                            <c:if test="${ selectedCategory ne oneCategory.id}">
-                                                                <a
-                                                                   href="${location.url}/category/${oneCategory.id}.html?type=${viewType}"
-                                                                   class="list-group-item">${oneCategory.name}
-                                                                    (${oneCategory.locationCount}) </a>
-                                                            </c:if>
-
-                                                        </c:forEach>
+                                                       <div>
+                                                           <a href="#" class="list-group-item" ng-click="onCategorySelected(null)">Show All</a>
+                                                       </div>
+                                                        <div  ng-repeat="category in categories">
+                                                        <a href="#" class="list-group-item" ng-click="onCategorySelected(category)">{{category.name}}</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
