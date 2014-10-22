@@ -99,7 +99,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 data.forEach(function (value, index, array) {
                     var commentRequest = $http({
                         method: "GET",
-                        url:'/ajax/complaint/' + value.id + '/comments?count=5',
+                        url:'/ajax/complaint/' + value.id + '/comments?count=50',
                         headers: {'Content-Type': 'application/json; charset=utf-8'}
                     });
                     commentRequest.success(function (resp) {
