@@ -195,6 +195,13 @@ public class ApiUtil {
         return complaints;
     }
 
+    public String getPoliticalAdminCategoryComplaints(HttpServletRequest httpServletRequest, Long politicalAdminId, Long categoryId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/politicaladmin/" + politicalAdminId + "/" + categoryId;
+        Map<String, String> params = getPagingInfo(httpServletRequest);
+        String complaints = getResponseFrom(httpServletRequest, urlPath, params);
+        return complaints;
+    }
+
     public String updateComplaintViewStatus(HttpServletRequest httpServletRequest, ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException {
         String urlPath = "/api/v0/complaint/politicaladmin/view";
         String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(complaintViewdByPoliticalAdminRequestDto));

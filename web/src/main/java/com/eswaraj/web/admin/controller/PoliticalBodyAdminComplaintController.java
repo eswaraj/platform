@@ -54,6 +54,13 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
         return complaints;
     }
 
+    @RequestMapping(value = "/ajax/complaint/leader/{politicalBodyAdminId}/{categoryId}", method = RequestMethod.GET)
+    public @ResponseBody String getAdminAndCategoryComplaints(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long politicalBodyAdminId, @PathVariable Long categoryId)
+            throws ApplicationException {
+        String complaints = apiUtil.getPoliticalAdminCategoryComplaints(httpServletRequest, politicalBodyAdminId, categoryId);
+        return complaints;
+    }
+
     @RequestMapping(value = "/ajax/complaint/leader/status", method = RequestMethod.POST)
     public @ResponseBody String getLeaderComplaints(HttpServletRequest httpServletRequest, ModelAndView mv,
             @RequestBody ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto) throws ApplicationException {

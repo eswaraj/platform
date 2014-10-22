@@ -107,6 +107,17 @@ public class ComplaintController extends BaseController{
         return politicalAdminComplaints;
     }
 
+    @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}/{categoryId}", method = RequestMethod.GET)
+    public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdminAndCategory(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId,
+            @PathVariable Long categoryId)
+            throws ApplicationException, IOException, ServletException {
+        long start = getLongParameter(httpServletRequest, "start", 0);
+        long pageSize = getLongParameter(httpServletRequest, "count", 10);
+
+        List<PoliticalAdminComplaintDto> politicalAdminComplaints = complaintService.getAllComplaintsOfPoliticalAdminAndCategory(politicalAdminId, categoryId, start, pageSize);
+        return politicalAdminComplaints;
+    }
+
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/view", method = RequestMethod.POST)
     public @ResponseBody PoliticalAdminComplaintDto updateComplaintViewStatus(HttpServletRequest httpServletRequest,
             @RequestBody ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException, IOException, ServletException {

@@ -353,8 +353,12 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     public List<PoliticalAdminComplaintDto> getAllComplaintsOfPoliticalAdmin(Long politicalAdminId, Long start, Long totalComplaints) throws ApplicationException {
         PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
         politicalBodyAdmin.setId(politicalAdminId);
-        List<PoliticalAdminComplaintDto> politlcalAdminComplaintDtos = new ArrayList<>();
         List<Complaint> complaints = complaintRepository.getAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, start, totalComplaints);
+        return convertComplaintList(complaints, politicalBodyAdmin);
+    }
+
+    private List<PoliticalAdminComplaintDto> convertComplaintList(List<Complaint> complaints, PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        List<PoliticalAdminComplaintDto> politlcalAdminComplaintDtos = new ArrayList<>();
         for (Complaint oneComplaint : complaints) {
             ComplaintPoliticalAdmin complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(oneComplaint, politicalBodyAdmin);
             PoliticalAdminComplaintDto onePolitlcalAdminComplaintDto = buildPoliticalAdminComplaint(oneComplaint, complaintPoliticalAdmin);
@@ -363,6 +367,15 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             politlcalAdminComplaintDtos.add(onePolitlcalAdminComplaintDto);
         }
         return politlcalAdminComplaintDtos;
+
+    }
+
+    @Override
+    public List<PoliticalAdminComplaintDto> getAllComplaintsOfPoliticalAdminAndCategory(Long politicalAdminId, Long categoryId, Long start, Long totalComplaints) throws ApplicationException {
+        PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
+        politicalBodyAdmin.setId(politicalAdminId);
+        List<Complaint> complaints = complaintRepository.getAllPagedComplaintsOfPoliticalAdminAndCategry(politicalAdminId, categoryId, start, totalComplaints);
+        return convertComplaintList(complaints, politicalBodyAdmin);
     }
 
     private void addPersons(Complaint complaint, PoliticalAdminComplaintDto politicalAdminComplaintDto) throws ApplicationException {
@@ -491,4 +504,5 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         logger.info("complaintPhotos : {}", photos);
         return photoConvertor.convertBeanList(photos);
     }
+
 }
