@@ -26,6 +26,7 @@
                                                     <h3 class="text-footer">Select Position</h3>
                                                     <select class="select dropdownlist" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
                                                     </select>
+                                                    <a href="#" class="list-group-item active" ng-click="onRefresh()">Refresh</a>
 
                                                     <p class="left_filter_category">
                                                         <strong>Filter Issues by category</strong>
@@ -204,6 +205,7 @@
                                                                                             <a href="#!" class="username">{{comment.postedBy.name}}</a>
                                                                                             <img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
                                                                                             <a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime | dateFormatter}}</abbr></a>
+                                                                                            <img src="http://dev.eswaraj.com/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin" ng-show="comment.adminComment">
                                                                                         </p>
 
                                                                                         <div class="comments-info" >
