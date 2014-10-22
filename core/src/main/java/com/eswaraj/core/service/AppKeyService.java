@@ -89,5 +89,9 @@ public interface AppKeyService {
 
     String getCommentListIdForComplaintKey(Long complaintId);
 
+    String getAdminCommentListIdForComplaintKey(Long complaintId);
+
     String getCommentIdKey(Long commentId);
+
+    String getCommentIdKey(String commentId);
 }

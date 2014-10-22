@@ -51,6 +51,8 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
 
             boolean adminComment = commentJsonObject.get("adminComment").getAsBoolean();
             if (adminComment) {
+                String adminOnlyCommentListForComplaint = appKeyService.getAdminCommentListIdForComplaintKey(commentSavedMessage.getComplaintId());
+                writeToMemoryStoreSortedSet(adminOnlyCommentListForComplaint, commentSavedMessage.getCommentId().toString(), creationTime);
                 // then Send mobile Notifications
                 List<DeviceDto> devices = appService.getDevicesForComplaint(commentSavedMessage.getComplaintId());
                 if (devices == null || devices.isEmpty()) {

@@ -145,6 +145,12 @@ public class ApiUtil {
         return locationComplaints;
     }
 
+    public String getComplaintComments(HttpServletRequest httpServletRequest, Long complaintId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/" + complaintId + "/comments";
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath);
+        return locationComplaints;
+    }
+
     public String getLocationCountersFor365Days(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {
         String urlPath = "/api/v0/location/" + locationId+"/complaintcounts/last365";
         String locationComplaints = getResponseFrom(httpServletRequest, urlPath);

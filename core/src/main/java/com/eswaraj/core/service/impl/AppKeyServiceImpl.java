@@ -375,4 +375,14 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     public String getCommentIdKey(Long commentId) {
         return "COM." + commentId;
     }
+
+    @Override
+    public String getCommentIdKey(String commentId) {
+        return "COM." + commentId;
+    }
+
+    @Override
+    public String getAdminCommentListIdForComplaintKey(Long complaintId) {
+        return "COM.LIST.CMP.AO." + complaintId;
+    }
 }

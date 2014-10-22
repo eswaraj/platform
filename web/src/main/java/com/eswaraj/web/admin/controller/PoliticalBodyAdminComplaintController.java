@@ -63,6 +63,13 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
         return complaints;
     }
 
+    @RequestMapping(value = "/ajax/complaint/{complaintId}/comments", method = RequestMethod.GET)
+    public @ResponseBody String getComplaintComments(HttpServletRequest httpServletRequest, ModelAndView mv,
+            @PathVariable Long complaintId) throws ApplicationException {
+        String complaints = apiUtil.getComplaintComments(httpServletRequest, complaintId);
+        return complaints;
+    }
+
     @RequestMapping(value = "/ajax/complaint/leader/merge", method = RequestMethod.POST)
     public @ResponseBody String mergeComplaints(HttpServletRequest httpServletRequest, ModelAndView mv,
  @RequestBody List<Long> complaintIds) throws ApplicationException {
