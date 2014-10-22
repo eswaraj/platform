@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,9 @@ public class ComplaintController extends BaseController{
 	private String awsDirectoryForComplaintPhoto;
     @Autowired
     private QueueService queueService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
@@ -95,6 +99,13 @@ public class ComplaintController extends BaseController{
 		
 		return savedComplaintDto;
 	}
+
+    @RequestMapping(value = "/api/v0/complaint{complaintId}", method = RequestMethod.GET)
+    public @ResponseBody String getComplaintById(HttpServletRequest httpServletRequest, @PathVariable Long complaintId) throws ApplicationException, IOException, ServletException {
+        String redisKey = appKeyService.getComplaintObjectKey(complaintId);
+        String complaint = stringRedisTemplate.opsForValue().get(redisKey);
+        return complaint;
+    }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}", method = RequestMethod.GET)
     public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException, IOException, ServletException {

@@ -130,6 +130,13 @@ public class ApiUtil {
         return list;
     }
 
+    public ComplaintBean getComplaintById(HttpServletRequest httpServletRequest, Long complaintId) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/" + complaintId;
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath);
+        ComplaintBean complaintBean = gson.fromJson(locationComplaints, ComplaintBean.class);
+        return complaintBean;
+    }
+
     public List<PoliticalPositionDto> getPersonPoliticalPositions(HttpServletRequest httpServletRequest, Long personId, boolean activeOnly) throws ApplicationException {
         String locationComplaints = getPersonPoliticalPositionsString(httpServletRequest, personId, activeOnly);
         List<PoliticalPositionDto> list = gson.fromJson(locationComplaints, new TypeToken<List<PoliticalPositionDto>>() {

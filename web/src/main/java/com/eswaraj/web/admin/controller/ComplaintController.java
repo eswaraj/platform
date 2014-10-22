@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
+import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
@@ -39,6 +40,8 @@ import com.google.gson.Gson;
 @Controller
 public class ComplaintController extends BaseController{
 	
+    @Autowired
+    private ApiUtil apiUtil;
 	@Autowired
 	private ComplaintService complaintService;	
 	@Autowired
@@ -51,6 +54,9 @@ public class ComplaintController extends BaseController{
             throws ApplicationException {
         // TODO get complaint Data and put it in model
         addGenericValues(mv, httpServletRequest);
+        ComplaintBean complaintBean = apiUtil.getComplaintById(httpServletRequest, complaintId);
+        mv.getModel().put("complaint", complaintBean);
+
         mv.setViewName("singlecomplaint");
         return mv;
     }
