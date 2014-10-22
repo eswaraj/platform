@@ -18,6 +18,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
 import com.eswaraj.domain.nodes.ExecutivePost;
@@ -30,6 +31,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
 import com.eswaraj.domain.repo.ExecutivePostRepository;
@@ -70,6 +72,8 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     private PhotoRepository photoRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -366,6 +370,43 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         ebaJsonObject.addProperty("postTitle", ebaExecutivePost.getTitle());
         ebaJsonObject.addProperty("postShortTitle", ebaExecutivePost.getShortTitle());
         return ebaJsonObject;
+    }
+
+    @Override
+    public JsonObject getComment(Long commentId) throws ApplicationException {
+        Comment comment = commentRepository.findOne(commentId);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("text", comment.getText());
+        jsonObject.addProperty("creationTime", comment.getCreationTime().getTime());
+        jsonObject.addProperty("id", comment.getId());
+        if (!StringUtils.isEmpty(comment.getExternalId())) {
+            jsonObject.addProperty("externalId", comment.getExternalId());
+        }
+
+        Person person = personRepository.findOne(comment.getCreatedBy().getId());
+        JsonObject personJsonPbject = new JsonObject();
+        personJsonPbject.addProperty("name", person.getName());
+        personJsonPbject.addProperty("id", person.getId());
+        personJsonPbject.addProperty("externalId", person.getExternalId());
+
+        jsonObject.add("postedBy", personJsonPbject);
+
+        if (comment.getPoliticalBodyAdmin() != null) {
+            jsonObject.addProperty("adminComment", true);
+            PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.findOne(comment.getPoliticalBodyAdmin().getId());
+            Person pbaPerson = personRepository.findOne(politicalBodyAdmin.getPerson().getId());
+            JsonObject pbaJsonObject = new JsonObject();
+            pbaJsonObject.addProperty("name", pbaPerson.getName());
+            pbaJsonObject.addProperty("id", politicalBodyAdmin.getId());
+            pbaJsonObject.addProperty("externalId", politicalBodyAdmin.getExternalId());
+            pbaJsonObject.addProperty("type", "political");
+            jsonObject.add("admin", pbaJsonObject);
+
+        } else {
+            jsonObject.addProperty("adminComment", false);
+        }
+
+        return jsonObject;
     }
 
 }

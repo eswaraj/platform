@@ -365,4 +365,14 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     public String getPoliticalBodyAdminHashKey() {
         return POLITICAL_ADMIN_HASH_KEY;
     }
+
+    @Override
+    public String getCommentListIdForComplaintKey(Long complaintId) {
+        return "COM.LIST.CMP." + complaintId;
+    }
+
+    @Override
+    public String getCommentIdKey(Long commentId) {
+        return "COM." + commentId;
+    }
 }

@@ -70,6 +70,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsComplaintCreatedQueueName;
     private String awsReprocessAllComplaintQueueName;
     private String awsComplaintViewedByPoliticalAdminQueueName;
+    private String awsCommentSavedQueueName;
 
     private void initConfigs() {
         dbUrl = System.getenv("db_url");
@@ -83,6 +84,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
         awsReprocessAllComplaintQueueName = System.getenv("aws_reprocess_all_complaint_queue_name");
         awsComplaintViewedByPoliticalAdminQueueName = System.getenv("aws_complaint_viewed_by_political_admin_queue_name");
+        awsCommentSavedQueueName = System.getenv("aws_comment_saved_queue_name");
         
 
         logInfo("SYSTEM : dbUrl= {}", dbUrl);
@@ -95,6 +97,7 @@ public abstract class EswarajBaseComponent implements Serializable {
         logInfo("SYSTEM : awsComplaintCreatedQueueName={}", awsComplaintCreatedQueueName);
         logInfo("SYSTEM : awsReprocessAllComplaintQueueName={}", awsReprocessAllComplaintQueueName);
         logInfo("SYSTEM : awsComplaintViewedByPoliticalAdminQueueName={}", awsComplaintViewedByPoliticalAdminQueueName);
+        logInfo("SYSTEM : awsCommentSavedQueueName={}", awsCommentSavedQueueName);
 
     }
 
@@ -156,7 +159,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
         AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
         queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName,
-                awsComplaintViewedByPoliticalAdminQueueName);
+                awsComplaintViewedByPoliticalAdminQueueName, awsCommentSavedQueueName);
     }
 
     // Neo4j related functions

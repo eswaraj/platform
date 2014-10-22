@@ -20,4 +20,6 @@ public interface StormCacheAppServices {
 
     JsonObject getExecutiveBodyAdmin(Long executiveBodyAdminId) throws ApplicationException;
 
+    JsonObject getComment(Long commentId) throws ApplicationException;
+
 }

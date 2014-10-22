@@ -86,4 +86,8 @@ public interface AppKeyService {
     String getPoliticalBodyAdminUrlsKey();
 
     String getPoliticalBodyAdminHashKey();
+
+    String getCommentListIdForComplaintKey(Long complaintId);
+
+    String getCommentIdKey(Long commentId);
 }

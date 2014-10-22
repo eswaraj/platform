@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.util.DataMessageTypes;
+import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
@@ -48,13 +49,16 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     @Value("${aws_complaint_viewed_by_political_admin_queue_name}")
     private String awsComplaintViewedByPoliticalAdminQueueName;
 
+    @Value("${aws_comment_saved_queue_name}")
+    private String awsCommentSavedQueueName;
+
     // Normal Constructor to be used by Spring
     public AwsQueueServiceImpl() {
 
     }
 
     public AwsQueueServiceImpl(AwsQueueManager awsQueueManager, String awsLocationQueueName, String awsCategoryUpdateQueueName, String awsComplaintCreatedQueueName,
-            String awsReProcessAllComplaintQueueName, String awsComplaintViewedByPoliticalAdminQueueName) {
+            String awsReProcessAllComplaintQueueName, String awsComplaintViewedByPoliticalAdminQueueName, String awsCommentSavedQueueName) {
         super();
         this.awsQueueManager = awsQueueManager;
         this.awsLocationQueueName = awsLocationQueueName;
@@ -62,6 +66,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
         this.awsComplaintCreatedQueueName = awsComplaintCreatedQueueName;
         this.awsReProcessAllComplaintQueueName = awsReProcessAllComplaintQueueName;
         this.awsComplaintViewedByPoliticalAdminQueueName = awsComplaintViewedByPoliticalAdminQueueName;
+        this.awsCommentSavedQueueName = awsCommentSavedQueueName;
     }
 
     /**
@@ -159,8 +164,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     @Override
     public void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException {
         String jsonMessage = gson.toJson(complaintViewedByPoliticalAdminMessage);
-        logger.debug("Sending message {} to queue {}", jsonMessage, awsComplaintViewedByPoliticalAdminQueueName);
-        awsQueueManager.sendMessage(awsComplaintViewedByPoliticalAdminQueueName, jsonMessage);
+        sendMessageToQueue(awsComplaintViewedByPoliticalAdminQueueName, jsonMessage);
     }
 
     @Override
@@ -169,5 +173,22 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
         return gson.fromJson(message, ComplaintViewedByPoliticalAdminMessage.class);
 
     }
+    private void sendMessageToQueue(String queuename, String message){
+        logger.debug("Sending message {} to queue {}", message, queuename);
+        awsQueueManager.sendMessage(queuename, message);
+    }
 
+    @Override
+    public void sendCommentSavedMessage(CommentSavedMessage commentSavedMessage) throws ApplicationException {
+        String jsonMessage = gson.toJson(commentSavedMessage);
+        sendMessageToQueue(awsCommentSavedQueueName, jsonMessage);
+    }
+
+    @Override
+    public CommentSavedMessage receiveCommentSavedMessage() throws ApplicationException {
+        String message = awsQueueManager.receiveMessage(awsCommentSavedQueueName);
+        return gson.fromJson(message, CommentSavedMessage.class);
+    }
+
+    
 }

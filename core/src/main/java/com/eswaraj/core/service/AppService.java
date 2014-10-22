@@ -108,4 +108,5 @@ public interface AppService {
     PoliticalBodyAdminStaffDto deletePoliticalAdminStaff(Long politicalAdminStaffId) throws ApplicationException;
 
     List<DeviceDto> getDevicesForComplaint(Long complaintId) throws ApplicationException;
+
 }

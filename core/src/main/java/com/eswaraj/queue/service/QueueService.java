@@ -1,6 +1,7 @@
 package com.eswaraj.queue.service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 
@@ -29,4 +30,9 @@ public interface QueueService {
     void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException;
 
     ComplaintViewedByPoliticalAdminMessage receiveComplaintViewedByPoliticalLeaderMessage() throws ApplicationException;
+
+    void sendCommentSavedMessage(CommentSavedMessage commentSavedMessage) throws ApplicationException;
+
+    CommentSavedMessage receiveCommentSavedMessage() throws ApplicationException;
+
 }

@@ -442,14 +442,19 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     public CommentSaveResponseDto commentOnComplaint(CommentSaveRequestDto commentRequestDto) throws ApplicationException {
 
         Person person = personRepository.findOne(commentRequestDto.getPersonId());
-        PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.findOne(commentRequestDto.getPoliticalAdminId());
 
         Comment comment = new Comment();
         comment.setText(commentRequestDto.getCommentText());
+        comment.setDateCreated(new Date());
+        comment.setDateModified(new Date());
+        comment.setCreationTime(new Date());
 
         comment.setCreatedBy(person);
         comment.setCreationTime(new Date());
-        comment.setPoliticalBodyAdmin(politicalBodyAdmin);
+        if (commentRequestDto.getPoliticalAdminId() != null && commentRequestDto.getPoliticalAdminId() > 0) {
+            PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.findOne(commentRequestDto.getPoliticalAdminId());
+            comment.setPoliticalBodyAdmin(politicalBodyAdmin);
+        }
         comment = commentRepository.save(comment);
 
         // Create relation between comment and complaint

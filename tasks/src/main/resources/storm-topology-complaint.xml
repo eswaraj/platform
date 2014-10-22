@@ -19,6 +19,7 @@
 				<ref bean="ComplaintCreatedSpoutBean" />
 				<ref bean="ReProcessAllComplaintsSpoutBean" />
 				<ref bean="ComplaintViwedByPoliticalAdminSpoutBean" />
+				<ref bean="CommentSavedSpoutBean" />
 			</list>
 		</property>
 		<property name="boltConfigs">
@@ -44,6 +45,15 @@
 		</property>
 	</bean>
 
+	<bean id="CommentSavedSpoutBean" class="com.eswaraj.tasks.spout.CommentSavedSpout">
+        <property name="componentId" value="CommentSavedSpout" />
+        <property name="outputStream" value="CommentSavedStream" />
+        <!-- Properties define which services will be available for spout -->
+        <property name="initializeRedisServices" value="false" />
+        <property name="initializeQueueServices" value="true" />
+        <property name="initializeDbServices" value="false" />
+        
+    </bean>
 	<bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
 		<property name="componentId" value="ComplaintCreatedSpout" />
 		<property name="outputStream" value="ComplaintCreatedStream" />
@@ -98,6 +108,27 @@
 
 	</bean>
 	
+	<bean id="CommentSavedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="CommentSavedBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.CommentSavedBoltProcessor" />
+
+        <property name="outputStream" value="SendMobileNotificationStream" />
+        <property name="paralellism" value="1" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="CommentSavedSpout" value="CommentSavedStream" />
+            </map>
+        </property>
+        <property name="fields">
+            <list>
+                <value>Message</value>
+                <value>MessageType</value>
+                <value>DeviceList</value>
+            </list>
+        </property>
+
+    </bean>
+	
 	<bean id="SendMobileNotificationBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="SendMobileNotificationBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
@@ -106,6 +137,7 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="ComplaintViewByPoliticalAdminBolt" value="SendMobileNotificationStream" />
+                <entry key="CommentSavedBolt" value="SendMobileNotificationStream" />
             </map>
         </property>
     </bean>
