@@ -20,8 +20,7 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
     $scope.node = {};
     $scope.newNode = {};
     $scope.selectedNode = {};
-    var addLocation = function (node)
-    {
+    var addLocation = function (node) {
         loc_hash[node.id] = node.name;
         if(node.children) {
             for(var i=0; i<node.children.length; i++) {
