@@ -256,14 +256,12 @@ complaintsApp.directive('textcollapse', function () {
         restrict : 'E',
         transclude : true,
         scope : {},
-        template : '<p class="desc elipsis text-content short-text" ng-transclude></p><p class="show-more"><a href="#">Show more</a></p>',
+        template : '<p class="desc elipsis text-content short-text" ng-transclude></p><p class="show-more"><a href="#!">Show more</a></p>',
         link : function (scope, element, attrs) {
             var content = element.find(".text-content");
             var link = element.find("a");
-            content = content[0];
-            //link = link[0];
-            var visibleHeight = content.clientHeight;
-            var actualHeight = content.scrollHeight - 1;
+            var visibleHeight = content[0].clientHeight;
+            var actualHeight = content[0].scrollHeight - 1;
             if (actualHeight < visibleHeight) {
                 link.show();
             } else {
