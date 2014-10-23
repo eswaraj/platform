@@ -106,7 +106,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="showMode">
+                                                                <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
                                                                     <div class="innerdiv-innerblock">
                                                                         <div class="innerdiv-issue-info" >
 
