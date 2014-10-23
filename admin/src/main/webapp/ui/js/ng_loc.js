@@ -1,4 +1,4 @@
-var locationNodeApp = angular.module('locationNodeApp', []);
+var locationNodeApp = angular.module('locationNodeApp', ['customDirectives']);
 
 locationNodeApp.controller('locationNodeController', function($scope, $http) {
     //Google Maps variables
