@@ -270,7 +270,7 @@ complaintsApp.directive('textcollapse', function () {
 
             link.bind('click', function () {
                 content.toggleClass("short-text, full-text", 100);
-                var text = link.text() == "Show More" ? "Show less" : "Show More";
+                var text = link.text() == "Show more" ? "Show less" : "Show more";
                 link.text(text);
             });
         }
