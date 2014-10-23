@@ -261,7 +261,7 @@ complaintsApp.directive('textcollapse', function () {
             var content = element.find(".text-content");
             var link = element.find("a");
             content = content[0];
-            link = link[0];
+            //link = link[0];
             var visibleHeight = content.clientHeight;
             var actualHeight = content.scrollHeight - 1;
             if (actualHeight < visibleHeight) {
