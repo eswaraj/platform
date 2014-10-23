@@ -107,37 +107,70 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.getNext = function () {
         var categoryString = $scope.selectedCategory ? "/" + $scope.selectedCategory.id : "";
         if(current == total) {
-            var complaintRequest = $http({
-                method: "GET",
-                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1),
-                headers: {'Content-Type': 'application/json; charset=utf-8'}
-            });
-            complaintRequest.success(function (data) {
-                if(data.length > 0) {
-                    //get comments for all fetched complaints
-                    data.forEach(function (value, index, array) {
-                        var commentRequest = $http({
-                            method: "GET",
-                            url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
-                            headers: {'Content-Type': 'application/json; charset=utf-8'}
+            if($scope.complaints.length == getCount) {
+                var complaintRequest = $http({
+                    method: "GET",
+                    url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1) + '&count=' + getCount,
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                });
+                complaintRequest.success(function (data) {
+                    if(data.length > 0) {
+                        //get comments for all fetched complaints
+                        data.forEach(function (value, index, array) {
+                            var commentRequest = $http({
+                                method: "GET",
+                                url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
+                                headers: {'Content-Type': 'application/json; charset=utf-8'}
+                            });
+                            commentRequest.success(function (resp) {
+                                array[index].comments = resp;
+                            });
+                            commentRequest.error(function () {
+                                console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
+                            });
                         });
-                        commentRequest.success(function (resp) {
-                            array[index].comments = resp;
-                        });
-                        commentRequest.error(function () {
-                            console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
-                        });
-                    });
-                    allComplaints = allComplaints.concat(data);
-                    total = total + 1;
-                    current = current + 1;
-                    $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
-                }
+                        allComplaints = allComplaints.concat(data);
+                        total = total + 1;
+                        current = current + 1;
+                        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                    }
 
-            });
-            complaintRequest.error(function () {
-                console.error("Complaint request failed");
-            });
+                });
+                complaintRequest.error(function () {
+                    console.error("Complaint request failed");
+                });
+            } else {
+                var complaintRequest = $http({
+                    method: "GET",
+                    url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current) + '&count=' + getCount,
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                });
+                complaintRequest.success(function (data) {
+                    if(data.length > $scope.complaints.length) {
+                        //get comments for all fetched complaints
+                        data.forEach(function (value, index, array) {
+                            var commentRequest = $http({
+                                method: "GET",
+                                url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
+                                headers: {'Content-Type': 'application/json; charset=utf-8'}
+                            });
+                            commentRequest.success(function (resp) {
+                                array[index].comments = resp;
+                            });
+                            commentRequest.error(function () {
+                                console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
+                            });
+                        });
+                        //Instead of concat, first remove all the old data and then append the new fetched data. Done at once by splice
+                        allComplaints.splice(-1, $scope.complaints.length, data);
+                        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                    }
+
+                });
+                complaintRequest.error(function () {
+                    console.error("Complaint request failed");
+                });
+            }
         }
         else {
             current = current + 1;
