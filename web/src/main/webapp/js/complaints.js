@@ -55,10 +55,11 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         });
     };
     $scope.showDetailsAndMarkViewed = function (event, complaint) {
-        var element = $(event.currentTarget);
-        var innerdiv = $(element.next( ".innerdiv-list-row" ));
-        innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
-        element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
+        //var element = $(event.currentTarget);
+        //var innerdiv = $(element.next( ".innerdiv-list-row" ));
+        //innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
+        //element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
+        complaint.showMode = !complaint.showMode;
 
         if (!complaint.viewed) {
             var viewedRequest = $http({
@@ -117,6 +118,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                     if(data.length > 0) {
                         //get comments for all fetched complaints
                         data.forEach(function (value, index, array) {
+                            value.showMode = false;
                             var commentRequest = $http({
                                 method: "GET",
                                 url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
@@ -149,6 +151,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                     if(data.length > $scope.complaints.length) {
                         //get comments for all fetched complaints
                         data.forEach(function (value, index, array) {
+                            value.showMode = false;
                             var commentRequest = $http({
                                 method: "GET",
                                 url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
@@ -257,6 +260,8 @@ complaintsApp.directive('textcollapse', function () {
         link : function (scope, element, attrs) {
             var content = element.find(".text-content");
             var link = element.find("a");
+            content = content[0];
+            link = link[0];
             var visibleHeight = content.clientHeight;
             var actualHeight = content.scrollHeight - 1;
             if (actualHeight < visibleHeight) {

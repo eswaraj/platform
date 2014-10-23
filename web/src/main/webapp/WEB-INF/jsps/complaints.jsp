@@ -72,7 +72,7 @@
                                                             <div ng-repeat="complaint in complaints">
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
-                                                                        <span class="glyphicon glyphicon-fullscreen glyph_right_float"></span>
+                                                                        <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" ><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
@@ -106,7 +106,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="innerdiv-list-row">
+                                                                <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}">
                                                                     <div class="innerdiv-innerblock">
                                                                         <div class="innerdiv-issue-info" >
 
@@ -203,7 +203,7 @@
 
                                                                                 <div id="show_full_comments_page">
                                                                                     <a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
-                                                                                    <a href="#!" id="collapse_comments_box" class="comments_controller">Back To Top</a>
+                                                                                    <a href="#!" id="collapse_comments_box" class="comments_controller" ng-click="showDetailsAndMarkViewed($event, complaint)">Close</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
