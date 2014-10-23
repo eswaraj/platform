@@ -71,7 +71,7 @@
                                                             <!-- 1 -->
                                                             <div ng-repeat="complaint in complaints">
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
-                                                                    <div class="innerblock"  ng-class="{'glyphicon-collapse-up' : complaint.showMode}" ng-show="showMode">
+                                                                    <div class="innerblock"  ng-class="{'glyphicon-collapse-up' : complaint.showMode}">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic">
@@ -106,7 +106,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}">
+                                                                <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="showMode">
                                                                     <div class="innerdiv-innerblock">
                                                                         <div class="innerdiv-issue-info" >
 
