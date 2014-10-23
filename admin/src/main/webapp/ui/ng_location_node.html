@@ -127,8 +127,8 @@
                                     <tbody ng-repeat="file in kmlList">
                                         <tr>
                                         <td>{{file.originalFileName}}</td>
-                                        <td><a class='btn btn-primary blue kml_inp_btn' href='#' ng-click='update_map({{file.fileNameAndPath}});'>OnMap</a></td>
-                                        <td><a class='btn btn-primary blue kml_inp_btn' href='#' ng-click='setCurrent({{file.fileNameAndPath}});'>SetCurrent</a></td>
+                                        <td><a class='btn btn-primary blue kml_inp_btn' href='#' ng-click='update_map(file.fileNameAndPath);'>OnMap</a></td>
+                                        <td><a class='btn btn-primary blue kml_inp_btn' href='#' ng-click='setCurrent(file.fileNameAndPath);'>SetCurrent</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
