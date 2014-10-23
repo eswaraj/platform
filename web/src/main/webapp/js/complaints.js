@@ -107,7 +107,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.getNext = function () {
         var categoryString = $scope.selectedCategory ? "/" + $scope.selectedCategory.id : "";
         if(current == total) {
-            if($scope.complaints.length == getCount) {
+            if($scope.complaints.length == getCount || $scope.complaints.length == 0) {
                 var complaintRequest = $http({
                     method: "GET",
                     url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1) + '&count=' + getCount,
@@ -184,6 +184,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         current = current - 1;
         $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
     };
+    
     //Get all political positions
     var positionRequest = $http({
         method: "GET",
@@ -192,10 +193,15 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     });
     positionRequest.success(function (data) {
         $scope.positions = data;
+        if($scope.positions.length == 1) {
+            $scope.selectedPosition = $scope.positions[0];
+            $scope.onPositionSelected();
+        }
     });
     positionRequest.error(function () {
         console.error('Could not get positions for the leader');
     });
+    
     //Get all categories for filter
     var categoryRequest = $http({
         method: "GET",
