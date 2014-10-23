@@ -59,7 +59,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         var innerdiv = $(element.next( ".innerdiv-list-row" ));
         innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
         element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
-        
+
         if (!complaint.viewed) {
             var viewedRequest = $http({
                 method: "POST",
@@ -113,24 +113,26 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                 headers: {'Content-Type': 'application/json; charset=utf-8'}
             });
             complaintRequest.success(function (data) {
-                //get comments for all fetched complaints
-                data.forEach(function (value, index, array) {
-                    var commentRequest = $http({
-                        method: "GET",
-                        url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
-                        headers: {'Content-Type': 'application/json; charset=utf-8'}
+                if(data.length > 0) {
+                    //get comments for all fetched complaints
+                    data.forEach(function (value, index, array) {
+                        var commentRequest = $http({
+                            method: "GET",
+                            url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
+                            headers: {'Content-Type': 'application/json; charset=utf-8'}
+                        });
+                        commentRequest.success(function (resp) {
+                            array[index].comments = resp;
+                        });
+                        commentRequest.error(function () {
+                            console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
+                        });
                     });
-                    commentRequest.success(function (resp) {
-                        array[index].comments = resp;
-                    });
-                    commentRequest.error(function () {
-                        console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
-                    });
-                });
-                allComplaints = allComplaints.concat(data);
-                total = total + 1;
-                current = current + 1;
-                $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                    allComplaints = allComplaints.concat(data);
+                    total = total + 1;
+                    current = current + 1;
+                    $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                }
 
             });
             complaintRequest.error(function () {
@@ -223,7 +225,7 @@ complaintsApp.directive('textcollapse', function () {
             } else {
                 link.hide();
             }
-            
+
             link.bind('click', function () {
                 content.toggleClass("short-text, full-text", 100);
                 var text = link.text() == "Show More" ? "Show less" : "Show More";
