@@ -26,6 +26,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
@@ -141,6 +142,12 @@ public class ComplaintController extends BaseController{
     public @ResponseBody String postComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto)
             throws ApplicationException, IOException, ServletException {
         CommentSaveResponseDto commentSaveResponseDto = complaintService.commentOnComplaint(commentRequestDto);
+        CommentSavedMessage commentSavedMessage = new CommentSavedMessage();
+        commentSavedMessage.setCommentId(commentSaveResponseDto.getId());
+        commentSavedMessage.setComplaintId(commentSaveResponseDto.getComplaintId());
+        commentSavedMessage.setPersonId(commentSaveResponseDto.getPersonId());
+        commentSavedMessage.setPoliticalAdminId(commentSaveResponseDto.getPoliticalAdminId());
+        queueService.sendCommentSavedMessage(commentSavedMessage);
         return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
     }
 
