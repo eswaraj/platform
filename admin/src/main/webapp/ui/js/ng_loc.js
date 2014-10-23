@@ -6,15 +6,12 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
     var layer;
     var kmlPath;
     var myMarker;
-    var set = true;
     var urlSuffix;
     var c;
     var mylocation = {
         'latitude': 28.61,
         'longitude': 77.23
     };
-    var root_node,new_node,sel;
-    var hash = {};
     var loc_hash = {};
 
     $scope.node = {};
@@ -160,7 +157,7 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
                 var child = {};
                 $scope.selectedNode.boundaryFile = data;
                 $.extend(true, child, $scope.selectedNode);
-                $scope.$broadcast(updateNode, {id:"js_tree", child:child});
+                $scope.$broadcast('updateNode', {id:"js_tree", child:child});
                 $scope.kmlStatus = "KML exists";
                 update_map(data);
                 $scope.$apply();
