@@ -50,7 +50,7 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
     };
     $scope.showTypeWithLocation = function (obj) {
         if (locationsAdded) {
-            return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
+            return obj.name + " Type: " + loc_hash[obj.locationTypeId];
         }
         else {
             return obj.name + " Type: Country";
@@ -147,24 +147,24 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
 
     $('#form1').submit(function(event){
         event.preventDefault();
-        //grab all form data  
-        //var formData = new FormData($('#form1'));
         var formData = new FormData(this);
-        var selected_node =  $('#js_tree').jstree('get_selected');
-        var  kml_url= '/ajax/location/'+selected_node[0]+'/upload';
+        var  kml_url = '/ajax/location/' + $scope.selectedNode.id + '/upload';
 
         $.ajax({
             url: kml_url,
             type: 'POST',
             data: formData,
-            async: false,
             cache: false,
             contentType: false,
             processData: false,
-            success: function (returndata) {
-                $('#'+selected_node).attr('boundaryFile',returndata);
-                $('#kml_status').html("<p>KML File exists</p>");
-                update_map(returndata);
+            success: function (data) {
+                var child = {};
+                $scope.selectedNode.boundaryFile = data;
+                $.extend(true, child, $scope.selectedNode);
+                $scope.$broadcast(updateNode, {id:"js_tree", child:child});
+                $scope.kmlStatus = "KML exists";
+                update_map(data);
+                $scope.$apply();
             }
         });
 
