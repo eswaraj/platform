@@ -108,6 +108,13 @@ public class ComplaintController extends BaseController{
         return politicalAdminComplaints;
     }
 
+    @RequestMapping(value = "/api/v0/complaint/{complaintId}", method = RequestMethod.GET)
+    public @ResponseBody ComplaintDto getComplaintById(HttpServletRequest httpServletRequest, @PathVariable Long complaintId) throws ApplicationException, IOException,
+            ServletException {
+        ComplaintDto complaint = complaintService.getComplaintById(complaintId);
+        return complaint;
+    }
+
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}/{categoryId}", method = RequestMethod.GET)
     public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdminAndCategory(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId,
             @PathVariable Long categoryId)
