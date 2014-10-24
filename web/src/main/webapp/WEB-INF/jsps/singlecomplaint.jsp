@@ -110,7 +110,7 @@
                                                     <div class="carousel-inner">
                                                         <c:forEach items="${complaint.photos}" var="onePhoto">
                                                             <div class="item">
-                                                                <img src="${onePhoto}" />
+                                                                <img src="${onePhoto.orgUrl}" />
                                                             </div>
                                                         </c:forEach>
                                                     </div>
