@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
 							out.println(",");
 						        i++;
 						    %>
-						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy.id}", userName: "TODO", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+						    {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy[0].id}", userName: "TODO", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
 				  </c:forEach>
 				  ];
 			</script>
@@ -50,10 +50,11 @@ pageEncoding="UTF-8"%>
 			<link rel="stylesheet" href="${staticHost}/css/nv.d3.css">
 			<link rel="stylesheet" href="${staticHost}/css/analytics.css">
 			<script type="text/javascript">
-				var analyticsData = ${locationCounters};
+				var analyticsData = <c:out value="${locationCounters}" escapeXml="false" /> ;
 
 			</script>
 			</c:if>
+			<c:out value="${locationCounters}" escapeXml="false" />
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-2">
