@@ -13,7 +13,7 @@
                                 <jsp:include page="include.jsp" />
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
-                                <link rel="stylesheet" href="${staticHost}/css/issue_specific_comments.css" />
+                                <link rel="stylesheet" href="${staticHost}/css/singlecomplaint.css" />
                                 
                                 <script src="${staticHost}/js/masonry.pkgd.min.js"></script>
                                 <script src="${staticHost}/js/jquery.flexslider-min.js"></script>
@@ -77,7 +77,7 @@
                                             <div class="issue-info" >
 
                                                 <p>
-                                                    <a href="#" class="issue-scope">${complaint.categories[0].name}</a>
+                                                    <a href="#" class="issue-scope">${complaint.categories[1].name}</a>
                                                     <a href="#" class="issue-scope-type"><img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
                                                 </p>
 
