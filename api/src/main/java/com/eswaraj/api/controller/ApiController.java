@@ -163,11 +163,11 @@ public class ApiController extends BaseController {
         Long value;
         DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
         Date date;
+        JsonArray jsonArray = new JsonArray();
         Map<Long, Long> counterMapByDate = new LinkedHashMap<>();
         for (Object oneCounter : data) {
             oneKey = (String)redisKeyForLocation365DaysCounter.get(count);
             oneKey = oneKey.replace(categoryHashKeyPrefix + ".", "");
-            logger.info("oneKey :  {}", oneKey);
             try {
                 date = dayFormat.parse(oneKey);
             } catch (ParseException e) {
@@ -175,16 +175,18 @@ public class ApiController extends BaseController {
             }
             if (oneCounter != null) {
                 value = Long.parseLong((String) oneCounter);
-                counterMapByDate.put(date.getTime(), value);
                 totalComplaints = totalComplaints + value;
             } else {
-                counterMapByDate.put(date.getTime(), 0L);
+                value = 0L;
             }
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(String.valueOf(date.getTime()), value);
+            jsonArray.add(jsonObject);
             count++;
         }
         JsonObject returnJsonObject = new JsonObject();
         returnJsonObject.addProperty("key", category.getName());
-        returnJsonObject.addProperty("values", gson.toJson(counterMapByDate));
+        returnJsonObject.add("values", jsonArray);
 
         return returnJsonObject;
     }
