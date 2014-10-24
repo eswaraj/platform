@@ -20,6 +20,9 @@
                                 <script src="${staticHost}/js/jmpress.min.js"></script>
                                 <script src="${staticHost}/js/carousel_image_slider.js"></script><!-- Script -->
                                 <script src="${staticHost}/js/user_interaction.js"></script><!-- Script -->
+                                <script src="${staticHost}/js/angular.min.js"></script>
+                                <script src="${staticHost}/js/singlecomplaint.js"></script>
+                                <script>var complaintId = ${complaint.id};</script>
                                 <script type="text/javascript">
                                     $(function () {
                                         $('#dasky').Dasky()
@@ -198,192 +201,50 @@
                                                             <form id="comment_form">
 
                                                                 <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-                                                                <input id="user_input" type="text" class="user_input_text" title="Please add your comment here..."/>
-                                                                <input id="user_input_button" type="button" value="Add Comment" class="comments_controller"</input>
+                                                                <input id="user_input" type="text" class="user_input_text" title="Please add your comment here..." ng-model="commentText"/>
+                                                                <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="saveComment()"/>
 
                                                             </form>
                                                         </div>	
 
                                                         <!-- Old Comments -->
 
-                                                        <!-- Comment #3 -->
-                                                        <div id="old_comments_block">
+                                                        <div ng-repeat="comment in comments">
+                                                            <div id="old_comments_block">
 
-                                                            <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
+                                                                <a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
 
-                                                            <p class="comments_whom">
-                                                                <strong class="issue-id">Comment #3 by</strong>
-                                                                <a href="#" class="username">Somnath Nabajja</a>
-                                                                <!-- social media share buttons -->								
-                                                                <img src = "images/time.png" class="posttimestatus" alt="">
-                                                                <a href="#" class="location">2 hrs ago</a>
-                                                                <img src = "images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"></img>
-                                                        </p>
+                                                                <p class="comments_whom">
+                                                                    <a href="#" class="username">{{comment.postedBy.name}}</a>
+                                                                    <!-- social media share buttons -->								
+                                                                    <img src = "images/time.png" class="posttimestatus" alt="">
+                                                                    <a href="#" class="location">{{comment.creationTime | dateFormatter}}</a>
+                                                                    <img src = "images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"  ng-show="comment.adminComment">
+                                                                </p>
 
-                                                    <div class="comments-info" >
+                                                                <div class="comments-info" >
 
-                                                        <p class="desc elipsis">
-                                                            Massive traffics jams have been reported from many parts of Bangalore as rain lashed the Garden City this evening.
-                                                            Water logging in several areas of the Region has made things worse for rush hour traffic.
-                                                            Many people, stuck in traffic, have been tweeting about the jams.
-                                                            "Too much traffic in Delhi and we are in castrpohic jam, (sic)" tweeted @anaam2720.
-                                                        </p>
+                                                                    <p class="desc elipsis">
+                                                                        {{comment.text}}
+                                                                    </p>
 
-                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <a href="#" class="comments_controller" ng-click="getNext()">Show More...</a>
 
-                                                </div>
-
-                                                <!-- Comment #2 -->
-                                                <div id="old_comments_block">
-
-                                                    <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-
-                                                    <p class="comments_whom">
-                                                        <strong class="issue-id">Comment #2 by</strong>
-                                                        <a href="#" class="username">Somnath Nabajja</a>
-                                                        <!-- social media share buttons -->								
-                                                        <img src = "images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">2 hrs ago</a>
-                                                        <img src = "images/mla_ribbon.png" class="posttimestatus leftshift" alt="" title="MLA"></img>
-                                                </p>
-
-                                            <div class="comments-info" >
-
-                                                <p class="desc elipsis">
-                                                    Massive traffics jams have been reported from many parts of Bangalore as rain lashed the Garden City this evening.
-                                                    Water logging in several areas of the Region has made things worse for rush hour traffic.
-                                                    Many people, stuck in traffic, have been tweeting about the jams.
-                                                    "Too much traffic in Delhi and we are in castrpohic jam, (sic)" tweeted @anaam2720.
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-
-                                        <!-- Comment #1 -->
-                                        <div id="old_comments_block">
-
-                                            <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-
-                                            <p class="comments_whom">
-                                                <strong class="issue-id">Comment #1 by</strong>
-                                                <a href="#" class="username">Somnath Nabajja</a>
-                                                <!-- social media share buttons -->								
-                                                <img src = "images/time.png" class="posttimestatus" alt="">
-                                                <a href="#" class="location">2 hrs ago</a>
-                                            </p>
-
-                                            <div class="comments-info" >
-
-                                                <p class="desc elipsis">
-                                                    Massive traffics jams have been reported from many parts of Bangalore as rain lashed the Garden City this evening.
-                                                    Water logging in several areas of the Region has made things worse for rush hour traffic.
-                                                    Many people, stuck in traffic, have been tweeting about the jams.
-                                                    "Too much traffic in Delhi and we are in castrpohic jam, (sic)" tweeted @anaam2720.
-                                                </p>
-
-                                            </div>
-
-                                            <div id="sub_comments_wrapper">
-                                                <!-- Sub Comment #1 -->
-                                                <div id="old_sub_comments_block">
-
-                                                    <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-
-                                                    <p class="comments_whom">
-                                                        <strong class="issue-id">Comment #1 by</strong>
-                                                        <a href="#" class="username">Somnath Nabajja</a>
-                                                        <!-- social media share buttons -->								
-                                                        <img src = "images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">2 hrs ago</a>
-                                                    </p>
-
-                                                    <div class="comments-info" >
-
-                                                        <p class="desc elipsis">
-                                                            This is a sub comment.
-                                                        </p>
+                                                        <div id="show_full_comments_page">
+                                                            <a href="#" id="collapse_comments_box" class="comments_controller">Collapse</a>
+                                                        </div>
 
                                                     </div>
-
                                                 </div>
-
-                                                <!-- Sub Comment #2 -->
-                                                <div id="old_sub_comments_block">
-
-                                                    <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-
-                                                    <p class="comments_whom">
-                                                        <strong class="issue-id">Comment #2 by</strong>
-                                                        <a href="#" class="username">Somnath Nabajja</a>
-                                                        <!-- social media share buttons -->								
-                                                        <img src = "images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">2 hrs ago</a>
-                                                    </p>
-
-                                                    <div class="comments-info" >
-
-                                                        <p class="desc elipsis">
-                                                            This is a sub comment.
-                                                        </p>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <!-- Sub Comment #3 -->
-                                                <div id="old_sub_comments_block">
-
-                                                    <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-
-                                                    <p class="comments_whom">
-                                                        <strong class="issue-id">Comment #3 by</strong>
-                                                        <a href="#" class="username">Somnath Nabajja</a>
-                                                        <!-- social media share buttons -->								
-                                                        <img src = "images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">2 hrs ago</a>
-                                                    </p>
-
-                                                    <div class="comments-info" >
-
-                                                        <p class="desc elipsis">
-                                                            This is a sub comment.
-                                                        </p>
-
-                                                    </div>
-
-                                                </div>
-
-
-                                                <div id="add_sub_comment"> 
-
-                                                    <form id="comment_form">
-
-                                                        <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-                                                        <input id="user_sub_com_input" type="text" class="user_sub_com_input_text" title="Please add your comment here..."/>
-                                                        <input id="user_sub_com_input_button" type="button" value="Add Comment" class="comments_controller"</input>
-
-                                                    </form>
-                                                </div>	
                                             </div>
                                         </div>
-
-                                        <div id="show_full_comments_page">
-                                            <a href="#" id="collapse_comments_box" class="comments_controller">Collapse</a>
-                                        </div>
-
                                     </div>
-
-
                                 </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                <div>.</div>
-                <jsp:include page="footer.jsp" />
-                </body>
-            </html>
+                                <div>.</div>
+                                <jsp:include page="footer.jsp" />
+                            </body>
+                        </html>
