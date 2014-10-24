@@ -26,14 +26,14 @@ app.directive('ngAutocomplete', function ($timeout) {
 });
 
 //jstree directive. To use, do following:
-//<div jstree id="tree1" ng-model="text" root-url="http://demo5303989.mockable.io/person/" child-url="http://demo5303989.mockable.io/getchild" selected-node="selctedNodeName" display-function="showTypeWithName()"></div>
+//<div jstree id="tree1" ng-model="text" root-url="http://demo5303989.mockable.io/person/" child-url="http://demo5303989.mockable.io/getchild" selected-node="selctedNodeName" display-function="showTypeWithName(obj)"></div>
 //To programmatically add a new root node, child node:
 //$scope.$broadcast('addRoot',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //$scope.$broadcast('addChild',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //$scope.$broadcast('updateNode',{id:"tree1",child:{id:100,name:'Vaibhav',li_attr:{id:100,name:'Vaibhav',someField:'someValue'}}});
 //'tree1' above is the id of the jstree to which you want to add the new node. Also, the payload has to be in 'child'. The child node is added to currently selected node.
 //parent scope will get a "selectedNode" field which will have the node object
-//display-function should be defined. If nothing special has to be done then it should just return the input
+//display-function should be defined. If nothing special has to be done then it should just return the input's name parameter. Also, the argument name in the HTML should be "obj"
 app.directive('jstree', function($timeout, $http) {
     "use strict";
     return {

@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,8 @@ public class ComplaintController extends BaseController{
     private QueueService queueService;
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
@@ -106,6 +109,14 @@ public class ComplaintController extends BaseController{
 
         List<PoliticalAdminComplaintDto> politicalAdminComplaints = complaintService.getAllComplaintsOfPoliticalAdmin(politicalAdminId, start, pageSize);
         return politicalAdminComplaints;
+    }
+
+    @RequestMapping(value = "/api/v0/complaint/{complaintId}", method = RequestMethod.GET)
+    public @ResponseBody String getComplaintById(HttpServletRequest httpServletRequest, @PathVariable Long complaintId) throws ApplicationException, IOException,
+            ServletException {
+        String complaintKey = appKeyService.getComplaintObjectKey(complaintId);
+        String complaintString = stringRedisTemplate.opsForValue().get(complaintKey);
+        return complaintString;
     }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}/{categoryId}", method = RequestMethod.GET)

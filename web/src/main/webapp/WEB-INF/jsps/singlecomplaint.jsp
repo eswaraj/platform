@@ -64,7 +64,7 @@
 
                                                 <div class="profile-pic profile-pic-padding">
                                                     <c:forEach items="${complaint.loggedBy}" var="oneUser">
-                                                        <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.profilePhoto}" alt=""></a>
+                                                        <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
                                                     </c:forEach>
                                                 </div>
 
