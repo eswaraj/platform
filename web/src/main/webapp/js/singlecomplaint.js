@@ -10,11 +10,12 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         totalCount = totalCount + getCount;
         var commentRequest = $http({
             method: "GET",
-            url:'/ajax/complaint/' + complaintId + '/comments?count=' + getCount + '&order=DESC',
+            url:'/ajax/complaint/' + complaintId + '/comments?count=' + totalCount + '&order=DESC',
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         });
         commentRequest.success(function (resp) {
             $scope.comments = resp;
+            totalCount = totalCount - getCount + resp.length;
         });
         commentRequest.error(function () {
             console.error("/ajax/complaint/'" + complaintId + "'/comments?count=5 failed");
