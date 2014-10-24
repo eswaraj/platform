@@ -7,7 +7,7 @@
 
 
                         <!DOCTYPE html>
-                        <html lang="en">
+                        <html lang="en" ng-app="complaintsApp">
                             <head>
                                 <title>e-Swaraj - Complaint ${complaint.id}</title>
                                 <jsp:include page="include.jsp" />
@@ -35,7 +35,7 @@
 
 
                             </head>
-                            <body>
+                            <body ng-controller="complaintsController">
                                 <div class="outerwrapper">
                                     <jsp:include page="header.jsp" />
 
@@ -232,10 +232,10 @@
                                                             </div>
                                                         </div>
                                                         
-                                                        <a href="#" class="comments_controller" ng-click="getNext()">Show More...</a>
+                                                        <a href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
 
                                                         <div id="show_full_comments_page">
-                                                            <a href="#" id="collapse_comments_box" class="comments_controller">Collapse</a>
+                                                            <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
                                                         </div>
 
                                                     </div>
