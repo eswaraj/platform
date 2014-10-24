@@ -59,7 +59,7 @@
                                             <div class="issue_reporters_box">
 
                                                 <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.postedBy)}</a>
+                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.loggedBy)}</a>
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
