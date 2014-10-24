@@ -155,11 +155,12 @@ locationNodeApp.controller('locationNodeController', function($scope, $http) {
             processData: false,
             success: function (data) {
                 var child = {};
-                $scope.selectedNode.boundaryFile = data;
+                $scope.selectedNode.boundaryFile = data.fileNameAndPath;
                 $.extend(true, child, $scope.selectedNode);
                 $scope.$broadcast('updateNode', {id:"js_tree", child:child});
                 $scope.kmlStatus = "KML exists";
-                update_map(data);
+                update_map(data.fileNameAndPath);
+                $scope.kmlList.concat(data);
                 $scope.$apply();
             }
         });
