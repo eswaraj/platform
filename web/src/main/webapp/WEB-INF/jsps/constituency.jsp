@@ -54,7 +54,6 @@ pageEncoding="UTF-8"%>
 
 			</script>
 			</c:if>
-			<c:out value="${locationCounters}" escapeXml="false" />
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-2">
