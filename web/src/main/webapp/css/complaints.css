@@ -349,7 +349,8 @@ text-decoration:none;
     border-bottom: 2px solid #ccc;
     min-height: 125px;
 	margin-bottom: 15px;
-	display: none;
+	/*display: none;
+    visibility: hidden;*/
 	float: left;
 	width: 100%;
 }

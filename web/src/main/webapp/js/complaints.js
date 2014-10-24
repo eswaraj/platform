@@ -55,11 +55,12 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         });
     };
     $scope.showDetailsAndMarkViewed = function (event, complaint) {
-        var element = $(event.currentTarget);
-        var innerdiv = $(element.next( ".innerdiv-list-row" ));
-        innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
-        element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
-        
+        //var element = $(event.currentTarget);
+        //var innerdiv = $(element.next( ".innerdiv-list-row" ));
+        //innerdiv.toggleClass("innerdiv-box-shadow").fadeToggle(500);
+        //element.find(".innerblock .glyph_right_float" ).toggleClass("glyphicon-collapse-up");
+        complaint.showMode = !complaint.showMode;
+
         if (!complaint.viewed) {
             var viewedRequest = $http({
                 method: "POST",
@@ -107,35 +108,72 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.getNext = function () {
         var categoryString = $scope.selectedCategory ? "/" + $scope.selectedCategory.id : "";
         if(current == total) {
-            var complaintRequest = $http({
-                method: "GET",
-                url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1),
-                headers: {'Content-Type': 'application/json; charset=utf-8'}
-            });
-            complaintRequest.success(function (data) {
-                //get comments for all fetched complaints
-                data.forEach(function (value, index, array) {
-                    var commentRequest = $http({
-                        method: "GET",
-                        url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
-                        headers: {'Content-Type': 'application/json; charset=utf-8'}
-                    });
-                    commentRequest.success(function (resp) {
-                        array[index].comments = resp;
-                    });
-                    commentRequest.error(function () {
-                        console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
-                    });
+            if($scope.complaints.length == getCount || $scope.complaints.length == 0) {
+                var complaintRequest = $http({
+                    method: "GET",
+                    url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1) + '&count=' + getCount,
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
                 });
-                allComplaints = allComplaints.concat(data);
-                total = total + 1;
-                current = current + 1;
-                $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                complaintRequest.success(function (data) {
+                    if(data.length > 0) {
+                        //get comments for all fetched complaints
+                        data.forEach(function (value, index, array) {
+                            value.showMode = false;
+                            var commentRequest = $http({
+                                method: "GET",
+                                url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
+                                headers: {'Content-Type': 'application/json; charset=utf-8'}
+                            });
+                            commentRequest.success(function (resp) {
+                                array[index].comments = resp;
+                            });
+                            commentRequest.error(function () {
+                                console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
+                            });
+                        });
+                        allComplaints = allComplaints.concat(data);
+                        total = total + 1;
+                        current = current + 1;
+                        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                    }
 
-            });
-            complaintRequest.error(function () {
-                console.error("Complaint request failed");
-            });
+                });
+                complaintRequest.error(function () {
+                    console.error("Complaint request failed");
+                });
+            } else {
+                var complaintRequest = $http({
+                    method: "GET",
+                    url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current) + '&count=' + getCount,
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                });
+                complaintRequest.success(function (data) {
+                    if(data.length > $scope.complaints.length) {
+                        //get comments for all fetched complaints
+                        data.forEach(function (value, index, array) {
+                            value.showMode = false;
+                            var commentRequest = $http({
+                                method: "GET",
+                                url:'/ajax/complaint/' + value.id + '/comments?count=50&order=DESC',
+                                headers: {'Content-Type': 'application/json; charset=utf-8'}
+                            });
+                            commentRequest.success(function (resp) {
+                                array[index].comments = resp;
+                            });
+                            commentRequest.error(function () {
+                                console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
+                            });
+                        });
+                        //Instead of concat, first remove all the old data and then append the new fetched data. Done at once by splice
+                        allComplaints.splice(-1, $scope.complaints.length, data);
+                        $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
+                    }
+
+                });
+                complaintRequest.error(function () {
+                    console.error("Complaint request failed");
+                });
+            }
         }
         else {
             current = current + 1;
@@ -149,6 +187,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         current = current - 1;
         $scope.complaints = allComplaints.slice((current-1)*getCount, current*getCount);
     };
+    
     //Get all political positions
     var positionRequest = $http({
         method: "GET",
@@ -157,10 +196,15 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     });
     positionRequest.success(function (data) {
         $scope.positions = data;
+        if($scope.positions.length == 1) {
+            $scope.selectedPosition = $scope.positions[0];
+            $scope.onPositionSelected();
+        }
     });
     positionRequest.error(function () {
         console.error('Could not get positions for the leader');
     });
+    
     //Get all categories for filter
     var categoryRequest = $http({
         method: "GET",
@@ -212,21 +256,21 @@ complaintsApp.directive('textcollapse', function () {
         restrict : 'E',
         transclude : true,
         scope : {},
-        template : '<p class="desc elipsis text-content short-text" ng-transclude></p><p class="show-more"><a href="#">Show more</a></p>',
+        template : '<p class="desc elipsis text-content short-text" ng-transclude></p><p class="show-more"><a href="#!">Show more</a></p>',
         link : function (scope, element, attrs) {
             var content = element.find(".text-content");
             var link = element.find("a");
-            var visibleHeight = content.clientHeight;
-            var actualHeight = content.scrollHeight - 1;
+            var visibleHeight = content[0].clientHeight;
+            var actualHeight = content[0].scrollHeight - 1;
             if (actualHeight < visibleHeight) {
                 link.show();
             } else {
                 link.hide();
             }
-            
+
             link.bind('click', function () {
                 content.toggleClass("short-text, full-text", 100);
-                var text = link.text() == "Show More" ? "Show less" : "Show More";
+                var text = link.text() == "Show more" ? "Show less" : "Show more";
                 link.text(text);
             });
         }
