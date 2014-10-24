@@ -136,7 +136,7 @@ public class LocationController extends BaseController {
     }
 
     @RequestMapping(value = "/ajax/location/{locationId}/upload", method = RequestMethod.POST)
-    public @ResponseBody String uploadLocationBoundaryFile(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
+    public @ResponseBody LocationBoundaryFileDto uploadLocationBoundaryFile(HttpServletRequest httpServletRequest, @PathVariable Long locationId) throws ApplicationException {
         try {
             System.out.println("locationId=" + locationId);
             Collection<Part> parts = httpServletRequest.getParts();
@@ -153,7 +153,7 @@ public class LocationController extends BaseController {
             }
             LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(locationId, uploadedImagePart.getSubmittedFileName(), uploadedImagePart.getInputStream(),
                     fileService);
-            return locationBoundaryFileDto.getFileNameAndPath();
+            return locationBoundaryFileDto;
         } catch (Exception ex) {
             throw new ApplicationException(ex);
         }
