@@ -14,7 +14,7 @@
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                                 <link rel="stylesheet" href="${staticHost}/css/singlecomplaint.css" />
-                                
+
                                 <script src="${staticHost}/js/masonry.pkgd.min.js"></script>
                                 <script src="${staticHost}/js/jquery.flexslider-min.js"></script>
                                 <script src="${staticHost}/js/jmpress.min.js"></script>
@@ -149,144 +149,12 @@
                                                     <div class="cd-testimonials-all-wrapper">
                                                         <ul>
                                                             <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit totam saepe iste maiores neque animi molestias nihil illum nisi temporibus.</p>
+                                                                <p>${complaint.description}</p>
 
                                                                 <div class="cd-author">
                                                                     <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
                                                                     <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore nostrum nisi, doloremque error hic nam nemo doloribus porro impedit perferendis. Tempora, distinctio hic suscipit. </p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Suresh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem quibusdam eveniet, molestiae laborum voluptatibus minima hic quasi accusamus ut facere, eius expedita, voluptatem? Repellat incidunt veniam quaerat, qui laboriosam dicta. </p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Mahesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero voluptates officiis tempore quae officia! Beatae quia deleniti cum corporis eos perferendis libero reiciendis nemo iusto accusamus, debitis tempora voluptas praesentium repudiandae laboriosam excepturi laborum, nisi optio repellat explicabo, incidunt ex numquam. Ullam perferendis officiis harum doloribus quae corrupti minima quia, aliquam nostrum expedita pariatur maxime repellat, voluptas sunt unde, inventore.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ganesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit totam saepe iste maiores neque animi molestias nihil illum nisi temporibus.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Dinesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis quia quas, quis illo adipisci voluptate ex harum iste commodi nulla dolor. Eius ratione quod ab!</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ritesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, dignissimos iure rem fugiat consequuntur officiis.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Harish Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At temporibus tempora necessitatibus reiciendis provident deserunt maxime sit id. Dicta aut voluptatibus placeat quibusdam vel, dolore.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis iusto sapiente, excepturi velit, beatae possimus est tenetur cumque fugit tempore dolore fugiat! Recusandae, vel suscipit? Perspiciatis non similique sint suscipit officia illo, accusamus dolorum, voluptate vitae quia ea amet optio magni voluptatem nemo, natus nihil.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor quasi officiis pariatur, fugit minus omnis animi ut assumenda quod commodi, ad a alias maxime unde suscipit magnam, voluptas laboriosam ipsam quibusdam quidem, dolorem deleniti id.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At temporibus tempora necessitatibus reiciendis provident deserunt maxime sit id. Dicta aut voluptatibus placeat quibusdam vel, dolore.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-item">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque tempore ipsam, eos suscipit nostrum molestias reprehenderit, rerum amet cum similique a, ipsum soluta delectus explicabo nihil repellat incidunt! Minima magni possimus mollitia deserunt facere, tempore earum modi, ea ipsa dicta temporibus suscipit quidem ut quibusdam vero voluptatibus nostrum excepturi explicabo nulla harum, molestiae alias. Ab, quidem rem fugit delectus quod.</p>
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
+                                                                        <li>${complaint.loggedBy[0].name}</li>
                                                                         <li>Cessna Business Park</li>
                                                                     </ul>
                                                                 </div> <!-- cd-author -->
@@ -302,137 +170,17 @@
                                                 <div class="cd-testimonials-pics-all">
                                                     <div class="cd-testimonials-pics-all-wrapper">
                                                         <ul>
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Suresh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Mahesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ganesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Dinesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ritesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Harish Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-
-                                                            <li class="cd-testimonials-pics-item">
-
-                                                                <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                    <ul class="cd-author-info">
-                                                                        <li>Ramesh Sharma</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
+                                                            <c:forEach items="${complaint.photos}" var="onePhoto">
+                                                                <li class="cd-testimonials-pics-item">
+                                                                    <div class="cd-author">
+                                                                        <img src="${onePhoto.orgUrl}" class="reported_description_pic" alt="Author image">
+                                                                        <ul class="cd-author-info">
+                                                                            <li>Ramesh Sharma</li>
+                                                                            <li>Cessna Business Park</li>
+                                                                        </ul>
+                                                                    </div> <!-- cd-author -->
+                                                                </li>
+                                                            </c:forEach>
                                                         </ul>
                                                     </div>	<!-- cd-testimonials-pics-all-wrapper -->
 
