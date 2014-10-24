@@ -108,18 +108,11 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-                                                        <div class="active item">
-                                                            <img src="images/issues.png" />
-                                                        </div>
-                                                        <div class="item">
-                                                            <img src="images/issues2.png" />
-                                                        </div>
-                                                        <div class="item">
-                                                            <img src="images/issues3.png" />
-                                                        </div>
-                                                        <div class="item">
-                                                            <img src="images/issues4.png" />
-                                                        </div>
+                                                        <c:forEach items="${complaint.photos}" var="onePhoto">
+                                                            <div class="item">
+                                                                <img src="${onePhoto}" />
+                                                            </div>
+                                                        </c:forEach>
                                                     </div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
@@ -132,54 +125,12 @@
                                                         <div class="active item">
                                                             <ul class="issue_description">
                                                                 <li>
-                                                                    <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                                    <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                     <div class="description_author">
                                                                         <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
                                                                         <ul class="description_author_info">
                                                                             <li class="description_author_name">Somanth Nabajja</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="item">
-                                                            <ul class="issue_description">
-                                                                <li>
-                                                                    <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                                                    <div class="description_author">
-                                                                        <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                        <ul class="description_author_info">
-                                                                            <li class="description_author_name">Shankar Mahadevan</li>
-                                                                            <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Bellandur</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="item">
-                                                            <ul class="issue_description">
-                                                                <li>
-                                                                    <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                                                    <div class="description_author">
-                                                                        <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                        <ul class="description_author_info">
-                                                                            <li class="description_author_name">Ramesh Sharma</li>
-                                                                            <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Cessna Business Park</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="item">
-                                                            <ul class="issue_description">
-                                                                <li>
-                                                                    <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                                                    <div class="description_author">
-                                                                        <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
-                                                                        <ul class="description_author_info">
-                                                                            <li class="description_author_name">Rishabh Shekhar</li>
-                                                                            <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Marathalli</li>
                                                                         </ul>
                                                                     </div>
                                                                 </li>
