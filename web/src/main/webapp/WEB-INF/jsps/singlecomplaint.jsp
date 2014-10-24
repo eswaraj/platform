@@ -59,11 +59,11 @@
                                             <div class="issue_reporters_box">
 
                                                 <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.postedBy)}</a>
+                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.loggedBy)}</a>
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
-                                                    <c:forEach items="${complaint.postedBy}" var="oneUser">
+                                                    <c:forEach items="${complaint.loggedBy}" var="oneUser">
                                                         <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.profilePhoto}" alt=""></a>
                                                     </c:forEach>
                                                 </div>
@@ -92,7 +92,7 @@
                                                 </p>
 
                                                 <p class="whom">
-                                                    <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.postedBy)}</strong>
+                                                    <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.loggedBy)}</strong>
                                                         <!-- social media share buttons -->								
                                                         <a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
                                                         <a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
