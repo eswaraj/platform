@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,8 @@ import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PhotoDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
+import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
 import com.google.gson.Gson;
 
 /**
@@ -82,6 +85,15 @@ public class ComplaintController extends BaseController{
 		
 	}
 	
+    @RequestMapping(value = "/ajax/complaint/user/comment", method = RequestMethod.POST)
+    public @ResponseBody String commentOnComplaints(HttpServletRequest httpServletRequest, ModelAndView mv, @RequestBody CommentSaveRequestDto commentRequestDto) throws ApplicationException {
+        UserDto loggedInuser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        commentRequestDto.setPersonId(loggedInuser.getPerson().getId());
+        commentRequestDto.setPoliticalAdminId(null);// in case client passed it
+        String complaints = apiUtil.userCommentOnComplaint(httpServletRequest, commentRequestDto);
+        return complaints;
+    }
+
 	@RequestMapping(value = "/mobile/complaint", method = RequestMethod.POST)
 	public @ResponseBody ComplaintDto saveComplaint(HttpServletRequest httpServletRequest) throws ApplicationException, IOException, ServletException {
 		

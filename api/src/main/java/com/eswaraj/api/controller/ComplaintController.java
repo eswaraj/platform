@@ -162,6 +162,12 @@ public class ComplaintController extends BaseController{
         return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
     }
 
+    @RequestMapping(value = "/api/v0/complaint/user/comment", method = RequestMethod.POST)
+    public @ResponseBody String postUserComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto) throws ApplicationException, IOException, ServletException {
+        CommentSaveResponseDto commentSaveResponseDto = complaintService.commentOnComplaint(commentRequestDto);
+        return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
+    }
+
     private void updateRandomDelhiPoint(SaveComplaintRequestDto saveComplaintRequestDto) {
         Double[][] delhiPoints = { { 77.04124994150143, 28.623132677360626 }, { 77.03290098437007, 28.62572366266242 }, { 77.02688134045275, 28.631229145737702 },
                 { 77.04084506670374, 28.62302782260635 }, { 77.0316069082104, 28.623910892538678 }, { 77.03226119037603, 28.622169846160872 }, { 77.03833192102502, 28.627098104023915 },
