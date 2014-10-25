@@ -13,6 +13,7 @@ import javax.servlet.http.Part;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -60,6 +61,7 @@ public class ComplaintController extends BaseController{
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)

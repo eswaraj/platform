@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,6 +102,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private LocationRepository locationRepository;
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private PoliticalBodyAdminRepository politicalBodyAdminRepository;

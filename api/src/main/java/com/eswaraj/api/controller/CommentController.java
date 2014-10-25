@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class CommentController extends BaseController {
     @Autowired
     private RedisTemplate<String, Long> redisTemplate;
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisUtil redisUtil;

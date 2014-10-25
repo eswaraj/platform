@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.social.facebook.api.Facebook;
@@ -77,6 +78,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     @Autowired
     private LocationTypeRepository locationTypeRepository;
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private AddressRepository addressRepository;

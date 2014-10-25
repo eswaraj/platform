@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class StatsController {
     private LocationService locationService;
 
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate redisTemplate;
 
     @RequestMapping(value = "/stats.html", method = RequestMethod.GET)

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ import com.eswaraj.web.dto.UserDto;
 public class ProfileController extends BaseController {
 
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private LocationService locationService;
