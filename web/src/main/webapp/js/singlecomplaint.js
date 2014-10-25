@@ -24,7 +24,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.saveComment = function () {
         var commentRequest = $http({
             method: "POST",
-            url:"/ajax/complaint/leader/comment",
+            url:"/ajax/complaint/user/comment",
             data: {
                 'complaintId' : complaintId,
                 'commentText' : $scope.commentText

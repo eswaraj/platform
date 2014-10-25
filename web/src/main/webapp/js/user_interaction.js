@@ -58,29 +58,6 @@ comments_counter = parseInt($( ".issue-info .whom a").text().match(/\d+/)[0]);
 sub_comments_counter = 3;
   $("#comments_box").fadeIn(500);
 
-$("#user_input_button").click(function(){
-
-comments_counter = comments_counter + 1;
-
-var d = new Date();
-
-var month = d.getMonth()+1;
-var day = d.getDate();
-var seconds = d.getSeconds();
-
-var output = ' ' + seconds + 'secs ago on ' + d.getFullYear() + '/' +
-    (month<10 ? '0' : '') + month + '/' +
-    (day<10 ? '0' : '') + day + '  ' ;
-
-var userinput = $("#user_input").val();
-if ( userinput != '') {
-	$("#add_comment").after('<div id="old_comments_block"><a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a><p class="comments_whom"><strong class="issue-id">Comment #' + comments_counter + ' by</strong><a href="#" class="username">Somnath Nabajja</a><img src = "images/time.png" class="posttimestatus" alt=""><a href="#" class="location">' + output + '</a></p><div class="comments-info" ><p id="user_comment_store" class="desc elipsis">' + userinput + '</p></div></div>');
-}
-
-$("#user_input").val('');
-
-	});
-
 
 $("#user_sub_com_input_button").click(function(){
 

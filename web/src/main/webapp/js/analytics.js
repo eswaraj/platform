@@ -36,6 +36,15 @@ function create_all_graph(data) {
 }
 
 function create_graph_ts(data,divid) {
+    data.forEach(function (obj, index, array) {
+        var list = [];
+        obj.values.forEach(function (o, i, a) {
+            var key = Object.keys(o)[0];
+            var val = o[key];
+            list.push([key, val]);
+        });
+        obj.values = list;
+    });
 	nv.addGraph(function() {
 		chart = nv.models.cumulativeLineChart()
 		.x(function(d) { return d[0] })
