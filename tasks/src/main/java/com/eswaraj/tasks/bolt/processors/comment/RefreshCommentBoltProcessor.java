@@ -31,6 +31,7 @@ public class RefreshCommentBoltProcessor extends AbstractBoltProcessor {
     @Override
     public Result processTuple(Tuple inputTuple) {
         RefreshCommentMessage refreshCommentMessage = (RefreshCommentMessage) inputTuple.getValue(0);
+        logDebug("Got refreshCommentMessage {} ", refreshCommentMessage);
         Long commentId = refreshCommentMessage.getCommentId();
         Long complaintId = refreshCommentMessage.getComplaintId();
         logDebug("Got Comment {} to refresh", commentId);

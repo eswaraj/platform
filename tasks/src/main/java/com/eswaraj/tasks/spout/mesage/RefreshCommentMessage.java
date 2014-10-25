@@ -29,4 +29,9 @@ public class RefreshCommentMessage implements Serializable {
     public void setComplaintId(Long complaintId) {
         this.complaintId = complaintId;
     }
+
+    @Override
+    public String toString() {
+        return "RefreshCommentMessage [commentId=" + commentId + ", complaintId=" + complaintId + "]";
+    }
 }

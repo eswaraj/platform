@@ -374,6 +374,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
 
     @Override
     public JsonObject getComment(Long commentId) throws ApplicationException {
+        logger.info("commentRepository = {} ", commentRepository);
         Comment comment = commentRepository.findOne(commentId);
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("text", comment.getText());
