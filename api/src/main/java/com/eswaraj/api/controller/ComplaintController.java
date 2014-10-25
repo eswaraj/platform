@@ -165,6 +165,12 @@ public class ComplaintController extends BaseController{
     @RequestMapping(value = "/api/v0/complaint/user/comment", method = RequestMethod.POST)
     public @ResponseBody String postUserComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto) throws ApplicationException, IOException, ServletException {
         CommentSaveResponseDto commentSaveResponseDto = complaintService.commentOnComplaint(commentRequestDto);
+        CommentSavedMessage commentSavedMessage = new CommentSavedMessage();
+        commentSavedMessage.setCommentId(commentSaveResponseDto.getId());
+        commentSavedMessage.setComplaintId(commentSaveResponseDto.getComplaintId());
+        commentSavedMessage.setPersonId(commentSaveResponseDto.getPersonId());
+        commentSavedMessage.setPoliticalAdminId(commentSaveResponseDto.getPoliticalAdminId());
+        queueService.sendCommentSavedMessage(commentSavedMessage);
         return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
     }
 
