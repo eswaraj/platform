@@ -13,6 +13,7 @@ import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
+import com.eswaraj.tasks.spout.mesage.SendMobileNotificationMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.device.NotificationMessage;
 import com.google.android.gcm.server.Message;
@@ -33,9 +34,10 @@ public class SendMobileNotificationBoltProcessor extends AbstractBoltProcessor {
     private AppService appService;
     @Override
     public Result processTuple(Tuple inputTuple) {
-        String message = (String) inputTuple.getValue(0);
-        String messageType = (String) inputTuple.getValue(1);
-        List<String> deviceList = (List<String>) inputTuple.getValue(2);
+        SendMobileNotificationMessage sendMobileNotificationMessage = (SendMobileNotificationMessage) inputTuple.getValue(0);
+        String message = sendMobileNotificationMessage.getMessage();
+        String messageType = sendMobileNotificationMessage.getMessageType();
+        List<String> deviceList = sendMobileNotificationMessage.getDeviceList();
         logDebug("Got message : {}, messageType :{} and deviceList :{}", message, messageType, deviceList);
         try {
             sendMessage(message, messageType, deviceList);

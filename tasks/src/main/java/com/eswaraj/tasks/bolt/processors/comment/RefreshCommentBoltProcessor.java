@@ -12,6 +12,7 @@ import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
+import com.eswaraj.tasks.spout.mesage.RefreshCommentMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
 @Component
@@ -29,8 +30,9 @@ public class RefreshCommentBoltProcessor extends AbstractBoltProcessor {
     private CommentCache commentCache;
     @Override
     public Result processTuple(Tuple inputTuple) {
-        Long commentId = (Long) inputTuple.getValue(0);
-        Long complaintId = (Long) inputTuple.getValue(1);
+        RefreshCommentMessage refreshCommentMessage = (RefreshCommentMessage) inputTuple.getValue(0);
+        Long commentId = refreshCommentMessage.getCommentId();
+        Long complaintId = refreshCommentMessage.getComplaintId();
         logDebug("Got Comment {} to refresh", commentId);
         try {
             commentCache.refreshComplaintComment(complaintId, commentId);
