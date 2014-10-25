@@ -1,9 +1,5 @@
 package com.eswaraj.api.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -18,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.CommentCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 
 @Controller
 public class CommentController extends BaseController {
@@ -38,39 +33,24 @@ public class CommentController extends BaseController {
     private AppKeyService appKeyService;
     @Autowired
     private AppService appService;
-    private JsonParser jsonParser = new JsonParser();
+    @Autowired
+    private CommentCache commentCache;
 
     @RequestMapping(value = "/api/v0/complaint/{complaintId}/comments", method = RequestMethod.GET)
     @ResponseBody
     public String getComplaintComments(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long complaintId) throws ApplicationException {
         int start = getIntParameter(httpServletRequest, "start", 0);
-        int count = getIntParameter(httpServletRequest, "count", 10);
+        int total = getIntParameter(httpServletRequest, "count", 10);
         boolean adminOnly = getBooleanParameter(httpServletRequest, "admin_only", false);
         String order = httpServletRequest.getParameter("order");
-        String redisSortedSetKey = appKeyService.getCommentListIdForComplaintKey(complaintId);
-        if (adminOnly) {
-            redisSortedSetKey = appKeyService.getAdminCommentListIdForComplaintKey(complaintId);
-        }
-        Set<String> commentIds;
-        if (order != null && order.equalsIgnoreCase("desc")) {
-            commentIds = stringRedisTemplate.opsForZSet().reverseRange(redisSortedSetKey, start, start + count);
-        } else {
-            commentIds = stringRedisTemplate.opsForZSet().range(redisSortedSetKey, start, start + count);
-        }
 
-        if (commentIds == null || commentIds.isEmpty()) {
-            return "[]";
+        String comments;
+        if (adminOnly) {
+            comments = commentCache.getComplaintAdminComments(complaintId, start, total, order);
+        } else {
+            comments = commentCache.getComplaintComments(complaintId, start, total, order);
         }
-        List<String> commentKeys = new ArrayList<>(commentIds.size());
-        for (String oneCommentId : commentIds) {
-            commentKeys.add(appKeyService.getCommentIdKey(oneCommentId));
-        }
-        List<String> comments = stringRedisTemplate.opsForValue().multiGet(commentKeys);
-        JsonArray commentArray = new JsonArray();
-        for (String oneComment : comments) {
-            commentArray.add(jsonParser.parse(oneComment));
-        }
-        return commentArray.toString();
+        return comments;
     }
 
 }

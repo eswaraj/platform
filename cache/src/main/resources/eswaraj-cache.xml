@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd'>
 
     <context:annotation-config />
-	<context:component-scan base-package='com.eswaraj.cache' />
+	<context:component-scan base-package='com.eswaraj.cache.redis.impl' />
 	<context:property-placeholder location='classpath:/eswaraj-cache.properties' />
 
 	<!-- For using @Cacheable if needed -->
@@ -26,4 +26,10 @@
 	<!-- Spring Data Redis definitions -->
 	<bean id='redisTemplate' class='org.springframework.data.redis.core.RedisTemplate' p:connection-factory-ref='jedisConnectionFactory' />
 	<bean id='cacheManager' class='org.springframework.data.redis.cache.RedisCacheManager' c:template-ref='redisTemplate' />
+	
+	
+	<!-- Redis related -->
+    <bean id="commentJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${comment_redis_server}" p:port="${comment_redis_port}" />
+    <bean id="commentStringRedisTemplate" name="commentStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="commentJedisConnFactory" />
+	
 </beans>
