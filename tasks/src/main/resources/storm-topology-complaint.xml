@@ -42,6 +42,7 @@
 				<ref bean="ComplaintViewByPoliticalAdminBoltBean" />
 				<ref bean="SendMobileNotificationBoltBean" />
 				<ref bean="CommentSavedBoltBean" />
+				<ref bean="RefreshCommentBoltProcessorBean" />
 			</list>
 		</property>
 	</bean>
