@@ -14,14 +14,6 @@ public interface CommentCache {
     void refreshComplaintComment(long complaintId, long commentId) throws ApplicationException;
 
     /**
-     * Refresh complaint's total comment count
-     * 
-     * @param complaintId
-     * @throws ApplicationException
-     */
-    void refreshComplaintCommentCount(long complaintId) throws ApplicationException;
-
-    /**
      * Get Complaint's Comment
      * 
      * @param complaintId
@@ -43,4 +35,13 @@ public interface CommentCache {
      * @throws ApplicationException
      */
     String getComplaintAdminComments(long complaintId, int start, int total, String order) throws ApplicationException;
+
+    /**
+     * return total comments for the complaint
+     * 
+     * @param complaintId
+     * @return
+     * @throws ApplicationException
+     */
+    long getComplaintCommentCount(long complaintId) throws ApplicationException;
 }

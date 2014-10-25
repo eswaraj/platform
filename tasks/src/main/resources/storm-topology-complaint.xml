@@ -113,7 +113,13 @@
         <property name="componentId" value="CommentSavedBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.CommentSavedBoltProcessor" />
 
-        <property name="outputStream" value="SendMobileNotificationStream" />
+        <property name="outputStreams">
+            <list>
+                <value>SendMobileNotificationStream</value>
+                <value>CommentRefreshStream</value>
+            </list>
+        </property>
+        
         <property name="paralellism" value="1" />
         <property name="sourceComponentStreams">
             <map>
@@ -130,6 +136,18 @@
 
     </bean>
 	
+	<bean id="RefreshCommentBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshCommentBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshCommentBoltProcessor" />
+
+        <property name="paralellism" value="1" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="CommentSavedBolt" value="CommentRefreshStream" />
+            </map>
+        </property>
+    </bean>
+    
 	<bean id="SendMobileNotificationBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="SendMobileNotificationBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
@@ -142,6 +160,7 @@
             </map>
         </property>
     </bean>
+    
 
 	<bean id="ComplaintProcessorBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="ComplaintProcessorBolt" />

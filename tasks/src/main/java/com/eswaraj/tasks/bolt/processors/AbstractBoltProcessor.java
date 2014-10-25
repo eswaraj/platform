@@ -87,6 +87,10 @@ public abstract class AbstractBoltProcessor implements BoltProcessor {
         eswarajBaseBolt.writeToStream(anchor, tuple);
     }
 
+    public void writeToParticularStream(Tuple anchor, List<Object> tuple, String streamId) {
+        eswarajBaseBolt.writeToParticularStream(anchor, tuple, streamId);
+    }
+
     public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
         eswarajBaseBolt.writeToTaskStream(taskId, anchor, tuple);
     }

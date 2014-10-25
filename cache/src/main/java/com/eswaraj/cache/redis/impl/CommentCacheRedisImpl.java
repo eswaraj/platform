@@ -51,12 +51,6 @@ public class CommentCacheRedisImpl implements CommentCache {
     }
 
     @Override
-    public void refreshComplaintCommentCount(long complaintId) throws ApplicationException {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public String getComplaintComments(long complaintId, int start, int total, String order) throws ApplicationException {
         String redisSortedSetKey = appKeyService.getCommentListIdForComplaintKey(complaintId);
         Set<String> commentIds;
@@ -98,6 +92,12 @@ public class CommentCacheRedisImpl implements CommentCache {
             commentArray.add(jsonParser.parse(oneComment));
         }
         return commentArray;
+    }
+
+    @Override
+    public long getComplaintCommentCount(long complaintId) throws ApplicationException {
+        String commentListKeyForComplaint = appKeyService.getCommentListIdForComplaintKey(complaintId);
+        return commentStringRedisTemplate.opsForZSet().size(commentListKeyForComplaint);
     }
 
 }
