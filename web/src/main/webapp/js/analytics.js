@@ -40,7 +40,7 @@ function create_graph_ts(data,divid) {
         var list = [];
         obj.values.forEach(function (o, i, a) {
             var key = Object.keys(o)[0];
-            var val = o.key;
+            var val = o[key];
             list.push([key, val]);
         });
         obj.values = list;
