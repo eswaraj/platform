@@ -18,6 +18,7 @@
     <!-- Imports user-defined @Controller beans that process client requests -->
      <import resource="classpath:eswaraj-core.xml" />
      <import resource="eswaraj-neo4j-db-context.xml" />
+     <import resource="classpath:eswaraj-cache.xml" />
      
      <!-- Redis related -->
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
