@@ -16,17 +16,6 @@
 	<!-- For using @Cacheable if needed -->
 	<cache:annotation-driven />
 
-	<!-- Jedis ConnectionFactory -->
-	<bean id='jedisConnectionFactory' class='org.springframework.data.redis.connection.jedis.JedisConnectionFactory' 
-	    p:host-name='${eswaraj.cache.redis.hostname}' 
-	    p:port='${eswaraj.cache.redis.port}' 
-	    p:use-pool='${eswaraj.cache.redis.usePool}' />
-
-
-	<!-- Spring Data Redis definitions -->
-	<bean id='redisTemplate' class='org.springframework.data.redis.core.RedisTemplate' p:connection-factory-ref='jedisConnectionFactory' />
-	<bean id='cacheManager' class='org.springframework.data.redis.cache.RedisCacheManager' c:template-ref='redisTemplate' />
-	
 	
 	<!-- Redis related -->
     <bean id="commentJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${comment_redis_server}" p:port="${comment_redis_port}" />
