@@ -227,6 +227,12 @@ public class ApiUtil {
         return complaints;
     }
 
+    public String userCommentOnComplaint(HttpServletRequest httpServletRequest, CommentSaveRequestDto commentRequestDto) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/user/comment";
+        String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(commentRequestDto));
+        return complaints;
+    }
+
     public String deletePoliticalAdminStaff(HttpServletRequest httpServletRequest, Long politicalAdminStaffId) throws ApplicationException {
         String urlPath = "/api/v0/leader/staff/" + politicalAdminStaffId;
         String locationCategoryAnalytics = delete(httpServletRequest, urlPath);
