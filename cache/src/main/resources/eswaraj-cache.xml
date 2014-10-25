@@ -10,10 +10,6 @@
     <context:annotation-config />
 	<context:component-scan base-package='com.eswaraj.cache.redis.impl' />
 
-	<!-- For using @Cacheable if needed -->
-	<cache:annotation-driven />
-
-	
 	<!-- Redis related -->
     <bean id="commentJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${comment_redis_server}" p:port="${comment_redis_port}" />
     <bean id="commentStringRedisTemplate" name="commentStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="commentJedisConnFactory" />
