@@ -37,6 +37,7 @@ import com.eswaraj.domain.nodes.relationships.ComplaintPhoto;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
+import com.eswaraj.domain.repo.ComplaintCommentRepository;
 import com.eswaraj.domain.repo.ComplaintLoggedByPersonRepository;
 import com.eswaraj.domain.repo.ComplaintPhotoRepository;
 import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
@@ -108,6 +109,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private PoliticalBodyAdminRepository politicalBodyAdminRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private ComplaintCommentRepository complaintCommentRepository;
 
 	@Override
 	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
@@ -477,6 +480,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         ComplaintComment complaintComment = new ComplaintComment();
         complaintComment.setComment(comment);
         complaintComment.setComplaint(complaint);
+        complaintComment = complaintCommentRepository.save(complaintComment);
 
         CommentSaveResponseDto commentSaveResponseDto = new CommentSaveResponseDto();
         BeanUtils.copyProperties(commentRequestDto, commentSaveResponseDto);
