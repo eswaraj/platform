@@ -31,6 +31,8 @@
 				<ref bean="SendMobileNotificationBoltBean" />
 				<ref bean="CommentSavedBoltBean" />
 				<ref bean="RefreshCommentBoltProcessorBean" />
+				<ref bean="RefreshAllCommentsBoltProcessorBean" />
+				
 			</list>
 		</property>
 	</bean>
