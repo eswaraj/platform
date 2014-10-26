@@ -16,6 +16,7 @@
 			<list>
 				<ref bean="DataChangeSpoutBean" />
 				<ref bean="CommentSavedSpoutBean" />
+				<ref bean="ComplaintViwedByPoliticalAdminSpoutBean" />
 			</list>
 		</property>
 		<property name="boltConfigs">
@@ -37,6 +38,17 @@
 	<bean id="CommentSavedSpoutBean" class="com.eswaraj.tasks.spout.CommentSavedSpout">
 		<property name="componentId" value="CommentSavedSpout" />
 		<property name="outputStream" value="CommentSavedStream" />
+		<!-- Properties define which services will be available for spout -->
+		<property name="initializeRedisServices" value="false" />
+		<property name="initializeQueueServices" value="true" />
+		<property name="initializeDbServices" value="false" />
+
+	</bean>
+
+	<bean id="ComplaintViwedByPoliticalAdminSpoutBean" class="com.eswaraj.tasks.spout.ComplaintViwedByPoliticalAdminSpout">
+		<property name="componentId" value="ComplaintViwedByPoliticalAdminSpout" />
+		<property name="outputStream" value="ComplaintViwedByPoliticalAdminStream" />
+
 		<!-- Properties define which services will be available for spout -->
 		<property name="initializeRedisServices" value="false" />
 		<property name="initializeQueueServices" value="true" />
@@ -196,16 +208,16 @@
 		</property>
 	</bean>
 	<bean id="RefreshAllCommentsBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="RefreshAllCommentsBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshAllCommentsBoltProcessor" />
-        <property name="outputStream" value="CommentRefreshStream" />
-        
-        <property name="paralellism" value="1" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="DataChangeSpout" value="RefreshAllCommentStream" />
-            </map>
-            
-        </property>
-    </bean>
+		<property name="componentId" value="RefreshAllCommentsBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshAllCommentsBoltProcessor" />
+		<property name="outputStream" value="CommentRefreshStream" />
+
+		<property name="paralellism" value="1" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="RefreshAllCommentStream" />
+			</map>
+
+		</property>
+	</bean>
 </beans>
