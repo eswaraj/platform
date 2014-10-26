@@ -400,7 +400,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
     @Override
     public List<PersonDto> getPersons(int page, int size) throws ApplicationException {
-        Pageable pageable = new PageRequest(page, size, Sort.Direction.fromString("order by id asc"));
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.ASC, "id");
         Page<Person> persons = personRepository.findAll(pageable);
         return personConvertor.convertBeanList(persons);
     }
