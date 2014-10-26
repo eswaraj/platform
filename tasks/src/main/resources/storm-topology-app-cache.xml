@@ -33,6 +33,8 @@
 				<ref bean="RefreshCommentBoltProcessorBean" />
 				<ref bean="RefreshAllCommentsBoltProcessorBean" />
 				<ref bean="RefreshAllPersonBoltBean" />
+				<ref bean="RefreshPersonBoltBean" />
+				
 				
 			</list>
 		</property>
