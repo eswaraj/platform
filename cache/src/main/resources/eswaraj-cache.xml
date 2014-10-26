@@ -13,5 +13,9 @@
 	<!-- Redis related -->
     <bean id="commentJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${comment_redis_server}" p:port="${comment_redis_port}" />
     <bean id="commentStringRedisTemplate" name="commentStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="commentJedisConnFactory" />
-	
+
+    
+    <bean id="personJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${person_redis_server}" p:port="${person_redis_port}" />
+    <bean id="personStringRedisTemplate" name="personStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="personJedisConnFactory" />
+    	
 </beans>

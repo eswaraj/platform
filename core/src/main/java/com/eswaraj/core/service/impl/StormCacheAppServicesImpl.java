@@ -412,4 +412,17 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         return jsonObject;
     }
 
+    @Override
+    public JsonObject getPerson(Long personId) throws ApplicationException {
+        Person person = personRepository.findOne(personId);
+
+        JsonObject personJsonObject = new JsonObject();
+        personJsonObject.addProperty("name", person.getName());
+        personJsonObject.addProperty("externalId", person.getExternalId());
+        personJsonObject.addProperty("gender", person.getGender());
+        personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+        personJsonObject.addProperty("id", person.getId());
+        return personJsonObject;
+    }
+
 }
