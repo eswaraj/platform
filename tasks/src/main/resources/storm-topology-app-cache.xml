@@ -32,6 +32,7 @@
 				<ref bean="CommentSavedBoltBean" />
 				<ref bean="RefreshCommentBoltProcessorBean" />
 				<ref bean="RefreshAllCommentsBoltProcessorBean" />
+				<ref bean="RefreshAllPersonBoltBean" />
 				
 			</list>
 		</property>
@@ -69,6 +70,7 @@
 				<value>PoliticalBodyAdminTypeUpdatedStream</value>
 				<value>RefreshAllChildLocationPBAListStream</value>
 				<value>RefreshAllCommentStream</value>
+				<value>RefreshAllPersonStream</value>
 			</list>
 		</property>
 		<!-- Properties define which services will be available for spout -->
@@ -119,6 +121,27 @@
 			</map>
 		</property>
 	</bean>
+	<bean id="RefreshAllPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshAllPersonBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllPersonBoltProcessor" />
+        <property name="outputStream" value="RefreshPersonStream" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="DataChangeSpout" value="RefreshAllPersonStream" />
+            </map>
+        </property>
+    </bean>
+    <bean id="RefreshPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshPersonBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPersonBoltProcessor" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
+            </map>
+        </property>
+    </bean>
+	
+	
 	<bean id="LocationUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="LocationUpdatedBolt" />
 		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationUpdatedBoltProcessor" />

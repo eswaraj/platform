@@ -13,6 +13,10 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.social.facebook.api.Facebook;
@@ -392,5 +396,12 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         device.setGcmId(registerGcmDeviceId.getGcmId());
         device = deviceRepository.save(device);
         logger.info("Saved Device : {} ", device);
+    }
+
+    @Override
+    public List<PersonDto> getPersons(int page, int size) throws ApplicationException {
+        Pageable pageable = new PageRequest(page, size, Sort.DEFAULT_DIRECTION);
+        Page<Person> persons = personRepository.findAll(pageable);
+        return personConvertor.convertBeanList(persons);
     }
 }
