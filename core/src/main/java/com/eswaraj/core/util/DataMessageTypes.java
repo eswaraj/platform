@@ -10,5 +10,6 @@ public class DataMessageTypes {
     public static final int REFRESH_ALL_LOCATION_MESSAGE_TYPE = 4;
     public static final int POLITICAL_BODY_ADMIN_TYPE_UPDATE_MESSAGE_TYPE = 5;
     public static final int REFRESH_LOCATION_PBA_LIST_MESSAGE_TYPE = 6;
+    public static final int REFRESH_ALL_COMMENT_MESSAGE_TYPE = 7;
 
 }
