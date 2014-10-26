@@ -26,7 +26,6 @@
 				<ref bean="RefreshAllLocationBean" />
 				<ref bean="PreprocessAllChildLocationForPBAListBoltProcessorBean" />
 				<ref bean="RefreshPoliticalBodyAdminListForALocationBoltProcessorBean" />
-				<ref bean="ComplaintRefreshBoltBean" />
 				<ref bean="ComplaintViewByPoliticalAdminBoltBean" />
 				<ref bean="SendMobileNotificationBoltBean" />
 				<ref bean="CommentSavedBoltBean" />
@@ -139,16 +138,6 @@
 		</property>
 	</bean>
 
-	<bean id="ComplaintRefreshBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-		<property name="componentId" value="ComplaintRefreshBolt" />
-		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.ComplaintRefreshBoltProcessor" />
-		<property name="paralellism" value="1" />
-		<property name="sourceComponentStreams">
-			<map>
-				<entry key="ComplaintProcessorBolt" value="ComplaintProcessorStream" />
-			</map>
-		</property>
-	</bean>
 	<bean id="ComplaintViewByPoliticalAdminBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="ComplaintViewByPoliticalAdminBolt" />
 		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.complaint.view.ComplaintViewByPoliticalAdminBoltProcessor" />
