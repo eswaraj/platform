@@ -20,4 +20,8 @@
     	
     <bean id="complaintJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${complaint_redis_server}" p:port="${complaint_redis_port}" />
     <bean id="complaintStringRedisTemplate" name="complaintStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="complaintJedisConnFactory" />
+
+    <bean id="locationJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true" p:host-name="${location_redis_server}" p:port="${location_redis_port}" />
+    <bean id="locationStringRedisTemplate" name="locationStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="locationJedisConnFactory" />
+    
 </beans>

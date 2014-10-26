@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 
+import com.eswaraj.cache.LocationPointCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.LocationService;
@@ -28,6 +29,8 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
     private AppKeyService appKeyService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private LocationPointCache locationPointCache;
 
     @Override
     public Result processTuple(Tuple input) {
@@ -132,13 +135,11 @@ public class LocationOneFileProcessorBoltProcessor extends AbstractBoltProcessor
                 break;
             }
         }
-        String redisKey = appKeyService.buildLocationKey(onePoint.getX(), onePoint.getY());
         if (insideBoundaries) {
-
-            writeToMemoryStoreSet(redisKey, allLocations);
+            locationPointCache.attachPointToLocations(onePoint.getX(), onePoint.getY(), allLocations);
             totalPointsProcessed.incrementAndGet();
         } else {
-            removeFromMemoryStoreSet(redisKey, String.valueOf(locationId));
+            locationPointCache.dettachPointFromLocations(onePoint.getX(), onePoint.getY(), allLocations);
             totalPointsMissed.incrementAndGet();
         }
         

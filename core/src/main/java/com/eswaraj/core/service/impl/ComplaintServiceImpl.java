@@ -518,7 +518,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
     @Override
     public List<CommentComplaintDto> getCodmplaintComments(int page, int count) throws ApplicationException {
-        Pageable pageable = new PageRequest(page, count, Sort.DEFAULT_DIRECTION.DESC);
+        Pageable pageable = new PageRequest(page, count, Sort.Direction.DESC, "id");
         Page<ComplaintComment> complaintComments = complaintCommentRepository.findAll(pageable);
         
         List<CommentComplaintDto> list = new ArrayList<>();
