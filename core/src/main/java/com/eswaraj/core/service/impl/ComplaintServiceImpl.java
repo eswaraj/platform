@@ -11,6 +11,10 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +54,7 @@ import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
+import com.eswaraj.web.dto.CommentComplaintDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
@@ -509,6 +514,24 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         Collection<Photo> photos = photoRepository.getComplaintPhotos(complaintId);
         logger.info("complaintPhotos : {}", photos);
         return photoConvertor.convertBeanList(photos);
+    }
+
+    @Override
+    public List<CommentComplaintDto> getCodmplaintComments(int page, int count) throws ApplicationException {
+        Pageable pageable = new PageRequest(page, count, Sort.DEFAULT_DIRECTION.DESC);
+        Page<ComplaintComment> complaintComments = complaintCommentRepository.findAll(pageable);
+        
+        List<CommentComplaintDto> list = new ArrayList<>();
+        if (complaintComments.getContent() != null && !complaintComments.getContent().isEmpty()) {
+            for (ComplaintComment oneCommentComplaint : complaintComments.getContent()) {
+                CommentComplaintDto oneCommentComplaintDto = new CommentComplaintDto();
+                oneCommentComplaintDto.setCommentId(oneCommentComplaint.getComment().getId());
+                oneCommentComplaintDto.setComplaintId(oneCommentComplaint.getComplaint().getId());
+                list.add(oneCommentComplaintDto);
+            }
+        }
+        logger.info("list : {}", list);
+        return list;
     }
 
 }

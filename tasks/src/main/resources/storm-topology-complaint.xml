@@ -134,8 +134,22 @@
         </property>
 
     </bean>
+    
 	
-	<bean id="RefreshCommentBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+	
+    <bean id="RefreshAllCommentsBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshAllCommentsBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshAllCommentsBoltProcessor" />
+        <property name="outputStream" value="CommentRefreshStream" />
+        
+        <property name="paralellism" value="1" />
+        <property name="sourceComponentStreams">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    	<bean id="RefreshCommentBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="RefreshCommentBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshCommentBoltProcessor" />
 
@@ -143,6 +157,8 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="CommentSavedBolt" value="CommentRefreshStream" />
+                <entry key="RefreshAllCommentsBolt" value="CommentRefreshStream" />
+                
             </map>
         </property>
     </bean>
