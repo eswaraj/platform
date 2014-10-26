@@ -1,7 +1,5 @@
 package com.eswaraj.tasks.bolt.processors;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +10,6 @@ import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.ComplaintDto;
-import com.eswaraj.web.dto.PhotoDto;
 
 @Component
 public class ComplaintProcessorBoltProcessor extends AbstractBoltProcessor {
@@ -36,11 +33,7 @@ public class ComplaintProcessorBoltProcessor extends AbstractBoltProcessor {
                 complaintId = (Long) value;
             }
             logDebug("Working on Complaint : {}", complaintId);
-            Collection<PhotoDto> photos = complaintService.getComplaintPhotos(complaintId);
-            logInfo("Complaint before resaving : {}", photos);
             ComplaintMessage updatedComplaintMessage = complaintService.updateLocationAndAdmins(complaintId);
-            photos = complaintService.getComplaintPhotos(complaintId);
-            logInfo("Complaint After resaving : {}", photos);
             writeToStream(input, new Values(updatedComplaintMessage));
             return Result.Success;
 		}catch(Exception ex){

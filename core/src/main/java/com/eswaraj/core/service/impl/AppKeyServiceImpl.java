@@ -36,7 +36,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     private final String EXECUTIVE_ADMIN_PREFIX = "EBA.";
     private final String CATEGORY_ALL_KEY = CATEGORY_PREFIX + "ALL";
 
-    private final String COMPLAINT_PREFIX = "Complaint.";
+    private final String COMPLAINT_PREFIX = "CO.";
     private final String PERSON_PREFIX = "P.";
 
     private final String GLOBAL_PREFIX = "Global.";

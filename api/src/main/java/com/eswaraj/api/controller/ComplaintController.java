@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
@@ -63,6 +64,9 @@ public class ComplaintController extends BaseController{
     @Autowired
     @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private ComplaintCache complaintCache;
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
@@ -116,9 +120,7 @@ public class ComplaintController extends BaseController{
     @RequestMapping(value = "/api/v0/complaint/{complaintId}", method = RequestMethod.GET)
     public @ResponseBody String getComplaintById(HttpServletRequest httpServletRequest, @PathVariable Long complaintId) throws ApplicationException, IOException,
             ServletException {
-        String complaintKey = appKeyService.getComplaintObjectKey(complaintId);
-        String complaintString = stringRedisTemplate.opsForValue().get(complaintKey);
-        return complaintString;
+        return complaintCache.getComplaintById(complaintId);
     }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}/{categoryId}", method = RequestMethod.GET)
@@ -246,12 +248,6 @@ public class ComplaintController extends BaseController{
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
-	}
-	@RequestMapping(value = "/mobile/complaints", method = RequestMethod.POST)
-	public @ResponseBody String saveComplaintsasa(HttpServletRequest httpServletRequest) throws ApplicationException {
-		
-		printInfo(httpServletRequest);
-		return "Done";
 	}
 	/*
 	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)
