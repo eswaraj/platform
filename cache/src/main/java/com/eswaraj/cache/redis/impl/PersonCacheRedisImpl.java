@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.PersonCache;
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -15,6 +16,7 @@ import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+@Component
 public class PersonCacheRedisImpl implements PersonCache {
 
     @Autowired

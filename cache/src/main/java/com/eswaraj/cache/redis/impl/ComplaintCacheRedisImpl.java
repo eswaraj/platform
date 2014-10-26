@@ -3,14 +3,15 @@ package com.eswaraj.cache.redis.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
+@Component
 public class ComplaintCacheRedisImpl implements ComplaintCache {
 
     @Autowired
@@ -22,8 +23,6 @@ public class ComplaintCacheRedisImpl implements ComplaintCache {
 
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
-
-    private JsonParser jsonParser = new JsonParser();
 
     @Override
     public void refreshComplaintInfo(long complaintId) throws ApplicationException {
