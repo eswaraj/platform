@@ -25,6 +25,7 @@
                                 <script>
                                     var complaintId = ${complaint.id};
                                     var loggedIn = ${loggedIn};
+                                    var totalComments = ${complaint.totalComments};
                                 </script>
                                 <script type="text/javascript">
                                     $(function () {
@@ -195,7 +196,7 @@
 
                                                 <!-- Comments Box -->
 
-                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( ${complaint.totalComments} )</a>
+                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( {{totalComments}} )</a>
 
                                                     <div id="comments_box" class="div_comments_box">
 
