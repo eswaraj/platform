@@ -195,7 +195,7 @@
 
                                                 <!-- Comments Box -->
 
-                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( 3 )</a>
+                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( ${complaint.totalComments} )</a>
 
                                                     <div id="comments_box" class="div_comments_box">
 
