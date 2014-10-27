@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.messaging.dto.ComplaintMessage;
+import com.eswaraj.web.dto.CommentComplaintDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
@@ -54,4 +55,6 @@ public interface ComplaintService {
 	PhotoDto addPhotoToComplaint(Long complaintId, PhotoDto photoDto) throws ApplicationException;
 
     List<PhotoDto> getComplaintPhotos(Long complaintId) throws ApplicationException;
+
+    List<CommentComplaintDto> getCodmplaintComments(int page, int count) throws ApplicationException;
 }

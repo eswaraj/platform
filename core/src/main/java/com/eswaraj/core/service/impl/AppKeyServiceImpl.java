@@ -36,7 +36,8 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     private final String EXECUTIVE_ADMIN_PREFIX = "EBA.";
     private final String CATEGORY_ALL_KEY = CATEGORY_PREFIX + "ALL";
 
-    private final String COMPLAINT_PREFIX = "Complaint.";
+    private final String COMPLAINT_PREFIX = "CO.";
+    private final String PERSON_PREFIX = "P.";
 
     private final String GLOBAL_PREFIX = "Global.";
     private final String LOCATION_PREFIX = "LC.";
@@ -384,5 +385,15 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     @Override
     public String getAdminCommentListIdForComplaintKey(Long complaintId) {
         return "COM.LIST.CMP.AO." + complaintId;
+    }
+
+    @Override
+    public String getPersonKey(Long personId) {
+        return PERSON_PREFIX + personId;
+    }
+
+    @Override
+    public String getPersonKey(String personId) {
+        return PERSON_PREFIX + personId;
     }
 }

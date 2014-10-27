@@ -49,7 +49,9 @@
 	</bean>
 	<!-- App beans -->
 	<import resource="classpath:eswaraj-core.xml" />
+	<import resource="classpath:eswaraj-cache.xml" />
 	<import resource="eswaraj-neo4j-db-context.xml" />
+	
 
 
 	<!-- Redis related -->

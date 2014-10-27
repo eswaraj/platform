@@ -41,4 +41,6 @@ public interface PersonService {
 
     UserDto updateUserInfo(UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException;
 
+    List<PersonDto> getPersons(int page, int count) throws ApplicationException;
+
 }

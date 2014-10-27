@@ -10,12 +10,13 @@ import org.springframework.util.StringUtils;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
+import com.eswaraj.tasks.spout.mesage.RefreshCommentMessage;
+import com.eswaraj.tasks.spout.mesage.SendMobileNotificationMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
@@ -30,8 +31,6 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
     @Autowired
-    private AppKeyService appKeyService;
-    @Autowired
     private AppService appService;
     @Autowired
     private PersonService personService;
@@ -40,19 +39,11 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
         CommentSavedMessage commentSavedMessage = (CommentSavedMessage) inputTuple.getValue(0);
         logDebug("Got CommentSavedMessage : {}", commentSavedMessage);
         try {
-            // Save Comment to redis
+            RefreshCommentMessage refreshCommentMessage = new RefreshCommentMessage(commentSavedMessage.getCommentId(), commentSavedMessage.getComplaintId());
+            writeToParticularStream(inputTuple, new Values(refreshCommentMessage), "CommentRefreshStream");
             JsonObject commentJsonObject = stormCacheAppServices.getComment(commentSavedMessage.getCommentId());
-            String commentKey = appKeyService.getCommentIdKey(commentSavedMessage.getCommentId());
-            String commentListKeyForComplaint = appKeyService.getCommentListIdForComplaintKey(commentSavedMessage.getComplaintId());
-
-            writeToMemoryStoreValue(commentKey, commentJsonObject.toString());
-            Long creationTime = commentJsonObject.get("creationTime").getAsLong();
-            writeToMemoryStoreSortedSet(commentListKeyForComplaint, commentSavedMessage.getCommentId().toString(), creationTime);
-
             boolean adminComment = commentJsonObject.get("adminComment").getAsBoolean();
             if (adminComment) {
-                String adminOnlyCommentListForComplaint = appKeyService.getAdminCommentListIdForComplaintKey(commentSavedMessage.getComplaintId());
-                writeToMemoryStoreSortedSet(adminOnlyCommentListForComplaint, commentSavedMessage.getCommentId().toString(), creationTime);
                 // then Send mobile Notifications
                 List<DeviceDto> devices = appService.getDevicesForComplaint(commentSavedMessage.getComplaintId());
                 if (devices == null || devices.isEmpty()) {
@@ -74,7 +65,8 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
                     message = "A Comment made by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName() + " on your complaint";
                 }
 
-                writeToStream(inputTuple, new Values(message, NotificationMessage.POLITICAL_ADMIN_COMMENTED_MESSAGE_TYPE, deviceList));
+                SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(message, NotificationMessage.POLITICAL_ADMIN_COMMENTED_MESSAGE_TYPE, deviceList);
+                writeToParticularStream(inputTuple, new Values(sendMobileNotificationMessage), "SendMobileNotificationStream");
             }
 
         } catch (Exception ex) {

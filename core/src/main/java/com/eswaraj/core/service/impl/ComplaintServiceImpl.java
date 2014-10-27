@@ -10,6 +10,11 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +41,7 @@ import com.eswaraj.domain.nodes.relationships.ComplaintPhoto;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
+import com.eswaraj.domain.repo.ComplaintCommentRepository;
 import com.eswaraj.domain.repo.ComplaintLoggedByPersonRepository;
 import com.eswaraj.domain.repo.ComplaintPhotoRepository;
 import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
@@ -48,6 +54,7 @@ import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
+import com.eswaraj.web.dto.CommentComplaintDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
@@ -101,11 +108,14 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private LocationRepository locationRepository;
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private PoliticalBodyAdminRepository politicalBodyAdminRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private ComplaintCommentRepository complaintCommentRepository;
 
 	@Override
 	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
@@ -475,6 +485,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         ComplaintComment complaintComment = new ComplaintComment();
         complaintComment.setComment(comment);
         complaintComment.setComplaint(complaint);
+        complaintComment = complaintCommentRepository.save(complaintComment);
 
         CommentSaveResponseDto commentSaveResponseDto = new CommentSaveResponseDto();
         BeanUtils.copyProperties(commentRequestDto, commentSaveResponseDto);
@@ -503,6 +514,24 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         Collection<Photo> photos = photoRepository.getComplaintPhotos(complaintId);
         logger.info("complaintPhotos : {}", photos);
         return photoConvertor.convertBeanList(photos);
+    }
+
+    @Override
+    public List<CommentComplaintDto> getCodmplaintComments(int page, int count) throws ApplicationException {
+        Pageable pageable = new PageRequest(page, count, Sort.Direction.DESC, "id");
+        Page<ComplaintComment> complaintComments = complaintCommentRepository.findAll(pageable);
+        
+        List<CommentComplaintDto> list = new ArrayList<>();
+        if (complaintComments.getContent() != null && !complaintComments.getContent().isEmpty()) {
+            for (ComplaintComment oneCommentComplaint : complaintComments.getContent()) {
+                CommentComplaintDto oneCommentComplaintDto = new CommentComplaintDto();
+                oneCommentComplaintDto.setCommentId(oneCommentComplaint.getComment().getId());
+                oneCommentComplaintDto.setComplaintId(oneCommentComplaint.getComplaint().getId());
+                list.add(oneCommentComplaintDto);
+            }
+        }
+        logger.info("list : {}", list);
+        return list;
     }
 
 }

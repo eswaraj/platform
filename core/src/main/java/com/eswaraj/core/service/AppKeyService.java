@@ -94,4 +94,9 @@ public interface AppKeyService {
     String getCommentIdKey(Long commentId);
 
     String getCommentIdKey(String commentId);
+
+    String getPersonKey(Long personId);
+
+    String getPersonKey(String personId);
+
 }

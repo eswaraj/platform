@@ -14,7 +14,6 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eswaraj.cache.CommentCache;
+import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
@@ -39,6 +40,8 @@ import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
 import com.eswaraj.web.dto.comment.CommentSaveResponseDto;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * 
@@ -59,8 +62,15 @@ public class ComplaintController extends BaseController{
     private QueueService queueService;
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
+
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private ComplaintCache complaintCache;
+
+    @Autowired
+    private CommentCache commentCache;
+
+    private JsonParser jsonParser = new JsonParser();
+
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
@@ -114,9 +124,12 @@ public class ComplaintController extends BaseController{
     @RequestMapping(value = "/api/v0/complaint/{complaintId}", method = RequestMethod.GET)
     public @ResponseBody String getComplaintById(HttpServletRequest httpServletRequest, @PathVariable Long complaintId) throws ApplicationException, IOException,
             ServletException {
-        String complaintKey = appKeyService.getComplaintObjectKey(complaintId);
-        String complaintString = stringRedisTemplate.opsForValue().get(complaintKey);
-        return complaintString;
+        String complaint = complaintCache.getComplaintById(complaintId);
+        JsonObject jsonObject = (JsonObject) jsonParser.parse(complaint);
+
+        long totalComments = commentCache.getComplaintCommentCount(complaintId);
+        jsonObject.addProperty("totalComments", totalComments);
+        return jsonObject.toString();
     }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}/{categoryId}", method = RequestMethod.GET)
@@ -165,6 +178,12 @@ public class ComplaintController extends BaseController{
     @RequestMapping(value = "/api/v0/complaint/user/comment", method = RequestMethod.POST)
     public @ResponseBody String postUserComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto) throws ApplicationException, IOException, ServletException {
         CommentSaveResponseDto commentSaveResponseDto = complaintService.commentOnComplaint(commentRequestDto);
+        CommentSavedMessage commentSavedMessage = new CommentSavedMessage();
+        commentSavedMessage.setCommentId(commentSaveResponseDto.getId());
+        commentSavedMessage.setComplaintId(commentSaveResponseDto.getComplaintId());
+        commentSavedMessage.setPersonId(commentSaveResponseDto.getPersonId());
+        commentSavedMessage.setPoliticalAdminId(commentSaveResponseDto.getPoliticalAdminId());
+        queueService.sendCommentSavedMessage(commentSavedMessage);
         return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
     }
 
@@ -238,12 +257,6 @@ public class ComplaintController extends BaseController{
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
-	}
-	@RequestMapping(value = "/mobile/complaints", method = RequestMethod.POST)
-	public @ResponseBody String saveComplaintsasa(HttpServletRequest httpServletRequest) throws ApplicationException {
-		
-		printInfo(httpServletRequest);
-		return "Done";
 	}
 	/*
 	@RequestMapping(value = "/user/complaints/{userId}", method = RequestMethod.GET)

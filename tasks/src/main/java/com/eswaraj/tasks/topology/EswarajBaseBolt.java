@@ -35,6 +35,7 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
     // key - CompnenetId , Value - Stream
     private Map<String, String> sourceComponentStreams;
     private List<String> fields;
+    private List<String> outputStreams;
 
     protected BoltProcessor getBoltProcessor() {
         try {
@@ -64,6 +65,11 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
         logInfo("outputStream = " + outputStream);
         if (outputStream != null) {
             declarer.declareStream(outputStream, new Fields(getFields()));
+        }
+        if (outputStreams != null) {
+            for (String oneOutpurStream : outputStreams) {
+                declarer.declareStream(oneOutpurStream, new Fields(getFields()));
+            }
         }
     }
 
@@ -107,6 +113,12 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
             List<Integer> taskIds = outputCollector.emit(outputStream, anchor, tuple);
             logDebug("Sent to task {}", taskIds);
         }
+    }
+
+    public void writeToParticularStream(Tuple anchor, List<Object> tuple, String stream) {
+        logDebug("Writing To Stream {}", stream);
+        List<Integer> taskIds = outputCollector.emit(stream, anchor, tuple);
+        logDebug("Sent to task {}", taskIds);
     }
 
     public void writeToTaskStream(int taskId, Tuple anchor, List<Object> tuple) {
@@ -201,6 +213,14 @@ public abstract class EswarajBaseBolt extends EswarajBaseComponent implements IR
 
     public void setFields(List<String> fields) {
         this.fields = fields;
+    }
+
+    public List<String> getOutputStreams() {
+        return outputStreams;
+    }
+
+    public void setOutputStreams(List<String> outputStreams) {
+        this.outputStreams = outputStreams;
     }
 
 }

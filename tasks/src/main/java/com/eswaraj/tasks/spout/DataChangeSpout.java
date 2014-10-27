@@ -42,6 +42,12 @@ public class DataChangeSpout extends EswarajBaseSpout {
             case DataMessageTypes.REFRESH_LOCATION_PBA_LIST_MESSAGE_TYPE:
                 writeToParticularStream(new Values(message), "RefreshAllChildLocationPBAListStream");
                 break;
+            case DataMessageTypes.REFRESH_ALL_COMMENT_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshAllCommentStream");
+                break;
+            case DataMessageTypes.REFRESH_ALL_PERSON_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshAllPersonStream");
+                break;
 
             }
         } catch (Exception e) {

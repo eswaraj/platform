@@ -339,6 +339,11 @@
 				<artifactId>eswaraj-core</artifactId>
 				<version>${eswaraj.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>com.eswaraj</groupId>
+                <artifactId>eswaraj-cache</artifactId>
+                <version>${eswaraj.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>com.eswaraj</groupId>
 				<artifactId>eswaraj-domain</artifactId>

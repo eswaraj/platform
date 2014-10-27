@@ -22,4 +22,6 @@ public interface StormCacheAppServices {
 
     JsonObject getComment(Long commentId) throws ApplicationException;
 
+    JsonObject getPerson(Long personId) throws ApplicationException;
+
 }

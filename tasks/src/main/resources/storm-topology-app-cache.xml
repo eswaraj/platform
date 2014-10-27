@@ -15,6 +15,8 @@
 		<property name="spoutConfigs">
 			<list>
 				<ref bean="DataChangeSpoutBean" />
+				<ref bean="CommentSavedSpoutBean" />
+				<ref bean="ComplaintViwedByPoliticalAdminSpoutBean" />
 			</list>
 		</property>
 		<property name="boltConfigs">
@@ -25,103 +27,224 @@
 				<ref bean="RefreshAllLocationBean" />
 				<ref bean="PreprocessAllChildLocationForPBAListBoltProcessorBean" />
 				<ref bean="RefreshPoliticalBodyAdminListForALocationBoltProcessorBean" />
+				<ref bean="ComplaintViewByPoliticalAdminBoltBean" />
+				<ref bean="SendMobileNotificationBoltBean" />
+				<ref bean="CommentSavedBoltBean" />
+				<ref bean="RefreshCommentBoltProcessorBean" />
+				<ref bean="RefreshAllCommentsBoltProcessorBean" />
+				<ref bean="RefreshAllPersonBoltBean" />
+				<ref bean="RefreshPersonBoltBean" />
+				
+				
 			</list>
 		</property>
+	</bean>
+
+	<bean id="CommentSavedSpoutBean" class="com.eswaraj.tasks.spout.CommentSavedSpout">
+		<property name="componentId" value="CommentSavedSpout" />
+		<property name="outputStream" value="CommentSavedStream" />
+		<!-- Properties define which services will be available for spout -->
+		<property name="initializeRedisServices" value="false" />
+		<property name="initializeQueueServices" value="true" />
+		<property name="initializeDbServices" value="false" />
+
+	</bean>
+
+	<bean id="ComplaintViwedByPoliticalAdminSpoutBean" class="com.eswaraj.tasks.spout.ComplaintViwedByPoliticalAdminSpout">
+		<property name="componentId" value="ComplaintViwedByPoliticalAdminSpout" />
+		<property name="outputStream" value="ComplaintViwedByPoliticalAdminStream" />
+
+		<!-- Properties define which services will be available for spout -->
+		<property name="initializeRedisServices" value="false" />
+		<property name="initializeQueueServices" value="true" />
+		<property name="initializeDbServices" value="false" />
+
 	</bean>
 
 	<bean id="DataChangeSpoutBean" class="com.eswaraj.tasks.spout.DataChangeSpout">
 		<property name="componentId" value="DataChangeSpout" />
 		<property name="outputStreams">
-            <list>
-                <value>CategoryUpdatedStream</value>
-                <value>LocationUpdatedStream</value>
-                <value>RefreshAllLocationStream</value>
-                <value>PoliticalBodyAdminUpdatedStream</value>
-                <value>PoliticalBodyAdminTypeUpdatedStream</value>
-                <value>RefreshAllChildLocationPBAListStream</value>
-            </list>
-        </property>
+			<list>
+				<value>CategoryUpdatedStream</value>
+				<value>LocationUpdatedStream</value>
+				<value>RefreshAllLocationStream</value>
+				<value>PoliticalBodyAdminUpdatedStream</value>
+				<value>PoliticalBodyAdminTypeUpdatedStream</value>
+				<value>RefreshAllChildLocationPBAListStream</value>
+				<value>RefreshAllCommentStream</value>
+				<value>RefreshAllPersonStream</value>
+			</list>
+		</property>
 		<!-- Properties define which services will be available for spout -->
 		<property name="initializeRedisServices" value="false" />
 		<property name="initializeQueueServices" value="true" />
 		<property name="initializeDbServices" value="false" />
-		
+
 	</bean>
-	
-	
+
+
 
 	<bean id="PreprocessAllChildLocationForPBAListBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="PreprocessAllChildLocationForPBAListBoltProcessorBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.ReprocessAllChildLocationForPBAListBoltProcessor" />
-        <property name="outputStream" value="RefreshLocationPBAListStream" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="DataChangeSpout" value="RefreshAllChildLocationPBAListStream" />
-                <entry key="PoliticalBodyAdminChangeBolt" value="RefreshAllChildLocationPBAListStream" />
-                
-            </map>
-        </property>
-    </bean>
-    <bean id="RefreshPoliticalBodyAdminListForALocationBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="RefreshPoliticalBodyAdminListForALocationBoltProcessorBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPoliticalBodyAdminListForALocationBoltProcessor" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="PreprocessAllChildLocationForPBAListBoltProcessorBolt" value="RefreshLocationPBAListStream" />
-            </map>
-        </property>
-    </bean>
+		<property name="componentId" value="PreprocessAllChildLocationForPBAListBoltProcessorBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.ReprocessAllChildLocationForPBAListBoltProcessor" />
+		<property name="outputStream" value="RefreshLocationPBAListStream" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="RefreshAllChildLocationPBAListStream" />
+				<entry key="PoliticalBodyAdminChangeBolt" value="RefreshAllChildLocationPBAListStream" />
+
+			</map>
+		</property>
+	</bean>
+	<bean id="RefreshPoliticalBodyAdminListForALocationBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="RefreshPoliticalBodyAdminListForALocationBoltProcessorBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPoliticalBodyAdminListForALocationBoltProcessor" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="PreprocessAllChildLocationForPBAListBoltProcessorBolt" value="RefreshLocationPBAListStream" />
+			</map>
+		</property>
+	</bean>
 	<bean id="PoliticalBodyAdminTypeUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="PoliticalBodyAdminTypeUpdateBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.PoliticalBodyAdminTypeUpdateBoltProcessor" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="DataChangeSpout" value="PoliticalBodyAdminTypeUpdatedStream" />
-            </map>
-        </property>
-    </bean>
+		<property name="componentId" value="PoliticalBodyAdminTypeUpdateBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.PoliticalBodyAdminTypeUpdateBoltProcessor" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="PoliticalBodyAdminTypeUpdatedStream" />
+			</map>
+		</property>
+	</bean>
 	<bean id="CatageoryUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="CatageoryChangeBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.CategoryChangeBoltProcessor" />
 		<property name="sourceComponentStreams">
-            <map>
-                <entry key="DataChangeSpout" value="CategoryUpdatedStream" />
-            </map>
-        </property>
+			<map>
+				<entry key="DataChangeSpout" value="CategoryUpdatedStream" />
+			</map>
+		</property>
 	</bean>
-	<bean id="LocationUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="LocationUpdatedBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationUpdatedBoltProcessor" />
+	<bean id="RefreshAllPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshAllPersonBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllPersonBoltProcessor" />
+        <property name="outputStream" value="RefreshPersonStream" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="DataChangeSpout" value="LocationUpdatedStream" />
-                <entry key="RefreshAllLocationBolt" value="RefreshSingleLocationStream" />
+                <entry key="DataChangeSpout" value="RefreshAllPersonStream" />
             </map>
         </property>
     </bean>
-    <bean id="PoliticalBodyAdminChangeBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="PoliticalBodyAdminChangeBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.PoliticalBodyAdminChangeBoltProcessor" />
-        <property name="outputStream" value="RefreshAllChildLocationPBAListStream" />
+    <bean id="RefreshPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="RefreshPersonBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPersonBoltProcessor" />
         <property name="sourceComponentStreams">
             <map>
-                <entry key="DataChangeSpout" value="PoliticalBodyAdminUpdatedStream" />
+                <entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
             </map>
         </property>
     </bean>
-    
-    <bean id="RefreshAllLocationBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="RefreshAllLocationBolt" />
-        <property name="outputStream" value="RefreshSingleLocationStream" />
-        
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllLocationBoltProcessor" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="DataChangeSpout" value="RefreshAllLocationStream" />
-            </map>
-        </property>
-    </bean>
-    
-    
 	
+	
+	<bean id="LocationUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="LocationUpdatedBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationUpdatedBoltProcessor" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="LocationUpdatedStream" />
+				<entry key="RefreshAllLocationBolt" value="RefreshSingleLocationStream" />
+			</map>
+		</property>
+	</bean>
+	<bean id="PoliticalBodyAdminChangeBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="PoliticalBodyAdminChangeBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.PoliticalBodyAdminChangeBoltProcessor" />
+		<property name="outputStream" value="RefreshAllChildLocationPBAListStream" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="PoliticalBodyAdminUpdatedStream" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="RefreshAllLocationBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="RefreshAllLocationBolt" />
+		<property name="outputStream" value="RefreshSingleLocationStream" />
+
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllLocationBoltProcessor" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="RefreshAllLocationStream" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="ComplaintViewByPoliticalAdminBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="ComplaintViewByPoliticalAdminBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.complaint.view.ComplaintViewByPoliticalAdminBoltProcessor" />
+
+		<property name="outputStream" value="SendMobileNotificationStream" />
+		<property name="paralellism" value="1" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="ComplaintViwedByPoliticalAdminSpout" value="ComplaintViwedByPoliticalAdminStream" />
+			</map>
+		</property>
+		<property name="fields">
+			<list>
+				<value>Message</value>
+				<value>MessageType</value>
+				<value>DeviceList</value>
+			</list>
+		</property>
+
+	</bean>
+	<bean id="CommentSavedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="CommentSavedBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.CommentSavedBoltProcessor" />
+
+		<property name="outputStreams">
+			<list>
+				<value>SendMobileNotificationStream</value>
+				<value>CommentRefreshStream</value>
+			</list>
+		</property>
+
+		<property name="paralellism" value="1" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="CommentSavedSpout" value="CommentSavedStream" />
+			</map>
+		</property>
+		<property name="fields">
+			<list>
+				<value>Message</value>
+			</list>
+		</property>
+
+	</bean>
+	<bean id="RefreshCommentBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="RefreshCommentBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshCommentBoltProcessor" />
+
+		<property name="paralellism" value="1" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="CommentSavedBolt" value="CommentRefreshStream" />
+				<entry key="RefreshAllCommentsBolt" value="CommentRefreshStream" />
+
+			</map>
+		</property>
+	</bean>
+	<bean id="RefreshAllCommentsBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="RefreshAllCommentsBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshAllCommentsBoltProcessor" />
+		<property name="outputStream" value="CommentRefreshStream" />
+
+		<property name="paralellism" value="1" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="RefreshAllCommentStream" />
+			</map>
+
+		</property>
+	</bean>
 </beans>
