@@ -22,7 +22,10 @@
                                 <script src="${staticHost}/js/user_interaction.js"></script><!-- Script -->
                                 <script src="${staticHost}/js/angular.min.js"></script>
                                 <script src="${staticHost}/js/singlecomplaint.js"></script>
-                                <script>var complaintId = ${complaint.id};</script>
+                                <script>
+                                    var complaintId = ${complaint.id};
+                                    var loggedIn = ${loggedIn};
+                                </script>
                                 <script type="text/javascript">
                                     $(function () {
                                         $('#dasky').Dasky()
@@ -197,11 +200,14 @@
                                                     <div id="comments_box" class="div_comments_box">
 
                                                         <div id="add_comment"> 
+                                                            <div ng-show="!loggedIn">
+                                                                Please log in to add comment.
+                                                            </div>
 
                                                             <form id="comment_form">
 
                                                                 <a href="#" class="profile-pic-comments"><img src="images/profile-pic.jpg" alt=""></a>
-                                                                <input id="user_input" type="text" class="user_input_text" title="Please add your comment here..." ng-model="commentText"/>
+                                                                <input id="user_input" type="text" class="user_input_text" title="Please add your comment here..." ng-model="commentText" ng-disabled="!loggedIn"/>
                                                                 <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="saveComment()"/>
 
                                                             </form>

@@ -1,9 +1,10 @@
 var complaintsApp = angular.module('complaintsApp', []);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
-    //complaintId will have the id populated by server. Can be directly used here.
+    //complaintId, loggedIn will be populated by server. Can be directly used here.
     var getCount = 10;
     var totalCount = 0;
+    $scope.loggedIn = loggedIn;
     $scope.commentText = "";
     $scope.comments = [];
     $scope.getNext = function () {
