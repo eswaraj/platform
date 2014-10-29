@@ -39,4 +39,11 @@ public class ComplaintCacheRedisImpl implements ComplaintCache {
         return (String) complaintStringRedisTemplate.opsForHash().get(redisKeyForComplaint, hashKeyForInfo);
     }
 
+    @Override
+    public String getComplaintById(String complaintId) throws ApplicationException {
+        String redisKeyForComplaint = appKeyService.getComplaintObjectKey(complaintId);
+        String hashKeyForInfo = appKeyService.getEnityInformationHashKey();
+        return (String) complaintStringRedisTemplate.opsForHash().get(redisKeyForComplaint, hashKeyForInfo);
+    }
+
 }

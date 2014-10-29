@@ -7,4 +7,6 @@ public interface ComplaintCache {
     void refreshComplaintInfo(long complaintId) throws ApplicationException;
 
     String getComplaintById(long complaintId) throws ApplicationException;
+
+    String getComplaintById(String complaintId) throws ApplicationException;
 }

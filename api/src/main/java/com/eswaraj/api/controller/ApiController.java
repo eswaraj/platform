@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -45,6 +46,8 @@ public class ApiController extends BaseController {
     private RedisUtil redisUtil;
     private JsonParser jsonParser = new JsonParser();
     private Gson gson = new Gson();
+    @Autowired
+    private ComplaintCache complaintCache;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -237,14 +240,17 @@ public class ApiController extends BaseController {
         return jsonArray.toString();
     }
 
-    private String getComplaintsOfKey(String key, int start, int count) {
+    private String getComplaintsOfKey(String key, int start, int count) throws ApplicationException {
         Set<String> complaintIds = stringRedisTemplate.opsForZSet().reverseRange(key, start, start + count);
         logger.info("complaintIds : {}", complaintIds);
         List<String> complaintKeys = new ArrayList<>();
+        List<String> complaintList = new ArrayList<>(complaintIds.size());
         for (String oneComplaintId : complaintIds) {
             complaintKeys.add(appKeyService.getComplaintObjectKey(oneComplaintId));
+            complaintList.add(complaintCache.getComplaintById(oneComplaintId));
         }
-        List<String> complaintList = stringRedisTemplate.opsForValue().multiGet(complaintKeys);
+        //List<String> complaintList = stringRedisTemplate.opsForValue().multiGet(complaintKeys);
+
 
         // Add Executive Admin Info
         JsonObject oneComplaintJsonObject;
