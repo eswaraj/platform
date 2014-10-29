@@ -1,9 +1,11 @@
 var complaintsApp = angular.module('complaintsApp', []);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
-    //complaintId will have the id populated by server. Can be directly used here.
+    //complaintId, loggedIn, totalComments will be populated by server. Can be directly used here.
     var getCount = 10;
     var totalCount = 0;
+    $scope.loggedIn = loggedIn;
+    $scope.totalComments = totalComments;
     $scope.commentText = "";
     $scope.comments = [];
     $scope.getNext = function () {
@@ -36,6 +38,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
             $scope.comments = $scope.comments || [];
             $scope.comments.unshift(data);
             totalCount = totalCount + 1;
+            $scope.totalComments = $scope.totalComments + 1;
         });
         commentRequest.error(function () {
             console.error('Request failed for /ajax/complaint/leader/comment');
