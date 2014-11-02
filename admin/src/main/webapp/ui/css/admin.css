@@ -341,3 +341,31 @@ margin-top: 10px;
 #person_details{
 clear: both;
 }
+
+#pbadmin_details{
+    width: 100%;
+    font-size: 18px;
+    color: #A2A2A2;
+    background-color: #F2F2F2;
+    margin-bottom: 40px;
+    text-align: middle;
+    padding: 10px;
+    float: left;
+    margin-top: 10px;
+}
+
+#pbadmin_details_innerdiv .col-sm-9{
+	margin-bottom: 40px;
+}
+
+#home_details_innerdiv .col-sm-9{
+	margin-bottom: 40px;
+}
+
+#office_details_innerdiv .col-sm-9{
+	margin-bottom: 40px;
+}
+
+#person_details_innerdiv .col-sm-9{
+	margin-bottom: 40px;
+}
