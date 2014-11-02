@@ -337,3 +337,7 @@ margin-top: 10px;
 .tab-content {
     display: block;
 }
+
+#person_details{
+clear: both;
+}
