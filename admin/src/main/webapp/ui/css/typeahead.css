@@ -33,6 +33,8 @@
 }
 .tainput{
     width: 250px;
+	margin-bottom: 10px;
+	height: 30px;
 }
 .taimage{
     width: 35px;
