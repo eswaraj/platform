@@ -411,3 +411,50 @@ clear: both;
 .loc_node_container{
 	margin: 0px;
 }
+
+.tablewidth50pc{
+ width: 50%;
+ table-layout: fixed;
+border: 1px solid #D2D2D2;
+border-top: 0;
+border-left: 0;
+border-right: 0;
+}
+
+.tablewidth50pc:hover, .tablewidth50pc:active{
+width: 50%;
+table-layout: fixed;
+border: 1px solid #22D2D2;
+border-top: 0;
+border-left: 0;
+border-right: 0;
+}
+
+.left_float{
+float:left;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+background-color: #FF9933;
+border-bottom-left-radius: 15px;
+border-bottom-right-radius: 15px;
+box-shadow: 0px 4px 4px #888888;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover {
+background-color: #FF9933;
+border-bottom-left-radius: 15px;
+border-bottom-right-radius: 15px;
+box-shadow: 0px 4px 4px #888888;
+}
+
+.navbar-nav>li>.dropdown-menu {
+margin-top: 0;
+}
+
+#category1{
+	position: absolute;
+	left: 0px;
+	width: 700px;
+	padding-left:12px
+}
