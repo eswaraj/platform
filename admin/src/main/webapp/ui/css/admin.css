@@ -273,6 +273,7 @@ background-color: #F2F2F2;
 margin-bottom: 25px;
 text-align: middle;
 padding: 10px;
+cursor: pointer;
 }
 
 .pbadmin_pic{
@@ -320,6 +321,7 @@ text-align: middle;
 padding: 10px;
 float: left;
 margin-top: 10px;
+cursor: pointer;
 }
 
 #home_details{
@@ -332,6 +334,7 @@ margin-top: 10px;
     padding: 10px;
     float: left;
     margin-top: 10px;
+	cursor: pointer;
 }
 
 .tab-content {
@@ -352,6 +355,7 @@ clear: both;
     padding: 10px;
     float: left;
     margin-top: 10px;
+	cursor: pointer;
 }
 
 #pbadmin_details_innerdiv .col-sm-9{
