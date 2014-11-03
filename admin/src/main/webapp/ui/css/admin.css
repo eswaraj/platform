@@ -120,7 +120,6 @@ margin-left: 5px;
 	color: #D2D2D2;
 	text-decoration: none;
 	position:relative;
-	height: 50px;
 }
 
 .header_font_size{
@@ -142,6 +141,9 @@ list-style-type: none;
 	padding-left: 20px;
 }
 
+.fa-3x {
+font-size: 3em;
+}
 .textbox { 
 	background: #FFF url(http://html-generator.weebly.com/files/theme/input-text-9.png) no-repeat 4px 4px; 
 	border: 1px solid #999; 
