@@ -379,14 +379,14 @@ clear: both;
 #useronclickbtn{
 	position: absolute;
 	width: 150px;
-	left: 310px;
+	left: 275px;
 	padding-left:12px
 }
 
 #tab1 {
 	position: absolute;
 	width: 200px;	
-	left: 75px;
+	left: 10px;
 	padding-left:12px
 }
 
@@ -395,16 +395,6 @@ clear: both;
 	width: 350px;
 	left: 525px;
 	padding-left:12px
-}
-
-#node_info  #map-canvas {
-	left: 0px;
-	margin-left:70px;
-	padding-top: 310px;
-	/*visibility: hidden;*/
-	padding-left:0px;
-	width: 500px;
-	height: 500px ;
 }
 
 .kml_inp_btn{
@@ -416,4 +406,6 @@ clear: both;
 	margin-bottom:8px
 }
 
-
+.loc_node_container{
+	margin: 0px;
+}
