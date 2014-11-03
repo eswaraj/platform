@@ -375,3 +375,45 @@ clear: both;
 #person_details_innerdiv .col-sm-9{
 	margin-bottom: 40px;
 }
+
+#useronclickbtn{
+	position: absolute;
+	width: 150px;
+	left: 310px;
+	padding-left:12px
+}
+
+#tab1 {
+	position: absolute;
+	width: 200px;	
+	left: 75px;
+	padding-left:12px
+}
+
+#kml_files {
+	position: absolute;
+	width: 350px;
+	left: 525px;
+	padding-left:12px
+}
+
+#node_info  #map-canvas {
+	left: 0px;
+	margin-left:70px;
+	padding-top: 310px;
+	/*visibility: hidden;*/
+	padding-left:0px;
+	width: 500px;
+	height: 500px ;
+}
+
+.kml_inp_btn{
+	width: 100px; !important;
+	border-radius: 30px; 
+	-moz-border-radius: 30px; 
+	-webkit-border-radius: 30px;
+	text-align:center;
+	margin-bottom:8px
+}
+
+
