@@ -90,6 +90,10 @@
 						<li>
 							<a href="/citizenservices.html">My Citizen Services</a>
 						</li>
+                        <li>
+                            <a href="/dashboard.html">My Dashboard</a>
+                        </li>
+						
 					</ul>
 					
 					<c:if test="${!loggedIn}">					
@@ -145,9 +149,17 @@
 								<li>
 									<a href="/web/logout">Logout</a>
 								</li>
+								<li>
+                                    <a href="/complaints.html">Admin - Complaints</a>
+                                </li>
+                                <li>
+                                    <a href="/staff.html">Admin - Staff</a>
+                                </li>
 								
 							</ul>
 						</li>
+						
+						
 					</ul>
 					</c:if>	
 				</div>
