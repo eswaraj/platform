@@ -144,6 +144,12 @@
                                                     <div class="listing">
                                                         <!-- .list-row  -->
                                                         <div class="list-row">
+															<p class="innerdiv-sharebtn">
+															<!-- social media share buttons -->								
+															<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+															<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+															<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+															</p>
                                                             <!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"--> <!-- not working as expected -->
                                                             <div class="innerblock">
                                                                 <div class="col-sm-1 profile-info profile_pic_adjust">
@@ -155,11 +161,8 @@
                                                                     <p class="whom" style="margin-bottom: 0px; line-height:100%;">
                                                                         <strong class="issue-id">Issue #51</strong>
                                                                         <span class="connector">raised by</span>
-                                                                        <a href="#" class="username">Somnath Nabajja</a>
-                                                                        <!-- social media share buttons -->								
-                                                                        <a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-                                                                        <a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-                                                                        <a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+                                                                        <a href="#" class="username text-limit name_adjust">Somnath Nabajja</a>
+                                                                        <a href="#" class="issue-scope-type text-limit type_adjust"><img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">Type - Lack of Infrastructure</a>
                                                                     </p>
 
                                                                     <p class="whenwhere">
@@ -181,7 +184,6 @@
 
                                                                     <p>
                                                                         <a href="#" class="issue-scope">Huge Traffic Jam</a>
-                                                                        <a href="#" class="issue-scope-type"><img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">Type - Lack of Infrastructure</a>
                                                                     </p>
 
                                                                     <p class="desc elipsis">

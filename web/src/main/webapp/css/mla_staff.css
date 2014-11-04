@@ -285,3 +285,7 @@ height: 30px;
 .taitems{
 margin-left: 8.25%;
 }
+
+.footer_pos{
+position: absolute;
+}

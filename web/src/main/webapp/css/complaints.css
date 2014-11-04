@@ -693,3 +693,7 @@ padding-bottom: 15px;
     padding-left: 10px;
 	margin-left: 10px;
 }
+
+.footer_pos{
+position: absolute;
+}
