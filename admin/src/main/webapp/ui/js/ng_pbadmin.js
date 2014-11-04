@@ -171,7 +171,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
                 });
                 personRequest.success(function (resp) {
                     //data.person = resp;
-                    $scope.pbAdminListCurrent[value.shortName].person = resp;
+                    $scope.pbAdminListCurrent[value.shortName].person = angular.copy(resp);
                 });
                 personRequest.error(function () {
                     console.error("Person request failed");
