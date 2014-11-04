@@ -116,7 +116,20 @@
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
                                                         <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-															Key: <c:out value="${counter.count}"/><br />
+															<c:choose>
+																<c:when test="${counter.count == '1'}">
+																<div class="active item">
+																	<img src="${onePhoto.orgUrl}" />
+																</div>
+																</c:when>
+
+																<c:otherwise>
+																<div class="item">
+																	<img src="${onePhoto.orgUrl}" />
+																</div>
+																</c:otherwise>
+																
+															</c:choose>
                                                         </c:forEach>
                                                     </div>
                                                     <!-- Carousel nav -->
