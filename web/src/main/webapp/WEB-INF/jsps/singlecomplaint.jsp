@@ -115,8 +115,8 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-                                                        <c:forEach items="${complaint.photos}" var="onePhoto">
-															Key: <c:out value="${onePhoto.key}"/><br />
+                                                        <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+															Key: <c:out value="${counter.count}"/><br />
                                                         </c:forEach>
                                                     </div>
                                                     <!-- Carousel nav -->
