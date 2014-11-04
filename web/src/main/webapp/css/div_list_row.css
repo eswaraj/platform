@@ -292,4 +292,11 @@ margin-top: 10px;
 	max-width: 32%;
 	width: 32%;
 }
-	
+
+
+.innerdiv-sharebtn {
+    font-size: 15px;
+    line-height: 200%;
+	float: right;
+	margin-right: 5px;
+}	
