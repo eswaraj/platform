@@ -28,7 +28,7 @@ body {
 
  .wrapper {
 	 float: left;
-	 margin-top: 1px;
+	 margin-top: 7.5%;
 	 padding-left: 10px;
 	 padding-top: 3px;
 	 width: 100%;
@@ -83,6 +83,9 @@ body {
 	left: 15px;
 }
 
+.shift_bottom{
+	padding-top: 100px;
+}
 
 .headerbox{
 	margin-top:0px;
@@ -254,7 +257,7 @@ margin: 100px;
 }
 
 #add_edit_admin_page{
-margin: 100px;
+margin: 0px 100px 0px 100px;
 }
 
 #add_edit_admin_page table, #add_edit_admin_page th, #add_edit_admin_page td {
