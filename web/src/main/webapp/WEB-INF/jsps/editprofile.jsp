@@ -287,10 +287,10 @@
 						}
 					}
 				</script>
-				<jsp:include page="footer.jsp" />
 			</div>
 		</div>
 	<div id="top_slide_notification"></div>
 	
+				<jsp:include page="footer.jsp" />
 </body>
 </html>
