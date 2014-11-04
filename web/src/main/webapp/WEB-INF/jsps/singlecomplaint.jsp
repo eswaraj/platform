@@ -45,7 +45,7 @@
 
                                     <!-- Reference : http://codecanyon.net/item/dasky-timeline-slider/full_screen_preview/5071233 -->
                                     <div id="issue_timeline" class="issue_timeline_data">
-                                        <iframe style="width: 100%; zoom: 4; height: 100px; border: none; margin: 0; padding:0; scrolling: no;" src="issue_timeline/issue_timeline.html"></iframe>
+                                        <iframe style="width: 100%; zoom: 4; height: 100px; border: none; margin: 0; padding:0; scrolling: no;" src="${staticHost}/templates/issue_timeline/issue_timeline.html"></iframe>
                                     </div>
 
                                     <div class="innerwrapper">
@@ -59,7 +59,7 @@
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
-                                                    <a href="#!" ><img src="images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
+                                                    <a href="#!" ><img src="${staticHost}/images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
                                                 </div>
 
                                             </div>
@@ -85,7 +85,7 @@
 
                                                 <p>
                                                     <a href="#" class="issue-scope">${complaint.categories[1].name}</a>
-                                                    <a href="#" class="issue-scope-type"><img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
+                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
                                                 </p>
 
                                                 <p class="whenwhere">
@@ -94,7 +94,7 @@
                                                         <a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
                                                     </span>
                                                     <span>
-                                                        <img src = "images/time.png" class="posttimestatus" alt="">
+                                                        <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
                                                         <a href="#" class="location">Latest Update : ${complaint.complaintTime}</a>
                                                     </span>
                                                 </p>
@@ -102,13 +102,13 @@
                                                 <p class="whom">
                                                     <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.loggedBy)}</strong>
                                                         <!-- social media share buttons -->								
-                                                        <a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+                                                        <a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
                                                         <a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-                                                        <a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+                                                        <a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
                                                         <span>
-                                                            <a href="#"><img src = "images/status_public_open.png" class="issue_status_pic" alt=""></a>
-                                                            <a href="#"><img src = "images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
-                                                            <a href="#"><img src = "images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
+                                                            <a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
+                                                            <a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
+                                                            <a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
                                                         </span>
                                                         </p>
 
@@ -134,7 +134,7 @@
                                                                 <li>
                                                                     <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                     <div class="description_author">
-                                                                        <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
+                                                                        <img src="${staticHost}/images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
                                                                         <ul class="description_author_info">
                                                                             <li class="description_author_name">${complaint.loggedBy[0].name}</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
@@ -159,7 +159,7 @@
                                                                 <p>${complaint.description}</p>
 
                                                                 <div class="cd-author">
-                                                                    <img src="images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
+                                                                    <img src="${staticHost}/images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
                                                                     <ul class="cd-author-info">
                                                                         <li>${complaint.loggedBy[0].name}</li>
                                                                         <li>Cessna Business Park</li>
@@ -224,9 +224,9 @@
                                                                 <p class="comments_whom">
                                                                     <a href="#" class="username">{{comment.postedBy.name}}</a>
                                                                     <!-- social media share buttons -->								
-                                                                    <img src = "images/time.png" class="posttimestatus" alt="">
+                                                                    <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
                                                                     <a href="#" class="location">{{comment.creationTime | dateFormatter}}</a>
-                                                                    <img src = "images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"  ng-show="comment.adminComment">
+                                                                    <img src = "${staticHost}/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"  ng-show="comment.adminComment">
                                                                 </p>
 
                                                                 <div class="comments-info" >
