@@ -152,7 +152,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-10 profile-info profile_info_adjust">
-                                                                    <p class="whom">
+                                                                    <p class="whom" style="margin-bottom: 0px; line-height:100%;">
                                                                         <strong class="issue-id">Issue #51</strong>
                                                                         <span class="connector">raised by</span>
                                                                         <a href="#" class="username">Somnath Nabajja</a>
