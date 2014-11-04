@@ -23,7 +23,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
                     $timeout.cancel(scope.pendingPromise); 
                 }
                 scope.pendingPromise = $timeout( function () {
-                    if(scope.model[scope.title].length >= scope.min && !scope.selected) {
+                    if(scope.model[scope.title].length == scope.min && !scope.selected) {
                         dataFactory.get(scope.url, scope.model[scope.title], scope.querystring).then(function(resp){
                             scope.items=resp.data;
                         });
@@ -50,7 +50,7 @@ typeAhead.directive('typeahead', function($timeout, dataFactory) {
         //templateUrl: 'templates/typeahead.html'
         template : '<input type="text" ng-model="model[title]" placeholder="{{prompt}}" ng-keydown="selected=false" class="tainput"/><br/>\
 <div class="taitems" ng-hide="!model[title].length || selected">\
-<div class="taitem" ng-repeat="item in items track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{taactive:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
+<div class="taitem" ng-repeat="item in items | filter:model[title] track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{taactive:isCurrent($index)}" ng-mouseenter="setCurrent($index)">\
 <img class="taimage" src="{{item[img]}}" ng-show="item[img]"></img>\
 <p class="tatitle">{{item[title]}}</p>\
 <p class="tasubtitle">{{item[subtitle]}}</p>\
