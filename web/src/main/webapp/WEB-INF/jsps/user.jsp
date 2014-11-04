@@ -47,14 +47,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style="margin-top:2.5%;">
                                         <div class="col-sm-2">
                                             <p>
                                                 <strong>Refine Search</strong>
                                             </p>
                                             <div class="refine-search">
                                                 <input type="text" value="Amsterdam,Washington" data-role="tagsinput">
-                                                <div class="filter-options">
+                                                <!--div class="filter-options">
                                                     <span class="trigger btn btn-default"> <i class="glyphicon glyphicon-cog"></i>
                                                     </span>
                                                     <div class="dropdown">
@@ -114,7 +114,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                                </div>
+                                                </div-->
                                             </div>
                                             <p>
                                                 <strong>Sort Issues by category</strong>
@@ -129,16 +129,16 @@
                                                 <a href="#" class="list-group-item">Transportation</a>
                                             </div>
                                         </div>
-                                        <div class="col-sm-10">
-                                            <div class="listing-wrapper">
+                                        <div class="col-sm-10" style="padding: 0px 0px 0px 5px; ">
+                                            <div class="listing-wrapper" style="width: 100%;">
                                                 <div class="secondary-wrapper">
                                                     <div class="pull-left">
                                                         <strong>My Activity Feed</strong>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right" style="margin-right: 31.5%;">
                                                         <button class="btn btn-primary">Raise Issue</button>
                                                     </div>
-                                                    <div class="clearfix"></div>
+                                                    <div class="clearfix"  style="margin-bottom: 1.5%; margin-top: 0px;"></div>
                                                 </div>
                                                 <div class="col-sm-8 user_feed_colsm">
                                                     <div class="listing">
@@ -226,7 +226,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4 analytics_data_colsm">
+                                                <div class="col-sm-4 analytics_data_colsm" style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
 
                                                     <div id="chart_bar_c">
                                                         <svg>
