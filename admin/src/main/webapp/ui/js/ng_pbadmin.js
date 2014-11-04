@@ -170,7 +170,8 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
                     headers: {'Content-Type': 'application/json; charset=utf-8'}
                 });
                 personRequest.success(function (resp) {
-                    data.person = resp;
+                    //data.person = resp;
+                    $scope.pbAdminListCurrent[value.shortName].person = resp;
                 });
                 personRequest.error(function () {
                     console.error("Person request failed");
