@@ -3,7 +3,7 @@ body{
 	position: relative;
 }
 body, html,.outerwrapper,.container{
-	height: 100%;
+	height: auto;
 }
 header{
 	text-align: center;
