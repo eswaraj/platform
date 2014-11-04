@@ -96,11 +96,11 @@ background-color: #f9f9f9;
 	text-decoration: none;
 	font-size: 15px;
 	font-family: New Century Schoolbook, serif;
-	vertical-align: 0px; 
+	vertical-align: -5px; 
 	margin-right: 2px;
 	padding-right: 0px;
-	margin-bottom: -1%;
-	margin-top: -1%;
+	margin-bottom: 0px;
+	margin-top: 0px;
 	font-weight: bold;
 }
 
@@ -289,7 +289,7 @@ margin-top: 10px;
 }
 
 .type_adjust{
-	max-width: 32%;
+	max-width: 38%;
 }
 
 .innerdiv-sharebtn {
