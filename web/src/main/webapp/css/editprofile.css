@@ -116,3 +116,9 @@ vertical-align: middle;
 	max-width: none !important;
 	background: none !important
 }
+
+.footer_class {
+position: absolute;
+bottom: 0px;
+width: 100%;
+}
