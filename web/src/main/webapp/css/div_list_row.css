@@ -96,7 +96,6 @@ background-color: #f9f9f9;
 	font-size: 15px;
 	font-family: New Century Schoolbook, serif;
 	vertical-align: 0px; 
-	border-right: 1px solid #D2D2D2;
 	margin-right: 2px;
 	padding-right: 0px;
 	margin-bottom: -1%;
@@ -115,7 +114,6 @@ background-color: #f9f9f9;
 .username{
 	color: #5E5B5B;
 	font-weight: bold;
-	border-right: 1px solid #D2D2D2;
 	margin-right: 0px;
 	padding-right: 5px;
 }
@@ -127,10 +125,6 @@ background-color: #f9f9f9;
 .icon_resize{
 width:25px;
 height:25px;
-}
-
-.username{
-margin-right: 10px;
 }
 
 .postcurrentstatus{
@@ -290,12 +284,12 @@ margin-top: 10px;
 	}
 	
 .name_adjust{
-	max-width: 23%;
-	width: 23%;
+	max-width: 21.1%;
+	width: 21.1%;
 }
 
 .type_adjust{
-	max-width: 30%;
-	width: 30%;
+	max-width: 32%;
+	width: 32%;
 }
 	
