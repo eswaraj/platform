@@ -206,6 +206,14 @@ pageEncoding="UTF-8"%>
 								${onePerson.name}
 								</c:forEach>
 								</a>
+								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type">
+									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+									<c:if test="${oneCategory.root}">
+									Type - ${oneCategory.name}
+									</c:if>
+									</c:forEach>
+								</a>
 								<!-- social media share buttons -->								
 								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
 								<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
@@ -231,15 +239,7 @@ pageEncoding="UTF-8"%>
 
 								<p>
 								<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="issue-scope">${oneComplaint.categoryTitle}</a>
-								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type">
-									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-									<c:if test="${oneCategory.root}">
-									Type - ${oneCategory.name}
-									</c:if>
-									</c:forEach>
-								</a>
-								</p>
+							</p>
 
 								<c:if test="${!empty oneComplaint.description}">
 								<p class="desc elipsis">
