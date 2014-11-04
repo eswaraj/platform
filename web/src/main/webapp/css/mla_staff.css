@@ -83,7 +83,7 @@ body {
 	left: 15px;
 }
 
-.shift_bottom{
+.shift-bottom{
 	padding-top: 100px;
 }
 
@@ -280,4 +280,8 @@ margin-left: 380px;
 .dropdownlist{
 width: 220px;
 height: 30px;
+}
+
+.taitems{
+margin-left: 8.25%;
 }
