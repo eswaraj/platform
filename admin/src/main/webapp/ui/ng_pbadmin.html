@@ -75,7 +75,7 @@
         </style>
         
 
-        <div class="wrapper">
+        <div class="wrapper" ng-hide="editMode">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 profile-margin">
@@ -184,7 +184,7 @@
             </div>
         </div>
 
-        <div id="add_edit_admin_page">
+        <div id="add_edit_admin_page" ng-hide="!editMode">
             <h4 class="text-footer-extended shift-bottom">Add New Political Admin</h4>
 
             <div id="edit_person">

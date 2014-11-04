@@ -2,7 +2,6 @@ var pbadminApp = angular.module('pbadminApp', ['typeAhead','customDirectives','t
 
 pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q) {
     "use strict";
-    //window.scope = $scope;
     $scope.acData = {};
     $scope.locationSearchText = "";
     $scope.loc_hash = {};
@@ -18,13 +17,8 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     $scope.selectedNode = $scope.selectedNode || {};
     $scope.selectedLocation = "";
     $scope.selectedPerson = {};
+    $scope.editMode = false;
     $scope.showTypeWithLocation = function (obj) {
-        //var p = $q.defer(); 
-        //deferred.promise.then(function () {
-        //    p.resolve(obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId]);
-        //});
-        //return p.promise;
-        
         if (promiseResolved) {
             return obj.name + " Type: " + $scope.loc_hash[obj.locationTypeId];
         }
@@ -35,8 +29,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     $scope.closeForm = function () {
         $scope.form = {};
         $scope.person = {};
-        $( "#add_edit_admin_page" ).hide();
-        $( ".wrapper" ).show();
+        $scope.editMode = false;
     };
     $scope.savePbAdmin = function () {
         $scope.form.startDate = new Date($scope.form.startDate).getTime();
@@ -90,17 +83,6 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
                     $.extend(true, $scope.pbAdminListAll[key][updateIndex], data);
                 }
                 else {
-                    //var personRequest = $http({
-                    //    method: "GET",
-                    //    url:"/ajax/person/get/"+data.personId,
-                    //    headers: {'Content-Type': 'application/json; charset=utf-8'}
-                    //});
-                    //personRequest.success(function (resp) {
-                    //    data.person = resp;
-                    //});
-                    //personRequest.error(function () {
-                    //    console.error("Person request failed");
-                    //});
                     $scope.pbAdminListAll[key].push(data);
                 }
             }
@@ -109,12 +91,10 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
         saveRequest.error(function () {
             console.error("Save request failed");
         });
-        $( "#add_edit_admin_page" ).hide();
-        $( ".wrapper" ).show();
+        $scope.editMode = false;
     };
     $scope.addPbAdmin = function (position) {
-        $( "#add_edit_admin_page" ).show();
-        $( ".wrapper" ).hide();
+        $scope.editMode = true;
         var positionId = "";
         $scope.pbAdminTypeList.forEach(function (value) {
             if (value.shortName == position) {
@@ -127,8 +107,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     };
     $scope.editPbAdmin = function (selected) {
         console.log(selected);
-        $( "#add_edit_admin_page" ).show();
-        $( ".wrapper" ).hide();
+        $scope.editMode = true;
         $.extend(true, $scope.form, selected);
         delete $scope.form.person;
         $.extend(true, $scope.person, selected.person);
@@ -170,7 +149,6 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
                     headers: {'Content-Type': 'application/json; charset=utf-8'}
                 });
                 personRequest.success(function (resp) {
-                    //data.person = resp;
                     $scope.pbAdminListCurrent[value.shortName].person = angular.copy(resp);
                 });
                 personRequest.error(function () {
@@ -253,9 +231,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
         return result;
     };
     $("#menu_new").load("../ui/ng_menu.html"); 
-    $( "#add_edit_admin_page" ).hide();
 
-    var deferred = $q.defer();
     var promiseResolved = false;
     var locTypeRequest = $http({
         method: "GET",
@@ -265,11 +241,9 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
     locTypeRequest.success(function (data) {
         addLocation(data);
         promiseResolved = true;
-        deferred.resolve();
     });
     locTypeRequest.error(function () {
         console.error('Location type get request failed');
-        deferred.reject();
     });
 
     var pbTypeRequest = $http({
