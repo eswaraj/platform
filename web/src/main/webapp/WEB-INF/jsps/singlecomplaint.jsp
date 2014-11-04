@@ -117,7 +117,7 @@
                                                     <div class="carousel-inner">
                                                         <c:forEach items="${complaint.photos}" var="onePhoto">
 															<c:choose>
-																<c:when test="${onePhoto.key == 0}">
+																<c:when test="${onePhoto.key == '0'}">
 																<div class="active item">
 																	<img src="${onePhoto.orgUrl}" />
 																</div>
