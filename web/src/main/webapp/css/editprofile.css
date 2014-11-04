@@ -48,22 +48,22 @@ border-top: 1px solid #D7D7D7;
 
 #top_slide_notification{
 position: absolute;
-height: 60px;
+height: 40px;
 width: 100%;
-top: 0px;
+bottom: 4.7%;
 left: 0px;
 background-color: #000;
 color: #C2C2C2;
 text-align: center;
 display: none;
 border: 1px solid #f0f0f0;
-border-radius: 8px;
+font-size: 15px;
 }
 
 #top_slide_notification h4{
-position : relative;
-padding: 10px;
+position: relative;
 margin: 10px;
+margin-right: 20px;
 }
 
 #notification_close_button{
