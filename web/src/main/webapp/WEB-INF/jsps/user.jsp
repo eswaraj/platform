@@ -228,12 +228,14 @@
                                                 </div>
                                                 <div class="col-sm-4 analytics_data_colsm" style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
 
-                                                    <div id="chart_bar_c">
+                                                    <div id="chart_bar_c" style="border: 0px solid #fff;">
                                                         <svg>
                                                         </svg>
                                                     </div>						
 
-                                                    <div id="chart_pie_c">
+													<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
+
+                                                    <div id="chart_pie_c" style="border: 0px solid #fff;">
                                                         <svg>
                                                         </svg>
                                                     </div>
