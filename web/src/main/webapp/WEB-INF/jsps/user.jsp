@@ -47,7 +47,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" style="margin-top:2.5%;">
+                                    <div class="row" style="margin-top:5%;">
                                         <div class="col-sm-2">
                                             <p>
                                                 <strong>Refine Search</strong>
@@ -130,12 +130,12 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-10" style="padding: 0px 0px 0px 5px; ">
-                                            <div class="listing-wrapper" style="width: 100%;">
+                                            <div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
                                                 <div class="secondary-wrapper">
                                                     <div class="pull-left">
                                                         <strong>My Activity Feed</strong>
                                                     </div>
-                                                    <div class="pull-right" style="margin-right: 31.5%;">
+                                                    <div class="pull-right" style="margin-right: 33%;">
                                                         <button class="btn btn-primary">Raise Issue</button>
                                                     </div>
                                                     <div class="clearfix"  style="margin-bottom: 1.5%; margin-top: 0px;"></div>
