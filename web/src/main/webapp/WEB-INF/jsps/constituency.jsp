@@ -201,12 +201,12 @@ pageEncoding="UTF-8"%>
 								<strong class="issue-id">Issue #${oneComplaint.id}</strong>
 								<span class="connector">raised by</span>
 								
-								<a href="#" class="username">
+								<a href="#" class="username text-limit name_adjust">
 								<c:forEach items="${oneComplaint.loggedBy}" var="onePerson">
 								${onePerson.name}
 								</c:forEach>
 								</a>
-								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type">
+								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type text-limit type_adjust">
 									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 									<c:if test="${oneCategory.root}">
