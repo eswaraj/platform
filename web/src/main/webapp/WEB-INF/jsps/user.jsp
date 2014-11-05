@@ -48,7 +48,7 @@
                                             </div>
                                         </div>
                                     </div-->
-                                    <div class="row" style="margin-top:5%;">
+                                    <div class="row" style="margin-top:1.5%;">
                                         <div class="col-sm-2">
                                             <p>
                                                 <strong>Refine Search</strong>
