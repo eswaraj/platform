@@ -95,7 +95,7 @@
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">Latest Update : ${complaint.complaintTime}</a>
+                                                        <a href="#" class="location">Latest Update : {{${complaint.complaintTime} | dateFormatter}}</a>
                                                     </span>
                                                 </p>
 
