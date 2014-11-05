@@ -78,7 +78,7 @@
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" >
 																					<c:choose>
-																						<c:when test="${complaint.createdByPersons[0].profilePhoto == ''}">
+																						<c:when test="${complaint.createdByPersons[0].name == 'anonymous'}">
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt=""></a>
 																						</c:when>
 
@@ -159,22 +159,31 @@
 																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
-																								<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
 																									<c:choose>
-																										<c:when test="${counter.count == '1'}">
+																										<c:when test="${complaint.images == ''}">
 																										<div class="active item">
-																											<img src="${onePhoto.orgUrl}" />
+																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
 																										</c:when>
 
 																										<c:otherwise>
-																										<div class="item">
-																											<img src="${onePhoto.orgUrl}" />
-																										</div>
-																										</c:otherwise>
-																										
+																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
+																												<c:choose>
+																													<c:when test="${counter.count == '1'}">
+																													<div class="active item">
+																														<img src="${onePhoto.orgUrl}" />
+																													</div>
+																													</c:when>
+
+																													<c:otherwise>
+																													<div class="item">
+																														<img src="${onePhoto.orgUrl}" />
+																													</div>
+																													</c:otherwise>																										
+																												</c:choose>
+																											</c:forEach>
+																										</c:otherwise>																										
 																									</c:choose>
-																								</c:forEach>
 																							 </div>
 																							<!-- Carousel nav -->
 																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
