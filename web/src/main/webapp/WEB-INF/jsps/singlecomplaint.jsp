@@ -45,7 +45,7 @@
 
                                     <!-- Reference : http://codecanyon.net/item/dasky-timeline-slider/full_screen_preview/5071233 -->
                                     <div id="issue_timeline" class="issue_timeline_data">
-                                        <iframe style="width: 100%; zoom: 4; height: 100px; border: none; margin: 0; padding:0; scrolling: no;" src="${staticHost}/templates/issue_timeline/issue_timeline.html"></iframe>
+                                        <iframe style="width: 100%; zoom: 4; height: 100px; border: none; margin: 0; padding:0; scrolling: no;" src="http://eswaraj.github.io/timebar/issue_timeline.html"></iframe>
                                     </div>
 
                                     <div class="innerwrapper">
