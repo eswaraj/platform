@@ -83,7 +83,7 @@ public class ComplaintController extends BaseController{
 		
 	}
 
-    @RequestMapping(value = "/api/v0/device/complaints/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v0/complaints/user/{userId}", method = RequestMethod.GET)
     public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value = "start", required = false) Integer start,
             @RequestParam(value = "count", required = false) Integer count) throws ApplicationException {
 		if(start == null){

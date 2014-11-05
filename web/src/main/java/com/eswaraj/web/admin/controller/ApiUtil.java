@@ -110,6 +110,15 @@ public class ApiUtil {
         return list;
     }
 
+    public List<ComplaintBean> getUserComplaints(HttpServletRequest httpServletRequest, Long userId) throws ApplicationException {
+        String urlPath = "/api/v0/complaints/user/" + userId;
+        Map<String, String> addedParams = getPagingInfo(httpServletRequest);
+        String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
+        List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
+        }.getType());
+        return list;
+    }
+
     public List<ComplaintBean> getLocationComplaints(HttpServletRequest httpServletRequest, Long locationId, Long pageSize) throws ApplicationException {
         String urlPath = "/api/v0/complaint/location/" + locationId;
         Map<String, String> addedParams = new HashMap<>();
