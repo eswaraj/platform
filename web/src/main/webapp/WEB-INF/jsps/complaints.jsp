@@ -91,7 +91,7 @@
                                                                         </div>
                                                                         <div class="profile-info profile_info_adjust">
                                                                             <span>
-                                                                                <strong class="text-limit issue-id">#{{complaint.id}}</strong>
+                                                                                <strong class="text-limit issue-id"><span>#</span>{{complaint.id}}</strong>
                                                                                 <span class="text-limit connector">by</span>
                                                                                 <a href="#!" class="text-limit username_adjust">{{complaint.createdByPersons[0].name}}</a>
                                                                             </span>
