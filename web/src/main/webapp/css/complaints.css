@@ -602,6 +602,7 @@ float:right;
 #show_full_comments_page{
 margin-top: 20px;
 padding-bottom: 15px;
+clear: both;
 }
 
 .outerwrapper{
