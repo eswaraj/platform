@@ -111,7 +111,7 @@ public class ApiUtil {
     }
 
     public List<ComplaintBean> getUserComplaints(HttpServletRequest httpServletRequest, Long userId) throws ApplicationException {
-        String urlPath = "/api/v0/complaints/user/" + userId;
+        String urlPath = "/api/v0/user/complaints" + userId;
         Map<String, String> addedParams = getPagingInfo(httpServletRequest);
         String locationComplaints = getResponseFrom(httpServletRequest, urlPath, addedParams);
         List<ComplaintBean> list = gson.fromJson(locationComplaints, new TypeToken<List<ComplaintBean>>() {
