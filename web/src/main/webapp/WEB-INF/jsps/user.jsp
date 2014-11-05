@@ -163,7 +163,7 @@
                                                                         <strong class="issue-id">Issue #51</strong>
                                                                         <span class="connector">raised by</span>
                                                                         <a href="#" class="username text-limit name_adjust">Somnath Nabajja</a>
-                                                                        <a href="#" class="issue-scope-type text-limit type_adjust"><img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">Type - Lack of Infrastructure</a>
+                                                                        <a href="#" class="issue-scope-type text-limit" style="max-width: 50%;"><img src = "images/potholeissue.jpg" class="issue_type_pic" alt="">Type - Lack of Infrastructure</a>
                                                                     </p>
 
                                                                     <p class="whenwhere">
