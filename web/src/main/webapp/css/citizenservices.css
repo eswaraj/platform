@@ -247,3 +247,7 @@ margin-top: 0px;
 .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
 background-color: #C2C2C2;
 }
+
+.footer_pos{
+position: absolute;
+bottom: -51px;}
