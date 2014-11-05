@@ -78,14 +78,15 @@
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" >
 																					<c:choose>
-																						<c:when test="${complaint.createdByPersons[0].name == 'anonymous'}">
+																						<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
+
+																						<c:when test="${person_name == 'anonymous'}">
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt=""></a>
 																						</c:when>
 
 																						<c:otherwise>
 																							<img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
 																						</c:otherwise>
-																						
 																					</c:choose>
                                                                             </div>
                                                                         </div>
@@ -160,7 +161,9 @@
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
 																									<c:choose>
-																										<c:when test="${complaint.images == ''}">
+																										<c:set var="first_complaint_image" value="{{complaint.images[0]}}"/>
+																										
+																										<c:when test="${first_complaint_image == ''}">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
