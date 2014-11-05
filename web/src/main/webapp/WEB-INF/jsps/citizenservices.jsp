@@ -12,6 +12,7 @@
 <jsp:include page="include.jsp" />
 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 <link rel="stylesheet" href="${staticHost}/css/citizenservices.css">
+<script type="text/javascript" src="js/jquery.tocify.js"></script>
 </head>
 <body>
 	<div class="">
