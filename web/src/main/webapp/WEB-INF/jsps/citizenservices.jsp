@@ -15,7 +15,7 @@
 <script type="text/javascript" src="js/jquery.tocify.js"></script>
 </head>
 <body>
-	<div class="">
+	<div class="outerwrapper">
 		<header>
 			<jsp:include page="header.jsp" />
 		</header>
