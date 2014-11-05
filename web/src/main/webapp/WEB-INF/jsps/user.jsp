@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			 -->
-			<div class="row" style="margin-top:1.5%;">
+			<div class="row" style="margin-top:5%;">
 				<div class="col-sm-2">
 					<p>
 						<strong>Refine Search</strong>
@@ -229,7 +229,7 @@
 									</div>
 								</c:forEach>
 
-								<div class="pagination-wrapper">
+								<div class="pagination-wrapper" style="margin-left: 34%; margin-right: 34%;">
 									<ul class="pagination">
 										<li class="disabled"><a href="#">&laquo;</a></li>
 										<li class="active"><a href="#">1</a></li>
