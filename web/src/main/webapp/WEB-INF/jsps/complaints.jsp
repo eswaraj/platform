@@ -78,6 +78,7 @@
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" >
 																					<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
+																					<c:out value="${person_name}"/>
 																					<c:choose>
 																						<c:when test="${person_name == 'anonymous'}">
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt=""></a>
@@ -160,6 +161,7 @@
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
 																									<c:set var="first_complaint_image" value="{{complaint.images[0]}}"/>
+																									<c:out value="${first_complaint_image}"/>
 																									<c:choose>
 																										<c:when test="${first_complaint_image == ''}">
 																										<div class="active item">
