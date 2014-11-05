@@ -77,9 +77,8 @@
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" >
+																					<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
 																					<c:choose>
-																						<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
-
 																						<c:when test="${person_name == 'anonymous'}">
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt=""></a>
 																						</c:when>
@@ -160,9 +159,8 @@
 																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
+																									<c:set var="first_complaint_image" value="{{complaint.images[0]}}"/>
 																									<c:choose>
-																										<c:set var="first_complaint_image" value="{{complaint.images[0]}}"/>
-																										
 																										<c:when test="${first_complaint_image == ''}">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
