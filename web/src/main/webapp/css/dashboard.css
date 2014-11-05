@@ -358,8 +358,11 @@ label {
     border-radius: 3px;
     margin: 27px 0 15px 0;
 }
-html,body {
-    height: 100%;
+html, body {
+min-height: 100vh;
+}
+body, html, .outerwrapper, .container {
+height: auto;
 }
 .outerwrapper {
     min-height: 100%;
