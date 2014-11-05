@@ -547,3 +547,9 @@ height: auto;
 	max-width: none !important;
 	background: none !important
 }
+
+.footer_pos{
+position: absolute;
+bottom: 0px; 
+width: 100%; 
+}
