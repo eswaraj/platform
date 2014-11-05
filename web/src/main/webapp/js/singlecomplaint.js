@@ -50,7 +50,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
 complaintsApp.filter('dateFormatter', function () {
     return function (input) {
         var date = new Date(input);
-        out = date.toString();
+        out = date.toLocaleString();
         return out;
     };
 });

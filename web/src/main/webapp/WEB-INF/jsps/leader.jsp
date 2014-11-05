@@ -11,22 +11,23 @@
 <head>
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
+<link rel="stylesheet" href="${staticHost}/css/leader.css" />
 </head>
-<body>
+<body style="height:auto;">
 	<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 		<!-- /.navbar -->
 		<div class="container-fluid">
-			<div class="row">
+			<div class="row" style="margin-top: 5%;">
 				<div class="col-sm-3">
 					<div class="panel panel-default mla-placeholder">
 						<div class="panel-body">
 							<div class="mla-profile">
-								<img src="${leader.profilePhoto}" alt="mla image">
+								<img src="${leader.profilePhoto}" class="politician_image" alt="mla image">
 								<p>
-									<strong>${leader.name}, ${leader.politicalAdminType.shortName}</strong> <span>In Office
-										since ${leader.since}</span> <a href="#" class="badge badge-default">Know
-										your MLA</a>
+									<strong>${leader.name}, ${leader.politicalAdminType.shortName}</strong><br \>
+									<span>In Office since ${leader.since}</span> <br \>
+									<a href="#" class="badge badge-default">Know your MLA</a>
 								</p>
 								<div class="visible-xs">
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing

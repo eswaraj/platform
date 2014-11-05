@@ -4,7 +4,6 @@
 	width: 250px;
 	margin: auto;
 	text-align: left;
-	margin-top: 5px;
 	background: #F2F2F2;
 	padding: 10px;
 	box-shadow: 0px 0px 5px #CCC;
@@ -22,6 +21,7 @@
 .tasubtitle{
 	font-size: 14px;
     color: #B2B2B2;
+	margin: 0px;
 }
 .taactive{
 	background-color: #C44741;
@@ -32,6 +32,7 @@
 }
 .tainput{
     width: 250px;
+	height: 30px;
 }
 .taimage{
     width: 35px;
@@ -41,4 +42,9 @@
     float: left;
     margin-right: 20px;
     margin-bottom: 0px; 
+}
+
+.tatitle{
+	margin: 0px;
+	line-height: 1.25em;
 }

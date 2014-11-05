@@ -184,6 +184,12 @@ pageEncoding="UTF-8"%>
 					<!-- new_div starts -->
 					<c:forEach items="${complaintList}" var="oneComplaint">
 					<div class="list-row">
+								<p class="innerdiv-sharebtn">
+								<!-- social media share buttons -->								
+								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+								<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+								<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+								</p>
 						<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"--> <!-- not working as expected -->
 						<div class="innerblock">
 							<div class="col-sm-1 profile-info profile_pic_adjust">
@@ -201,15 +207,19 @@ pageEncoding="UTF-8"%>
 								<strong class="issue-id">Issue #${oneComplaint.id}</strong>
 								<span class="connector">raised by</span>
 								
-								<a href="#" class="username">
+								<a href="#" class="username text-limit name_adjust">
 								<c:forEach items="${oneComplaint.loggedBy}" var="onePerson">
 								${onePerson.name}
 								</c:forEach>
 								</a>
-								<!-- social media share buttons -->								
-								<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-								<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-								<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type text-limit type_adjust">
+									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+									<c:if test="${oneCategory.root}">
+									Type-${oneCategory.name}
+									</c:if>
+									</c:forEach>
+								</a>
 								</p>
 
 								<p class="whenwhere">
@@ -231,15 +241,7 @@ pageEncoding="UTF-8"%>
 
 								<p>
 								<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="issue-scope">${oneComplaint.categoryTitle}</a>
-								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type">
-									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-									<c:if test="${oneCategory.root}">
-									Type - ${oneCategory.name}
-									</c:if>
-									</c:forEach>
-								</a>
-								</p>
+							</p>
 
 								<c:if test="${!empty oneComplaint.description}">
 								<p class="desc elipsis">

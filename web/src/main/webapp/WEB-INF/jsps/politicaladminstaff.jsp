@@ -18,9 +18,7 @@
                                 <link rel="stylesheet" href='${staticHost}/css/mla_staff.css' />
                             </head>
                             <body ng-controller="pbadminStaffController">
-                                <header>
                                     <jsp:include page="header.jsp" />
-                                </header>
                                 <div class="wrapper" ng-show="!addMode">
                                     <div class="container">
                                         <div class="row">
@@ -79,12 +77,12 @@
 
                                     <div id="edit_person" >
                                         <div id="search_by_name" style="float: left;">
-                                            Search by Name
+                                            <b style="margin-right: 5px;">Search by Name</b>
                                             <typeahead text="text" items="items" prompt="Start typing a name" title="name" subtitle="email" img="profilePhoto" min="3" url="/api/person/search/name/" querystring="term" model="selected" on-select="onPersonSelected()"></typeahead>
                                         </div>
 
                                         <div id="search_by_email" style="margin-left: 380px;">
-                                            Search by Email
+                                            <b style="margin-right: 5px;">Search by Email</b>
                                             <typeahead text="text" items="items" prompt="Start typing an email" title="email" subtitle="name" img="profilePhoto" min="3" url="/api/person/search/email/" querystring="term" model="selected" on-select="onPersonSelected()"></typeahead>
                                         </div>
 
@@ -103,7 +101,7 @@
 
                                             <div class="col-sm-9">
 
-                                                <table>
+                                                <table style="margin-bottom: 10px;">
 
                                                     <tr>
                                                         <td><label for="pbadmin_name">Name</label></td>

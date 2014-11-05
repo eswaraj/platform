@@ -19,6 +19,7 @@
 <script src="${staticHost}/js/user_analytics.js"></script>
 <script src="${staticHost}/js/user_map.js"></script>
 
+
 <!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
 <script>
                                 function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}
@@ -34,6 +35,7 @@
 	<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 		<div class="container-fluid">
+			<!-- 
 			<div class="banner">
 				<div class="locate-on-map">
 					<script type="text/javascript"
@@ -49,6 +51,7 @@
 					</div>
 				</div>
 			</div>
+			 -->
 			<div class="row">
 				<div class="col-sm-2">
 					<p>
@@ -57,6 +60,7 @@
 					<div class="refine-search">
 						<input type="text" value="Amsterdam,Washington"
 							data-role="tagsinput">
+						<!-- 
 						<div class="filter-options">
 							<span class="trigger btn btn-default"> <i
 								class="glyphicon glyphicon-cog"></i>
@@ -115,6 +119,7 @@
 								</form>
 							</div>
 						</div>
+						-->
 					</div>
 					<p>
 						<strong>Sort Issues by category</strong>
@@ -183,6 +188,7 @@
 														class="icon_resize" /></a>
 												</p>
 
+
 												<p class="whenwhere">
 													<span> <img src="${staticHost}/images/time.png"
 														class="posttimestatus" alt=""> <a href="#"
@@ -246,14 +252,17 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4 analytics_data_colsm">
+						<div class="col-sm-4 analytics_data_colsm"
+							style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
 
-							<div id="chart_bar_c">
+							<div id="chart_bar_c" style="border: 0px solid #fff;">
 								<svg>
                                                         </svg>
 							</div>
 
-							<div id="chart_pie_c">
+							<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
+
+							<div id="chart_pie_c" style="border: 0px solid #fff;">
 								<svg>
                                                         </svg>
 							</div>

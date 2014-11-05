@@ -1,0 +1,249 @@
+body{
+background-color: #D8D8D8;
+}
+
+.box_style{
+width: 100%;
+height: auto;
+float: left;
+text-align: center;
+/*box-shadow: 1px 1px 35px 10px rgba(250,250,250,1);*/
+position: relative;
+}
+
+.box_style_innderdiv{
+padding-top: 5px;
+}
+
+.video_img{
+width: 400px;
+height: 280px;
+max-width: 400px;
+max-height: 280px;
+border-radius: 30px;
+}
+
+.frame_header{
+color: #FFFFFF;
+padding: 15px 5px 10px 5px;
+font-size: 30px;
+background: #C2C2C2;
+font-style: bold;
+margin: 0px;
+cursor: pointer;
+}
+
+.frame_content{
+text-align: justify;
+text-justify: inter-word;
+background-color: #C2C2C2;
+color: #FFF;
+margin-bottom: 0px;
+padding: 20px 100px 20px 100px;
+clear: both;
+font-size: 20px;
+}
+
+.frame_info_link{
+height: 280px;
+width: 100%;
+margin-bottom: 0px;
+float: left;
+}
+
+.ahref_text_margin{
+text-decoration: none;
+margin-right: 25%;
+font-size: 25px;
+float: right;
+}
+
+.right_float{
+float:right;
+}
+
+.glyphicon_margin{
+margin-top: 11%;
+font-size: 140px;
+}
+
+.glyphicon {
+top: 3px;
+}
+
+.img_video_box{
+float: left;
+margin: 0px 20px 0px 20px;
+}
+
+#water_col_innnerdiv, #water_col .frame_header,#water_col .frame_content,#water_col  .img_video_box,#water_col   .frame_info_link{
+background-color: #74BBFB;
+}
+#law_ord_col_innnerdiv, #law_ord_col .frame_header,#law_ord_col .frame_content,#law_ord_col  .img_video_box,#law_ord_col   .frame_info_link{
+background-color: #FFB69E;
+}
+#electricity_col_innnerdiv, #electricity_col .frame_header,#electricity_col .frame_content,#electricity_col  .img_video_box,#electricity_col   .frame_info_link{
+background-color: #5BD0AC;
+}
+#roads_col_innnerdiv, #roads_col .frame_header,#roads_col .frame_content,#roads_col  .img_video_box,#roads_col   .frame_info_link{
+background-color: #DF82A0;
+}
+#sew_san_col_innnerdiv, #sew_san_col .frame_header,#sew_san_col .frame_content,#sew_san_col  .img_video_box,#sew_san_col   .frame_info_link{
+background-color: #CFB1FA;
+}
+#transport_col_innnerdiv, #transport_col .frame_header,#transport_col .frame_content,#transport_col  .img_video_box,#transport_col   .frame_info_link{
+background-color: #E889F0;
+}
+
+.play_video_image{
+top: 40%;
+left: 42%;
+color: #FFFFFF;
+font-size: 70px;
+display: none;
+position: absolute;
+}
+
+.play_video_image:hover{
+color: #00D;
+}
+
+.video_play{
+position: absolute;
+top: 75px;
+width: 100%;
+height: 500px; 
+/*568px full height */
+}
+
+.frame_info_first_span{
+float: left;
+border: 2px solid #D2D2D2;
+height: 280px;
+background-color: #D2D2D2;
+margin: 0px 20px 0px 35px;
+border-radius: 30px;
+width: 400px;
+}
+
+.frame_info_first_span:hover{
+background-color: #F2F2F2;
+border: 2px solid #F2F2F2;
+}
+
+.frame_info_second_span{
+float: left;
+border: 2px solid #D2D2D2;
+height: 280px;
+background-color: #D2D2D2;
+margin: 0px 20px 0px 20px;
+border-radius: 30px;
+width: 400px;
+}
+
+.frame_info_second_span:hover{
+background-color: #F2F2F2;
+border: 2px solid #F2F2F2;
+}
+
+.close-btn {
+  position: fixed;
+  display: block;
+  width: 40px;
+  height: 40px;
+  top: 20px;
+  right: 2%;
+  /* image replacement */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+.close-btn::before, .close-btn::after {
+  /* close icon in css */
+  content: '';
+  position: absolute;
+  display: inline-block;
+  width: 2px;
+  height: 24px;
+  top: 8px;
+  left: 19px;
+  background-color: #39393c;
+}
+.close-btn::before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.close-btn::after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#citizenservices{
+/*margin-top: 10px; to be changed when header is included*/
+}
+
+.outerwrapper{
+height: auto;
+}
+
+.row{
+width: 100%;
+margin-left: 0px;
+margin-right: 0px;
+}
+
+
+#water_col, #law_ord_col, #electricity_col, #roads_col, #sew_san_col, #transport_col{
+display: none;
+}
+
+.rotatediv{
+    -webkit-transform: translateY(-100%) rotate(90deg); /* Safari */
+    -moz-transform: translateY(-100%) rotate(90deg); /* Firefox 3.6 Firefox 4 */
+    /*-moz-transform-origin: right top; */
+    -ms-transform: translateY(-100%) rotate(90deg); /* IE9 */
+    -o-transform: translateY(-100%) rotate(90deg); /* Opera */
+    transform: translateY(-100%) rotate(90deg); /* W3C */  
+    -webkit-transform-origin: left bottom;
+    -moz-transform-origin: left bottom;
+    -ms-transform-origin: left bottom;
+    -o-transform-origin: left bottom;
+    transform-origin: left bottom;	
+	width: 536px;
+}
+
+.infographic_image{
+width: 100%;
+height: auto;
+overflow-y: auto;
+overflow-x: hidden;
+}
+
+.tocify{
+
+background-color: #F5F5F5;
+width: 165px;
+left: 0px;
+margin-left: 0px;
+top: 210px;
+
+}
+
+.tocify-extend-page{
+display: none;
+}
+
+#citizenservices h3{
+margin-bottom: 0px;
+margin-top: 0px;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+background-color: #C2C2C2;
+}
