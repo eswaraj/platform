@@ -250,8 +250,10 @@
                                                             </div>
                                                         </div>
                                                         
-                                                        <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
-                                                        <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
+													<div class="collap_show_btn">
+                                                      <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
+                                                      <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
+													</div>
 
                                                     </div>
                                                 </div>
