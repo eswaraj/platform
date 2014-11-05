@@ -10,11 +10,12 @@
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
+                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+								<link rel="stylesheet" href='${staticHost}/css/complaints.css' />
                                 <script src="${staticHost}/js/angular.min.js"></script>
                                 <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
                                 <script src="${staticHost}/js/complaints.js"></script>
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
-                                <link rel="stylesheet" href='${staticHost}/css/complaints.css' />
                             </head>
                             <body ng-controller="complaintsController">
                                 <div class="outerwrapper">
@@ -75,12 +76,22 @@
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic">
-                                                                                <a href="#!" ><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
+                                                                                <a href="#!" >
+																					<c:choose>
+																						<c:when test="${complaint.createdByPersons[0].profilePhoto == ''}">
+																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt=""></a>
+																						</c:when>
+
+																						<c:otherwise>
+																							<img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
+																						</c:otherwise>
+																						
+																					</c:choose>
                                                                             </div>
                                                                         </div>
                                                                         <div class="profile-info profile_info_adjust">
                                                                             <span>
-                                                                                <strong class="text-limit issue-id">{{complaint.id}}</strong>
+                                                                                <strong class="text-limit issue-id">#{{complaint.id}}</strong>
                                                                                 <span class="text-limit connector">by</span>
                                                                                 <a href="#!" class="text-limit username_adjust">{{complaint.createdByPersons[0].name}}</a>
                                                                             </span>
@@ -111,11 +122,29 @@
                                                                         <div class="innerdiv-issue-info" >
 
                                                                             <p class="issue-title">
-                                                                                <a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a>
+                                                                                <!--a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a-->
+																				<a href="#!" class="innerdiv-issue-scope">{{complaint.categories  | subCategory}}</a>
                                                                             </p>
 
                                                                             <p class="desc elipsis">
-                                                                                {{complaint.description}}								
+																					<c:choose>
+																						<c:when test="${complaint.description == ''}">
+																						Lorem Ipsum is simply dummy text of the printing and typesetting 
+																						industry. Lorem Ipsum has been the industry's standard dummy text 
+																						ever since the 1500s, when an unknown printer took a galley of type 
+																						and scrambled it to make a type specimen book. It has survived not 
+																						only five centuries, but also the leap into electronic typesetting, 
+																						remaining essentially unchanged. It was popularised in the 1960s with 
+																						the release of Letraset sheets containing Lorem Ipsum passages, and
+																						more recently with desktop publishing software like Aldus PageMaker 
+																						including versions of Lorem Ipsum.																				
+																						</c:when>
+
+																						<c:otherwise>
+																							{{complaint.description}}
+																						</c:otherwise>
+																						
+																					</c:choose>
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
@@ -127,11 +156,30 @@
                                                                                 <div class="tab-content">
 
                                                                                     <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
-                                                                                        <carousel interval="3500" id="myCarousel{{$index + 1}}">
-                                                                                            <slide ng-repeat="image in complaint.images">
-                                                                                                <img ng-src="{{image.orgUrl}}" style="margin:auto;">
-                                                                                            </slide>
-                                                                                        </carousel>
+																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
+																						<!-- Carousel items -->
+																							<div class="carousel-inner">
+																								<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
+																									<c:choose>
+																										<c:when test="${counter.count == '1'}">
+																										<div class="active item">
+																											<img src="${onePhoto.orgUrl}" />
+																										</div>
+																										</c:when>
+
+																										<c:otherwise>
+																										<div class="item">
+																											<img src="${onePhoto.orgUrl}" />
+																										</div>
+																										</c:otherwise>
+																										
+																									</c:choose>
+																								</c:forEach>
+																							 </div>
+																							<!-- Carousel nav -->
+																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+																							<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																						</div>
                                                                                     </div>
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
