@@ -10,6 +10,7 @@
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
+                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css" />
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                                 <link rel="stylesheet" href="${staticHost}/css/nv.d3.css" type="text/css"></link>
                             <script src="${staticHost}/js/d3.min.js"></script>
@@ -29,7 +30,7 @@
 
                             </head>
                         <body>
-                            <div class="outerwrapper">
+                            <div class="outerwrapper" style="height: auto;">
                                 <jsp:include page="header.jsp" />
                                 <div class="container-fluid">
                                     <div class="banner">
