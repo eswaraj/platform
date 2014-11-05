@@ -696,4 +696,6 @@ padding-bottom: 15px;
 
 .footer_pos{
 position: absolute;
+bottom: 0px; 
+width: 100%; 
 }
