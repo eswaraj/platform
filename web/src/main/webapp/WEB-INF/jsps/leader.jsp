@@ -12,12 +12,12 @@
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
 </head>
-<body>
+<body style="height:auto;">
 	<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 		<!-- /.navbar -->
 		<div class="container-fluid">
-			<div class="row">
+			<div class="row" style="margin-top: 5%;">
 				<div class="col-sm-3">
 					<div class="panel panel-default mla-placeholder">
 						<div class="panel-body">
