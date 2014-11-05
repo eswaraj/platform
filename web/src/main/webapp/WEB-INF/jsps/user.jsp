@@ -33,7 +33,7 @@
                             <div class="outerwrapper" style="height: auto;">
                                 <jsp:include page="header.jsp" />
                                 <div class="container-fluid">
-                                    <div class="banner">
+                                    <!--div class="banner">
                                         <div class="locate-on-map">
                                             <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
                                             <div style="overflow:hidden;height:100%;width:100%;">
@@ -47,7 +47,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div-->
                                     <div class="row" style="margin-top:5%;">
                                         <div class="col-sm-2">
                                             <p>
