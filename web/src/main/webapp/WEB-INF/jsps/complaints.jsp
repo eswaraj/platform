@@ -80,10 +80,12 @@
 																					<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
 																					<c:choose>
 																						<c:when test="${person_name eq 'anonymous'}">
-																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt=""></a>
+																						<c:out value="${person_name}"/>
+																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
 																						</c:when>
 
 																						<c:otherwise>
+																						<c:out value="Otherwise"/>
 																							<img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
 																						</c:otherwise>
 																					</c:choose>
