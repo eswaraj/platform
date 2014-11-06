@@ -1,5 +1,5 @@
 .row{
-margin-top: 3.5%;
+margin-top: 0px;
 }
 
 /*list row starts*/
@@ -661,7 +661,7 @@ border-radius: 3px;
 }
 
 .left_filter_category{
-margin-top: 30px;
+margin-top: 10px;
 }
 
 .label_status_options{
@@ -701,4 +701,24 @@ padding-bottom: 15px;
 position: absolute;
 bottom: 0px; 
 width: 100%; 
+}
+
+.refresh_button{
+height: 30px;
+line-height: 10px;
+width: 80px;
+margin-top: 10px;
+margin-left: 25%;
+}
+
+.dlist_width{
+width: 100%;
+}
+
+body{
+padding-bottom: 0px;
+}
+
+.row{
+margin-bottom: 25px;
 }

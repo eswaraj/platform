@@ -25,9 +25,9 @@
                                             <div class="col-sm-2">
                                                 <div class="left_filter">
                                                     <h3 class="text-footer">Select Position</h3>
-                                                    <select class="select dropdownlist" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
+                                                    <select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
                                                     </select>
-                                                    <a href="#" class="list-group-item active" ng-click="onRefresh()">Refresh</a>
+                                                    <a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 
                                                     <p class="left_filter_category">
                                                         <strong>Filter Issues by category</strong>
