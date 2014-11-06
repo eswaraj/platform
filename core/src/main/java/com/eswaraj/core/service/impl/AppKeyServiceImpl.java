@@ -235,6 +235,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     @Override
     public List<String> getMonthComplaintKeysForTheYear(String prefix, Date date) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         calendar.set(Calendar.MONTH, 0);
 
         int totalMonths = 12;
