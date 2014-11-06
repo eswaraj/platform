@@ -161,14 +161,8 @@
 										<div class="innerblock">
 											<div class="col-sm-1 profile-info profile_pic_adjust">
 												<div class="profile-pic">
-													<c:if test="${!empty oneComplaint.loggedBy[0].photo}">
 														<a href="#"><img
-															src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
-													</c:if>
-													<c:if test="${empty oneComplaint.loggedBy[0].photo}">
-														<a href="#"><img
-															src="${staticHost}/images/profile-pic.jpg" alt=""></a>
-													</c:if>
+															src="${user.person.profilePhoto}" alt=""></a>
 												</div>
 											</div>
 											<div class="col-sm-10 profile-info profile_info_adjust">
@@ -176,10 +170,8 @@
 													<strong class="issue-id">Issue #${oneComplaint.id}</strong>
 													<span class="connector">raised by</span> 
 													<a href="#" class="username text-limit name_adjust">
-														<c:forEach
-															items="${oneComplaint.loggedBy}" var="onePerson">
-											                                ${onePerson.name}
-											            </c:forEach></a>
+											                                ${user.person.name}
+											           </a>
 													<a
 														href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}"
 														class="issue-scope">${oneComplaint.categoryTitle}</a> <a
