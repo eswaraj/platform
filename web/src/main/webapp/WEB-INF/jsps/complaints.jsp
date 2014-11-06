@@ -75,21 +75,14 @@
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
                                                                         <div class="col-sm-1 profile_pic_adjust">
-                                                                            <div class="profile-pic">
-                                                                                <a href="#!" >
-																					<c:set var="profile_photo" value="{{complaint.createdByPersons[0].profilePhoto}}"/>
-																					<c:choose>
-																						<c:when test="${empty profile_photo}">
-																						<c:out value="${person_name}"/>
-																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
-																						</c:when>
-
-																						<c:otherwise>
-																						<c:out value="Otherwise"/>
-																							<img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
-																						</c:otherwise>
-																					</c:choose>
-                                                                            </div>
+                                                                            <div class="profile-pic" ng-switch on="true">
+																				<div ng-switch-when="false">
+																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
+																				</div>
+																				<div ng-switch-when="{{complaint.createdByPersons[0].profilePhoto}}">	
+																					<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
+																				</div>
+																			</div>
                                                                         </div>
                                                                         <div class="profile-info profile_info_adjust">
                                                                             <span>
