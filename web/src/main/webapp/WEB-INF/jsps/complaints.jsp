@@ -123,7 +123,7 @@
 
                                                                             <p class="desc elipsis">
 																				<span ng-switch on="complaint.description">
-																					<span ng-switch-when="null">
+																					<span ng-switch-when="">
 																					Lorem Ipsum is simply dummy text of the printing and typesetting 
 																					industry. Lorem Ipsum has been the industry's standard dummy text 
 																					ever since the 1500s, when an unknown printer took a galley of type 
@@ -153,7 +153,7 @@
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
 																									<span ng-switch on="complaint.images[0]">
-																										<span ng-switch-when="null">
+																										<span ng-switch-when="">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
