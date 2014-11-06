@@ -194,6 +194,7 @@ pbadminApp.controller('pbadminController', function($scope, $http, $timeout, $q)
         }, 1500);
     };
     $scope.tabToggle = function (event) {
+        event.preventDefault();
         $(event.target).tab('show');
     };
     var all_pbtype = {};
