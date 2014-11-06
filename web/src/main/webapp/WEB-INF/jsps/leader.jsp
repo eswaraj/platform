@@ -23,7 +23,7 @@
 					<div class="panel panel-default mla-placeholder">
 						<div class="panel-body">
 							<div class="mla-profile">
-								<img src="${leader.profilePhoto}" class="politician_image" alt="mla image">
+								<img src="${leader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="mla image">
 								<p>
 									<strong>${leader.name}, ${leader.politicalAdminType.shortName}</strong><br \>
 									<span>In Office since ${leader.since}</span> <br \>

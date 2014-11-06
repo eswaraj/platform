@@ -52,13 +52,13 @@
 				</div>
 			</div>
 			 -->
-			<div class="row">
+			<div class="row" style="margin-top:5%;">
 				<div class="col-sm-2">
 					<p>
 						<strong>Refine Search</strong>
 					</p>
 					<div class="refine-search">
-						<input type="text" value="Amsterdam,Washington"
+						<input type="text" value="Amsterdam,Washington" 
 							data-role="tagsinput">
 						<!-- 
 						<div class="filter-options">
@@ -134,16 +134,16 @@
 							class="list-group-item">Transportation</a>
 					</div>
 				</div>
-				<div class="col-sm-10">
-					<div class="listing-wrapper">
+				<div class="col-sm-10" style="padding: 0px 0px 0px 5px; ">
+					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
 								<strong>My Activity Feed</strong>
 							</div>
-							<div class="pull-right">
+							<div class="pull-right" style="margin-right: 33%;">
 								<button class="btn btn-primary">Raise Issue</button>
 							</div>
-							<div class="clearfix"></div>
+							<div class="clearfix" style="margin-bottom: 1.5%; margin-top: 0px;"></div>
 						</div>
 						<div class="col-sm-8 user_feed_colsm">
 							<div class="listing">
@@ -152,6 +152,12 @@
 									<div class="list-row">
 										<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"-->
 										<!-- not working as expected -->
+											<p class="innerdiv-sharebtn">
+											<!-- social media share buttons -->								
+											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+											<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+											<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+											</p>
 										<div class="innerblock">
 											<div class="col-sm-1 profile-info profile_pic_adjust">
 												<div class="profile-pic">
@@ -166,28 +172,28 @@
 												</div>
 											</div>
 											<div class="col-sm-10 profile-info profile_info_adjust">
-												<p class="whom">
+												<p class="whom" style="margin-bottom: 0px; line-height:100%;">
 													<strong class="issue-id">Issue #${oneComplaint.id}</strong>
-													<span class="connector">raised by</span> <a href="#"
-														class="username"><c:forEach
+													<span class="connector">raised by</span> 
+													<a href="#" class="username text-limit name_adjust">
+														<c:forEach
 															items="${oneComplaint.loggedBy}" var="onePerson">
 											                                ${onePerson.name}
-											                                </c:forEach></a>
-													<!-- social media share buttons -->
+											            </c:forEach></a>
 													<a
-														href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img
-														src="images/fbicon.png" alt="" align="middle"
-														class="icon_resize"></a> <a
-														href="https://plus.google.com/share?url={URL}"
-														onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img
-														src="https://www.gstatic.com/images/icons/gplus-32.png"
-														alt="Share on Google+" class="icon_resize" /></a> <a
-														href="https://twitter.com/share"
-														onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img
-														src="images/twittericon.png" alt="Share on Twitter"
-														class="icon_resize" /></a>
+														href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}"
+														class="issue-scope">${oneComplaint.categoryTitle}</a> <a
+														href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}"
+														class="issue-scope-type"> <img
+														src="${staticHost}/images/potholeissue.jpg"
+														class="issue_type_pic" alt=""> <c:forEach
+															items="${oneComplaint.categories}" var="oneCategory">
+															<c:if test="${oneCategory.root}">
+															Type - ${oneCategory.name}
+															</c:if>
+														</c:forEach>
+													</a>
 												</p>
-
 
 												<p class="whenwhere">
 													<span> <img src="${staticHost}/images/time.png"
@@ -206,22 +212,6 @@
 											</div>
 											<div class="issue-info">
 
-												<p>
-													<a
-														href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}"
-														class="issue-scope">${oneComplaint.categoryTitle}</a> <a
-														href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}"
-														class="issue-scope-type"> <img
-														src="${staticHost}/images/potholeissue.jpg"
-														class="issue_type_pic" alt=""> <c:forEach
-															items="${oneComplaint.categories}" var="oneCategory">
-															<c:if test="${oneCategory.root}">
-                                    Type - ${oneCategory.name}
-                                    </c:if>
-														</c:forEach>
-													</a>
-												</p>
-
 												<c:if test="${!empty oneComplaint.description}">
 													<p class="desc elipsis">${oneComplaint.description}</p>
 												</c:if>
@@ -239,7 +229,7 @@
 									</div>
 								</c:forEach>
 
-								<div class="pagination-wrapper">
+								<div class="pagination-wrapper" style="margin-left: 34%; margin-right: 34%;">
 									<ul class="pagination">
 										<li class="disabled"><a href="#">&laquo;</a></li>
 										<li class="active"><a href="#">1</a></li>
@@ -252,8 +242,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4 analytics_data_colsm"
-							style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
+						<div class="col-sm-4 analytics_data_colsm" style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
 
 							<div id="chart_bar_c" style="border: 0px solid #fff;">
 								<svg>

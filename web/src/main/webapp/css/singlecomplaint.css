@@ -358,6 +358,7 @@ border-radius: 8px;
 
 #load_comments_box{
 	margin-top: 20px;
+	margin-bottom: 30px;
 	display: block;
 	width: 600px;
 }
@@ -794,10 +795,6 @@ width: 30px;
 margin-left: 8px;
 }
 
-.footer_pos{
-position: relative;
-}
-
 .collap_show_btn{
 margin-top: 10px;
 padding-top: 15px;
@@ -807,4 +804,8 @@ border-top: 1px solid #DFDFDF;
 
 #collapse_comments_box{
 margin-left: 15px;
+}
+
+body{
+padding-bottom: 0px;
 }

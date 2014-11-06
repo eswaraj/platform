@@ -33,6 +33,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         });
     };
     $scope.showTab = function (event) {
+        event.preventDefault();
         var element = $(event.currentTarget);
         element.tab('show');
     };
@@ -246,7 +247,7 @@ complaintsApp.filter('subCategory', function () {
 complaintsApp.filter('dateFormatter', function () {
     return function (input) {
         var date = new Date(input);
-        out = date.toString();
+        out = date.toLocaleString();
         return out;
     };
 });
@@ -309,4 +310,15 @@ complaintsApp.directive('googleMap', function ($timeout) {
             myMarker.setMap(map);
         }
     };
+});
+
+complaintsApp.directive('scrollOnClick', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, $elm) {
+      $elm.on('click', function() {
+        $("body").animate({scrollTop: $elm.offset().top}, "slow");
+      });
+    }
+  }
 });

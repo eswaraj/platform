@@ -2,8 +2,11 @@ body{
 	font-family: "Arimo",helvetica;
 	position: relative;
 }
-body, html,.outerwrapper,.container{
-	height: 100%;
+html, body {
+min-height: 100vh;
+}
+body, html, .outerwrapper, .container {
+height: auto;
 }
 header{
 	text-align: center;

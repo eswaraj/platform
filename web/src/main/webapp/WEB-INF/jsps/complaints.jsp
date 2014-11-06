@@ -10,11 +10,12 @@
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
+                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+								<link rel="stylesheet" href='${staticHost}/css/complaints.css' />
                                 <script src="${staticHost}/js/angular.min.js"></script>
                                 <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
                                 <script src="${staticHost}/js/complaints.js"></script>
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
-                                <link rel="stylesheet" href='${staticHost}/css/complaints.css' />
                             </head>
                             <body ng-controller="complaintsController">
                                 <div class="outerwrapper">
@@ -24,9 +25,9 @@
                                             <div class="col-sm-2">
                                                 <div class="left_filter">
                                                     <h3 class="text-footer">Select Position</h3>
-                                                    <select class="select dropdownlist" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
+                                                    <select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
                                                     </select>
-                                                    <a href="#" class="list-group-item active" ng-click="onRefresh()">Refresh</a>
+                                                    <a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 
                                                     <p class="left_filter_category">
                                                         <strong>Filter Issues by category</strong>
@@ -63,9 +64,9 @@
                                                     <div class="listing">
                                                         <!-- new_div starts -->
                                                         <div class="mla_unread_complaints_controller">
-                                                            <span class="unread_complaints"><b>Unread Complaints (2)</b></span>
+                                                            <span class="unread_complaints"><b>Unread Complaints (<span ng-repeat="item in complaints | filter:{isVisible:'true'} = (items | filter:filterExpr)"></span><span>{{complaints.length}}</span>)</b></span>
                                                             <span class="glyphicon glyphicon-circle-arrow-up glyph_unread_complaints glyph_comments_right_float"></span>
-                                                            <span class="comments_display_per_page"><b>Showing 2 of 2000 Complaints</b></span>
+                                                            <span class="comments_display_per_page"><b>Showing <span ng-repeat="item in complaints | filter:{isVisible:'true'} = (items | filter:filterExpr)"></span><span>{{complaints.length}}</span> of <span>{{complaints.length}}</span> Complaints</b></span>
                                                         </div>	
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
@@ -74,13 +75,18 @@
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
                                                                         <div class="col-sm-1 profile_pic_adjust">
-                                                                            <div class="profile-pic">
-                                                                                <a href="#!" ><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
-                                                                            </div>
+                                                                            <div class="profile-pic" ng-switch on="complaint.createdByPersons[0].name">
+																				<div ng-switch-when="anonymous">
+																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;" /></a>
+																				</div>
+																				<div ng-switch-default>
+																					<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt="" /></a>
+																				</div>
+																			</div>
                                                                         </div>
                                                                         <div class="profile-info profile_info_adjust">
                                                                             <span>
-                                                                                <strong class="text-limit issue-id">{{complaint.id}}</strong>
+                                                                                <strong class="text-limit issue-id"><span>#</span>{{complaint.id}}</strong>
                                                                                 <span class="text-limit connector">by</span>
                                                                                 <a href="#!" class="text-limit username_adjust">{{complaint.createdByPersons[0].name}}</a>
                                                                             </span>
@@ -111,27 +117,70 @@
                                                                         <div class="innerdiv-issue-info" >
 
                                                                             <p class="issue-title">
-                                                                                <a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a>
+                                                                                <!--a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a-->
+																				<a href="#!" class="innerdiv-issue-scope">{{complaint.categories  | subCategory}}</a>
                                                                             </p>
 
                                                                             <p class="desc elipsis">
-                                                                                {{complaint.description}}								
+																				<span ng-switch on="complaint.description">
+																					<span ng-switch-when="">
+																					Lorem Ipsum is simply dummy text of the printing and typesetting 
+																					industry. Lorem Ipsum has been the industry's standard dummy text 
+																					ever since the 1500s, when an unknown printer took a galley of type 
+																					and scrambled it to make a type specimen book. It has survived not 
+																					only five centuries, but also the leap into electronic typesetting, 
+																					remaining essentially unchanged. It was popularised in the 1960s with 
+																					the release of Letraset sheets containing Lorem Ipsum passages, and
+																					more recently with desktop publishing software like Aldus PageMaker 
+																					including versions of Lorem Ipsum.																				
+																					</span>
+																					<span ng-switch-default>
+																						{{complaint.description}}
+																					</span>
+																				</span>
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
                                                                                 <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" >
-                                                                                    <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event)">Complaint Pictures</a></li>
-                                                                                    <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event)">Show on Map</a></li>
+                                                                                    <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Complaint Pictures</a></li>
+                                                                                    <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Show on Map</a></li>
                                                                                 </ul>
 
                                                                                 <div class="tab-content">
 
                                                                                     <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
-                                                                                        <carousel interval="3500" id="myCarousel{{$index + 1}}">
-                                                                                            <slide ng-repeat="image in complaint.images">
-                                                                                                <img ng-src="{{image.orgUrl}}" style="margin:auto;">
-                                                                                            </slide>
-                                                                                        </carousel>
+																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
+																						<!-- Carousel items -->
+																							<div class="carousel-inner">
+																									<span ng-switch on="complaint.images">
+																										<span ng-switch-when="">
+																										<div class="active item">
+																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+																										</div>
+																										</span>
+																										<span ng-switch-default>
+																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
+																												<c:choose>
+																													<c:when test="${counter.count == '1'}">
+																													<div class="active item">
+																														<img src="${onePhoto.orgUrl}" />
+																													</div>
+																													</c:when>
+
+																													<c:otherwise>
+																													<div class="item">
+																														<img src="${onePhoto.orgUrl}" />
+																													</div>
+																													</c:otherwise>																										
+																												</c:choose>
+																											</c:forEach>
+																										</span>
+																									</span>
+																							 </div>
+																							<!-- Carousel nav -->
+																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+																							<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																						</div>
                                                                                     </div>
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
@@ -149,7 +198,7 @@
                                                                         <!-- Comments Box -->
 
                                                                         <div id="load_comments_box">
-                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand">Comments from Users ( 140 )</a>
+                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( 140 )</a>
 
                                                                             <div id="comments_box" class="div_comments_box">
 

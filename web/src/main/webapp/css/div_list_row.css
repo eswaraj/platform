@@ -300,5 +300,7 @@ margin-top: -15px;
 }
 
 .footer_pos{
-position: relative;
+position: absolute;
+bottom: 0px; 
+width: 100%; 
 }
