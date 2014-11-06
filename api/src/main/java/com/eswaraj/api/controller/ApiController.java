@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.CategoryCache;
 import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.cache.LocationCache;
 import com.eswaraj.cache.PoliticalAdminCache;
@@ -54,6 +55,8 @@ public class ApiController extends BaseController {
     private ComplaintCache complaintCache;
     @Autowired
     private PoliticalAdminCache politicalAdminCache;
+    @Autowired
+    private CategoryCache categoryCache;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -81,7 +84,7 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationComplaintCountForLast30Days(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        String keyPrefix = appKeyService.getLocationKey(locationId);
+        String keyPrefix = appKeyService.getLocationCounterKey(locationId);
         List<String> redisKeyForLocation30DaysCounter = appKeyService.getHourComplaintKeysForLast30Days(keyPrefix, new Date());
         logger.info("getting data from Redis for keys {}", redisKeyForLocation30DaysCounter);
         List<String> data = stringRedisTemplate.opsForValue().multiGet(redisKeyForLocation30DaysCounter);
@@ -123,7 +126,7 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last365", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationComplaintCountForLast365Days(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        String redisKey = appKeyService.getLocationKey(locationId);
+        String redisKey = appKeyService.getLocationCounterKey(locationId);
         List<CategoryWithChildCategoryDto> allCategories = getAllCategories();
         JsonArray ts = new JsonArray();
         JsonArray categoryArray = new JsonArray();
@@ -184,9 +187,8 @@ public class ApiController extends BaseController {
         return returnJsonObject;
     }
 
-    List<CategoryWithChildCategoryDto> getAllCategories() {
-        String allCategoriesKey = appKeyService.getAllCategoriesKey();
-        String allCategories = stringRedisTemplate.opsForValue().get(allCategoriesKey);
+    List<CategoryWithChildCategoryDto> getAllCategories() throws ApplicationException {
+        String allCategories = categoryCache.getAllCategories();
         List<CategoryWithChildCategoryDto> list = gson.fromJson(allCategories, new TypeToken<List<CategoryWithChildCategoryDto>>() {
         }.getType());
         return list;

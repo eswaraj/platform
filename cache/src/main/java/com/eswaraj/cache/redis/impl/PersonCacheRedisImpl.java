@@ -11,25 +11,14 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.PersonCache;
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 @Component
-public class PersonCacheRedisImpl implements PersonCache {
+public class PersonCacheRedisImpl extends BaseCacheRedisImpl implements PersonCache {
 
     @Autowired
     @Qualifier("personStringRedisTemplate")
     private StringRedisTemplate personStringRedisTemplate;
-
-    @Autowired
-    private AppKeyService appKeyService;
-
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
-
-    private JsonParser jsonParser = new JsonParser();
 
     @Override
     public void refreshPerson(long personId) throws ApplicationException {

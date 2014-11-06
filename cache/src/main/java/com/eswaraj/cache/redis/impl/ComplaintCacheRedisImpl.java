@@ -7,22 +7,14 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonObject;
 
 @Component
-public class ComplaintCacheRedisImpl implements ComplaintCache {
+public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements ComplaintCache {
 
     @Autowired
     @Qualifier("complaintStringRedisTemplate")
     private StringRedisTemplate complaintStringRedisTemplate;
-
-    @Autowired
-    private AppKeyService appKeyService;
-
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
 
     @Override
     public void refreshComplaintInfo(long complaintId) throws ApplicationException {

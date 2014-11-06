@@ -66,7 +66,7 @@ public class StatsController {
     @RequestMapping(value = "/stat/location/{locationId}.html", method = RequestMethod.GET)
     public ModelAndView showStateLocations(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
-        String locationPrefix = appKeyService.getLocationKey(locationId);
+        String locationPrefix = appKeyService.getLocationCounterKey(locationId);
         addDataToModel(mv, locationPrefix);
         addCategoryAllTimeStats(mv, locationId);
         List<LocationDto> childLocations = locationService.getChildLocationsOfParent(locationId);

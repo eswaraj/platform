@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -13,21 +11,11 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 @Component
-public class PoliticalAdminCacheRedisImpl implements PoliticalAdminCache {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
-    @Autowired
-    private AppKeyService appKeyService;
-    private JsonParser jsonParser = new JsonParser();
+public class PoliticalAdminCacheRedisImpl extends BaseCacheRedisImpl implements PoliticalAdminCache {
 
     @Autowired
     @Qualifier("personStringRedisTemplate")

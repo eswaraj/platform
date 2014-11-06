@@ -11,26 +11,15 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.CommentCache;
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 @Component
-public class CommentCacheRedisImpl implements CommentCache {
+public class CommentCacheRedisImpl extends BaseCacheRedisImpl implements CommentCache {
 
     @Autowired
     @Qualifier("commentStringRedisTemplate")
     private StringRedisTemplate commentStringRedisTemplate;
-
-    @Autowired
-    private AppKeyService appKeyService;
-
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
-
-    private JsonParser jsonParser = new JsonParser();
 
     @Override
     public void refreshComplaintComment(long complaintId, long commentId) throws ApplicationException {

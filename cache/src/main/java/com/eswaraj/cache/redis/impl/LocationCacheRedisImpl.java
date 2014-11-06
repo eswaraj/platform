@@ -10,22 +10,14 @@ import org.springframework.util.StringUtils;
 
 import com.eswaraj.cache.LocationCache;
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
 import com.google.gson.JsonObject;
 
 @Component
-public class LocationCacheRedisImpl implements LocationCache {
+public class LocationCacheRedisImpl extends BaseCacheRedisImpl implements LocationCache {
 
     @Autowired
     @Qualifier("locationStringRedisTemplate")
     private StringRedisTemplate locationStringRedisTemplate;
-
-    @Autowired
-    private AppKeyService appKeyService;
-
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
 
     @Override
     public void refreshLocationInfo(long locationId) throws ApplicationException {
