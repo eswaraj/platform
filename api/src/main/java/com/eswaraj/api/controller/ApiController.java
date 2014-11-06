@@ -34,7 +34,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 @Controller
 public class ApiController extends BaseController {
@@ -47,7 +46,6 @@ public class ApiController extends BaseController {
     private AppKeyService appKeyService;
     @Autowired
     private RedisUtil redisUtil;
-    private JsonParser jsonParser = new JsonParser();
     private Gson gson = new Gson();
     @Autowired
     private ComplaintCache complaintCache;

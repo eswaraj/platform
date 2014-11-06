@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.LocationCache;
 import com.eswaraj.cache.LocationPointCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 
@@ -26,6 +27,8 @@ public class LocationController extends BaseController {
     private RedisUtil redisUtil;
     @Autowired
     private LocationPointCache locationPointCache;
+    @Autowired
+    private LocationCache locationCache;
 
     @RequestMapping(value = "/api/v0/getpointlocations", method = RequestMethod.GET)
     public @ResponseBody String getLocationAtPoint(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
