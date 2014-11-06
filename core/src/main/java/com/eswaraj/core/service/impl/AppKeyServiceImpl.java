@@ -264,7 +264,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public String getCategoryHourComplaintCounterKey(Date date, Long categoryId) {
-        return getCategoryKey(categoryId) + "." + hourFormat.format(date);
+        return getCategoryCounterKey(categoryId) + "." + hourFormat.format(date);
     }
 
     @Override
