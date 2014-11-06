@@ -79,7 +79,7 @@
                                                                                 <a href="#!" >
 																					<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
 																					<c:choose>
-																						<c:when test="${person_name eq 'anonymous'}">
+																						<c:when test="${fn:contains(person_name, 'anonymous')}">
 																						<c:out value="${person_name}"/>
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
 																						</c:when>
