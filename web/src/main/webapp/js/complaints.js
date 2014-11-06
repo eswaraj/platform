@@ -33,6 +33,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         });
     };
     $scope.showTab = function (event) {
+        event.preventDefault();
         var element = $(event.currentTarget);
         element.tab('show');
     };

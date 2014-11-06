@@ -142,8 +142,8 @@
 
                                                                             <div class="carousel_map_tab">
                                                                                 <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" >
-                                                                                    <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event)">Complaint Pictures</a></li>
-                                                                                    <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event)">Show on Map</a></li>
+                                                                                    <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Complaint Pictures</a></li>
+                                                                                    <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Show on Map</a></li>
                                                                                 </ul>
 
                                                                                 <div class="tab-content">
