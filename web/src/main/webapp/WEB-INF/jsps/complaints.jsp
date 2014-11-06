@@ -74,9 +74,9 @@
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
-                                                                        <div class="col-sm-1 profile_pic_adjust" ng-init="personName='{{complaint.createdByPersons[0].name}}'">
-                                                                            <div class="profile-pic" ng-switch on="personName">
-																				<div ng-switch-when="anonymous">	
+                                                                        <div class="col-sm-1 profile_pic_adjust" ng-init="firstname_template='{{complaint.createdByPersons[0].name}}'">
+                                                                            <div class="profile-pic" ng-switch on="firstname_template">
+																				<div ng-switch-when="anonymous">
 																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
 																				</div>
 																				<div ng-switch-default>
@@ -121,25 +121,23 @@
 																				<a href="#!" class="innerdiv-issue-scope">{{complaint.categories  | subCategory}}</a>
                                                                             </p>
 
-                                                                            <p class="desc elipsis">
-																					<c:choose>
-																						<c:when test="${complaint.description == ''}">
-																						Lorem Ipsum is simply dummy text of the printing and typesetting 
-																						industry. Lorem Ipsum has been the industry's standard dummy text 
-																						ever since the 1500s, when an unknown printer took a galley of type 
-																						and scrambled it to make a type specimen book. It has survived not 
-																						only five centuries, but also the leap into electronic typesetting, 
-																						remaining essentially unchanged. It was popularised in the 1960s with 
-																						the release of Letraset sheets containing Lorem Ipsum passages, and
-																						more recently with desktop publishing software like Aldus PageMaker 
-																						including versions of Lorem Ipsum.																				
-																						</c:when>
-
-																						<c:otherwise>
-																							{{complaint.description}}
-																						</c:otherwise>
-																						
-																					</c:choose>
+                                                                            <p class="desc elipsis" ng-init="description_template='{{complaint.description}}'">
+																				<span ng-switch on="description_template">
+																					<span ng-switch-when="">
+																					Lorem Ipsum is simply dummy text of the printing and typesetting 
+																					industry. Lorem Ipsum has been the industry's standard dummy text 
+																					ever since the 1500s, when an unknown printer took a galley of type 
+																					and scrambled it to make a type specimen book. It has survived not 
+																					only five centuries, but also the leap into electronic typesetting, 
+																					remaining essentially unchanged. It was popularised in the 1960s with 
+																					the release of Letraset sheets containing Lorem Ipsum passages, and
+																					more recently with desktop publishing software like Aldus PageMaker 
+																					including versions of Lorem Ipsum.																				
+																					</span>
+																					<span ng-switch-default>
+																						{{complaint.description}}
+																					</span>
+																				</span>
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
@@ -154,15 +152,14 @@
 																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
-																									<c:set var="first_complaint_image" value="{{complaint.images[0]}}"/>
-																									<c:choose>
-																										<c:when test="${empty first_complaint_image}">
+																								<span ng-init="complaint_image_template='{{complaint.images[0]}}'">
+																									<span ng-switch on="complaint_image_template">
+																										<span ng-switch-when="">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
-																										</c:when>
-
-																										<c:otherwise>
+																										</span>
+																										<span ng-switch-default>
 																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
@@ -178,8 +175,9 @@
 																													</c:otherwise>																										
 																												</c:choose>
 																											</c:forEach>
-																										</c:otherwise>																										
-																									</c:choose>
+																										</span>
+																									</span>
+																								</span>
 																							 </div>
 																							<!-- Carousel nav -->
 																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
