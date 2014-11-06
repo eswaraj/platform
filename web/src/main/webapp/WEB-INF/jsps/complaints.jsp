@@ -77,7 +77,7 @@
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" >
-																					<c:set var="person_name" value="{{complaint.createdByPersons[0].name}}"/>
+																					<c:set var="person_name" value="${fn:trim({{complaint.createdByPersons[0].name}})}"/>
 																					<c:choose>
 																						<c:when test="${fn:contains(person_name, 'anonymous')}">
 																						<c:out value="${person_name}"/>
