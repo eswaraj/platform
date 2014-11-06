@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.CategoryCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
+@Component
 public class CategoryCacheRedisImpl extends BaseCacheRedisImpl implements CategoryCache {
 
     @Autowired
