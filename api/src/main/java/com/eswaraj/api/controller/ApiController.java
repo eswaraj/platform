@@ -3,10 +3,8 @@ package com.eswaraj.api.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -200,10 +198,7 @@ public class ApiController extends BaseController {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int count = getIntParameter(httpServletRequest, "count", 10);
 
-        String locationComplaintKey = appKeyService.getLocationComplaintsKey(locationId);
-        logger.info("locationComplaintKey : {}, start:{}, count{}", locationComplaintKey);
-        
-        return getComplaintsOfKey(locationComplaintKey, start, count);
+        return complaintCache.getComplaintsOfLocation(locationId, start, count);
     }
 
     @RequestMapping(value = "/api/v0/complaint/location/{locationId}/{categoryId}", method = RequestMethod.GET)
@@ -213,95 +208,8 @@ public class ApiController extends BaseController {
         int start = getIntParameter(httpServletRequest, "start", 0);
         int count = getIntParameter(httpServletRequest, "count", 10);
 
-        String locationComplaintCategoryKey = appKeyService.getLocationCategoryComplaintsKey(locationId, categoryId);
-        logger.info("locationComplaintKey : {}", locationComplaintCategoryKey);
-        return getComplaintsOfKey(locationComplaintCategoryKey, start, count);
+        return complaintCache.getComplaintsOfLocationCategory(locationId, categoryId, start, count);
 
-    }
-
-    private String convertList(List<String> complaints) {
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jsonObject;
-        JsonArray jsonArray = new JsonArray();
-        for (String oneComplaint : complaints) {
-            jsonObject = (JsonObject) jsonParser.parse(oneComplaint);
-            jsonArray.add(jsonObject);
-        }
-        return jsonArray.toString();
-    }
-
-    private String getComplaintsOfKey(String key, int start, int count) throws ApplicationException {
-        Set<String> complaintIds = stringRedisTemplate.opsForZSet().reverseRange(key, start, start + count);
-        logger.info("complaintIds : {}", complaintIds);
-        List<String> complaintKeys = new ArrayList<>();
-        List<String> complaintList = new ArrayList<>(complaintIds.size());
-        for (String oneComplaintId : complaintIds) {
-            complaintKeys.add(appKeyService.getComplaintObjectKey(oneComplaintId));
-            complaintList.add(complaintCache.getComplaintById(oneComplaintId));
-        }
-        //List<String> complaintList = stringRedisTemplate.opsForValue().multiGet(complaintKeys);
-
-
-        // Add Executive Admin Info
-        JsonObject oneComplaintJsonObject;
-        JsonParser jsonParser = new JsonParser();
-        JsonArray complaintJsonArray = new JsonArray();
-        for (String oneComplaint : complaintList) {
-            oneComplaintJsonObject = (JsonObject) jsonParser.parse(oneComplaint);
-            addExecutiveBodyAdminInformation(oneComplaintJsonObject);
-            addPoliticalBodyAdminInformation(oneComplaintJsonObject);
-
-            complaintJsonArray.add(oneComplaintJsonObject);
-        }
-        return convertList(complaintList);
-    }
-
-    private void addPoliticalBodyAdminInformation(JsonObject oneComplaintJsonObject) throws ApplicationException {
-        if (oneComplaintJsonObject == null) {
-            return;
-        }
-        if (oneComplaintJsonObject.get("pba") != null && !oneComplaintJsonObject.get("pba").isJsonNull()) {
-            JsonArray jsonArray = oneComplaintJsonObject.get("pba").getAsJsonArray();
-            // remove eba
-            oneComplaintJsonObject.remove("pba");
-            JsonObject ebaOneJsonObject;
-            Set<String> politicalBodyAdminIds = new LinkedHashSet<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                ebaOneJsonObject = (JsonObject) jsonArray.get(i);
-                politicalBodyAdminIds.add(ebaOneJsonObject.get("id").getAsString());
-            }
-            JsonArray pbaJsonInforArray = politicalAdminCache.getPoliticalBodyAdminByIds(politicalBodyAdminIds);
-            oneComplaintJsonObject.add("politicalAdmins", pbaJsonInforArray);
-
-        }
-    }
-
-    private void addExecutiveBodyAdminInformation(JsonObject oneComplaintJsonObject) {
-        if (oneComplaintJsonObject == null) {
-            return;
-        }
-        if (oneComplaintJsonObject.get("eba") != null && !oneComplaintJsonObject.get("eba").isJsonNull()) {
-            logger.info("eba is null = " + oneComplaintJsonObject.get("eba").isJsonNull());
-            JsonArray jsonArray = oneComplaintJsonObject.get("eba").getAsJsonArray();
-            // remove eba
-            oneComplaintJsonObject.remove("eba");
-            JsonObject ebaOneJsonObject;
-            String redisKey;
-            String hashKey;
-            JsonArray ebaJsonInforArray = new JsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                ebaOneJsonObject = (JsonObject) jsonArray.get(i);
-                redisKey = appKeyService.getExecutiveBodyAdminObjectKey(ebaOneJsonObject.get("id").getAsString());
-                hashKey = appKeyService.getEnityInformationHashKey();
-                String ebaInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
-                if (ebaInfo != null) {
-                    JsonObject oneEbaJsonObject = (JsonObject) jsonParser.parse(ebaInfo);
-                    ebaJsonInforArray.add(oneEbaJsonObject);
-                }
-            }
-            oneComplaintJsonObject.add("executiveAdmins", ebaJsonInforArray);
-
-        }
     }
 
 }

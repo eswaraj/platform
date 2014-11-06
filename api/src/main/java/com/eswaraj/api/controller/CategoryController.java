@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.CategoryCache;
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -28,12 +29,14 @@ public class CategoryController extends BaseController {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private AppKeyService appKeyService;
+    @Autowired
+    private CategoryCache categoryCache;
 
     private JsonParser jsonParser = new JsonParser();
 
     @RequestMapping(value = "/api/v0/categories", method = RequestMethod.GET)
     public @ResponseBody String getAllCategories(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
-        String allCategories = stringRedisTemplate.opsForValue().get(appKeyService.getAllCategoriesKey());
+        String allCategories = categoryCache.getAllCategories();
         JsonArray categoryJsonArray = new JsonArray();
         if (allCategories != null) {
             categoryJsonArray = (JsonArray) jsonParser.parse(allCategories);
