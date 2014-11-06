@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -253,7 +254,7 @@ public class ApiController extends BaseController {
         return convertList(complaintList);
     }
 
-    private void addPoliticalBodyAdminInformation(JsonObject oneComplaintJsonObject) {
+    private void addPoliticalBodyAdminInformation(JsonObject oneComplaintJsonObject) throws ApplicationException {
         if (oneComplaintJsonObject == null) {
             return;
         }
@@ -262,19 +263,12 @@ public class ApiController extends BaseController {
             // remove eba
             oneComplaintJsonObject.remove("pba");
             JsonObject ebaOneJsonObject;
-            String redisKey;
-            String hashKey;
-            JsonArray pbaJsonInforArray = new JsonArray();
+            Set<String> politicalBodyAdminIds = new LinkedHashSet<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 ebaOneJsonObject = (JsonObject) jsonArray.get(i);
-                redisKey = appKeyService.getPoliticalBodyAdminObjectKey(ebaOneJsonObject.get("id").getAsString());
-                hashKey = appKeyService.getEnityInformationHashKey();
-                String ebaInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
-                if (ebaInfo != null) {
-                    JsonObject oneEbaJsonObject = (JsonObject) jsonParser.parse(ebaInfo);
-                    pbaJsonInforArray.add(oneEbaJsonObject);
-                }
+                politicalBodyAdminIds.add(ebaOneJsonObject.get("id").getAsString());
             }
+            JsonArray pbaJsonInforArray = politicalAdminCache.getPoliticalBodyAdminByIds(politicalBodyAdminIds);
             oneComplaintJsonObject.add("politicalAdmins", pbaJsonInforArray);
 
         }

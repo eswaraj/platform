@@ -80,6 +80,7 @@ public class PoliticalAdminCacheRedisImpl implements PoliticalAdminCache {
         for (String onePoliticalAdmin : pbaList) {
             if(onePoliticalAdmin == null){
                 logger.warn("One Political Admin Not found for ID : {}", politicalBodyAdminKey.get(count));
+                continue;
             }
             politicalBodyAdminsArray.add(jsonParser.parse(onePoliticalAdmin));
             count++;
