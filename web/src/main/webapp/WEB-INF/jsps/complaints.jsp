@@ -64,7 +64,7 @@
                                                     <div class="listing">
                                                         <!-- new_div starts -->
                                                         <div class="mla_unread_complaints_controller">
-                                                            <span class="unread_complaints"><b>Unread Complaints (2)</b></span>
+                                                            <span class="unread_complaints"><b>Unread Complaints (<span ng-repeat="item in complaints | filter:{isVisible:'true'} = (items | filter:filterExpr)"></span><span>{{complaints.length}}</span>)</b></span>
                                                             <span class="glyphicon glyphicon-circle-arrow-up glyph_unread_complaints glyph_comments_right_float"></span>
                                                             <span class="comments_display_per_page"><b>Showing <span ng-repeat="item in complaints | filter:{isVisible:'true'} = (items | filter:filterExpr)"></span><span>{{complaints.length}}</span> of <span>{{complaints.length}}</span> Complaints</b></span>
                                                         </div>	
