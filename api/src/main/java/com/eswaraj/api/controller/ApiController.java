@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.cache.CategoryCache;
 import com.eswaraj.cache.ComplaintCache;
+import com.eswaraj.cache.CounterCache;
 import com.eswaraj.cache.LocationCache;
 import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -53,6 +54,8 @@ public class ApiController extends BaseController {
     private PoliticalAdminCache politicalAdminCache;
     @Autowired
     private CategoryCache categoryCache;
+    @Autowired
+    private CounterCache counterCache;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -80,28 +83,7 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationComplaintCountForLast30Days(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        String keyPrefix = appKeyService.getLocationCounterKey(locationId);
-        List<String> redisKeyForLocation30DaysCounter = appKeyService.getHourComplaintKeysForLast30Days(keyPrefix, new Date());
-        logger.info("getting data from Redis for keys {}", redisKeyForLocation30DaysCounter);
-        List<String> data = stringRedisTemplate.opsForValue().multiGet(redisKeyForLocation30DaysCounter);
-        Long totalComplaints = 0L;
-        int count = 0;
-        JsonArray jsonArray = new JsonArray();
-        JsonObject jsonObject;
-        for (String oneString : data) {
-            jsonObject = new JsonObject();
-            if (oneString != null) {
-                jsonObject.addProperty(redisKeyForLocation30DaysCounter.get(count).replace(keyPrefix, ""), oneString);
-                totalComplaints = totalComplaints + Long.parseLong(oneString);
-            } else {
-                jsonObject.addProperty(redisKeyForLocation30DaysCounter.get(count).replace(keyPrefix, ""), "0");
-            }
-            jsonArray.add(jsonObject);
-            count++;
-        }
-        JsonObject returnObject = new JsonObject();
-        returnObject.addProperty("totalComplaints", totalComplaints);
-        returnObject.add("dayWise", jsonArray);
+        JsonObject returnObject = counterCache.getLast30DayLocationCounters(locationId, new Date());
         return returnObject.toString();
     }
 
