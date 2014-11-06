@@ -40,7 +40,7 @@ public class CategoryHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = appKeyService.getCategoryKey(oneCategory);
+            String redisKey = appKeyService.getCategoryCounterKey(oneCategory);
             String hashKey = appKeyService.getHourKey(creationDate);
 
 

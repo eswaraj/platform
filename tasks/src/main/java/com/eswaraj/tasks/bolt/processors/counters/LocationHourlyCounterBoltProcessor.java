@@ -40,7 +40,7 @@ public class LocationHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = appKeyService.getLocationKey(oneLocation);
+            String redisKey = appKeyService.getLocationCounterKey(oneLocation);
             String hashKey = appKeyService.getHourKey(creationDate);
 
             writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);

@@ -29,6 +29,8 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     private final String CATEGORY_PREFIX = "CG.";
 
+    private final String COUNT = "CNT";
+
     private final String POLITICAL_ADMIN_URL_KEY = "PBA_URLS";
     private final String POLITICAL_ADMIN_HASH_KEY = "PBA_LIST";
     private final String POLITICAL_ADMIN_PREFIX = "PBA.";
@@ -90,7 +92,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public String getGlobalComplaintCounterKey() {
-        return GLOBAL_PREFIX + "Count";
+        return GLOBAL_PREFIX + COUNT;
     }
 
     @Override
@@ -271,6 +273,11 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     }
 
     @Override
+    public String getCategoryCounterKey(Long categoryId) {
+        return CATEGORY_PREFIX + categoryId + "." + COUNT;
+    }
+
+    @Override
     public String getLocationHourComplaintCounterKey(Date date, Long locationId) {
         return getLocationKey(locationId) + "." + hourFormat.format(date);
     }
@@ -288,6 +295,11 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     @Override
     public String getLocationKey(String locationId) {
         return LOCATION_PREFIX + locationId;
+    }
+
+    @Override
+    public String getLocationCounterKey(Long locationId) {
+        return LOCATION_PREFIX + locationId + "." + COUNT;
     }
 
     @Override

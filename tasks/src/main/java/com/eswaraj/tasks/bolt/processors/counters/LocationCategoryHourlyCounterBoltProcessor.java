@@ -47,12 +47,12 @@ public class LocationCategoryHourlyCounterBoltProcessor extends AbstractBoltProc
 
                 Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-                String redisKey = appKeyService.getLocationKey(oneLocation);
+                String redisKey = appKeyService.getLocationCounterKey(oneLocation);
                 String hashKey = appKeyService.getCategoryHourComplaintCounterKey(creationDate, oneCategory);
 
                 writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 
-                String keyPrefixForNextBolt = appKeyService.getCategoryKey(oneCategory);
+                String keyPrefixForNextBolt = appKeyService.getCategoryCounterKey(oneCategory);
                 writeToStream(inputTuple, new Values(redisKey, keyPrefixForNextBolt, complaintCreatedMessage));
             }
         }

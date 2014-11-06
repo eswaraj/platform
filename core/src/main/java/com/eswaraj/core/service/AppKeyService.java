@@ -47,11 +47,15 @@ public interface AppKeyService {
 
     String getCategoryKey(Long categoryId);
 
+    String getCategoryCounterKey(Long categoryId);
+
     String getLocationHourComplaintCounterKey(Date date, Long locationId);
 
     String getLocationKey(Long locationId);
 
     String getLocationKey(String locationId);
+
+    String getLocationCounterKey(Long locationId);
 
     String getLocationPoliticalAdminKey(String locationId);
 
