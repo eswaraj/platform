@@ -74,8 +74,8 @@
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
-                                                                        <div class="col-sm-1 profile_pic_adjust" ng-init="firstname_template='{{complaint.createdByPersons[0].name}}'">
-                                                                            <div class="profile-pic" ng-switch on="firstname_template">
+                                                                        <div class="col-sm-1 profile_pic_adjust">
+                                                                            <div class="profile-pic" ng-switch on="complaint.createdByPersons[0].name">
 																				<div ng-switch-when="anonymous">
 																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;" /></a>
 																				</div>
@@ -121,8 +121,8 @@
 																				<a href="#!" class="innerdiv-issue-scope">{{complaint.categories  | subCategory}}</a>
                                                                             </p>
 
-                                                                            <p class="desc elipsis" ng-init="description_template='{{complaint.description}}'">
-																				<span ng-switch on="description_template">
+                                                                            <p class="desc elipsis">
+																				<span ng-switch on="complaint.description">
 																					<span ng-switch-when="null">
 																					Lorem Ipsum is simply dummy text of the printing and typesetting 
 																					industry. Lorem Ipsum has been the industry's standard dummy text 
@@ -152,8 +152,7 @@
 																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
-																								<span ng-init="complaint_image_template='{{complaint.images[0]}}'">
-																									<span ng-switch on="complaint_image_template">
+																									<span ng-switch on="complaint.images[0]">
 																										<span ng-switch-when="null">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
@@ -177,7 +176,6 @@
 																											</c:forEach>
 																										</span>
 																									</span>
-																								</span>
 																							 </div>
 																							<!-- Carousel nav -->
 																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
