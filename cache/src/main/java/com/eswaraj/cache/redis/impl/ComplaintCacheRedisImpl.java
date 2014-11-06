@@ -87,7 +87,7 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
 
             complaintJsonArray.add(oneComplaintJsonObject);
         }
-        return convertList(complaintList);
+        return complaintJsonArray.toString();// convertList(complaintList);
     }
 
     private String convertList(List<String> complaints) {
