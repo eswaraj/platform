@@ -80,11 +80,11 @@
 																					<c:set var="string1" value="{{complaint.createdByPersons[0].name}}"/>
 																					<c:set var="person_name" value="${fn:trim(string1)}" />
 																						<c:out value="${person_name}"/>
-																						<c:if test="${person_name == 'anonymous'}">
+																						<c:if test="${fn:containsIgnoreCase(person_name, 'anon')}">
 																						<p>Found test string<p>
 																						</c:if>
 																					<c:choose>
-																						<c:when test="${fn:contains(person_name, 'anonymous')}">
+																						<c:when test="${person_name == 'anonymous'}">
 																						<c:out value="${person_name}"/>
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
 																						</c:when>
@@ -168,7 +168,7 @@
 																							<div class="carousel-inner">
 																									<c:set var="first_complaint_image" value="{{complaint.images[0]}}"/>
 																									<c:choose>
-																										<c:when test="${first_complaint_image eq ''}">
+																										<c:when test="${empty first_complaint_image}">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
