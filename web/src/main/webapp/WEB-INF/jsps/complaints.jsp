@@ -66,7 +66,7 @@
                                                         <div class="mla_unread_complaints_controller">
                                                             <span class="unread_complaints"><b>Unread Complaints (2)</b></span>
                                                             <span class="glyphicon glyphicon-circle-arrow-up glyph_unread_complaints glyph_comments_right_float"></span>
-                                                            <span class="comments_display_per_page"><b>Showing <span ng-repeat="item in allComplaints | filter:{isVisible:'true'} = (items | filter:filterExpr)"></span><span>{{allComplaints.length}}</span> of <span ng-repeat='item in allComplaints = (items | filter:filterExpr)'></span><span>{{allComplaints.length}}</span> Complaints</b></span>
+                                                            <span class="comments_display_per_page"><b>Showing 2<!--span ng-repeat="item in allComplaints | filter:{isVisible:'true'} = (items | filter:filterExpr)"></span><span>{{allComplaints.length}}</span--> of <span ng-repeat='item in allComplaints = (items | filter:filterExpr)'></span><span>{{allComplaints.length}}</span> Complaints</b></span>
                                                         </div>	
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
