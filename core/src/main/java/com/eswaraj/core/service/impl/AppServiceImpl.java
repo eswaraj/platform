@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import com.eswaraj.core.convertors.PoliticalBodyAdminStaffConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
@@ -60,6 +63,7 @@ import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.ExecutivePostDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
@@ -122,6 +126,8 @@ public class AppServiceImpl extends BaseService implements AppService {
     private DeviceRepository deviceRepository;
     @Autowired
     private DeviceConvertor deviceConvertor;
+    @Autowired
+    private LocationService locationService;
 	
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) throws ApplicationException {
@@ -551,6 +557,21 @@ public class AppServiceImpl extends BaseService implements AppService {
     public List<DeviceDto> getDevicesForComplaint(Long complaintId) throws ApplicationException {
         List<Device> devices = deviceRepository.getDevicesForComplaint(complaintId);
         return deviceConvertor.convertBeanList(devices);
+    }
+
+    @Override
+    public Set<String> getAllCurrentPoliticalAdminIdsOfLocation(Long locationId) throws ApplicationException {
+        Set<String> pbAdminIds = new HashSet<>();
+        List<LocationDto> allParentLocations = locationService.getAllParents(locationId);
+        if (allParentLocations != null) {
+            for (LocationDto oneLocationDto : allParentLocations) {
+                List<PoliticalBodyAdminDto> allCurrentPoliticalAdmins = getAllCurrentPoliticalBodyAdminByLocationId(oneLocationDto.getId());
+                for (PoliticalBodyAdminDto onePoliticalBodyAdminDto : allCurrentPoliticalAdmins) {
+                    pbAdminIds.add(onePoliticalBodyAdminDto.getId().toString());
+                }
+            }
+        }
+        return pbAdminIds;
     }
 
 }

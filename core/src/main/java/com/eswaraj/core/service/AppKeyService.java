@@ -17,6 +17,8 @@ public interface AppKeyService {
 
     String getPoliticalBodyAdminObjectKey(String politicalBodyAdminId);
 
+    String getPoliticalBodyAdminUrlKey(String politicalBodyAdminUrlIdentifier);
+
     String getExecutiveBodyAdminObjectKey(String executiveBodyAdminId);
 
     String buildLocationKey(double lattitude, double longitude) throws ApplicationException;
@@ -30,6 +32,8 @@ public interface AppKeyService {
     String getNearByKeyPrefix(double lattitude, double longitude) throws ApplicationException;
 
     String getEnityInformationHashKey();
+
+    String getLocationUrlKey(String url);
 
     String getLocationComplaintsKey(Long locationId);
 
@@ -46,6 +50,10 @@ public interface AppKeyService {
     String getLocationHourComplaintCounterKey(Date date, Long locationId);
 
     String getLocationKey(Long locationId);
+
+    String getLocationKey(String locationId);
+
+    String getLocationPoliticalAdminKey(String locationId);
 
     String getLocationCategoryHourComplaintCounterKey(Date date, Long locationId, Long categoryId);
 

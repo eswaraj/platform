@@ -53,7 +53,7 @@ public class PersonCacheRedisImpl implements PersonCache {
             keys.add(appKeyService.getPersonKey(onePersonId));
         }
         List<String> persons = personStringRedisTemplate.opsForValue().multiGet(keys);
-        return null;
+        return persons;
     }
 
 }

@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.cache.ComplaintCache;
+import com.eswaraj.cache.LocationCache;
+import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -41,6 +42,8 @@ public class ApiController extends BaseController {
     @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
+    private LocationCache locationCache;
+    @Autowired
     private AppKeyService appKeyService;
     @Autowired
     private RedisUtil redisUtil;
@@ -48,17 +51,15 @@ public class ApiController extends BaseController {
     private Gson gson = new Gson();
     @Autowired
     private ComplaintCache complaintCache;
+    @Autowired
+    private PoliticalAdminCache politicalAdminCache;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/api/v0/location/{locationId}/info", method = RequestMethod.GET)
     @ResponseBody
-    public String getLocationCategoryCount(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        List<Long> locationIds = new ArrayList<>(1);
-        locationIds.add(locationId);
-        String redisKey = appKeyService.getLocationKey(locationId);
-        String infoHashKey = appKeyService.getEnityInformationHashKey();
-        String locationInfo = (String) stringRedisTemplate.opsForHash().get(redisKey, infoHashKey);
+    public String getLocationCount(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        String locationInfo = locationCache.getLocationInfoById(locationId);
         return locationInfo;
     }
 
@@ -72,22 +73,8 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/api/v0/location/{locationId}/leaders", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationLeaders(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
-        String redisKey = appKeyService.getLocationKey(locationId);
-        String hashKey = appKeyService.getPoliticalBodyAdminHashKey();
-        String pbAdminCommaSepratedList = (String) stringRedisTemplate.opsForHash().get(redisKey, hashKey);
-        if (StringUtils.isEmpty(pbAdminCommaSepratedList)) {
-            return "[]";
-        }
-        String[] pbAdmiIds = pbAdminCommaSepratedList.split(",");
-        String infoHashKey = appKeyService.getEnityInformationHashKey();
-        JsonObject jsonObject;
-        JsonArray jsonArray = new JsonArray();
-        for (String oneString : pbAdmiIds) {
-            String pbAdminRedisKey = appKeyService.getPoliticalAdminKey(Long.parseLong(oneString));
-            String oneAdmin = (String) stringRedisTemplate.opsForHash().get(pbAdminRedisKey, infoHashKey);
-            jsonObject = (JsonObject) jsonParser.parse(oneAdmin);
-            jsonArray.add(jsonObject);
-        }
+        Set<String> pbAdminIds = locationCache.getLocationPoliticalAdmins(locationId);
+        JsonArray jsonArray = politicalAdminCache.getPoliticalBodyAdminByIds(pbAdminIds);
         return jsonArray.toString();
     }
     @RequestMapping(value = "/api/v0/location/{locationId}/complaintcounts/last30", method = RequestMethod.GET)

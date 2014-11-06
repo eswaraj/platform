@@ -1,6 +1,7 @@
 package com.eswaraj.core.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.CategoryDto;
@@ -109,4 +110,5 @@ public interface AppService {
 
     List<DeviceDto> getDevicesForComplaint(Long complaintId) throws ApplicationException;
 
+    Set<String> getAllCurrentPoliticalAdminIdsOfLocation(Long lcoationId) throws ApplicationException;
 }

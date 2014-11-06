@@ -41,7 +41,10 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     private final String GLOBAL_PREFIX = "Global.";
     private final String LOCATION_PREFIX = "LC.";
-    private final String POLITICAL_BODY_ADMIN_PREFIX = "PBA.";
+    private final String URL = "U";
+    private final String URL_PREFIX = URL + ".";
+    private final String POLITICAL_BODY_ADMIN = "PBA";
+    private final String POLITICAL_BODY_ADMIN_PREFIX = POLITICAL_BODY_ADMIN + ".";
 
     protected DateFormat hourFormat = new SimpleDateFormat("yyyyMMddkk");
     protected DateFormat dayFormat = new SimpleDateFormat("yyyyMMdd");
@@ -73,6 +76,11 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     @Override
     public String getPoliticalBodyAdminObjectKey(String politicalBodyAdminId) {
         return POLITICAL_ADMIN_PREFIX + politicalBodyAdminId;
+    }
+
+    @Override
+    public String getPoliticalBodyAdminUrlKey(String politicalBodyAdminUrlIdentifier) {
+        return POLITICAL_ADMIN_PREFIX + URL_PREFIX + politicalBodyAdminUrlIdentifier;
     }
 
     @Override
@@ -269,7 +277,22 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     @Override
     public String getLocationKey(Long locationId) {
+        return getLocationKey(locationId.toString());
+    }
+
+    @Override
+    public String getLocationPoliticalAdminKey(String locationId) {
+        return getLocationKey(locationId) + "." + POLITICAL_BODY_ADMIN;
+    }
+
+    @Override
+    public String getLocationKey(String locationId) {
         return LOCATION_PREFIX + locationId;
+    }
+
+    @Override
+    public String getLocationUrlKey(String url) {
+        return URL_PREFIX + url;
     }
 
     @Override

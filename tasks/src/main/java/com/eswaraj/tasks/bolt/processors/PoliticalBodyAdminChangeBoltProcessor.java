@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
@@ -36,6 +37,8 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
     private AppService appService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private PoliticalAdminCache politicalAdminCache;
 
 
 
@@ -48,20 +51,8 @@ public class PoliticalBodyAdminChangeBoltProcessor extends AbstractBoltProcessor
             Long locationId = jsonObject.get("locationId").getAsLong();
             Long politicalBodyAdminId = jsonObject.get("politicalBodyAdminId").getAsLong();
             
+            politicalAdminCache.refreshPoliticalBodyAdmin(politicalBodyAdminId);
             
-            JsonObject politicalBodyJsonObject = stormCacheAppServices.getPoliticalBodyAdmin(politicalBodyAdminId);
-            String redisKey = appKeyService.getPoliticalBodyAdminObjectKey(String.valueOf(politicalBodyAdminId));
-            String hashKey = appKeyService.getEnityInformationHashKey();
-            String redisValue = politicalBodyJsonObject.toString();
-            writeToMemoryStoreHash(redisKey, hashKey, redisValue);
-            
-            // Save Location Id with Political Admin Body
-            String allPoliticalAdminUrlRedisKey = appKeyService.getPoliticalBodyAdminUrlsKey();
-            String url = politicalBodyJsonObject.get("urlIdentifier").getAsString();
-            writeToMemoryStoreHash(allPoliticalAdminUrlRedisKey, url, politicalBodyAdminId);
-
-            // Save Location Id with Political Admin Body
-
             JsonObject locationJsonObject = new JsonObject();
             locationJsonObject.addProperty("locationId", locationId);
             writeToStream(inputTuple, new Values(locationJsonObject.toString()));

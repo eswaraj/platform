@@ -2,12 +2,10 @@ package com.eswaraj.tasks.bolt.processors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import backtype.storm.tuple.Tuple;
 
-import com.eswaraj.core.service.AppKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.cache.LocationCache;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,9 +14,8 @@ import com.google.gson.JsonParser;
 public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
-    private AppKeyService appKeyService;
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
+    private LocationCache locationCache;
+
     private JsonParser jsonParser = new JsonParser();
 
 	@Override
@@ -28,16 +25,7 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
             JsonObject jsonObject = (JsonObject)jsonParser.parse(message);
             Long locationId = jsonObject.get("locationId").getAsLong();
 
-            JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
-            String urlId = outputJsonObject.get("url").getAsString();
-            String redisKey = appKeyService.getLocationKey(locationId);
-            String hashKey = appKeyService.getEnityInformationHashKey();
-
-            String locationInfo = outputJsonObject.toString();
-            writeToMemoryStoreHash(redisKey, hashKey, locationInfo);
-            if (!StringUtils.isEmpty(urlId)) {
-                writeToMemoryStoreValue(urlId, locationId);
-            }
+            locationCache.refreshLocationInfo(locationId);
 
             return Result.Success;
 		}catch(Exception ex){
