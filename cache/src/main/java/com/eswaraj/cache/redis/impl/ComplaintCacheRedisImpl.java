@@ -78,6 +78,9 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
         JsonParser jsonParser = new JsonParser();
         JsonArray complaintJsonArray = new JsonArray();
         for (String oneComplaint : complaintList) {
+            if (oneComplaint == null) {
+                continue;
+            }
             oneComplaintJsonObject = (JsonObject) jsonParser.parse(oneComplaint);
             addExecutiveBodyAdminInformation(oneComplaintJsonObject);
             addPoliticalBodyAdminInformation(oneComplaintJsonObject);
