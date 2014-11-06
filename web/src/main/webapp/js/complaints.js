@@ -312,12 +312,13 @@ complaintsApp.directive('googleMap', function ($timeout) {
     };
 });
 
-$(document).ready(function(){
-	$( ".innerdiv-list-row" ).each( function () {
-		$(this).find("#comments_status").click(function(){
-		var x = $( this ).offset().left;
-		var y = $( this ).offset().top;
-		window.scrollTo(x,y-15);
-		});
-	});
+complaintsApp.directive('scrollOnClick', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, $elm) {
+      $elm.on('click', function() {
+        $("body").animate({scrollTop: $elm.offset().top}, "slow");
+      });
+    }
+  }
 });

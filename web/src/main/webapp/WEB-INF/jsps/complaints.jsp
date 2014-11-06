@@ -198,7 +198,7 @@
                                                                         <!-- Comments Box -->
 
                                                                         <div id="load_comments_box">
-                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand">Comments from Users ( 140 )</a>
+                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( 140 )</a>
 
                                                                             <div id="comments_box" class="div_comments_box">
 
