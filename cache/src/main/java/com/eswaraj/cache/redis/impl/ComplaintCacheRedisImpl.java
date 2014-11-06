@@ -31,22 +31,19 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
     public void refreshComplaintInfo(long complaintId) throws ApplicationException {
         JsonObject jsonObject = stormCacheAppServices.getCompleteComplaintInfo(complaintId);
         String redisKeyForComplaint = appKeyService.getComplaintObjectKey(complaintId);
-        String hashKeyForInfo = appKeyService.getEnityInformationHashKey();
-        complaintStringRedisTemplate.opsForHash().put(redisKeyForComplaint, hashKeyForInfo, jsonObject.toString());
+        complaintStringRedisTemplate.opsForValue().set(redisKeyForComplaint, jsonObject.toString());
     }
 
     @Override
     public String getComplaintById(long complaintId) throws ApplicationException {
         String redisKeyForComplaint = appKeyService.getComplaintObjectKey(complaintId);
-        String hashKeyForInfo = appKeyService.getEnityInformationHashKey();
-        return (String) complaintStringRedisTemplate.opsForHash().get(redisKeyForComplaint, hashKeyForInfo);
+        return complaintStringRedisTemplate.opsForValue().get(redisKeyForComplaint);
     }
 
     @Override
     public String getComplaintById(String complaintId) throws ApplicationException {
         String redisKeyForComplaint = appKeyService.getComplaintObjectKey(complaintId);
-        String hashKeyForInfo = appKeyService.getEnityInformationHashKey();
-        return (String) complaintStringRedisTemplate.opsForHash().get(redisKeyForComplaint, hashKeyForInfo);
+        return complaintStringRedisTemplate.opsForValue().get(redisKeyForComplaint);
     }
 
     @Override
@@ -71,6 +68,7 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
         for (String oneComplaintId : complaintIds) {
             complaintKeys.add(appKeyService.getComplaintObjectKey(oneComplaintId));
         }
+        logger.info("complaintKeys : {}", complaintKeys);
         List<String> complaintList = complaintStringRedisTemplate.opsForValue().multiGet(complaintKeys);
 
         // Add Executive Admin Info
