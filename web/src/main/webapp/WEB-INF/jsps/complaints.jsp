@@ -77,10 +77,10 @@
                                                                         <div class="col-sm-1 profile_pic_adjust" ng-init="firstname_template='{{complaint.createdByPersons[0].name}}'">
                                                                             <div class="profile-pic" ng-switch on="firstname_template">
 																				<div ng-switch-when="anonymous">
-																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
+																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;" /></a>
 																				</div>
 																				<div ng-switch-default>
-																					<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt=""></a>
+																					<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt="" /></a>
 																				</div>
 																			</div>
                                                                         </div>
@@ -123,7 +123,7 @@
 
                                                                             <p class="desc elipsis" ng-init="description_template='{{complaint.description}}'">
 																				<span ng-switch on="description_template">
-																					<span ng-switch-when="">
+																					<span ng-switch-when="null">
 																					Lorem Ipsum is simply dummy text of the printing and typesetting 
 																					industry. Lorem Ipsum has been the industry's standard dummy text 
 																					ever since the 1500s, when an unknown printer took a galley of type 
@@ -154,7 +154,7 @@
 																							<div class="carousel-inner">
 																								<span ng-init="complaint_image_template='{{complaint.images[0]}}'">
 																									<span ng-switch on="complaint_image_template">
-																										<span ng-switch-when="">
+																										<span ng-switch-when="null">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
