@@ -152,7 +152,7 @@
 																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
-																									<span ng-switch on="complaint.images[0]">
+																									<span ng-switch on="complaint.images">
 																										<span ng-switch-when="">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
