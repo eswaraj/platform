@@ -77,14 +77,9 @@
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic">
                                                                                 <a href="#!" >
-																					<c:set var="string1" value="{{complaint.createdByPersons[0].name}}"/>
-																					<c:set var="person_name" value="${fn:trim(string1)}" />
-																						<c:out value="${person_name}"/>
-																						<c:if test="${fn:containsIgnoreCase(person_name, 'anon')}">
-																						<p>Found test string<p>
-																						</c:if>
+																					<c:set var="profile_photo" value="{{complaint.createdByPersons[0].profilePhoto}}"/>
 																					<c:choose>
-																						<c:when test="${person_name == 'anonymous'}">
+																						<c:when test="${empty profile_photo}">
 																						<c:out value="${person_name}"/>
 																							<img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
 																						</c:when>
