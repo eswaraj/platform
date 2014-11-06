@@ -383,28 +383,11 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         if (!StringUtils.isEmpty(comment.getExternalId())) {
             jsonObject.addProperty("externalId", comment.getExternalId());
         }
-
-        Person person = personRepository.findOne(comment.getCreatedBy().getId());
-        JsonObject personJsonPbject = new JsonObject();
-        personJsonPbject.addProperty("name", person.getName());
-        personJsonPbject.addProperty("id", person.getId());
-        personJsonPbject.addProperty("externalId", person.getExternalId());
-        personJsonPbject.addProperty("profilePhoto", person.getProfilePhoto());
-
-        jsonObject.add("postedBy", personJsonPbject);
+        jsonObject.addProperty("commentedById", comment.getCreatedBy().getId());
 
         if (comment.getPoliticalBodyAdmin() != null) {
+            jsonObject.addProperty("politicalAdminId", comment.getPoliticalBodyAdmin().getId());
             jsonObject.addProperty("adminComment", true);
-            PoliticalBodyAdmin politicalBodyAdmin = politicalBodyAdminRepository.findOne(comment.getPoliticalBodyAdmin().getId());
-            Person pbaPerson = personRepository.findOne(politicalBodyAdmin.getPerson().getId());
-            JsonObject pbaJsonObject = new JsonObject();
-            pbaJsonObject.addProperty("name", pbaPerson.getName());
-            pbaJsonObject.addProperty("id", politicalBodyAdmin.getId());
-            pbaJsonObject.addProperty("externalId", politicalBodyAdmin.getExternalId());
-            pbaJsonObject.addProperty("type", "political");
-            pbaJsonObject.addProperty("profilePhoto", pbaPerson.getProfilePhoto());
-            jsonObject.add("admin", pbaJsonObject);
-
         } else {
             jsonObject.addProperty("adminComment", false);
         }

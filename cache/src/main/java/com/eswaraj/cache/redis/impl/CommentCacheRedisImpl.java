@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.CommentCache;
+import com.eswaraj.cache.PersonCache;
+import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -20,6 +22,12 @@ public class CommentCacheRedisImpl extends BaseCacheRedisImpl implements Comment
     @Autowired
     @Qualifier("commentStringRedisTemplate")
     private StringRedisTemplate commentStringRedisTemplate;
+
+    @Autowired
+    private PersonCache personCache;
+
+    @Autowired
+    private PoliticalAdminCache politicalAdminCache;
 
     @Override
     public void refreshComplaintComment(long complaintId, long commentId) throws ApplicationException {
@@ -67,7 +75,7 @@ public class CommentCacheRedisImpl extends BaseCacheRedisImpl implements Comment
         return commentArray.toString();
     }
 
-    private JsonArray getCommentByIds(Set<String> commentIds) {
+    private JsonArray getCommentByIds(Set<String> commentIds) throws ApplicationException {
         JsonArray commentArray = new JsonArray();
         if (commentIds == null || commentIds.isEmpty()) {
             return commentArray;
@@ -80,7 +88,58 @@ public class CommentCacheRedisImpl extends BaseCacheRedisImpl implements Comment
         for (String oneComment : comments) {
             commentArray.add(jsonParser.parse(oneComment));
         }
+        addPersonDetail(commentArray);
         return commentArray;
+    }
+
+    private void addPersonDetail(JsonArray commentArray) throws ApplicationException {
+        JsonObject jsonObject;
+        List<Long> personIds = new ArrayList<>(commentArray.size());
+        for (int i = 0; i < commentArray.size(); i++) {
+            jsonObject = commentArray.get(i).getAsJsonObject();
+            Long personId = jsonObject.get("commentedById").getAsLong();
+            personIds.add(personId);
+        }
+        
+        List<String> persons = personCache.getPersonsByIds(personIds);
+        int count = 0;
+        for (String onePerson : persons) {
+            jsonObject = commentArray.get(count).getAsJsonObject();
+            jsonObject.remove("commentedById");
+            if (onePerson != null) {
+                jsonObject.add("postedBy", jsonParser.parse(onePerson));
+            }
+            count++;
+        }
+
+    }
+
+    private void addPoliticalAdminDetail(JsonArray commentArray) throws ApplicationException {
+        JsonObject jsonObject;
+        List<String> politicalAdminIds = new ArrayList<>(commentArray.size());
+        for (int i = 0; i < commentArray.size(); i++) {
+            jsonObject = commentArray.get(i).getAsJsonObject();
+            String politicalAdminId;
+            if (jsonObject.get("politicalAdminId") == null) {
+                politicalAdminId = "0";
+            } else {
+                politicalAdminId = jsonObject.get("politicalAdminId").getAsString();
+            }
+            politicalAdminIds.add(politicalAdminId);
+        }
+
+        JsonArray admins = politicalAdminCache.getPoliticalBodyAdminByIds(politicalAdminIds);
+        JsonObject oneAdmin;
+        for (int count = 0; count < admins.size(); count++) {
+            jsonObject = commentArray.get(count).getAsJsonObject();
+            jsonObject.remove("politicalAdminId");
+            oneAdmin = admins.get(count).getAsJsonObject();
+            if (oneAdmin != null) {
+                jsonObject.add("admin", oneAdmin);
+            }
+            count++;
+        }
+
     }
 
     @Override
