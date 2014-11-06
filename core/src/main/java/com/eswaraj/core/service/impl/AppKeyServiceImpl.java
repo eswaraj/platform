@@ -328,6 +328,11 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     }
 
     @Override
+    public String getPoliticalAdminCounterKey(Long politicalAdminId) {
+        return POLITICAL_BODY_ADMIN_PREFIX + politicalAdminId + "." + COUNT;
+    }
+
+    @Override
     public String buildLocationKey(double lattitude, double longitude) throws ApplicationException {
         String key = "L" + decimalFormat.format(lattitude) + "-" + decimalFormat.format(longitude);
         return key;

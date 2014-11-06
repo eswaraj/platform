@@ -67,6 +67,8 @@ public interface AppKeyService {
 
     String getPoliticalAdminKey(Long politicalAdminId);
 
+    String getPoliticalAdminCounterKey(Long politicalAdminId);
+
     String getDayComplaintCounterKey(String prefix, Date date);
 
     String getLast24HourComplaintCounterKey(String prefix, Date date);

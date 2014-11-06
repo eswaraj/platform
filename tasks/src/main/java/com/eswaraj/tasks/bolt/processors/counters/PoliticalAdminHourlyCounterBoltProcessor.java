@@ -40,7 +40,7 @@ public class PoliticalAdminHourlyCounterBoltProcessor extends AbstractBoltProces
 
             Long totalComplaint = executeCountQueryAndReturnLong(cypherQuery, params, "totalComplaint");
 
-            String redisKey = appKeyService.getPoliticalAdminKey(onePoliticalAdmin);
+            String redisKey = appKeyService.getPoliticalAdminCounterKey(onePoliticalAdmin);
             String hashKey = appKeyService.getHourKey(creationDate);
             writeToMemoryStoreHash(redisKey, hashKey, totalComplaint);
 

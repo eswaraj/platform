@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,6 +22,7 @@ import com.google.gson.JsonParser;
 @Component
 public class PoliticalAdminCacheRedisImpl implements PoliticalAdminCache {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
     @Autowired
@@ -68,13 +71,18 @@ public class PoliticalAdminCacheRedisImpl implements PoliticalAdminCache {
         if (politicalBodyAdminId == null || politicalBodyAdminId.isEmpty()) {
             return politicalBodyAdminsArray;
         }
-        List<String> commentKeys = new ArrayList<>(politicalBodyAdminId.size());
+        List<String> politicalBodyAdminKey = new ArrayList<>(politicalBodyAdminId.size());
         for (String onePoliticalAdminId : politicalBodyAdminId) {
-            commentKeys.add(appKeyService.getPoliticalBodyAdminObjectKey(onePoliticalAdminId));
+            politicalBodyAdminKey.add(appKeyService.getPoliticalBodyAdminObjectKey(onePoliticalAdminId));
         }
-        List<String> comments = personStringRedisTemplate.opsForValue().multiGet(commentKeys);
-        for (String oneComment : comments) {
-            politicalBodyAdminsArray.add(jsonParser.parse(oneComment));
+        List<String> pbaList = personStringRedisTemplate.opsForValue().multiGet(politicalBodyAdminKey);
+        int count = 0;
+        for (String onePoliticalAdmin : pbaList) {
+            if(onePoliticalAdmin == null){
+                logger.warn("One Political Admin Not found for ID : {}", politicalBodyAdminKey.get(count));
+            }
+            politicalBodyAdminsArray.add(jsonParser.parse(onePoliticalAdmin));
+            count++;
         }
         return politicalBodyAdminsArray;
     }
