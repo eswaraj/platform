@@ -79,7 +79,9 @@
                                                                                 <a href="#!" >
 																					<c:set var="string1" value="{{complaint.createdByPersons[0].name}}"/>
 																					<c:set var="person_name" value="${fn:trim(string1)}" />
-																					<c:out value="${person_name}"/>
+																						<c:if test="${fn:contains(person_name, 'anonymous')}">
+																						<p>Found test string<p>
+																						</c:if>
 																					<c:choose>
 																						<c:when test="${fn:contains(person_name, 'anonymous')}">
 																						<c:out value="${person_name}"/>
