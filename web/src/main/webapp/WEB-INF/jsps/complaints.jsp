@@ -74,8 +74,8 @@
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
-                                                                        <div class="col-sm-1 profile_pic_adjust">
-                                                                            <div class="profile-pic" ng-switch on="{{complaint.createdByPersons[0].name}}">
+                                                                        <div class="col-sm-1 profile_pic_adjust" ng-init="personName='{{complaint.createdByPersons[0].name}}'">
+                                                                            <div class="profile-pic" ng-switch on="personName">
 																				<div ng-switch-when="anonymous">	
 																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;"></a>
 																				</div>
