@@ -403,6 +403,10 @@ margin-left: 35%;
 display: inline-block;
 }
 
+.carousel_map_tab{
+margin-bottom: 5px;
+}
+
 .carousel-linked-nav, .item img , .carousel-inner, .item{
     padding: 0;
     margin: 0;
