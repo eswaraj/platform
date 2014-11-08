@@ -141,7 +141,7 @@
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
-                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" >
+                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" class="c_m_tab_content" >
                                                                                     <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Complaint Pictures</a></li>
                                                                                     <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Show on Map</a></li>
                                                                                 </ul>
@@ -149,7 +149,7 @@
                                                                                 <div class="tab-content">
 
                                                                                     <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
-																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
+																						<div id="myCarousel{{$index + 1}}" class="myCarousel_tabcontent carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
 																									<span ng-switch on="complaint.images">
@@ -184,7 +184,7 @@
                                                                                     </div>
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
-                                                                                        <div>
+                                                                                        <div class="googleMap_tabcontent">
                                                                                             <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}"></google-map>
                                                                                         </div>
                                                                                     </div>
