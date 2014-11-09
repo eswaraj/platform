@@ -87,7 +87,7 @@ background-color: #F2F2F2;
     font-family: "Arimo",helvetica;
 	margin-right: 5px;
 	padding-right: 20px;
-	color: #555;
+	color: #428bca;
 }
 
 .issue-scope-type{
@@ -99,8 +99,7 @@ background-color: #F2F2F2;
 	padding-right: 0px;
 	margin-bottom: 0px;
 	margin-top: 0px;
-	font-weight: bold;
-	color: #555;
+	color: #428bca;
 }
 
 .issue_type_pic{
