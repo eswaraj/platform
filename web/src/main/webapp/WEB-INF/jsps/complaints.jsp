@@ -169,24 +169,9 @@
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
-																											   <c:out value="${items}"/><p>
-																											   <c:out value="${onePhoto}"/><p>
-																											   <c:out value="${onePhoto[0].orgUrl}"/><p>
-																												<c:choose>
-																													<c:when test="${counter.count == '1'}">
-																													<div class="active item">
-																														<img src="${onePhoto[0].orgUrl}" />
-																													</div>
-																													</c:when>
-
-																													<c:otherwise>
-																													<div class="item">
-																														<img src="${onePhoto[0].orgUrl}" />
-																													</div>
-																													</c:otherwise>																										
-																												</c:choose>
-																											</c:forEach>
+																											<div class="item" ng-class="{active : $first}" ng-repeat="img in complaint.images">
+																												<img ng-src="{{img.orgUrl}}" />
+																											</div>
 																										</span>
 																									</span>
 																							 </div>
