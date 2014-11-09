@@ -117,6 +117,12 @@
                                                                 </div>
 
                                                                 <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
+																	<p class="innerdiv-sharebtn">
+																	<!-- social media share buttons -->								
+																	<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																	<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+																	</p>
                                                                     <div class="innerdiv-innerblock">
                                                                         <div class="innerdiv-issue-info" >
 
@@ -128,15 +134,7 @@
                                                                             <p class="desc elipsis">
 																				<span ng-switch on="complaint.description">
 																					<span ng-switch-when="">
-																					Lorem Ipsum is simply dummy text of the printing and typesetting 
-																					industry. Lorem Ipsum has been the industry's standard dummy text 
-																					ever since the 1500s, when an unknown printer took a galley of type 
-																					and scrambled it to make a type specimen book. It has survived not 
-																					only five centuries, but also the leap into electronic typesetting, 
-																					remaining essentially unchanged. It was popularised in the 1960s with 
-																					the release of Letraset sheets containing Lorem Ipsum passages, and
-																					more recently with desktop publishing software like Aldus PageMaker 
-																					including versions of Lorem Ipsum.																				
+																						Issue Reported has not shared any Description for this issue
 																					</span>
 																					<span ng-switch-default>
 																						{{complaint.description}}
@@ -163,7 +161,10 @@
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
+																											{{complaint.images}}
+																											<br />
+																											${complaint.images}
+																											<c:forEach items="complaint.images" var="onePhoto"  varStatus="counter">
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
 																													<div class="active item">

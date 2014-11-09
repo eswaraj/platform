@@ -726,3 +726,12 @@ padding-bottom: 0px;
 .row{
 margin-bottom: 25px;
 }
+
+.innerdiv-sharebtn {
+font-size: 15px;
+line-height: 200%;
+float: right;
+margin-right: 5px;
+margin-bottom: 0px;
+margin-top: -15px;
+}
