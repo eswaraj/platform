@@ -75,6 +75,7 @@
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
                                                             <div ng-repeat="complaint in complaints">
+																{{ complaint }}
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
@@ -162,14 +163,14 @@
 																						<div id="myCarousel{{$index + 1}}" class="myCarousel_tabcontent carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
-																									<span ng-switch on="complaint.photos">
+																									<span ng-switch on="complaint.images">
 																										<span ng-switch-when="">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
 																													<div class="active item">
