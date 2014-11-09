@@ -85,10 +85,12 @@
 
                                                 <p>
                                                     <a href="#" class="issue-scope">${complaint.categories[1].name}</a>
-                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
                                                 </p>
 
                                                 <p class="whenwhere">
+                                                    <span>
+                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
+                                                    </span>
                                                     <span>
                                                         <i class="glyphicon glyphicon-map-marker"></i>
                                                         <a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>

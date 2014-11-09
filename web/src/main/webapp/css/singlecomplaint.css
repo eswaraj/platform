@@ -22,14 +22,15 @@
     line-height: 200%;
 }
 .issue-scope{
-	text-decoration: none;
-	font-size: 25px;
+	text-decoration: none !important;
+	font-size: 25px !important;
 }
 
 .issue-scope-type{
-	text-decoration: none;
-	font-size: 15px;
-	vertical-align: 0px;
+	text-decoration: none !important;
+	font-size: 15px !important;
+	vertical-align: 0px !important;
+	margin-right: 5px !important;
 }
 
 .issue_type_pic{
@@ -265,7 +266,7 @@ font-size: 14px;
 }
 
 .rightshift{
-margin-right: 20px;
+margin-right: 10px;
 }
 
 .leftshift{
@@ -784,10 +785,10 @@ border-bottom: 1px solid #F2F2F2;
 margin-bottom: 20px;}
 
 .issue_status_pic{
-height: 30px;
-max-height: 30px;
+height: 26px;
+max-height: 26px;
 width: 30px;
-margin-left: 8px;
+margin-left: -8px;
 }
 
 .collap_show_btn{
