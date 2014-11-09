@@ -83,22 +83,24 @@ background-color: #F2F2F2;
 }
 .issue-scope{
 	text-decoration: none;
-	font-size: 25px;
-    font-family: New Century Schoolbook, serif;
+	font-size: 20px;
+    font-family: "Arimo",helvetica;
 	margin-right: 5px;
 	padding-right: 20px;
+	color: #555;
 }
 
 .issue-scope-type{
 	text-decoration: none;
 	font-size: 15px;
-	font-family: New Century Schoolbook, serif;
+	font-family: "Arimo",helvetica;
 	vertical-align: -5px; 
 	margin-right: 2px;
 	padding-right: 0px;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	font-weight: bold;
+	color: #555;
 }
 
 .issue_type_pic{

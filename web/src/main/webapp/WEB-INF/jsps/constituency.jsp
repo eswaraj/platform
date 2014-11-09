@@ -218,7 +218,7 @@ pageEncoding="UTF-8"%>
 									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 									<c:if test="${oneCategory.root}">
-									Type-${oneCategory.name}
+									Type - ${oneCategory.name}
 									</c:if>
 									</c:forEach>
 								</span>
