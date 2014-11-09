@@ -169,20 +169,20 @@
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.images[0]}" var="onePhoto"  varStatus="counter">
+																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
 																											   <c:out value="${items}"/><p>
 																											   <c:out value="${onePhoto}"/><p>
-																											   <c:out value="${onePhoto.orgUrl}"/><p>
+																											   <c:out value="${onePhoto[0].orgUrl}"/><p>
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
 																													<div class="active item">
-																														<img src="${onePhoto.orgUrl}" />
+																														<img src="${onePhoto[0].orgUrl}" />
 																													</div>
 																													</c:when>
 
 																													<c:otherwise>
 																													<div class="item">
-																														<img src="${onePhoto.orgUrl}" />
+																														<img src="${onePhoto[0].orgUrl}" />
 																													</div>
 																													</c:otherwise>																										
 																												</c:choose>
