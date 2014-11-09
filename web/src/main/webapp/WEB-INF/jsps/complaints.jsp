@@ -162,8 +162,6 @@
 																										</span>
 																										<span ng-switch-default>
 																											{{complaint.images}}
-																											<br />
-																											${complaint.images}
 																											<c:forEach items="complaint.images" var="onePhoto"  varStatus="counter">
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
