@@ -14,6 +14,9 @@ pageEncoding="UTF-8"%>
 		<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 		<link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
 
+		<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+        <script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
+
 	</head>
 	<body>
 		<div class="">
@@ -194,10 +197,10 @@ pageEncoding="UTF-8"%>
 							<div class="col-sm-1 profile-info profile_pic_adjust">
 								<div class="profile-pic">
 								<c:if test="${!empty oneComplaint.loggedBy[0].photo}">
-								    <a href="#" ><img src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
+								    <img src="${oneComplaint.loggedBy[0].photo}" alt="">
 								</c:if>
                                 <c:if test="${empty oneComplaint.loggedBy[0].photo}">
-                                    <a href="#" ><img src="${staticHost}/images/profile-pic.jpg" alt=""></a>
+                                    <img src="${staticHost}/images/profile-pic.jpg" alt="">
                                 </c:if>
 								</div>
 							</div>
@@ -206,40 +209,42 @@ pageEncoding="UTF-8"%>
 								<strong class="issue-id">Issue #${oneComplaint.id}</strong>
 								<span class="connector">raised by</span>
 								
-								<a href="#" class="username text-limit name_adjust">
+								<span class="username text-limit name_adjust">
 								<c:forEach items="${oneComplaint.loggedBy}" var="onePerson">
 								${onePerson.name}
 								</c:forEach>
-								</a>
-								<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="issue-scope-type text-limit type_adjust">
+								</span>
+								<span class="issue-scope-type text-limit type_adjust">
 									<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 									<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 									<c:if test="${oneCategory.root}">
 									Type-${oneCategory.name}
 									</c:if>
 									</c:forEach>
-								</a>
+								</span>
 								</p>
 
 								<p class="whenwhere">
 								<span>
 									<img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-									<a href="#" class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></a>
+									<span class="location">
+										<abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr>
+									</span>
 								</span>
 								<span class="connector">at</span>
 								<span>
 									<i class="glyphicon glyphicon-map-marker"></i>
-									<a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
+									<span class="location">Cessna Business Park main road,Keverappa Layout</span>
 								</span>
 								<span>
-									<a href="#"><img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>
+									<img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt="">
 								</span>
 								</p>
 							</div>
 							<div class="issue-info" >
 
 								<p>
-								<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="issue-scope">${oneComplaint.categoryTitle}</a>
+								<span class="issue-scope">${oneComplaint.categoryTitle}</span>
 							</p>
 
 								<c:if test="${!empty oneComplaint.description}">
@@ -250,7 +255,7 @@ pageEncoding="UTF-8"%>
 
 								<c:if test="${!empty oneComplaint.photos}">
 								<div class="issue-pic">
-									<a href="#" ><img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle"></a>
+									<img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle">
 								</div>
 								</c:if>
 
