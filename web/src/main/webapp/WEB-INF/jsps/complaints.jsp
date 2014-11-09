@@ -169,7 +169,7 @@
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
+																											<c:forEach items="complaint.images" var="onePhoto"  varStatus="counter">
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
 																													<div class="active item">
