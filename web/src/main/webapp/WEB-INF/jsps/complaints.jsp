@@ -75,7 +75,6 @@
                                                         <div class="mla_unread_complaints" >
                                                             <!-- 1 -->
                                                             <div ng-repeat="complaint in complaints">
-																{{ complaint }}
                                                                 <div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
                                                                     <div class="innerblock">
                                                                         <span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
@@ -171,6 +170,9 @@
 																										</span>
 																										<span ng-switch-default>
 																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
+																											   <c:out value="${items}"/><p>
+																											   <c:out value="${onePhoto}"/><p>
+																											   <c:out value="${onePhoto.orgUrl}"/><p>
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
 																													<div class="active item">
