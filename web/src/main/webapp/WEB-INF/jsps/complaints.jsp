@@ -162,17 +162,14 @@
 																						<div id="myCarousel{{$index + 1}}" class="myCarousel_tabcontent carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
-																									<span ng-switch on="complaint.images">
+																									<span ng-switch on="complaint.images[0]">
 																										<span ng-switch-when="">
 																										<div class="active item">
 																											<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
-																											   <c:out value="${items}"/><p>
-																											   <c:out value="${onePhoto}"/><p>
-																											   <c:out value="${onePhoto.orgUrl}"/><p>
+																											<c:forEach items="${complaint.images[0]}" var="onePhoto"  varStatus="counter">
 																												<c:choose>
 																													<c:when test="${counter.count == '1'}">
 																													<div class="active item">
