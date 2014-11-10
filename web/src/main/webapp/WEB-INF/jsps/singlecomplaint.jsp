@@ -117,9 +117,18 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-															<div class="item" ng-class="{active : $first}" ng-repeat="img in complaint.photos">
-																<img ng-src="{{img.orgUrl}}" />
-															</div>
+														<span ng-switch on="complaint.photos">
+															<span ng-switch-when="">
+																<div class="active item">
+																	<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+																</div>
+															</span>
+															<span ng-switch-default>
+																<div class="item" ng-class="{active : $first}" ng-repeat="img in complaint.photos">
+																	<img ng-src="{{img.orgUrl}}" />
+																</div>
+															</span>
+														</span>
                                                     </div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
