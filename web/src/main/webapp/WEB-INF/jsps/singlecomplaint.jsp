@@ -296,6 +296,25 @@
                                         </div>
                                     </div>
                                 </div>
+								<div>
+									<c:set var="object" value="${complaint}" />
+									<c:if test="${!empty object.class.declaredFields}">
+										<h2>Object Attributes <em>&dollar;{object.name}</em></h2>
+										<ul>
+											<c:forEach var="attr" items="${object.class.declaredFields}">
+												<c:catch><li><span>${attr.name}</span>${object[attr.name]}</li></c:catch>
+											</c:forEach>
+										</ul>
+									</c:if>
+									<c:if test="${!empty object.class.declaredMethods}">
+										<h2>Object Methods<em>&lt;% object.getName() %&gt;</em></h2>
+										<ul>
+											<c:forEach var="attr" items="${object.class.declaredMethods}">
+												<c:catch><li>${attr.name}</li></c:catch>
+											</c:forEach>
+										</ul>
+									</c:if>
+								</div>
                                 <div>.</div>
                                 <jsp:include page="footer.jsp" />
                             </body>
