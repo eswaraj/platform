@@ -88,6 +88,7 @@
                                                             <a href="#" class="issue-scope">${cat.name}</a>
                                                         </p> 
                                                     </c:if>
+                                                </c:forEach>
                                                 <p class="whenwhere">
                                                     <span>
                                                     <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[1].name}</a>
