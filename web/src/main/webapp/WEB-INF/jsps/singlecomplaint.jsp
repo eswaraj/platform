@@ -164,7 +164,7 @@
                                                                 <li>
                                                                     <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                     <div class="description_author">
-                                                                        <img src="${staticHost}/images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
+                                                                        <img src="${complaint.loggedBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
                                                                         <ul class="description_author_info">
                                                                             <li class="description_author_name">${complaint.loggedBy[0].name}</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
