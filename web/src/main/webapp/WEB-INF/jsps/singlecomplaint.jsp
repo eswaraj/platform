@@ -140,7 +140,14 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-														<c:choose>
+															<c:forEach var="complaint_data" items="${complaint}">
+																<c:out value="${complaint_data}" />
+																<c:out value="${complaint_data.photos}" />
+																<c:out value="${complaint_data.photos.orgUrl}" />
+																<br />
+															</c:forEach>
+															
+															<c:choose>
 															<c:when test="${complaint.photos == ''}">
 																<div class="active item">
 																	<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
