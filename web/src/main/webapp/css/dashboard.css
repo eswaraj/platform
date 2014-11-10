@@ -369,7 +369,7 @@ height: auto;
     height: auto !important;
     height: 100%;
     margin: 0 auto -60px;
-    max-width: 1366px;
+    max-width: auto;
 }
 .mla-placeholder {
     text-align: center;
