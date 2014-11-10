@@ -79,7 +79,7 @@
 
                                                 <div class="profile-pic profile-pic-padding">
                                                     <c:forEach items="${complaint.loggedBy}" var="oneUser">
-                                                        <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.profilePhoto}" alt=""></a>
+                                                        <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
                                                     </c:forEach>
                                                 </div>
 
@@ -164,7 +164,7 @@
                                                                 <li>
                                                                     <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                     <div class="description_author">
-                                                                        <img src="${complaint.loggedBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
+                                                                        <img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
                                                                         <ul class="description_author_info">
                                                                             <li class="description_author_name">${complaint.loggedBy[0].name}</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
@@ -189,7 +189,7 @@
                                                                 <p>${complaint.description}</p>
 
                                                                 <div class="cd-author">
-                                                                    <img src="${complaint.loggedBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
+                                                                    <img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
                                                                     <ul class="cd-author-info">
                                                                         <li>${complaint.loggedBy[0].name}</li>
                                                                         <li>Cessna Business Park</li>
@@ -212,7 +212,7 @@
                                                                     <div class="cd-author">
                                                                         <img src="${onePhoto.orgUrl}" class="reported_description_pic" alt="Author image">
                                                                         <ul class="cd-author-info">
-                                                                            <li>${complaint.loggedBy[0].profilePhoto}</li>
+                                                                            <li>${complaint.loggedBy[0].photo}</li>
                                                                             <li>Cessna Business Park</li>
                                                                         </ul>
                                                                     </div> <!-- cd-author -->
