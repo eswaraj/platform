@@ -166,12 +166,9 @@
 																
 															</c:choose>
 														</c:forEach>
-														<c:if test="${complaint.photos == ''}">
-															<p><c:out value="empty"/><p>
-														</c:if>
-														<c:if test="${complaint.photos.orgUrl == ''}">
-															<p><c:out value="empty"/><p>
-														</c:if>
+														<c:forEach items="${complaint.photos}" var="entry">
+														  ${entry.key},${entry.value}<br/>
+														</c:forEach>						
 													</div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
