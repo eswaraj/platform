@@ -86,7 +86,7 @@
                                                 <p>
                                                     <a href="#" class="issue-scope">${complaint.categories[0].name}</a>
                                                 </p>
-
+                                                ${complaint.categories}
                                                 <p class="whenwhere">
                                                     <span>
                                                     <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[1].name}</a>
