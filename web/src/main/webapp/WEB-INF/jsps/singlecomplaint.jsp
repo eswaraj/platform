@@ -297,7 +297,7 @@
                                     </div>
                                 </div>
 								<div>
-									<c:set var="object" value="${complaint}" />
+									<c:set var="object" value="${complaint.photos}" />
 									<c:if test="${!empty object.class.declaredFields}">
 										<h2>Object Attributes <em>&dollar;{object.name}</em></h2>
 										<ul>
