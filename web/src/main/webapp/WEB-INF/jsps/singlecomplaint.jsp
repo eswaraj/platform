@@ -83,7 +83,7 @@
                                         <div class="col-md-9 md9_pad">
                                             <div class="issue-info" >
                                                 <c:forEach var="cat" items="${complaint.categories}">
-                                                    <c:if test="${cat.root}">
+                                                    <c:if test="${not cat.root}">
                                                         <p>
                                                             <a href="#" class="issue-scope">${cat.name}</a>
                                                         </p> 
@@ -91,7 +91,15 @@
                                                 </c:forEach>
                                                 <p class="whenwhere">
                                                     <span>
-                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[1].name}</a>
+                                                    <a href="#" class="issue-scope-type">
+                                                    <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+                                                        <c:forEach var="cat" items="${complaint.categories}">
+                                                            <c:if test="${cat.root}">
+                                                                Type - ${cat.name}
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    
+                                                    </a>
                                                     </span>
                                                     <span>
                                                         <i class="glyphicon glyphicon-map-marker"></i>
