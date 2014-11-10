@@ -32,7 +32,7 @@
                                         $('#dasky').Dasky()
                                     });
                                     jQuery(document).ready(function() {
-                                        jQuery(".timeago").timeago();
+                                        jQuery("abbr.timeago").timeago();
                                     });
                                 </script>
 
@@ -64,7 +64,7 @@
                                                                 ${cat.name} Complaints 
                                                             </c:if>
                                                         </c:forEach>
-                                                    
+
                                                     </a>
                                                 </p>
 
@@ -101,15 +101,15 @@
                                                 </c:forEach>
                                                 <p class="whenwhere">
                                                     <span>
-                                                    <a href="#" class="issue-scope-type">
-                                                    <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-                                                        <c:forEach var="cat" items="${complaint.categories}">
-                                                            <c:if test="${cat.root}">
-                                                                Type - ${cat.name}
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    
-                                                    </a>
+                                                        <a href="#" class="issue-scope-type">
+                                                            <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+                                                            <c:forEach var="cat" items="${complaint.categories}">
+                                                                <c:if test="${cat.root}">
+                                                                    Type - ${cat.name}
+                                                                </c:if>
+                                                            </c:forEach>
+
+                                                        </a>
                                                     </span>
                                                     <span>
                                                         <i class="glyphicon glyphicon-map-marker"></i>
@@ -117,7 +117,9 @@
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location timeago" title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</a>
+                                                        <a href="#" class="location timeago">
+                                                            <abbr class="timeago"  title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</abbr>
+                                                        </a>
                                                     </span>
                                                 </p>
 
@@ -138,20 +140,20 @@
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
                                                         <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-															<c:choose>
-																<c:when test="${counter.count == '1'}">
-																<div class="active item">
-																	<img src="${onePhoto.orgUrl}" />
-																</div>
-																</c:when>
+                                                            <c:choose>
+                                                                <c:when test="${counter.count == '1'}">
+                                                                    <div class="active item">
+                                                                        <img src="${onePhoto.orgUrl}" />
+                                                                    </div>
+                                                                </c:when>
 
-																<c:otherwise>
-																<div class="item">
-																	<img src="${onePhoto.orgUrl}" />
-																</div>
-																</c:otherwise>
-																
-															</c:choose>
+                                                                <c:otherwise>
+                                                                    <div class="item">
+                                                                        <img src="${onePhoto.orgUrl}" />
+                                                                    </div>
+                                                                </c:otherwise>
+
+                                                            </c:choose>
                                                         </c:forEach>
                                                     </div>
                                                     <!-- Carousel nav -->
@@ -271,11 +273,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
-													<div class="collap_show_btn">
-                                                      <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
-                                                      <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
-													</div>
+
+                                                        <div class="collap_show_btn">
+                                                            <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
+                                                            <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
+                                                        </div>
 
                                                     </div>
                                                 </div>
