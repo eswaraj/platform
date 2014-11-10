@@ -55,7 +55,7 @@
                                             <div class="issue_reporters_box_pic">
 
                                                 <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor_pic">${complaint.categories[0].name} Complaints</a>
+                                                    <a href="#!" class="text_reporters_anchor_pic">${complaint.categories[1].name} Complaints</a>
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
