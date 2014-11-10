@@ -141,7 +141,6 @@
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
 															<c:forEach items="${complaint.photos}" var="complaint_data" >
-																<c:out value="${complaint_data.photos}" />
 																<c:out value="${complaint_data.orgUrl}" />
 																<br />
 															</c:forEach>
