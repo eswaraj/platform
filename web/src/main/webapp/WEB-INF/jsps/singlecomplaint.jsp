@@ -134,18 +134,22 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-														<span ng-switch on="complaint.photos">
-															<span ng-switch-when="">
+                                                        <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+															<c:choose>
+																<c:when test="${counter.count == '1'}">
 																<div class="active item">
-																	<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+																	<img src="${onePhoto.orgUrl}" />
 																</div>
-															</span>
-															<span ng-switch-default>
-																<div class="item" ng-class="{active : $first}" ng-repeat="img in complaint.photos">
-																	<img ng-src="{{img.orgUrl}}" />
+																</c:when>
+
+																<c:otherwise>
+																<div class="item">
+																	<img src="${onePhoto.orgUrl}" />
 																</div>
-															</span>
-														</span>
+																</c:otherwise>
+																
+															</c:choose>
+                                                        </c:forEach>
                                                     </div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
