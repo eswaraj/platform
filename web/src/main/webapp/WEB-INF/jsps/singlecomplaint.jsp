@@ -140,13 +140,14 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-														<span ng-switch on="complaint.photos">
-															<span ng-switch-when="">
+														<c:choose>
+															<c:when test="${complaint.photos == ''}">
 																<div class="active item">
 																	<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																</div>
-															</span>
-															<span ng-switch-default>
+															</c:when>
+
+															<c:otherwise>
 																<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
 																	<c:choose>
 																		
@@ -164,8 +165,8 @@
 
 																	</c:choose>
 																</c:forEach>
-															</span>
-														</span>
+															</c:otherwise>
+														</c:choose>
                                                     </div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
