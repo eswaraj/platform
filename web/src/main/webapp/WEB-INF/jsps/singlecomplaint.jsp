@@ -82,11 +82,12 @@
 
                                         <div class="col-md-9 md9_pad">
                                             <div class="issue-info" >
-
-                                                <p>
-                                                    <a href="#" class="issue-scope">${complaint.categories[0].name}</a>
-                                                </p>
-                                                ${complaint.categories}
+                                                <c:forEach var="cat" items="${complaint.categories}">
+                                                    <c:if test="${cat.root}">
+                                                        <p>
+                                                            <a href="#" class="issue-scope">${cat.name}</a>
+                                                        </p> 
+                                                    </c:if>
                                                 <p class="whenwhere">
                                                     <span>
                                                     <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[1].name}</a>
