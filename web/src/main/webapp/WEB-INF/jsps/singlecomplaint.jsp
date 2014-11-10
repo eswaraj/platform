@@ -147,7 +147,7 @@
 																		<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																	</div>
 																</c:when>
-
+																
 																<c:otherwise>
 																	<c:choose>
 																		<c:when test="${counter.count == '1'}">
@@ -166,9 +166,6 @@
 																
 															</c:choose>
 														</c:forEach>
-														<c:forEach items="${complaint.photos}" var="entry">
-														  ${entry.key},${entry.value}<br/>
-														</c:forEach>						
 													</div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
@@ -238,7 +235,11 @@
                                                                 </li>
                                                             </c:forEach>
                                                         </ul>
-                                                    </div>	<!-- cd-testimonials-pics-all-wrapper -->
+														<c:forEach items="${complaint.photos}" var="entry">
+														  ${entry.key},${entry.value}<br/>
+														</c:forEach>						
+
+													</div>	<!-- cd-testimonials-pics-all-wrapper -->
 
                                                     <a href="#0" class="close-btn">Close</a>
                                                 </div> <!-- cd-pics-all -->
