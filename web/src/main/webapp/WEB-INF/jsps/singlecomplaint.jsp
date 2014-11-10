@@ -31,6 +31,9 @@
                                     $(function () {
                                         $('#dasky').Dasky()
                                     });
+                                    jQuery(document).ready(function() {
+                                        jQuery(".timeago").timeago();
+                                    });
                                 </script>
 
                                 <!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
@@ -114,7 +117,7 @@
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">Latest Update : ${complaint.complaintTime}</a>
+                                                        <a href="#" class="location timeago">Latest Update : ${complaint.complaintTime}</a>
                                                     </span>
                                                 </p>
 
