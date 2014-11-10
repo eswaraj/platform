@@ -147,7 +147,7 @@
 																		<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
 																	</div>
 																</c:when>
-																
+
 																<c:otherwise>
 																	<c:choose>
 																		<c:when test="${counter.count == '1'}">
@@ -235,11 +235,7 @@
                                                                 </li>
                                                             </c:forEach>
                                                         </ul>
-														<c:forEach items="${complaint.photos}" var="entry">
-														  ${entry.key},${entry.value}<br/>
-														</c:forEach>						
-
-													</div>	<!-- cd-testimonials-pics-all-wrapper -->
+                                                    </div>	<!-- cd-testimonials-pics-all-wrapper -->
 
                                                     <a href="#0" class="close-btn">Close</a>
                                                 </div> <!-- cd-pics-all -->
