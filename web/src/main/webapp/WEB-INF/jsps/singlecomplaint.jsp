@@ -140,10 +140,9 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-															<c:forEach var="complaint_data" items="${complaint}">
-																<c:out value="${complaint_data}" />
+															<c:forEach items="${complaint.photos}" var="complaint_data" >
 																<c:out value="${complaint_data.photos}" />
-																<c:out value="${complaint_data.photos.orgUrl}" />
+																<c:out value="${complaint_data.orgUrl}" />
 																<br />
 															</c:forEach>
 															
