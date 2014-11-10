@@ -114,7 +114,7 @@
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">Latest Update : {{${complaint.complaintTime} | dateFormatter}}</a>
+                                                        <a href="#" class="location">Latest Update : ${complaint.complaintTime}</a>
                                                     </span>
                                                 </p>
 
@@ -189,7 +189,7 @@
                                                                 <p>${complaint.description}</p>
 
                                                                 <div class="cd-author">
-                                                                    <img src="${staticHost}/images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
+                                                                    <img src="${complaint.loggedBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
                                                                     <ul class="cd-author-info">
                                                                         <li>${complaint.loggedBy[0].name}</li>
                                                                         <li>Cessna Business Park</li>
@@ -212,7 +212,7 @@
                                                                     <div class="cd-author">
                                                                         <img src="${onePhoto.orgUrl}" class="reported_description_pic" alt="Author image">
                                                                         <ul class="cd-author-info">
-                                                                            <li>Ramesh Sharma</li>
+                                                                            <li>${complaint.loggedBy[0].profilePhoto}</li>
                                                                             <li>Cessna Business Park</li>
                                                                         </ul>
                                                                     </div> <!-- cd-author -->
