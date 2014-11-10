@@ -158,8 +158,7 @@
                                         <div class="col-sm-7">
                                             <div class="listing-wrapper">
                                                 <div class="secondary-wrapper">
-                                                    <!--h1 class="loc_head_text">${location.name}</h1--> <!-- Not working at present, to be updated from backend -->
-                                                    <h1 class="loc_head_text">Delhi</h1>									
+                                                    <h1 class="loc_head_text">${location.name}</h1> 
                                                     <div class="views_div">
 
                                                         <c:if test="${viewType eq 'list'}">
