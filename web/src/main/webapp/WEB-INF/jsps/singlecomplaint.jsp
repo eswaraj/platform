@@ -118,7 +118,8 @@
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
                                                         <a href="#" class="location">
-                                                            <abbr class="timeago" title="${complaint.complaintTime}">Latest Update : <fmt:formatDate type="both" value="${complaint.complaintTime}" /></abbr>
+                                                            <abbr class="timeago"  title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</abbr>
+															<!--fmt:formatDate type="both" value="${complaint.complaintTime}" /-->
                                                         </a>
                                                     </span>
                                                 </p>
