@@ -63,6 +63,7 @@ background-color: #F2F2F2;
 .issue-info  {
     margin-left: 75px;
     margin-right: 75px;
+	padding-top: 50px;
 }
 .issue-info .desc {
     margin-top: 8px;
