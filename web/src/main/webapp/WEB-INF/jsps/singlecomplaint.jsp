@@ -117,7 +117,7 @@
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location timeago">Latest Update : ${complaint.complaintTime}</a>
+                                                        <a href="#" class="location timeago" title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</a>
                                                     </span>
                                                 </p>
 
