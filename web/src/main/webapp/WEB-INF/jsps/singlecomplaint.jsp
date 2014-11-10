@@ -84,12 +84,12 @@
                                             <div class="issue-info" >
 
                                                 <p>
-                                                    <a href="#" class="issue-scope">${complaint.categories[1].name}</a>
+                                                    <a href="#" class="issue-scope">${complaint.categories[0].name}</a>
                                                 </p>
 
                                                 <p class="whenwhere">
                                                     <span>
-                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
+                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[1].name}</a>
                                                     </span>
                                                     <span>
                                                         <i class="glyphicon glyphicon-map-marker"></i>
@@ -117,22 +117,9 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-                                                        <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-															<c:choose>
-																<c:when test="${counter.count == '1'}">
-																<div class="active item">
-																	<img src="${onePhoto.orgUrl}" />
-																</div>
-																</c:when>
-
-																<c:otherwise>
-																<div class="item">
-																	<img src="${onePhoto.orgUrl}" />
-																</div>
-																</c:otherwise>
-																
-															</c:choose>
-                                                        </c:forEach>
+															<div class="item" ng-class="{active : $first}" ng-repeat="img in complaint.photos">
+																<img ng-src="{{img.orgUrl}}" />
+															</div>
                                                     </div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
