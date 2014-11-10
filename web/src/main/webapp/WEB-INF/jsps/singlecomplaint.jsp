@@ -140,22 +140,16 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-															<c:forEach items="${complaint.photos}" var="complaint_data" >
-																<c:out value="${complaint_data.orgUrl}" />
-																<br />
-															</c:forEach>
-															
+														<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
 															<c:choose>
-															<c:when test="${complaint.photos == ''}">
-																<div class="active item">
-																	<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
-																</div>
-															</c:when>
+																<c:when test="${onePhoto.orgUrl == ''}">
+																	<div class="active item">
+																		<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+																	</div>
+																</c:when>
 
-															<c:otherwise>
-																<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+																<c:otherwise>
 																	<c:choose>
-																		
 																		<c:when test="${counter.count == '1'}">
 																			<div class="active item">
 																				<img src="${onePhoto.orgUrl}" />
@@ -167,12 +161,12 @@
 																				<img src="${onePhoto.orgUrl}" />
 																			</div>
 																		</c:otherwise>
-
 																	</c:choose>
-																</c:forEach>
-															</c:otherwise>
-														</c:choose>
-                                                    </div>
+																</c:otherwise>
+																
+															</c:choose>
+														</c:forEach>
+													</div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                                                     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
