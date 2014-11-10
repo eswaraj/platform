@@ -55,7 +55,14 @@
                                             <div class="issue_reporters_box_pic">
 
                                                 <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor_pic">${complaint.categories[1].name} Complaints</a>
+                                                    <a href="#!" class="text_reporters_anchor_pic">
+                                                        <c:forEach var="cat" items="${complaint.categories}">
+                                                            <c:if test="${not cat.root}">
+                                                                ${cat.name} Complaints 
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    
+                                                    </a>
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
