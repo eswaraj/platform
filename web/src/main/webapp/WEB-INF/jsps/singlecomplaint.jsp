@@ -117,7 +117,7 @@
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location timeago">
+                                                        <a href="#" class="location">
                                                             <abbr class="timeago"  title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</abbr>
                                                         </a>
                                                     </span>
@@ -141,6 +141,12 @@
                                                     <div class="carousel-inner">
                                                         <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
                                                             <c:choose>
+                                                                <c:when test="${counter.count == '0'}">
+                                                                    <div class="active item">
+                                                                        <img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+                                                                    </div>
+                                                                </c:when>
+                                                                
                                                                 <c:when test="${counter.count == '1'}">
                                                                     <div class="active item">
                                                                         <img src="${onePhoto.orgUrl}" />
