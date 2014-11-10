@@ -210,12 +210,12 @@
                                                 <div class="cd-testimonials-pics-all">
                                                     <div class="cd-testimonials-pics-all-wrapper">
                                                         <ul>
-                                                            <c:forEach items="${complaint.photos}" var="onePhoto">
+                                                            <c:forEach items="${complaint.loggedBy}" var="oneUser">
                                                                 <li class="cd-testimonials-pics-item">
                                                                     <div class="cd-author">
-                                                                        <img src="${onePhoto.orgUrl}" class="reported_description_pic" alt="Author image">
+                                                                        <img src="${oneUser.photo}" class="reported_description_pic" alt="Author image">
                                                                         <ul class="cd-author-info">
-                                                                            <li>${complaint.loggedBy[0].photo}</li>
+                                                                            <li>${oneUser.name}</li>
                                                                             <li>Cessna Business Park</li>
                                                                         </ul>
                                                                     </div> <!-- cd-author -->
