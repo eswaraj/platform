@@ -265,8 +265,8 @@
                                                                         </c:if>
 
 																		<p>
-																			<span ng-repeat="comment in oneComplaint.comments">
-																				<a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt="" /></a>
+																			<span>
+																				<a href="#!" class="profile-pic-comments"><img src="{{${oneComplaint.comments.postedBy.profilePhoto}}" alt="" /></a>
 																			</span>
 																		</p>
                                                                     </div>
