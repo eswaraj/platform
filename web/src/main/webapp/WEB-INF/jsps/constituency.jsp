@@ -266,7 +266,7 @@
 
 																		<p>
 																			<span>
-																				<a href="#!" class="profile-pic-comments"><img src="{{${oneComplaint.comments.postedBy.profilePhoto}}" alt="" /></a>
+																				<a href="#!" class="profile-pic-comments"><img src="${oneComplaint.comments.postedBy.profilePhoto}" alt="" /></a>
 																			</span>
 																		</p>
                                                                     </div>
