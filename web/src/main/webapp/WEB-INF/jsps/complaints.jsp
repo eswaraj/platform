@@ -18,7 +18,6 @@
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
 
                                 <script>
-                                    var complaintId = ${complaint.id};
                                     var loggedIn = ${loggedIn};
                                     var totalComments = ${complaint.totalComments};
                                 </script>
