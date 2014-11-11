@@ -217,7 +217,7 @@
                                                                                 <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
                                                                                 <c:forEach items="${oneComplaint.categories}" var="oneCategory">
                                                                                     <c:if test="${oneCategory.root}">
-                                                                                        Type - ${oneCategory.name}
+                                                                                        <a href="#!" class="anchorlink" >Type - ${oneCategory.name}</a>
                                                                                     </c:if>
                                                                                 </c:forEach>
                                                                             </span>
@@ -226,14 +226,16 @@
                                                                         <p class="whenwhere">
                                                                             <span>
                                                                                 <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                                                <span class="location">
+                                                                                <a href="#!" class="anchorlink" >
+																				<span class="location">
                                                                                     <abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr>
                                                                                 </span>
+																				</a>
                                                                             </span>
                                                                             <span class="connector">at</span>
                                                                             <span>
                                                                                 <i class="glyphicon glyphicon-map-marker"></i>
-                                                                                <span class="location">Cessna Business Park main road,Keverappa Layout</span>
+                                                                                <a href="#!" class="anchorlink" ><span class="location">Cessna Business Park main road,Keverappa Layout</span></a>
                                                                             </span>
                                                                             <span>
                                                                                 <img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt="">
