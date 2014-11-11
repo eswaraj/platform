@@ -24,6 +24,10 @@
                                     <script>
                                         jQuery(document).ready(function() {
                                             jQuery("abbr.timeago").timeago();
+										$('.anchorlink').click(function(e){
+											e.preventDefault();
+											e.stopPropagation();
+										});
                                         });
                                     </script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
