@@ -81,10 +81,15 @@
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
-                                                    <c:forEach items="${complaint.loggedBy}" var="oneUser">
-                                                        <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
-                                                    </c:forEach>
-                                                </div>
+													<c:if test="${!empty complaint.loggedBy[0].photo}">
+														<c:forEach items="${complaint.loggedBy}" var="oneUser">
+															<a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
+														</c:forEach>
+													</c:if>
+													<c:if test="${empty complaint.loggedBy[0].photo}">
+															<a href="#!" ><img class="reporters_profile_pic" src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="border: 1px solid #ccc;" ></a>
+													</c:if>
+                                               </div>
 
                                             </div>
 
@@ -178,7 +183,12 @@
                                                                 <li>
                                                                     <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                     <div class="description_author">
+																	<c:if test="${!empty complaint.loggedBy[0].photo}">
                                                                         <img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty complaint.loggedBy[0].photo}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
                                                                         <ul class="description_author_info">
                                                                             <li class="description_author_name">${complaint.loggedBy[0].name}</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
@@ -207,7 +217,7 @@
 																		<img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
 																	</c:if>
 																	<c:if test="${empty complaint.loggedBy[0].photo}">
-																		<img src="${staticHost}/images/anonymous_profile_pic.png" class="reported_description_pic" alt="Author image" style="width: 35px;" />																	
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
 																	</c:if>
                                                                     <ul class="cd-author-info">
                                                                         <li>${complaint.loggedBy[0].name}</li>
