@@ -7,7 +7,7 @@
                     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
                         <!DOCTYPE html>
-                        <html lang="en">
+                        <html lang="en" ng-app="complaintsApp">
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
@@ -17,7 +17,7 @@
 								<script src="${staticHost}/js/complaints.js"></script>
 
                             </head>
-                            <body>
+                            <body ng-controller="complaintsController">
                                 <div class="">
                                     <jsp:include page="header.jsp" />
                                     <script>
@@ -265,11 +265,11 @@
                                                                             </div>
                                                                         </c:if>
 
+																		<p> Comments by: 
 																		<span>
-																		Comments by: 
-																			<a href="#" ng-repeat="comment in comments" class="profile-pic-comments">
-																				<img src="{{comment.postedBy.profilePhoto}}" alt="">
-																			</a>
+																		<div ng-repeat="comment in comments">
+																			<a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+																		</div>
 																		</span>
 																		</p>
 																		

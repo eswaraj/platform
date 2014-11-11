@@ -170,9 +170,12 @@
 															</c:forEach>
 														</c:if>
 													</div>
-                                                    <!-- Carousel nav -->
-                                                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                                                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													
+													<c:if test="${fn:length(complaint.loggedBy) > 1}">
+														<!-- Carousel nav -->
+														<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+														<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													</c:if>
                                                 </div>
 
                                                 <div id="myCarousel2" class="carousel slide" data-ride="carousel">
@@ -204,9 +207,11 @@
                                                             </ul>
                                                         </div>
                                                     </div>
+													<c:if test="${fn:length(complaint.loggedBy) > 1}">
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                                                     <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													</c:if>
                                                     <a href="#0" style="text-decoration:none;" class="cd-see-all">See all</a>
                                                 </div>								
 
