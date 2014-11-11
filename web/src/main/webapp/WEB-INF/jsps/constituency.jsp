@@ -264,18 +264,11 @@
                                                                             </div>
                                                                         </c:if>
 
-																		<p> Comments by: 
-																		<span>
-																			<div ng-repeat="comment in comments">
-																				<div id="old_comments_block">
-
-																					<a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
-
-																				</div>
-																			</div>
-																		</span>
+																		<p>
+																			<span ng-repeat="comment in oneComplaint.comments">
+																				<a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt="" /></a>
+																			</span>
 																		</p>
-																		
                                                                     </div>
                                                                 </div>
                                                             </div>
