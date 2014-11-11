@@ -140,32 +140,30 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-														<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-															<c:choose>
-																<c:when test="${onePhoto.orgUrl == ''}">
-																	<div class="active item">
-																		<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
-																	</div>
-																</c:when>
 
-																<c:otherwise>
-																	<c:choose>
-																		<c:when test="${counter.count == '1'}">
-																			<div class="active item">
-																				<img src="${onePhoto.orgUrl}" />
-																			</div>
-																		</c:when>
+														<c:if test="${empty complaint.photos}">
+															<div class="active item">
+																<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+															</div>
+														</c:if>
 
-																		<c:otherwise>
-																			<div class="item">
-																				<img src="${onePhoto.orgUrl}" />
-																			</div>
-																		</c:otherwise>
-																	</c:choose>
-																</c:otherwise>
-																
-															</c:choose>
-														</c:forEach>
+														<c:if test="${!empty complaint.photos}">
+															<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+																<c:choose>
+																	<c:when test="${counter.count == '1'}">
+																		<div class="active item">
+																			<img src="${onePhoto.orgUrl}" />
+																		</div>
+																	</c:when>
+
+																	<c:otherwise>
+																		<div class="item">
+																			<img src="${onePhoto.orgUrl}" />
+																		</div>
+																	</c:otherwise>
+																</c:choose>
+															</c:forEach>
+														</c:if>
 													</div>
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
