@@ -192,7 +192,7 @@
                                                             <div class="list-row" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
                                                                 <p class="innerdiv-sharebtn">
                                                                     <!-- social media share buttons -->								
-																	<a href="javascript:fbShare('this.href', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																	<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
                                                                     <a href="https://plus.google.com/share?url={URL}" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
                                                                     <a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
                                                                 </p>
@@ -200,10 +200,10 @@
                                                                     <div class="col-sm-1 profile-info profile_pic_adjust">
                                                                         <div class="profile-pic">
                                                                             <c:if test="${!empty oneComplaint.loggedBy[0].photo}">
-                                                                                <img src="${oneComplaint.loggedBy[0].photo}" alt="">
+                                                                                <a href="#!" class="anchorlink" ><img src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
                                                                             </c:if>
                                                                             <c:if test="${empty oneComplaint.loggedBy[0].photo}">
-                                                                                <img src="${staticHost}/images/profile-pic.jpg" alt="">
+                                                                                <a href="#!" class="anchorlink" ><img src="${staticHost}/images/profile-pic.jpg" alt=""></a>
                                                                             </c:if>
                                                                         </div>
                                                                     </div>
@@ -242,7 +242,7 @@
                                                                                 <a href="#!" class="anchorlink" ><span class="location">Cessna Business Park main road,Keverappa Layout</span></a>
                                                                             </span>
                                                                             <span>
-                                                                                <img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt="">
+                                                                                <a href="#!" class="anchorlink" ><img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>
                                                                             </span>
                                                                         </p>
                                                                     </div>
