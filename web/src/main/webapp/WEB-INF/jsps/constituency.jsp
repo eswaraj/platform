@@ -12,8 +12,6 @@
                                 <jsp:include page="include.jsp" />
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
-								<script src="${staticHost}/js/angular.min.js"></script>
-								<script src="${staticHost}/js/singlecomplaint.js"></script>
 
                             </head>
                             <body ng-controller="complaintsController">
@@ -266,7 +264,8 @@
 
 																		<p>
 																			<span>
-																				<a href="#!" class="profile-pic-comments"><img src="${oneComplaint.comment.postedBy.profilePhoto}" alt="" /></a>
+																				<!--a href="#!" class="profile-pic-comments"><img src="${oneComplaint.comment.postedBy.profilePhoto}" alt="" /></a-->
+																					<c:out value="${oneComplaint.key} = ${oneComplaint.value}"/><br/>									
 																			</span>
 																		</p>
                                                                     </div>
