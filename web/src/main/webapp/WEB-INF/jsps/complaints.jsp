@@ -81,7 +81,7 @@
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic" ng-switch on="complaint.createdByPersons[0].name">
 																				<div ng-switch-when="anonymous">
-																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;" /></a>
+																					<a href="#!"><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 35px;" /></a>
 																				</div>
 																				<div ng-switch-default>
 																					<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt="" /></a>

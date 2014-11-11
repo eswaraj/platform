@@ -207,7 +207,7 @@
 																		<img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
 																	</c:if>
 																	<c:if test="${empty complaint.loggedBy[0].photo}">
-																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="width: 35px;" />																	
+																		<img src="${staticHost}/images/anonymous_profile_pic.png" class="reported_description_pic" alt="Author image" style="width: 35px;" />																	
 																	</c:if>
                                                                     <ul class="cd-author-info">
                                                                         <li>${complaint.loggedBy[0].name}</li>

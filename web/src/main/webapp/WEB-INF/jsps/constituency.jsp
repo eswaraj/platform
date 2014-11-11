@@ -203,7 +203,7 @@
                                                                                 <a href="#!" class="anchorlink" ><img src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
                                                                             </c:if>
                                                                             <c:if test="${empty oneComplaint.loggedBy[0].photo}">
-                                                                                <a href="#!" class="anchorlink" ><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 35px;" ></a>
+                                                                                <a href="#!" class="anchorlink" ><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 50px; max-width: 50px; border: 1px solid #ccc;" ></a>
                                                                             </c:if>
                                                                         </div>
                                                                     </div>
