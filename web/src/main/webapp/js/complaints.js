@@ -1,10 +1,12 @@
 var complaintsApp = angular.module('complaintsApp', []);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
+    //complaintId, loggedIn, totalComments will be populated by server. Can be directly used here.
     var getCount = 10;
     var total = 0;
     var current = 0;
     var allComplaints = [];
+    $scope.loggedIn = loggedIn;
     $scope.positions = {};
     $scope.complaints = [];
     $scope.statuses = ['Pending', 'Viewed', 'Duplicate', 'Assigned', 'InProgress', 'InReview', 'Done', 'Unfinished', 'Esclated'];
