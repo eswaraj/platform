@@ -307,3 +307,12 @@ position: absolute;
 bottom: 0px; 
 width: 100%; 
 }
+
+.profile-pic-comments img {
+max-width: 30px;
+width: auto;
+height: auto;
+border-radius: 50%;
+border: 0px solid #ccc;
+float: left;
+}

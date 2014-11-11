@@ -51,6 +51,7 @@
                                         <script src="${staticHost}/js/analytics.js" type="text/javascript"></script>
                                         <script src="${staticHost}/js/d3.min.js" type="text/javascript"></script>
                                         <script src="${staticHost}/js/nv.d3.min.js" type="text/javascript"></script>
+										<script src="${staticHost}/js/complaints.js"></script>
                                         <link rel="stylesheet" href="${staticHost}/css/nv.d3.css">
                                         <link rel="stylesheet" href="${staticHost}/css/analytics.css">
                                         <script type="text/javascript">
@@ -263,6 +264,12 @@
                                                                             </div>
                                                                         </c:if>
 
+																		<p> Comments by: 
+																		<div ng-repeat="comment in comments">
+																			<a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+																		</div>
+																		</p>
+																		
                                                                     </div>
                                                                 </div>
                                                             </div>
