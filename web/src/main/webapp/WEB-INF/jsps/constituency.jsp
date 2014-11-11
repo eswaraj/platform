@@ -262,12 +262,6 @@
                                                                             </div>
                                                                         </c:if>
 
-																		<p>
-																			<span>
-																				<!--a href="#!" class="profile-pic-comments"><img src="${oneComplaint.comment.postedBy.profilePhoto}" alt="" /></a-->
-																					<c:out value="${oneComplaint.key} = ${oneComplaint.value}"/><br/>									
-																			</span>
-																		</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
