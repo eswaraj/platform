@@ -13,7 +13,7 @@
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
 								<script src="${staticHost}/js/angular.min.js"></script>
-								<script src="${staticHost}/js/complaints.js"></script>
+								<script src="${staticHost}/js/singlecomplaint.js"></script>
 
                             </head>
                             <body ng-controller="complaintsController">
@@ -266,9 +266,13 @@
 
 																		<p> Comments by: 
 																		<span>
-																		<div ng-repeat="comment in complaint.comments">
-																			<a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
-																		</div>
+																			<div ng-repeat="comment in comments">
+																				<div id="old_comments_block">
+
+																					<a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+
+																				</div>
+																			</div>
 																		</span>
 																		</p>
 																		

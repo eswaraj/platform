@@ -17,6 +17,12 @@
                                 <script src="${staticHost}/js/complaints.js"></script>
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
 
+                                <script>
+                                    var complaintId = ${complaint.id};
+                                    var loggedIn = ${loggedIn};
+                                    var totalComments = ${complaint.totalComments};
+                                </script>
+
 								<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
 								<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
 
@@ -176,8 +182,10 @@
 																									</span>
 																							 </div>
 																							<!-- Carousel nav -->
-																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-																							<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																							<c:if test="${fn:length(complaint.loggedBy) > 1}">
+																								<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+																								<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																							</c:if>
 																						</div>
                                                                                     </div>
 
@@ -196,7 +204,7 @@
                                                                         <!-- Comments Box -->
 
                                                                         <div id="load_comments_box">
-                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( 140 )</a>
+                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( {{totalComments}} )</a>
 
                                                                             <div id="comments_box" class="div_comments_box">
 
@@ -215,6 +223,9 @@
                                                                                 </div>	
 
                                                                                 <div id="add_comment"> 
+																					<div ng-show="!loggedIn">
+																						Please log in to add comment.
+																					</div>
 
                                                                                     <form id="comment_form">
 
