@@ -1,4 +1,4 @@
-var complaintsApp = angular.module('complaintsApp', ['directives']);
+var complaintsApp = angular.module('complaintsApp', []);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
     var getCount = 10;
@@ -37,7 +37,6 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         var element = $(event.currentTarget);
         element.tab('show');
     };
-	$scope.is_map_tab_selected = 'false';
     $scope.saveStatus = function (complaint) {
         var statusRequest = $http({
             method: "POST",
@@ -279,7 +278,7 @@ complaintsApp.directive('textcollapse', function () {
     };
 });
 
-angular.module('directives', []).directive('googleMap', function() {
+complaintsApp.directive('googleMap', function ($timeout) {
     return {
         restrict : 'E',
         scope : {
@@ -287,27 +286,28 @@ angular.module('directives', []).directive('googleMap', function() {
             lng : '@',
             id : '@'
         },
-        replace: true,
-        template: '<div></div>',
-        link : function ($scope, element, attrs) {
+        link : function (scope, element, attrs) {
+            var el = document.createElement("div");
+            el.style.width = "100%";
+            el.style.height = "100%";
+            element.css('display','block');
+            element.css('height','300px');
+            element.prepend(el);
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
                 center: myLatlng,
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             }
-            var map = new google.maps.Map(document.getElementById(attrs.id), mapOptions);
+            var map = new google.maps.Map(el, mapOptions);
+            $timeout(function() {
+                google.maps.event.trigger(map, "resize");
+            });
             var myMarker = new google.maps.Marker({
                 position : myLatlng,
                 draggable : false
             });
             myMarker.setMap(map);
-			$scope.$watch('is_map_tab_selected', function () {               
-                   window.setTimeout(function(){
-                   google.maps.event.trigger(map, 'resize'); 
-				   },100); 
-			});
-
         }
     };
 });
