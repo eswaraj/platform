@@ -37,6 +37,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         var element = $(event.currentTarget);
         element.tab('show');
     };
+	$scope.selected = 'false';
     $scope.saveStatus = function (complaint) {
         var statusRequest = $http({
             method: "POST",
