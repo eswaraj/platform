@@ -17,11 +17,6 @@
                                 <script src="${staticHost}/js/complaints.js"></script>
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
 
-                                <script>
-                                    var loggedIn = ${loggedIn};
-                                    var totalComments = ${complaint.totalComments};
-                                </script>
-
 								<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
 								<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
 
@@ -139,15 +134,6 @@
                                                                             <p class="desc elipsis">
 																				<span ng-switch on="complaint.description">
 																					<span ng-switch-when="">
-																					Lorem Ipsum is simply dummy text of the printing and typesetting 
-																					industry. Lorem Ipsum has been the industry's standard dummy text 
-																					ever since the 1500s, when an unknown printer took a galley of type 
-																					and scrambled it to make a type specimen book. It has survived not 
-																					only five centuries, but also the leap into electronic typesetting, 
-																					remaining essentially unchanged. It was popularised in the 1960s with 
-																					the release of Letraset sheets containing Lorem Ipsum passages, and
-																					more recently with desktop publishing software like Aldus PageMaker 
-																					including versions of Lorem Ipsum.																				
 																					</span>
 																					<span ng-switch-default>
 																						{{complaint.description}}
@@ -203,7 +189,7 @@
                                                                         <!-- Comments Box -->
 
                                                                         <div id="load_comments_box">
-                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( {{totalComments}} )</a>
+                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( )</a>
 
                                                                             <div id="comments_box" class="div_comments_box">
 
@@ -226,14 +212,10 @@
                                                                                     <form id="comment_form">
 
                                                                                         <a href="#!" class="profile-pic-comments"><img src="${user.person.profilePhoto}" alt=""></a>
-                                                                                        <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="complaint.commentText" ng-disabled="!loggedIn"/>
+                                                                                        <input id="user_input" type="text" class="user_input_text" placeholder="Please add your comment here..." ng-model="complaint.commentText"/>
                                                                                         <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="addComment(complaint)"/>
 
                                                                                     </form>
-
-																					<div ng-show="!loggedIn">
-																						Please log in to add comment.
-																					</div>
 
                                                                                 </div>	
 
