@@ -296,7 +296,15 @@ complaintsApp.directive('googleMap', function ($timeout) {
             var mapOptions = {
                 zoom: 14,
                 center: myLatlng,
-                mapTypeId : google.maps.MapTypeId.ROADMAP
+                mapTypeId : google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: true,
+				mapTypeControlOptions: {
+				  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+				},
+				zoomControl: true,
+				zoomControlOptions: {
+				  style: google.maps.ZoomControlStyle.LARGE
+				}
             }
             var map = new google.maps.Map(el, mapOptions);
             var myMarker = new google.maps.Marker({
@@ -321,8 +329,8 @@ complaintsApp.directive('googleMap', function ($timeout) {
             }, 100);
   		    google.maps.event.addListener(map, 'center_changed', function() {
 				// 3 seconds after the center of the map has changed, pan back to the marker.
-				window.setTimeout(function() {
-				  map.panTo(marker.getPosition());
+				$timeout(function() {
+				  map.panTo(myMarker.getPosition());
 				}, 3000);
 			});
         }
