@@ -218,7 +218,7 @@
                                                                                 <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
                                                                                 <c:forEach items="${oneComplaint.categories}" var="oneCategory">
                                                                                     <c:if test="${oneCategory.root}">
-                                                                                        <a href="#!" class="anchorlink" >Type - ${oneCategory.name}</a>
+																						<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
                                                                                     </c:if>
                                                                                 </c:forEach>
                                                                             </span>
