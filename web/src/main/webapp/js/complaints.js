@@ -312,7 +312,7 @@ complaintsApp.directive('googleMap', function ($timeout) {
                 draggable : false
             });
             myMarker.setMap(map);
-			google.maps.event.addListener(map, "tilesloaded", function(){
+			google.maps.event.addListener(map, "mouseover", function(){
 			var center = map.getCenter();
 			google.maps.event.trigger(map, 'resize'); 
 			map.setCenter(center);
@@ -328,10 +328,10 @@ complaintsApp.directive('googleMap', function ($timeout) {
 			map.setCenter(center);
             }, 100);
   		    google.maps.event.addListener(map, 'center_changed', function() {
-				// 3 seconds after the center of the map has changed, pan back to the marker.
+				// 10 seconds after the center of the map has changed, pan back to the marker.
 				$timeout(function() {
 				  map.panTo(myMarker.getPosition());
-				}, 3000);
+				}, 10000);
 			});
         }
     };
