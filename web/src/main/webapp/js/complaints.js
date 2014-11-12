@@ -328,10 +328,10 @@ complaintsApp.directive('googleMap', function ($timeout) {
 			map.setCenter(center);
             }, 100);
   		    google.maps.event.addListener(map, 'center_changed', function() {
-				// 10 seconds after the center of the map has changed, pan back to the marker.
+				// 30 seconds after the center of the map has changed, pan back to the marker.
 				$timeout(function() {
 				  map.panTo(myMarker.getPosition());
-				}, 10000);
+				}, 30000);
 			});
         }
     };
