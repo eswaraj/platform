@@ -286,28 +286,27 @@ complaintsApp.directive('googleMap', function ($timeout) {
             lng : '@',
             id : '@'
         },
+        replace: true,
+        template: '<div></div>',
         link : function (scope, element, attrs) {
-            var el = document.createElement("div");
-            el.style.width = "100%";
-            el.style.height = "100%";
-            element.css('display','block');
-            element.css('height','300px');
-            element.prepend(el);
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
                 center: myLatlng,
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             }
-            var map = new google.maps.Map(el, mapOptions);
-            $timeout(function() {
-                google.maps.event.trigger(map, "resize");
-            });
+            var map = new google.maps.Map(document.getElementById(attrs.id), mapOptions);
             var myMarker = new google.maps.Marker({
                 position : myLatlng,
                 draggable : false
             });
             myMarker.setMap(map);
+			$scope.$watch('selected', function () {               
+                   window.setTimeout(function(){
+                   google.maps.event.trigger(map, 'resize'); 
+				   },100); 
+			});
+
         }
     };
 });

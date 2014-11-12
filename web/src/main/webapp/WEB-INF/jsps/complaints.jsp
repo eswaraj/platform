@@ -144,7 +144,7 @@
                                                                             <div class="carousel_map_tab">
                                                                                 <ul class="nav nav-tabs c_m_tab_content" id="c_m_tab{{$index + 1}}">
                                                                                     <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Complaint Pictures</a></li>
-                                                                                    <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Show on Map</a></li>
+                                                                                    <li ng-click="selected = 'true'"><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Show on Map</a></li>
                                                                                 </ul>
 
                                                                                 <div class="tab-content">
@@ -175,8 +175,8 @@
                                                                                     </div>
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
-                                                                                        <div class="googleMap_tabcontent">
-                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}"></google-map>
+                                                                                        <div ng-show="selected == 'true'" class="googleMap_tabcontent">
+                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}" class="gmap_canvas"></google-map>
                                                                                         </div>
                                                                                     </div>
 
