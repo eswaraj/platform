@@ -304,13 +304,10 @@ complaintsApp.directive('googleMap', function ($timeout) {
                 draggable : false
             });
             myMarker.setMap(map);
-			google.maps.event.addListener(map, "idle", function(){
+            $timeout(function() {
 			var center = map.getCenter();
 			google.maps.event.trigger(map, 'resize'); 
 			map.setCenter(center);
-			});
-            $timeout(function() {
-                google.maps.event.trigger(map, "resize");
             }, 100);
         }
     };
