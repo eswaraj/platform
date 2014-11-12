@@ -302,7 +302,7 @@ complaintsApp.directive('googleMap', function ($timeout) {
             var map = new google.maps.Map(el, mapOptions);
             $timeout(function() {
                 google.maps.event.trigger(map, "resize");
-            });
+            }, 100);
             var myMarker = new google.maps.Marker({
                 position : myLatlng,
                 draggable : false
