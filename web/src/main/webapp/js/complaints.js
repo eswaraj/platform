@@ -37,7 +37,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         var element = $(event.currentTarget);
         element.tab('show');
     };
-	$scope.selected = 'false';
+	$scope.is_map_tab_selected = 'false';
     $scope.saveStatus = function (complaint) {
         var statusRequest = $http({
             method: "POST",
@@ -279,7 +279,7 @@ complaintsApp.directive('textcollapse', function () {
     };
 });
 
-complaintsApp.directive('googleMap', function ($timeout) {
+complaintsApp.directive('googleMap', function () {
     return {
         restrict : 'E',
         scope : {
@@ -302,7 +302,7 @@ complaintsApp.directive('googleMap', function ($timeout) {
                 draggable : false
             });
             myMarker.setMap(map);
-			$scope.$watch('selected', function () {               
+			$scope.$watch('is_map_tab_selected', function () {               
                    window.setTimeout(function(){
                    google.maps.event.trigger(map, 'resize'); 
 				   },100); 
