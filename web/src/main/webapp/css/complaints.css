@@ -401,8 +401,6 @@ padding: 5px;
 .gmap_canvas{
     margin: 0;
     padding: 0;
-    height: 333px;
-    border: 1px solid #ccc;
 }
 
 .c_m_tab_content{
