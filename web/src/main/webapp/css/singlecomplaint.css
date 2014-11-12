@@ -364,12 +364,15 @@ border-radius: 8px;
 .description_text{
 color: black;
 color: #5CACEE;
-padding-top: 60px;
+padding-top: 0px;
+margin-top: 60px !important;
 padding-right: 40px;
 word-wrap: break-word;
 text-wrap: normal;
-font-size: 20px;
+font-size: 18px;
 text-align: justify;
+max-height: 120px;
+overflow-y: auto;
 text-justify: inter-word;
 }
 

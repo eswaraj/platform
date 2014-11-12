@@ -189,7 +189,7 @@
 																			<span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                         </c:if>																	
                                                                         <c:if test="${empty complaint.description}">
-																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by <br />" ${complaint.loggedBy[0].name} "</p>
+																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by '${complaint.loggedBy[0].name}'</p>
                                                                         </c:if>																	
                                                                     <div class="description_author">
 																	<c:if test="${!empty complaint.loggedBy[0].photo}">
