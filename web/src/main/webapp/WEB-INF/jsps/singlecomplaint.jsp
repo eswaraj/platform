@@ -221,7 +221,12 @@
                                                     <div class="cd-testimonials-all-wrapper">
                                                         <ul>
                                                             <li class="cd-testimonials-item">
-                                                                <p>${complaint.description}</p>
+																<c:if test="${!empty complaint.description}">
+																	<p>${complaint.description}</p>
+																</c:if>																	
+																<c:if test="${empty complaint.description}">
+																	<p>No Description added by '${complaint.loggedBy[0].name}'</p>
+																</c:if>																	
 
                                                                 <div class="cd-author">
 																	<c:if test="${!empty complaint.loggedBy[0].photo}">
@@ -250,7 +255,12 @@
                                                             <c:forEach items="${complaint.loggedBy}" var="oneUser">
                                                                 <li class="cd-testimonials-pics-item">
                                                                     <div class="cd-author">
+																	<c:if test="${!empty oneUser.photo}">
                                                                         <img src="${oneUser.photo}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty oneUser.photo}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
                                                                         <ul class="cd-author-info">
                                                                             <li>${oneUser.name}</li>
                                                                             <li>Cessna Business Park</li>
