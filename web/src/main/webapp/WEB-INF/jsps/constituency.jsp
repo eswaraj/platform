@@ -6,15 +6,17 @@
                     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
                         <!DOCTYPE html>
-                        <html lang="en" ng-app="complaintsApp">
+                        <html lang="en">
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
+								<script src="${staticHost}/js/angular.min.js"></script>
+								<script src="${staticHost}/js/complaints.js"></script>
 
                             </head>
-                            <body ng-controller="complaintsController">
+                            <body>
                                 <div class="">
                                     <jsp:include page="header.jsp" />
                                     <script>
