@@ -1,4 +1,4 @@
-var complaintsApp = angular.module('complaintsApp', []);
+var complaintsApp = angular.module('complaintsApp', ['directives']);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
     var getCount = 10;
@@ -279,7 +279,7 @@ complaintsApp.directive('textcollapse', function () {
     };
 });
 
-complaintsApp.directive('googleMap', function () {
+angular.module('directives', []).directive('map', function() {
     return {
         restrict : 'E',
         scope : {
@@ -289,7 +289,7 @@ complaintsApp.directive('googleMap', function () {
         },
         replace: true,
         template: '<div></div>',
-        link : function (scope, element, attrs) {
+        link : function ($scope, element, attrs) {
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
