@@ -304,6 +304,11 @@ complaintsApp.directive('googleMap', function ($timeout) {
                 draggable : false
             });
             myMarker.setMap(map);
+			google.maps.event.addListener(map, "tilesloaded", function(){
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize'); 
+			map.setCenter(center);
+			});
             $timeout(function() {
 			var center = map.getCenter();
 			google.maps.event.trigger(map, 'resize'); 
