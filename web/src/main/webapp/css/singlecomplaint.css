@@ -1,6 +1,7 @@
 .issue-info  {
     margin-left: 75px;
     margin-right: 75px;
+	padding-top: 0px;
 }
 .issue-info .desc {
     margin-top: 8px;
@@ -291,9 +292,16 @@ border: 2px solid #F2F2F2;
 border-radius: 8px;
 /*background: radial-gradient(#E6E6FA, #FFFFFF); *//* Standard syntax (must be last) */
 width: 250px;
-margin-top: 20px;
 padding-top: 10px;
 padding-bottom: 10px;
+}
+
+.issue_reporters_box{
+margin-top: 0px;
+}
+
+.issue_reporters_box_pic{
+margin-top: 15px;
 }
 
 .profile-pic-padding{
@@ -316,7 +324,7 @@ text-align: center;
 }
 
 .md3_pad{
-    padding-left: 25px;
+    padding-left: 45px;
     padding-right: 0px;
 }
 
@@ -787,7 +795,7 @@ color: #B2B2B2;
 height: 160px;
 margin-top: 0px;
 border-bottom: 1px solid #F2F2F2;
-margin-bottom: 20px;}
+margin-bottom: 15px;}
 
 .issue_status_pic{
 height: 26px;
