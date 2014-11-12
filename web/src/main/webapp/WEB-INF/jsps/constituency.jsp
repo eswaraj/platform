@@ -246,7 +246,7 @@
                                                                     <div class="issue-info" >
 
                                                                         <p>
-                                                                            <span class="issue-scope">${oneComplaint.categoryTitle}</span>
+                                                                            <a href="#!" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
                                                                         </p>
 
                                                                         <c:if test="${!empty oneComplaint.description}">
