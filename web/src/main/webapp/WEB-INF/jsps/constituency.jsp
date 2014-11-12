@@ -12,9 +12,6 @@
                                 <jsp:include page="include.jsp" />
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
-								<script src="${staticHost}/js/angular.min.js"></script>
-								<script src="${staticHost}/js/complaints.js"></script>
-
                             </head>
                             <body>
                                 <div class="">
