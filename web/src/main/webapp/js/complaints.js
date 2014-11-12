@@ -290,6 +290,8 @@ complaintsApp.directive('googleMap', function ($timeout) {
         link : function (scope, element, attrs) {
             var el = document.createElement("div");
             el.style.height = "100%";
+            element.css('height','333px');
+            element.prepend(el);
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
