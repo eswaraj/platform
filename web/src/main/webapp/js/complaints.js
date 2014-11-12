@@ -279,7 +279,7 @@ complaintsApp.directive('textcollapse', function () {
     };
 });
 
-angular.module('directives', []).directive('map', function() {
+angular.module('directives', []).directive('googleMap', function() {
     return {
         restrict : 'E',
         scope : {
