@@ -300,14 +300,19 @@ complaintsApp.directive('googleMap', function ($timeout) {
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             }
             var map = new google.maps.Map(el, mapOptions);
-            $timeout(function() {
-                google.maps.event.trigger(map, "resize");
-            }, 100);
             var myMarker = new google.maps.Marker({
                 position : myLatlng,
                 draggable : false
             });
             myMarker.setMap(map);
+			google.maps.event.addListener(map, "idle", function(){
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize'); 
+			map.setCenter(center);
+			});	
+            $timeout(function() {
+                google.maps.event.trigger(map, "resize");
+            }, 100);
         }
     };
 });
