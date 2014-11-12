@@ -15,8 +15,7 @@
                                 <script src="${staticHost}/js/angular.min.js"></script>
                                 <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
                                 <script src="${staticHost}/js/complaints.js"></script>
-                                <!--script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script-->
-								<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>										
+                                <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
 
 								<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
 								<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
