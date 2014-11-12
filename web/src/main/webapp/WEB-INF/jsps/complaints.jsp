@@ -176,7 +176,7 @@
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
                                                                                         <div class="googleMap_tabcontent">
-                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}"></google-map>
+                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}" class="gmap_canvas"></google-map>
                                                                                         </div>
                                                                                     </div>
 
