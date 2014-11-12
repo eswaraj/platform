@@ -20,7 +20,6 @@
                                         jQuery(document).ready(function() {
                                             jQuery("abbr.timeago").timeago();
 										$('.anchorlink').click(function(e){
-											e.preventDefault();
 											e.stopPropagation();
 										});
                                         });
