@@ -309,11 +309,22 @@ complaintsApp.directive('googleMap', function ($timeout) {
 			google.maps.event.trigger(map, 'resize'); 
 			map.setCenter(center);
 			});
-            $timeout(function() {
+			google.maps.event.addListener(map, "idle", function(){
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize'); 
+			map.setCenter(center);
+			});
+  		    $timeout(function() {
 			var center = map.getCenter();
 			google.maps.event.trigger(map, 'resize'); 
 			map.setCenter(center);
             }, 100);
+  		    google.maps.event.addListener(map, 'center_changed', function() {
+				// 3 seconds after the center of the map has changed, pan back to the marker.
+				window.setTimeout(function() {
+				  map.panTo(marker.getPosition());
+				}, 3000);
+			});
         }
     };
 });
