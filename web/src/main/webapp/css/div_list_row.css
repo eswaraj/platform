@@ -216,8 +216,9 @@ margin-top: 20px;
 
 .left_filter{
 position: fixed;
-left: 10px;
+left: 25px;
 top: 75px;
+width: 15%;
 }
 
 .right_profile{
@@ -230,7 +231,7 @@ height: auto;
 }
 
 .listing-wrapper{
-margin-left: 50px;
+margin-left: 40px;
 width: 750px;
 }
 
