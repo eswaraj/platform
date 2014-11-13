@@ -11,6 +11,7 @@
 <head>
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
+<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
 <link rel="stylesheet" href="${staticHost}/css/nv.d3.css"
 	type="text/css"></link>
