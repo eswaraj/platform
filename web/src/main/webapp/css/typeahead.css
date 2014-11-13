@@ -22,6 +22,8 @@
 	font-size: 14px;
     color: #B2B2B2;
 	margin: 0px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .taactive{
 	background-color: #C44741;
