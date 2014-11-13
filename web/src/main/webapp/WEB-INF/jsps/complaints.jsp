@@ -167,10 +167,10 @@
 																									</span>
 																							 </div>
 																							<!-- Carousel nav -->
-																							<c:if test="${fn:length(complaint.loggedBy) > 1}">
-																								<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-																								<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-																							</c:if>
+																									<span ng-show="complaint.loggedBy > 1">
+																											<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+																											<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																									</span>
 																						</div>
                                                                                     </div>
 
