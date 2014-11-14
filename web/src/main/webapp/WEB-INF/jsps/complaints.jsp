@@ -16,7 +16,11 @@
                                 <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
                                 <script src="${staticHost}/js/complaints.js"></script>
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.exp"></script>
-                            </head>
+
+								<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+								<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
+
+							</head>
                             <body ng-controller="complaintsController">
                                 <div class="outerwrapper">
                                     <jsp:include page="header.jsp" />
@@ -77,7 +81,7 @@
                                                                         <div class="col-sm-1 profile_pic_adjust">
                                                                             <div class="profile-pic" ng-switch on="complaint.createdByPersons[0].name">
 																				<div ng-switch-when="anonymous">
-																					<a href="#!"><img src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="width: 35px;" /></a>
+																					<a href="#!"><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 35px;" /></a>
 																				</div>
 																				<div ng-switch-default>
 																					<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt="" /></a>
@@ -113,7 +117,13 @@
                                                                 </div>
 
                                                                 <div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
-                                                                    <div class="innerdiv-innerblock">
+																	<p class="innerdiv-sharebtn">
+																	<!-- social media share buttons -->								
+																	<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																	<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+																	</p>
+                                                                   <div class="innerdiv-innerblock">
                                                                         <div class="innerdiv-issue-info" >
 
                                                                             <p class="issue-title">
@@ -124,15 +134,6 @@
                                                                             <p class="desc elipsis">
 																				<span ng-switch on="complaint.description">
 																					<span ng-switch-when="">
-																					Lorem Ipsum is simply dummy text of the printing and typesetting 
-																					industry. Lorem Ipsum has been the industry's standard dummy text 
-																					ever since the 1500s, when an unknown printer took a galley of type 
-																					and scrambled it to make a type specimen book. It has survived not 
-																					only five centuries, but also the leap into electronic typesetting, 
-																					remaining essentially unchanged. It was popularised in the 1960s with 
-																					the release of Letraset sheets containing Lorem Ipsum passages, and
-																					more recently with desktop publishing software like Aldus PageMaker 
-																					including versions of Lorem Ipsum.																				
 																					</span>
 																					<span ng-switch-default>
 																						{{complaint.description}}
@@ -141,7 +142,7 @@
                                                                             </p>
 
                                                                             <div class="carousel_map_tab">
-                                                                                <ul class="nav nav-tabs" id="c_m_tab{{$index + 1}}" >
+                                                                                <ul class="nav nav-tabs c_m_tab_content" id="c_m_tab{{$index + 1}}">
                                                                                     <li><a href="#issues_images_carousel{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Complaint Pictures</a></li>
                                                                                     <li><a href="#loc_on_map{{$index + 1}}" ng-click="showTab($event); $event.preventDefault(); $event.stopPropagation();">Show on Map</a></li>
                                                                                 </ul>
@@ -149,7 +150,7 @@
                                                                                 <div class="tab-content">
 
                                                                                     <div class="tab-pane" id="issues_images_carousel{{$index + 1}}">
-																						<div id="myCarousel{{$index + 1}}" class="carousel slide" data-ride="carousel">
+																						<div id="myCarousel{{$index + 1}}" class="myCarousel_tabcontent carousel slide" data-ride="carousel">
 																						<!-- Carousel items -->
 																							<div class="carousel-inner">
 																									<span ng-switch on="complaint.images">
@@ -159,33 +160,23 @@
 																										</div>
 																										</span>
 																										<span ng-switch-default>
-																											<c:forEach items="${complaint.images}" var="onePhoto"  varStatus="counter">
-																												<c:choose>
-																													<c:when test="${counter.count == '1'}">
-																													<div class="active item">
-																														<img src="${onePhoto.orgUrl}" />
-																													</div>
-																													</c:when>
-
-																													<c:otherwise>
-																													<div class="item">
-																														<img src="${onePhoto.orgUrl}" />
-																													</div>
-																													</c:otherwise>																										
-																												</c:choose>
-																											</c:forEach>
+																											<div class="item" ng-class="{active : $first}" ng-repeat="img in complaint.images">
+																												<img ng-src="{{img.orgUrl}}" />
+																											</div>
 																										</span>
 																									</span>
 																							 </div>
 																							<!-- Carousel nav -->
-																							<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-																							<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																									<span ng-show="complaint.loggedBy > 1">
+																											<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+																											<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																									</span>
 																						</div>
                                                                                     </div>
 
                                                                                     <div class="tab-pane" id="loc_on_map{{$index + 1}}">
-                                                                                        <div>
-                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}"></google-map>
+                                                                                        <div class="googleMap_tabcontent">
+                                                                                            <google-map id="googleMap{{$index + 1}}" lat="{{complaint.lattitude}}" lng="{{complaint.longitude}}" class="gmap_canvas"></google-map>
                                                                                         </div>
                                                                                     </div>
 
@@ -198,7 +189,7 @@
                                                                         <!-- Comments Box -->
 
                                                                         <div id="load_comments_box">
-                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( 140 )</a>
+                                                                            <a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from Users ( )</a>
 
                                                                             <div id="comments_box" class="div_comments_box">
 

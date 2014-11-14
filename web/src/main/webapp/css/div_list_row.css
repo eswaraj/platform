@@ -4,13 +4,13 @@
     padding: 15px 0;
     border: 2px solid #ccc;
 	border-radius: 15px;
-    min-height: 125px;
+    min-height: 155px;
 	width: 750px;
 	margin-bottom: 15px;
 }
 
 .list-row:hover {
-background-color: #f9f9f9;
+background-color: #F2F2F2;
 }
 
 .list-row .innerblock {
@@ -59,9 +59,11 @@ background-color: #f9f9f9;
     margin: 2px 2px 10px 2px;
 	padding: 2px 2px 10px 2px;
 	}
+	
 .issue-info  {
     margin-left: 75px;
     margin-right: 75px;
+	padding-top: 50px;
 }
 .issue-info .desc {
     margin-top: 8px;
@@ -83,22 +85,23 @@ background-color: #f9f9f9;
 }
 .issue-scope{
 	text-decoration: none;
-	font-size: 25px;
-    font-family: New Century Schoolbook, serif;
+	font-size: 20px;
+    font-family: "Arimo",helvetica;
 	margin-right: 5px;
 	padding-right: 20px;
+	color: #428bca;
 }
 
 .issue-scope-type{
 	text-decoration: none;
 	font-size: 15px;
-	font-family: New Century Schoolbook, serif;
+	font-family: "Arimo",helvetica;
 	vertical-align: -5px; 
 	margin-right: 2px;
 	padding-right: 0px;
 	margin-bottom: 0px;
 	margin-top: 0px;
-	font-weight: bold;
+	color: #428bca;
 }
 
 .issue_type_pic{
@@ -213,8 +216,9 @@ margin-top: 20px;
 
 .left_filter{
 position: fixed;
-left: 10px;
+left: 25px;
 top: 75px;
+width: 15%;
 }
 
 .right_profile{
@@ -227,7 +231,7 @@ height: auto;
 }
 
 .listing-wrapper{
-margin-left: 50px;
+margin-left: 40px;
 width: 750px;
 }
 
@@ -303,4 +307,13 @@ margin-top: -15px;
 position: absolute;
 bottom: 0px; 
 width: 100%; 
+}
+
+.profile-pic-comments img {
+max-width: 30px;
+width: auto;
+height: auto;
+border-radius: 50%;
+border: 0px solid #ccc;
+float: left;
 }

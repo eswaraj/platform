@@ -31,6 +31,9 @@
                                     $(function () {
                                         $('#dasky').Dasky()
                                     });
+                                    jQuery(document).ready(function() {
+                                        jQuery("abbr.timeago").timeago();
+                                    });
                                 </script>
 
                                 <!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
@@ -55,7 +58,14 @@
                                             <div class="issue_reporters_box_pic">
 
                                                 <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor_pic">${complaint.categories[0].name} Complaints</a>
+                                                    <a href="#!" class="text_reporters_anchor_pic">
+                                                        <c:forEach var="cat" items="${complaint.categories}">
+                                                            <c:if test="${not cat.root}">
+                                                                ${cat.name} Complaints 
+                                                            </c:if>
+                                                        </c:forEach>
+
+                                                    </a>
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
@@ -71,10 +81,15 @@
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
-                                                    <c:forEach items="${complaint.loggedBy}" var="oneUser">
-                                                        <a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
-                                                    </c:forEach>
-                                                </div>
+													<c:if test="${!empty complaint.loggedBy[0].photo}">
+														<c:forEach items="${complaint.loggedBy}" var="oneUser">
+															<a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
+														</c:forEach>
+													</c:if>
+													<c:if test="${empty complaint.loggedBy[0].photo}">
+															<a href="#!" ><img class="reporters_profile_pic" src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="border: 1px solid #ccc;" ></a>
+													</c:if>
+                                               </div>
 
                                             </div>
 
@@ -82,20 +97,35 @@
 
                                         <div class="col-md-9 md9_pad">
                                             <div class="issue-info" >
-
-                                                <p>
-                                                    <a href="#" class="issue-scope">${complaint.categories[1].name}</a>
-                                                    <a href="#" class="issue-scope-type"><img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">Type - ${complaint.categories[0].name}</a>
-                                                </p>
-
+                                                <c:forEach var="cat" items="${complaint.categories}">
+                                                    <c:if test="${not cat.root}">
+                                                        <p>
+                                                            <a href="#" class="issue-scope">${cat.name}</a>
+                                                        </p> 
+                                                    </c:if>
+                                                </c:forEach>
                                                 <p class="whenwhere">
+                                                    <span>
+                                                        <a href="#" class="issue-scope-type">
+                                                            <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+                                                            <c:forEach var="cat" items="${complaint.categories}">
+                                                                <c:if test="${cat.root}">
+                                                                    Type - ${cat.name}
+                                                                </c:if>
+                                                            </c:forEach>
+
+                                                        </a>
+                                                    </span>
                                                     <span>
                                                         <i class="glyphicon glyphicon-map-marker"></i>
                                                         <a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
                                                     </span>
                                                     <span>
                                                         <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">Latest Update : {{${complaint.complaintTime} | dateFormatter}}</a>
+                                                        <a href="#" class="location">
+                                                            <abbr class="timeago"  title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</abbr>
+															<!--fmt:formatDate type="both" value="${complaint.complaintTime}" /-->
+                                                        </a>
                                                     </span>
                                                 </p>
 
@@ -115,26 +145,37 @@
                                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                                     <!-- Carousel items -->
                                                     <div class="carousel-inner">
-                                                        <c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-															<c:choose>
-																<c:when test="${counter.count == '1'}">
-																<div class="active item">
-																	<img src="${onePhoto.orgUrl}" />
-																</div>
-																</c:when>
 
-																<c:otherwise>
-																<div class="item">
-																	<img src="${onePhoto.orgUrl}" />
-																</div>
-																</c:otherwise>
-																
-															</c:choose>
-                                                        </c:forEach>
-                                                    </div>
-                                                    <!-- Carousel nav -->
-                                                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                                                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+														<c:if test="${empty complaint.photos}">
+															<div class="active item">
+																<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+															</div>
+														</c:if>
+
+														<c:if test="${!empty complaint.photos}">
+															<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+																<c:choose>
+																	<c:when test="${counter.count == '1'}">
+																		<div class="active item">
+																			<img src="${onePhoto.orgUrl}" />
+																		</div>
+																	</c:when>
+
+																	<c:otherwise>
+																		<div class="item">
+																			<img src="${onePhoto.orgUrl}" />
+																		</div>
+																	</c:otherwise>
+																</c:choose>
+															</c:forEach>
+														</c:if>
+													</div>
+													
+													<c:if test="${fn:length(complaint.loggedBy) > 1}">
+														<!-- Carousel nav -->
+														<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+														<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													</c:if>
                                                 </div>
 
                                                 <div id="myCarousel2" class="carousel slide" data-ride="carousel">
@@ -143,9 +184,20 @@
                                                         <div class="active item">
                                                             <ul class="issue_description">
                                                                 <li>
-                                                                    <p class="description_text"><span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
+                                                                    <p class="description_text">
+                                                                        <c:if test="${!empty complaint.description}">
+																			<span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
+                                                                        </c:if>																	
+                                                                        <c:if test="${empty complaint.description}">
+																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by '${complaint.loggedBy[0].name}'</p>
+                                                                        </c:if>																	
                                                                     <div class="description_author">
-                                                                        <img src="${staticHost}/images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
+																	<c:if test="${!empty complaint.loggedBy[0].photo}">
+                                                                        <img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty complaint.loggedBy[0].photo}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
                                                                         <ul class="description_author_info">
                                                                             <li class="description_author_name">${complaint.loggedBy[0].name}</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
@@ -155,9 +207,11 @@
                                                             </ul>
                                                         </div>
                                                     </div>
+													<c:if test="${fn:length(complaint.loggedBy) > 1}">
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                                                     <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													</c:if>
                                                     <a href="#0" style="text-decoration:none;" class="cd-see-all">See all</a>
                                                 </div>								
 
@@ -167,10 +221,20 @@
                                                     <div class="cd-testimonials-all-wrapper">
                                                         <ul>
                                                             <li class="cd-testimonials-item">
-                                                                <p>${complaint.description}</p>
+																<c:if test="${!empty complaint.description}">
+																	<p>${complaint.description}</p>
+																</c:if>																	
+																<c:if test="${empty complaint.description}">
+																	<p>No Description added by '${complaint.loggedBy[0].name}'</p>
+																</c:if>																	
 
                                                                 <div class="cd-author">
-                                                                    <img src="${staticHost}/images/profile-pic.jpg" class="reported_description_pic" alt="Author image">
+																	<c:if test="${!empty complaint.loggedBy[0].photo}">
+																		<img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty complaint.loggedBy[0].photo}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
                                                                     <ul class="cd-author-info">
                                                                         <li>${complaint.loggedBy[0].name}</li>
                                                                         <li>Cessna Business Park</li>
@@ -188,12 +252,17 @@
                                                 <div class="cd-testimonials-pics-all">
                                                     <div class="cd-testimonials-pics-all-wrapper">
                                                         <ul>
-                                                            <c:forEach items="${complaint.photos}" var="onePhoto">
+                                                            <c:forEach items="${complaint.loggedBy}" var="oneUser">
                                                                 <li class="cd-testimonials-pics-item">
                                                                     <div class="cd-author">
-                                                                        <img src="${onePhoto.orgUrl}" class="reported_description_pic" alt="Author image">
+																	<c:if test="${!empty oneUser.photo}">
+                                                                        <img src="${oneUser.photo}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty oneUser.photo}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
                                                                         <ul class="cd-author-info">
-                                                                            <li>Ramesh Sharma</li>
+                                                                            <li>${oneUser.name}</li>
                                                                             <li>Cessna Business Park</li>
                                                                         </ul>
                                                                     </div> <!-- cd-author -->
@@ -249,11 +318,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
-													<div class="collap_show_btn">
-                                                      <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
-                                                      <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
-													</div>
+
+                                                        <div class="collap_show_btn">
+                                                            <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
+                                                            <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
+                                                        </div>
 
                                                     </div>
                                                 </div>

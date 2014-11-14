@@ -273,7 +273,22 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
 
     <div id="toc">
           </div><!--/.well -->
-	
+
+	<!-- AddThis Button BEGIN -->
+	<!-- <div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:url="http://www.eswaraj.com"  style="left:50px;top:50px;" >
+	<a class="addthis_button_facebook"></a>
+	<a class="addthis_button_twitter"></a>
+	<a class="addthis_button_google_plusone_share" g:plusone:count="false"></a>
+	<a class="addthis_button_gmail"></a>
+	<a class="addthis_button_linkedin"></a>
+	<a class="addthis_button_compact"></a>
+		
+	</div> -->
+	<!-- AddThis Button END -->
+    
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>		  
+
 <script>
 
 /* For Users Pics Modal View */

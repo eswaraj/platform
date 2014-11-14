@@ -281,6 +281,7 @@ complaintsApp.directive('textcollapse', function () {
 complaintsApp.directive('googleMap', function ($timeout) {
     return {
         restrict : 'E',
+        replace: true,
         scope : {
             lat : '@',
             lng : '@',
@@ -288,26 +289,50 @@ complaintsApp.directive('googleMap', function ($timeout) {
         },
         link : function (scope, element, attrs) {
             var el = document.createElement("div");
-            el.style.width = "100%";
             el.style.height = "100%";
-            element.css('display','block');
-            element.css('height','300px');
+            element.css('height','333px');
             element.prepend(el);
             var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
             var mapOptions = {
                 zoom: 14,
                 center: myLatlng,
-                mapTypeId : google.maps.MapTypeId.ROADMAP
+                mapTypeId : google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: true,
+				mapTypeControlOptions: {
+				  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+				},
+				zoomControl: true,
+				zoomControlOptions: {
+				  style: google.maps.ZoomControlStyle.LARGE
+				}
             }
             var map = new google.maps.Map(el, mapOptions);
-            $timeout(function() {
-                google.maps.event.trigger(map, "resize");
-            });
             var myMarker = new google.maps.Marker({
                 position : myLatlng,
                 draggable : false
             });
             myMarker.setMap(map);
+			google.maps.event.addListener(map, "mouseover", function(){
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize'); 
+			map.setCenter(center);
+			});
+			google.maps.event.addListener(map, "idle", function(){
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize'); 
+			map.setCenter(center);
+			});
+  		    $timeout(function() {
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize'); 
+			map.setCenter(center);
+            }, 100);
+  		    google.maps.event.addListener(map, 'center_changed', function() {
+				// 30 seconds after the center of the map has changed, pan back to the marker.
+				$timeout(function() {
+				  map.panTo(myMarker.getPosition());
+				}, 30000);
+			});
         }
     };
 });

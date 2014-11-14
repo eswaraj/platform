@@ -89,11 +89,11 @@ $("#collapse_comments_box").click(function(){
 });
 
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 	$( ".reporters_profile_pic" ).each(function() {
 				img = $(this).attr('src');
 				$(this).mouseover(function(e) {
-				$(this).after('<div id="divhoverText"><button type="button" id="notification_close_button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><a href="#"><img class="reporters_profile_pic" style="float: left; margin: 15px 10px 10px 20px; width: 60px; height: 60px;" src="' + img + '" alt=""></a><p style = "font-size: 14px; color: #929292; margin: 25px 0px 10px 0px;" >Somnath Nabajja<br /><span class="glyphicon glyphicon-map-marker"></span><span class="description_author_area">Kadubeesanahalli</span></div>');
+				$(this).after('<div id="divhoverText"><button type="button" id="notification_close_button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><a href="#"><img class="reporters_profile_pic" style="float: left; margin: 15px 10px 10px 20px; width: 60px; height: 60px;" src="' + img + '" alt=""></a><p style = "font-size: 14px; color: #929292; margin: 25px 0px 10px 0px;" >User Name<br /><span class="glyphicon glyphicon-map-marker"></span><span class="description_author_area">Kadubeesanahalli</span></div>');
 				$('#divhoverText').hide(); 
 				}).mousemove( function(e) {
 				var top = $(".issue_reporters_box").offset().top;
@@ -116,6 +116,7 @@ $(document).ready(function(){
 
 		});
 });
+*/
 
 /* For Users Description Modal View */
 jQuery(document).ready(function($){

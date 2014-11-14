@@ -11,6 +11,7 @@
 <head>
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
+<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
 <link rel="stylesheet" href="${staticHost}/css/nv.d3.css"
 	type="text/css"></link>
@@ -29,6 +30,14 @@
                                     "cat":[{"name":"No water","count":942,"color":"#98abc5"},{"name":"Dirty Water","count":542,"color":"#8a89a6"},{"name":"Too expensive","count":342,"color":"#7b6888"},{"name":"No connection","count":242,"color":"#6b486b"},{"name":"Intermittent supply","count":142,"color":"#a05d56"},{"name":"Leaking pipes","count":442,"color":"#ff8c00"},{"name":"No fixed time","count":350,"color":"#ff0000"}]
                                 };
                             </script>
+							<script>
+								jQuery(document).ready(function() {
+									jQuery("abbr.timeago").timeago();
+								$('.anchorlink').click(function(e){
+									e.stopPropagation();
+								});
+								});
+							</script>
 
 </head>
 <body>
@@ -149,56 +158,50 @@
 							<div class="listing">
 								<!-- .list-row  -->
 								<c:forEach items="${userComplaints}" var="oneComplaint">
-									<div class="list-row">
+									<div class="list-row" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
 										<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"-->
 										<!-- not working as expected -->
 											<p class="innerdiv-sharebtn">
 											<!-- social media share buttons -->								
-											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-											<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-											<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+											<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;" class="anchorlink"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+											<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;" class="anchorlink"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
 											</p>
 										<div class="innerblock">
 											<div class="col-sm-1 profile-info profile_pic_adjust">
 												<div class="profile-pic">
-														<a href="#"><img
-															src="${user.person.profilePhoto}" alt=""></a>
+														<a href="#"><img src="${user.person.profilePhoto}" alt=""></a>
 												</div>
 											</div>
 											<div class="col-sm-10 profile-info profile_info_adjust">
 												<p class="whom" style="margin-bottom: 0px; line-height:100%;">
 													<strong class="issue-id">Issue #${oneComplaint.id}</strong>
 													<span class="connector">raised by</span> 
-													<a href="#" class="username text-limit name_adjust">
-											                                ${user.person.name}
-											           </a>
-													<a
-														href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}"
-														class="issue-scope">${oneComplaint.categoryTitle}</a> <a
-														href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}"
-														class="issue-scope-type"> <img
-														src="${staticHost}/images/potholeissue.jpg"
-														class="issue_type_pic" alt=""> <c:forEach
-															items="${oneComplaint.categories}" var="oneCategory">
-															<c:if test="${oneCategory.root}">
-															Type - ${oneCategory.name}
-															</c:if>
-														</c:forEach>
+													<a href="#" class="username text-limit name_adjust">${user.person.name}</a>
+													<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink issue-scope">${oneComplaint.categoryTitle}</a>
+													<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="anchorlink issue-scope-type">
+													<img src="${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+													<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+														<c:if test="${oneCategory.root}">
+															<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
+														</c:if>
+													</c:forEach>
 													</a>
 												</p>
 
 												<p class="whenwhere">
-													<span> <img src="${staticHost}/images/time.png"
-														class="posttimestatus" alt=""> <a href="#"
-														class="location"><abbr class="timeago"
-															title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></a>
-													</span> <span class="connector">at</span> <span> <i
-														class="glyphicon glyphicon-map-marker"></i> <a href="#"
-														class="location">Cessna Business Park main
-															road,Keverappa Layout</a>
-													</span> <span> <a href="#"><img
-															src="${staticHost}/images/underreview.png"
-															class="postcurrentstatus" alt=""></a>
+													<span> <img src="${staticHost}/images/time.png" class="posttimestatus" alt=""> 
+														<a href="#!" class="anchorlink" >
+															<span class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></span>
+														</a>
+													</span> 
+													<span class="connector">at</span> 
+													<span> 
+														<i class="glyphicon glyphicon-map-marker"></i> 
+														<a href="#!" class="anchorlink" ><span class="location">Cessna Business Park main road,Keverappa Layout</span></a>
+													</span> 
+													<span> 
+														<a href="#!" class="anchorlink" ><img src="${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>
 													</span>
 												</p>
 											</div>
@@ -210,9 +213,7 @@
 
 												<c:if test="${!empty oneComplaint.photos}">
 													<div class="issue-pic">
-														<a href="#"><img
-															src="${oneComplaint.photos[0].orgUrl}" alt=""
-															align="middle"></a>
+														<a href="#"><img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle"></a>
 													</div>
 												</c:if>
 
@@ -221,7 +222,7 @@
 									</div>
 								</c:forEach>
 
-								<div class="pagination-wrapper" style="margin-left: 34%; margin-right: 34%;">
+								<div class="pagination-wrapper" style="margin-left: 34%; margin-right: 34%; margin-bottom: 7%;">
 									<ul class="pagination">
 										<li class="disabled"><a href="#">&laquo;</a></li>
 										<li class="active"><a href="#">1</a></li>
@@ -238,14 +239,14 @@
 
 							<div id="chart_bar_c" style="border: 0px solid #fff;">
 								<svg>
-                                                        </svg>
+                                </svg>
 							</div>
 
 							<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
 
 							<div id="chart_pie_c" style="border: 0px solid #fff;">
 								<svg>
-                                                        </svg>
+                                </svg>
 							</div>
 
 						</div>

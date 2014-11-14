@@ -1,6 +1,7 @@
 .issue-info  {
     margin-left: 75px;
     margin-right: 75px;
+	padding-top: 0px;
 }
 .issue-info .desc {
     margin-top: 8px;
@@ -22,24 +23,22 @@
     line-height: 200%;
 }
 .issue-scope{
-	text-decoration: none;
-	font-size: 35px;
-    font-family: New Century Schoolbook, serif;
-	border-right: 1px solid #D2D2D2;
-	margin-right: 5px;
-	padding-right: 20px;
+	color: #5CACEE !important;
+	text-decoration: none !important;
+	font-size: 25px !important;
 }
 
 .issue-scope-type{
-	text-decoration: none;
-	font-size: 20px;
-    font-family: New Century Schoolbook, serif;
-	vertical-align: 5px;
+	color: #5CACEE !important;
+	text-decoration: none !important;
+	font-size: 15px !important;
+	vertical-align: 0px !important;
+	margin-right: 5px !important;
 }
 
 .issue_type_pic{
 	vertical-align:middle;
-    max-width: 40px;
+    max-width: 30px;
     width: auto;
     height: auto;
     border-radius: 50%;
@@ -238,7 +237,7 @@ overflow-y: auto;
 	border: 1px solid #d2d2d2;
 	border-radius: 10px;
 	padding: 5px;
-    text-decoration:none; !important;
+    text-decoration:none !important;
 }
 
 .comments_controller:hover, .comments_controller:visited, .comments_controller:link, .comments_controller:active
@@ -270,7 +269,7 @@ font-size: 14px;
 }
 
 .rightshift{
-margin-right: 20px;
+margin-right: 10px;
 }
 
 .leftshift{
@@ -293,9 +292,16 @@ border: 2px solid #F2F2F2;
 border-radius: 8px;
 /*background: radial-gradient(#E6E6FA, #FFFFFF); *//* Standard syntax (must be last) */
 width: 250px;
-margin-top: 20px;
 padding-top: 10px;
 padding-bottom: 10px;
+}
+
+.issue_reporters_box{
+margin-top: 15px;
+}
+
+.issue_reporters_box_pic{
+margin-top: 0px;
 }
 
 .profile-pic-padding{
@@ -318,7 +324,7 @@ text-align: center;
 }
 
 .md3_pad{
-    padding-left: 25px;
+    padding-left: 45px;
     padding-right: 0px;
 }
 
@@ -366,12 +372,15 @@ border-radius: 8px;
 .description_text{
 color: black;
 color: #5CACEE;
-padding-top: 60px;
+padding-top: 0px;
+margin-top: 60px !important;
 padding-right: 40px;
 word-wrap: break-word;
 text-wrap: normal;
-font-size: 20px;
+font-size: 18px;
 text-align: justify;
+max-height: 120px;
+overflow-y: auto;
 text-justify: inter-word;
 }
 
@@ -786,13 +795,13 @@ color: #B2B2B2;
 height: 160px;
 margin-top: 0px;
 border-bottom: 1px solid #F2F2F2;
-margin-bottom: 20px;}
+margin-bottom: 15px;}
 
 .issue_status_pic{
-height: 30px;
-max-height: 30px;
+height: 26px;
+max-height: 26px;
 width: 30px;
-margin-left: 8px;
+margin-left: -8px;
 }
 
 .collap_show_btn{
@@ -808,4 +817,9 @@ margin-left: 15px;
 
 body{
 padding-bottom: 0px;
+}
+
+a:hover, a:focus {
+color: #428bca !important;
+text-decoration: none !important;
 }
