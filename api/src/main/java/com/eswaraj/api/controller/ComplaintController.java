@@ -32,6 +32,7 @@ import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PhotoDto;
@@ -161,6 +162,13 @@ public class ComplaintController extends BaseController{
             IOException, ServletException {
         return complaintService.updateComplaintPoliticalAdminStatus(complaintStatusChangeByPoliticalAdminRequestDto);
     }
+
+    @RequestMapping(value = "/api/v0/complaint/user/status", method = RequestMethod.POST)
+    public @ResponseBody ComplaintDto updateUserComplaintStatus(HttpServletRequest httpServletRequest,
+            @RequestBody ComplaintStatusChangeByPersonRequestDto complaintStatusChangeByPersonRequestDto) throws ApplicationException, IOException, ServletException {
+        return complaintService.updateComplaintPersonStatus(complaintStatusChangeByPersonRequestDto);
+    }
+
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/comment", method = RequestMethod.POST)
     public @ResponseBody String postComment(HttpServletRequest httpServletRequest, @RequestBody CommentSaveRequestDto commentRequestDto)

@@ -6,6 +6,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.web.dto.CommentComplaintDto;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PhotoDto;
@@ -41,6 +42,8 @@ public interface ComplaintService {
     PoliticalAdminComplaintDto updateComplaintViewStatus(ComplaintViewdByPoliticalAdminRequestDto complaintViewdByPoliticalAdminRequestDto) throws ApplicationException;
 
     PoliticalAdminComplaintDto updateComplaintPoliticalAdminStatus(ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto) throws ApplicationException;
+
+    ComplaintDto updateComplaintPersonStatus(ComplaintStatusChangeByPersonRequestDto complaintStatusChangeByPersonRequestDto) throws ApplicationException;
 
     CommentSaveResponseDto commentOnComplaint(CommentSaveRequestDto commentRequestDto) throws ApplicationException;
 

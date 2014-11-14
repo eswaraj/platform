@@ -56,6 +56,7 @@ import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.CommentComplaintDto;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PersonDto;
@@ -507,6 +508,22 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
 
         return buildPoliticalAdminComplaint(complaint, complaintPoliticalAdmin);
+    }
+
+    @Override
+    public ComplaintDto updateComplaintPersonStatus(ComplaintStatusChangeByPersonRequestDto complaintStatusChangeByPersonRequestDto) throws ApplicationException {
+        Complaint complaint = complaintRepository.findOne(complaintStatusChangeByPersonRequestDto.getComplaintId());
+        Person person = personRepository.findOne(complaintStatusChangeByPersonRequestDto.getPersonId());
+
+        ComplaintLoggedByPerson complaintPoliticalAdmin = complaintLoggedByPersonRepository.getComplaintLoggedByPersonRelation(complaint, person);
+        if (complaintPoliticalAdmin == null) {
+            throw new ApplicationException("You can not update this complaint status");
+        }
+
+        complaint.setStatus(Complaint.Status.valueOf(complaintStatusChangeByPersonRequestDto.getStatus()));
+        complaint = complaintRepository.save(complaint);
+
+        return complaintConvertor.convertBean(complaint);
     }
 
     @Override

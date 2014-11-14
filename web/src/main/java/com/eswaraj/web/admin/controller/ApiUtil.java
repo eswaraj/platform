@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.controller.beans.ComplaintBean;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PoliticalPositionDto;
@@ -221,6 +222,12 @@ public class ApiUtil {
             throws ApplicationException {
         String urlPath = "/api/v0/complaint/politicaladmin/status";
         String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(complaintStatusChangeByPoliticalAdminRequestDto));
+        return complaints;
+    }
+
+    public String updateComplaintStatusUser(HttpServletRequest httpServletRequest, ComplaintStatusChangeByPersonRequestDto complaintStatusChangeByPersonRequestDto) throws ApplicationException {
+        String urlPath = "/api/v0/complaint/user/status";
+        String complaints = postRequest(httpServletRequest, urlPath, gson.toJson(complaintStatusChangeByPersonRequestDto));
         return complaints;
     }
 
