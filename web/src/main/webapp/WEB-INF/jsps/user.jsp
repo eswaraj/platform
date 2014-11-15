@@ -176,17 +176,19 @@
 											<div class="col-sm-10 profile-info profile_info_adjust">
 												<p class="whom" style="margin-bottom: 0px; line-height:100%;">
 													<strong class="issue-id">Issue #${oneComplaint.id}</strong>
-													<span class="connector">raised by</span> 
-													<a href="#" class="username text-limit name_adjust">${user.person.name}</a>
-													<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink issue-scope">${oneComplaint.categoryTitle}</a>
-													<a href="${location.url}/category/${oneComplaint.categoryId}.html?type=${viewType}" class="anchorlink issue-scope-type">
-													<img src="${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-													<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-														<c:if test="${oneCategory.root}">
-															<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
-														</c:if>
-													</c:forEach>
-													</a>
+													<span class="connector">raised by</span>
+
+													<span class="username text-limit name_adjust">
+														<a href="#!" class="anchorlink" >${user.person.name}</a>
+													</span>
+                                                    <span class="issue-scope-type text-limit type_adjust">
+														<img src="${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+															<c:if test="${oneCategory.root}">
+																<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
+															</c:if>
+														</c:forEach>
+													</span>
 												</p>
 
 												<p class="whenwhere">
@@ -206,6 +208,10 @@
 												</p>
 											</div>
 											<div class="issue-info">
+
+												<p>
+													<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
+												</p>
 
 												<c:if test="${!empty oneComplaint.description}">
 													<p class="desc elipsis">${oneComplaint.description}</p>
