@@ -387,8 +387,8 @@ $('.water_video_link').on('click', function(){
 });
 $('#water_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", water_infograph_img_src);
-	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://www.creativebloq.com/sites/creativebloq.com/files/images/2013/04/controllersfull2.jpg" style="left:50px;top:50px;"><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('#modal-background-infographic').fadeIn(1);
+	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://www.creativebloq.com/sites/creativebloq.com/files/images/2013/04/controllersfull2.jpg" style="left:50px;top:50px;"><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
@@ -413,8 +413,8 @@ $('.law_ord_video_link').on('click', function(){
 });
 $('#law_ord_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", law_ord_infograph_img_src);
-	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2013/10/productive.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('#modal-background-infographic').fadeIn(1);
+	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2013/10/productive.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
@@ -439,8 +439,8 @@ $('.electricity_video_link').on('click', function(){
 });
 $('#electricity_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", electricity_infograph_img_src);
-	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://th07.deviantart.net/fs50/PRE/i/2009/309/8/3/Panda_Infographic_by_Lish_55.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('#modal-background-infographic').fadeIn(1);
+	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://th07.deviantart.net/fs50/PRE/i/2009/309/8/3/Panda_Infographic_by_Lish_55.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
@@ -465,8 +465,8 @@ $('.roads_video_link').on('click', function(){
 });
 $('#roads_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", roads_infograph_img_src);
-	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://th05.deviantart.net/fs70/PRE/i/2010/287/5/9/typographic_elephant_by_lish_55-d30qrbr.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('#modal-background-infographic').fadeIn(1);
+	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://th05.deviantart.net/fs70/PRE/i/2010/287/5/9/typographic_elephant_by_lish_55-d30qrbr.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
@@ -491,8 +491,8 @@ $('.sew_san_video_link').on('click', function(){
 });
 $('#sew_san_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", sew_san_infograph_img_src);
-	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="https://farm3.staticflickr.com/2750/4314987544_ca47fb5b72_z.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('#modal-background-infographic').fadeIn(1);
+	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="https://farm3.staticflickr.com/2750/4314987544_ca47fb5b72_z.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
@@ -517,8 +517,8 @@ $('.transport_video_link').on('click', function(){
 });
 $('#transport_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", transport_infograph_img_src);
-	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2014/04/font-infography.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('#modal-background-infographic').fadeIn(1);
+	$('#modal-background-infographic .infographic_image').after( '<div class="addthis_toolbox addthis_floating_style  addthis_32x32_style" addthis:title="Water" addthis:description="Infographic for Water Category" addthis:url="http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2014/04/font-infography.jpg" style="left:50px;top:50px;" ><a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_google_plusone_share" g:plusone:count="false"></a><a class="addthis_button_gmail"></a><a class="addthis_button_compact"></a></div>' );
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
