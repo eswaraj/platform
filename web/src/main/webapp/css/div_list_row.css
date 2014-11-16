@@ -219,14 +219,14 @@ width: 100%;
 }
 
 .right_profile{
-margin-top: 15%;
-margin-right: 15%;
+margin-top: 10%;
+margin-right: 10%;
 width: 250px;
 height: auto;
 }
 
 .listing-wrapper{
-margin-left: 40px;
+margin-left: 22.5px;
 width: 750px;
 }
 
@@ -315,7 +315,7 @@ float: left;
 
 .issue_reporters_box_pic{
 background-color: #ECE9E8;
-height: 100px;
+height: 130px;
 margin-bottom: 10px;
 padding-left: 10px;
 padding-top: 10px;
@@ -323,8 +323,8 @@ padding-top: 10px;
 
 .issue_reporters_box_cover_quote{
 background-color: #5bc0de;
-height: 100px;
-margin-top: 45px;
+height: 130px;
+margin-top: 25px;
 text-align: center;
 padding: 5px;
 }
@@ -354,12 +354,21 @@ padding-top:10px;
 
 .constituency_left_pane{
 width: 22%;
+padding-left: 10px;
+padding-right: 10px;
+float: left;
 }
 
 .constituency_mid_pane{
 width: 58%;
+padding-left: 10px;
+padding-right: 10px;
+float: left;
 }
 
 .constituency_right_pane{
 width: 20%;
+padding-left: 10px;
+padding-right: 10px;
+float: left;
 }
