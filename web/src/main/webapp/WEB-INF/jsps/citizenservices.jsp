@@ -243,7 +243,7 @@
 	
     <div id="modal-background-infographic" style="display: none;">
 	<img class="infographic_image" src=""></img>
-	<div class="addthis_toolbox addthis_floating_style addthis_32x32_style" addthis:title="" addthis:description="" addthis:url="" >
+	<div class="addthis_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" >
 		<a class="addthis_button_facebook"></a>
 		<a class="addthis_button_twitter"></a>
 		<a class="addthis_button_google_plusone_share" g:plusone:count="false"></a>
@@ -280,10 +280,6 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
 
     <div id="toc">
           </div><!--/.well -->
-
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>		  
 
 <script>
 
@@ -622,6 +618,10 @@ $( "#transport_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
 
 </script>
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>		  
 
 <jsp:include page="footer.jsp" />
 </body>
