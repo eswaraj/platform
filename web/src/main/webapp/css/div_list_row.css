@@ -318,8 +318,13 @@ float: left;
 .issue_reporters_box_pic{
 background-color: #ECE9E8;
 height: 100px;
-margin-top: 45px;
 margin-bottom: 10px;
+}
+
+.issue_reporters_box_cover_quote{
+background-color: #5bc0de;
+height: 100px;
+margin-top: 45px;
 }
 
 .profile-pic-padding{
@@ -332,4 +337,10 @@ height: 150px;
 border: 5px solid #D2D2D2;
 border-radius: 30px;
 margin-left: 30px;
+}
+
+.reporter-profile-pic{
+width: 80px;
+float: left;
+border: 1px solid #ccc;
 }
