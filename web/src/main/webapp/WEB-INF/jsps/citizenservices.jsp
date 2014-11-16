@@ -237,7 +237,7 @@
 	</div>
 
     <div id="modal-background" style="display: none;">
-	<div class="addthis_sharing_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px; width: 45px;">
+	<div class="addthis_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px; width: 45px;">
 		<a class="addthis_button_facebook"></a>
 		<a class="addthis_button_twitter"></a>
 		<a class="addthis_button_google_plusone_share" g:plusone:count="false"></a>
@@ -249,7 +249,7 @@
     </div>
 	
     <div id="modal-background-infographic" style="display: none;">
-	<div class="addthis_sharing_toolbox addthis_32x32_style addthis_floating_style" data-title="" data-url="" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px; width: 45px;">
+	<div class="addthis_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px; width: 45px;">
 		<a class="addthis_button_facebook"></a>
 		<a class="addthis_button_twitter"></a>
 		<a class="addthis_button_google_plusone_share" g:plusone:count="false"></a>
@@ -262,7 +262,7 @@
 
     <div id="modal-background-content" style="display: none;">
 <div id="modal_content"></div>
-	<div class="addthis_sharing_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px; width: 45px;">
+	<div class="addthis_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px; width: 45px;">
 		<a class="addthis_button_facebook"></a>
 		<a class="addthis_button_twitter"></a>
 		<a class="addthis_button_google_plusone_share" g:plusone:count="false"></a>
