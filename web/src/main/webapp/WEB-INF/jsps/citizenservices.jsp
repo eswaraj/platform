@@ -382,6 +382,10 @@ $('#water_infographic_div').on('click', function(){
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Water Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Water Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", water_infograph_img_src);
+	var addthis_share = {
+    url: water_infograph_img_src,
+    title: "Water Category"
+	}
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -410,6 +414,10 @@ $('#law_ord_infographic_div').on('click', function(){
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Law & Order Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Law & Order Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", law_ord_infograph_img_src);
+	var addthis_share = {
+    url: law_ord_infograph_img_src,
+    title: "Law & Order Category"
+	}
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -438,6 +446,10 @@ $('#electricity_infographic_div').on('click', function(){
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Electricity Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Electricity Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", electricity_infograph_img_src);
+	var addthis_share = {
+    url: electricity_infograph_img_src,
+    title: "Electricity Category"
+	}
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -466,6 +478,10 @@ $('#roads_infographic_div').on('click', function(){
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Roads Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Roads Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", roads_infograph_img_src);
+	var addthis_share = {
+    url: roads_infograph_img_src,
+    title: "Roads Category"
+	}
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -494,6 +510,10 @@ $('#sew_san_infographic_div').on('click', function(){
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Sewage & Sanitation Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Sewage & Sanitation Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", sew_san_infograph_img_src);
+	var addthis_share = {
+    url: sew_san_infograph_img_src,
+    title: "Sewage & Sanitation Category"
+	}
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -523,6 +543,10 @@ $('#transport_infographic_div').on('click', function(){
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Transport Category");
 	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", transport_infograph_img_src);
 	$('#modal-background-infographic').fadeIn(1);
+	var addthis_share = {
+    url: transport_infograph_img_src,
+    title: "Transport Category"
+	}
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
