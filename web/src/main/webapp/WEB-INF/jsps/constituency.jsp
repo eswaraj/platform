@@ -14,13 +14,20 @@
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                             </head>
                             <body>
-								<img src="https://c1.staticflickr.com/9/8540/10201285295_15b4859929_b.jpg" style="
+								<!--img src="https://c1.staticflickr.com/9/8540/10201285295_15b4859929_b.jpg" style="
 									opacity: 0.5;
 									position: fixed;
 									height: 100%;
 									width: 100%;
 									z-index: -1;
-								">                                
+								"-->                                
+								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
+									opacity: 0.6;
+									position: fixed;
+									height: 100%;
+									width: 100%;
+									z-index: -1;
+								">
 								<div class="">
                                     <jsp:include page="header.jsp" />
                                     <script>
