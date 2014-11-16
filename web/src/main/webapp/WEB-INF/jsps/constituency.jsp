@@ -73,13 +73,13 @@
                                         <div class="row">
 											<div class="constituency_left_pane">
 												<div class="reporter_cover_profile_quote">
-													<div class="issue_reporters_box_cover_quote">
+													<div class="cons_issue_reporters_box_cover_quote">
 														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself. One drowning man will never save another.”</p> 
 													</div>
 												</div>
 
 												<div class="reporter_profile_data">
-													<div class="issue_reporters_box_pic">
+													<div class="cons_issue_reporters_box_pic">
 														<c:if test="${!empty user.person.profilePhoto}">
 															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
 														</c:if>

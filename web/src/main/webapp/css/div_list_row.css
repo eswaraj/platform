@@ -8,7 +8,7 @@
 	width: 750px;
 	margin-bottom: 15px;
 	background-color: #FFF;
-	opacity: 0.8;
+	opacity: 0.85;
 }
 
 .list-row:hover {
@@ -315,7 +315,7 @@ border: 0px solid #ccc;
 float: left;
 }
 
-.issue_reporters_box_pic{
+.cons_issue_reporters_box_pic{
 background-color: #ECE9E8;
 height: 130px;
 margin-bottom: 10px;
@@ -323,7 +323,7 @@ padding-left: 15px;
 padding-top: 15px;
 }
 
-.issue_reporters_box_cover_quote{
+.cons_issue_reporters_box_cover_quote{
 background-color: #5bc0de;
 height: 130px;
 margin-top: 25px;
