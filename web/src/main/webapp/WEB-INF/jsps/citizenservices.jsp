@@ -400,11 +400,22 @@ $.each(headTags, function (index, tag) {
 if ( $( "#citizenservices" ).has( "water_col" ) ) {
 water_img_src = "http://www.youtube.com/embed/R1MqsddGeUw"; //waterurl
 water_infograph_img_src = "http://www.creativebloq.com/sites/creativebloq.com/files/images/2013/04/controllersfull2.jpg";
+water_content="http://www.lipsum.com/"
+
 var arr = water_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#water_col .video_img' ).attr("src", url);
 $('.water_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", water_img_src);
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', water_img_src);
+    $("meta[itemprop='url']").attr("content", water_img_src);
+    $("meta[property='og:url']").attr("content", water_img_src);
+    $("link[rel='canonical']").attr("href", water_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Water Category");
+    $("meta[name='title']").attr("content", "Water Category");
+    $("meta[itemprop='name']").attr("content", "Water Category");
+    $("meta[property='og:title']").attr("content", "Water Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -425,6 +436,15 @@ $('#water_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#water_content_div').on('click', function(){
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', water_content);
+    $("meta[itemprop='url']").attr("content", water_content);
+    $("meta[property='og:url']").attr("content", water_content);
+    $("link[rel='canonical']").attr("href", water_content);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Water Category");
+    $("meta[name='title']").attr("content", "Water Category");
+    $("meta[itemprop='name']").attr("content", "Water Category");
+    $("meta[property='og:title']").attr("content", "Water Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -434,11 +454,21 @@ $('#water_content_div').on('click', function(){
 if ( $( "#citizenservices" ).has( "law_ord_col" ) ) {
 law_ord_img_src = "http://www.youtube.com/embed/rapvMuB02e0"; //waterurl
 law_ord_infograph_img_src = "http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2013/10/productive.jpg";
+law_ord_content="http://www.lipsum.com/"
 var arr = law_ord_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#law_ord_col .video_img' ).attr("src", url);
 $('.law_ord_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", law_ord_img_src);
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', law_ord_img_src);
+    $("meta[itemprop='url']").attr("content", law_ord_img_src);
+    $("meta[property='og:url']").attr("content", law_ord_img_src);
+    $("link[rel='canonical']").attr("href", law_ord_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
+    $("meta[name='title']").attr("content", "Law & Order Category");
+    $("meta[itemprop='name']").attr("content", "Law & Order Category");
+    $("meta[property='og:title']").attr("content", "Law & Order Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -453,11 +483,21 @@ $('#law_ord_infographic_div').on('click', function(){
     $("meta[name='title']").attr("content", "Law & Order Category");
     $("meta[itemprop='name']").attr("content", "Law & Order Category");
     $("meta[property='og:title']").attr("content", "Law & Order Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
 $('#law_ord_content_div').on('click', function(){
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', law_ord_content);
+    $("meta[itemprop='url']").attr("content", law_ord_content);
+    $("meta[property='og:url']").attr("content", law_ord_content);
+    $("link[rel='canonical']").attr("href", law_ord_content);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
+    $("meta[name='title']").attr("content", "Law & Order Category");
+    $("meta[itemprop='name']").attr("content", "Law & Order Category");
+    $("meta[property='og:title']").attr("content", "Law & Order Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -467,11 +507,21 @@ $('#law_ord_content_div').on('click', function(){
 if ( $( "#citizenservices" ).has( "electricity_col" ) ) {
 electricity_img_src = "http://www.youtube.com/embed/hjAP8Fy5WhE"; //waterurl
 electricity_infograph_img_src = "http://th07.deviantart.net/fs50/PRE/i/2009/309/8/3/Panda_Infographic_by_Lish_55.jpg";
+electricity_content="http://www.lipsum.com/"
 var arr = electricity_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#electricity_col .video_img' ).attr("src", url);
 $('.electricity_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", electricity_img_src);
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', electricity_img_src);
+    $("meta[itemprop='url']").attr("content", electricity_img_src);
+    $("meta[property='og:url']").attr("content", electricity_img_src);
+    $("link[rel='canonical']").attr("href", electricity_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Electricity Category");
+    $("meta[name='title']").attr("content", "Electricity Category");
+    $("meta[itemprop='name']").attr("content", "Electricity Category");
+    $("meta[property='og:title']").attr("content", "Electricity Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -486,11 +536,21 @@ $('#electricity_infographic_div').on('click', function(){
     $("meta[name='title']").attr("content", "Electricity Category");
     $("meta[itemprop='name']").attr("content", "Electricity Category");
     $("meta[property='og:title']").attr("content", "Electricity Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
 $('#electricity_content_div').on('click', function(){
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', electricity_content);
+    $("meta[itemprop='url']").attr("content", electricity_content);
+    $("meta[property='og:url']").attr("content", electricity_content);
+    $("link[rel='canonical']").attr("href", electricity_content);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Electricity Category");
+    $("meta[name='title']").attr("content", "Electricity Category");
+    $("meta[itemprop='name']").attr("content", "Electricity Category");
+    $("meta[property='og:title']").attr("content", "Electricity Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -500,11 +560,21 @@ $('#electricity_content_div').on('click', function(){
 if ( $( "#citizenservices" ).has( "roads_col" ) ) {
 roads_img_src = "http://www.youtube.com/embed/R1MqsddGeUw"; //roads_url
 roads_infograph_img_src = "http://th05.deviantart.net/fs70/PRE/i/2010/287/5/9/typographic_elephant_by_lish_55-d30qrbr.jpg";
+roads_content="http://www.lipsum.com/"
 var arr = roads_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#roads_col .video_img' ).attr("src", url);
 $('.roads_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", roads_img_src);
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', roads_img_src);
+    $("meta[itemprop='url']").attr("content", roads_img_src);
+    $("meta[property='og:url']").attr("content", roads_img_src);
+    $("link[rel='canonical']").attr("href", roads_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Roads Category");
+    $("meta[name='title']").attr("content", "Roads Category");
+    $("meta[itemprop='name']").attr("content", "Roads Category");
+    $("meta[property='og:title']").attr("content", "Roads Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -519,11 +589,21 @@ $('#roads_infographic_div').on('click', function(){
     $("meta[name='title']").attr("content", "Roads Category");
     $("meta[itemprop='name']").attr("content", "Roads Category");
     $("meta[property='og:title']").attr("content", "Roads Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
 $('#roads_content_div').on('click', function(){
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', roads_content);
+    $("meta[itemprop='url']").attr("content", roads_content);
+    $("meta[property='og:url']").attr("content", roads_content);
+    $("link[rel='canonical']").attr("href", roads_content);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Roads Category");
+    $("meta[name='title']").attr("content", "Roads Category");
+    $("meta[itemprop='name']").attr("content", "Roads Category");
+    $("meta[property='og:title']").attr("content", "Roads Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -533,11 +613,21 @@ $('#roads_content_div').on('click', function(){
 if ( $( "#citizenservices" ).has( "sew_san_col" ) ) {
 sew_san_img_src = "http://www.youtube.com/embed/X63ZVyjd4dY"; //sew_san_url
 sew_san_infograph_img_src = "https://farm3.staticflickr.com/2750/4314987544_ca47fb5b72_z.jpg";
+sew_san_content="http://www.lipsum.com/"
 var arr = sew_san_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#sew_san_col .video_img' ).attr("src", url);
 $('.sew_san_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", sew_san_img_src);
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', sew_san_img_src);
+    $("meta[itemprop='url']").attr("content", sew_san_img_src);
+    $("meta[property='og:url']").attr("content", sew_san_img_src);
+    $("link[rel='canonical']").attr("href", sew_san_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Sewage & Sanitation Category");
+    $("meta[name='title']").attr("content", "Sewage & Sanitation Category");
+    $("meta[itemprop='name']").attr("content", "Sewage & Sanitation Category");
+    $("meta[property='og:title']").attr("content", "Sewage & Sanitation Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -552,11 +642,21 @@ $('#sew_san_infographic_div').on('click', function(){
     $("meta[name='title']").attr("content", "Sewage & Sanitation Category");
     $("meta[itemprop='name']").attr("content", "Sewage & Sanitation Category");
     $("meta[property='og:title']").attr("content", "Sewage & Sanitation Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
 $('#sew_san_content_div').on('click', function(){
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', sew_san_content);
+    $("meta[itemprop='url']").attr("content", sew_san_content);
+    $("meta[property='og:url']").attr("content", sew_san_content);
+    $("link[rel='canonical']").attr("href", sew_san_content);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Sewage & Sanitation Category");
+    $("meta[name='title']").attr("content", "Sewage & Sanitation Category");
+    $("meta[itemprop='name']").attr("content", "Sewage & Sanitation Category");
+    $("meta[property='og:title']").attr("content", "Sewage & Sanitation Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -566,11 +666,21 @@ $('#sew_san_content_div').on('click', function(){
 if ( $( "#citizenservices" ).has( "transport_col" ) ) {
 transport_img_src = "http://www.youtube.com/embed/rapvMuB02e0"; //transport_url
 transport_infograph_img_src = "http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2014/04/font-infography.jpg";
+transport_content="http://www.lipsum.com/"
 var arr = transport_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#transport_col .video_img' ).attr("src", url);
 $('.transport_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", transport_img_src);
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', transport_img_src);
+    $("meta[itemprop='url']").attr("content", transport_img_src);
+    $("meta[property='og:url']").attr("content", transport_img_src);
+    $("link[rel='canonical']").attr("href", transport_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Transport Category");
+    $("meta[name='title']").attr("content", "Transport Category");
+    $("meta[itemprop='name']").attr("content", "Transport Category");
+    $("meta[property='og:title']").attr("content", "Transport Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -585,10 +695,21 @@ $('#transport_infographic_div').on('click', function(){
     $("meta[name='title']").attr("content", "Transport Category");
     $("meta[itemprop='name']").attr("content", "Transport Category");
     $("meta[property='og:title']").attr("content", "Transport Category");
+    addthis.toolbox(".addthis_toolbox");
+	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
 $('#transport_content_div').on('click', function(){
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', transport_content);
+    $("meta[itemprop='url']").attr("content", transport_content);
+    $("meta[property='og:url']").attr("content", transport_content);
+    $("link[rel='canonical']").attr("href", transport_content);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Transport Category");
+    $("meta[name='title']").attr("content", "Transport Category");
+    $("meta[itemprop='name']").attr("content", "Transport Category");
+    $("meta[property='og:title']").attr("content", "Transport Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
