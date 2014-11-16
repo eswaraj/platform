@@ -58,13 +58,32 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-sm-2">
+												<div class="issue_reporters_box_pic">
+
+													<p class="text_reporters_p">
+														<a href="#!" class="text_reporters_anchor_pic">
+															<c:forEach var="cat" items="${complaint.categories}">
+																<c:if test="${not cat.root}">
+																	${cat.name} Complaints 
+																</c:if>
+															</c:forEach>
+
+														</a>
+													</p>
+
+													<div class="profile-pic profile-pic-padding">
+														<a href="#!" ><img src="${staticHost}/images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
+													</div>
+
+												</div>
+
                                                 <div class="left_filter">
                                                     <p>
                                                         <strong>Refine Search</strong>
                                                     </p>
                                                     <div class="refine-search">
                                                         <input type="text" value="Amsterdam,Washington" data-role="tagsinput">
-                                                        <div class="filter-options">
+                                                        <!-- <div class="filter-options">
                                                             <span class="trigger btn btn-default"> <i
                                                                                                       class="glyphicon glyphicon-cog"></i>
                                                             </span>
@@ -120,7 +139,7 @@
                                                                     <div class="btn btn-primary btn-xs">Search</div>
                                                                 </div>
                                                                 </form>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                                 <p>

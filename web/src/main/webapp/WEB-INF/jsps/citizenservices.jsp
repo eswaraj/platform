@@ -379,6 +379,24 @@ $('.play_video_image').delay(2500).fadeIn(500);
 
 window.onload = function() {
 
+var headTags = [
+   '<meta name="title"        content="" />',
+   '<meta itemprop="name"     content="" />',
+   '<meta property="og:title" content="" />',
+   '<meta itemprop="url"    content=""/>',
+   '<meta property="og:url" content=""/>',
+   '<link rel="canonical"   href=""/>',
+   '<meta itemprop="image"    content="">',
+   '<meta property="og:image" content="">',
+   '<meta property="og:image:width" content="">',
+   '<meta property="og:image:height" content="">',
+];
+
+$.each(headTags, function (index, tag) {
+    $('head').append(tag);
+});
+
+
 if ( $( "#citizenservices" ).has( "water_col" ) ) {
 water_img_src = "http://www.youtube.com/embed/R1MqsddGeUw"; //waterurl
 water_infograph_img_src = "http://www.creativebloq.com/sites/creativebloq.com/files/images/2013/04/controllersfull2.jpg";
@@ -393,13 +411,15 @@ $('.water_video_link').on('click', function(){
 });
 $('#water_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", water_infograph_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Water Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Water Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", water_infograph_img_src);
-	var addthis_share = {
-    url: "http://www.creativebloq.com/sites/creativebloq.com/files/images/2013/04/controllersfull2.jpg",
-    title: "Water Category"
-	}
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', water_infograph_img_src);
+    $("meta[itemprop='url']").attr("content", water_infograph_img_src);
+    $("meta[property='og:url']").attr("content", water_infograph_img_src);
+    $("link[rel='canonical']").attr("href", water_infograph_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Water Category");
+    $("meta[name='title']").attr("content", "Water Category");
+    $("meta[itemprop='name']").attr("content", "Water Category");
+    $("meta[property='og:title']").attr("content", "Water Category");
+    addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -425,13 +445,14 @@ $('.law_ord_video_link').on('click', function(){
 });
 $('#law_ord_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", law_ord_infograph_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Law & Order Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Law & Order Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", law_ord_infograph_img_src);
-	var addthis_share = {
-    url: "http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2013/10/productive.jpg",
-    title: "Law & Order Category"
-	}
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', law_ord_infograph_img_src);
+    $("meta[itemprop='url']").attr("content", law_ord_infograph_img_src);
+    $("meta[property='og:url']").attr("content", law_ord_infograph_img_src);
+    $("link[rel='canonical']").attr("href", law_ord_infograph_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
+    $("meta[name='title']").attr("content", "Law & Order Category");
+    $("meta[itemprop='name']").attr("content", "Law & Order Category");
+    $("meta[property='og:title']").attr("content", "Law & Order Category");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -457,13 +478,14 @@ $('.electricity_video_link').on('click', function(){
 });
 $('#electricity_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", electricity_infograph_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Electricity Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Electricity Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", electricity_infograph_img_src);
-	var addthis_share = {
-    url: "http://th07.deviantart.net/fs50/PRE/i/2009/309/8/3/Panda_Infographic_by_Lish_55.jpg",
-    title: "Electricity Category"
-	}
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', electricity_infograph_img_src);
+    $("meta[itemprop='url']").attr("content", electricity_infograph_img_src);
+    $("meta[property='og:url']").attr("content", electricity_infograph_img_src);
+    $("link[rel='canonical']").attr("href", electricity_infograph_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Electricity Category");
+    $("meta[name='title']").attr("content", "Electricity Category");
+    $("meta[itemprop='name']").attr("content", "Electricity Category");
+    $("meta[property='og:title']").attr("content", "Electricity Category");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -489,13 +511,14 @@ $('.roads_video_link').on('click', function(){
 });
 $('#roads_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", roads_infograph_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Roads Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Roads Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", roads_infograph_img_src);
-	var addthis_share = {
-    url: "http://th05.deviantart.net/fs70/PRE/i/2010/287/5/9/typographic_elephant_by_lish_55-d30qrbr.jpg",
-    title: "Roads Category"
-	}
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', roads_infograph_img_src);
+    $("meta[itemprop='url']").attr("content", roads_infograph_img_src);
+    $("meta[property='og:url']").attr("content", roads_infograph_img_src);
+    $("link[rel='canonical']").attr("href", roads_infograph_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Roads Category");
+    $("meta[name='title']").attr("content", "Roads Category");
+    $("meta[itemprop='name']").attr("content", "Roads Category");
+    $("meta[property='og:title']").attr("content", "Roads Category");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -521,13 +544,14 @@ $('.sew_san_video_link').on('click', function(){
 });
 $('#sew_san_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", sew_san_infograph_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Sewage & Sanitation Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Sewage & Sanitation Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", sew_san_infograph_img_src);
-	var addthis_share = {
-    url: "https://farm3.staticflickr.com/2750/4314987544_ca47fb5b72_z.jpg",
-    title: "Sewage & Sanitation Category"
-	}
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', sew_san_infograph_img_src);
+    $("meta[itemprop='url']").attr("content", sew_san_infograph_img_src);
+    $("meta[property='og:url']").attr("content", sew_san_infograph_img_src);
+    $("link[rel='canonical']").attr("href", sew_san_infograph_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Sewage & Sanitation Category");
+    $("meta[name='title']").attr("content", "Sewage & Sanitation Category");
+    $("meta[itemprop='name']").attr("content", "Sewage & Sanitation Category");
+    $("meta[property='og:title']").attr("content", "Sewage & Sanitation Category");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
@@ -553,14 +577,14 @@ $('.transport_video_link').on('click', function(){
 });
 $('#transport_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", transport_infograph_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:title", "Transport Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:description", "Infographic for Transport Category");
-	$('#modal-background-infographic .addthis_32x32_style').attr("addthis:url", transport_infograph_img_src);
-	$('#modal-background-infographic').fadeIn(1);
-	var addthis_share = {
-    url: "http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2014/04/font-infography.jpg",
-    title: "Transport Category"
-	}
+	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', transport_infograph_img_src);
+    $("meta[itemprop='url']").attr("content", transport_infograph_img_src);
+    $("meta[property='og:url']").attr("content", transport_infograph_img_src);
+    $("link[rel='canonical']").attr("href", transport_infograph_img_src);
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Transport Category");
+    $("meta[name='title']").attr("content", "Transport Category");
+    $("meta[itemprop='name']").attr("content", "Transport Category");
+    $("meta[property='og:title']").attr("content", "Transport Category");
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
