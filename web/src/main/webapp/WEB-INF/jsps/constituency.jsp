@@ -14,7 +14,14 @@
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                             </head>
                             <body>
-                                <div class="">
+								<img src="https://c1.staticflickr.com/9/8540/10201285295_15b4859929_b.jpg" style="
+									opacity: 0.5;
+									position: fixed;
+									height: 100%;
+									width: 100%;
+									z-index: -1;
+								">                                
+								<div class="">
                                     <jsp:include page="header.jsp" />
                                     <script>
                                         jQuery(document).ready(function() {
@@ -67,7 +74,7 @@
 												<div class="reporter_profile_data">
 													<div class="issue_reporters_box_pic">
 														<c:if test="${!empty user.person.profilePhoto}">
-															<img src="${user.person.profilePhoto}?type=square&width=80&height=80" alt="profile-pic" class= "reporter-profile-pic">
+															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
 														</c:if>
 														<c:if test="${empty user.person.profilePhoto}">
 															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
