@@ -60,10 +60,10 @@
                                             <div class="col-sm-2">
 												<div class="issue_reporters_box_pic">
 													<c:if test="${!empty user.person.profilePhoto}">
-														<img src="${user.person.profilePhoto}?type=square&width=300&height=300" alt="profile-pic" class= "profile-pic">
+														<img src="${user.person.profilePhoto}?type=square&width=80&height=80" alt="profile-pic" class= "profile-pic">
 													</c:if>
 													<c:if test="${empty user.person.profilePhoto}">
-														<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=300&height=300" alt="profile-pic" style="border: 1px solid #ccc;">
+														<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" style="border: 1px solid #ccc;">
 													</c:if>
 													<p class="read center-align">
 													<c:if test="${!empty user.person.profilePhoto}">
