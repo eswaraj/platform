@@ -282,6 +282,7 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
           </div><!--/.well -->
 
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>		  
 
 <script>
