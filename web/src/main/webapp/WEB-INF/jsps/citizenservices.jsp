@@ -407,7 +407,7 @@ var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#water_col .video_img' ).attr("src", url);
 $('.water_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", water_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', water_img_src);
+	$('#modal-background .addthis_32x32_style').attr('addthis:url', water_img_src);
     $("meta[itemprop='url']").attr("content", water_img_src);
     $("meta[property='og:url']").attr("content", water_img_src);
     $("link[rel='canonical']").attr("href", water_img_src);
@@ -436,7 +436,7 @@ $('#water_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#water_content_div').on('click', function(){
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', water_content);
+	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', water_content);
     $("meta[itemprop='url']").attr("content", water_content);
     $("meta[property='og:url']").attr("content", water_content);
     $("link[rel='canonical']").attr("href", water_content);
@@ -460,7 +460,7 @@ var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#law_ord_col .video_img' ).attr("src", url);
 $('.law_ord_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", law_ord_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', law_ord_img_src);
+	$('#modal-background .addthis_32x32_style').attr('addthis:url', law_ord_img_src);
     $("meta[itemprop='url']").attr("content", law_ord_img_src);
     $("meta[property='og:url']").attr("content", law_ord_img_src);
     $("link[rel='canonical']").attr("href", law_ord_img_src);
@@ -489,7 +489,7 @@ $('#law_ord_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#law_ord_content_div').on('click', function(){
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', law_ord_content);
+	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', law_ord_content);
     $("meta[itemprop='url']").attr("content", law_ord_content);
     $("meta[property='og:url']").attr("content", law_ord_content);
     $("link[rel='canonical']").attr("href", law_ord_content);
@@ -513,7 +513,7 @@ var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#electricity_col .video_img' ).attr("src", url);
 $('.electricity_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", electricity_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', electricity_img_src);
+	$('#modal-background .addthis_32x32_style').attr('addthis:url', electricity_img_src);
     $("meta[itemprop='url']").attr("content", electricity_img_src);
     $("meta[property='og:url']").attr("content", electricity_img_src);
     $("link[rel='canonical']").attr("href", electricity_img_src);
@@ -542,7 +542,7 @@ $('#electricity_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#electricity_content_div').on('click', function(){
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', electricity_content);
+	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', electricity_content);
     $("meta[itemprop='url']").attr("content", electricity_content);
     $("meta[property='og:url']").attr("content", electricity_content);
     $("link[rel='canonical']").attr("href", electricity_content);
@@ -566,7 +566,7 @@ var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#roads_col .video_img' ).attr("src", url);
 $('.roads_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", roads_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', roads_img_src);
+	$('#modal-background .addthis_32x32_style').attr('addthis:url', roads_img_src);
     $("meta[itemprop='url']").attr("content", roads_img_src);
     $("meta[property='og:url']").attr("content", roads_img_src);
     $("link[rel='canonical']").attr("href", roads_img_src);
@@ -595,7 +595,7 @@ $('#roads_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#roads_content_div').on('click', function(){
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', roads_content);
+	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', roads_content);
     $("meta[itemprop='url']").attr("content", roads_content);
     $("meta[property='og:url']").attr("content", roads_content);
     $("link[rel='canonical']").attr("href", roads_content);
@@ -619,7 +619,7 @@ var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#sew_san_col .video_img' ).attr("src", url);
 $('.sew_san_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", sew_san_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', sew_san_img_src);
+	$('#modal-background .addthis_32x32_style').attr('addthis:url', sew_san_img_src);
     $("meta[itemprop='url']").attr("content", sew_san_img_src);
     $("meta[property='og:url']").attr("content", sew_san_img_src);
     $("link[rel='canonical']").attr("href", sew_san_img_src);
@@ -648,7 +648,7 @@ $('#sew_san_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#sew_san_content_div').on('click', function(){
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', sew_san_content);
+	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', sew_san_content);
     $("meta[itemprop='url']").attr("content", sew_san_content);
     $("meta[property='og:url']").attr("content", sew_san_content);
     $("link[rel='canonical']").attr("href", sew_san_content);
@@ -672,7 +672,7 @@ var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
 $( '#transport_col .video_img' ).attr("src", url);
 $('.transport_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", transport_img_src);
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', transport_img_src);
+	$('#modal-background .addthis_32x32_style').attr('addthis:url', transport_img_src);
     $("meta[itemprop='url']").attr("content", transport_img_src);
     $("meta[property='og:url']").attr("content", transport_img_src);
     $("link[rel='canonical']").attr("href", transport_img_src);
@@ -701,7 +701,7 @@ $('#transport_infographic_div').on('click', function(){
 	$("#toc").fadeOut(1);
 });
 $('#transport_content_div').on('click', function(){
-	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', transport_content);
+	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', transport_content);
     $("meta[itemprop='url']").attr("content", transport_content);
     $("meta[property='og:url']").attr("content", transport_content);
     $("link[rel='canonical']").attr("href", transport_content);
