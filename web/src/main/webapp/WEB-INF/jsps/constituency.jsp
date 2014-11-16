@@ -135,9 +135,13 @@
 											<div class="constituency_mid_pane">
 												<div class="listing-wrapper">
 													<div class="secondary-wrapper">
-														<h1 class="loc_head_text">${location.name}</h1> 
 														<div class="views_div">
-
+																<a type="button" href="#!" title="Location View">
+																<div class="cons_location_name">
+																	<span class="location_text_adjust">${location.name}</span>
+																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">
+																</div>
+																</a>	
 															<c:if test="${viewType eq 'list'}">
 																<a type="button" href="#" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
 																<a type="button" href="?type=map" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
