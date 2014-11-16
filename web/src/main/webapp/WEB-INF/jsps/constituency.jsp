@@ -22,7 +22,7 @@
 									z-index: -1;
 								"-->                                
 								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
-									opacity: 0.6;
+									opacity: 0.4;
 									position: fixed;
 									height: 100%;
 									width: 100%;
@@ -338,13 +338,39 @@
 											</div>
 											<div class="constituency_right_pane">
 												<div class="right_profile">
-													<c:forEach items="${leaders}" var="oneLeader">
-														<div class="mla-profile">
-															<img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
-															<a href="${oneLeader.urlIdentifier}.html"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
-															<p>In Office since ${oneLeader.since}</p>
-														</div>					
-													</c:forEach>
+													<div id="myCarousel" class="carousel slide" data-ride="carousel">
+														<!-- Carousel items -->
+														<div class="carousel-inner">
+
+															<c:if test="${!empty leaders}">
+																<c:forEach items="${leaders}" var="oneLeader"  varStatus="counter">
+																	<c:choose>
+																		<c:when test="${counter.count == '1'}">
+																			<div class="active item">
+																				<img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
+																				<a href="${oneLeader.urlIdentifier}.html"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
+																				<p>In Office since ${oneLeader.since}</p>
+																			</div>
+																		</c:when>
+
+																		<c:otherwise>
+																			<div class="item">
+																				<img src="${oneLeader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="Leader image"><br \>
+																				<a href="${oneLeader.urlIdentifier}.html"><strong>${oneLeader.name}, ${oneLeader.politicalAdminType.shortName}</strong></a><br \>
+																				<p>In Office since ${oneLeader.since}</p>
+																			</div>
+																		</c:otherwise>
+																	</c:choose>
+																</c:forEach>
+															</c:if>
+														</div>
+														
+														<c:if test="${fn:length(leaders) > 1}">
+															<!-- Carousel nav -->
+															<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+															<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+														</c:if>
+													</div>
 												</div>
 											</div>
                                     </div>
