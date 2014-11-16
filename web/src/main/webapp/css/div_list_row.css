@@ -219,10 +219,8 @@ width: 100%;
 }
 
 .right_profile{
-position: fixed;
-right: 10px;
-top: 15%;
-margin-right: 30px;
+margin-top: 15%;
+margin-right: 15%;
 width: 250px;
 height: auto;
 }
@@ -352,4 +350,16 @@ border: 1px solid #ccc;
 .center-align{
 text-align: center;
 padding-top:10px;
+}
+
+.constituency_left_pane{
+width: 22%;
+}
+
+.constituency_mid_pane{
+width: 58%;
+}
+
+.constituency_right_pane{
+width: 20%;
 }
