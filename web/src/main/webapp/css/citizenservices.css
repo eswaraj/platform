@@ -260,3 +260,7 @@ display: none;
 #at4-thankyou{
 display: none;
 }
+
+.addthis_floating_style {
+background: none;
+}
