@@ -60,7 +60,7 @@
                                             <div class="col-sm-2">
 												<div class="reporter_cover_profile_quote">
 													<div class="issue_reporters_box_cover_quote">
-															<strong>${user.person.name}</strong> 
+															<strong>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself. One drowning man will never save another.”</strong> 
 													</div>
 												</div>
 

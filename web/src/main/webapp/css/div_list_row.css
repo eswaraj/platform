@@ -319,12 +319,16 @@ float: left;
 background-color: #ECE9E8;
 height: 100px;
 margin-bottom: 10px;
+padding-left: 10px;
+padding-top: 10px;
 }
 
 .issue_reporters_box_cover_quote{
 background-color: #5bc0de;
 height: 100px;
 margin-top: 45px;
+text-align: center;
+padding: 5px;
 }
 
 .profile-pic-padding{
