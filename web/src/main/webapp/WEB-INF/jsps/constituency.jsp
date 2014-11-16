@@ -59,22 +59,22 @@
                                         <div class="row">
                                             <div class="col-sm-2">
 												<div class="issue_reporters_box_pic">
-
-													<p class="text_reporters_p">
-														<a href="#!" class="text_reporters_anchor_pic">
-															<c:forEach var="cat" items="${complaint.categories}">
-																<c:if test="${not cat.root}">
-																	${cat.name} Complaints 
-																</c:if>
-															</c:forEach>
-
-														</a>
+													<img src="${user.person.profilePhoto}?type=square&width=300&height=300" alt="profile-pic" class= "profile-pic">
+													<p class="read center-align">
+														<strong>${user.person.name}</strong> <br> 
+														<span> 
+														<c:if test="${!empty age}">
+														${age} Yrs,
+														</c:if>
+														${user.person.gender}
+														</span>
 													</p>
-
-													<div class="profile-pic profile-pic-padding">
-														<a href="#!" ><img src="${staticHost}/images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
-													</div>
-
+													<p class="center-align">
+														<strong>My Raised Complaints</strong> <br> 
+														<span> 
+														200
+														</span>
+													</p>
 												</div>
 
                                                 <div class="left_filter">
