@@ -237,12 +237,6 @@
 	</div>
 
     <div id="modal-background" style="display: none;">
-	<iframe class="video_play" src="" frameborder="0" allowfullscreen></iframe>
-	<a href="#0" class="close-btn">Close</a>
-    </div>
-	
-    <div id="modal-background-infographic" style="display: none;">
-	<img class="infographic_image" src=""></img>
 	<div class="addthis_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" >
 		<a class="addthis_button_facebook"></a>
 		<a class="addthis_button_twitter"></a>
@@ -250,6 +244,19 @@
 		<a class="addthis_button_gmail"></a>
 		<a class="addthis_button_compact"></a>
 	</div>	
+	<iframe class="video_play" src="" frameborder="0" allowfullscreen></iframe>
+	<a href="#0" class="close-btn">Close</a>
+    </div>
+	
+    <div id="modal-background-infographic" style="display: none;">
+	<div class="addthis_toolbox addthis_32x32_style addthis_floating_style" addthis:title="" addthis:description="" addthis:url="" >
+		<a class="addthis_button_facebook"></a>
+		<a class="addthis_button_twitter"></a>
+		<a class="addthis_button_google_plusone_share" g:plusone:count="false"></a>
+		<a class="addthis_button_gmail"></a>
+		<a class="addthis_button_compact"></a>
+	</div>	
+	<img class="infographic_image" src=""></img>
 	<a href="#0" class="close-btn">Close</a>
     </div>
 

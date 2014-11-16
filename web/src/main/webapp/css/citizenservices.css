@@ -253,3 +253,10 @@ position: absolute;
 bottom: -51px; 
 width: 100%; 
 }
+
+body > div.at4-share-outer-right.addthis-smartlayers.addthis-smartlayers-desktop{
+display: none;
+}
+#at4-thankyou{
+display: none;
+}
