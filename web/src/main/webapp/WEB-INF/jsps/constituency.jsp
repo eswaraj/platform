@@ -58,33 +58,41 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-sm-2">
-												<div class="issue_reporters_box_pic">
-													<c:if test="${!empty user.person.profilePhoto}">
-														<img src="${user.person.profilePhoto}?type=square&width=80&height=80" alt="profile-pic" class= "profile-pic">
-													</c:if>
-													<c:if test="${empty user.person.profilePhoto}">
-														<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" style="border: 1px solid #ccc;">
-													</c:if>
-													<p class="read center-align">
-													<c:if test="${!empty user.person.profilePhoto}">
-														<strong>${user.person.name}</strong> <br> 
-														<c:if test="${!empty age}">
-														${age} Yrs,
+												<div class="reporter_cover_profile_quote">
+													<div class="issue_reporters_box_cover_quote">
+															<strong>${user.person.name}</strong> 
+													</div>
+												</div>
+
+												<div class="reporter_profile_data">
+													<div class="issue_reporters_box_pic">
+														<c:if test="${!empty user.person.profilePhoto}">
+															<img src="${user.person.profilePhoto}?type=square&width=80&height=80" alt="profile-pic" class= "reporter-profile-pic">
 														</c:if>
-														<span> 
-														${user.person.gender}
-														</span>
-													</c:if>
-													<c:if test="${empty user.person.profilePhoto}">
-														<strong>Aam Aadmi</strong> <br> 
-													</c:if>
-													</p>
-													<p class="center-align">
-														<strong>My Raised Complaints</strong> <br> 
-														<span> 
-														200
-														</span>
-													</p>
+														<c:if test="${empty user.person.profilePhoto}">
+															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="reporter-profile-pic">
+														</c:if>
+														<p class="read center-align">
+														<c:if test="${!empty user.person.profilePhoto}">
+															<strong>${user.person.name}</strong> <br /> 
+															<c:if test="${!empty age}">
+															${age} Yrs,
+															</c:if>
+															<span> 
+															${user.person.gender}
+															</span>
+														</c:if>
+														<c:if test="${empty user.person.profilePhoto}">
+															<strong>Aam Aadmi</strong> <br /> 
+														</c:if>
+														</p>
+														<p class="center-align">
+															<strong>My Raised Complaints</strong> <br /> 
+															<span> 
+															200
+															</span>
+														</p>
+													</div>
 												</div>
 
                                                 <div class="left_filter">
