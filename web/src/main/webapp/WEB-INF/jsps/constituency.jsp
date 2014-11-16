@@ -72,7 +72,7 @@
 														<c:if test="${empty user.person.profilePhoto}">
 															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
 														</c:if>
-														<p class="read center-align">
+														<p class="center-align">
 														<c:if test="${!empty user.person.profilePhoto}">
 															<strong>${user.person.name}</strong> <br /> 
 															<c:if test="${!empty age}">

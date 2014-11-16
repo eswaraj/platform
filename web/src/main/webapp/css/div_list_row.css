@@ -344,3 +344,8 @@ width: 80px;
 float: left;
 border: 1px solid #ccc;
 }
+
+.center-align{
+text-align: center;
+padding-top:10px;
+}
