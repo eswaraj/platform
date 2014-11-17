@@ -431,59 +431,17 @@ margin-right: 20px;
 
 .platform_constituency_counter{
 background-color: #ECE9E8;
-height: 130px;
+height: auto;
 margin-bottom: 10px;
-padding: 5px;
+padding: 10px;
+padding-left: 15px;
 margin-top: 10px;
 border-radius: 10px;
 width: 200px;
 }
 
-.total_cons_population{
-clear: both;
-float:left;
+.total_cons_population,.total_cons_area,.total_voters,.total_const_count,.total_eswaraj_reg_voters,.total_eswaraj_const_coverage{
 font-size: 12px;
-margin-right: 5px;
-margin-left: 10px;
-padding-top: 5px;
-}
-
-.total_cons_area{
-float: left;
-font-size: 12px;
-padding-top: 5px;
-margin-left: 15px;
-}
-
-.total_voters{
-float: left;
-font-size: 12px;
-padding-top: 5px;
-margin-left: 10px;
-margin-right: 5px;
-}
-
-.total_const_count{
-float: left;
-font-size: 12px;
-padding-top: 5px;
-margin-left: 10px;
-margin-right: 5px;
-}
-
-.total_eswaraj_reg_voters{
-float: left;
-font-size: 12px;
-padding-top: 5px;
-margin-left: 10px;
-margin-right: 5px;
-}
-
-.total_eswaraj_const_coverage{
-float: left;
-font-size: 12px;
-padding-top: 5px;
-margin-left: 5px;
 }
 
 .complaints_followers_counter{

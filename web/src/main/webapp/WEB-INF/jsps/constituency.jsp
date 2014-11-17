@@ -415,7 +415,7 @@
 													<!--div class="addthis_horizontal_follow_toolbox" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px;">
 													</div-->	
 													
-													<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+													<div class="addthis_toolbox addthis_default_style addthis_20x20_style">
 														<a class="addthis_counter_facebook"></a>
 														<a class="addthis_counter_twitter"></a>
 													</div>
