@@ -385,27 +385,40 @@
 													<div class="platform_constituency_counter">
 													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Constituency</span></p>
 													<p class="total_cons_population">
-														<span class="grey_text">Population</span> <br /> 
+														<span class="grey_text">Total Population</span> <br /> 
 														<strong class="blue_color_text">9.879 million</strong>
 													</p>
-													<p class="total_cons_issue_reporters">
-														<span class="grey_text">Issue Reporters</span> <br /> 
-														<strong class="blue_color_text">23533</strong>
+													<p class="total_cons_area">
+														<span class="grey_text">Total Area</span> <br /> 
+														<strong class="blue_color_text">1,484 km²</strong>
 													</p>
-													<p class="total_registered_complaints">
-														<span class="grey_text">All Complaints</span> <br /> 
-														<strong class="blue_color_text">564575</strong>
+													<p class="total_const_count">
+														<span class="grey_text">Total Constituencies</span> <br /> 
+														<strong class="blue_color_text">70</strong>
 													</p>
-													<p class="total_resolved_complaints">
-														<span class="grey_text">Total Resolved</span> <br /> 
-														<strong class="blue_color_text">7452</strong>
+													<p class="total_voters">
+														<span class="grey_text">Total Voters</span> <br /> 
+														<strong class="blue_color_text">56458975</strong>
+													</p>
+													<p class="total_eswaraj_reg_voters">
+														<span class="grey_text">Voters with eSwaraj</span> <br /> 
+														<strong class="blue_color_text">42453975</strong>
+													</p>
+													<p class="total_eswaraj_const_coverage">
+														<span class="grey_text">eSwaraj Coverage</span> <br /> 
+														<strong class="blue_color_text">90%</strong>
 													</p>
 													</div>
 
 													<div class="social_media_sharing_buttons">
 
-													<div class="addthis_horizontal_follow_toolbox" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px;">
-													</div>	
+													<!--div class="addthis_horizontal_follow_toolbox" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px;">
+													</div-->	
+													
+													<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+														<a class="addthis_counter_facebook"></a>
+														<a class="addthis_counter_twitter"></a>
+													</div>
 
 													<!-- Go to www.addthis.com/dashboard to customize your tools -->
 													<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>

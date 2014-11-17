@@ -434,7 +434,6 @@ background-color: #ECE9E8;
 height: 130px;
 margin-bottom: 10px;
 padding: 5px;
-text-align: center;
 margin-top: 10px;
 border-radius: 10px;
 width: 200px;
@@ -445,26 +444,42 @@ clear: both;
 float:left;
 font-size: 12px;
 margin-right: 5px;
-margin-left: 5px;
+margin-left: 10px;
 padding-top: 5px;
 }
 
-.total_cons_issue_reporters{
+.total_cons_area{
 float: left;
 font-size: 12px;
 padding-top: 5px;
-margin-left: 5px;
+margin-left: 15px;
 }
 
-.total_registered_complaints{
+.total_voters{
 float: left;
 font-size: 12px;
 padding-top: 5px;
-margin-left: 5px;
+margin-left: 10px;
 margin-right: 5px;
 }
 
-.total_resolved_complaints{
+.total_const_count{
+float: left;
+font-size: 12px;
+padding-top: 5px;
+margin-left: 10px;
+margin-right: 5px;
+}
+
+.total_eswaraj_reg_voters{
+float: left;
+font-size: 12px;
+padding-top: 5px;
+margin-left: 10px;
+margin-right: 5px;
+}
+
+.total_eswaraj_const_coverage{
 float: left;
 font-size: 12px;
 padding-top: 5px;
@@ -488,6 +503,7 @@ color: #FF3A00;
 font-weight: 700;
 width: 100%;
 margin: 0px;
+text-align: center;
 }
 
 .social_media_sharing_buttons{
@@ -505,8 +521,13 @@ display: none;
 background: none;
 }
 
-.filter_category, .ref_search, #atftbx > p > span {
+.filter_category, .ref_search {
 color: #FF3100;
+}
+
+#atftbx > p > span {
+color: #FF3100;
+font-weight: 700;
 }
 
 .blue_color_text{
