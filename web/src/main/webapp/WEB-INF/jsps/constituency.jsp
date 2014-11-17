@@ -412,7 +412,7 @@
 
 													<div class="social_media_sharing_buttons">
 
-													<p class="p_c_counter_loc red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
+													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
 														<div id="fb-root"></div>
 														<script>(function(d, s, id) {
 														  var js, fjs = d.getElementsByTagName(s)[0];
@@ -420,10 +420,14 @@
 														  js = d.createElement(s); js.id = id;
 														  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
 														  fjs.parentNode.insertBefore(js, fjs);
-														}(document, 'script', 'facebook-jssdk'));</script>
-														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+														}(document, 'script', 'facebook-jssdk'));</script>														
+														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-width="5" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>></div>
+														
+														<br />
+														
 														<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/eSwarajApp" data-text="Follow eSwaraj :" data-via="eSwarajApp" data-size="large">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+														<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+													
 													</div>
 												</div>
 											</div>
