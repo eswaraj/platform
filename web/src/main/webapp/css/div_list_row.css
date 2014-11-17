@@ -419,13 +419,17 @@ width: 200px;
 clear: both;
 float:left;
 font-size: 12px;
+margin-right: 20px;
+margin-left: 10px;
 }
 
 .reporter_complaint_followers, .reporter_complaint_visited{
 float: left;
 font-size: 12px;
+margin-right: 20px;
 }
 
 .complaints_followers_counter{
-margin-top: 10px;
+margin-top: 45px;
+text-align: center;
 }
