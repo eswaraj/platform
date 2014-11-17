@@ -110,7 +110,7 @@
 															<strong>5000</strong>
 														</p>
 														<p class="reporter_complaint_visited">
-															<span>Complaints Followed</span> <br /> 
+															<span>Following</span> <br /> 
 															<strong>50</strong>
 														</p>
 														</div>
