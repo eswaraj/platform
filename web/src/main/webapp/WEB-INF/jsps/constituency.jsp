@@ -412,16 +412,18 @@
 
 													<div class="social_media_sharing_buttons">
 
-													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
-													<div class="addthis_toolbox addthis_default_style addthis_20x20_style">
-														<a class="addthis_counter_facebook" addthis:url="https://www.facebook.com/eSwarajApp?ref=hl" ></a>
-														<a class='addthis_button_tweet' expr:tw:counturl="https://twitter.com/eSwarajApp"></a>
-<a class="addthis_button_twitter_follow_native" tw:counturl="https://twitter.com/eSwarajApp" tf:size="medium" tf:show-count="false" tf:show-screen-name="false"></a>													</div>
-
-													<!-- Go to www.addthis.com/dashboard to customize your tools -->
-													<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
-													<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>
-
+													<p class="p_c_counter_loc red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
+														<div id="fb-root"></div>
+														<script>(function(d, s, id) {
+														  var js, fjs = d.getElementsByTagName(s)[0];
+														  if (d.getElementById(id)) return;
+														  js = d.createElement(s); js.id = id;
+														  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+														  fjs.parentNode.insertBefore(js, fjs);
+														}(document, 'script', 'facebook-jssdk'));</script>
+														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+														<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/eSwarajApp" data-text="Follow eSwaraj :" data-via="eSwarajApp" data-size="large">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 													</div>
 												</div>
 											</div>
