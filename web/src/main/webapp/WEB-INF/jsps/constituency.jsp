@@ -415,12 +415,14 @@
 													<!--div class="addthis_horizontal_follow_toolbox" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px;">
 													</div-->	
 													
+													<p class="p_c_counter_loc red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
 													<div class="addthis_toolbox addthis_default_style addthis_20x20_style">
-														<a class="addthis_counter_facebook"></a>
-														<a class="addthis_counter_twitter"></a>
+														<a class="addthis_counter_facebook" addthis:url="https://www.facebook.com/eSwarajApp?ref=hl" ></a>
+														<a class="addthis_counter_twitter" addthis:url="https://twitter.com/eSwarajApp" </a>
 													</div>
 
 													<!-- Go to www.addthis.com/dashboard to customize your tools -->
+													<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
 													<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>
 
 													</div>
