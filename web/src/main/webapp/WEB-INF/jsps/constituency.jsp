@@ -416,7 +416,7 @@
 													<div class="addthis_toolbox addthis_default_style addthis_20x20_style">
 														<a class="addthis_counter_facebook" addthis:url="https://www.facebook.com/eSwarajApp?ref=hl" ></a>
 														<a class='addthis_button_tweet' expr:tw:counturl="https://twitter.com/eSwarajApp"></a>
-													</div>
+<a class="addthis_button_twitter_follow_native" tw:counturl="https://twitter.com/eSwarajApp" tf:size="medium" tf:show-count="false" tf:show-screen-name="false"></a>													</div>
 
 													<!-- Go to www.addthis.com/dashboard to customize your tools -->
 													<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
