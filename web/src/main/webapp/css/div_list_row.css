@@ -493,3 +493,14 @@ margin-bottom: 5px;
 .social_media_sharing_buttons{
 width: 200px;
 }
+
+body > div.at4-share-outer-right.addthis-smartlayers.addthis-smartlayers-desktop{
+display: none;
+}
+#at4-thankyou{
+display: none;
+}
+
+.addthis_horizontal_follow_toolbox {
+background: none;
+}
