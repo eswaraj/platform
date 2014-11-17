@@ -412,7 +412,7 @@
 
 													<div class="social_media_sharing_buttons">
 
-													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
+													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow Us: </span></p>
 														<div id="fb-root"></div>
 														<script>(function(d, s, id) {
 														  var js, fjs = d.getElementsByTagName(s)[0];
@@ -421,7 +421,7 @@
 														  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
 														  fjs.parentNode.insertBefore(js, fjs);
 														}(document, 'script', 'facebook-jssdk'));</script>														
-														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-width="5" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>></div>
+														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-width="5" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 														
 														<br />
 														
