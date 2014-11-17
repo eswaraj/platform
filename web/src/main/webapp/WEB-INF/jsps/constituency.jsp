@@ -88,30 +88,32 @@
 														</c:if>
 														<p class="center-align">
 														<c:if test="${!empty user.person.profilePhoto}">
-															<strong>${user.person.name}</strong> <br /> 
+															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
 															<c:if test="${!empty age}">
-															${age} Yrs,
+																<span class="grey_text">
+																${age} Yrs,
+																</span>
 															</c:if>
-															<span> 
+															<span class="grey_text"> 
 															${user.person.gender}
 															</span>
 														</c:if>
 														<c:if test="${empty user.person.profilePhoto}">
-															<strong>Aam Aadmi</strong> <br /> 
+															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p>
 														<div class="complaints_followers_counter">
 														<p class="reporter_total_complaints">
-															<span>Complaints</span> <br /> 
-															<strong>200</strong>
+															<span class="grey_text">Complaints</span> <br /> 
+															<strong class="blue_color_text">200</strong>
 														</p>
 														<p class="reporter_complaint_followers">
-															<span>Followers</span> <br /> 
-															<strong>5000</strong>
+															<span class="grey_text">Followers</span> <br /> 
+															<strong class="blue_color_text">5000</strong>
 														</p>
 														<p class="reporter_complaint_visited">
-															<span>Following</span> <br /> 
-															<strong>50</strong>
+															<span class="grey_text">Following</span> <br /> 
+															<strong class="blue_color_text">50</strong>
 														</p>
 														</div>
 													</div>
@@ -381,22 +383,22 @@
 													</div>
 
 													<div class="platform_constituency_counter">
-													<span class="p_c_counter_loc">${location.name}</span>
+													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Constituency</span></p>
 													<p class="total_cons_population">
-														<span>Population</span> <br /> 
-														<strong>9.879 million</strong>
+														<span class="grey_text">Population</span> <br /> 
+														<strong class="blue_color_text">9.879 million</strong>
 													</p>
 													<p class="total_cons_issue_reporters">
-														<span>Issue Reporters</span> <br /> 
-														<strong>23533</strong>
+														<span class="grey_text">Issue Reporters</span> <br /> 
+														<strong class="blue_color_text">23533</strong>
 													</p>
 													<p class="total_registered_complaints">
-														<span>Total Complaints</span> <br /> 
-														<strong>564575</strong>
+														<span class="grey_text">All Complaints</span> <br /> 
+														<strong class="blue_color_text">564575</strong>
 													</p>
 													<p class="total_resolved_complaints">
-														<span>Resolved Complaints</span> <br /> 
-														<strong>7452</strong>
+														<span class="grey_text">Total Resolved</span> <br /> 
+														<strong class="blue_color_text">7452</strong>
 													</p>
 													</div>
 

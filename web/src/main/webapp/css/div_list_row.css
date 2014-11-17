@@ -431,9 +431,9 @@ margin-right: 20px;
 
 .platform_constituency_counter{
 background-color: #ECE9E8;
-height: 100px;
+height: 130px;
 margin-bottom: 10px;
-padding: 10px;
+padding: 5px;
 text-align: center;
 margin-top: 10px;
 border-radius: 10px;
@@ -486,8 +486,8 @@ color: #FF3A00;
 
 .p_c_counter_loc{
 font-weight: 700;
-margin-top: 5px;
-margin-bottom: 5px;
+width: 100%;
+margin: 0px;
 }
 
 .social_media_sharing_buttons{
@@ -503,4 +503,21 @@ display: none;
 
 .addthis_horizontal_follow_toolbox {
 background: none;
+}
+
+.filter_category, .ref_search, #atftbx > p > span {
+color: #FF3100;
+}
+
+.blue_color_text{
+color: #428bca;
+}
+
+.red_orng_clr_text{
+color: #FF3100;
+font-weight: 700;
+}
+
+.grey_text{
+color: #777;
 }
