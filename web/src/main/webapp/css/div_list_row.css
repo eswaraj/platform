@@ -437,6 +437,7 @@ padding: 10px;
 text-align: center;
 margin-top: 10px;
 border-radius: 10px;
+width: 200px;
 }
 
 .total_cons_population{
@@ -487,4 +488,8 @@ color: #FF3A00;
 font-weight: 700;
 margin-top: 5px;
 margin-bottom: 5px;
+}
+
+.social_media_sharing_buttons{
+width: 200px;
 }

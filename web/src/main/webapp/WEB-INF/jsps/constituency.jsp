@@ -400,6 +400,15 @@
 													</p>
 													</div>
 
+													<div class="social_media_sharing_buttons">
+
+													<div class="addthis_horizontal_follow_toolbox" style="border-radius: 0px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 0px;">
+													</div>	
+
+													<!-- Go to www.addthis.com/dashboard to customize your tools -->
+													<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5461a4f33cabcdfe" async="async"></script>
+
+													</div>
 												</div>
 											</div>
                                     </div>
