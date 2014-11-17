@@ -412,7 +412,7 @@
 
 													<div class="social_media_sharing_buttons">
 
-													<p class="p_c_counter_loc red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
+													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow eSwaraj on: </span></p>
 													<div class="addthis_toolbox addthis_default_style addthis_20x20_style">
 														<a class="addthis_counter_facebook" addthis:url="https://www.facebook.com/eSwarajApp?ref=hl" ></a>
 														<a class='addthis_button_tweet' expr:tw:counturl="https://twitter.com/eSwarajApp"></a>
