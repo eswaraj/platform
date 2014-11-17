@@ -100,11 +100,17 @@
 															<strong>Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p>
-														<p class="center-align">
-															<strong>My Raised Complaints</strong> <br /> 
-															<span> 
-															200
-															</span>
+														<p class="reporter_total_complaints">
+															<span>My Complaints</span> <br /> 
+															<strong>200</strong>
+														</p>
+														<p class="reporter_complaint_followers">
+															<span>Total Followers</span> <br /> 
+															<strong>5000</strong>
+														</p>
+														<p class="reporter_complaint_visited">
+															<span>Other Complaints Followed</span> <br /> 
+															<strong>50</strong>
 														</p>
 													</div>
 												</div>
