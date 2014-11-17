@@ -74,7 +74,7 @@
 											<div class="constituency_left_pane">
 												<div class="reporter_cover_profile_quote">
 													<div class="cons_issue_reporters_box_cover_quote">
-														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself. One drowning man will never save another.”</p> 
+														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
 													</div>
 												</div>
 
@@ -100,18 +100,20 @@
 															<strong>Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p>
+														<div class="complaints_followers_counter">
 														<p class="reporter_total_complaints">
-															<span>My Complaints</span> <br /> 
+															<span>Complaints</span> <br /> 
 															<strong>200</strong>
 														</p>
 														<p class="reporter_complaint_followers">
-															<span>Total Followers</span> <br /> 
+															<span>Followers</span> <br /> 
 															<strong>5000</strong>
 														</p>
 														<p class="reporter_complaint_visited">
-															<span>Other Complaints Followed</span> <br /> 
+															<span>Complaints Followed</span> <br /> 
 															<strong>50</strong>
 														</p>
+														</div>
 													</div>
 												</div>
 

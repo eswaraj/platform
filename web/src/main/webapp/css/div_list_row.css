@@ -417,4 +417,15 @@ width: 200px;
 
 .reporter_total_complaints{
 clear: both;
+float:left;
+font-size: 12px;
+}
+
+.reporter_complaint_followers, .reporter_complaint_visited{
+float: left;
+font-size: 12px;
+}
+
+.complaints_followers_counter{
+margin-top: 10px;
 }
