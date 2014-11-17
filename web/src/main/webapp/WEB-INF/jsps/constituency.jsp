@@ -381,17 +381,22 @@
 													</div>
 
 													<div class="platform_constituency_counter">
+													<span class="p_c_counter_loc">${location.name}</span>
 													<p class="total_cons_population">
-														<span>${location.name} Population</span> <br /> 
+														<span>Population</span> <br /> 
 														<strong>9.879 million</strong>
+													</p>
+													<p class="total_cons_issue_reporters">
+														<span>Issue Reporters</span> <br /> 
+														<strong>23533</strong>
 													</p>
 													<p class="total_registered_complaints">
 														<span>Total Complaints</span> <br /> 
-														<strong>500000</strong>
+														<strong>564575</strong>
 													</p>
-													<p class="total_cons_issue_reporters">
-														<span>${location.name} Issue Reporters</span> <br /> 
-														<strong>23533</strong>
+													<p class="total_resolved_complaints">
+														<span>Resolved Complaints</span> <br /> 
+														<strong>7452</strong>
 													</p>
 													</div>
 
