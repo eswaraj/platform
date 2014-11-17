@@ -119,14 +119,14 @@
 
 												<div class="left_filter">
 													<p>
-														<strong>Refine Search</strong>
+														<strong class="ref_search">Refine Search</strong>
 													</p>
 													<div class="refine-search">
 														<input type="text" value="Amsterdam,Washington" data-role="tagsinput">
 													</div>
 												</div>
 												<p>
-													<strong>Filter Issues by category</strong>
+													<strong class="filter_category">Filter Issues by category</strong>
 												</p>
 												<div class="list-group">
 													<c:if test="${empty selectedCategory}">
@@ -379,6 +379,22 @@
 															<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 														</c:if>
 													</div>
+
+													<div class="platform_constituency_counter">
+													<p class="total_cons_population">
+														<span>${location.name} Population</span> <br /> 
+														<strong>9.879 million</strong>
+													</p>
+													<p class="total_registered_complaints">
+														<span>Total Complaints</span> <br /> 
+														<strong>500000</strong>
+													</p>
+													<p class="total_cons_issue_reporters">
+														<span>${location.name} Issue Reporters</span> <br /> 
+														<strong>23533</strong>
+													</p>
+													</div>
+
 												</div>
 											</div>
                                     </div>

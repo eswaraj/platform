@@ -429,11 +429,43 @@ font-size: 12px;
 margin-right: 20px;
 }
 
+.platform_constituency_counter{
+background-color: #ECE9E8;
+height: 100px;
+margin-bottom: 10px;
+padding-top: 5px;
+text-align: center;
+}
+
+.total_cons_population{
+clear: both;
+float:left;
+font-size: 12px;
+margin-right: 20px;
+margin-left: 10px;
+}
+
+.total_registered_complaints, .total_cons_issue_reporters{
+float: left;
+font-size: 12px;
+margin-right: 20px;
+}
+
 .complaints_followers_counter{
 margin-top: 45px;
 text-align: center;
 }
 
+.platform_constituency_counter{
+margin-top: 10px;
+text-align: center;
+}
+
+
 .constituency_left_pane .left_filter {
 clear: both;
+}
+
+.constituency_left_pane .left_filter  .refine-search, .constituency_left_pane .left_filter .filter_category{
+color: #FF3A00;
 }
