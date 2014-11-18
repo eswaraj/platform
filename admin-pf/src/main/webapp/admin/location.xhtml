@@ -99,7 +99,7 @@
 							</p:panelGrid>
 							<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
 								<p:column headerText="File name">
-									<h:outputText value="#{oneBoundaryFile.originalFileName}" />
+									<h:outputText value="#{oneBoundaryFile.originalFileName}(#{oneBoundaryFile.status})" />
 								</p:column>
 
 								<p:column headerText="Date">
@@ -111,7 +111,7 @@
 					</h:panelGrid>
                     <p:outputPanel id="mapPanel">
                     
-					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="13" type="HYBRID"
+					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="10" type="HYBRID"
 						rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
 						style="width:700px;height:500px">
 						<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />

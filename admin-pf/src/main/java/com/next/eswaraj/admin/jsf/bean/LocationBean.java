@@ -103,14 +103,17 @@ public class LocationBean {
         Object data = nodeSelected.getData();
         if (data instanceof Document) {
             draggableModel.getMarkers().clear();
+            draggableModel.getPolygons().clear();
             Document document = (Document) data;
             lat = document.getLocation().getLatitude();
             lng = document.getLocation().getLongitude();
-            if (lat == null) {
-                lat = 21.1289956;
+            if (lat == null || lat == 0.0) {
+                lat = 28.871187;
+                document.getLocation().setLatitude(lat);
             }
-            if (lng == null) {
-                lng = 82.7792201;
+            if (lng == null || lng == 0.0) {
+                lng = 77.095337;
+                document.getLocation().setLongitude(lng);
             }
 
             LatLng coord1 = new LatLng(lat, lng);
