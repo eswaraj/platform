@@ -87,13 +87,15 @@
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 											$("#modal-background-subcategory-innerdiv").on('mouseleave', function () {
-												$("#modal-background-subcategory").on('click', function () {
+												$("#modal-background-subcategory").on('click', ':not(#modal-background-subcategory-innerdiv)', function (e) {
+													e.stopPropagation();
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#modal-background-subcategory').fadeOut(1);	
 												});
 											});
 											$("#md-bg-services-plus-sys-level-innerdiv").on('mouseleave', function () {
-												$("#md-bg-services-plus-sys-level").on('click', function () {
+												$("#md-bg-services-plus-sys-level").on('click', ':not(#md-bg-services-plus-sys-level-innerdiv)',function (e) {
+													e.stopPropagation();
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#md-bg-services-plus-sys-level').fadeOut(1);	
 												});
