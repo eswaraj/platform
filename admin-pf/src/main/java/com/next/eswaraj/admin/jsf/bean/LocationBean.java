@@ -115,6 +115,7 @@ public class LocationBean {
             }
             try {
                 locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
+                /*
                 if (!locationBoundaryFiles.isEmpty()) {
                     LocationBoundaryFile activeLocationBoundaryFile = null;
                     for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
@@ -129,6 +130,7 @@ public class LocationBean {
                         draggableModel.addOverlay(kmlLayer);
                     }
                 }
+                */
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
