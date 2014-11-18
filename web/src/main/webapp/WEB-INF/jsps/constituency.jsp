@@ -77,18 +77,17 @@
 												$('.constituency_page').children().attr('disabled', 'disabled');
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											$('#modal-background-subcategory').on({
-												mouseenter: function () {
-												},
-												mouseleave: function () {
-												$('.constituency_page').on('click', function (e) {
-												e.stopPropagation();
-												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
+											if($('#modal-background-subcategory').is(':visible')) {
+												$('#modal-background-subcategory').on('mouseleave', function(){
+													$('.constituency_page').on('click', function (e) {
+													e.stopPropagation();
+													$('#modal-background-subcategory').fadeOut(1);	
+													$('.constituency_page').fadeTo( "slow", 1 );
+													$('.constituency_page').children().removeAttr('disabled');
+													});
+													}
 												});
-												}
-											});
+											}
 										}										
 									</script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
