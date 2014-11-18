@@ -25,28 +25,28 @@
 
 	<!-- All Enviornment related beans are defined here and we dont use @Component in class same way in eswaraj-core-test.xml we have defined test related beans -->
 	<beans profile="local">
-		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
 		</bean>
-        <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+        <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
         </bean>
 	</beans>
 	<beans profile="jenkins">
-		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
 		</bean>
-        <bean class="com.eswaraj.core.service.impl.LocalQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+        <bean class="com.eswaraj.core.service.impl.LocalQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
         </bean>
 				
 	</beans>
 	<beans profile="prod">
-		<bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		<bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
 		</bean>
-		<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+		<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
 		</bean>
 	</beans>
 	<beans profile="dev">
-		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" id="fileService" name="fileService" scope="singleton">
+		<bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
 		</bean>
-		<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" id="queueService" name="queueService" scope="singleton">
+		<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
 		</bean>
 	</beans>
 </beans>

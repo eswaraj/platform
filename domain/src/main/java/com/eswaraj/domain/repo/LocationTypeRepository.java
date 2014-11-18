@@ -1,6 +1,7 @@
 package com.eswaraj.domain.repo;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -26,6 +27,9 @@ public interface LocationTypeRepository extends GraphRepository<LocationType>{
 	
 	@Query("start locationType=node({0}) match (locationType)<-[:PART_OF]-(childlocationType) return childlocationType")
     public Collection<LocationType> findLocationTypeByParentLocation(LocationType locationType);
+
+    @Query("start locationType=node({0}) match (locationType)<-[:PART_OF]-(childlocationType) return childlocationType")
+    public List<LocationType> findLocationTypeByParentLocation(Long locationType);
 
 	@Query("start locationType=node:LocationType(name={0}) match (locationType)-[:BELONGS_TO]->(dataClient) return locationType")
     public LocationType getLocationTypeByNameAndDataClientType(String name, DataClient dataClient);
