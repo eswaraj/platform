@@ -28,7 +28,7 @@
 									width: 100%;
 									z-index: -1;
 								">
-								<div class="constituency_page">
+								<div class="">
                                     <jsp:include page="header.jsp" />
                                     <script>
                                         jQuery(document).ready(function() {
@@ -47,29 +47,7 @@
 												});
 											});
                                         });
-
-										jQuery(document).ready(function($){
-											//close the infographic page
-											$('#modal-background-subcategory .close-btn').on('click', function(){
-												$('#modal-background-subcategory').fadeOut(1);
-												$('.constituency_page').fadeIn(1);
-											});
-											$(document).keyup(function(event){
-												//check if user has pressed 'Esc'
-												if(event.which=='27'){
-												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
-												}
-												if(event.which=='8'){
-												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
-												}
-											});
-											$('#subcategory_input').on('keypress', function(){
-												$('#modal-background-subcategory').fadeIn(1);
-												$('.constituency_page').fadeOut(1);
-											});
-									</script>
+                                    </script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
                                     <c:if test="${viewType eq 'map'}">
                                         <script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
@@ -185,18 +163,14 @@
 																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
 															</p>
 
+															<c:forEach items="${rootCategories}" var="oneCategory">
+																<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+																	<a href="#!" class="list-group-item">${subCategory.name}</a>
+																</c:forEach>
+															</c:forEach>
+
 															<div class="refine-search">
-																<input id="subcategory_input" type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
-																	<div id="modal-background-subcategory" style="display: none;">
-																		<c:forEach items="${rootCategories}" var="oneCategory">
-																			<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
-																			<c:forEach items="${oneCategory.childCategories}" var="subCategory">
-																				<a href="#!" class="list-group-item">${subCategory.name}</a>
-																			</c:forEach>
-																			<hr />
-																		</c:forEach>
-																	<a href="#0" class="close-btn">Close</a>
-																	</div>
+																<input type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
 															</div>
 														</div>
 													<hr />
