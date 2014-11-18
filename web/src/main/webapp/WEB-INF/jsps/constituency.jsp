@@ -68,7 +68,7 @@
 										});	
 
 										window.onload = function() {
-											$('#subcategory_input').on('click', function(){
+											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeOut(1);
 											});
