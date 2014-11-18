@@ -49,12 +49,17 @@
                                         });
 
 										jQuery(document).ready(function($){
-											//close the infographic page
+
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
+												$('.constituency_page').fadeTo( "slow", 1 );
+											});
+
+											$('#md-bg-services-plus-sys-level .close-btn').on('click', function(){
 												$('#md-bg-services-plus-sys-level').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
 											});
+
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
@@ -550,8 +555,6 @@
 									</c:forEach>
 								<a href="#0" class="close-btn">Close</a>
 								</div>
-
-								
 								
                             <jsp:include page="footer.jsp" />
                             </body>
