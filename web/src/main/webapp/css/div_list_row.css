@@ -188,7 +188,7 @@ font-size: 50px;
 
 .frame_glyphicon{
 float: left;
-border: 2px solid #dbdbdb;
+border: 1px solid #dbdbdb;
 height: 115px;
 background-color: #E8E8E8;
 margin: 0px 10px 0px 10px;
@@ -287,7 +287,7 @@ margin-top: 10px;
 }
 
 .type_adjust{
-	max-width: 38%;
+	max-width: 45%;
 }
 
 .innerdiv-sharebtn {
@@ -485,7 +485,7 @@ display: none;
 background: none;
 }
 
-.filter_category, .ref_search {
+.filter_citzn_serv, .filter_sys_lvl, .filter_temporal, .filter_spatial  {
 color: #FF3100;
 }
 
@@ -510,3 +510,55 @@ color: #777;
 #twitter-widget-0{
 margin-top: 20px;
 }
+
+.list-group-item {
+position: relative;
+display: inline-block;
+border-radius: 10px;
+padding: 5px 10px;
+margin-bottom: 5px;
+margin-top: 2px;
+background-color: #fff;
+border: 0px;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+color: #f2f2f2;
+background-color: #5bc0de;
+}
+
+.list-group-item:first-child {
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+margin-left: 25%;
+}
+
+.list-group-item:last-child {
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
+}
+
+.filter_types{
+background-color: #ECE9E8;
+height: auto;
+margin-bottom: 10px;
+padding: 10px;
+padding-left: 15px;
+margin-top: 10px;
+border-radius: 10px;
+}
+
+hr {
+margin-top: 15px;
+margin-bottom: 15px;
+border: 0;
+border-top: 1px solid #CDCDCD;
+}
+
+.dropdownlist{
+height: 30px;
+background-color: #FD6B37;
+color: #FFFFFF;
+border-radius: 10px;
+}
+

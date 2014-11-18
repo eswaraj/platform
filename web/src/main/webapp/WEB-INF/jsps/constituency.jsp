@@ -129,18 +129,9 @@
 													</div>
 												</div>
 
-												<div class="left_filter">
-													<p>
-														<strong class="ref_search">Refine Search</strong>
-													</p>
-													<div class="refine-search">
-														<input type="text" value="Amsterdam,Washington" data-role="tagsinput">
-													</div>
-												</div>
-												<p>
-													<strong class="filter_category">Filter Issues by category</strong>
-												</p>
 												<div class="list-group">
+												
+													<div class="filter_types">
 													<c:if test="${empty selectedCategory}">
 														<a href="#" class="list-group-item active">Show All
 															(${total})</a>
@@ -149,8 +140,10 @@
 														<a href="${location.url}.html?type=${viewType}"
 														   class="list-group-item">Show All (${total})</a>
 													</c:if>
-
-
+													<hr />
+													<p>
+														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+													</p>
 													<c:forEach items="${rootCategories}" var="oneCategory">
 														<c:if test="${selectedCategory eq oneCategory.id}">
 															<a href="#" class="list-group-item active">${oneCategory.name}
@@ -164,6 +157,53 @@
 														</c:if>
 
 													</c:forEach>
+													<hr />
+														<c:forEach items="${complaintList}" var="oneComplaint">
+																<a href="#!" class="list-group-item">${oneComplaint.categoryTitle}</a>
+														</c:forEach>
+
+														<div class="left_filter">
+															<p>
+																<strong class="filter_sys_lvl">System Level Filtering</strong>
+															</p>
+															<div class="refine-search">
+																<input type="text" value="Amsterdam,Washington" data-role="tagsinput">
+															</div>
+														</div>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_temporal">Temporal Filtering</strong>
+															</p>
+
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Today</option>
+																<option>Yesterday</option>
+																<option>Last 72 Hrs</option>
+																<option>Last 1 Week</option>
+																<option>Last 2 Weeks</option>
+																<option>Last 1 Month</option>
+																<option>Last 3 Months</option>
+															</select>
+														</div>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_spatial">Spatial Filtering</strong>
+															</p>
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Cessna Business Park main road</option>
+																<option>Mahadevapura, More Mall</option>
+																<option>Chandni Chowk</option>
+																<option>South Delhi</option>
+																<option>Gurgaon</option>
+															</select>
+														</div>
+													
+													</div>
+
 												</div>
 											</div>
 											<div class="constituency_mid_pane">

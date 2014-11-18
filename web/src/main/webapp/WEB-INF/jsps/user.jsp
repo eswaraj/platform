@@ -33,10 +33,20 @@
 							<script>
 								jQuery(document).ready(function() {
 									jQuery("abbr.timeago").timeago();
-								$('.anchorlink').click(function(e){
-									e.stopPropagation();
-								});
-								});
+										$('.anchorlink').click(function(e){
+											e.stopPropagation();
+										});
+										$( ".list-row" ).each( function () {
+											$(this).on({
+											mouseenter: function () {
+												$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 500);
+											},
+											mouseleave: function () {
+												$( this ).find(".innerdiv-sharebtn" ).hide();
+											}
+											});
+										});
+									});
 							</script>
 
 </head>
