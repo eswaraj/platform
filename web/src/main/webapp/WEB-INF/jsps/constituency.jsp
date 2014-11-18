@@ -86,20 +86,18 @@
 												$('.constituency_page').fadeTo( "slow", 0.33 );
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											if ( $('#modal-background-subcategory').css('visibility') !== 'hidden' && $('#modal-background-subcategory').css('display') !== 'none') {
-											$(".constituency_page").on('click', function (e) {
-													e.preventDefault();
+											$("#modal-background-subcategory").on('mouseleave', function () {
+												$(".constituency_page").on('click', function () {
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#modal-background-subcategory').fadeOut(1);	
-													});
-											}
-											if ( $('#md-bg-services-plus-sys-level').css('visibility') !== 'hidden' && $('#md-bg-services-plus-sys-level').css('display') !== 'none') {
-											$(".constituency_page").on('click', function (e) {
-													e.preventDefault();
+												});
+											});
+											$("#md-bg-services-plus-sys-level").on('mouseleave', function () {
+												$(".constituency_page").on('click', function () {
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#md-bg-services-plus-sys-level').fadeOut(1);	
-													});
-											}
+												});
+											});
 										}										
 									</script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
