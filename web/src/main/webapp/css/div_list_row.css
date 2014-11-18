@@ -1,10 +1,9 @@
 
 /*list row starts*/
 .list-row {
-    padding: 15px 0;
-    border: 2px solid #ccc;
+    padding: 0px;
+    border: 1px solid #f3f3f3;
 	border-radius: 10px;
-    min-height: 155px;
 	width: 750px;
 	margin-bottom: 15px;
 	background-color: #FFF;
@@ -295,9 +294,6 @@ margin-top: 10px;
 font-size: 15px;
 line-height: 200%;
 float: right;
-margin-right: 5px;
-margin-bottom: 0px;
-margin-top: -15px;
 }
 
 .footer_pos{

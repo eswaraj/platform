@@ -41,6 +41,13 @@
 
 </head>
 <body>
+<img src="http://www.glowmagazine.me/wp-content/uploads/2012/04/taj-mahal-at-sunset.jpg" style="
+	opacity: 0.4;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+">
 	<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 		<div class="container-fluid">
@@ -163,8 +170,10 @@
 										<!-- not working as expected -->
 											<p class="innerdiv-sharebtn">
 											<!-- social media share buttons -->								
-											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>
+											<br />											
 											<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;" class="anchorlink"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+											<br />
 											<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;" class="anchorlink"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
 											</p>
 										<div class="innerblock">
