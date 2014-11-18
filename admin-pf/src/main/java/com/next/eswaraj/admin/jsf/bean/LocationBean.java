@@ -115,6 +115,20 @@ public class LocationBean {
             }
             try {
                 locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
+                if (!locationBoundaryFiles.isEmpty()) {
+                    LocationBoundaryFile activeLocationBoundaryFile = null;
+                    for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
+                        activeLocationBoundaryFile = oneLocationBoundaryFile;
+                        if (oneLocationBoundaryFile.isActive()) {
+                            break;
+                        }
+                    }
+                    if (activeLocationBoundaryFile != null) {
+                        KmlLayer kmlLayer = new KmlLayer();
+                        kmlLayer.setUrl(activeLocationBoundaryFile.getFileNameAndPath());
+                        draggableModel.addOverlay(kmlLayer);
+                    }
+                }
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
