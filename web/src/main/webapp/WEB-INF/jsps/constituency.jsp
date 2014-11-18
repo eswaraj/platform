@@ -65,10 +65,14 @@
 												$('.constituency_page').fadeIn(1);
 												}
 											});
+										});	
+
+										window.onload = function() {
 											$('#subcategory_input').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeOut(1);
 											});
+										}										
 									</script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
                                     <c:if test="${viewType eq 'map'}">
@@ -503,7 +507,7 @@
                                     </div>
                                 </div>
                                 </div>
-								<div id="modal-background-subcategory" style="display: none;">
+								<div id="modal-background-subcategory">
 									<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
 										<c:forEach items="${oneCategory.childCategories}" var="subCategory">

@@ -607,3 +607,9 @@ width: 100%;
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
+
+.modal-background-subcategory{
+text-align: center;
+padding: 100px;
+display: none;
+}
