@@ -616,7 +616,6 @@ width: 100%;
 #modal-background-subcategory-innerdiv{
 text-align: center;
 background-color: #E5E5E5;
-display: none;
 margin-left: 10%;
 margin-right: 10%;
 margin-bottom: 10%;
@@ -632,7 +631,6 @@ padding-right: 20px;
 #md-bg-services-plus-sys-level-innerdiv{
 text-align: center;
 background-color: #E5E5E5;
-display: none;
 margin-bottom: 10%;
 position: absolute;
 left: 35%;
@@ -644,10 +642,9 @@ padding-right: 20px;
 }
 
 #modal-background-subcategory, #md-bg-services-plus-sys-level{
+display: none;
 height: 100%;
 width: 100%;
-background-color: #000;
-opacity: 0.25;
 position: absolute;
 left: 0px;
 top: 0px;
