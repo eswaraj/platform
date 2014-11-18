@@ -61,11 +61,11 @@
 								<h:outputText value="#{doc.name}" />
 							</p:treeNode>
 						</p:tree>
-						<p:blockUI block="doc" trigger="doc">LOADING<br />
+						<p:blockUI block="@form" trigger="doc">LOADING<br />
 							<p:graphicImage width="80" value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
 						</p:blockUI>
 						<p:contextMenu for="doc">
-							<p:menuitem value="Create" update="@form" actionListener="#{locationTypeBean.createNewLocationType}"
+							<p:menuitem value="Create Location Type" update="@form" actionListener="#{locationTypeBean.createNewLocationType}"
 								icon="ui-icon-search" />
 							<p:menuitem value="Delete" update="doc" actionListener="#{locationTypeBean.deleteNode}" icon="ui-icon-close" />
 						</p:contextMenu>

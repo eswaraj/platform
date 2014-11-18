@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.DataClient;
+import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 
 @Service
@@ -26,6 +28,8 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private DataClientRepository dataClientRepository;
 
+    @Autowired
+    private LocationRepository locationRepository;
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -101,6 +105,26 @@ public class AdminServiceImpl implements AdminService {
             locationType = locationTypeRepository.save(locationType);
         }
         return locationType;
+    }
+
+    @Override
+    public Location getRootLocationForSwarajIndia() throws ApplicationException {
+        DataClient dataClient = getOrCreateDataClientIndiaEswaraj();
+        LocationType locationType = getOrCreateRootLocationTypeIndiaEswaraj(dataClient);
+        Location location = locationRepository.getRootLocationByLocationType(locationType.getId());
+        if (location == null) {
+            // create default location India
+            location = new Location();
+            location.setLocationType(locationType);
+            location.setName("India");
+            location = locationRepository.save(location);
+        }
+        return location;
+    }
+
+    @Override
+    public List<Location> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException {
+        return locationRepository.findLocationByParentLocation(parentLocationId);
     }
 
 }

@@ -5,8 +5,33 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<style>
-body {
-	font-size: 14px;
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 300px;
 }
 </style>
 	</h:head>
@@ -15,7 +40,7 @@ body {
 		<h:form id="location_form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Location">
-				<p:panelGrid columns="2">
+				<h:panelGrid columns="2"  styleClass="topAlignPanelColumns">
 					<p:outputPanel id="listView">
 						<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
 							selection="#{locationBean.selectedNode}">
@@ -42,29 +67,33 @@ body {
 								icon="ui-icon-search" />
 							<p:menuitem value="Delete" update="doc" actionListener="#{locationBean.deleteNode}" icon="ui-icon-close" />
 						</p:contextMenu>
+						<p:blockUI block="@form" trigger="doc">LOADING<br />
+							<p:graphicImage width="80"
+								value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
+						</p:blockUI>
 					</p:outputPanel>
 					<p:outputPanel id="formView">
-						<p:panelGrid columns="2" rendered="#{not empty locationBean.selectedNode}">
+						<h:panelGrid columns="2" rendered="#{not empty locationBean.selectedNode}">
 							<p:outputLabel value="Name"></p:outputLabel>
 							<p:inputText id="name" value="#{locationBean.selectedNode.data.location.name}" style="width:200px" />
 
-                            <p:outputLabel value="URL Identifier"></p:outputLabel>
-                            <p:inputText id="urlId" value="#{locationBean.selectedNode.data.location.urlIdentifier}" style="width:200px" />
+							<p:outputLabel value="URL Identifier"></p:outputLabel>
+							<p:inputText id="urlId" value="#{locationBean.selectedNode.data.location.urlIdentifier}" style="width:200px" />
 
-                            <p:outputLabel value="Latitude"></p:outputLabel>
-                            <p:inputText id="latitude" value="#{locationBean.selectedNode.data.location.latitude}" style="width:200px" />
+							<p:outputLabel value="Latitude"></p:outputLabel>
+							<p:inputText id="latitude" value="#{locationBean.selectedNode.data.location.latitude}" style="width:200px" />
 
-                            <p:outputLabel value="Longitude"></p:outputLabel>
-                            <p:inputText id="longitude" value="#{locationBean.selectedNode.data.location.longitude}" style="width:200px" />
+							<p:outputLabel value="Longitude"></p:outputLabel>
+							<p:inputText id="longitude" value="#{locationBean.selectedNode.data.location.longitude}" style="width:200px" />
 
-						</p:panelGrid>
-						<p:panelGrid columns="6" id="buttonPanel" >
+						</h:panelGrid>
+						<p:panelGrid columns="6" id="buttonPanel">
 						</p:panelGrid>
 					</p:outputPanel>
 					<p:commandButton id="searchHashTag" value="Search Hashtag Users" update="@form"
 						actionListener="#{relatedHashtagBean.reloadDataForhashtag}" styleClass="ui-priority-primary">
 					</p:commandButton>
-				</p:panelGrid>
+				</h:panelGrid>
 			</p:panel>
 		</h:form>
 	</h:body>

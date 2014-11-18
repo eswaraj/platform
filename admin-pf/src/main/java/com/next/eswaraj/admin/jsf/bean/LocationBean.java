@@ -25,16 +25,16 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.LocationService;
-import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.LocationType;
+import com.next.eswaraj.admin.service.AdminService;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 public class LocationBean {
 
     @Autowired
-    private LocationService locationService;
+    private AdminService adminService;
 
     private TreeNode root;
 
@@ -44,10 +44,10 @@ public class LocationBean {
 
     @PostConstruct
     public void init() {
-        LocationDto location;
+        Location location;
         try {
             logger.info("Getting Location From DB");
-            location = locationService.getRootLocationForSwarajIndia();
+            location = adminService.getRootLocationForSwarajIndia();
             logger.info("Got  Location From DB : " + location);
             root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
             TreeNode topLocation = new CustomTreeNode(new Document(location.getName(), "-", "Folder", location), root);
@@ -58,10 +58,20 @@ public class LocationBean {
     }
 
     public void onNodeExpand(NodeExpandEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Expanded", event.getTreeNode().toString());
-        FacesContext.getCurrentInstance().addMessage(null, message);
         TreeNode nodeSelected = event.getTreeNode();
-        TreeNode documents = new CustomTreeNode(new Document("Child", "-", "Folder", null), nodeSelected);
+        if (selectedNode != null && selectedNode.getChildCount() == 0) {
+
+            try {
+                List<Location> childLocations = adminService.getChildLocationsOfParent(((Document) nodeSelected.getData()).getLocation().getId());
+                for (Location oneLocation : childLocations) {
+                    new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), nodeSelected);
+                }
+            } catch (ApplicationException e) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", e.getMessage());
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+        }
+
     }
 
     public void onNodeCollapse(NodeCollapseEvent event) {
@@ -83,20 +93,21 @@ public class LocationBean {
 
     private void createButtons() {
         try {
-            List<LocationTypeDto> locationTypes = locationService.getChildLocationsTypeOfParent(((Document) selectedNode.getData()).getLocation().getLocationTypeId());
+            List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) selectedNode.getData()).getLocation().getLocationType().getId());
             UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:buttonPanel");
+            component.getChildren().clear();
             FacesContext facesCtx = FacesContext.getCurrentInstance();
             ELContext elContext = facesCtx.getELContext();
             Application app = facesCtx.getApplication();
             ExpressionFactory elFactory = app.getExpressionFactory();
             System.out.println("component=" + component);
             System.out.println("locationTypes=" + locationTypes);
-            for (LocationTypeDto oneLocationTypeDto : locationTypes) {
+            for (LocationType oneLocationType : locationTypes) {
                 CommandButton submit = new CommandButton();
-                submit.setValue("Create " + oneLocationTypeDto.getName());
+                submit.setValue("Create " + oneLocationType.getName());
                 submit.setUpdate("location_form");
-                submit.setId("create" + oneLocationTypeDto.getName());
-                MethodExpression methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createSomething(" + oneLocationTypeDto.getId() + ")}", null, new Class[] {});
+                submit.setId("create" + oneLocationType.getId());
+                MethodExpression methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createSomething(" + oneLocationType.getId() + ")}", null, new Class[] {});
                 submit.setActionExpression(methodExpression);
                 // createButtons.getChildren().add(submit);
                 if (component != null) {
@@ -105,7 +116,8 @@ public class LocationBean {
 
             }
         } catch (ApplicationException e) {
-            e.printStackTrace();
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
     }

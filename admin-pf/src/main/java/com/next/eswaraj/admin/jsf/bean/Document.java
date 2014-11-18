@@ -2,7 +2,7 @@ package com.next.eswaraj.admin.jsf.bean;
 
 import java.io.Serializable;
 
-import com.eswaraj.web.dto.LocationDto;
+import com.eswaraj.domain.nodes.Location;
 
 public class Document implements Serializable, Comparable<Document> {
 
@@ -14,9 +14,9 @@ public class Document implements Serializable, Comparable<Document> {
 
     private String type;
 
-    private LocationDto location;
+    private Location location;
 
-    public Document(String name, String size, String type, LocationDto location) {
+    public Document(String name, String size, String type, Location location) {
         this.name = name;
         this.size = size;
         this.type = type;
@@ -47,11 +47,11 @@ public class Document implements Serializable, Comparable<Document> {
         this.type = type;
     }
 
-    public LocationDto getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(LocationDto location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
