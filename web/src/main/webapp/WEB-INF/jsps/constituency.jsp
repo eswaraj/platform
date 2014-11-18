@@ -74,7 +74,7 @@
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 											if($('#modal-background-subcategory').is(':visible')) {
-											$("html, body").on('click', ':not(#modal-background-subcategory)', function (e) {
+											$(".constituency_page").on('click', function (e) {
 													e.preventDefault();
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#modal-background-subcategory').fadeOut(1);	
@@ -194,7 +194,8 @@
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_sys_lvl">Filter Issues by SubCategory<span class="glyphicon glyphicon-filter refine-search"></span></strong>
+																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+																<span class="glyphicon glyphicon-filter refine-search"></span>
 															</p>
 
 															<div class="subcat-search">
