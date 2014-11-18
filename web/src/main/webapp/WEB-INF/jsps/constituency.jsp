@@ -102,7 +102,7 @@
 											$( "#modal-background-subcategory-innerdiv a" ).each( function () {
 												$(this).on('click', function() {
 													$(this).toggleClass("modal_ahrefclick");
-														if $(this).hasClass( "modal_ahrefclick" ) {
+														if ( $(this).hasClass( "modal_ahrefclick" ) ) {
 															var anchor_value = $(this).text();
 															var subcategory_input_val = $(".subcategory_input").attr("value");
 															$("subcategory_input").attr("value", subcategory_input_val + ',' + anchor_value );
