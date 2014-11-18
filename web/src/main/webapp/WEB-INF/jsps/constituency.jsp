@@ -53,19 +53,16 @@
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page')().removeAttr('disabled');
 											});
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').removeAttr('disabled');
 												}
 												if(event.which=='8'){
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').removeAttr('disabled');
 												}
 											});
 										});	
@@ -74,15 +71,12 @@
 											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
-												$('.constituency_page')().attr('disabled', 'disabled');
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 											if($('#modal-background-subcategory').is(':visible')) {
-											$("body, .constituency_page").on('click', ':not(#modal-background-subcategory)', function (e) {
-													e.stopPropagation();
+											$("html, body").on('click', ':not(#modal-background-subcategory)', function (e) {
 													e.preventDefault();
 													$('.constituency_page').fadeTo( "slow", 1 );
-													$('.constituency_page')().removeAttr('disabled');
 													$('#modal-background-subcategory').fadeOut(1);	
 													});
 											}
@@ -200,10 +194,10 @@
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+																<strong class="filter_sys_lvl">Filter Issues by SubCategory<span class="glyphicon glyphicon-filter refine-search"></span></strong>
 															</p>
 
-															<div class="refine-search">
+															<div class="subcat-search">
 																<input id="subcategory_input" type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
 															</div>
 														</div>

@@ -456,7 +456,7 @@ height: 50px;
 clear: both;
 }
 
-.constituency_left_pane .left_filter  .refine-search, .constituency_left_pane .left_filter .filter_category{
+.constituency_left_pane .left_filter  .subcat-search, .constituency_left_pane .left_filter .filter_category{
 color: #FF3A00;
 }
 
@@ -492,6 +492,10 @@ background: none;
 
 .filter_citzn_serv, .filter_sys_lvl, .filter_temporal, .filter_spatial  {
 color: #FF3100;
+}
+
+.filter_sys_lvl{
+margin-right:10px;
 }
 
 #atftbx > p > span {
