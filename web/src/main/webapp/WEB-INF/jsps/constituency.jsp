@@ -70,8 +70,17 @@
 										window.onload = function() {
 											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
-												$('.constituency_page').fadeOut(1);
+												$('.constituency_page').fadeTo( "slow", 0.33 );
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
+											});
+											$('#modal-background-subcategory').on({
+												mouseenter: function () {
+												alert("Please select the subCategory");
+												},
+												mouseleave: function () {
+												$('#modal-background-subcategory').fadeOut(1);	
+												$('.constituency_page').fadeIn(1);
+												}
 											});
 										}										
 									</script>
@@ -509,7 +518,7 @@
                                 </div>
                                 </div>
 								<div id="modal-background-subcategory">
-								<h1 class="red_orng_clr_text">Select SubCategories</h1><hr />
+								<h1 class="blue_color_text">Select SubCategories</h1><hr />
 									<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
 										<c:forEach items="${oneCategory.childCategories}" var="subCategory">

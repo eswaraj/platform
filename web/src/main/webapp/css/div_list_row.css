@@ -576,7 +576,7 @@ width: 100%;
   width: 40px;
   height: 40px;
   top: 20px;
-  right: 2%;
+  right: 12%;
   /* image replacement */
   overflow: hidden;
   text-indent: 100%;
@@ -610,8 +610,12 @@ width: 100%;
 
 #modal-background-subcategory{
 text-align: center;
-padding: 100px;
+background-color: #E5E5E5;
 display: none;
 margin-top: -51px;
 padding-top: 40px;
+margin-left: 10%;
+margin-right: 10%;
+margin-bottom: 10%;
+position: absolute;
 }
