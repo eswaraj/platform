@@ -37,8 +37,13 @@
 												e.stopPropagation();
 											});
 											$( ".list-row" ).each( function () {
-												$( this ).on( 'hover', function () {
-												$( this ).find(".innerdiv-sharebtn" ).slideToggle( "slow" );
+												$(this).on({
+												mouseenter: function () {
+													$( this ).find(".innerdiv-sharebtn" ).slideToggle( "slow" );
+												},
+												mouseleave: function () {
+													$( this ).find(".innerdiv-sharebtn" ).slideToggle( "slow" );
+												}
 												});
 											});
                                         });
