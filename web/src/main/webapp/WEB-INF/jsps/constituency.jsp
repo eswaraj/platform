@@ -38,7 +38,7 @@
 											});
 											$( ".list-row" ).each( function () {
 												$( this ).on( 'hover', function () {
-												$( this ).find(".innerdiv-sharebtn" ).toggle( "slide" );
+												$( this ).find(".innerdiv-sharebtn" ).slideToggle( "slow" );
 												});
 											});
                                         });
