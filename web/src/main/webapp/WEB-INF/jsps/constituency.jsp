@@ -52,23 +52,43 @@
 											//close the infographic page
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
-												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 											});
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
 												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 												}
 												if(event.which=='8'){
 												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 												}
 											});
-											$('#subcategory_input').on('keypress', function(){
+										});	
+
+										window.onload = function() {
+											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
-												$('.constituency_page').fadeOut(1);
+												$('.constituency_page').fadeTo( "slow", 0.33 );
+												$('.constituency_page').children().attr('disabled', 'disabled');
+											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
+											if($('#modal-background-subcategory').is(':visible')) {
+												$('#modal-background-subcategory').on('mouseleave', function(){
+													$('.constituency_page').on('click', function (e) {
+													e.stopPropagation();
+													$('#modal-background-subcategory').fadeOut(1);	
+													$('.constituency_page').fadeTo( "slow", 1 );
+													$('.constituency_page').children().removeAttr('disabled');
+													});
+													}
+												});
+											}
+										}										
 									</script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
                                     <c:if test="${viewType eq 'map'}">
@@ -187,16 +207,6 @@
 
 															<div class="refine-search">
 																<input id="subcategory_input" type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
-																	<div id="modal-background-subcategory" style="display: none;">
-																		<c:forEach items="${rootCategories}" var="oneCategory">
-																			<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
-																			<c:forEach items="${oneCategory.childCategories}" var="subCategory">
-																				<a href="#!" class="list-group-item">${subCategory.name}</a>
-																			</c:forEach>
-																			<hr />
-																		</c:forEach>
-																	<a href="#0" class="close-btn">Close</a>
-																	</div>
 															</div>
 														</div>
 													<hr />
@@ -513,6 +523,17 @@
                                     </div>
                                 </div>
                                 </div>
+								<div id="modal-background-subcategory">
+								<h1 class="blue_color_text">Select SubCategories</h1><hr />
+									<c:forEach items="${rootCategories}" var="oneCategory">
+										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
+										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+											<a href="#!" class="list-group-item">${subCategory.name}</a>
+										</c:forEach>
+										<hr />
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
                             <jsp:include page="footer.jsp" />
                             </body>
                         </html>
