@@ -40,7 +40,6 @@ import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.next.eswaraj.admin.service.AdminService;
-import com.next.eswaraj.admin.service.HttpUtil;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
@@ -48,9 +47,6 @@ public class LocationBean {
 
     @Autowired
     private AdminService adminService;
-
-    @Autowired
-    private HttpUtil httpUtil;
 
     private TreeNode root;
 
