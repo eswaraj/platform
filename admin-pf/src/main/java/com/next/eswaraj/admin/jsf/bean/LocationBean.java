@@ -10,6 +10,8 @@ import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.event.NodeCollapseEvent;
@@ -22,18 +24,23 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import org.primefaces.model.map.Polygon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.next.eswaraj.admin.service.AdminService;
+import com.next.eswaraj.admin.service.HttpUtil;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
@@ -41,6 +48,9 @@ public class LocationBean {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private HttpUtil httpUtil;
 
     private TreeNode root;
 
@@ -106,6 +116,7 @@ public class LocationBean {
             if (lng == null) {
                 lng = 82.7792201;
             }
+
             LatLng coord1 = new LatLng(lat, lng);
 
             // Draggable
@@ -115,8 +126,9 @@ public class LocationBean {
             }
             try {
                 locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
-                /*
-                if (!locationBoundaryFiles.isEmpty()) {
+
+                // if (!locationBoundaryFiles.isEmpty())
+                {
                     LocationBoundaryFile activeLocationBoundaryFile = null;
                     for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
                         activeLocationBoundaryFile = oneLocationBoundaryFile;
@@ -124,13 +136,54 @@ public class LocationBean {
                             break;
                         }
                     }
-                    if (activeLocationBoundaryFile != null) {
-                        KmlLayer kmlLayer = new KmlLayer();
-                        kmlLayer.setUrl(activeLocationBoundaryFile.getFileNameAndPath());
-                        draggableModel.addOverlay(kmlLayer);
+                    System.out.println("Creating Polygon");
+                    if (activeLocationBoundaryFile != null)
+                    {
+                        try {
+                            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                            org.w3c.dom.Document doc = dBuilder.parse(activeLocationBoundaryFile.getFileNameAndPath());
+                            //org.w3c.dom.Document doc = dBuilder.parse("https://s3-us-west-2.amazonaws.com/eswaraj-dev/locations/72848/41b8ccc9-9b3b-435d-9d20-a1217703539b_201409111918.kml");
+                            NodeList coordinates = doc.getElementsByTagName("coordinates");
+                            for (int temp = 0; temp < coordinates.getLength(); temp++) {
+
+                                Node nNode = coordinates.item(temp);
+
+                                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                                    Element eElement = (Element) nNode;
+
+                                    String coordinatesStr = eElement.getTextContent();
+                                    System.out.println("Cooridinates : " + coordinatesStr);
+                                    Polygon polygon = new Polygon();
+                                    String[] latLngs = coordinatesStr.split(" ");
+                                    int count = 0;
+                                    for (String oneLatLng : latLngs) {
+
+                                        String[] ll = oneLatLng.split(",");
+                                        polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
+                                        count++;
+                                        System.out.println(count + ". oneLatLng : " + oneLatLng);
+                                    }
+
+                                    polygon.setStrokeColor("#FF9900");
+                                    polygon.setFillColor("#FF9900");
+                                    polygon.setStrokeOpacity(0.7);
+                                    polygon.setFillOpacity(0.7);
+
+                                    draggableModel.addOverlay(polygon);
+
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        // draggableModel.addOverlay(kmlLayer);
                     }
                 }
-                */
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }

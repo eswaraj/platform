@@ -49,7 +49,8 @@
 								selection="#{locationBean.selectedNode}">
 								<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
 								<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
-								<p:ajax event="select" update=":location_form:formView" listener="#{locationBean.onNodeSelect}" />
+								<p:ajax event="select" update=":location_form:formView,:location_form:mapPanel"
+									listener="#{locationBean.onNodeSelect}" />
 								<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
 
 								<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
@@ -75,8 +76,10 @@
 									value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
 							</p:blockUI>
 						</p:outputPanel>
-						<p:outputPanel id="formView" rendered="#{not empty locationBean.selectedNode}">
-							<h:panelGrid columns="2" >
+						<p:outputPanel id="formView" >
+						<p:outputPanel rendered="#{not empty locationBean.selectedNode}">
+						
+							<h:panelGrid columns="2">
 								<p:outputLabel value="Name"></p:outputLabel>
 								<p:inputText id="name" value="#{locationBean.selectedNode.data.location.name}" style="width:200px" />
 
@@ -92,7 +95,7 @@
 									style="width:200px" />
 
 							</h:panelGrid>
-							<p:panelGrid columns="6" id="buttonPanel">
+							<p:panelGrid columns="2" id="buttonPanel">
 							</p:panelGrid>
 							<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
 								<p:column headerText="File name">
@@ -104,13 +107,18 @@
 								</p:column>
 							</p:dataTable>
 						</p:outputPanel>
+						</p:outputPanel>
 					</h:panelGrid>
-
+                    <p:outputPanel id="mapPanel">
+                    
 					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="13" type="HYBRID"
 						rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
 						style="width:700px;height:500px">
 						<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />
+						<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
+
 					</p:gmap>
+					</p:outputPanel>
 				</h:panelGrid>
 
 			</p:panel>
