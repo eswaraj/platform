@@ -39,10 +39,10 @@
 											$( ".list-row" ).each( function () {
 												$(this).on({
 												mouseenter: function () {
-													$( this ).find(".innerdiv-sharebtn" ).slideToggle( "slow" );
+													$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 1000);
 												},
 												mouseleave: function () {
-													$( this ).find(".innerdiv-sharebtn" ).slideToggle( "slow" );
+													$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 1000);
 												}
 												});
 											});
