@@ -19,6 +19,7 @@
 	    <module>domain</module>
 	    <module>core</module>
             <module>admin</module>
+            <module>admin-pf</module>
 	    <module>api</module>
 	    <module>web</module>
             <module>cache</module>
