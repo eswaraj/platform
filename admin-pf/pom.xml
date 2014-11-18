@@ -196,6 +196,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+	   <finalName>eswaraj-admin-pf</finalName>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
