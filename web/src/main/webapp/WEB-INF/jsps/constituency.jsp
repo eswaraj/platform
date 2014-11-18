@@ -77,15 +77,6 @@
 												$('.constituency_page').children().prop('disabled',true);
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											$('#modal-background-subcategory').on({
-												mouseenter: function () {
-												},
-												mouseleave: function () {
-												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
-												$('.constituency_page').children().prop('disabled',false);
-												}
-											});
 										}										
 									</script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
