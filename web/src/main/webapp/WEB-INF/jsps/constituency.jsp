@@ -10,7 +10,9 @@
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
-                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+								<link rel="stylesheet" href="http://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css">
+								<link rel="stylesheet" href="http://timschlechter.github.io/bootstrap-tagsinput/examples/assets/app.css">
+                               <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                             </head>
                             <body>
@@ -86,26 +88,30 @@
 												$('.constituency_page').fadeTo( "slow", 0.33 );
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											$("#modal-background-subcategory-innerdiv").on('mouseleave', function () {
-												$("#modal-background-subcategory").on('click', ':not(#modal-background-subcategory-innerdiv)', function () {
-													$('.constituency_page').fadeTo( "slow", 1 );
-													$('#modal-background-subcategory').fadeOut(1);	
-												});
-											});
-											$("#md-bg-services-plus-sys-level-innerdiv").on('mouseleave', function () {
-												$("#md-bg-services-plus-sys-level").on('click', ':not(#md-bg-services-plus-sys-level-innerdiv)',function () {
-													$('.constituency_page').fadeTo( "slow", 1 );
-													$('#md-bg-services-plus-sys-level').fadeOut(1);	
-												});
-											});
-											
+											$("#modal-background-subcategory").click(function(e) {
+												if($(e.target).is('#modal-background-subcategory-innerdiv')){
+													e.preventDefault();
+													return;
+												}
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('#modal-background-subcategory').fadeOut(1);	
+											}); 
+											$("#md-bg-services-plus-sys-level").click(function(e) {
+												if($(e.target).is('#md-bg-services-plus-sys-level-innerdiv')){
+													e.preventDefault();
+													return;
+												}
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('#md-bg-services-plus-sys-level').fadeOut(1);	
+											}); 
+
 											$( "#modal-background-subcategory-innerdiv a" ).each( function () {
 												$(this).on('click', function() {
 													$(this).toggleClass("modal_ahrefclick");
 														if ( $(this).hasClass( "modal_ahrefclick" ) ) {
 															var anchor_value = $(this).text();
 															var subcategory_input_val = $(".subcategory_input").attr("value");
-															$("subcategory_input").attr("value", subcategory_input_val + ',' + anchor_value );
+															$(".subcategory_input").attr("value", subcategory_input_val + ',' + anchor_value );
 														}
 													});
 											});
@@ -209,9 +215,11 @@
 														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
 													</p>
 
-															<div class="cat-search">
-																<input id="citizen_services_input" type="text" value="Water,Electricity" data-role="tagsinput">
-															</div>
+													<div class="cat-search example example_objects_as_tags">
+													  <div class="bs-example">
+														<input id="citizen_services_input" type="text" />
+													  </div>
+												   </div>
 
 													<hr />
 														<div class="left_filter">
@@ -571,5 +579,61 @@
 								</div>
 								
                             <jsp:include page="footer.jsp" />
+
+	<script src="http://timschlechter.github.io/bootstrap-tagsinput/examples/lib/jquery/dist/jquery.min.js"></script>
+    <script src="http://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="http://timschlechter.github.io/bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle.js"></script>
+    <script>
+	var citynames = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    url: 'http://www.json-generator.com/api/json/get/cehuLZcbtu?indent=4',
+    filter: function(list) {
+      return $.map(list, function(cityname) {
+        return { name: cityname }; });
+    }
+  }
+});
+citynames.initialize();
+
+var cities = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: 'http://www.json-generator.com/api/json/get/bUsaHfinsi?indent=4'
+});
+cities.initialize();
+
+/**
+ * Typeahead
+ */
+var elt = $('.example_typeahead > > input');
+elt.tagsinput({
+  typeaheadjs: {
+    name: 'citynames',
+    displayKey: 'name',
+    valueKey: 'name',
+    source: citynames.ttAdapter()
+  }
+});
+
+/**
+ * Objects as tags
+ */
+elt = $('.example_objects_as_tags > > input');
+elt.tagsinput({
+  itemValue: 'value',
+  itemText: 'text',
+  typeaheadjs: {
+    name: 'cities',
+    displayKey: 'text',
+    source: cities.ttAdapter()
+  }
+});
+
+elt.tagsinput('add', { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    });
+elt.tagsinput('add', { "value": 4 , "text": "Washington"  , "continent": "America"   });
+</script>
+
                             </body>
                         </html>
