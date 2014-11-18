@@ -576,8 +576,7 @@ width: 100%;
   width: 40px;
   height: 40px;
   top: 20px;
-  right: 12%;
-  /* image replacement */
+  right: 2%;
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
@@ -612,12 +611,14 @@ width: 100%;
 text-align: center;
 background-color: #E5E5E5;
 display: none;
-margin-top: -51px;
-padding-top: 40px;
 margin-left: 10%;
 margin-right: 10%;
 margin-bottom: 10%;
 position: absolute;
 left: 0px;
-top: 0px;
+top: 75px;
+height: 75vh;
+overflow: auto;
+padding-left: 20px;
+padding-right: 20px;
 }

@@ -78,8 +78,9 @@
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 											if($('#modal-background-subcategory').is(':visible')) {
-											$("body").on('click', ':not(#modal-background-subcategory)', function (e) {
+											$("body, .constituency_page").on('click', ':not(#modal-background-subcategory)', function (e) {
 													e.stopPropagation();
+													e.preventDefault();
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('.constituency_page')().removeAttr('disabled');
 													$('#modal-background-subcategory').fadeOut(1);	
