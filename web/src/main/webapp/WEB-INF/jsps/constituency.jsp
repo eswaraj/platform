@@ -52,20 +52,20 @@
 											//close the infographic page
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
-												$('.constituency_page').fadeIn(1);
-												$('.constituency_page').children().prop('disabled',false);
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 											});
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
 												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
-												$('.constituency_page').children().prop('disabled',false);
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 												}
 												if(event.which=='8'){
 												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeIn(1);
-												$('.constituency_page').children().prop('disabled',false);
+												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 												}
 											});
 										});	
@@ -74,8 +74,18 @@
 											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
-												$('.constituency_page').children().prop('disabled',true);
+												$('.constituency_page').children().attr('disabled', 'disabled');
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
+											});
+											$('#modal-background-subcategory').on({
+												mouseenter: function () {
+												},
+												mouseleave: function () {
+												$('.constituency_page').on('click', function () {
+												$('#modal-background-subcategory').fadeOut(1);	
+												$('.constituency_page').fadeTo( "slow", 1 );
+												});
+												}
 											});
 										}										
 									</script>
