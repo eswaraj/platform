@@ -33,9 +33,19 @@
                                     <script>
                                         jQuery(document).ready(function() {
                                             jQuery("abbr.timeago").timeago();
-										$('.anchorlink').click(function(e){
-											e.stopPropagation();
-										});
+											$('.anchorlink').click(function(e){
+												e.stopPropagation();
+											});
+											$( ".list-row" ).each( function () {
+												$(this).on({
+												mouseenter: function () {
+													$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 500);
+												},
+												mouseleave: function () {
+													$( this ).find(".innerdiv-sharebtn" ).hide();
+												}
+												});
+											});
                                         });
                                     </script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
@@ -74,7 +84,7 @@
 											<div class="constituency_left_pane">
 												<div class="reporter_cover_profile_quote">
 													<div class="cons_issue_reporters_box_cover_quote">
-														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself. One drowning man will never save another.”</p> 
+														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
 													</div>
 												</div>
 
@@ -88,39 +98,40 @@
 														</c:if>
 														<p class="center-align">
 														<c:if test="${!empty user.person.profilePhoto}">
-															<strong>${user.person.name}</strong> <br /> 
+															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
 															<c:if test="${!empty age}">
-															${age} Yrs,
+																<span class="grey_text">
+																${age} Yrs,
+																</span>
 															</c:if>
-															<span> 
+															<span class="grey_text"> 
 															${user.person.gender}
 															</span>
 														</c:if>
 														<c:if test="${empty user.person.profilePhoto}">
-															<strong>Aam Aadmi</strong> <br /> 
+															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p>
-														<p class="center-align">
-															<strong>My Raised Complaints</strong> <br /> 
-															<span> 
-															200
-															</span>
+														<div class="complaints_followers_counter">
+														<p class="reporter_total_complaints">
+															<span class="grey_text">Complaints</span> <br /> 
+															<strong class="blue_color_text">200</strong>
 														</p>
+														<p class="reporter_complaint_followers">
+															<span class="grey_text">Followers</span> <br /> 
+															<strong class="blue_color_text">5000</strong>
+														</p>
+														<p class="reporter_complaint_visited">
+															<span class="grey_text">Following</span> <br /> 
+															<strong class="blue_color_text">50</strong>
+														</p>
+														</div>
 													</div>
 												</div>
 
-												<div class="left_filter">
-													<p>
-														<strong>Refine Search</strong>
-													</p>
-													<div class="refine-search">
-														<input type="text" value="Amsterdam,Washington" data-role="tagsinput">
-													</div>
-												</div>
-												<p>
-													<strong>Filter Issues by category</strong>
-												</p>
 												<div class="list-group">
+												
+													<div class="filter_types">
 													<c:if test="${empty selectedCategory}">
 														<a href="#" class="list-group-item active">Show All
 															(${total})</a>
@@ -129,8 +140,10 @@
 														<a href="${location.url}.html?type=${viewType}"
 														   class="list-group-item">Show All (${total})</a>
 													</c:if>
-
-
+													<hr />
+													<p>
+														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+													</p>
 													<c:forEach items="${rootCategories}" var="oneCategory">
 														<c:if test="${selectedCategory eq oneCategory.id}">
 															<a href="#" class="list-group-item active">${oneCategory.name}
@@ -144,6 +157,56 @@
 														</c:if>
 
 													</c:forEach>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+															</p>
+
+															<c:forEach items="${rootCategories}" var="oneCategory">
+																<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+																	<a href="#!" class="list-group-item">${subCategory.name}</a>
+																</c:forEach>
+															</c:forEach>
+
+															<div class="refine-search">
+																<input type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
+															</div>
+														</div>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_temporal">Filter Issues by Time</strong>
+															</p>
+
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Today</option>
+																<option>Yesterday</option>
+																<option>Last 72 Hrs</option>
+																<option>Last 1 Week</option>
+																<option>Last 2 Weeks</option>
+																<option>Last 1 Month</option>
+																<option>Last 3 Months</option>
+															</select>
+														</div>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_spatial">Filter Issues by Location</strong>
+															</p>
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Cessna Business Park main road</option>
+																<option>Mahadevapura, More Mall</option>
+																<option>Chandni Chowk</option>
+																<option>South Delhi</option>
+																<option>Gurgaon</option>
+															</select>
+														</div>
+													
+													</div>
+
 												</div>
 											</div>
 											<div class="constituency_mid_pane">
@@ -185,8 +248,10 @@
 																		<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
 																		<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
 																		<!-- social media share buttons -->								
-																		<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																		<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
+																		<br />																		
 																		<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																		<br />
 																		<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
 																	</p>
 																	<div class="innerblock">
@@ -370,6 +435,52 @@
 															<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 															<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 														</c:if>
+													</div>
+
+													<div class="platform_constituency_counter">
+													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Constituency</span></p>
+													<p class="total_cons_population">
+														<span class="grey_text">Total Population</span> <br /> 
+														<strong class="blue_color_text">9.879 million</strong>
+													</p>
+													<p class="total_cons_area">
+														<span class="grey_text">Total Area</span> <br /> 
+														<strong class="blue_color_text">1,484 km²</strong>
+													</p>
+													<p class="total_const_count">
+														<span class="grey_text">Total Constituencies</span> <br /> 
+														<strong class="blue_color_text">70</strong>
+													</p>
+													<p class="total_voters">
+														<span class="grey_text">Total Voters</span> <br /> 
+														<strong class="blue_color_text">56458975</strong>
+													</p>
+													<p class="total_eswaraj_reg_voters">
+														<span class="grey_text">Voters with eSwaraj</span> <br /> 
+														<strong class="blue_color_text">42453975</strong>
+													</p>
+													<p class="total_eswaraj_const_coverage">
+														<span class="grey_text">eSwaraj Coverage</span> <br /> 
+														<strong class="blue_color_text">90%</strong>
+													</p>
+													</div>
+
+													<div class="social_media_sharing_buttons">
+
+													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow Us: </span></p>
+														<div id="fb-root"></div>
+														<script>(function(d, s, id) {
+														  var js, fjs = d.getElementsByTagName(s)[0];
+														  if (d.getElementById(id)) return;
+														  js = d.createElement(s); js.id = id;
+														  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+														  fjs.parentNode.insertBefore(js, fjs);
+														}(document, 'script', 'facebook-jssdk'));</script>														
+														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-width="5" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+																												
+														<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/eSwarajApp" data-text="Follow eSwaraj :" data-via="eSwarajApp" data-size="large">Tweet</a>
+														<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+													
 													</div>
 												</div>
 											</div>

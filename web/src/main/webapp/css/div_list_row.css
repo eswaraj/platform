@@ -1,10 +1,9 @@
 
 /*list row starts*/
 .list-row {
-    padding: 15px 0;
-    border: 2px solid #ccc;
+    padding: 0px;
+    border: 1px solid #f3f3f3;
 	border-radius: 10px;
-    min-height: 155px;
 	width: 750px;
 	margin-bottom: 15px;
 	background-color: #FFF;
@@ -189,7 +188,7 @@ font-size: 50px;
 
 .frame_glyphicon{
 float: left;
-border: 2px solid #dbdbdb;
+border: 1px solid #dbdbdb;
 height: 115px;
 background-color: #E8E8E8;
 margin: 0px 10px 0px 10px;
@@ -223,7 +222,7 @@ width: 100%;
 .right_profile{
 margin-top: 10%;
 margin-left: 10%;
-width: 250px;
+width: 200px;
 height: auto;
 }
 
@@ -288,16 +287,14 @@ margin-top: 10px;
 }
 
 .type_adjust{
-	max-width: 38%;
+	max-width: 45%;
 }
 
 .innerdiv-sharebtn {
 font-size: 15px;
 line-height: 200%;
 float: right;
-margin-right: 5px;
-margin-bottom: 0px;
-margin-top: -15px;
+display: none;
 }
 
 .footer_pos{
@@ -320,7 +317,9 @@ background-color: #ECE9E8;
 height: 130px;
 margin-bottom: 10px;
 padding-left: 15px;
-padding-top: 15px;
+padding-top: 5px;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
 }
 
 .cons_issue_reporters_box_cover_quote{
@@ -329,6 +328,10 @@ height: 130px;
 margin-top: 25px;
 text-align: center;
 padding: 5px;
+font-size: 13px;
+font-family: Brush Script MT,cursive;
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
 }
 
 .profile-pic-padding{
@@ -348,6 +351,7 @@ width: 90px;
 float: left;
 border: 1px solid #ccc;
 border-radius: 10px;
+margin-top: -55px;
 }
 
 .center-align{
@@ -358,6 +362,7 @@ text-align: center;
 width: 22%;
 padding-left: 25px;
 float: left;
+margin-bottom: 40px;
 }
 
 .constituency_mid_pane{
@@ -411,3 +416,157 @@ text-align: center;
 #myCarousel{
 width: 200px;
 }
+
+.reporter_total_complaints{
+clear: both;
+float:left;
+font-size: 12px;
+margin-right: 20px;
+margin-left: 10px;
+}
+
+.reporter_complaint_followers, .reporter_complaint_visited{
+float: left;
+font-size: 12px;
+margin-right: 20px;
+}
+
+.platform_constituency_counter{
+background-color: #ECE9E8;
+height: auto;
+margin-bottom: 10px;
+padding: 10px;
+padding-left: 15px;
+margin-top: 10px;
+border-radius: 10px;
+width: 200px;
+}
+
+.total_cons_population,.total_cons_area,.total_voters,.total_const_count,.total_eswaraj_reg_voters,.total_eswaraj_const_coverage{
+font-size: 12px;
+}
+
+.complaints_followers_counter{
+margin-top: 15%;
+text-align: center;
+height: 50px;
+}
+
+.constituency_left_pane .left_filter {
+clear: both;
+}
+
+.constituency_left_pane .left_filter  .refine-search, .constituency_left_pane .left_filter .filter_category{
+color: #FF3A00;
+}
+
+.p_c_counter_loc{
+font-weight: 700;
+width: 100%;
+margin: 0px;
+text-align: center;
+margin-bottom: 8px;
+}
+
+.follow_eswaraj_box{
+font-weight: 700;
+width: 100%;
+margin: 0px;
+margin-bottom: 8px;
+}
+
+.social_media_sharing_buttons{
+width: 200px;
+}
+
+body > div.at4-share-outer-right.addthis-smartlayers.addthis-smartlayers-desktop{
+display: none;
+}
+#at4-thankyou{
+display: none;
+}
+
+.addthis_horizontal_follow_toolbox {
+background: none;
+}
+
+.filter_citzn_serv, .filter_sys_lvl, .filter_temporal, .filter_spatial  {
+color: #FF3100;
+}
+
+#atftbx > p > span {
+color: #FF3100;
+font-weight: 700;
+}
+
+.blue_color_text{
+color: #428bca;
+}
+
+.red_orng_clr_text{
+color: #FF3100;
+font-weight: 700;
+}
+
+.grey_text{
+color: #777;
+}
+
+#twitter-widget-0{
+margin-top: 20px;
+}
+
+.list-group-item {
+position: relative;
+display: inline-block;
+border-radius: 10px;
+padding: 5px 10px;
+margin-bottom: 5px;
+margin-top: 2px;
+background-color: #fff;
+border: 0px;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+color: #f2f2f2;
+background-color: #5bc0de;
+}
+
+.list-group-item:first-child {
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+margin-left: 25%;
+margin-top: 5%;
+}
+
+.list-group-item:last-child {
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
+}
+
+.filter_types{
+background-color: #ECE9E8;
+height: auto;
+margin-bottom: 10px;
+padding: 10px;
+padding-left: 15px;
+margin-top: 10px;
+border-radius: 10px;
+padding-bottom: 20px;
+}
+
+hr {
+margin-top: 15px;
+margin-bottom: 15px;
+border: 0;
+border-top: 1px solid #CDCDCD;
+}
+
+.dropdownlist{
+height: 30px;
+background-color: #FD6B37;
+color: #FFFFFF;
+border-radius: 10px;
+width: 100%;
+}
+
