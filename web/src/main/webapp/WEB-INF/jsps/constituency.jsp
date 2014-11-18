@@ -158,22 +158,27 @@
 
 													</c:forEach>
 													<hr />
-														<c:forEach items="${complaintList}" var="oneComplaint">
-																<a href="#!" class="list-group-item">${oneComplaint.categoryTitle}</a>
-														</c:forEach>
-
 														<div class="left_filter">
 															<p>
-																<strong class="filter_sys_lvl">System Level Filtering</strong>
+																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
 															</p>
+
+															<c:forEach items="${rootCategories}" var="subCategory">
+																<a href="#!" class="list-group-item">${subCategory.name}</a>
+															</c:forEach>
+
+															<c:forEach items="${complaintList}" var="oneComplaint">
+																<a href="#!" class="list-group-item">${oneComplaint.categoryTitle}</a>
+															</c:forEach>
+
 															<div class="refine-search">
-																<input type="text" value="Amsterdam,Washington" data-role="tagsinput">
+																<input type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
 															</div>
 														</div>
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_temporal">Temporal Filtering</strong>
+																<strong class="filter_temporal">Filter Issues by Time</strong>
 															</p>
 
 															<select class="select dropdownlist">
@@ -190,7 +195,7 @@
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_spatial">Spatial Filtering</strong>
+																<strong class="filter_spatial">Filter Issues by Location</strong>
 															</p>
 															<select class="select dropdownlist">
 																<option selected>Select</option>

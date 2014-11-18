@@ -318,6 +318,8 @@ height: 130px;
 margin-bottom: 10px;
 padding-left: 15px;
 padding-top: 5px;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
 }
 
 .cons_issue_reporters_box_cover_quote{
@@ -328,6 +330,8 @@ text-align: center;
 padding: 5px;
 font-size: 13px;
 font-family: Brush Script MT,cursive;
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
 }
 
 .profile-pic-padding{
@@ -358,6 +362,7 @@ text-align: center;
 width: 22%;
 padding-left: 25px;
 float: left;
+margin-bottom: 40px;
 }
 
 .constituency_mid_pane{
@@ -531,6 +536,7 @@ background-color: #5bc0de;
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 margin-left: 25%;
+margin-top: 5%;
 }
 
 .list-group-item:last-child {
@@ -546,6 +552,7 @@ padding: 10px;
 padding-left: 15px;
 margin-top: 10px;
 border-radius: 10px;
+padding-bottom: 20px;
 }
 
 hr {
@@ -560,5 +567,6 @@ height: 30px;
 background-color: #FD6B37;
 color: #FFFFFF;
 border-radius: 10px;
+width: 100%;
 }
 
