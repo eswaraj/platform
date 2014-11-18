@@ -16,7 +16,12 @@ import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.NodeUnselectEvent;
+import org.primefaces.event.map.MarkerDragEvent;
 import org.primefaces.model.TreeNode;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +45,18 @@ public class LocationBean {
 
     private TreeNode selectedNode;
 
+    private MapModel draggableModel;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private Double lat;
+    private Double lng;
 
     @PostConstruct
     public void init() {
         Location location;
         try {
+            draggableModel = new DefaultMapModel();
             logger.info("Getting Location From DB");
             location = adminService.getRootLocationForSwarajIndia();
             logger.info("Got  Location From DB : " + location);
@@ -80,12 +91,38 @@ public class LocationBean {
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected", event.getTreeNode().toString());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-
-        createButtons();
+        TreeNode nodeSelected = event.getTreeNode();
+        Object data = nodeSelected.getData();
+        if (data instanceof Document) {
+            draggableModel.getMarkers().clear();
+            Document document = (Document) data;
+            lat = document.getLocation().getLatitude();
+            lng = document.getLocation().getLongitude();
+            if (lat == null) {
+                lat = 21.1289956;
+            }
+            if (lng == null) {
+                lng = 82.7792201;
+            }
+            LatLng coord1 = new LatLng(lat, lng);
+            // Draggable
+            draggableModel.addOverlay(new Marker(coord1, document.getLocation().getName()));
+            for (Marker premarker : draggableModel.getMarkers()) {
+                premarker.setDraggable(true);
+            }
+            createButtons();
+        }
     }
 
+    public void onMarkerDrag(MarkerDragEvent event) {
+        Marker marker = event.getMarker();
+        if (selectedNode.getData() instanceof Document) {
+            Document document = (Document) selectedNode.getData();
+            document.getLocation().setLatitude(marker.getLatlng().getLat());
+            document.getLocation().setLongitude(marker.getLatlng().getLng());
+        }
+
+    }
     public void onNodeUnselect(NodeUnselectEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unselected", event.getTreeNode().toString());
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -155,5 +192,29 @@ public class LocationBean {
 
     public void setSelectedNode(TreeNode selectedNode) {
         this.selectedNode = selectedNode;
+    }
+
+    public MapModel getDraggableModel() {
+        return draggableModel;
+    }
+
+    public void setDraggableModel(MapModel draggableModel) {
+        this.draggableModel = draggableModel;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 }

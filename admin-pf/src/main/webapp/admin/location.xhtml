@@ -4,6 +4,8 @@
 	<h:head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript" ></script>
+		
 		<style>
 .topAlignPanelColumns td {
 	vertical-align: top;
@@ -40,57 +42,65 @@
 		<h:form id="location_form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Location">
-				<h:panelGrid columns="2"  styleClass="topAlignPanelColumns">
-					<p:outputPanel id="listView">
-						<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
-							selection="#{locationBean.selectedNode}">
-							<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
-							<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
-							<p:ajax event="select" update=":location_form:formView" listener="#{locationBean.onNodeSelect}" />
-							<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
+				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+						<p:outputPanel id="listView">
+							<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+								selection="#{locationBean.selectedNode}">
+								<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
+								<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
+								<p:ajax event="select" update=":location_form:formView" listener="#{locationBean.onNodeSelect}" />
+								<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
 
-							<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
-								<h:outputText value="#{doc.name}" />
-							</p:treeNode>
-							<p:treeNode type="document" icon="ui-icon-document">
-								<h:outputText value="#{doc.name}" />
-							</p:treeNode>
-							<p:treeNode type="picture" icon="ui-icon-image">
-								<h:outputText value="#{doc.name}" />
-							</p:treeNode>
-							<p:treeNode type="mp3" icon="ui-icon-video">
-								<h:outputText value="#{doc.name}" />
-							</p:treeNode>
-						</p:tree>
-						<p:contextMenu for="doc">
-							<p:menuitem value="Create" update="messages" actionListener="#{locationBean.displaySelectedSingle}"
-								icon="ui-icon-search" />
-							<p:menuitem value="Delete" update="doc" actionListener="#{locationBean.deleteNode}" icon="ui-icon-close" />
-						</p:contextMenu>
-						<p:blockUI block="@form" trigger="doc">LOADING<br />
-							<p:graphicImage width="80"
-								value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
-						</p:blockUI>
-					</p:outputPanel>
-					<p:outputPanel id="formView">
-						<h:panelGrid columns="2" rendered="#{not empty locationBean.selectedNode}">
-							<p:outputLabel value="Name"></p:outputLabel>
-							<p:inputText id="name" value="#{locationBean.selectedNode.data.location.name}" style="width:200px" />
+								<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="document" icon="ui-icon-document">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="picture" icon="ui-icon-image">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="mp3" icon="ui-icon-video">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+							</p:tree>
+							<p:contextMenu for="doc">
+								<p:menuitem value="Create" update="messages" actionListener="#{locationBean.displaySelectedSingle}"
+									icon="ui-icon-search" />
+								<p:menuitem value="Delete" update="doc" actionListener="#{locationBean.deleteNode}" icon="ui-icon-close" />
+							</p:contextMenu>
+							<p:blockUI block="@form" trigger="doc">LOADING<br />
+								<p:graphicImage width="80"
+									value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
+							</p:blockUI>
+						</p:outputPanel>
+						<p:outputPanel id="formView">
+							<h:panelGrid columns="2" rendered="#{not empty locationBean.selectedNode}">
+								<p:outputLabel value="Name"></p:outputLabel>
+								<p:inputText id="name" value="#{locationBean.selectedNode.data.location.name}" style="width:200px" />
 
-							<p:outputLabel value="URL Identifier"></p:outputLabel>
-							<p:inputText id="urlId" value="#{locationBean.selectedNode.data.location.urlIdentifier}" style="width:200px" />
+								<p:outputLabel value="URL Identifier"></p:outputLabel>
+								<p:inputText id="urlId" value="#{locationBean.selectedNode.data.location.urlIdentifier}" style="width:200px" />
 
-							<p:outputLabel value="Latitude"></p:outputLabel>
-							<p:inputText id="latitude" value="#{locationBean.selectedNode.data.location.latitude}" style="width:200px" />
+								<p:outputLabel value="Latitude"></p:outputLabel>
+								<p:inputText disabled="true" id="latitude" value="#{locationBean.selectedNode.data.location.latitude}" style="width:200px" />
 
-							<p:outputLabel value="Longitude"></p:outputLabel>
-							<p:inputText id="longitude" value="#{locationBean.selectedNode.data.location.longitude}" style="width:200px" />
+								<p:outputLabel value="Longitude"></p:outputLabel>
+								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedNode.data.location.longitude}" style="width:200px" />
 
-						</h:panelGrid>
-						<p:panelGrid columns="6" id="buttonPanel">
-						</p:panelGrid>
-					</p:outputPanel>
+							</h:panelGrid>
+							<p:panelGrid columns="6" id="buttonPanel">
+							</p:panelGrid>
+						</p:outputPanel>
+					</h:panelGrid>
+
+					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="13" type="HYBRID" rendered="#{not empty locationBean.selectedNode}"
+						model="#{locationBean.draggableModel}" style="width:700px;height:500px">
+						<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />
+					</p:gmap>
 				</h:panelGrid>
+
 			</p:panel>
 		</h:form>
 	</h:body>

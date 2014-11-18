@@ -4,6 +4,7 @@ import javax.faces.webapp.FacesServlet;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
@@ -25,6 +26,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-domain.xml", "classpath:eswaraj-web-admin-context.xml" })
+@EnableAutoConfiguration
 public class Main extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
