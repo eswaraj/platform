@@ -442,8 +442,9 @@ font-size: 12px;
 }
 
 .complaints_followers_counter{
-margin-top: 10%;
+margin-top: 15%;
 text-align: center;
+height: 50px;
 }
 
 .constituency_left_pane .left_filter {
