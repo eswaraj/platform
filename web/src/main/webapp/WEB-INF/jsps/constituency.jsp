@@ -52,32 +52,47 @@
 											//close the infographic page
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
+												$('#md-bg-services-plus-sys-level').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
 											});
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
 												$('#modal-background-subcategory').fadeOut(1);	
+												$('#md-bg-services-plus-sys-level').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
 												}
 												if(event.which=='8'){
 												$('#modal-background-subcategory').fadeOut(1);	
+												$('#md-bg-services-plus-sys-level').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
 												}
 											});
 										});	
 
 										window.onload = function() {
-											$('.refine-search').on('click', function(){
+											$('.advanced-filter').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											if($('#modal-background-subcategory').is(':visible')) {
+											$('.cat-search').on('click', function(){
+												$('#md-bg-services-plus-sys-level').fadeIn(1);
+												$('.constituency_page').fadeTo( "slow", 0.33 );
+											    $("html, body").animate({ scrollTop: 0 }, "slow");
+											});
+											if ( $('#modal-background-subcategory').css('visibility') !== 'hidden' && $('#modal-background-subcategory').css('display') !== 'none') {
 											$(".constituency_page").on('click', function (e) {
 													e.preventDefault();
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#modal-background-subcategory').fadeOut(1);	
+													});
+											}
+											if ( $('#md-bg-services-plus-sys-level').css('visibility') !== 'hidden' && $('#md-bg-services-plus-sys-level').css('display') !== 'none') {
+											$(".constituency_page").on('click', function (e) {
+													e.preventDefault();
+													$('.constituency_page').fadeTo( "slow", 1 );
+													$('#md-bg-services-plus-sys-level').fadeOut(1);	
 													});
 											}
 										}										
@@ -178,24 +193,16 @@
 													<p>
 														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
 													</p>
-													<c:forEach items="${rootCategories}" var="oneCategory">
-														<c:if test="${selectedCategory eq oneCategory.id}">
-															<a href="#" class="list-group-item active">${oneCategory.name}
-																(${oneCategory.locationCount})</a>
-														</c:if>
-														<c:if test="${ selectedCategory ne oneCategory.id}">
-															<a
-															   href="${location.url}/category/${oneCategory.id}.html?type=${viewType}"
-															   class="list-group-item">${oneCategory.name}
-																(${oneCategory.locationCount}) </a>
-														</c:if>
 
-													</c:forEach>
+															<div class="cat-search">
+																<input id="citizen_services_input" type="text" value="Water,Electricity" data-role="tagsinput">
+															</div>
+
 													<hr />
 														<div class="left_filter">
 															<p>
 																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
-																<span class="glyphicon glyphicon-filter refine-search"></span>
+																<span class="glyphicon glyphicon-filter advanced-filter"></span>
 															</p>
 
 															<div class="subcat-search">
@@ -527,6 +534,25 @@
 									</c:forEach>
 								<a href="#0" class="close-btn">Close</a>
 								</div>
+								
+								
+								<div id="md-bg-services-plus-sys-level">
+								<h1 class="blue_color_text">Select Citizen Services</h1><hr />
+									<c:forEach items="${rootCategories}" var="oneCategory">
+										<c:if test="${selectedCategory eq oneCategory.id}">
+											<a href="#" class="list-group-item active">${oneCategory.name}
+												(${oneCategory.locationCount})</a><br />
+										</c:if>
+										<c:if test="${ selectedCategory ne oneCategory.id}">
+											<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="list-group-item">
+											${oneCategory.name} (${oneCategory.locationCount}) </a><br />
+										</c:if>
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+
+								
+								
                             <jsp:include page="footer.jsp" />
                             </body>
                         </html>

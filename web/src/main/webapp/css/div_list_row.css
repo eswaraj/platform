@@ -456,8 +456,12 @@ height: 50px;
 clear: both;
 }
 
-.constituency_left_pane .left_filter  .subcat-search, .refine-search, .constituency_left_pane .left_filter .filter_category{
+.constituency_left_pane .left_filter  .subcat-search, .advanced-filter, .constituency_left_pane .left_filter .filter_category{
 color: #FF3A00;
+}
+
+.advanced-filter{
+cursor: pointer !important;
 }
 
 .p_c_counter_loc{
@@ -608,6 +612,22 @@ width: 100%;
 }
 
 #modal-background-subcategory{
+text-align: center;
+background-color: #E5E5E5;
+display: none;
+margin-left: 10%;
+margin-right: 10%;
+margin-bottom: 10%;
+position: absolute;
+left: 0px;
+top: 75px;
+height: 75vh;
+overflow: auto;
+padding-left: 20px;
+padding-right: 20px;
+}
+
+.md-bg-services-plus-sys-level{
 text-align: center;
 background-color: #E5E5E5;
 display: none;
