@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 
@@ -30,6 +32,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private LocationBoundaryFileRepository locationBoundaryFileRepository;
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -125,6 +130,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Location> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException {
         return locationRepository.findLocationByParentLocation(parentLocationId);
+    }
+
+    @Override
+    public List<LocationBoundaryFile> getLocationBoundaryFiles(Long locationId) throws ApplicationException {
+        return locationBoundaryFileRepository.getAllLocationBoundaryFile(locationId);
     }
 
 }

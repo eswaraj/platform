@@ -4,8 +4,8 @@
 	<h:head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript" ></script>
-		
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
 		<style>
 .topAlignPanelColumns td {
 	vertical-align: top;
@@ -44,7 +44,7 @@
 			<p:panel id="mainPanel" header="Location">
 				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
 					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
-						<p:outputPanel id="listView">
+						<p:outputPanel id="treeView">
 							<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
 								selection="#{locationBean.selectedNode}">
 								<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
@@ -75,8 +75,8 @@
 									value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
 							</p:blockUI>
 						</p:outputPanel>
-						<p:outputPanel id="formView">
-							<h:panelGrid columns="2" rendered="#{not empty locationBean.selectedNode}">
+						<p:outputPanel id="formView" rendered="#{not empty locationBean.selectedNode}">
+							<h:panelGrid columns="2" >
 								<p:outputLabel value="Name"></p:outputLabel>
 								<p:inputText id="name" value="#{locationBean.selectedNode.data.location.name}" style="width:200px" />
 
@@ -84,19 +84,31 @@
 								<p:inputText id="urlId" value="#{locationBean.selectedNode.data.location.urlIdentifier}" style="width:200px" />
 
 								<p:outputLabel value="Latitude"></p:outputLabel>
-								<p:inputText disabled="true" id="latitude" value="#{locationBean.selectedNode.data.location.latitude}" style="width:200px" />
+								<p:inputText disabled="true" id="latitude" value="#{locationBean.selectedNode.data.location.latitude}"
+									style="width:200px" />
 
 								<p:outputLabel value="Longitude"></p:outputLabel>
-								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedNode.data.location.longitude}" style="width:200px" />
+								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedNode.data.location.longitude}"
+									style="width:200px" />
 
 							</h:panelGrid>
 							<p:panelGrid columns="6" id="buttonPanel">
 							</p:panelGrid>
+							<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
+								<p:column headerText="File name">
+									<h:outputText value="#{oneBoundaryFile.originalFileName}" />
+								</p:column>
+
+								<p:column headerText="Date">
+									<h:outputText value="#{oneBoundaryFile.uploadDate}" />
+								</p:column>
+							</p:dataTable>
 						</p:outputPanel>
 					</h:panelGrid>
 
-					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="13" type="HYBRID" rendered="#{not empty locationBean.selectedNode}"
-						model="#{locationBean.draggableModel}" style="width:700px;height:500px">
+					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="13" type="HYBRID"
+						rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
+						style="width:700px;height:500px">
 						<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />
 					</p:gmap>
 				</h:panelGrid>

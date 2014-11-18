@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.next.eswaraj.admin.service.AdminService;
 
@@ -51,6 +52,7 @@ public class LocationBean {
 
     private Double lat;
     private Double lng;
+    private List<LocationBoundaryFile> locationBoundaryFiles;
 
     @PostConstruct
     public void init() {
@@ -105,10 +107,16 @@ public class LocationBean {
                 lng = 82.7792201;
             }
             LatLng coord1 = new LatLng(lat, lng);
+
             // Draggable
             draggableModel.addOverlay(new Marker(coord1, document.getLocation().getName()));
             for (Marker premarker : draggableModel.getMarkers()) {
                 premarker.setDraggable(true);
+            }
+            try {
+                locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
+            } catch (ApplicationException e) {
+                e.printStackTrace();
             }
             createButtons();
         }
@@ -216,5 +224,13 @@ public class LocationBean {
 
     public void setLng(Double lng) {
         this.lng = lng;
+    }
+
+    public List<LocationBoundaryFile> getLocationBoundaryFiles() {
+        return locationBoundaryFiles;
+    }
+
+    public void setLocationBoundaryFiles(List<LocationBoundaryFile> locationBoundaryFiles) {
+        this.locationBoundaryFiles = locationBoundaryFiles;
     }
 }

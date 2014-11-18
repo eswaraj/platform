@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 
 public interface AdminService {
@@ -19,4 +20,6 @@ public interface AdminService {
     Location getRootLocationForSwarajIndia() throws ApplicationException;
 
     List<Location> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
+
+    List<LocationBoundaryFile> getLocationBoundaryFiles(Long locationId) throws ApplicationException;
 }
