@@ -163,12 +163,10 @@
 																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
 															</p>
 
-															<c:forEach items="${rootCategories}" var="subCategory">
-																<a href="#!" class="list-group-item">${subCategory.name}</a>
-															</c:forEach>
-
-															<c:forEach items="${complaintList}" var="oneComplaint">
-																<a href="#!" class="list-group-item">${oneComplaint.categoryTitle}</a>
+															<c:forEach items="${rootCategories}" var="oneCategory">
+																<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+																	<a href="#!" class="list-group-item">${subCategory.name}</a>
+																</c:forEach>
 															</c:forEach>
 
 															<div class="refine-search">
