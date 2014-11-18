@@ -33,9 +33,14 @@
                                     <script>
                                         jQuery(document).ready(function() {
                                             jQuery("abbr.timeago").timeago();
-										$('.anchorlink').click(function(e){
-											e.stopPropagation();
-										});
+											$('.anchorlink').click(function(e){
+												e.stopPropagation();
+											});
+											$( ".list-row" ).each( function () {
+												$( this ).on( 'hover', function () {
+												$( this ).find(".innerdiv-sharebtn" ).toggle( "slide" );
+												});
+											});
                                         });
                                     </script>
                                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
