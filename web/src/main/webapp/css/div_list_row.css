@@ -447,7 +447,7 @@ font-size: 12px;
 }
 
 .complaints_followers_counter{
-margin-top: 15%;
+margin-top: 10%;
 text-align: center;
 height: 50px;
 }
@@ -612,4 +612,6 @@ width: 100%;
 text-align: center;
 padding: 100px;
 display: none;
+margin-top: -51px;
+padding-top: 40px;
 }

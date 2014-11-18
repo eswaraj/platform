@@ -71,6 +71,7 @@
 											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeOut(1);
+											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 										}										
 									</script>
@@ -508,6 +509,7 @@
                                 </div>
                                 </div>
 								<div id="modal-background-subcategory">
+								<h1 class="red_orng_clr_text">Select SubCategories</h1><hr />
 									<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
 										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
