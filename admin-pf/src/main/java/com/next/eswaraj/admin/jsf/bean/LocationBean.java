@@ -59,7 +59,7 @@ public class LocationBean {
 
     public void onNodeExpand(NodeExpandEvent event) {
         TreeNode nodeSelected = event.getTreeNode();
-        if (selectedNode != null && selectedNode.getChildCount() == 0) {
+        if (nodeSelected != null && nodeSelected.getChildCount() == 0) {
 
             try {
                 List<Location> childLocations = adminService.getChildLocationsOfParent(((Document) nodeSelected.getData()).getLocation().getId());
