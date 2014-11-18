@@ -102,7 +102,7 @@
 															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p>
-														<div class="complaints_followers_counter">
+														<p class="complaints_followers_counter">
 														<p class="reporter_total_complaints">
 															<span class="grey_text">Complaints</span> <br /> 
 															<strong class="blue_color_text">200</strong>
@@ -115,7 +115,7 @@
 															<span class="grey_text">Following</span> <br /> 
 															<strong class="blue_color_text">50</strong>
 														</p>
-														</div>
+														</p>
 													</div>
 												</div>
 
