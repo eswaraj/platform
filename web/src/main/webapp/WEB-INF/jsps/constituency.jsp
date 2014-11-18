@@ -50,12 +50,12 @@
 
 										jQuery(document).ready(function($){
 
-											$('#modal-background-subcategory .close-btn').on('click', function(){
+											$('#modal-background-subcategory-innerdiv .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
 											});
 
-											$('#md-bg-services-plus-sys-level .close-btn').on('click', function(){
+											$('#md-bg-services-plus-sys-level-innerdiv .close-btn').on('click', function(){
 												$('#md-bg-services-plus-sys-level').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
 											});
@@ -76,24 +76,24 @@
 										});	
 
 										window.onload = function() {
-											$('.advanced-filter').on('click', function(){
+											$('.advanced-filter-subcategory').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											$('.cat-search').on('click', function(){
+											$('.advanced-filter-citzn-serv').on('click', function(){
 												$('#md-bg-services-plus-sys-level').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
-											$("#modal-background-subcategory").on('mouseleave', function () {
-												$(".constituency_page").on('click', function () {
+											$("#modal-background-subcategory-innerdiv").on('mouseleave', function () {
+												$("#modal-background-subcategory").on('click', function () {
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#modal-background-subcategory').fadeOut(1);	
 												});
 											});
-											$("#md-bg-services-plus-sys-level").on('mouseleave', function () {
-												$(".constituency_page").on('click', function () {
+											$("#md-bg-services-plus-sys-level-innerdiv").on('mouseleave', function () {
+												$("#md-bg-services-plus-sys-level").on('click', function () {
 													$('.constituency_page').fadeTo( "slow", 1 );
 													$('#md-bg-services-plus-sys-level').fadeOut(1);	
 												});
@@ -195,6 +195,7 @@
 													<hr />
 													<p>
 														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
 													</p>
 
 															<div class="cat-search">
@@ -205,7 +206,7 @@
 														<div class="left_filter">
 															<p>
 																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
-																<span class="glyphicon glyphicon-filter advanced-filter"></span>
+																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
 															</p>
 
 															<div class="subcat-search">
@@ -526,7 +527,9 @@
                                     </div>
                                 </div>
                                 </div>
+								
 								<div id="modal-background-subcategory">
+								<div id="modal-background-subcategory-innerdiv">
 								<h1 class="blue_color_text">Select SubCategories</h1><hr />
 									<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
@@ -537,9 +540,10 @@
 									</c:forEach>
 								<a href="#0" class="close-btn">Close</a>
 								</div>
-								
+								</div>
 								
 								<div id="md-bg-services-plus-sys-level">
+								<div id="md-bg-services-plus-sys-level-innerdiv">
 								<h1 class="blue_color_text">Select Citizen Services</h1><hr />
 									<c:forEach items="${rootCategories}" var="oneCategory">
 										<c:if test="${selectedCategory eq oneCategory.id}">
@@ -552,6 +556,7 @@
 										</c:if>
 									</c:forEach>
 								<a href="#0" class="close-btn">Close</a>
+								</div>
 								</div>
 								
                             <jsp:include page="footer.jsp" />

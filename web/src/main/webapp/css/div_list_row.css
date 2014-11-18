@@ -320,6 +320,7 @@ padding-left: 15px;
 padding-top: 5px;
 border-bottom-right-radius: 10px;
 border-bottom-left-radius: 10px;
+position: relative;
 }
 
 .cons_issue_reporters_box_cover_quote{
@@ -447,20 +448,21 @@ font-size: 12px;
 }
 
 .complaints_followers_counter{
-margin-top: 10%;
 text-align: center;
 height: 50px;
+position: absolute;
+bottom: 10px;
 }
 
 .constituency_left_pane .left_filter {
 clear: both;
 }
 
-.constituency_left_pane .left_filter  .subcat-search, .advanced-filter, .constituency_left_pane .left_filter .filter_category{
+.constituency_left_pane .left_filter  .subcat-search, .advanced-filter-subcategory, .advanced-filter-citzn-serv, .constituency_left_pane .left_filter .filter_category{
 color: #FF3A00;
 }
 
-.advanced-filter{
+.advanced-filter-subcategory, .advanced-filter-citzn-serv{
 cursor: pointer !important;
 }
 
@@ -611,7 +613,7 @@ width: 100%;
   transform: rotate(-45deg);
 }
 
-#modal-background-subcategory{
+#modal-background-subcategory-innerdiv{
 text-align: center;
 background-color: #E5E5E5;
 display: none;
@@ -627,18 +629,26 @@ padding-left: 20px;
 padding-right: 20px;
 }
 
-#md-bg-services-plus-sys-level{
+#md-bg-services-plus-sys-level-innerdiv{
 text-align: center;
 background-color: #E5E5E5;
 display: none;
-margin-left: 10%;
-margin-right: 10%;
 margin-bottom: 10%;
 position: absolute;
-left: 0px;
+left: 35%;
 top: 75px;
 height: 75vh;
 overflow: auto;
 padding-left: 20px;
 padding-right: 20px;
+}
+
+#modal-background-subcategory, #md-bg-services-plus-sys-level{
+height: 100%;
+width: 100%;
+background-color: #000;
+opacity: 0.25;
+position: absolute;
+left: 0px;
+top: 0px;
 }
