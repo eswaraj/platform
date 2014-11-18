@@ -65,7 +65,7 @@
 												$('.constituency_page').fadeIn(1);
 												}
 											});
-											$('#subcategory_input').on('keypress', function(){
+											$('#subcategory_input').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeOut(1);
 											});
@@ -187,16 +187,6 @@
 
 															<div class="refine-search">
 																<input id="subcategory_input" type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
-																	<div id="modal-background-subcategory" style="display: none;">
-																		<c:forEach items="${rootCategories}" var="oneCategory">
-																			<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
-																			<c:forEach items="${oneCategory.childCategories}" var="subCategory">
-																				<a href="#!" class="list-group-item">${subCategory.name}</a>
-																			</c:forEach>
-																			<hr />
-																		</c:forEach>
-																	<a href="#0" class="close-btn">Close</a>
-																	</div>
 															</div>
 														</div>
 													<hr />
@@ -513,6 +503,16 @@
                                     </div>
                                 </div>
                                 </div>
+								<div id="modal-background-subcategory" style="display: none;">
+									<c:forEach items="${rootCategories}" var="oneCategory">
+										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
+										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+											<a href="#!" class="list-group-item">${subCategory.name}</a>
+										</c:forEach>
+										<hr />
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
                             <jsp:include page="footer.jsp" />
                             </body>
                         </html>
