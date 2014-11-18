@@ -53,19 +53,19 @@
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
 												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
+												$('.constituency_page')().removeAttr('disabled');
 											});
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
+												$('.constituency_page').removeAttr('disabled');
 												}
 												if(event.which=='8'){
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
+												$('.constituency_page').removeAttr('disabled');
 												}
 											});
 										});	
@@ -74,19 +74,16 @@
 											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
-												$('.constituency_page').children().attr('disabled', 'disabled');
+												$('.constituency_page')().attr('disabled', 'disabled');
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 											if($('#modal-background-subcategory').is(':visible')) {
-												$('#modal-background-subcategory').on('mouseleave', function(){
-													$('.constituency_page').on('click', function (e) {
+											$("body").on('click', ':not(#modal-background-subcategory)', function (e) {
 													e.stopPropagation();
-													$('#modal-background-subcategory').fadeOut(1);	
 													$('.constituency_page').fadeTo( "slow", 1 );
-													$('.constituency_page').children().removeAttr('disabled');
+													$('.constituency_page')().removeAttr('disabled');
+													$('#modal-background-subcategory').fadeOut(1);	
 													});
-													}
-												});
 											}
 										}										
 									</script>
