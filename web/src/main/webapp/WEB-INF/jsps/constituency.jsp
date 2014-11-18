@@ -81,9 +81,11 @@
 												mouseenter: function () {
 												},
 												mouseleave: function () {
-												$('.constituency_page').on('click', function () {
+												$('.constituency_page').on('click', function (e) {
+												e.stopPropagation();
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeTo( "slow", 1 );
+												$('.constituency_page').children().removeAttr('disabled');
 												});
 												}
 											});
