@@ -53,16 +53,19 @@
 											$('#modal-background-subcategory .close-btn').on('click', function(){
 												$('#modal-background-subcategory').fadeOut(1);
 												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').children().prop('disabled',false);
 											});
 											$(document).keyup(function(event){
 												//check if user has pressed 'Esc'
 												if(event.which=='27'){
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').children().prop('disabled',false);
 												}
 												if(event.which=='8'){
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').children().prop('disabled',false);
 												}
 											});
 										});	
@@ -71,15 +74,16 @@
 											$('.refine-search').on('click', function(){
 												$('#modal-background-subcategory').fadeIn(1);
 												$('.constituency_page').fadeTo( "slow", 0.33 );
+												$('.constituency_page').children().prop('disabled',true);
 											    $("html, body").animate({ scrollTop: 0 }, "slow");
 											});
 											$('#modal-background-subcategory').on({
 												mouseenter: function () {
-												alert("Please select the subCategory");
 												},
 												mouseleave: function () {
 												$('#modal-background-subcategory').fadeOut(1);	
 												$('.constituency_page').fadeIn(1);
+												$('.constituency_page').children().prop('disabled',false);
 												}
 											});
 										}										
