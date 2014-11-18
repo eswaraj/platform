@@ -122,9 +122,10 @@ public class LocationBean {
             }
             try {
                 locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
-
-                // if (!locationBoundaryFiles.isEmpty())
+                System.out.println("locationBoundaryFiles = " + locationBoundaryFiles);
+                if (!locationBoundaryFiles.isEmpty())
                 {
+                    System.out.println("Select Active File = ");
                     LocationBoundaryFile activeLocationBoundaryFile = null;
                     for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
                         activeLocationBoundaryFile = oneLocationBoundaryFile;
@@ -132,6 +133,7 @@ public class LocationBean {
                             break;
                         }
                     }
+                    System.out.println("activeLocationBoundaryFile = " + activeLocationBoundaryFile);
                     System.out.println("Creating Polygon");
                     if (activeLocationBoundaryFile != null)
                     {
@@ -177,7 +179,6 @@ public class LocationBean {
                             e.printStackTrace();
                         }
 
-                        // draggableModel.addOverlay(kmlLayer);
                     }
                 }
             } catch (ApplicationException e) {
