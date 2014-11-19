@@ -70,8 +70,7 @@ window.onload = function() {
 	}); 
 
 	$( "#modal-background-subcategory-innerdiv a" ).each( function () {
-		$(this).on('click', function(e) {
-			e.preventDefault();
+		$(this).on('click', function() {
 			$(this).toggleClass("modal_ahrefclick");
 			});
 	});
