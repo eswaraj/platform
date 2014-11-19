@@ -30,7 +30,13 @@
 								">
 								<div class="constituency_page">
                                     <jsp:include page="header.jsp" />
-                                    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
+                                    <script>
+									jQuery(document).ready(function() {
+										jQuery("abbr.timeago").timeago();
+									});
+									</script>
+									
+									<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
                                     <c:if test="${viewType eq 'map'}">
                                         <script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
                                         <script src="${staticHost}/js/mapview.js" type="text/javascript"></script>
