@@ -228,9 +228,11 @@
 																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
 															</p>
 
-															<div class="subcat-search">
-																<input id="subcategory_input" type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
-															</div>
+															<div class="subcat-search example example_objects_as_tags_subcat">
+															  <div class="bs-example">
+																<input id="subcategory_input" type="text" />
+															  </div>
+														   </div>
 														</div>
 													<hr />
 														<div class="left_filter">
@@ -588,7 +590,7 @@
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   prefetch: {
-    url: 'http://www.json-generator.com/api/json/get/cehuLZcbtu?indent=4',
+    url: 'http://www.json-generator.com/api/json/get/ceeSBtfmNu?indent=4',
     filter: function(list) {
       return $.map(list, function(cityname) {
         return { name: cityname }; });
@@ -600,7 +602,7 @@ citynames.initialize();
 var cities = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: 'http://www.json-generator.com/api/json/get/bUsaHfinsi?indent=4'
+  prefetch: 'http://www.json-generator.com/api/json/get/cmSkWToAHS?indent=4'
 });
 cities.initialize();
 
@@ -631,9 +633,62 @@ elt.tagsinput({
   }
 });
 
-elt.tagsinput('add', { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    });
-elt.tagsinput('add', { "value": 4 , "text": "Washington"  , "continent": "America"   });
+elt.tagsinput('add', { "value": 1 , "text": "Water"   , "continent": "India"    });
+elt.tagsinput('add', { "value": 5 , "text": "Roads"  , "continent": "India"   });
 </script>
 
+
+
+    <script>
+	var citynames_subcat = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    url: 'http://www.json-generator.com/api/json/get/bSGNSuCPNe?indent=4',
+    filter: function(list) {
+      return $.map(list, function(cityname_subcat) {
+        return { name: cityname_subcat }; });
+    }
+  }
+});
+citynames_subcat.initialize();
+
+var cities_subcat = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: 'http://www.json-generator.com/api/json/get/bSsjtwWjoy?indent=4'
+});
+cities_subcat.initialize();
+
+/**
+ * Typeahead
+ */
+var elt_subcat = $('.example_typeahead_subcat > > input');
+elt_subcat.tagsinput({
+  typeaheadjs: {
+    name: 'citynames_subcat',
+    displayKey: 'name',
+    valueKey: 'name',
+    source: citynames_subcat.ttAdapter()
+  }
+});
+
+/**
+ * Objects as tags
+ */
+elt_subcat = $('.example_objects_as_tags_subcat > > input');
+elt_subcat.tagsinput({
+  itemValue: 'value',
+  itemText: 'name',
+  typeaheadjs: {
+    name: 'cities_subcat',
+    displayKey: 'name',
+    source: cities_subcat.ttAdapter()
+  }
+});
+
+elt_subcat.tagsinput('add', { "value": 1 , "name": "No Munciplaity Water at homes"   , "id": "78261"    });
+elt_subcat.tagsinput('add', { "value": 5 , "name": "Poor calliberation of water meters"  , "id": "78267"   });
+</script>
                             </body>
                         </html>
