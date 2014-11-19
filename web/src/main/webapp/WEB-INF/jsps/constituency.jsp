@@ -120,15 +120,6 @@
 												<div class="list-group">
 												
 													<div class="filter_types">
-													<c:if test="${empty selectedCategory}">
-														<a href="#" class="list-group-item active">Show All
-															(${total})</a>
-													</c:if>
-													<c:if test="${!empty selectedCategory}">
-														<a href="${location.url}.html?type=${viewType}"
-														   class="list-group-item">Show All (${total})</a>
-													</c:if>
-													<hr />
 													<p>
 														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
 														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
@@ -470,8 +461,10 @@
 								
 								<div id="modal-background-subcategory">
 								<div id="modal-background-subcategory-innerdiv">
-								<h1 class="blue_color_text">Select SubCategories</h1><hr />
-									<c:forEach items="${rootCategories}" var="oneCategory">
+								<h2 class="blue_color_text">Select SubCategories</h2><hr />
+										<a href="#!" class="list-group-item active">Show All</a>
+										<hr />
+										<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
 										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
 											<a href="#!" class="list-group-item">${subCategory.name}</a>
@@ -484,7 +477,16 @@
 								
 								<div id="md-bg-services-plus-sys-level">
 								<div id="md-bg-services-plus-sys-level-innerdiv">
-								<h1 class="blue_color_text">Select Citizen Services</h1><hr />
+								<h2 class="red_orng_clr_text">Select Citizen Services</h2><hr />
+									<c:if test="${empty selectedCategory}">
+										<a href="#" class="list-group-item active">Show All
+											(${total})</a>
+									</c:if>
+									<c:if test="${!empty selectedCategory}">
+										<a href="${location.url}.html?type=${viewType}"
+										   class="list-group-item">Show All (${total})</a>
+									</c:if>
+									<hr />
 									<c:forEach items="${rootCategories}" var="oneCategory">
 										<c:if test="${selectedCategory eq oneCategory.id}">
 											<a href="#" class="list-group-item active">${oneCategory.name}

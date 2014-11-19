@@ -73,12 +73,6 @@ window.onload = function() {
 		$(this).on('click', function(e) {
 			e.preventDefault();
 			$(this).toggleClass("modal_ahrefclick");
-				if ( $(this).hasClass( "modal_ahrefclick" ) ) {
-					var anchor_value = $(this).text();
-					var subcategory_input_val = $(".subcategory_input").attr('value');
-					alert( subcategory_input_val + ',' + anchor_value );
-					$(".subcategory_input").attr('value', subcategory_input_val + ',' + anchor_value );
-				}
 			});
 	});
 }										
