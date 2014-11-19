@@ -10,8 +10,6 @@
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
-								<link rel="stylesheet" href="http://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css">
-								<link rel="stylesheet" href="http://timschlechter.github.io/bootstrap-tagsinput/examples/assets/app.css">
                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                             </head>
@@ -106,11 +104,13 @@
 											}); 
 
 											$( "#modal-background-subcategory-innerdiv a" ).each( function () {
-												$(this).on('click', function() {
+												$(this).on('click', function(e) {
+													e.preventDefault();
 													$(this).toggleClass("modal_ahrefclick");
 														if ( $(this).hasClass( "modal_ahrefclick" ) ) {
 															var anchor_value = $(this).text();
 															var subcategory_input_val = $(".subcategory_input").attr("value");
+															alert( subcategory_input_val + ',' + anchor_value );
 															$(".subcategory_input").attr("value", subcategory_input_val + ',' + anchor_value );
 														}
 													});
@@ -656,7 +656,7 @@ citynames_subcat.initialize();
 var cities_subcat = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: 'http://www.json-generator.com/api/json/get/bSsjtwWjoy?indent=4'
+  prefetch: 'http://www.json-generator.com/api/json/get/cfcORgRTeG?indent=4'
 });
 cities_subcat.initialize();
 
@@ -679,16 +679,16 @@ elt_subcat.tagsinput({
 elt_subcat = $('.example_objects_as_tags_subcat > > input');
 elt_subcat.tagsinput({
   itemValue: 'value',
-  itemText: 'name',
+  itemText: 'text',
   typeaheadjs: {
     name: 'cities_subcat',
-    displayKey: 'name',
+    displayKey: 'text',
     source: cities_subcat.ttAdapter()
   }
 });
 
-elt_subcat.tagsinput('add', { "value": 1 , "name": "No Munciplaity Water at homes"   , "id": "78261"    });
-elt_subcat.tagsinput('add', { "value": 5 , "name": "Poor calliberation of water meters"  , "id": "78267"   });
+elt_subcat.tagsinput('add', { "value": 1 , "text": "No Munciplaity Water at homes"   , "id": "78261"    });
+elt_subcat.tagsinput('add', { "value": 5 , "text": "Poor calliberation of water meters"  , "id": "78267"   });
 </script>
                             </body>
                         </html>
