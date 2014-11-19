@@ -462,7 +462,7 @@
 								<div id="modal-background-subcategory">
 								<div id="modal-background-subcategory-innerdiv">
 								<h2 class="blue_color_text">Select SubCategories</h2><hr />
-										<a href="#!" class="list-group-item active">Show All</a>
+										<a href="${location.url}.html?type=${viewType}" class="list-group-item active">Show All</a>
 										<hr />
 										<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
