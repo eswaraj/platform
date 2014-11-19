@@ -467,7 +467,7 @@
 										<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
 										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
-											<a href="#!" class="list-group-item">${subCategory.name}</a>
+											<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" " class="list-group-item">${subCategory.name}</a>
 										</c:forEach>
 										<hr />
 									</c:forEach>
