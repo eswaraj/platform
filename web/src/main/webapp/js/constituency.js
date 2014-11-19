@@ -133,11 +133,9 @@ elt.tagsinput({
 
 elt.tagsinput('add', { "value": 1 , "text": "Water"   , "continent": "India"    });
 elt.tagsinput('add', { "value": 5 , "text": "Roads"  , "continent": "India"   });
-</script>
 
 
 
-    <script>
 	var citynames_subcat = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
