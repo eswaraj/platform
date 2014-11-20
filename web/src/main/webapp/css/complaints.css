@@ -715,6 +715,7 @@ line-height: 10px;
 width: 80px;
 margin-top: 10px;
 margin-left: 25%;
+padding: 10px 15px;
 }
 
 .dlist_width{
@@ -838,7 +839,6 @@ background-color: #5bc0de;
 .list-group-item:first-child {
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
-margin-left: 25%;
 margin-top: 5%;
 }
 
@@ -935,6 +935,7 @@ height: 75vh;
 overflow: auto;
 padding-left: 20px;
 padding-right: 20px;
+padding-bottom: 20px;
 }
 
 #modal-background-subcategory, #md-bg-services-plus-sys-level{
