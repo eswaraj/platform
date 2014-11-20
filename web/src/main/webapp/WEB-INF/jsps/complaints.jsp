@@ -48,7 +48,7 @@
 												   </div>
 
 													<hr />
-														<div class="left_filter">
+														<div class="left_filter_sections">
 															<p>
 																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
 																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
@@ -61,7 +61,7 @@
 														   </div>
 														</div>
 													<hr />
-														<div class="left_filter">
+														<div class="left_filter_sections">
 															<p>
 																<strong class="filter_temporal">Filter Issues by Time</strong>
 															</p>
@@ -78,7 +78,7 @@
 															</select>
 														</div>
 													<hr />
-														<div class="left_filter">
+														<div class="left_filter_sections">
 															<p>
 																<strong class="filter_spatial">Filter Issues by Location</strong>
 															</p>
