@@ -33,19 +33,6 @@
 							<script>
 								jQuery(document).ready(function() {
 									jQuery("abbr.timeago").timeago();
-										$('.anchorlink').click(function(e){
-											e.stopPropagation();
-										});
-										$( ".list-row" ).each( function () {
-											$(this).on({
-											mouseenter: function () {
-												$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 500);
-											},
-											mouseleave: function () {
-												$( this ).find(".innerdiv-sharebtn" ).hide();
-											}
-											});
-										});
 									});
 							</script>
 
@@ -80,85 +67,68 @@
 			 -->
 			<div class="row" style="margin-top:1.25%;">
 				<div class="col-sm-2">
-					<p>
-						<strong>Refine Search</strong>
-					</p>
-					<div class="refine-search">
-						<input type="text" value="Amsterdam,Washington" 
-							data-role="tagsinput">
-						<!-- 
-						<div class="filter-options">
-							<span class="trigger btn btn-default"> <i
-								class="glyphicon glyphicon-cog"></i>
-							</span>
-							<div class="dropdown">
-								<form action="">
-									<div class="form-group">
-										<label>Your Locality</label> <select class="form-control">
-											<option value="1"></option>
-											<option value="2">Locality</option>
-											<option value="3">Locality</option>
-											<option value="4">Locality</option>
-											<option value="5">Locality</option>
-											<option value="6">Locality</option>
-											<option value="7">Locality</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Citizen Services</label> <select class="form-control">
-											<option value="1">Show All</option>
-											<option value="2">Road</option>
-											<option value="3">Water</option>
-											<option value="4">Transportation</option>
-											<option value="5">Electricity</option>
-											<option value="6">Law &amp; order</option>
-											<option value="7">Sewage</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Issue Type</label> <select class="form-control">
-											<option value="1">Issue</option>
-											<option value="2">Issue</option>
-											<option value="3">Issue</option>
-											<option value="4">Issue</option>
-											<option value="5">Issue</option>
-											<option value="6">Issue</option>
-											<option value="7">Issue</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Duration</label> <select class="form-control">
-											<option value="1"></option>
-											<option value="2">Today</option>
-											<option value="3">Yesterday</option>
-											<option value="4">Last 72 Hrs</option>
-											<option value="5">Last 1 Week</option>
-											<option value="6">Last 2 Week</option>
-											<option value="7">Last 1 Month</option>
-											<option value="8">Last 3 Month</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<div class="btn btn-default btn-xs">Clear</div>
-										<div class="btn btn-primary btn-xs">Search</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						-->
-					</div>
-					<p>
-						<strong>Sort Issues by category</strong>
-					</p>
-					<div class="list-group">
-						<a href="#" class="list-group-item active">Show All</a> <a
-							href="#" class="list-group-item">Water</a> <a href="#"
-							class="list-group-item">Electricity</a> <a href="#"
-							class="list-group-item">Sewage &amp; Sanitation</a> <a href="#"
-							class="list-group-item">Law &amp; Order</a> <a href="#"
-							class="list-group-item">Roads</a> <a href="#"
-							class="list-group-item">Transportation</a>
-					</div>
+												<div class="list-group">
+												
+													<div class="filter_types">
+													<p>
+														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
+													</p>
+
+													<div class="cat-search example example_objects_as_tags">
+													  <div class="bs-example">
+														<input id="citizen_services_input" type="text" />
+													  </div>
+												   </div>
+
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
+															</p>
+
+															<div class="subcat-search example example_objects_as_tags_subcat">
+															  <div class="bs-example">
+																<input id="subcategory_input" type="text" />
+															  </div>
+														   </div>
+														</div>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_temporal">Filter Issues by Time</strong>
+															</p>
+
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Today</option>
+																<option>Yesterday</option>
+																<option>Last 72 Hrs</option>
+																<option>Last 1 Week</option>
+																<option>Last 2 Weeks</option>
+																<option>Last 1 Month</option>
+																<option>Last 3 Months</option>
+															</select>
+														</div>
+													<hr />
+														<div class="left_filter">
+															<p>
+																<strong class="filter_spatial">Filter Issues by Location</strong>
+															</p>
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Cessna Business Park main road</option>
+																<option>Mahadevapura, More Mall</option>
+																<option>Chandni Chowk</option>
+																<option>South Delhi</option>
+																<option>Gurgaon</option>
+															</select>
+														</div>
+													
+													</div>
+
+												</div>
 				</div>
 				<div class="col-sm-10" style="padding: 0px 0px 0px 5px; ">
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
@@ -280,6 +250,51 @@
 			</div>
 		</div>
 	</div>
+								<div id="modal-background-subcategory">
+								<div id="modal-background-subcategory-innerdiv">
+								<h2 class="blue_color_text">Select SubCategories</h2><hr />
+										<a href="${location.url}.html?type=${viewType}" class="list-group-item active">Show All</a>
+										<hr />
+										<c:forEach items="${rootCategories}" var="oneCategory">
+										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
+										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+											<a href="${location.url}/category/${subCategory.id}.html?type=${viewType}" " class="list-group-item">${subCategory.name}</a>
+										</c:forEach>
+										<hr />
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+								
+								<div id="md-bg-services-plus-sys-level">
+								<div id="md-bg-services-plus-sys-level-innerdiv">
+								<h2 class="red_orng_clr_text">Select Citizen Services</h2><hr />
+									<c:if test="${empty selectedCategory}">
+										<a href="#" class="list-group-item active">Show All
+											(${total})</a>
+									</c:if>
+									<c:if test="${!empty selectedCategory}">
+										<a href="${location.url}.html?type=${viewType}"
+										   class="list-group-item">Show All (${total})</a>
+									</c:if>
+									<hr />
+									<c:forEach items="${rootCategories}" var="oneCategory">
+										<c:if test="${selectedCategory eq oneCategory.id}">
+											<a href="#" class="list-group-item active">${oneCategory.name}
+												(${oneCategory.locationCount})</a><br />
+										</c:if>
+										<c:if test="${ selectedCategory ne oneCategory.id}">
+											<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="list-group-item">
+											${oneCategory.name} (${oneCategory.locationCount}) </a><br />
+										</c:if>
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+								
 	<jsp:include page="footer.jsp" />
+    <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
+	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
+	<script src="${staticHost}/js/filter_settings.js"></script>
 </body>
 </html>

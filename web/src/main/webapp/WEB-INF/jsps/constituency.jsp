@@ -505,6 +505,6 @@
 
     <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
 	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
-	<script src="${staticHost}/js/constituency.js"></script>
+	<script src="${staticHost}/js/filter_settings.js"></script>
                             </body>
                         </html>
