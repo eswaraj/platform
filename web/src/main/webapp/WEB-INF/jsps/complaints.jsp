@@ -22,7 +22,7 @@
 
 							</head>
                             <body ng-controller="complaintsController">
-                                <div class="outerwrapper">
+                                <div class="outerwrapper main_content_page">
                                     <jsp:include page="header.jsp" />
                                     <div class="container-fluid">
                                         <div class="row">
@@ -33,18 +33,68 @@
                                                     </select>
                                                     <a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 
-                                                    <p class="left_filter_category">
-                                                        <strong>Filter Issues by category</strong>
-                                                    </p>
-                                                    
-                                                    <div class="list-group">
-                                                       <div>
-                                                           <a href="#" class="list-group-item" ng-click="onCategorySelected(null)">Show All</a>
-                                                       </div>
-                                                        <div  ng-repeat="category in categories">
-                                                        <a href="#" class="list-group-item" ng-click="onCategorySelected(category)">{{category.name}}</a>
-                                                        </div>
-                                                    </div>
+												<div class="list-group">
+												
+													<div class="filter_types">
+													<p>
+														<strong class="filter_citzn_serv">Filter by Citizen Services</strong>
+														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
+													</p>
+
+													<div class="cat-search example example_objects_as_tags">
+													  <div class="bs-example">
+														<input id="citizen_services_input" type="text" />
+													  </div>
+												   </div>
+
+													<hr />
+														<div class="left_filter_sections">
+															<p>
+																<strong class="filter_sys_lvl">Filter by SubCategory</strong>
+																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
+															</p>
+
+															<div class="subcat-search example example_objects_as_tags_subcat">
+															  <div class="bs-example">
+																<input id="subcategory_input" type="text" />
+															  </div>
+														   </div>
+														</div>
+													<hr />
+														<div class="left_filter_sections">
+															<p>
+																<strong class="filter_temporal">Filter by Time</strong>
+															</p>
+
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Today</option>
+																<option>Yesterday</option>
+																<option>Last 72 Hrs</option>
+																<option>Last 1 Week</option>
+																<option>Last 2 Weeks</option>
+																<option>Last 1 Month</option>
+																<option>Last 3 Months</option>
+															</select>
+														</div>
+													<hr />
+														<div class="left_filter_sections">
+															<p>
+																<strong class="filter_spatial">Filter by Location</strong>
+															</p>
+															<select class="select dropdownlist">
+																<option selected>Select</option>
+																<option>Cessna Business Park main road</option>
+																<option>Mahadevapura, More Mall</option>
+																<option>Chandni Chowk</option>
+																<option>South Delhi</option>
+																<option>Gurgaon</option>
+															</select>
+														</div>
+													
+													</div>
+
+												</div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-10 wrap_pad_left">
@@ -264,6 +314,40 @@
                                         </div>
                                     </div>
                                 </div>
+								<div id="modal-background-subcategory">
+								<div id="modal-background-subcategory-innerdiv">
+								<h2 class="blue_color_text">Select SubCategories</h2><hr />
+										<a href="${location.url}.html?type=${viewType}" class="list-group-item active">Show All</a>
+										<hr />
+										<c:forEach items="${rootCategories}" var="oneCategory">
+										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
+										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+											<a href="${location.url}/category/${subCategory.id}.html?type=${viewType}" " class="list-group-item">${subCategory.name}</a>
+										</c:forEach>
+										<hr />
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+								
+								<div id="md-bg-services-plus-sys-level">
+								<div id="md-bg-services-plus-sys-level-innerdiv">
+								<h2 class="red_orng_clr_text">Select Citizen Services</h2><hr />
+										   <div>
+											   <a href="#" class="list-group-item" ng-click="onCategorySelected(null)">Show All</a>
+										   </div>
+									<hr />
+											<div  ng-repeat="category in categories">
+											<a href="#" class="list-group-item" ng-click="onCategorySelected(category)">{{category.name}}</a>
+											</div>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+								
                                 <jsp:include page="footer.jsp" />
+
+    <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
+	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
+	<script src="${staticHost}/js/filter_settings.js"></script>
                             </body>
                         </html>

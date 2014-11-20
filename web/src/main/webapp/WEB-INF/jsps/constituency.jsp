@@ -28,7 +28,7 @@
 									width: 100%;
 									z-index: -1;
 								">
-								<div class="constituency_page">
+								<div class="main_content_page">
                                     <jsp:include page="header.jsp" />
                                     <script>
 									jQuery(document).ready(function() {
@@ -121,7 +121,7 @@
 												
 													<div class="filter_types">
 													<p>
-														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+														<strong class="filter_citzn_serv">Filter by Citizen Services</strong>
 														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
 													</p>
 
@@ -134,7 +134,7 @@
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+																<strong class="filter_sys_lvl">Filter by SubCategory</strong>
 																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
 															</p>
 
@@ -147,7 +147,7 @@
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_temporal">Filter Issues by Time</strong>
+																<strong class="filter_temporal">Filter by Time</strong>
 															</p>
 
 															<select class="select dropdownlist">
@@ -164,7 +164,7 @@
 													<hr />
 														<div class="left_filter">
 															<p>
-																<strong class="filter_spatial">Filter Issues by Location</strong>
+																<strong class="filter_spatial">Filter by Location</strong>
 															</p>
 															<select class="select dropdownlist">
 																<option selected>Select</option>
@@ -505,6 +505,6 @@
 
     <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
 	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
-	<script src="${staticHost}/js/constituency.js"></script>
+	<script src="${staticHost}/js/filter_settings.js"></script>
                             </body>
                         </html>

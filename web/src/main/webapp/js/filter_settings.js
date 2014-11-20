@@ -18,12 +18,12 @@ jQuery(document).ready(function($){
 
 	$('#modal-background-subcategory-innerdiv .close-btn').on('click', function(){
 		$('#modal-background-subcategory').fadeOut(1);
-		$('.constituency_page').fadeTo( "slow", 1 );
+		$('.main_content_page').fadeTo( "slow", 1 );
 	});
 
 	$('#md-bg-services-plus-sys-level-innerdiv .close-btn').on('click', function(){
 		$('#md-bg-services-plus-sys-level').fadeOut(1);
-		$('.constituency_page').fadeTo( "slow", 1 );
+		$('.main_content_page').fadeTo( "slow", 1 );
 	});
 
 	$(document).keyup(function(event){
@@ -31,12 +31,12 @@ jQuery(document).ready(function($){
 		if(event.which=='27'){
 		$('#modal-background-subcategory').fadeOut(1);	
 		$('#md-bg-services-plus-sys-level').fadeOut(1);
-		$('.constituency_page').fadeTo( "slow", 1 );
+		$('.main_content_page').fadeTo( "slow", 1 );
 		}
 		if(event.which=='8'){
 		$('#modal-background-subcategory').fadeOut(1);	
 		$('#md-bg-services-plus-sys-level').fadeOut(1);
-		$('.constituency_page').fadeTo( "slow", 1 );
+		$('.main_content_page').fadeTo( "slow", 1 );
 		}
 	});
 });	
@@ -44,12 +44,12 @@ jQuery(document).ready(function($){
 window.onload = function() {
 	$('.advanced-filter-subcategory').on('click', function(){
 		$('#modal-background-subcategory').fadeIn(1);
-		$('.constituency_page').fadeTo( "slow", 0.33 );
+		$('.main_content_page').fadeTo( "slow", 0.33 );
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	});
 	$('.advanced-filter-citzn-serv').on('click', function(){
 		$('#md-bg-services-plus-sys-level').fadeIn(1);
-		$('.constituency_page').fadeTo( "slow", 0.33 );
+		$('.main_content_page').fadeTo( "slow", 0.33 );
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	});
 	$("#modal-background-subcategory").click(function(e) {
@@ -57,7 +57,7 @@ window.onload = function() {
 			e.preventDefault();
 			return;
 		}
-		$('.constituency_page').fadeTo( "slow", 1 );
+		$('.main_content_page').fadeTo( "slow", 1 );
 		$('#modal-background-subcategory').fadeOut(1);	
 	}); 
 	$("#md-bg-services-plus-sys-level").click(function(e) {
@@ -65,7 +65,7 @@ window.onload = function() {
 			e.preventDefault();
 			return;
 		}
-		$('.constituency_page').fadeTo( "slow", 1 );
+		$('.main_content_page').fadeTo( "slow", 1 );
 		$('#md-bg-services-plus-sys-level').fadeOut(1);	
 	}); 
 
