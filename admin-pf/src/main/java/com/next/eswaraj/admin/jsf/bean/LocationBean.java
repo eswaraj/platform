@@ -21,9 +21,11 @@ import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.NodeUnselectEvent;
 import org.primefaces.event.map.MarkerDragEvent;
+import org.primefaces.event.map.StateChangeEvent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.LatLngBounds;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 import org.primefaces.model.map.Polygon;
@@ -103,7 +105,7 @@ public class LocationBean {
                         }
                     } else {
                         for (LocationType oneLocationType : childLocationTypes) {
-                            new CustomTreeNode(new LocationTypeDocument(oneLocationType.getName() + "(s)", "-", "Folder", oneLocationType), nodeSelected);
+                            new CustomTreeNode(new LocationTypeDocument(oneLocationType.getName() + "(s)", "-", "mp3", oneLocationType), nodeSelected);
                         }
                     }
 
@@ -242,6 +244,11 @@ public class LocationBean {
         }
     }
 
+    public void onStateChange(StateChangeEvent event) {
+        LatLngBounds bounds = event.getBounds();
+        int zoomLevel = event.getZoomLevel();
+        ((Document) selectedLocationNode.getData()).getLocation().setDepth(zoomLevel);
+    }
     public void onMarkerDrag(MarkerDragEvent event) {
         Marker marker = event.getMarker();
         if (selectedNode.getData() instanceof Document) {

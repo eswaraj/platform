@@ -35,6 +35,8 @@ public class Location extends BaseNode {
 	
 	private Double longitude;
 	
+    private Integer depth = 13;
+	
 	private Long totalNumberOfHouses;
 	
 	private Long totalPopulation;
@@ -99,7 +101,18 @@ public class Location extends BaseNode {
 		this.latitude = latitude;
 	}
 
-	public Long getTotalNumberOfHouses() {
+    public Integer getDepth() {
+        if (depth == null) {
+            depth = 13;
+        }
+        return depth;
+    }
+
+    public void setDepth(Integer depth) {
+        this.depth = depth;
+    }
+
+    public Long getTotalNumberOfHouses() {
 		return totalNumberOfHouses;
 	}
 

@@ -96,6 +96,10 @@
 								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedLocationNode.data.location.longitude}"
 									style="width:200px" />
 
+                                <p:outputLabel value="Depth"></p:outputLabel>
+                                <p:inputText disabled="true" id="depth" value="#{locationBean.selectedLocationNode.data.location.depth}"
+                                    style="width:200px" />
+
 							</h:panelGrid>
 							<h:panelGrid columns="6" id="saveCancelButtonPanel" >
                             <p:commandButton id="saveLocation" value="Save" update="@form"
@@ -123,12 +127,13 @@
 					</h:panelGrid>
                     <p:outputPanel id="mapPanel">
                     
-					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="10" type="HYBRID"
+					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
 						rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
 						style="width:700px;height:500px">
 						<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />
 						<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
-
+                        <p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:depth" />
+                    
 					</p:gmap>
 					</p:outputPanel>
 				</h:panelGrid>
