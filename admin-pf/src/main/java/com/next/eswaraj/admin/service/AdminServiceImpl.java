@@ -7,6 +7,7 @@ import org.neo4j.rest.graphdb.RestResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.DataClient;
@@ -44,6 +45,8 @@ public class AdminServiceImpl implements AdminService {
             // means we are trying to create new location type
             checkIfRootLocationAlreadyExists(locationType, dataClient);
         }
+        String urlIdentifier = getLocationTypeUrlIdentifier(locationType);
+        locationType.setUrlIdentifier(urlIdentifier);
         locationType = locationTypeRepository.save(locationType);
         return locationType;
     }
@@ -144,6 +147,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Location saveLocation(Location location) throws ApplicationException {
+        location.setUrlIdentifier(getLocationUrlIdentifier(location));
         return locationRepository.save(location);
     }
 
@@ -152,4 +156,57 @@ public class AdminServiceImpl implements AdminService {
         return locationRepository.findOne(locationId);
     }
 
+    private String getLocationUrlIdentifier(Location oneLocation) {
+
+        if (oneLocation.getParentLocation() == null) {
+            String urlIdentifier = removeExtraChars(oneLocation.getName());
+            return urlIdentifier;
+        }
+
+        Location location = oneLocation;
+        LocationType locationType;
+        String locationTypeUrlId;
+        String locationTypeNameUrl;
+        String urlIdentifier = "";
+        while (location != null) {
+            locationType = locationTypeRepository.findOne(location.getLocationType().getId());
+            locationTypeUrlId = getLocationTypeUrlIdentifier(locationType);
+            if (!locationTypeUrlId.equals("country")) {// No need to add country
+                                                       // in url
+                locationTypeNameUrl = removeExtraChars(location.getName());
+                urlIdentifier = "/" + locationTypeUrlId + "/" + locationTypeNameUrl + urlIdentifier;
+            }
+
+            if (location.getParentLocation() == null) {
+                break;
+            }
+            location = locationRepository.findOne(location.getParentLocation().getId());
+        }
+        return urlIdentifier;
+    }
+
+    private String removeExtraChars(String str) {
+        String urlIdentifier = str.toLowerCase();
+        urlIdentifier = urlIdentifier.replace(' ', '-');
+        urlIdentifier = urlIdentifier.replace("&", "");
+        return urlIdentifier;
+    }
+
+    private String getLocationTypeUrlIdentifier(LocationType oneLocationType) {
+        String urlIdentifier = oneLocationType.getName().toLowerCase();
+        urlIdentifier = urlIdentifier.replace("&", "");
+        if (urlIdentifier.contains(" ")) {
+            // names like assembly constituency
+            String parts[] = urlIdentifier.split(" ");
+            String id = "";
+            for (String onePart : parts) {
+                if (StringUtils.isEmpty(onePart)) {
+                    continue;
+                }
+                id = id + onePart.charAt(0);
+            }
+            urlIdentifier = id;
+        }
+        return urlIdentifier;
+    }
 }
