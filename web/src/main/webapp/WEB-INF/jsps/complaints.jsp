@@ -31,7 +31,7 @@
                                                     <h3 class="text-footer">Select Position</h3>
                                                     <select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
                                                     </select>
-                                                    <a href="#" class="active refresh_button" ng-click="onRefresh()">Refresh</a>
+                                                    <a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 
 												<div class="list-group">
 												
