@@ -37,7 +37,7 @@
 												
 													<div class="filter_types">
 													<p>
-														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+														<strong class="filter_citzn_serv">Filter by Citizen Services</strong>
 														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
 													</p>
 
@@ -50,7 +50,7 @@
 													<hr />
 														<div class="left_filter_sections">
 															<p>
-																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+																<strong class="filter_sys_lvl">Filter by SubCategory</strong>
 																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
 															</p>
 
@@ -63,7 +63,7 @@
 													<hr />
 														<div class="left_filter_sections">
 															<p>
-																<strong class="filter_temporal">Filter Issues by Time</strong>
+																<strong class="filter_temporal">Filter by Time</strong>
 															</p>
 
 															<select class="select dropdownlist">
@@ -80,7 +80,7 @@
 													<hr />
 														<div class="left_filter_sections">
 															<p>
-																<strong class="filter_spatial">Filter Issues by Location</strong>
+																<strong class="filter_spatial">Filter by Location</strong>
 															</p>
 															<select class="select dropdownlist">
 																<option selected>Select</option>
