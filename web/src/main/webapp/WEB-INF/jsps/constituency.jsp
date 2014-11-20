@@ -10,7 +10,7 @@
                             <head>
                                 <title>eSwaraj</title>
                                 <jsp:include page="include.jsp" />
-                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+                               <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
                             </head>
                             <body>
@@ -31,66 +31,12 @@
 								<div class="constituency_page">
                                     <jsp:include page="header.jsp" />
                                     <script>
-                                        jQuery(document).ready(function() {
-                                            jQuery("abbr.timeago").timeago();
-											$('.anchorlink').click(function(e){
-												e.stopPropagation();
-											});
-											$( ".list-row" ).each( function () {
-												$(this).on({
-												mouseenter: function () {
-													$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 500);
-												},
-												mouseleave: function () {
-													$( this ).find(".innerdiv-sharebtn" ).hide();
-												}
-												});
-											});
-                                        });
-
-										jQuery(document).ready(function($){
-											//close the infographic page
-											$('#modal-background-subcategory .close-btn').on('click', function(){
-												$('#modal-background-subcategory').fadeOut(1);
-												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
-											});
-											$(document).keyup(function(event){
-												//check if user has pressed 'Esc'
-												if(event.which=='27'){
-												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
-												}
-												if(event.which=='8'){
-												$('#modal-background-subcategory').fadeOut(1);	
-												$('.constituency_page').fadeTo( "slow", 1 );
-												$('.constituency_page').children().removeAttr('disabled');
-												}
-											});
-										});	
-
-										window.onload = function() {
-											$('.refine-search').on('click', function(){
-												$('#modal-background-subcategory').fadeIn(1);
-												$('.constituency_page').fadeTo( "slow", 0.33 );
-												$('.constituency_page').children().attr('disabled', 'disabled');
-											    $("html, body").animate({ scrollTop: 0 }, "slow");
-											});
-											if($('#modal-background-subcategory').is(':visible')) {
-												$('#modal-background-subcategory').on('mouseleave', function(){
-													$('.constituency_page').on('click', function (e) {
-													e.stopPropagation();
-													$('#modal-background-subcategory').fadeOut(1);	
-													$('.constituency_page').fadeTo( "slow", 1 );
-													$('.constituency_page').children().removeAttr('disabled');
-													});
-													}
-												});
-											}
-										}										
+									jQuery(document).ready(function() {
+										jQuery("abbr.timeago").timeago();
+									});
 									</script>
-                                    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
+									
+									<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=visualization"></script>
                                     <c:if test="${viewType eq 'map'}">
                                         <script src="${staticHost}/js/markerclusterer.js" type="text/javascript"></script>
                                         <script src="${staticHost}/js/mapview.js" type="text/javascript"></script>
@@ -174,40 +120,29 @@
 												<div class="list-group">
 												
 													<div class="filter_types">
-													<c:if test="${empty selectedCategory}">
-														<a href="#" class="list-group-item active">Show All
-															(${total})</a>
-													</c:if>
-													<c:if test="${!empty selectedCategory}">
-														<a href="${location.url}.html?type=${viewType}"
-														   class="list-group-item">Show All (${total})</a>
-													</c:if>
-													<hr />
 													<p>
 														<strong class="filter_citzn_serv">Filter Issues by Citizen Services</strong>
+														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
 													</p>
-													<c:forEach items="${rootCategories}" var="oneCategory">
-														<c:if test="${selectedCategory eq oneCategory.id}">
-															<a href="#" class="list-group-item active">${oneCategory.name}
-																(${oneCategory.locationCount})</a>
-														</c:if>
-														<c:if test="${ selectedCategory ne oneCategory.id}">
-															<a
-															   href="${location.url}/category/${oneCategory.id}.html?type=${viewType}"
-															   class="list-group-item">${oneCategory.name}
-																(${oneCategory.locationCount}) </a>
-														</c:if>
 
-													</c:forEach>
+													<div class="cat-search example example_objects_as_tags">
+													  <div class="bs-example">
+														<input id="citizen_services_input" type="text" />
+													  </div>
+												   </div>
+
 													<hr />
 														<div class="left_filter">
 															<p>
 																<strong class="filter_sys_lvl">Filter Issues by SubCategory</strong>
+																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
 															</p>
 
-															<div class="refine-search">
-																<input id="subcategory_input" type="text" value="Open Manholes in this area,Leaking Water Pipes" data-role="tagsinput">
-															</div>
+															<div class="subcat-search example example_objects_as_tags_subcat">
+															  <div class="bs-example">
+																<input id="subcategory_input" type="text" />
+															  </div>
+														   </div>
 														</div>
 													<hr />
 														<div class="left_filter">
@@ -523,17 +458,53 @@
                                     </div>
                                 </div>
                                 </div>
+								
 								<div id="modal-background-subcategory">
-								<h1 class="blue_color_text">Select SubCategories</h1><hr />
-									<c:forEach items="${rootCategories}" var="oneCategory">
+								<div id="modal-background-subcategory-innerdiv">
+								<h2 class="blue_color_text">Select SubCategories</h2><hr />
+										<a href="${location.url}.html?type=${viewType}" class="list-group-item active">Show All</a>
+										<hr />
+										<c:forEach items="${rootCategories}" var="oneCategory">
 										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
 										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
-											<a href="#!" class="list-group-item">${subCategory.name}</a>
+											<a href="${location.url}/category/${subCategory.id}.html?type=${viewType}" " class="list-group-item">${subCategory.name}</a>
 										</c:forEach>
 										<hr />
 									</c:forEach>
 								<a href="#0" class="close-btn">Close</a>
 								</div>
+								</div>
+								
+								<div id="md-bg-services-plus-sys-level">
+								<div id="md-bg-services-plus-sys-level-innerdiv">
+								<h2 class="red_orng_clr_text">Select Citizen Services</h2><hr />
+									<c:if test="${empty selectedCategory}">
+										<a href="#" class="list-group-item active">Show All
+											(${total})</a>
+									</c:if>
+									<c:if test="${!empty selectedCategory}">
+										<a href="${location.url}.html?type=${viewType}"
+										   class="list-group-item">Show All (${total})</a>
+									</c:if>
+									<hr />
+									<c:forEach items="${rootCategories}" var="oneCategory">
+										<c:if test="${selectedCategory eq oneCategory.id}">
+											<a href="#" class="list-group-item active">${oneCategory.name}
+												(${oneCategory.locationCount})</a><br />
+										</c:if>
+										<c:if test="${ selectedCategory ne oneCategory.id}">
+											<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="list-group-item">
+											${oneCategory.name} (${oneCategory.locationCount}) </a><br />
+										</c:if>
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+								
                             <jsp:include page="footer.jsp" />
+
+    <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
+	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
+	<script src="${staticHost}/js/constituency.js"></script>
                             </body>
                         </html>
