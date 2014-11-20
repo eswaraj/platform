@@ -3,6 +3,7 @@ package com.next.eswaraj.admin.service;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -28,4 +29,10 @@ public interface AdminService {
     List<Location> findLocationByParentLocationAndLocationType(Long parentLocationId, Long locationTypeId) throws ApplicationException;
 
     Location saveLocation(Location location) throws ApplicationException;
+
+    List<Category> getAllRootCategories() throws ApplicationException;
+
+    List<Category> getChildCategories(Long parentCategoryId) throws ApplicationException;
+
+    Category saveCategory(Category category) throws ApplicationException;
 }

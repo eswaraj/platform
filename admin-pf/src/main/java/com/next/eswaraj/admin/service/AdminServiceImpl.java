@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
@@ -36,6 +38,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private LocationBoundaryFileRepository locationBoundaryFileRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -208,5 +213,23 @@ public class AdminServiceImpl implements AdminService {
             urlIdentifier = id;
         }
         return urlIdentifier;
+    }
+
+    @Override
+    public List<Category> getAllRootCategories() throws ApplicationException {
+        List<Category> rootCategories = categoryRepository.getAllRootCategories();
+        return rootCategories;
+    }
+
+    @Override
+    public List<Category> getChildCategories(Long parentCategoryId) throws ApplicationException {
+        List<Category> childCategories = categoryRepository.findAllChildCategoryOfParentCategory(parentCategoryId);
+        return childCategories;
+    }
+
+    @Override
+    public Category saveCategory(Category category) throws ApplicationException {
+        category = categoryRepository.save(category);
+        return category;
     }
 }
