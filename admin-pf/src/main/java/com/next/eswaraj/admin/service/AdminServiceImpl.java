@@ -57,8 +57,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public LocationType getLocationTypeById(Long locationTypeId) throws ApplicationException {
-        // TODO Auto-generated method stub
-        return null;
+        return locationTypeRepository.findOne(locationTypeId);
     }
 
     @Override
@@ -135,6 +134,22 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<LocationBoundaryFile> getLocationBoundaryFiles(Long locationId) throws ApplicationException {
         return locationBoundaryFileRepository.getAllLocationBoundaryFile(locationId);
+    }
+
+    @Override
+    public List<Location> findLocationByParentLocationAndLocationType(Long parentLocationId, Long locationTypeId) throws ApplicationException {
+        System.out.println("findLocationByParentLocationAndLocationType (" + parentLocationId + "," + locationTypeId + ")");
+        return locationRepository.findLocationByParentLocationAndLocationType(parentLocationId, locationTypeId);
+    }
+
+    @Override
+    public Location saveLocation(Location location) throws ApplicationException {
+        return locationRepository.save(location);
+    }
+
+    @Override
+    public Location getLocationById(Long locationId) throws ApplicationException {
+        return locationRepository.findOne(locationId);
     }
 
 }

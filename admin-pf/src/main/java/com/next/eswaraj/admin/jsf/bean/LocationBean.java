@@ -1,5 +1,6 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -52,6 +54,8 @@ public class LocationBean {
 
     private TreeNode selectedNode;
 
+    private TreeNode selectedLocationNode;
+
     private MapModel draggableModel;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -70,6 +74,8 @@ public class LocationBean {
             logger.info("Got  Location From DB : " + location);
             root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
             TreeNode topLocation = new CustomTreeNode(new Document(location.getName(), "-", "Folder", location), root);
+            topLocation.setSelected(true);
+            selectedLocationNode = topLocation;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,19 +84,48 @@ public class LocationBean {
 
     public void onNodeExpand(NodeExpandEvent event) {
         TreeNode nodeSelected = event.getTreeNode();
+        loadNodeChild(nodeSelected);
+    }
+
+    private void loadNodeChild(TreeNode nodeSelected) {
         if (nodeSelected != null && nodeSelected.getChildCount() == 0) {
 
             try {
-                List<Location> childLocations = adminService.getChildLocationsOfParent(((Document) nodeSelected.getData()).getLocation().getId());
-                for (Location oneLocation : childLocations) {
-                    new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), nodeSelected);
+                Object data = nodeSelected.getData();
+                if (data instanceof Document) {
+                    Document document = ((Document) data);
+                    Location selectedLocation = document.getLocation();
+                    List<LocationType> childLocationTypes = adminService.getChildLocationsTypeOfParent(selectedLocation.getLocationType().getId());
+                    if (childLocationTypes.isEmpty() || childLocationTypes.size() == 1) {
+                        List<Location> childLocations = adminService.getChildLocationsOfParent(((Document) nodeSelected.getData()).getLocation().getId());
+                        for (Location oneLocation : childLocations) {
+                            new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), nodeSelected);
+                        }
+                    } else {
+                        for (LocationType oneLocationType : childLocationTypes) {
+                            new CustomTreeNode(new LocationTypeDocument(oneLocationType.getName() + "(s)", "-", "Folder", oneLocationType), nodeSelected);
+                        }
+                    }
+
                 }
+                if (data instanceof LocationTypeDocument) {
+                    LocationTypeDocument locationTypeDocument = ((LocationTypeDocument) nodeSelected.getData());
+                    LocationType selectedLocationType = locationTypeDocument.getLocationType();
+                    TreeNode parentNode = nodeSelected.getParent();
+                    Document document = ((Document) parentNode.getData());
+
+                    Location selectedParentLocation = document.getLocation();
+                    List<Location> childLocations = adminService.findLocationByParentLocationAndLocationType(selectedParentLocation.getId(), selectedLocationType.getId());
+                    for (Location oneLocation : childLocations) {
+                        new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), nodeSelected);
+                    }
+                }
+
             } catch (ApplicationException e) {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", e.getMessage());
                 FacesContext.getCurrentInstance().addMessage(null, message);
             }
         }
-
     }
 
     public void onNodeCollapse(NodeCollapseEvent event) {
@@ -102,6 +137,7 @@ public class LocationBean {
         TreeNode nodeSelected = event.getTreeNode();
         Object data = nodeSelected.getData();
         if (data instanceof Document) {
+            selectedLocationNode = nodeSelected;
             draggableModel.getMarkers().clear();
             draggableModel.getPolygons().clear();
             Document document = (Document) data;
@@ -124,70 +160,85 @@ public class LocationBean {
                 premarker.setDraggable(true);
             }
             try {
-                locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
-                System.out.println("locationBoundaryFiles = " + locationBoundaryFiles);
-                if (!locationBoundaryFiles.isEmpty())
-                {
-                    System.out.println("Select Active File = ");
-                    LocationBoundaryFile activeLocationBoundaryFile = null;
-                    for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
-                        activeLocationBoundaryFile = oneLocationBoundaryFile;
-                        if (oneLocationBoundaryFile.isActive()) {
-                            break;
-                        }
-                    }
-                    System.out.println("activeLocationBoundaryFile = " + activeLocationBoundaryFile);
-                    System.out.println("Creating Polygon");
-                    if (activeLocationBoundaryFile != null)
-                    {
-                        try {
-                            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                            org.w3c.dom.Document doc = dBuilder.parse(activeLocationBoundaryFile.getFileNameAndPath());
-                            //org.w3c.dom.Document doc = dBuilder.parse("https://s3-us-west-2.amazonaws.com/eswaraj-dev/locations/72848/41b8ccc9-9b3b-435d-9d20-a1217703539b_201409111918.kml");
-                            NodeList coordinates = doc.getElementsByTagName("coordinates");
-                            for (int temp = 0; temp < coordinates.getLength(); temp++) {
-
-                                Node nNode = coordinates.item(temp);
-
-                                System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
-                                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                                    Element eElement = (Element) nNode;
-
-                                    String coordinatesStr = eElement.getTextContent();
-                                    System.out.println("Cooridinates : " + coordinatesStr);
-                                    Polygon polygon = new Polygon();
-                                    String[] latLngs = coordinatesStr.split(" ");
-                                    int count = 0;
-                                    for (String oneLatLng : latLngs) {
-
-                                        String[] ll = oneLatLng.split(",");
-                                        polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
-                                        count++;
-                                        System.out.println(count + ". oneLatLng : " + oneLatLng);
-                                    }
-
-                                    polygon.setStrokeColor("#FF9900");
-                                    polygon.setFillColor("#FF9900");
-                                    polygon.setStrokeOpacity(0.7);
-                                    polygon.setFillOpacity(0.7);
-
-                                    draggableModel.addOverlay(polygon);
-
-                                }
+                if (document.getLocation() != null) {
+                    locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
+                    System.out.println("locationBoundaryFiles = " + locationBoundaryFiles);
+                    if (!locationBoundaryFiles.isEmpty()) {
+                        System.out.println("Select Active File = ");
+                        LocationBoundaryFile activeLocationBoundaryFile = null;
+                        for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
+                            activeLocationBoundaryFile = oneLocationBoundaryFile;
+                            if (oneLocationBoundaryFile.isActive()) {
+                                break;
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+                        System.out.println("activeLocationBoundaryFile = " + activeLocationBoundaryFile);
+                        System.out.println("Creating Polygon");
+                        if (activeLocationBoundaryFile != null) {
+                            try {
+                                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                                org.w3c.dom.Document doc = dBuilder.parse(activeLocationBoundaryFile.getFileNameAndPath());
+                                // org.w3c.dom.Document doc =
+                                // dBuilder.parse("https://s3-us-west-2.amazonaws.com/eswaraj-dev/locations/72848/41b8ccc9-9b3b-435d-9d20-a1217703539b_201409111918.kml");
+                                NodeList coordinates = doc.getElementsByTagName("coordinates");
+                                for (int temp = 0; temp < coordinates.getLength(); temp++) {
 
+                                    Node nNode = coordinates.item(temp);
+
+                                    System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                                        Element eElement = (Element) nNode;
+
+                                        String coordinatesStr = eElement.getTextContent();
+                                        System.out.println("Cooridinates : " + coordinatesStr);
+                                        Polygon polygon = new Polygon();
+                                        String[] latLngs = coordinatesStr.split(" ");
+                                        int count = 0;
+                                        for (String oneLatLng : latLngs) {
+
+                                            String[] ll = oneLatLng.split(",");
+                                            polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
+                                            count++;
+                                            System.out.println(count + ". oneLatLng : " + oneLatLng);
+                                        }
+
+                                        polygon.setStrokeColor("#FF9900");
+                                        polygon.setFillColor("#FF9900");
+                                        polygon.setStrokeOpacity(0.7);
+                                        polygon.setFillOpacity(0.7);
+
+                                        draggableModel.addOverlay(polygon);
+
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
                     }
                 }
+
+                List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) nodeSelected.getData()).getLocation().getLocationType().getId());
+                createButtonsAndMenus(locationTypes, document.getLocation());
             } catch (ApplicationException e) {
                 e.printStackTrace();
+            } finally {
+                disableSaveCancelButtons(false);
             }
-            createButtons();
+        } else {
+            selectedLocationNode = nodeSelected.getParent();
+            System.out.println("selectedLocationNode = " + selectedLocationNode);
+            LocationType selectedLocationType = ((LocationTypeDocument) nodeSelected.getData()).getLocationType();
+            List<LocationType> locationTypes = new ArrayList<>(1);
+            locationTypes.add(selectedLocationType);
+            System.out.println("createButtonsAndMenus for = " + selectedLocationType);
+            createButtonsAndMenus(locationTypes, ((Document) selectedLocationNode.getData()).getLocation());
+            disableSaveCancelButtons(true);
+            System.out.println("Done");
         }
     }
 
@@ -200,44 +251,140 @@ public class LocationBean {
         }
 
     }
+
     public void onNodeUnselect(NodeUnselectEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unselected", event.getTreeNode().toString());
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    private void createButtons() {
+    public void saveLocation() {
+        System.out.println("saving Location " + selectedNode.getData());
+        Document document = (Document)selectedNode.getData();
+        document.setName(document.getLocation().getName());
         try {
-            List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) selectedNode.getData()).getLocation().getLocationType().getId());
-            UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:buttonPanel");
-            component.getChildren().clear();
-            FacesContext facesCtx = FacesContext.getCurrentInstance();
-            ELContext elContext = facesCtx.getELContext();
-            Application app = facesCtx.getApplication();
-            ExpressionFactory elFactory = app.getExpressionFactory();
-            System.out.println("component=" + component);
-            System.out.println("locationTypes=" + locationTypes);
-            for (LocationType oneLocationType : locationTypes) {
-                CommandButton submit = new CommandButton();
-                submit.setValue("Create " + oneLocationType.getName());
-                submit.setUpdate("location_form");
-                submit.setId("create" + oneLocationType.getId());
-                MethodExpression methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createSomething(" + oneLocationType.getId() + ")}", null, new Class[] {});
-                submit.setActionExpression(methodExpression);
-                // createButtons.getChildren().add(submit);
-                if (component != null) {
-                    component.getChildren().add(submit);
-                }
-
-            }
+            System.out.println("LocationType " + document.getLocation().getLocationType());
+            Location location = adminService.saveLocation(document.getLocation());
+            document.setLocation(location);
         } catch (ApplicationException e) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            e.printStackTrace();
         }
+    }
+
+    private void disableSaveCancelButtons(boolean disabled) {
+        CommandButton saveLocationButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:saveLocation");
+        CommandButton canceButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:cancel");
+        saveLocationButton.setDisabled(disabled);
+        canceButton.setDisabled(disabled);
 
     }
 
-    public void createSomething(Long id) {
-        System.out.println("Creating SOmething");
+    private void createButtonsAndMenus(List<LocationType> locationTypes, Location selectedLocation) {
+
+        UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:buttonPanel");
+        UIComponent contextMenu = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:contextMenu");
+        component.getChildren().clear();
+        contextMenu.getChildren().clear();
+        FacesContext facesCtx = FacesContext.getCurrentInstance();
+        ELContext elContext = facesCtx.getELContext();
+        Application app = facesCtx.getApplication();
+        ExpressionFactory elFactory = app.getExpressionFactory();
+        System.out.println("component=" + component);
+        System.out.println("locationTypes=" + locationTypes);
+        for (LocationType oneLocationType : locationTypes) {
+            CommandButton submit = new CommandButton();
+            submit.setValue("Create " + oneLocationType.getName());
+            submit.setUpdate(":location_form");
+            submit.setId("create" + oneLocationType.getId());
+            MethodExpression methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createChildLocation( " + oneLocationType.getId() + "," + selectedLocation.getId()
+                    + ")}",
+                    null, new Class[] {});
+            submit.setActionExpression(methodExpression);
+            // createButtons.getChildren().add(submit);
+            if (component != null) {
+                component.getChildren().add(submit);
+            }
+
+            UIMenuItem menuItem = new UIMenuItem();
+            // menuItem.setParam("value","Create City");
+            menuItem.setValue("Create " + oneLocationType.getName());
+            menuItem.setUpdate("location_form");
+            menuItem.setId("createMenu" + oneLocationType.getId());
+            methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createChildLocation(" + oneLocationType.getId() + "," + selectedLocation.getId() + ")}", null,
+                    new Class[] {});
+            menuItem.setActionExpression(methodExpression);
+            if (contextMenu != null) {
+                contextMenu.getChildren().add(menuItem);
+            }
+        }
+
+    }
+    public void cancel() {
+        if (selectedLocationNode != null) {
+            if (((Document) selectedLocationNode.getData()).getLocation().getId() == null) {
+                TreeNode parentNode = selectedLocationNode.getParent();
+                selectedLocationNode.getChildren().clear();
+                selectedLocationNode.getParent().getChildren().remove(selectedLocationNode);
+                selectedLocationNode.setParent(null);
+                selectedLocationNode = null;
+                if (parentNode.getData() instanceof LocationTypeDocument) {
+                    selectedLocationNode = parentNode.getParent();
+                } else {
+                    selectedLocationNode = parentNode;
+                }
+                selectedLocationNode.setSelected(true);
+            }
+        }
+    }
+    public void createChildLocation(Long locationTypeId, Long locationId) {
+        System.out.println("Creating SOmething : " + locationTypeId + ", " + locationId);
+        if (selectedLocationNode != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Creating under ", selectedNode.getData().toString());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            loadNodeChild(selectedLocationNode);
+            TreeNode parentNode = getParentNodeForNewChild(selectedLocationNode, locationTypeId);
+            parentNode.setExpanded(true);
+            Location location = new Location();
+            LocationType locationType;
+            try {
+                System.out.println("Getting LocationType " + locationTypeId);
+                Location parentLocation = adminService.getLocationById(locationId);
+                locationType = adminService.getLocationTypeById(locationTypeId);
+                location.setLocationType(locationType);
+                location.setParentLocation(parentLocation);
+                System.out.println("locationType = " + locationType);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            location.setName("New");
+            location.setUrlIdentifier("");
+            selectedNode.setExpanded(true);
+            selectedNode.setSelected(false);
+            selectedNode = new CustomTreeNode(new Document("NEW", "-", "Folder", location), parentNode);
+            selectedNode.setSelected(true);
+            selectedLocationNode = selectedNode;
+            disableSaveCancelButtons(false);
+        }
+    }
+
+    private TreeNode getParentNodeForNewChild(TreeNode selectedLocationNode, Long locationTypeId) {
+        List<TreeNode> childrenNodes = selectedLocationNode.getChildren();
+        if (childrenNodes.isEmpty()) {
+            return selectedLocationNode;
+        }
+        if(childrenNodes.get(0).getData() instanceof Document){
+            return selectedLocationNode;
+        }
+                
+        for(TreeNode oneChildNode : childrenNodes){
+            System.out.println(((LocationTypeDocument) oneChildNode.getData()).getLocationType().getId() + "== " + locationTypeId);
+            if (((LocationTypeDocument) oneChildNode.getData()).getLocationType().getId().equals(locationTypeId)) {
+                System.out.println("Found Parent Node");
+                return oneChildNode;
+            }
+        }
+        return selectedLocationNode;
     }
 
     public void displaySelectedSingle() {
@@ -301,5 +448,13 @@ public class LocationBean {
 
     public void setLocationBoundaryFiles(List<LocationBoundaryFile> locationBoundaryFiles) {
         this.locationBoundaryFiles = locationBoundaryFiles;
+    }
+
+    public TreeNode getSelectedLocationNode() {
+        return selectedLocationNode;
+    }
+
+    public void setSelectedLocationNode(TreeNode selectedLocationNode) {
+        this.selectedLocationNode = selectedLocationNode;
     }
 }

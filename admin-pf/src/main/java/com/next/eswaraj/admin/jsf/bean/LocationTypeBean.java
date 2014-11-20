@@ -120,7 +120,8 @@ public class LocationTypeBean {
                 TreeNode parentNode = selectedNode.getParent();
                 locationType.setParentLocationType(((LocationTypeDocument) parentNode.getData()).getLocationType());
             }
-            adminService.saveLocationType(locationType);
+            locationType = adminService.saveLocationType(locationType);
+            ((LocationTypeDocument) selectedNode.getData()).setLocationType(locationType);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Location Type Saved Succesfully");
             FacesContext.getCurrentInstance().addMessage(null, message);
 

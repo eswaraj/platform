@@ -15,6 +15,8 @@ public interface AdminService {
     
     LocationType getLocationTypeById(Long locationTypeId) throws ApplicationException;
 
+    Location getLocationById(Long locationId) throws ApplicationException;
+
     List<LocationType> getChildLocationsTypeOfParent(Long parentLocationTypeId) throws ApplicationException;
 
     Location getRootLocationForSwarajIndia() throws ApplicationException;
@@ -22,4 +24,8 @@ public interface AdminService {
     List<Location> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
 
     List<LocationBoundaryFile> getLocationBoundaryFiles(Long locationId) throws ApplicationException;
+
+    List<Location> findLocationByParentLocationAndLocationType(Long parentLocationId, Long locationTypeId) throws ApplicationException;
+
+    Location saveLocation(Location location) throws ApplicationException;
 }

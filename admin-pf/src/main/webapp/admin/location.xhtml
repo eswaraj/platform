@@ -42,6 +42,8 @@
 		<h:form id="location_form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Location">
+                <h:panelGrid columns="8" id="buttonPanel">
+                </h:panelGrid>
 				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
 					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
 						<p:outputPanel id="treeView">
@@ -49,7 +51,7 @@
 								selection="#{locationBean.selectedNode}">
 								<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
 								<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
-								<p:ajax event="select" update=":location_form:formView,:location_form:mapPanel"
+								<p:ajax event="select" update=":location_form:formView,:location_form:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
 									listener="#{locationBean.onNodeSelect}" />
 								<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
 
@@ -66,7 +68,7 @@
 									<h:outputText value="#{doc.name}" />
 								</p:treeNode>
 							</p:tree>
-							<p:contextMenu for="doc">
+							<p:contextMenu for="doc" id="contextMenu">
 								<p:menuitem value="Create" update="messages" actionListener="#{locationBean.displaySelectedSingle}"
 									icon="ui-icon-search" />
 								<p:menuitem value="Delete" update="doc" actionListener="#{locationBean.deleteNode}" icon="ui-icon-close" />
@@ -81,25 +83,35 @@
 						
 							<h:panelGrid columns="2">
 								<p:outputLabel value="Name"></p:outputLabel>
-								<p:inputText id="name" value="#{locationBean.selectedNode.data.location.name}" style="width:200px" />
+								<p:inputText id="name" value="#{locationBean.selectedLocationNode.data.location.name}" style="width:200px" />
 
 								<p:outputLabel value="URL Identifier"></p:outputLabel>
-								<p:inputText id="urlId" value="#{locationBean.selectedNode.data.location.urlIdentifier}" style="width:200px" />
+								<p:inputText disabled="true"  id="urlId" value="#{locationBean.selectedLocationNode.data.location.urlIdentifier}" style="width:200px" />
 
 								<p:outputLabel value="Latitude"></p:outputLabel>
-								<p:inputText disabled="true" id="latitude" value="#{locationBean.selectedNode.data.location.latitude}"
+								<p:inputText disabled="true" id="latitude" value="#{locationBean.selectedLocationNode.data.location.latitude}"
 									style="width:200px" />
 
 								<p:outputLabel value="Longitude"></p:outputLabel>
-								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedNode.data.location.longitude}"
+								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedLocationNode.data.location.longitude}"
 									style="width:200px" />
 
 							</h:panelGrid>
-							<p:panelGrid columns="2" id="buttonPanel">
-							</p:panelGrid>
+							<h:panelGrid columns="6" id="saveCancelButtonPanel" >
+                            <p:commandButton id="saveLocation" value="Save" update="@form"
+                                actionListener="#{locationBean.saveLocation}" styleClass="ui-priority-primary">
+                            </p:commandButton>
+                            <p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{locationBean.cancel}"
+                                styleClass="ui-priority-primary">
+                            </p:commandButton>
+                            <p:blockUI block="@form" trigger="saveLocation">Saving<br />
+                                <p:graphicImage width="80" value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
+                            </p:blockUI>
+
+                        </h:panelGrid>
 							<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
 								<p:column headerText="File name">
-									<h:outputText value="#{oneBoundaryFile.originalFileName}(#{oneBoundaryFile.status})" />
+									<h:outputText value="#{oneBoundaryFile.originalFileName}(#{oneBoundaryFile.status}, Active=#{oneBoundaryFile.active})" />
 								</p:column>
 
 								<p:column headerText="Date">
