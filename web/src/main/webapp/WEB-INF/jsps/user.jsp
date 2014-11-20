@@ -45,7 +45,7 @@
 	width: 100%;
 	z-index: -1;
 ">
-	<div class="outerwrapper">
+	<div class="outerwrapper main_content_page">
 		<jsp:include page="header.jsp" />
 		<div class="container-fluid">
 			<!-- 

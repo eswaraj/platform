@@ -28,7 +28,7 @@
 									width: 100%;
 									z-index: -1;
 								">
-								<div class="constituency_page">
+								<div class="main_content_page">
                                     <jsp:include page="header.jsp" />
                                     <script>
 									jQuery(document).ready(function() {

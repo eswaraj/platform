@@ -22,7 +22,7 @@
 
 							</head>
                             <body ng-controller="complaintsController">
-                                <div class="outerwrapper">
+                                <div class="outerwrapper main_content_page">
                                     <jsp:include page="header.jsp" />
                                     <div class="container-fluid">
                                         <div class="row">
