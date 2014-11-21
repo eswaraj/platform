@@ -1,11 +1,13 @@
 package com.next.eswaraj.admin.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.neo4j.cypher.MissingIndexException;
 import org.neo4j.rest.graphdb.RestResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -15,11 +17,14 @@ import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
+import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -41,6 +46,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PoliticalBodyAdminRepository politicalBodyAdminRepository;
+
+    @Autowired
+    private PoliticalBodyTypeRepository politicalBodyTypeRepository;
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -231,5 +242,30 @@ public class AdminServiceImpl implements AdminService {
     public Category saveCategory(Category category) throws ApplicationException {
         category = categoryRepository.save(category);
         return category;
+    }
+
+    @Override
+    public List<LocationType> getAllLocationTypes() throws ApplicationException {
+        DataClient dataClient = getOrCreateDataClientIndiaEswaraj();
+        return locationTypeRepository.getAllLocationTypeOfDataClient(dataClient.getId());
+    }
+
+    @Override
+    public List<PoliticalBodyType> getAllPoliticalBodyTypes() throws ApplicationException {
+        EndResult<PoliticalBodyType> dbPoliticalTypes = politicalBodyTypeRepository.findAll();
+        return convertToList(dbPoliticalTypes);
+    }
+
+    private <T> List<T> convertToList(EndResult<T> dbResult) {
+        List<T> returnList = new ArrayList<>();
+        for (T oneT : dbResult) {
+            returnList.add(oneT);
+        }
+        return returnList;
+    }
+
+    @Override
+    public PoliticalBodyType savePoliticalBodyType(PoliticalBodyType politicalBodyType) throws ApplicationException {
+        return politicalBodyTypeRepository.save(politicalBodyType);
     }
 }

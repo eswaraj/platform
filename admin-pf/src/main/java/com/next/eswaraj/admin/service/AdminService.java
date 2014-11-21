@@ -7,6 +7,7 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 public interface AdminService {
 
@@ -19,6 +20,8 @@ public interface AdminService {
     Location getLocationById(Long locationId) throws ApplicationException;
 
     List<LocationType> getChildLocationsTypeOfParent(Long parentLocationTypeId) throws ApplicationException;
+
+    List<LocationType> getAllLocationTypes() throws ApplicationException;
 
     Location getRootLocationForSwarajIndia() throws ApplicationException;
 
@@ -35,4 +38,8 @@ public interface AdminService {
     List<Category> getChildCategories(Long parentCategoryId) throws ApplicationException;
 
     Category saveCategory(Category category) throws ApplicationException;
+
+    List<PoliticalBodyType> getAllPoliticalBodyTypes() throws ApplicationException;
+
+    PoliticalBodyType savePoliticalBodyType(PoliticalBodyType politicalBodyType) throws ApplicationException;
 }

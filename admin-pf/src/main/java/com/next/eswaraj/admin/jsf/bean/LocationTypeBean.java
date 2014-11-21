@@ -147,9 +147,6 @@ public class LocationTypeBean {
     }
     public void createNewLocationType() {
         if (selectedNode != null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Creating under ", selectedNode.getData().toString());
-            FacesContext.getCurrentInstance().addMessage(null, message);
-
             LocationType locationType = new LocationType();
             locationType.setRoot(false);
             locationType.setName("New");

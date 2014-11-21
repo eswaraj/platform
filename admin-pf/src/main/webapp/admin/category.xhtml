@@ -106,8 +106,8 @@
 							</p:imageSwitch>
 						</p:overlayPanel>
                         <p:overlayPanel id="headerImgPanel" for="headerImageUrl" showEffect="blind" hideEffect="explode" showEvent="mouseover"
-                            hideEvent="mousedown" dismissable="false" showCloseIcon="true">
-                            <p:imageSwitch effect="fade" style="width:300px;height:300px;">
+                            hideEvent="mouseout" dismissable="false" showCloseIcon="true">
+                            <p:imageSwitch effect="fade" style="width:600px;height:300px;">
                                 <p:graphicImage value="#{categoryBean.selectedNode.data.category.headerImageUrl}" height="200" />
                             </p:imageSwitch>
                         </p:overlayPanel>
