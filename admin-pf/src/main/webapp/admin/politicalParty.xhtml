@@ -41,7 +41,7 @@
 			<p:panel id="mainPanel" header="Political Parties">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:outputPanel id="listView" rendered="#{politicalPartyBean.showList}">
-					<p:commandButton value="Create Admin Type" actionListener="#{politicalPartyBean.createParty}"
+					<p:commandButton value="Create Political Party" actionListener="#{politicalPartyBean.createParty}"
 						update="@form" />
 					<p:dataTable var="onePoliticalParty" value="#{politicalPartyBean.parties}">
 						<p:column headerText="Id">
