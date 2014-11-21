@@ -257,8 +257,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<PoliticalBodyType> getAllPoliticalBodyTypes() throws ApplicationException {
-        EndResult<PoliticalBodyType> dbPoliticalTypes = politicalBodyTypeRepository.findAll();
-        return convertToList(dbPoliticalTypes);
+        List<PoliticalBodyType> dbPoliticalTypes = politicalBodyTypeRepository.getAllPoliticalBodyTypes();
+        return dbPoliticalTypes;
     }
 
     private <T> List<T> convertToList(EndResult<T> dbResult) {
@@ -279,8 +279,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Party> getAllParties() throws ApplicationException {
-        EndResult<Party> parties = partyRepository.findAll();
-        return convertToList(parties);
+        List<Party> parties = partyRepository.getAllParties();
+        return parties;
     }
 
     @Override
