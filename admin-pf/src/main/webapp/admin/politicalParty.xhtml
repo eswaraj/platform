@@ -1,0 +1,91 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="political_party_form">
+			<p:panel id="mainPanel" header="Political Parties">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:outputPanel id="listView" rendered="#{politicalPartyBean.showList}">
+					<p:commandButton value="Create Admin Type" actionListener="#{politicalPartyBean.createParty}"
+						update="@form" />
+					<p:dataTable var="onePoliticalParty" value="#{politicalPartyBean.parties}">
+						<p:column headerText="Id">
+							<h:outputText value="#{onePoliticalParty.id}" />
+						</p:column>
+
+						<p:column headerText="Name">
+							<h:outputText value="#{onePoliticalParty.name}" />
+						</p:column>
+						<p:column headerText="Short Name">
+							<h:outputText value="#{onePoliticalParty.shortName}" />
+						</p:column>
+
+						<p:column style="width:100px;">
+							<f:facet name="header">
+								<h:outputText value="Update" />
+							</f:facet>
+							<p:commandLink update="@form" title="Update">
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+									height="20" />
+								<f:setPropertyActionListener value="#{onePoliticalParty}"
+									target="#{politicalPartyBean.selectedParty}" />
+							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+				</p:outputPanel>
+				<p:outputPanel id="formView" rendered="#{!politicalPartyBean.showList}">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Name" />
+						<p:inputText value="#{politicalPartyBean.selectedParty.name}" style="width:600px" />
+						<p:outputLabel value="Short Name" />
+						<p:inputText value="#{politicalPartyBean.selectedParty.shortName}" style="width:200px" />
+					</p:panelGrid>
+					<p:outputPanel id="buttonView">
+						<p:commandButton value="Cancel" update="@form" actionListener="#{politicalPartyBean.cancel}"
+							styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:commandButton id="saveCategory" value="Save Political Body Admin Type" update="@form"
+							actionListener="#{politicalPartyBean.saveParty}" styleClass="ui-priority-primary">
+						</p:commandButton>
+					</p:outputPanel>
+				</p:outputPanel>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

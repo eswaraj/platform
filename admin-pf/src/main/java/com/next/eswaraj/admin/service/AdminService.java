@@ -7,6 +7,7 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 public interface AdminService {
@@ -42,4 +43,8 @@ public interface AdminService {
     List<PoliticalBodyType> getAllPoliticalBodyTypes() throws ApplicationException;
 
     PoliticalBodyType savePoliticalBodyType(PoliticalBodyType politicalBodyType) throws ApplicationException;
+
+    List<Party> getAllParties() throws ApplicationException;
+
+    Party saveParty(Party party) throws ApplicationException;
 }

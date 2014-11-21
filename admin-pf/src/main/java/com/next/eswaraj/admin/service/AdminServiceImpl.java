@@ -17,12 +17,14 @@ import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
+import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 
@@ -52,6 +54,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PoliticalBodyTypeRepository politicalBodyTypeRepository;
+
+    @Autowired
+    private PartyRepository partyRepository;
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -266,6 +271,20 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public PoliticalBodyType savePoliticalBodyType(PoliticalBodyType politicalBodyType) throws ApplicationException {
+        if (politicalBodyType.getLocationType() == null) {
+            throw new ApplicationException("Location Type can not be null");
+        }
         return politicalBodyTypeRepository.save(politicalBodyType);
+    }
+
+    @Override
+    public List<Party> getAllParties() throws ApplicationException {
+        EndResult<Party> parties = partyRepository.findAll();
+        return convertToList(parties);
+    }
+
+    @Override
+    public Party saveParty(Party party) throws ApplicationException {
+        return partyRepository.save(party);
     }
 }
