@@ -183,13 +183,13 @@
 							<div class="pull-left">
 								<strong>My Activity Feed</strong>
 							</div>
-							<div class="clearfix" style="margin-bottom: 1.5%; margin-top: 0px;"></div>
+							<div class="clearfix" style="margin-bottom: 1%; margin-top: 0px;"></div>
 						</div>
 						<div class="user_feed_colsm">
 							<div class="listing">
 								<!-- .list-row  -->
 								<c:forEach items="${userComplaints}" var="oneComplaint">
-									<div class="list-row" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
+									<div class="list-row user-dashboard-settings" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
 										<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"-->
 										<!-- not working as expected -->
 											<p class="innerdiv-sharebtn">
@@ -261,7 +261,7 @@
 									</div>
 								</c:forEach>
 
-								<div class="pagination-wrapper" style="margin-left: 34%; margin-right: 34%; margin-bottom: 7%;">
+								<div class="pagination-wrapper" style="margin-left: 31.5%; margin-right: 31.5%; margin-bottom: 7%;">
 									<ul class="pagination">
 										<li class="disabled"><a href="#">&laquo;</a></li>
 										<li class="active"><a href="#">1</a></li>

@@ -760,22 +760,27 @@ cursor: pointer !important;
 }
 
 .user_dash_left_pane{
-width: 22%;
-padding-left: 25px;
+width: 21%;
+padding-left: 15px;
+padding-left: 10px;
 float: left;
 margin-bottom: 40px;
 }
 
 .user_dash_mid_pane{
-width: 58%;
-padding-left: 10px;
-padding-right: 10px;
+width: 51%;
+padding-left: 5px;
 float: left;
 }
 
 .user_dash_right_pane{
-width: 20%;
-padding-left: 10px;
-padding-right: 10px;
+width: 28%;
+padding-left: 0px;
+padding-right: 0px;
+margin-left: -15px;
 float: left;
+}
+
+.user-dashboard-settings{
+width: auto;
 }
