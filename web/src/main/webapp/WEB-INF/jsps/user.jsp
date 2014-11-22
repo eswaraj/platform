@@ -276,7 +276,7 @@
 						</div>
 				</div>
 				</div>
-				<div class="user_dash_right_pane analytics_data_colsm" style="padding-left: 20px; padding-right: 0px;">
+				<div class="user_dash_right_pane analytics_data_colsm">
 
 					<div id="chart_bar_c" style="border: 0px solid #fff;">
 						<svg>

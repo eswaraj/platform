@@ -762,7 +762,7 @@ cursor: pointer !important;
 .user_dash_left_pane{
 width: 21%;
 padding-left: 15px;
-padding-left: 10px;
+padding-right: 10px;
 float: left;
 margin-bottom: 40px;
 }
