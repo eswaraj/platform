@@ -66,7 +66,7 @@
 			</div>
 			 -->
 			<div class="row" style="margin-top:1.25%;">
-				<div class="col-sm-2">
+				<div class="user_dash_left_pane">
 												<div class="reporter_cover_profile_quote">
 													<div class="cons_issue_reporters_box_cover_quote">
 														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
@@ -177,18 +177,15 @@
 
 												</div>
 				</div>
-				<div class="col-sm-10" style="padding: 0px 0px 0px 5px; ">
+				<div class="user_dash_mid_pane" style="padding: 0px 0px 0px 5px; ">
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
 								<strong>My Activity Feed</strong>
 							</div>
-							<div class="pull-right" style="margin-right: 33%;">
-								<button class="btn btn-primary">Raise Issue</button>
-							</div>
 							<div class="clearfix" style="margin-bottom: 1.5%; margin-top: 0px;"></div>
 						</div>
-						<div class="col-sm-8 user_feed_colsm">
+						<div class="user_feed_colsm">
 							<div class="listing">
 								<!-- .list-row  -->
 								<c:forEach items="${userComplaints}" var="oneComplaint">
@@ -277,22 +274,22 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4 analytics_data_colsm" style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
+				</div>
+				</div>
+				<div class="user_dash_right_pane analytics_data_colsm" style="padding-left: 20px; padding-right: 0px;">
 
-							<div id="chart_bar_c" style="border: 0px solid #fff;">
-								<svg>
-                                </svg>
-							</div>
-
-							<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
-
-							<div id="chart_pie_c" style="border: 0px solid #fff;">
-								<svg>
-                                </svg>
-							</div>
-
-						</div>
+					<div id="chart_bar_c" style="border: 0px solid #fff;">
+						<svg>
+						</svg>
 					</div>
+
+					<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
+
+					<div id="chart_pie_c" style="border: 0px solid #fff;">
+						<svg>
+						</svg>
+					</div>
+
 				</div>
 			</div>
 		</div>
