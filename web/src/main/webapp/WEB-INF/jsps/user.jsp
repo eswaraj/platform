@@ -67,6 +67,53 @@
 			 -->
 			<div class="row" style="margin-top:1.25%;">
 				<div class="col-sm-2">
+												<div class="reporter_cover_profile_quote">
+													<div class="cons_issue_reporters_box_cover_quote">
+														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
+													</div>
+												</div>
+
+												<div class="reporter_profile_data">
+													<div class="cons_issue_reporters_box_pic">
+														<c:if test="${!empty user.person.profilePhoto}">
+															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
+														</c:if>
+														<c:if test="${empty user.person.profilePhoto}">
+															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
+														</c:if>
+														<p class="center-align">
+														<c:if test="${!empty user.person.profilePhoto}">
+															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
+															<c:if test="${!empty age}">
+																<span class="grey_text">
+																${age} Yrs,
+																</span>
+															</c:if>
+															<span class="grey_text"> 
+															${user.person.gender}
+															</span>
+														</c:if>
+														<c:if test="${empty user.person.profilePhoto}">
+															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
+														</c:if>
+														</p>
+														<div class="complaints_followers_counter">
+														<p class="reporter_total_complaints">
+															<span class="grey_text">Complaints</span> <br /> 
+															<strong class="blue_color_text">200</strong>
+														</p>
+														<p class="reporter_complaint_followers">
+															<span class="grey_text">Followers</span> <br /> 
+															<strong class="blue_color_text">5000</strong>
+														</p>
+														<p class="reporter_complaint_visited">
+															<span class="grey_text">Following</span> <br /> 
+															<strong class="blue_color_text">50</strong>
+														</p>
+														</div>
+													</div>
+												</div>
+
 												<div class="list-group">
 												
 													<div class="filter_types" style="padding-left:10px;">
