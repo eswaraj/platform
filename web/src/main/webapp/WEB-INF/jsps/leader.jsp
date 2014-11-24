@@ -12,7 +12,6 @@
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
-<link rel="stylesheet" href='${staticHost}/css/complaints.css' />
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
 <script src="${staticHost}/js/angular.min.js"></script>
 <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
@@ -228,7 +227,7 @@
 				<div class="col-sm-6">
 					
 				<div class="about-mla hidden-xs">
-						<h2 class="blue_color_text">Know your MLA</h2>
+						<h3 class="red_orng_clr_text">Know your MLA</h3>
 						<div class="desc-wrapper">
 							<div class="desc">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -239,7 +238,8 @@
 							</div>
 						</div>
 					</div>
-
+					<hr />
+					<h3 class="red_orng_clr_text">MLA Comments Feed</h3>
 					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
@@ -267,7 +267,7 @@
 												</span>
 												<span class="comment_type_adjust">
 													<img src = "http://dev.eswaraj.com/images/potholeissue.jpg" class="issue-type-pic" alt="">
-													<a href="#!" class="text-limit issue-scope-type">Type - {{complaint.categories | rootCategory}}</a>
+													<a href="#!" class="text-limit issue-scope-type">{{complaint.categories | rootCategory}}</a>
 												</span>
 												<span class="comment_content_adjust">
 													<a href="#!" class="text-limit issue-scope">{{complaint.categories  | subCategory}}</a>
@@ -276,9 +276,9 @@
 													<i class="glyphicon glyphicon-map-marker glyph_adjust"></i>
 													<a href="#!" class="text-limit location_adjust">Cessna Business Park main road,Keverappa Layout</a>
 												</span>
-												<span class="comment_status_adjust">
+												<!--span class="comment_status_adjust">
 													<a href="#!" class="text-limit issue-scope-status">Status - {{complaint.politicalAdminComplaintStatus}}</a>
-												</span>
+												</span-->
 												<span>
 													<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus posttimestatus_adjust" alt="">
 													<a href="#!" class="location"><abbr class="text-limit timeago" title="{{complaint.complaintTime | dateFormatter}}">{{complaint.complaintTime | dateFormatter}}</abbr></a>
@@ -307,7 +307,6 @@
 											<!-- Comments Box -->
 
 											<div id="load_comments_box">
-												<a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from MLA ( )</a>
 
 												<div id="comments_box" class="div_comments_box">
 
@@ -325,10 +324,14 @@
 															</p>
 
 															<div class="comments-info" >
+																	{{comment.text}}
+															</div>
+
+															<!--div class="comments-info" >
 																<textcollapse>
 																	{{comment.text}}
 																</textcollapse>
-															</div>
+															</div-->
 
 														</div>
 													</div>
@@ -359,7 +362,7 @@
 					</div>
 				</div>
 				<div class="col-sm-3">
-					<h3 class="blue_color_text">MLA on Social Media</h3>
+					<h3 class="red_orng_clr_text">MLA on Social Media</h3>
 					<div class="eswaraj-int-facebook">
 						<div class="fb-like-box" data-href="https://www.facebook.com/narendramodi" data-width="307" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="false"></div>
 						<!--div class="fb-like-box"
