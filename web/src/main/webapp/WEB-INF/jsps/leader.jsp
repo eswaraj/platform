@@ -75,18 +75,21 @@
 
 						<div class="leader_profile_stats">
 							<div class="complaints_followers_counter">
-							<p class="leader_last_active">
-								<span class="grey_text">Last Active</span> <br /> 
-								<strong class="blue_color_text">16th August, 2014</strong>
-							</p>
-							<p class="leader_total_complaints">
-								<span class="grey_text">Complaints</span> <br /> 
-								<strong class="blue_color_text">20080</strong>
-							</p>
-							<p class="leader_followers">
-								<span class="grey_text">Followers</span> <br /> 
-								<strong class="blue_color_text">507800</strong>
-							</p>
+									<div>
+										<h5 class="red_orng_clr_text">Current Statistics</h5>
+									</div>
+									<p class="leader_last_active">
+										<span class="grey_text">Last Active</span> <br /> 
+										<strong class="blue_color_text">16th August, 2014</strong>
+									</p>
+									<p class="leader_total_complaints">
+										<span class="grey_text">Complaints</span> <br /> 
+										<strong class="blue_color_text">20080</strong>
+									</p>
+									<p class="leader_followers">
+										<span class="grey_text">Followers</span> <br /> 
+										<strong class="blue_color_text">507800</strong>
+									</p>
 							</div>
 						</div>
 
