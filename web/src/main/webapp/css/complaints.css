@@ -265,7 +265,7 @@ height: auto;
 }
 
 .wrap_pad_left{
-padding-left: 30px;
+padding-left: 10px;
 padding-right: 20px;
 }
 
@@ -1054,4 +1054,9 @@ position: relative !important;
 float: right !important;
 padding-top: 10px !important;
 cursor: pointer !important;
+}
+
+.left_filter .list-group-item{
+padding: 10px 15px;
+margin-top: 15px;
 }

@@ -758,3 +758,29 @@ float: right !important;
 padding-top: 10px !important;
 cursor: pointer !important;
 }
+
+.user_dash_left_pane{
+width: 21%;
+padding-left: 15px;
+padding-right: 10px;
+float: left;
+margin-bottom: 40px;
+}
+
+.user_dash_mid_pane{
+width: 51%;
+padding-left: 5px;
+float: left;
+}
+
+.user_dash_right_pane{
+width: 28%;
+padding-left: 0px;
+padding-right: 0px;
+margin-left: -15px;
+float: left;
+}
+
+.user-dashboard-settings{
+width: auto;
+}

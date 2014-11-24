@@ -66,7 +66,54 @@
 			</div>
 			 -->
 			<div class="row" style="margin-top:1.25%;">
-				<div class="col-sm-2">
+				<div class="user_dash_left_pane">
+												<div class="reporter_cover_profile_quote">
+													<div class="cons_issue_reporters_box_cover_quote">
+														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
+													</div>
+												</div>
+
+												<div class="reporter_profile_data">
+													<div class="cons_issue_reporters_box_pic">
+														<c:if test="${!empty user.person.profilePhoto}">
+															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
+														</c:if>
+														<c:if test="${empty user.person.profilePhoto}">
+															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
+														</c:if>
+														<p class="center-align">
+														<c:if test="${!empty user.person.profilePhoto}">
+															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
+															<c:if test="${!empty age}">
+																<span class="grey_text">
+																${age} Yrs,
+																</span>
+															</c:if>
+															<span class="grey_text"> 
+															${user.person.gender}
+															</span>
+														</c:if>
+														<c:if test="${empty user.person.profilePhoto}">
+															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
+														</c:if>
+														</p>
+														<div class="complaints_followers_counter">
+														<p class="reporter_total_complaints">
+															<span class="grey_text">Complaints</span> <br /> 
+															<strong class="blue_color_text">200</strong>
+														</p>
+														<p class="reporter_complaint_followers">
+															<span class="grey_text">Followers</span> <br /> 
+															<strong class="blue_color_text">5000</strong>
+														</p>
+														<p class="reporter_complaint_visited">
+															<span class="grey_text">Following</span> <br /> 
+															<strong class="blue_color_text">50</strong>
+														</p>
+														</div>
+													</div>
+												</div>
+
 												<div class="list-group">
 												
 													<div class="filter_types" style="padding-left:10px;">
@@ -130,22 +177,19 @@
 
 												</div>
 				</div>
-				<div class="col-sm-10" style="padding: 0px 0px 0px 5px; ">
+				<div class="user_dash_mid_pane" style="padding: 0px 0px 0px 5px; ">
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
 								<strong>My Activity Feed</strong>
 							</div>
-							<div class="pull-right" style="margin-right: 33%;">
-								<button class="btn btn-primary">Raise Issue</button>
-							</div>
-							<div class="clearfix" style="margin-bottom: 1.5%; margin-top: 0px;"></div>
+							<div class="clearfix" style="margin-bottom: 1%; margin-top: 0px;"></div>
 						</div>
-						<div class="col-sm-8 user_feed_colsm">
+						<div class="user_feed_colsm">
 							<div class="listing">
 								<!-- .list-row  -->
 								<c:forEach items="${userComplaints}" var="oneComplaint">
-									<div class="list-row" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
+									<div class="list-row user-dashboard-settings" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
 										<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"-->
 										<!-- not working as expected -->
 											<p class="innerdiv-sharebtn">
@@ -217,7 +261,7 @@
 									</div>
 								</c:forEach>
 
-								<div class="pagination-wrapper" style="margin-left: 34%; margin-right: 34%; margin-bottom: 7%;">
+								<div class="pagination-wrapper" style="margin-left: 31.5%; margin-right: 31.5%; margin-bottom: 7%;">
 									<ul class="pagination">
 										<li class="disabled"><a href="#">&laquo;</a></li>
 										<li class="active"><a href="#">1</a></li>
@@ -230,22 +274,22 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4 analytics_data_colsm" style="padding-left: 10px; margin-left: -20px; padding-right: 0px;">
+				</div>
+				</div>
+				<div class="user_dash_right_pane analytics_data_colsm">
 
-							<div id="chart_bar_c" style="border: 0px solid #fff;">
-								<svg>
-                                </svg>
-							</div>
-
-							<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
-
-							<div id="chart_pie_c" style="border: 0px solid #fff;">
-								<svg>
-                                </svg>
-							</div>
-
-						</div>
+					<div id="chart_bar_c" style="border: 0px solid #fff;">
+						<svg>
+						</svg>
 					</div>
+
+					<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
+
+					<div id="chart_pie_c" style="border: 0px solid #fff;">
+						<svg>
+						</svg>
+					</div>
+
 				</div>
 			</div>
 		</div>
