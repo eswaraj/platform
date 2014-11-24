@@ -418,7 +418,6 @@ margin-top: 10px;
 .list-row {
     padding: 0;
     border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
 	min-height: 55px;
 	height: 55px;
 	width: 100%;
@@ -542,7 +541,7 @@ border-bottom: 0px dotted;
 
 .glyph_right_float{
 float:right;
-margin-top: 1%;
+margin-top: 2.5%;
 font-size: 15px;
 margin-right: 0.5%;
 cursor: pointer;
@@ -710,8 +709,10 @@ width: 100%;
 
 .listing-wrapper {
 padding: 5px 0px 15px 15px;
+margin-top: 0px;
 background-color: #FFF;
-border-radius: 10px;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
 }
 
 .listing{
@@ -734,20 +735,34 @@ text-align: center;
 }
 
 .knw_mla{
-margin-top: 15px;
+padding-top: 10px;
+margin: 0px;
+padding-bottom: 10px;
+background-color: #5bc0de;
+}
+
+.about-mla.hidden-xs .desc-wrapper{
+padding: 5px;
 }
 
 .mla_comm_feed{
-margin-top: 10px;
 text-align: center;
+padding-top: 10px;
+margin: 0px;
+padding-bottom: 10px;
+background-color: #5bc0de;
+margin-top: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 
-.innerdiv-sharebtn {
-font-size: 15px;
-line-height: 200%;
-float: right;
-display: none;
-margin-right: 20px;
-margin-bottom: 0px;
-margin-top: 15px;
+.mla_calendar_head{
+text-align: center;
+padding-top: 10px;
+margin: 0px;
+padding-bottom: 10px;
+background-color: #5bc0de;
+margin-top: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }

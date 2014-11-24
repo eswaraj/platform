@@ -26,23 +26,6 @@
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1505507139725051&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<script>
-jQuery(document).ready(function() {
-	$('.anchorlink').click(function(e){
-		e.stopPropagation();
-	});
-$( ".innerdiv-list-row" ).each( function () {
-		$(this).on({
-		mouseenter: function () {
-			$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 500);
-		},
-		mouseleave: function () {
-			$( this ).find(".innerdiv-sharebtn" ).hide();
-		}
-		});
-	});
-});
-</script>
 								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
 									opacity: 0.4;
 									position: fixed;
@@ -304,16 +287,6 @@ $( ".innerdiv-list-row" ).each( function () {
 									</div>
 
 									<div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
-										<p class="innerdiv-sharebtn">
-											<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
-											<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
-											<!-- social media share buttons -->								
-											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
-											<br />																		
-											<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-											<br />
-											<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-										</p>
 									   <div class="innerdiv-innerblock">
 											<div class="innerdiv-issue-info" >
 
@@ -377,7 +350,7 @@ $( ".innerdiv-list-row" ).each( function () {
 						</div>
 					</div>
 
-					<h3 class="red_orng_clr_text center-align">MLA Calendar</h3>
+					<h3 class="red_orng_clr_text mla_calendar_head">MLA Calendar</h3>
 					<div class="mla_cal_contents">
 						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
 					</div>
