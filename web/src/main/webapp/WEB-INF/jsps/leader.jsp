@@ -76,7 +76,7 @@
 						<div class="leader_profile_stats">
 							<div class="complaints_followers_counter">
 									<div>
-										<h5 class="red_orng_clr_text">Current Statistics</h5>
+										<h5 class="red_orng_clr_text leader_curr_stat">Current Statistics</h5>
 									</div>
 									<p class="leader_last_active">
 										<span class="grey_text">Last Active</span> <br /> 
@@ -160,26 +160,35 @@
 						<div class="panel-body">
 							<div class="widget-wrapper">
 								<h3>MLA related videos</h3>
-								<div class="embed-responsive embed-responsive-4by3">
-									<iframe class="embed-responsive-item" width="100%"
-										src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-										allowfullscreen></iframe>
-								</div>
-								<div class="embed-responsive embed-responsive-4by3">
-									<iframe class="embed-responsive-item" width="100%"
-										src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-										allowfullscreen></iframe>
-								</div>
-								<div class="embed-responsive embed-responsive-4by3">
-									<iframe class="embed-responsive-item" width="100%"
-										src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-										allowfullscreen></iframe>
-								</div>
-								<div class="embed-responsive embed-responsive-4by3">
-									<iframe class="embed-responsive-item" width="100%"
-										src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-										allowfullscreen></iframe>
-								</div>
+									<div id="myCarousel" class="carousel slide" data-ride="carousel">
+										<!-- Carousel items -->
+										<div class="carousel-inner">
+												<div class="active item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+												<div class="item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+												<div class="item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+												<div class="item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+										</div>
+										
+											<!-- Carousel nav -->
+											<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+											<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+									</div>
 							</div>
 						</div>
 					</div>
