@@ -220,6 +220,20 @@
 					</div>
 				</div>
 				<div class="col-sm-6">
+					
+				<div class="about-mla hidden-xs">
+						<h2 class="blue_color_text">Know your MLA</h2>
+						<div class="desc-wrapper">
+							<div class="desc">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+									Harum quia laboriosam adipisci assumenda quis natus eaque
+									delectus, praesentium, vitae, cupiditate, aut similique! Ea
+									voluptates quos alias officia vero provident sed veniam
+									recusandae.</p>
+							</div>
+						</div>
+					</div>
+
 					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
@@ -332,19 +346,8 @@
 							</div>	
 						</div>
 					</div>
-<div class="about-mla hidden-xs">
-						<h2 class="blue_color_text">Know your MLA</h2>
-						<div class="desc-wrapper">
-							<div class="desc">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Harum quia laboriosam adipisci assumenda quis natus eaque
-									delectus, praesentium, vitae, cupiditate, aut similique! Ea
-									voluptates quos alias officia vero provident sed veniam
-									recusandae.</p>
-							</div>
-						</div>
-					</div>
-						<h3 class="blue_color_text">MLA Calender</h3>
+
+					<h3 class="blue_color_text">MLA Calendar</h3>
 					<div class="mla_cal_contents">
 						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
 					</div>
