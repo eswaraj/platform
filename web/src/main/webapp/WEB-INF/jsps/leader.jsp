@@ -22,7 +22,7 @@
 									z-index: -1;
 								">
 
-<div class="outerwrapper">
+<div class="outerwrapper main_content_page">
 		<jsp:include page="header.jsp" />
 		<!-- /.navbar -->
 		<div class="container-fluid">
@@ -234,6 +234,49 @@
 			</div>
 		</div>
 	</div>
+
+								<div id="modal-background-subcategory">
+								<div id="modal-background-subcategory-innerdiv">
+								<h2 class="blue_color_text">Select SubCategories</h2><hr />
+										<a href="${location.url}.html?type=${viewType}" class="list-group-item active">Show All</a>
+										<hr />
+										<c:forEach items="${rootCategories}" var="oneCategory">
+										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
+										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
+											<a href="${location.url}/category/${subCategory.id}.html?type=${viewType}" " class="list-group-item">${subCategory.name}</a>
+										</c:forEach>
+										<hr />
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+								
+								<div id="md-bg-services-plus-sys-level">
+								<div id="md-bg-services-plus-sys-level-innerdiv">
+								<h2 class="red_orng_clr_text">Select Citizen Services</h2><hr />
+									<c:if test="${empty selectedCategory}">
+										<a href="#" class="list-group-item active">Show All
+											(${total})</a>
+									</c:if>
+									<c:if test="${!empty selectedCategory}">
+										<a href="${location.url}.html?type=${viewType}"
+										   class="list-group-item">Show All (${total})</a>
+									</c:if>
+									<hr />
+									<c:forEach items="${rootCategories}" var="oneCategory">
+										<c:if test="${selectedCategory eq oneCategory.id}">
+											<a href="#" class="list-group-item active">${oneCategory.name}
+												(${oneCategory.locationCount})</a><br />
+										</c:if>
+										<c:if test="${ selectedCategory ne oneCategory.id}">
+											<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="list-group-item">
+											${oneCategory.name} (${oneCategory.locationCount}) </a><br />
+										</c:if>
+									</c:forEach>
+								<a href="#0" class="close-btn">Close</a>
+								</div>
+								</div>
+	
 	<jsp:include page="footer.jsp" />
 </body>
 </html>
