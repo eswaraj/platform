@@ -237,8 +237,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="listing-wrapper">
 					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
+					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
 							<div class="mla_unread_complaints" >
