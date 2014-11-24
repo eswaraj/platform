@@ -218,8 +218,11 @@
 						</table>
 					</div>
 
-					<h3 class="text-footer">Select Position</h3>
-					<select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
+					<h3 class="text-footer red_orng_clr_text">Select Position</h3>
+					<!--select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
+					</select--> <!-- Doing Temporary -->
+					<select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()" ng-init="selectedPosition = options[0]" >
+					    <option value="0" selected="selected">Chief Minister of Delhi</option>
 					</select>
 					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 				</div>
@@ -328,12 +331,13 @@
 
 														</div>
 
-														<div id="show_full_comments_page" ng-if="$last">
-														<a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
-														<a href="#!" id="collapse_comments_box" class="comments_controller" ng-click="showDetailsAndMarkViewed($event, complaint)">Close</a>
-														</div>
 													</div>
 
+													<div id="show_full_comments_page">
+														<a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
+														<a href="#!" id="collapse_comments_box" class="comments_controller" ng-click="showDetailsAndMarkViewed($event, complaint)">Close</a>
+													</div>
+	
 												</div>
 											</div>
 										</div>
