@@ -14,34 +14,55 @@
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
 </head>
 <body style="height:auto;">
-	<div class="outerwrapper">
+								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
+									opacity: 0.4;
+									position: fixed;
+									height: 100%;
+									width: 100%;
+									z-index: -1;
+								">
+
+<div class="outerwrapper">
 		<jsp:include page="header.jsp" />
 		<!-- /.navbar -->
 		<div class="container-fluid">
 			<div class="row" style="margin-top: 5%;">
 				<div class="col-sm-3">
-					<div class="panel panel-default mla-placeholder">
-						<div class="panel-body">
-							<div class="mla-profile">
-								<img src="${leader.profilePhoto}?type=square&height=200&width=200" class="politician_image" alt="mla image">
-								<p>
-									<strong>${leader.name}, ${leader.politicalAdminType.shortName}</strong><br \>
-									<span>In Office since ${leader.since}</span> <br \>
-									<a href="#" class="badge badge-default">Know your MLA</a>
-								</p>
-								<div class="visible-xs">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Dolores, illum facilis aut officiis, molestias saepe
-										beatae laudantium dolorum labore facere eaque mollitia, ab
-										pariatur. At nostrum magni fugit commodi sequi!</p>
-									<button class="btn btn-default btn-xs">show more /
-										show less</button>
-								</div>
-							</div>
+					<div class="constituency_left_pane">
+						<div class="leader_profile_pic_bio">
+								<c:if test="${!empty leader.profilePhoto}">
+									<img src="${leader.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "leader-profile-pic" style="width: 100px;">
+									<p class="center-align">
+										<strong class="red_orng_clr_text">${leader.name}</strong> <br /> 
+										<c:if test="${!empty leader.politicalAdminType.shortName}">
+											<span class="grey_text">
+											 ${leader.politicalAdminType.shortName}
+											</span> <br \>
+											<span>In Office since ${leader.since}</span> <br \>
+										</c:if>
+										<c:if test="${empty leader.politicalAdminType.shortName}">
+											<span class="grey_text">
+											 Political Position To be Updated
+											</span>
+										</c:if>
+									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency
+										Link</a>
+									<hr>
+									</p>
+								</c:if>
+								<c:if test="${empty leader.profilePhoto}">
+									<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="leader-profile-pic">
+									<p class="center-align">
+									<strong class="red_orng_clr_text">Leader Not Yet Declared</strong> <br /> 
+										<span class="grey_text">
+										 Political Position Not Yet Declared
+										</span>
+									</p>
+								</c:if>
 						</div>
-					</div>
-					<div class="row mla-record">
-						<div class="col-sm-12">
+
+						<div class="leader_profile_edu_stats">
+							<div class="cons_issue_reporters_box_pic">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">Education Records</h3>
@@ -52,13 +73,84 @@
 										1980-81 from Pune Vidyapeeth</li>
 								</ul>
 							</div>
+								<div class="complaints_followers_counter">
+								<p class="reporter_total_complaints">
+									<span class="grey_text">Complaints</span> <br /> 
+									<strong class="blue_color_text">200</strong>
+								</p>
+								<p class="reporter_complaint_followers">
+									<span class="grey_text">Followers</span> <br /> 
+									<strong class="blue_color_text">5000</strong>
+								</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="list-group">
+						
+							<div class="filter_types">
+							<p>
+								<strong class="filter_citzn_serv">Filter Comments by Citizen Services</strong>
+								<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
+							</p>
+
+							<div class="cat-search example example_objects_as_tags">
+							  <div class="bs-example">
+								<input id="citizen_services_input" type="text" />
+							  </div>
+						   </div>
+
+							<hr />
+								<div class="left_filter">
+									<p>
+										<strong class="filter_sys_lvl">Filter Comments by SubCategory</strong>
+										<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
+									</p>
+
+									<div class="subcat-search example example_objects_as_tags_subcat">
+									  <div class="bs-example">
+										<input id="subcategory_input" type="text" />
+									  </div>
+								   </div>
+								</div>
+							<hr />
+								<div class="left_filter">
+									<p>
+										<strong class="filter_temporal">Filter Comments by Time</strong>
+									</p>
+
+									<select class="select dropdownlist">
+										<option selected>Select</option>
+										<option>Today</option>
+										<option>Yesterday</option>
+										<option>Last 72 Hrs</option>
+										<option>Last 1 Week</option>
+										<option>Last 2 Weeks</option>
+										<option>Last 1 Month</option>
+										<option>Last 3 Months</option>
+									</select>
+								</div>
+							<hr />
+								<div class="left_filter">
+									<p>
+										<strong class="filter_spatial">Filter Comments by Location</strong>
+									</p>
+									<select class="select dropdownlist">
+										<option selected>Select</option>
+										<option>Cessna Business Park main road</option>
+										<option>Mahadevapura, More Mall</option>
+										<option>Chandni Chowk</option>
+										<option>South Delhi</option>
+										<option>Gurgaon</option>
+									</select>
+								</div>
+							
+							</div>
+
 						</div>
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency
-								Link</a>
-							<hr>
 							<div class="widget-wrapper">
 								<h3>MLA related videos</h3>
 								<div class="embed-responsive embed-responsive-4by3">

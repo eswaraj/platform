@@ -12,3 +12,50 @@ border-radius: 15px;
 text-align: center;
 margin-bottom: 35px;
 }
+
+.center-align{
+text-align: center;
+}
+
+.blue_color_text{
+color: #428bca;
+}
+
+.red_orng_clr_text{
+color: #FF3100;
+font-weight: 700;
+}
+
+.grey_text{
+color: #777;
+}
+
+.leader-profile-pic{
+width: 90px;
+float: left;
+border: 1px solid #ccc;
+border-radius: 10px;
+margin-top: -55px;
+}
+
+.leader_profile_edu_stats{
+background-color: #ECE9E8;
+height: 130px;
+margin-bottom: 10px;
+padding-left: 15px;
+padding-top: 5px;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
+position: relative;
+}
+
+.leader_profile_pic_bio{
+background-color: #5bc0de;
+height: 130px;
+margin-top: 25px;
+text-align: center;
+padding: 5px;
+font-size: 13px;
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+}
