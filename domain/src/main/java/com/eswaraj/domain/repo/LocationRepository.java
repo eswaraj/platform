@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 
 /**
  * Repo for location queries
@@ -24,6 +26,10 @@ public interface LocationRepository extends GraphRepository<Location>{
 
     @Query("start n=node:LocationNameFt({0}) return n")
     Collection<Location> searchLocationByName(String name);
+
+    @Query("start location=node:LocationNameFt({0}) match (location)-[:OF_TYPE]->(locationType) return distinct location, locationType limit 10")
+    EndResult<LocationSearchResult> searchLocationByLocationName(String locationName);
+
 	/*
 	@Query("start location=node({0}) " +
 			"match location<--politicalBody return politicalBody")

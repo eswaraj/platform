@@ -9,6 +9,7 @@ import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 
 public interface AdminService {
 
@@ -47,4 +48,6 @@ public interface AdminService {
     List<Party> getAllParties() throws ApplicationException;
 
     Party saveParty(Party party) throws ApplicationException;
+
+    List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException;
 }

@@ -19,6 +19,7 @@ import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
@@ -286,5 +287,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Party saveParty(Party party) throws ApplicationException {
         return partyRepository.save(party);
+    }
+
+    @Override
+    public List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException {
+        System.out.println("Searching for Name : " + "name:*" + name + "*");
+        return convertToList(locationRepository.searchLocationByLocationName("name:*" + name + "*"));
     }
 }
