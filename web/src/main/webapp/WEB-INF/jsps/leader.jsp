@@ -28,11 +28,11 @@
 		<div class="container-fluid">
 			<div class="row" style="margin-top: 5%;">
 				<div class="col-sm-3">
-					<div class="constituency_left_pane">
+					<div class="leader_page_left_pane">
 						<div class="leader_profile_pic_bio">
 								<c:if test="${!empty leader.profilePhoto}">
 									<img src="${leader.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "leader-profile-pic" style="width: 100px;">
-									<p class="center-align">
+									<p class="center-align name-top-adjust">
 										<strong class="red_orng_clr_text">${leader.name}</strong> <br /> 
 										<c:if test="${!empty leader.politicalAdminType.shortName}">
 											<span class="grey_text">
@@ -42,7 +42,7 @@
 										</c:if>
 										<c:if test="${empty leader.politicalAdminType.shortName}">
 											<span class="grey_text">
-											 Political Position To be Updated
+											 Position Not Yet Declared
 											</span>
 										</c:if>
 									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency
@@ -55,34 +55,38 @@
 									<p class="center-align">
 									<strong class="red_orng_clr_text">Leader Not Yet Declared</strong> <br /> 
 										<span class="grey_text">
-										 Political Position Not Yet Declared
+										 Position Not Yet Declared
 										</span>
 									</p>
 								</c:if>
 						</div>
 
-						<div class="leader_profile_edu_stats">
-							<div class="cons_issue_reporters_box_pic">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Education Records</h3>
+						<div class="leader_profile_edu">
+								<div class="leader_educational_bg">
+									<div>
+										<h5 class="red_orng_clr_text">Educational Records</h5>
+									</div>
+									<ul>
+										<li class="grey_text">B.Sc in 1977-78 | Pune Vidyapeeth</li>
+										<li class="grey_text">M.Sc in 1980-81 | IIT, Kanpur</li>
+									</ul>
 								</div>
-								<ul class="list-group">
-									<li class="list-group-item">Graduate Professional</li>
-									<li class="list-group-item">B.Sc in 1977-78, B.ed in
-										1980-81 from Pune Vidyapeeth</li>
-								</ul>
-							</div>
-								<div class="complaints_followers_counter">
-								<p class="reporter_total_complaints">
-									<span class="grey_text">Complaints</span> <br /> 
-									<strong class="blue_color_text">200</strong>
-								</p>
-								<p class="reporter_complaint_followers">
-									<span class="grey_text">Followers</span> <br /> 
-									<strong class="blue_color_text">5000</strong>
-								</p>
-								</div>
+						</div>
+
+						<div class="leader_profile_stats">
+							<div class="complaints_followers_counter">
+							<p class="leader_last_active">
+								<span class="grey_text">Last Active</span> <br /> 
+								<strong class="blue_color_text">16th August, 2014</strong>
+							</p>
+							<p class="leader_total_complaints">
+								<span class="grey_text">Complaints</span> <br /> 
+								<strong class="blue_color_text">20080</strong>
+							</p>
+							<p class="leader_followers">
+								<span class="grey_text">Followers</span> <br /> 
+								<strong class="blue_color_text">507800</strong>
+							</p>
 							</div>
 						</div>
 
