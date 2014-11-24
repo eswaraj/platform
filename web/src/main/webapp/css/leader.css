@@ -1,3 +1,6 @@
+.row{
+margin-top: 3%;
+}
 
 .politician_image{
 width: 200px;
@@ -57,6 +60,17 @@ border-bottom-left-radius: 10px;
 position: relative;
 }
 
+.mla_related_videos{
+background-color: #ECE9E8;
+min-height: 100px;
+margin-bottom: 10px;
+padding-left: 15px;
+padding-top: 5px;
+padding-bottom: 10px;
+border-radius: 10px;
+position: relative;
+}
+
 .leader_profile_pic_bio{
 background-color: #5bc0de;
 height: 130px;
@@ -74,7 +88,7 @@ margin-bottom: 12%;
 }
 
 .complaints_followers_counter{
-text-align: center;
+text-align: left;
 }
 
 .leader_last_active{
@@ -353,3 +367,32 @@ clear: both;
 .leader_curr_stat{
 text-align: left;
 }
+
+.carousel-control {
+margin-top: 40px;
+margin-bottom: 40px;
+}
+
+.platform_constituency_counter{
+background-color: #ECE9E8;
+height: auto;
+margin-bottom: 10px;
+padding: 10px;
+padding-left: 15px;
+margin-top: 10px;
+border-radius: 10px;
+width: 200px;
+}
+
+.total_cons_population,.total_cons_area,.total_voters,.total_const_count,.total_eswaraj_reg_voters,.total_eswaraj_const_coverage{
+font-size: 12px;
+}
+
+.p_c_counter_loc{
+font-weight: 700;
+width: 100%;
+margin: 0px;
+text-align: center;
+margin-bottom: 8px;
+}
+

@@ -26,7 +26,7 @@
 		<jsp:include page="header.jsp" />
 		<!-- /.navbar -->
 		<div class="container-fluid">
-			<div class="row" style="margin-top: 5%;">
+			<div class="row">
 				<div class="col-sm-3">
 					<div class="leader_page_left_pane">
 						<div class="leader_profile_pic_bio">
@@ -156,11 +156,9 @@
 
 						</div>
 					</div>
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="widget-wrapper">
-								<h3>MLA related videos</h3>
-									<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<div class="mla_related_videos">
+								<h5 class="red_orng_clr_text leader_curr_stat">MLA related videos</h5>
+									<div id="myCarousel" class="carousel slide"> <!--  data-ride="carousel" removed to avoid auto slide -->
 										<!-- Carousel items -->
 										<div class="carousel-inner">
 												<div class="active item embed-responsive embed-responsive-4by3">
@@ -189,13 +187,38 @@
 											<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 											<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 									</div>
-							</div>
-						</div>
+					</div>
+					<div class="platform_constituency_counter">
+						<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Location</span></p>
+						<p class="total_cons_population">
+							<span class="grey_text">Total Population</span> <br /> 
+							<strong class="blue_color_text">9.879 million</strong>
+						</p>
+						<p class="total_cons_area">
+							<span class="grey_text">Total Area</span> <br /> 
+							<strong class="blue_color_text">1,484 km²</strong>
+						</p>
+						<p class="total_const_count">
+							<span class="grey_text">Total Constituencies</span> <br /> 
+							<strong class="blue_color_text">70</strong>
+						</p>
+						<p class="total_voters">
+							<span class="grey_text">Total Voters</span> <br /> 
+							<strong class="blue_color_text">56458975</strong>
+						</p>
+						<p class="total_eswaraj_reg_voters">
+							<span class="grey_text">Voters with eSwaraj</span> <br /> 
+							<strong class="blue_color_text">42453975</strong>
+						</p>
+						<p class="total_eswaraj_const_coverage">
+							<span class="grey_text">eSwaraj Coverage</span> <br /> 
+							<strong class="blue_color_text">90%</strong>
+						</p>
 					</div>
 				</div>
-				<div class="col-sm-9">
+				<div class="col-sm-5">
 					<div class="about-mla hidden-xs">
-						<h1>Know your MLA</h1>
+						<h2 class="blue_color_text">Know your MLA</h2>
 						<div class="desc-wrapper">
 							<div class="desc">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -203,11 +226,12 @@
 									delectus, praesentium, vitae, cupiditate, aut similique! Ea
 									voluptates quos alias officia vero provident sed veniam
 									recusandae.</p>
-								<button class="btn btn-default btn-xs">show less</button>
 							</div>
 						</div>
 					</div>
 					<hr>
+				</div>
+				<div class="col-sm-4">
 					<h3 class="sub-header">MLA on Social Media</h3>
 					<div class="row">
 						<div class="col-sm-6">
