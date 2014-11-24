@@ -52,7 +52,7 @@
 								</c:if>
 								<c:if test="${empty leader.profilePhoto}">
 									<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="leader-profile-pic">
-									<p class="center-align">
+									<p class="center-align name-top-adjust">
 									<strong class="red_orng_clr_text">Leader Not Yet Declared</strong> <br /> 
 										<span class="grey_text">
 										 Position Not Yet Declared
