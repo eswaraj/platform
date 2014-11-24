@@ -227,7 +227,7 @@
 				<div class="col-sm-6">
 					
 				<div class="about-mla hidden-xs">
-						<h3 class="red_orng_clr_text">Know your MLA</h3>
+						<h3 class="red_orng_clr_text knw_mla">Know your MLA</h3>
 						<div class="desc-wrapper">
 							<div class="desc">
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -238,8 +238,7 @@
 							</div>
 						</div>
 					</div>
-					<hr />
-					<h3 class="red_orng_clr_text">MLA Comments Feed</h3>
+					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
 					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
@@ -356,7 +355,7 @@
 						</div>
 					</div>
 
-					<h3 class="blue_color_text">MLA Calendar</h3>
+					<h3 class="red_orng_clr_text center-align">MLA Calendar</h3>
 					<div class="mla_cal_contents">
 						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
 					</div>

@@ -1,5 +1,5 @@
-.row{
-margin-top: 3%;
+body {
+padding: 40px 0 0px 0;
 }
 
 .politician_image{
@@ -407,7 +407,7 @@ margin-bottom: 10px;
 }
 
 .mla_cal_contents{
-margin-bottom: 10px;
+margin-bottom: 50px;
 }
 
 #twitter-widget-0 {
@@ -635,10 +635,9 @@ margin-bottom: 20px;
 
 #old_comments_block{
 	clear: both;
-	margin-bottom: 10px;
-	margin-top: 10px;
 	padding-top:15px;
-	border-top: 1px solid #c3c3c3;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #c3c3c3;
 }
 
 .comments_whom {
@@ -733,4 +732,23 @@ overflow: auto;
 
 .col-sm-6 {
 padding: 0px;
+}
+
+.about-mla {
+overflow: hidden;
+background-color: #FFF;
+margin-top: 25px;
+border-radius: 10px;
+text-align: center;
+padding: 0px 10px 5px 10px;
+text-align: center;
+}
+
+.knw_mla{
+margin-top: 15px;
+}
+
+.mla_comm_feed{
+margin-top: 10px;
+text-align: center;
 }
