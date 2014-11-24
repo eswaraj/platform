@@ -7,13 +7,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="complaintsApp" >
 <head>
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
+<script src="${staticHost}/js/angular.min.js"></script>
+<script src="${staticHost}/js/complaints.js"></script>
 </head>
-<body style="height:auto;">
+<body ng-controller="complaintsController">
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -76,7 +78,7 @@
 										<h5 class="red_orng_clr_text">Educational Records</h5>
 									</div>
 									<ul>
-										<li class="grey_text">B.Sc in 1977-78 | Pune Vidyapeeth</li>
+										<li class="grey_text">B.Sc in 1977-79 | Pune Vidyapeeth</li>
 										<li class="grey_text">M.Sc in 1980-81 | IIT, Kanpur</li>
 									</ul>
 								</div>
@@ -216,7 +218,119 @@
 					</div>
 				</div>
 				<div class="col-sm-6">
-					<div class="about-mla hidden-xs">
+					<div class="listing-wrapper">
+						<div class="listing">
+							<!-- new_div starts -->
+							<div class="mla_unread_complaints" >
+								<!-- 1 -->
+								<div ng-repeat="complaint in complaints">
+									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
+										<div class="innerblock">
+											<span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
+											<div class="col-sm-1 profile_pic_adjust">
+												<div class="profile-pic" ng-switch on="complaint.createdByPersons[0].name">
+													<div ng-switch-when="anonymous">
+														<a href="#!"><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 35px;" /></a>
+													</div>
+													<div ng-switch-default>
+														<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt="" /></a>
+													</div>
+												</div>
+											</div>
+											<div class="profile-info profile_info_adjust">
+												<span>
+													<strong class="text-limit issue-id"><span>#</span>{{complaint.id}}</strong>
+													<span class="text-limit connector">by</span>
+													<a href="#!" class="text-limit username_adjust">{{complaint.createdByPersons[0].name}}</a>
+												</span>
+												<span class="comment_type_adjust">
+													<img src = "http://dev.eswaraj.com/images/potholeissue.jpg" class="issue-type-pic" alt="">
+													<a href="#!" class="text-limit issue-scope-type">Type - {{complaint.categories | rootCategory}}</a>
+												</span>
+												<span class="comment_content_adjust">
+													<a href="#!" class="text-limit issue-scope">{{complaint.categories  | subCategory}}</a>
+												</span>
+												<span>
+													<i class="glyphicon glyphicon-map-marker glyph_adjust"></i>
+													<a href="#!" class="text-limit location_adjust">Cessna Business Park main road,Keverappa Layout</a>
+												</span>
+												<span class="comment_status_adjust">
+													<a href="#!" class="text-limit issue-scope-status">Status - {{complaint.politicalAdminComplaintStatus}}</a>
+												</span>
+												<span>
+													<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus posttimestatus_adjust" alt="">
+													<a href="#!" class="location"><abbr class="text-limit timeago" title="{{complaint.complaintTime | dateFormatter}}">{{complaint.complaintTime | dateFormatter}}</abbr></a>
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
+										<p class="innerdiv-sharebtn">
+										<!-- social media share buttons -->								
+										<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+										<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+										<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+										</p>
+									   <div class="innerdiv-innerblock">
+											<div class="innerdiv-issue-info" >
+
+												<p class="issue-title">
+													<!--a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a-->
+													<a href="#!" class="innerdiv-issue-scope">{{complaint.categories  | subCategory}}</a>
+												</p>
+
+											</div>
+
+											<!-- Comments Box -->
+
+											<div id="load_comments_box">
+												<a href="#!" id="comments_status" class="comments_controller allcomments_expand" scroll-on-click>Comments from MLA ( )</a>
+
+												<div id="comments_box" class="div_comments_box">
+
+												<!-- Old Comments -->
+													<div ng-repeat="comment in complaint.comments">
+														<div id="old_comments_block">
+
+															<a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+
+															<p class="comments_whom" ng-show="comment.adminComment">
+																<a href="#!" class="username">{{comment.postedBy.name}}</a>
+																<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
+																<a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime | dateFormatter}}</abbr></a>
+																<img src="http://dev.eswaraj.com/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin" ng-show="comment.adminComment">
+															</p>
+
+															<div class="comments-info" >
+																<textcollapse>
+																	{{comment.text}}
+																</textcollapse>
+															</div>
+
+														</div>
+													</div>
+
+													<div id="show_full_comments_page">
+														<a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
+														<a href="#!" id="collapse_comments_box" class="comments_controller" ng-click="showDetailsAndMarkViewed($event, complaint)">Close</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- new_div ends  -->
+								<div class="pagination-wrapper">
+									<ul class="pagination">
+										<li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
+										<li><a href="#!" ng-click="getNext()">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>	
+						</div>
+					</div>
+<div class="about-mla hidden-xs">
 						<h2 class="blue_color_text">Know your MLA</h2>
 						<div class="desc-wrapper">
 							<div class="desc">
@@ -243,7 +357,6 @@
 							data-colorscheme="light" data-show-faces="true"
 							data-header="false" data-stream="true" data-show-border="true"></div-->
 					</div>
-					<hr />
 					<div class="eswaraj-int-twitter">
 						<!--a class="twitter-timeline"
 							href="https://twitter.com/${leader.twitterHandle}"
