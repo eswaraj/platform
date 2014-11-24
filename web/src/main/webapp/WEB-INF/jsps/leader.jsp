@@ -165,38 +165,6 @@
 
 						</div>
 					</div>
-					<div class="mla_related_videos">
-								<h5 class="red_orng_clr_text leader_curr_stat">MLA related videos</h5>
-									<div id="myCarousel" class="carousel slide"> <!--  data-ride="carousel" removed to avoid auto slide -->
-										<!-- Carousel items -->
-										<div class="carousel-inner">
-												<div class="active item embed-responsive embed-responsive-4by3">
-													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-														allowfullscreen></iframe>
-												</div>
-												<div class="item embed-responsive embed-responsive-4by3">
-													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-														allowfullscreen></iframe>
-												</div>
-												<div class="item embed-responsive embed-responsive-4by3">
-													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-														allowfullscreen></iframe>
-												</div>
-												<div class="item embed-responsive embed-responsive-4by3">
-													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
-														allowfullscreen></iframe>
-												</div>
-										</div>
-										
-											<!-- Carousel nav -->
-											<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-											<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-									</div>
-					</div>
 					<div class="platform_constituency_counter">
 						<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Location</span></p>
 						<table>
@@ -260,7 +228,10 @@
 							</div>
 						</div>
 					</div>
-					<hr>
+						<h3 class="blue_color_text">MLA Calender</h3>
+					<div class="mla_cal_contents">
+						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
+					</div>
 				</div>
 				<div class="col-sm-3">
 					<h3 class="blue_color_text">MLA on Social Media</h3>
@@ -282,9 +253,37 @@
 						data-widget-id="536914450473697280">Tweets by @narendramodi</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					</div>
-					<h3 class="blue_color_text">MLA Calender</h3>
-					<div>
-						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
+					<div class="mla_related_videos">
+								<h5 class="red_orng_clr_text leader_curr_stat">MLA Videos</h5>
+									<div id="myCarousel" class="carousel slide"> <!--  data-ride="carousel" removed to avoid auto slide -->
+										<!-- Carousel items -->
+										<div class="carousel-inner">
+												<div class="active item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+												<div class="item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+												<div class="item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+												<div class="item embed-responsive embed-responsive-4by3">
+													<iframe class="embed-responsive-item" width="100%"
+														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														allowfullscreen></iframe>
+												</div>
+										</div>
+										
+											<!-- Carousel nav -->
+											<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+											<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+									</div>
 					</div>
 				</div>
 			</div>
