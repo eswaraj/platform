@@ -254,8 +254,8 @@ $( ".innerdiv-list-row" ).each( function () {
 							</div>
 						</div>
 					</div>
-					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
 					<div class="listing-wrapper">
+					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
 						<div class="listing">
 							<!-- new_div starts -->
 							<div class="mla_unread_complaints" >
@@ -331,8 +331,8 @@ $( ".innerdiv-list-row" ).each( function () {
 												<div id="comments_box" class="div_comments_box">
 
 												<!-- Old Comments -->
-													<div ng-repeat="comment in complaint.comments">
-														<div id="old_comments_block" ng-show="comment.adminComment">
+													<div ng-repeat="comment in complaint.comments" ng-show="comment.adminComment">
+														<div id="old_comments_block">
 
 															<a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
 
@@ -354,12 +354,13 @@ $( ".innerdiv-list-row" ).each( function () {
 															</div-->
 
 														</div>
-													</div>
 
-													<div id="show_full_comments_page">
+														<div id="show_full_comments_page" ng-if="$last">
 														<a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
 														<a href="#!" id="collapse_comments_box" class="comments_controller" ng-click="showDetailsAndMarkViewed($event, complaint)">Close</a>
+														</div>
 													</div>
+
 												</div>
 											</div>
 										</div>

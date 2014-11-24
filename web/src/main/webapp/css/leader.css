@@ -509,6 +509,11 @@ overflow: hidden;
 	border-right: 2px solid #ccc;
 }
 
+.comment_content_adjust{
+	max-width: 35%;
+	width: 35%;
+}
+
 .timeago{
 }
 
@@ -554,10 +559,9 @@ text-decoration:none;
     border-bottom: 2px solid #ccc;
     min-height: 125px;
 	margin-bottom: 15px;
-	/*display: none;
-    visibility: hidden;*/
 	float: left;
 	width: 100%;
+	position: relative;
 }
 	
 .innerdiv-box-shadow{
@@ -704,19 +708,13 @@ padding: 10px 15px;
 width: 100%;
 }
 
-.innerdiv-sharebtn {
-font-size: 15px;
-line-height: 200%;
-float: right;
-margin-right: 20px;
-margin-bottom: 0px;
-margin-top: 15px;
-}
-
 .listing-wrapper {
-padding: 15px;
+padding: 5px 0px 15px 15px;
 background-color: #FFF;
 border-radius: 10px;
+}
+
+.listing{
 max-height: 500px;
 overflow: auto;
 }
@@ -748,4 +746,8 @@ text-align: center;
 font-size: 15px;
 line-height: 200%;
 float: right;
+display: none;
+margin-right: 20px;
+margin-bottom: 0px;
+margin-top: 15px;
 }
