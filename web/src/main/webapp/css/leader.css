@@ -419,8 +419,8 @@ margin-top: 10px;
     padding: 0;
     border-bottom: 1px solid #ccc;
     border-top: 1px solid #ccc;
-    min-height: 50px;
-    height: 50px;
+	min-height: 55px;
+	height: 55px;
 	width: 100%;
 	float: left;
 	position: relative;
@@ -454,19 +454,19 @@ background-color: #f9f9f9;
 }
 
 .list-row .innerblock .profile-pic{
-	margin-top: 10%;
+	margin-top: 20%;
 }
 
 .list-row .innerblock .profile-info {
     overflow: hidden;
     margin: 0px;
 	padding: 0px;
-	margin-top: 1%;
+	margin-top: -0.2%;
+	margin-left: 25px;
 }
 
 .profile_info_adjust{
 float: left;
-width: 93%;
 overflow: hidden;
 }
 	
@@ -485,22 +485,16 @@ overflow: hidden;
 }	
 	
 .username_adjust{
-	max-width: 11%;
-	width: 11%;
 	border-right: 2px solid #ccc;
 }
 	
 .issue-scope{
-	max-width: 24%;
-	width: 24%;
 	font-weight: 700;
 	border-right: 2px solid #ccc;
 }
 
 .issue-scope-type{
 	border-right: 2px solid #ccc;
-	max-width: 10%;
-	width: 10%;
 }
 
 .issue-type-pic{
@@ -510,14 +504,12 @@ overflow: hidden;
 }
 
 .location_adjust{
-	max-width: 14%;
-	width: 14%;
+	max-width: 50%;
+	width: 50%;
 	border-right: 2px solid #ccc;
 }
 
 .timeago{
-	max-width: 11%;
-	width: 11%;
 }
 
 .icon_resize{
@@ -526,8 +518,7 @@ height:25px;
 }
 
 .posttimestatus{
-    max-width: 20px;
-    width: 20px;
+	max-width: 20px;
     width: auto;
     height: auto;
 }
@@ -587,7 +578,7 @@ margin-bottom: 0px;
 .innerdiv-issue-info  {
     margin-left: 75px;
     margin-right: 75px;
-	margin-top: 30px;
+	margin-top: 10px;
 }
 .innerdiv-issue-info .desc {
     margin-top: 8px;
@@ -620,7 +611,7 @@ text-decoration: none;
 margin: 0px 75px 20px 75px;
 }
 #comments_box{
-margin-top: 20px;
+margin-top: 10px;
 margin-bottom: 20px;
 }
 
@@ -635,7 +626,7 @@ margin-bottom: 20px;
 
 #old_comments_block{
 	clear: both;
-	padding-top:15px;
+	padding-top:10px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #c3c3c3;
 }
@@ -751,4 +742,10 @@ margin-top: 15px;
 .mla_comm_feed{
 margin-top: 10px;
 text-align: center;
+}
+
+.innerdiv-sharebtn {
+font-size: 15px;
+line-height: 200%;
+float: right;
 }

@@ -26,7 +26,23 @@
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1505507139725051&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
+<script>
+jQuery(document).ready(function() {
+	$('.anchorlink').click(function(e){
+		e.stopPropagation();
+	});
+$( ".innerdiv-list-row" ).each( function () {
+		$(this).on({
+		mouseenter: function () {
+			$( this ).find(".innerdiv-sharebtn" ).toggle('slide', {direction: "right"}, 500);
+		},
+		mouseleave: function () {
+			$( this ).find(".innerdiv-sharebtn" ).hide();
+		}
+		});
+	});
+});
+</script>
 								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
 									opacity: 0.4;
 									position: fixed;
@@ -266,11 +282,12 @@
 												</span>
 												<span class="comment_type_adjust">
 													<img src = "http://dev.eswaraj.com/images/potholeissue.jpg" class="issue-type-pic" alt="">
-													<a href="#!" class="text-limit issue-scope-type">{{complaint.categories | rootCategory}}</a>
+													<a href="#!" class="text-limit issue-scope-type">Type - {{complaint.categories | rootCategory}}</a>
 												</span>
 												<span class="comment_content_adjust">
 													<a href="#!" class="text-limit issue-scope">{{complaint.categories  | subCategory}}</a>
 												</span>
+												<br />
 												<span>
 													<i class="glyphicon glyphicon-map-marker glyph_adjust"></i>
 													<a href="#!" class="text-limit location_adjust">Cessna Business Park main road,Keverappa Layout</a>
@@ -288,10 +305,14 @@
 
 									<div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
 										<p class="innerdiv-sharebtn">
-										<!-- social media share buttons -->								
-										<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-										<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-										<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+											<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+											<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
+											<!-- social media share buttons -->								
+											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
+											<br />																		
+											<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+											<br />
+											<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
 										</p>
 									   <div class="innerdiv-innerblock">
 											<div class="innerdiv-issue-info" >
@@ -311,11 +332,11 @@
 
 												<!-- Old Comments -->
 													<div ng-repeat="comment in complaint.comments">
-														<div id="old_comments_block">
+														<div id="old_comments_block" ng-show="comment.adminComment">
 
 															<a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
 
-															<p class="comments_whom" ng-show="comment.adminComment">
+															<p class="comments_whom">
 																<a href="#!" class="username">{{comment.postedBy.name}}</a>
 																<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
 																<a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime | dateFormatter}}</abbr></a>
@@ -386,22 +407,22 @@
 										<div class="carousel-inner">
 												<div class="active item embed-responsive embed-responsive-4by3">
 													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														src="//www.youtube.com/embed/1mUXNqQ1-cA" frameborder="0"
 														allowfullscreen></iframe>
 												</div>
 												<div class="item embed-responsive embed-responsive-4by3">
 													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														src="//www.youtube.com/embed/pTTe7wTk57c" frameborder="0"
 														allowfullscreen></iframe>
 												</div>
 												<div class="item embed-responsive embed-responsive-4by3">
 													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														src="//www.youtube.com/embed/qRFCqb4SeHM" frameborder="0"
 														allowfullscreen></iframe>
 												</div>
 												<div class="item embed-responsive embed-responsive-4by3">
 													<iframe class="embed-responsive-item" width="100%"
-														src="//www.youtube.com/embed/ex6LhnQwunA" frameborder="0"
+														src="//www.youtube.com/embed/ADdxXM1dC5k" frameborder="0"
 														allowfullscreen></iframe>
 												</div>
 										</div>
