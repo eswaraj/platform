@@ -400,7 +400,6 @@ margin-bottom: 8px;
 .eswaraj-int-facebook{
 background-color: #ECE9E8;
 border-radius: 10px;
-margin-bottom: 10px;
 }
 
 .list-group{
@@ -409,4 +408,8 @@ margin-bottom: 10px;
 
 .mla_cal_contents{
 margin-bottom: 10px;
+}
+
+#twitter-widget-0 {
+margin-top: 10px;
 }
