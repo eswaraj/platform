@@ -11,6 +11,8 @@
 <head>
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
+<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+<link rel="stylesheet" href='${staticHost}/css/complaints.css' />
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
 <script src="${staticHost}/js/angular.min.js"></script>
 <script src="${staticHost}/js/complaints.js"></script>
