@@ -221,8 +221,9 @@
 					<h3 class="text-footer red_orng_clr_text">Select Position</h3>
 					<!--select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
 					</select--> <!-- Doing Temporary -->
-					<select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()" ng-init="selectedPosition = options[0]" >
-					    <option value="0" selected="selected">Chief Minister of Delhi</option>
+					<select class="select dropdownlist dlist_width" ng-model="selectedPosition" ng-init="onPositionSelected()" >
+					    <option value="0" selected>Chief Minister of Delhi</option>
+						<option value="1">President of India</option>
 					</select>
 					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 				</div>
