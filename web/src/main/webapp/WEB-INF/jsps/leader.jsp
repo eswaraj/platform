@@ -14,6 +14,15 @@
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
 </head>
 <body style="height:auto;">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1505507139725051&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
 									opacity: 0.4;
 									position: fixed;
@@ -232,39 +241,29 @@
 					<hr>
 				</div>
 				<div class="col-sm-4">
-					<h3 class="sub-header">MLA on Social Media</h3>
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="eswaraj-int-facebook">
-								<div id="fb-root"></div>
-								<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-								<div class="fb-like-box"
-									data-href="https://www.facebook.com/${leader.fbPage}"
-									data-show-border="false" data-height="400"
-									data-colorscheme="light" data-show-faces="true"
-									data-header="false" data-stream="true" data-show-border="true"></div>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="eswaraj-int-twitter">
-								<a class="twitter-timeline"
-									href="https://twitter.com/${leader.twitterHandle}"
-									data-widget-id="505705935222747136">Tweets by @${leader.twitterHandle}</a>
-								<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-							</div>
-						</div>
+					<h3 class="blue_color_text">MLA on Social Media</h3>
+					<div class="eswaraj-int-facebook">
+						<div class="fb-like-box" data-href="https://www.facebook.com/narendramodi" data-width="420" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
+						<!--div class="fb-like-box"
+							data-href="https://www.facebook.com/${leader.fbPage}"
+							data-show-border="false" data-height="400"
+							data-colorscheme="light" data-show-faces="true"
+							data-header="false" data-stream="true" data-show-border="true"></div-->
 					</div>
-					<h3 class="sub-header">MLA Calender</h3>
-					<div class="row">
-						<div class="col-sm-12">
-							<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
-						</div>
+					<hr />
+					<div class="eswaraj-int-twitter">
+						<!--a class="twitter-timeline"
+							href="https://twitter.com/${leader.twitterHandle}"
+								data-widget-id="505705935222747136">Tweets by @${leader.twitterHandle}</a-->
+						<a class="twitter-timeline"
+						href="https://twitter.com/narendramodi"
+						data-widget-id="536914450473697280">Tweets by @narendramodi</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					</div>
+					<hr />
+					<h3 class="blue_color_text">MLA Calender</h3>
+					<div>
+						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
 					</div>
 				</div>
 			</div>
