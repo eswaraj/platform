@@ -199,33 +199,55 @@
 					</div>
 					<div class="platform_constituency_counter">
 						<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Location</span></p>
-						<p class="total_cons_population">
-							<span class="grey_text">Total Population</span> <br /> 
-							<strong class="blue_color_text">9.879 million</strong>
-						</p>
-						<p class="total_cons_area">
-							<span class="grey_text">Total Area</span> <br /> 
-							<strong class="blue_color_text">1,484 km²</strong>
-						</p>
-						<p class="total_const_count">
-							<span class="grey_text">Total Constituencies</span> <br /> 
-							<strong class="blue_color_text">70</strong>
-						</p>
-						<p class="total_voters">
-							<span class="grey_text">Total Voters</span> <br /> 
-							<strong class="blue_color_text">56458975</strong>
-						</p>
-						<p class="total_eswaraj_reg_voters">
-							<span class="grey_text">Voters with eSwaraj</span> <br /> 
-							<strong class="blue_color_text">42453975</strong>
-						</p>
-						<p class="total_eswaraj_const_coverage">
-							<span class="grey_text">eSwaraj Coverage</span> <br /> 
-							<strong class="blue_color_text">90%</strong>
-						</p>
+						<table>
+						<tbody>
+							<tr>
+								<td>
+									<p class="total_cons_population">
+										<span class="grey_text">Total Population</span> <br /> 
+										<strong class="blue_color_text">9.879 million</strong>
+									</p>
+								</td>
+								<td>
+									<p class="total_cons_area">
+										<span class="grey_text">Total Area</span> <br /> 
+										<strong class="blue_color_text">1,484 km²</strong>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p class="total_const_count">
+										<span class="grey_text">Total Constituencies</span> <br /> 
+										<strong class="blue_color_text">70</strong>
+									</p>
+								</td>
+								<td>
+									<p class="total_voters">
+										<span class="grey_text">Total Voters</span> <br /> 
+										<strong class="blue_color_text">56458975</strong>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p class="total_eswaraj_reg_voters">
+										<span class="grey_text">Voters with eSwaraj</span> <br /> 
+										<strong class="blue_color_text">42453975</strong>
+									</p>
+								</td>
+								<td>
+									<p class="total_eswaraj_const_coverage">
+										<span class="grey_text">eSwaraj Coverage</span> <br /> 
+										<strong class="blue_color_text">90%</strong>
+									</p>
+								</td>
+							</tr>
+						</tbody>
+						</table>
 					</div>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-sm-6">
 					<div class="about-mla hidden-xs">
 						<h2 class="blue_color_text">Know your MLA</h2>
 						<div class="desc-wrapper">
@@ -240,10 +262,10 @@
 					</div>
 					<hr>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<h3 class="blue_color_text">MLA on Social Media</h3>
 					<div class="eswaraj-int-facebook">
-						<div class="fb-like-box" data-href="https://www.facebook.com/narendramodi" data-width="420" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
+						<div class="fb-like-box" data-href="https://www.facebook.com/narendramodi" data-width="307" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="false"></div>
 						<!--div class="fb-like-box"
 							data-href="https://www.facebook.com/${leader.fbPage}"
 							data-show-border="false" data-height="400"
@@ -260,7 +282,6 @@
 						data-widget-id="536914450473697280">Tweets by @narendramodi</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					</div>
-					<hr />
 					<h3 class="blue_color_text">MLA Calender</h3>
 					<div>
 						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">

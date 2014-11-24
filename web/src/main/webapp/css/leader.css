@@ -65,8 +65,9 @@ background-color: #ECE9E8;
 min-height: 100px;
 margin-bottom: 10px;
 padding-left: 15px;
+padding-right: 15px;
 padding-top: 5px;
-padding-bottom: 10px;
+padding-bottom: 15px;
 border-radius: 10px;
 position: relative;
 }
@@ -381,7 +382,6 @@ padding: 10px;
 padding-left: 15px;
 margin-top: 10px;
 border-radius: 10px;
-width: 200px;
 }
 
 .total_cons_population,.total_cons_area,.total_voters,.total_const_count,.total_eswaraj_reg_voters,.total_eswaraj_const_coverage{
@@ -396,3 +396,7 @@ text-align: center;
 margin-bottom: 8px;
 }
 
+.eswaraj-int-facebook{
+background-color: #ECE9E8;
+border-radius: 10px;
+}
