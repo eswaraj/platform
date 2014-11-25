@@ -25,7 +25,7 @@
 					<c:forEach items="${rootCategories}" var="oneCategory">
 						<div id="${oneCategory.name}_col" class="box_style">
 						<h3 class="frame_header">${oneCategory.name}<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="water_col_innnerdiv" class="box_style_innderdiv">
+						<div id="${oneCategory.name}_col_innnerdiv" class="box_style_innderdiv">
 
 						<a href="#!" id="${oneCategory.name}_infographic_div">
 						<div>
@@ -127,7 +127,7 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
 /* For Users Pics Modal View */
 jQuery(document).ready(function($){
 
-$("#water_col").fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#${oneCategory.name}_col").fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#law_ord_col").delay(500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#electricity_col").delay(1000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#roads_col").delay(1500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
@@ -224,14 +224,14 @@ $.each(headTags, function (index, tag) {
 });
 
 
-if ( $( "#citizenservices" ).has( "water_col" ) ) {
+if ( $( "#citizenservices" ).has( "${oneCategory.name}_col" ) ) {
 water_img_src = "http://www.youtube.com/embed/R1MqsddGeUw"; //waterurl
 water_infograph_img_src = "http://www.creativebloq.com/sites/creativebloq.com/files/images/2013/04/controllersfull2.jpg";
 water_content="http://www.lipsum.com/"
 
 var arr = water_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
-$( '#water_col .video_img' ).attr("src", url);
+$( '#${oneCategory.name}_col .video_img' ).attr("src", url);
 $('.water_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", water_img_src);
 	$('#modal-background .addthis_32x32_style').attr('addthis:url', water_img_src);
@@ -544,9 +544,9 @@ $('#transport_content_div').on('click', function(){
 } 
 }
 	
-$( "#water_col .frame_header" ).click( function () {
-$( "#water_col_innnerdiv" ).fadeToggle(500);
-$( "#water_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
+$( "#${oneCategory.name}_col .frame_header" ).click( function () {
+$( "#${oneCategory.name}_col_innnerdiv" ).fadeToggle(500);
+$( "#${oneCategory.name}_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
 });
 
 $( "#law_ord_col .frame_header" ).click( function () {
@@ -592,8 +592,8 @@ $(window).scroll(function() {
 $(document).ready(function(){
 $( "#toc ul:nth-child(1)" ).click( function () {
 event.preventDefault();
-$( "#water_col_innnerdiv" ).show();
-$( "#water_col .frame_header span" ).removeClass("glyphicon-fullscreen");
+$( "#${oneCategory.name}_col_innnerdiv" ).show();
+$( "#${oneCategory.name}_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
 
 $( "#toc ul:nth-child(2)" ).click( function () {
