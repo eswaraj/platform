@@ -24,13 +24,7 @@
 					
 					<c:forEach items="${rootCategories}" var="oneCategory">
 						<c:set var="ampersand" value=" & "/>
-						${fn:replace(oneCategory.name, ampersand, "")}
-						<c:if test="${oneCategory.name == 'Law & Order'}">
-						<c:set var="oneCategory.name" value="LawOrder"/>
-						</c:if>
-						<c:if test="${oneCategory.name == 'Sewerage & Sanitation'}">
-						<c:set var="oneCategory.name" value="SewerageSanitation"/>
-						</c:if>
+						<c:set var="oneCategory.name" value="${fn:replace(oneCategory.name, ampersand, '')}"/>
 						<div id="${oneCategory.name}_col" class="box_style">
 						<h3 class="frame_header">${oneCategory.name}<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
 						<div id="${oneCategory.name}_col_innnerdiv" class="box_style_innderdiv">
