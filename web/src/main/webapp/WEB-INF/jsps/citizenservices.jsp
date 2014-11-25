@@ -24,12 +24,11 @@
 					
 					<c:forEach items="${rootCategories}" var="oneCategory">
 						<c:set var="ampersand" value=" & "/>
-						<c:set var="oneCategory.name" value="${fn:replace(oneCategory.name, ampersand, '')}"/>
-						<div id="${oneCategory.name}_col" class="box_style">
+						<div id="${fn:replace(oneCategory.name, ampersand, "")}_col" class="box_style">
 						<h3 class="frame_header">${oneCategory.name}<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="${oneCategory.name}_col_innnerdiv" class="box_style_innderdiv">
+						<div id="${fn:replace(oneCategory.name, ampersand, "")}_col_innnerdiv" class="box_style_innderdiv">
 
-						<a href="#!" id="${oneCategory.name}_infographic_div">
+						<a href="#!" id="${fn:replace(oneCategory.name, ampersand, "")}_infographic_div">
 						<div>
 						<span class="frame_info_first_span">
 						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
@@ -41,11 +40,11 @@
 						<div class="img_video_box">
 						<div style="position: relative;">
 						<img class="video_img" src=""></img>
-						<a href="#!" class="${oneCategory.name}_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
+						<a href="#!" class="${fn:replace(oneCategory.name, ampersand, "")}_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
 						</div>
 						</div>
 
-						<a href="#!" id="${oneCategory.name}_content_div">
+						<a href="#!" id="${fn:replace(oneCategory.name, ampersand, "")}_content_div">
 						<div>						
 						<span class="frame_info_second_span">
 						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
