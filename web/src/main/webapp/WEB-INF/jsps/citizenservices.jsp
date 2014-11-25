@@ -23,6 +23,12 @@
 			<div id="citizenservices">
 					
 					<c:forEach items="${rootCategories}" var="oneCategory">
+						<c:if test="${oneCategory == 'LawOrder'}">
+						<c:set var="oneCategory" value="LawOrder"/>
+						</c:if>
+						<c:if test="${oneCategory == 'SewerageSanitation'}">
+						<c:set var="oneCategory" value="SewerageSanitation"/>
+						</c:if>
 						<div id="${oneCategory.name}_col" class="box_style">
 						<h3 class="frame_header">${oneCategory.name}<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
 						<div id="${oneCategory.name}_col_innnerdiv" class="box_style_innderdiv">
@@ -128,10 +134,10 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
 jQuery(document).ready(function($){
 
 $("#Water_col").fadeIn(1).animate({height:"auto"}, 1000, "linear");
-$("#Law & Order_col").delay(500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#LawOrder").delay(500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#Electricity_col").delay(1000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#Roads_col").delay(1500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
-$("#Sewerage & Sanitation_col").delay(2000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#SewerageSanitation").delay(2000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#Transportation_col").delay(2500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $('.play_video_image').delay(2500).fadeIn(500);
 
@@ -277,52 +283,52 @@ $('#Water_content_div').on('click', function(){
 });
 }
 
-if ( $( "#citizenservices" ).has( "Law & Order_col" ) ) {
+if ( $( "#citizenservices" ).has( "LawOrder_col" ) ) {
 law_ord_img_src = "http://www.youtube.com/embed/rapvMuB02e0"; //Waterurl
 law_ord_infograph_img_src = "http://media.creativebloq.futurecdn.net/sites/creativebloq.com/files/images/2013/10/productive.jpg";
 law_ord_content="http://www.lipsum.com/"
 var arr = law_ord_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
-$( '#Law & Order_col .video_img' ).attr("src", url);
-$('.Law & Order_video_link').on('click', function(){
+$( '#LawOrder_col .video_img' ).attr("src", url);
+$('.LawOrder_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", law_ord_img_src);
 	$('#modal-background .addthis_32x32_style').attr('addthis:url', law_ord_img_src);
     $("meta[itemprop='url']").attr("content", law_ord_img_src);
     $("meta[property='og:url']").attr("content", law_ord_img_src);
     $("link[rel='canonical']").attr("href", law_ord_img_src);
-    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
-    $("meta[name='title']").attr("content", "Law & Order Category");
-    $("meta[itemprop='name']").attr("content", "Law & Order Category");
-    $("meta[property='og:title']").attr("content", "Law & Order Category");
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "LawOrder Category");
+    $("meta[name='title']").attr("content", "LawOrder Category");
+    $("meta[itemprop='name']").attr("content", "LawOrder Category");
+    $("meta[property='og:title']").attr("content", "LawOrder Category");
     addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
-$('#Law & Order_infographic_div').on('click', function(){
+$('#LawOrder_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", law_ord_infograph_img_src);
 	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', law_ord_infograph_img_src);
     $("meta[itemprop='url']").attr("content", law_ord_infograph_img_src);
     $("meta[property='og:url']").attr("content", law_ord_infograph_img_src);
     $("link[rel='canonical']").attr("href", law_ord_infograph_img_src);
-    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
-    $("meta[name='title']").attr("content", "Law & Order Category");
-    $("meta[itemprop='name']").attr("content", "Law & Order Category");
-    $("meta[property='og:title']").attr("content", "Law & Order Category");
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "LawOrder Category");
+    $("meta[name='title']").attr("content", "LawOrder Category");
+    $("meta[itemprop='name']").attr("content", "LawOrder Category");
+    $("meta[property='og:title']").attr("content", "LawOrder Category");
     addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
-$('#Law & Order_content_div').on('click', function(){
+$('#LawOrder_content_div').on('click', function(){
 	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', law_ord_content);
     $("meta[itemprop='url']").attr("content", law_ord_content);
     $("meta[property='og:url']").attr("content", law_ord_content);
     $("link[rel='canonical']").attr("href", law_ord_content);
-    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
-    $("meta[name='title']").attr("content", "Law & Order Category");
-    $("meta[itemprop='name']").attr("content", "Law & Order Category");
-    $("meta[property='og:title']").attr("content", "Law & Order Category");
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "LawOrder Category");
+    $("meta[name='title']").attr("content", "LawOrder Category");
+    $("meta[itemprop='name']").attr("content", "LawOrder Category");
+    $("meta[property='og:title']").attr("content", "LawOrder Category");
     addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
@@ -436,14 +442,14 @@ $('#Roads_content_div').on('click', function(){
 });
 }
 
-if ( $( "#citizenservices" ).has( "Sewerage & Sanitation_col" ) ) {
+if ( $( "#citizenservices" ).has( "SewerageSanitation_col" ) ) {
 sew_san_img_src = "http://www.youtube.com/embed/X63ZVyjd4dY"; //sew_san_url
 sew_san_infograph_img_src = "https://farm3.staticflickr.com/2750/4314987544_ca47fb5b72_z.jpg";
 sew_san_content="http://www.lipsum.com/"
 var arr = sew_san_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
-$( '#Sewerage & Sanitation_col .video_img' ).attr("src", url);
-$('.Sewerage & Sanitation_video_link').on('click', function(){
+$( '#SewerageSanitation_col .video_img' ).attr("src", url);
+$('.SewerageSanitation_video_link').on('click', function(){
 	$('#modal-background .video_play').attr("src", sew_san_img_src);
 	$('#modal-background .addthis_32x32_style').attr('addthis:url', sew_san_img_src);
     $("meta[itemprop='url']").attr("content", sew_san_img_src);
@@ -458,7 +464,7 @@ $('.Sewerage & Sanitation_video_link').on('click', function(){
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
-$('#Sewerage & Sanitation_infographic_div').on('click', function(){
+$('#SewerageSanitation_infographic_div').on('click', function(){
 	$('#modal-background-infographic .infographic_image').attr("src", sew_san_infograph_img_src);
 	$('#modal-background-infographic .addthis_32x32_style').attr('addthis:url', sew_san_infograph_img_src);
     $("meta[itemprop='url']").attr("content", sew_san_infograph_img_src);
@@ -473,7 +479,7 @@ $('#Sewerage & Sanitation_infographic_div').on('click', function(){
 	$('.outerwrapper').fadeOut(1);
 	$("#toc").fadeOut(1);
 });
-$('#Sewerage & Sanitation_content_div').on('click', function(){
+$('#SewerageSanitation_content_div').on('click', function(){
 	$('#modal-background-content .addthis_32x32_style').attr('addthis:url', sew_san_content);
     $("meta[itemprop='url']").attr("content", sew_san_content);
     $("meta[property='og:url']").attr("content", sew_san_content);
@@ -548,9 +554,9 @@ $( "#Water_col_innnerdiv" ).fadeToggle(500);
 $( "#Water_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
 });
 
-$( "#Law \\& Order_col .frame_header" ).click( function () {
-$( "#Law \\& Order_col_innnerdiv" ).fadeToggle(500);
-$( "#Law \\& Order_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
+$( "#LawOrder_col .frame_header" ).click( function () {
+$( "#LawOrder_col_innnerdiv" ).fadeToggle(500);
+$( "#LawOrder_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
 });
 
 $( "#Electricity_col .frame_header" ).click( function () {
@@ -563,9 +569,9 @@ $( "#Roads_col_innnerdiv" ).fadeToggle(500);
 $( "#Roads_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
 });
 
-$( "#Sewerage \\& Sanitation_col .frame_header" ).click( function () {
-$( "#Sewerage \\& Sanitation_col_innnerdiv" ).fadeToggle(500);
-$( "#Sewerage \\& Sanitation_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
+$( "#SewerageSanitation_col .frame_header" ).click( function () {
+$( "#SewerageSanitation_col_innnerdiv" ).fadeToggle(500);
+$( "#SewerageSanitation_col .frame_header span" ).toggleClass("glyphicon-fullscreen");
 });
 
 $( "#Transportation_col .frame_header" ).click( function () {
@@ -597,8 +603,8 @@ $( "#Water_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 
 $( "#toc ul:nth-child(2)" ).click( function () {
 event.preventDefault();
-$( "#Law \\& Order_col_innnerdiv" ).show();
-$( "#Law \\& Order_col .frame_header span" ).removeClass("glyphicon-fullscreen");
+$( "#LawOrder_col_innnerdiv" ).show();
+$( "#LawOrder_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
 
 $( "#toc ul:nth-child(3)" ).click( function () {
@@ -615,8 +621,8 @@ $( "#Roads_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 
 $( "#toc ul:nth-child(5)" ).click( function () {
 event.preventDefault();
-$( "#Sewerage \\& Sanitation_col_innnerdiv" ).show();
-$( "#Sewerage \\& Sanitation_col .frame_header span" ).removeClass("glyphicon-fullscreen");
+$( "#SewerageSanitation_col_innnerdiv" ).show();
+$( "#SewerageSanitation_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
 
 $( "#toc ul:nth-child(6)" ).click( function () {
