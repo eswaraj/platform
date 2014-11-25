@@ -22,11 +22,12 @@
 		<div class="row">
 			<div id="citizenservices">
 					
-						<div id="water_col" class="box_style">
-						<h3 class="frame_header">Water<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
+					<c:forEach items="${rootCategories}" var="oneCategory">
+						<div id="${oneCategory.name}_col" class="box_style">
+						<h3 class="frame_header">${oneCategory.name}<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
 						<div id="water_col_innnerdiv" class="box_style_innderdiv">
 
-						<a href="#!" id="water_infographic_div">
+						<a href="#!" id="${oneCategory.name}_infographic_div">
 						<div>
 						<span class="frame_info_first_span">
 						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
@@ -38,11 +39,11 @@
 						<div class="img_video_box">
 						<div style="position: relative;">
 						<img class="video_img" src=""></img>
-						<a href="#!" class="water_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
+						<a href="#!" class="${oneCategory.name}_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
 						</div>
 						</div>
 
-						<a href="#!" id="water_content_div">
+						<a href="#!" id="${oneCategory.name}_content_div">
 						<div>						
 						<span class="frame_info_second_span">
 						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
@@ -56,181 +57,7 @@
 						</div>
 						
 						</div>
-
-						<div id="law_ord_col" class="box_style">
-						<h3 class="frame_header">Law & Order<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="law_ord_col_innnerdiv" class="box_style_innderdiv">
-
-						<a href="#!" id="law_ord_infographic_div">
-						<div>
-						<span class="frame_info_first_span">
-						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
-						<span class="ahref_text_margin">Infographic View</span>
-						</span>
-						</div>
-						</a>
-
-						<div class="img_video_box">
-						<div style="position: relative;">
-						<img class="video_img" src=""></img>
-						<a href="#!" class="law_ord_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
-						</div>
-						</div>
-						
-						<a href="#!" id="law_ord_content_div">
-						<div>						
-						<span class="frame_info_second_span">
-						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
-						<span class="ahref_text_margin">Related Content</span>
-						</span>
-						</div>
-						</a>
-						
-						<p class="frame_content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus veritatis repudiandae velit qui necessitatibus, ipsa, dicta quasi saepe illum facilis, ut quas. Quidem excepturi, nobis blanditiis ipsum libero!</p>
-
-						</div>
-						
-						</div>
-
-						<div id="electricity_col" class="box_style">
-						<h3 class="frame_header">Electricity<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="electricity_col_innnerdiv" class="box_style_innderdiv">
-
-						<a href="#!" id="electricity_infographic_div">
-						<div>
-						<span class="frame_info_first_span">
-						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
-						<span class="ahref_text_margin">Infographic View</span>
-						</span>
-						</div>
-						</a>
-
-						<div class="img_video_box">
-						<div style="position: relative;">
-						<img class="video_img" src=""></img>
-						<a href="#!" class="electricity_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
-						</div>
-						</div>
-
-						<a href="#!" id="electricity_content_div">
-						<div>						
-						<span class="frame_info_second_span">
-						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
-						<span class="ahref_text_margin">Related Content</span>
-						</span>
-						</div>
-						</a>
-						
-						<p class="frame_content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus veritatis repudiandae velit qui necessitatibus, ipsa, dicta quasi saepe illum facilis, ut quas. Quidem excepturi, nobis blanditiis ipsum libero!</p>
-
-						</div>
-						
-						</div>
-						
-						<div id="roads_col" class="box_style">
-						<h3 class="frame_header">Roads<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="roads_col_innnerdiv" class="box_style_innderdiv">
-
-						<a href="#!" id="roads_infographic_div">
-						<div>
-						<span class="frame_info_first_span">
-						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
-						<span class="ahref_text_margin">Infographic View</span>
-						</span>
-						</div>
-						</a>
-
-						<div class="img_video_box">
-						<div style="position: relative;">
-						<img class="video_img" src=""></img>
-						<a href="#!" class="roads_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
-						</div>
-						</div>
-
-						<a href="#!" id="roads_content_div">
-						<div>						
-						<span class="frame_info_second_span">
-						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
-						<span class="ahref_text_margin">Related Content</span>
-						</span>
-						</div>
-						</a>
-						
-						<p class="frame_content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus veritatis repudiandae velit qui necessitatibus, ipsa, dicta quasi saepe illum facilis, ut quas. Quidem excepturi, nobis blanditiis ipsum libero!</p>
-
-						</div>
-						
-						</div>
-						
-						<div id="sew_san_col" class="box_style">
-						<h3 class="frame_header">Sewage & Sanitation<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="sew_san_col_innnerdiv" class="box_style_innderdiv">
-
-						<a href="#!" id="sew_san_infographic_div">
-						<div>
-						<span class="frame_info_first_span">
-						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
-						<span class="ahref_text_margin">Infographic View</span>
-						</span>
-						</div>
-						</a>
-
-						<div class="img_video_box">
-						<div style="position: relative;">
-						<img class="video_img" src=""></img>
-						<a href="#!" class="sew_san_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
-						</div>
-						</div>
-
-						<a href="#!" id="sew_san_content_div">
-						<div>						
-						<span class="frame_info_second_span">
-						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
-						<span class="ahref_text_margin">Related Content</span>
-						</span>
-						</div>
-						</a>
-						
-						<p class="frame_content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus veritatis repudiandae velit qui necessitatibus, ipsa, dicta quasi saepe illum facilis, ut quas. Quidem excepturi, nobis blanditiis ipsum libero!</p>
-
-						</div>
-						
-						</div>
-
-						<div id="transport_col" class="box_style">
-						<h3 class="frame_header">Transport<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
-						<div id="transport_col_innnerdiv" class="box_style_innderdiv">
-
-						<a href="#!" id="transport_infographic_div">
-						<div>
-						<span class="frame_info_first_span">
-						<span class="glyphicon glyphicon-new-window glyphicon_margin"></span>
-						<span class="ahref_text_margin">Infographic View</span>
-						</span>
-						</div>
-						</a>
-
-						<div class="img_video_box">
-						<div style="position: relative;">
-						<img class="video_img" src=""></img>
-						<a href="#!" class="transport_video_link"><span class="glyphicon glyphicon-expand play_video_image"></span></a>
-						</div>
-						</div>
-
-						<a href="#!" id="transport_content_div">
-						<div>						
-						<span class="frame_info_second_span">
-						<span class="glyphicon glyphicon-align-left glyphicon_margin"></span>
-						<span class="ahref_text_margin">Related Content</span>
-						</span>
-						</div>
-						</a>
-						
-						<p class="frame_content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus veritatis repudiandae velit qui necessitatibus, ipsa, dicta quasi saepe illum facilis, ut quas. Quidem excepturi, nobis blanditiis ipsum libero!</p>
-
-						</div>
-						
-						</div>
+					</c:forEach>
 
 			</div>
 		</div>
