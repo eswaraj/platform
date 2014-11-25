@@ -127,6 +127,12 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
 /* For Users Pics Modal View */
 jQuery(document).ready(function($){
 
+$("#Water_col").fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#law_ord_col").delay(500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#Electricity_col").delay(1000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#Roads_col").delay(1500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#sew_san_col").delay(2000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#Transport_col").delay(2500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $('.play_video_image').delay(2500).fadeIn(500);
 
 	//close the video modal page
@@ -618,13 +624,6 @@ event.preventDefault();
 $( "#Transport_col_innnerdiv" ).show();
 $( "#Transport_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
-});
-
-jQuery(document).ready(function($){
-
-<c:forEach items="${rootCategories}" var="oneCategory">
-$("#${oneCategory.name}_col").fadeIn(1).animate({height:"auto"}, 1000, "linear");
-</c:forEach>
 });
 
 </script>
