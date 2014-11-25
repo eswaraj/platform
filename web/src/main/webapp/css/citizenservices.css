@@ -76,22 +76,22 @@ float: left;
 margin: 0px 20px 0px 20px;
 }
 
-#water_col_innnerdiv, #water_col .frame_header,#water_col .frame_content,#water_col  .img_video_box,#water_col   .frame_info_link{
+#Water_col_innnerdiv, #Water_col .frame_header,#Water_col .frame_content,#Water_col  .img_video_box,#Water_col   .frame_info_link{
 background-color: #74BBFB;
 }
-#law_ord_col_innnerdiv, #law_ord_col .frame_header,#law_ord_col .frame_content,#law_ord_col  .img_video_box,#law_ord_col   .frame_info_link{
+#Law\20 \26 \20 Order_col_innnerdiv, #Law\20 \26 \20 Order_col .frame_header,#Law\20 \26 \20 Order_col .frame_content,#Law\20 \26 \20 Order_col  .img_video_box,#Law\20 \26 \20 Order_col   .frame_info_link{
 background-color: #FFB69E;
 }
-#electricity_col_innnerdiv, #electricity_col .frame_header,#electricity_col .frame_content,#electricity_col  .img_video_box,#electricity_col   .frame_info_link{
+#Electricity_col_innnerdiv, #Electricity_col .frame_header,#Electricity_col .frame_content,#Electricity_col  .img_video_box,#Electricity_col   .frame_info_link{
 background-color: #5BD0AC;
 }
-#roads_col_innnerdiv, #roads_col .frame_header,#roads_col .frame_content,#roads_col  .img_video_box,#roads_col   .frame_info_link{
+#Roads_col_innnerdiv, #Roads_col .frame_header,#Roads_col .frame_content,#Roads_col  .img_video_box,#Roads_col   .frame_info_link{
 background-color: #DF82A0;
 }
-#sew_san_col_innnerdiv, #sew_san_col .frame_header,#sew_san_col .frame_content,#sew_san_col  .img_video_box,#sew_san_col   .frame_info_link{
+#Sewerage\20 \26 \20 Sanitation_col_innnerdiv, #Sewerage\20 \26 \20 Sanitation_col .frame_header,#Sewerage\20 \26 \20 Sanitation_col .frame_content,#Sewerage\20 \26 \20 Sanitation_col  .img_video_box,#Sewerage\20 \26 \20 Sanitation_col   .frame_info_link{
 background-color: #CFB1FA;
 }
-#transport_col_innnerdiv, #transport_col .frame_header,#transport_col .frame_content,#transport_col  .img_video_box,#transport_col   .frame_info_link{
+#Transportation_col_innnerdiv, #Transportation_col .frame_header,#Transportation_col .frame_content,#Transportation_col  .img_video_box,#Transportation_col   .frame_info_link{
 background-color: #E889F0;
 }
 
@@ -199,7 +199,7 @@ margin-right: 0px;
 }
 
 
-#water_col, #law_ord_col, #electricity_col, #roads_col, #sew_san_col, #transport_col{
+#Water_col, #Law\20 \26 \20 Order_col, #Electricity_col, #Roads_col, #Sewerage\20 \26 \20 Sanitation_col, #Transportation_col{
 display: none;
 }
 
