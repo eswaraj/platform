@@ -23,11 +23,11 @@
 			<div id="citizenservices">
 					
 					<c:forEach items="${rootCategories}" var="oneCategory">
-						<c:if test="${oneCategory == 'LawOrder'}">
-						<c:set var="oneCategory" value="LawOrder"/>
+						<c:if test="${oneCategory.name == 'LawOrder'}">
+						<c:set var="oneCategory.name" value="LawOrder"/>
 						</c:if>
-						<c:if test="${oneCategory == 'SewerageSanitation'}">
-						<c:set var="oneCategory" value="SewerageSanitation"/>
+						<c:if test="${oneCategory.name == 'SewerageSanitation'}">
+						<c:set var="oneCategory.name" value="SewerageSanitation"/>
 						</c:if>
 						<div id="${oneCategory.name}_col" class="box_style">
 						<h3 class="frame_header">${oneCategory.name}<span class="glyphicon glyphicon-circle-arrow-up right_float"></span></h3>
