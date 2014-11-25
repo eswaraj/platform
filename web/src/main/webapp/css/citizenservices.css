@@ -79,7 +79,7 @@ margin: 0px 20px 0px 20px;
 #Water_col_innnerdiv, #Water_col .frame_header,#Water_col .frame_content,#Water_col  .img_video_box,#Water_col   .frame_info_link{
 background-color: #74BBFB;
 }
-#Law & Order_col_innnerdiv, #Law & Order_col .frame_header,#Law & Order_col .frame_content,#Law & Order_col  .img_video_box,#Law & Order_col   .frame_info_link{
+#Law\20 \26 \20 Order_col_innnerdiv, #Law\20 \26 \20 Order_col .frame_header,#Law\20 \26 \20 Order_col .frame_content,#Law\20 \26 \20 Order_col  .img_video_box,#Law\20 \26 \20 Order_col   .frame_info_link{
 background-color: #FFB69E;
 }
 #Electricity_col_innnerdiv, #Electricity_col .frame_header,#Electricity_col .frame_content,#Electricity_col  .img_video_box,#Electricity_col   .frame_info_link{
@@ -88,7 +88,7 @@ background-color: #5BD0AC;
 #Roads_col_innnerdiv, #Roads_col .frame_header,#Roads_col .frame_content,#Roads_col  .img_video_box,#Roads_col   .frame_info_link{
 background-color: #DF82A0;
 }
-#Sewerage & Sanitation_col_innnerdiv, #Sewerage & Sanitation_col .frame_header,#Sewerage & Sanitation_col .frame_content,#Sewerage & Sanitation_col  .img_video_box,#Sewerage & Sanitation_col   .frame_info_link{
+#Sewerage\20 \26 \20 Sanitation_col_innnerdiv, #Sewerage\20 \26 \20 Sanitation_col .frame_header,#Sewerage\20 \26 \20 Sanitation_col .frame_content,#Sewerage\20 \26 \20 Sanitation_col  .img_video_box,#Sewerage\20 \26 \20 Sanitation_col   .frame_info_link{
 background-color: #CFB1FA;
 }
 #Transportation_col_innnerdiv, #Transportation_col .frame_header,#Transportation_col .frame_content,#Transportation_col  .img_video_box,#Transportation_col   .frame_info_link{
@@ -199,7 +199,7 @@ margin-right: 0px;
 }
 
 
-#Water_col, #Law & Order_col, #Electricity_col, #Roads_col, #Sewerage & Sanitation_col, #Transportation_col{
+#Water_col, #Law\20 \26 \20 Order_col, #Electricity_col, #Roads_col, #Sewerage\20 \26 \20 Sanitation_col, #Transportation_col{
 display: none;
 }
 

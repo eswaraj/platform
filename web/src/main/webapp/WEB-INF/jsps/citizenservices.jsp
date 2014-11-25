@@ -598,7 +598,7 @@ $( "#Water_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 $( "#toc ul:nth-child(2)" ).click( function () {
 event.preventDefault();
 $( "#Law & Order_col_innnerdiv" ).show();
-$( "#Law & Order_col .frame_header span" ).removeClass("glyphicon-fullscreen");
+$( "#Law\20 \26 \20 Order_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
 
 $( "#toc ul:nth-child(3)" ).click( function () {
@@ -616,7 +616,7 @@ $( "#Roads_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 $( "#toc ul:nth-child(5)" ).click( function () {
 event.preventDefault();
 $( "#Sewerage & Sanitation_col_innnerdiv" ).show();
-$( "#Sewerage & Sanitation_col .frame_header span" ).removeClass("glyphicon-fullscreen");
+$( "#Sewerage\20 \26 \20 Sanitation_col .frame_header span" ).removeClass("glyphicon-fullscreen");
 });
 
 $( "#toc ul:nth-child(6)" ).click( function () {
