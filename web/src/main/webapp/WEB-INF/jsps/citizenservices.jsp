@@ -129,10 +129,10 @@ Phasellus leo urna, gravida vitae justo eleifend, vulputate porttitor erat. Sed 
 jQuery(document).ready(function($){
 
 $("#Water_col").fadeIn(1).animate({height:"auto"}, 1000, "linear");
-$("#LawOrder").delay(500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#LawOrder_col").delay(500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#Electricity_col").delay(1000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#Roads_col").delay(1500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
-$("#SewerageSanitation").delay(2000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
+$("#SewerageSanitation_col").delay(2000).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $("#Transportation_col").delay(2500).fadeIn(1).animate({height:"auto"}, 1000, "linear");
 $('.play_video_image').delay(2500).fadeIn(500);
 
@@ -291,10 +291,10 @@ $('.LawOrder_video_link').on('click', function(){
     $("meta[itemprop='url']").attr("content", law_ord_img_src);
     $("meta[property='og:url']").attr("content", law_ord_img_src);
     $("link[rel='canonical']").attr("href", law_ord_img_src);
-    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "LawOrder Category");
-    $("meta[name='title']").attr("content", "LawOrder Category");
-    $("meta[itemprop='name']").attr("content", "LawOrder Category");
-    $("meta[property='og:title']").attr("content", "LawOrder Category");
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
+    $("meta[name='title']").attr("content", "Law & Order Category");
+    $("meta[itemprop='name']").attr("content", "Law & Order Category");
+    $("meta[property='og:title']").attr("content", "Law & Order Category");
     addthis.toolbox(".addthis_toolbox");
 	$('#modal-background').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
@@ -306,10 +306,10 @@ $('#LawOrder_infographic_div').on('click', function(){
     $("meta[itemprop='url']").attr("content", law_ord_infograph_img_src);
     $("meta[property='og:url']").attr("content", law_ord_infograph_img_src);
     $("link[rel='canonical']").attr("href", law_ord_infograph_img_src);
-    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "LawOrder Category");
-    $("meta[name='title']").attr("content", "LawOrder Category");
-    $("meta[itemprop='name']").attr("content", "LawOrder Category");
-    $("meta[property='og:title']").attr("content", "LawOrder Category");
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
+    $("meta[name='title']").attr("content", "Law & Order Category");
+    $("meta[itemprop='name']").attr("content", "Law & Order Category");
+    $("meta[property='og:title']").attr("content", "Law & Order Category");
     addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-infographic').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
@@ -320,10 +320,10 @@ $('#LawOrder_content_div').on('click', function(){
     $("meta[itemprop='url']").attr("content", law_ord_content);
     $("meta[property='og:url']").attr("content", law_ord_content);
     $("link[rel='canonical']").attr("href", law_ord_content);
-    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "LawOrder Category");
-    $("meta[name='title']").attr("content", "LawOrder Category");
-    $("meta[itemprop='name']").attr("content", "LawOrder Category");
-    $("meta[property='og:title']").attr("content", "LawOrder Category");
+    $(".updated_sharing .addthis_toolbox").attr('addthis:title', "Law & Order Category");
+    $("meta[name='title']").attr("content", "Law & Order Category");
+    $("meta[itemprop='name']").attr("content", "Law & Order Category");
+    $("meta[property='og:title']").attr("content", "Law & Order Category");
     addthis.toolbox(".addthis_toolbox");
 	$('#modal-background-content').fadeIn(1);
 	$('.outerwrapper').fadeOut(1);
