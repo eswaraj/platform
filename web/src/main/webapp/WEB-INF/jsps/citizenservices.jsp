@@ -23,10 +23,10 @@
 			<div id="citizenservices">
 					
 					<c:forEach items="${rootCategories}" var="oneCategory">
-						<c:if test="${oneCategory.name == 'Law & Order'}">
+						<c:if test="${oneCategory.name == 'Law \& Order'}">
 						<c:set var="oneCategory.name" value="LawOrder"/>
 						</c:if>
-						<c:if test="${oneCategory.name == 'Sewerage & Sanitation'}">
+						<c:if test="${oneCategory.name == 'Sewerage \& Sanitation'}">
 						<c:set var="oneCategory.name" value="SewerageSanitation"/>
 						</c:if>
 						<div id="${oneCategory.name}_col" class="box_style">
