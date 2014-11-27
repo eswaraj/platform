@@ -69,8 +69,8 @@
 										<span class="grey_text">
 										 Position Not Yet Declared 
 										</span> <br />
-									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Know Your MLA</a>
-									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency Link</a>
+									<a href="#!" id="mla_bio_data_link" class="btn btn-info">Know Your MLA</a>
+									<a href="${locationUrl}" class="btn btn-info">Constituency Link</a>
 									</p>
 								</c:if>
 						</div>
