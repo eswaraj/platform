@@ -55,10 +55,10 @@
 										<c:if test="${empty leader.politicalAdminType.shortName}">
 											<span class="grey_text">
 											 Position Not Yet Declared
-											</span>
+											</span><br \>
 										</c:if>
-									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency
-										Link</a>
+									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Know Your MLA</a>
+									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency Link</a>
 									<hr>
 									</p>
 								</c:if>
@@ -67,8 +67,10 @@
 									<p class="center-align name-top-adjust">
 									<strong class="red_orng_clr_text">Leader Not Yet Declared</strong> <br /> 
 										<span class="grey_text">
-										 Position Not Yet Declared
-										</span>
+										 Position Not Yet Declared 
+										</span> <br />
+									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Know Your MLA</a>
+									<a href="${locationUrl}" target="_blank" class="btn btn-info btn-block">Constituency Link</a>
 									</p>
 								</c:if>
 						</div>
@@ -225,18 +227,6 @@
 				</div>
 				<div class="col-sm-6">
 					
-				<div class="about-mla hidden-xs">
-						<h3 class="red_orng_clr_text knw_mla">Know your MLA</h3>
-						<div class="desc-wrapper">
-							<div class="desc">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Harum quia laboriosam adipisci assumenda quis natus eaque
-									delectus, praesentium, vitae, cupiditate, aut similique! Ea
-									voluptates quos alias officia vero provident sed veniam
-									recusandae.</p>
-							</div>
-						</div>
-					</div>
 					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
 					<div class="listing-wrapper">
 						<div class="listing">
@@ -353,7 +343,7 @@
 
 					<h3 class="red_orng_clr_text mla_calendar_head">MLA Calendar</h3>
 					<div class="mla_cal_contents">
-						<img src="${staticHost}/images/mla-calendar.png" width="100%" alt="">
+						<img src="${staticHost}/images/conf_cal_sample.png" width="100%" alt="">
 					</div>
 				</div>
 				<div class="col-sm-3">
