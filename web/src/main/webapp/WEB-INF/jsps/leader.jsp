@@ -293,7 +293,7 @@
 												<div id="comments_box" class="div_comments_box">
 
 												<!-- Old Comments -->
-													<c:forEach items="${oneComplaint.comments}" var="oneComplaintcomment">
+		<!--											<c:forEach items="${oneComplaint.comments}" var="oneComplaintcomment">
 													<div>
 														<div id="old_comments_block">
 
@@ -316,7 +316,7 @@
 
 													</div>
 
-													</c:forEach>
+													</c:forEach> -->
 
 													<div id="show_full_comments_page">
 														<a href="http://dev.eswaraj.com/complaint/${oneComplaint.id}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
