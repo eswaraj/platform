@@ -236,9 +236,9 @@
 					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
-							<div class="mla_unread_complaints" >
+							<div class="mla_unread_complaints" infinite-scroll='getNext()' infinite-scroll-distance='2' >
 								<!-- 1 -->
-								<div ng-repeat="complaint in complaints" infinite-scroll='getNext()' infinite-scroll-distance='2'>
+								<div ng-repeat="complaint in complaints">
 									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
 										<div class="innerblock">
 											<span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
