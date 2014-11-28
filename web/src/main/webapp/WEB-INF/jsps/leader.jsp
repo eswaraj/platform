@@ -303,7 +303,7 @@
 																<a href="#!" class="username">${oneComplaintcomment.postedBy.name}</a>
 																<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
 																<a href="#!" class="location"><abbr class="timeago" title="${oneComplaintcomment.creationTime}">${oneComplaintcomment.creationTime}</abbr></a>
-																<c:if test="${oneComplaintcomment.adminComment}">
+																<c:if test="${oneComplaintcomment.adminComment == 'true'}">
 																<img src="http://dev.eswaraj.com/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin">
 																</c:if>
 															</p>
