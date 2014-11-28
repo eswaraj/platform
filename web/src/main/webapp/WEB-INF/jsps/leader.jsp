@@ -238,7 +238,7 @@
 							<!-- new_div starts -->
 							<div class="mla_unread_complaints" >
 								<!-- 1 -->
-								<div ng-repeat="complaint in complaints">
+								<div ng-repeat="complaint in complaints" infinite-scroll='getNext()' infinite-scroll-distance='2'>
 									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
 										<div class="innerblock">
 											<span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
@@ -315,12 +315,6 @@
 																	{{comment.text}}
 															</div>
 
-															<!--div class="comments-info" >
-																<textcollapse>
-																	{{comment.text}}
-																</textcollapse>
-															</div-->
-
 														</div>
 
 													</div>
@@ -336,12 +330,6 @@
 									</div>
 								</div>
 								<!-- new_div ends  -->
-								<div class="pagination-wrapper">
-									<ul class="pagination">
-										<li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
-										<li><a href="#!" ng-click="getNext()">&raquo;</a></li>
-									</ul>
-								</div>
 							</div>	
 						</div>
 					</div>

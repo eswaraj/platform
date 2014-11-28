@@ -1,7 +1,8 @@
-var complaintsApp = angular.module('complaintsApp', []);
+var complaintsApp = angular.module('complaintsApp', ['infinite-scroll']);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
     var allComplaints = [];
+    var current = 0;
     $scope.positions = {};
     $scope.complaints = [];
     $scope.selectedPosition = {};
@@ -38,16 +39,19 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
     $scope.onStatusSelected = function () {};
     $scope.onCategorySelected = function (category) {
         $scope.selectedCategory = category;
+        current = 0;
         $scope.complaints = [];
         allComplaints = [];
         $scope.getNext();
     };
     $scope.onPositionSelected = function () {
+        current = 0;
         $scope.complaints = [];
         allComplaints = [];
         $scope.getNext();
     };
     $scope.onRefresh = function () {
+        current = 0;
         $scope.complaints = [];
         allComplaints = [];
         $scope.getNext();
@@ -56,7 +60,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         var categoryString = $scope.selectedCategory ? "/" + $scope.selectedCategory.id : "";
                 var complaintRequest = $http({
                     method: "GET",
-                    url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString,
+                    url:'/ajax/complaint/leader/' + $scope.selectedPosition.id + categoryString + '/?page=' + (current+1),
                     headers: {'Content-Type': 'application/json; charset=utf-8'}
                 });
                 complaintRequest.success(function (data) {
@@ -76,7 +80,8 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                                 console.error("/ajax/complaint/'" + value.id + "'/comments?count=5 failed");
                             });
                         });
-                        allComplaints = allComplaints.concat(data);
+                        current = current + 1;
+						allComplaints = allComplaints.concat(data);
                         $scope.complaints = allComplaints;
                     }
                 });
@@ -169,65 +174,6 @@ complaintsApp.directive('textcollapse', function () {
                 var text = link.text() == "Show more" ? "Show less" : "Show more";
                 link.text(text);
             });
-        }
-    };
-});
-
-complaintsApp.directive('googleMap', function ($timeout) {
-    return {
-        restrict : 'E',
-        replace: true,
-        scope : {
-            lat : '@',
-            lng : '@',
-            id : '@'
-        },
-        link : function (scope, element, attrs) {
-            var el = document.createElement("div");
-            el.style.height = "100%";
-            element.css('height','333px');
-            element.prepend(el);
-            var myLatlng = new google.maps.LatLng(scope.lat, scope.lng);
-            var mapOptions = {
-                zoom: 14,
-                center: myLatlng,
-                mapTypeId : google.maps.MapTypeId.ROADMAP,
-				mapTypeControl: true,
-				mapTypeControlOptions: {
-				  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-				},
-				zoomControl: true,
-				zoomControlOptions: {
-				  style: google.maps.ZoomControlStyle.LARGE
-				}
-            }
-            var map = new google.maps.Map(el, mapOptions);
-            var myMarker = new google.maps.Marker({
-                position : myLatlng,
-                draggable : false
-            });
-            myMarker.setMap(map);
-			google.maps.event.addListener(map, "mouseover", function(){
-			var center = map.getCenter();
-			google.maps.event.trigger(map, 'resize'); 
-			map.setCenter(center);
-			});
-			google.maps.event.addListener(map, "idle", function(){
-			var center = map.getCenter();
-			google.maps.event.trigger(map, 'resize'); 
-			map.setCenter(center);
-			});
-  		    $timeout(function() {
-			var center = map.getCenter();
-			google.maps.event.trigger(map, 'resize'); 
-			map.setCenter(center);
-            }, 100);
-  		    google.maps.event.addListener(map, 'center_changed', function() {
-				// 30 seconds after the center of the map has changed, pan back to the marker.
-				$timeout(function() {
-				  map.panTo(myMarker.getPosition());
-				}, 30000);
-			});
         }
     };
 });
