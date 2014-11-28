@@ -6,6 +6,7 @@ var complaintsApp = angular.module('complaintsApp', ['infinite-scroll']);
 complaintsApp.controller('complaintsController', function ($scope, $http) {
     var allComplaints = [];
     var current = 0;
+	var scrollbusy = false;
     $scope.positions = {};
     $scope.complaints = [];
     $scope.selectedPosition = {};
@@ -60,6 +61,8 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
         $scope.getNext();
     };
     $scope.getNext = function () {
+		if (scrollbusy) return;
+		scrollbusy = true;
         var categoryString = $scope.selectedCategory ? "/" + $scope.selectedCategory.id : "";
                 var complaintRequest = $http({
                     method: "GET",
@@ -84,6 +87,7 @@ complaintsApp.controller('complaintsController', function ($scope, $http) {
                             });
                         });
                         current = current + 1;
+						scrollbusy = false;
 						allComplaints = allComplaints.concat(data);
                         $scope.complaints = allComplaints;
                     }

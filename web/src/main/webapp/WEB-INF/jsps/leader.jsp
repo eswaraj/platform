@@ -236,7 +236,7 @@
 					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
-							<div class="mla_unread_complaints" infinite-scroll='getNext()' >
+							<div class="mla_unread_complaints" infinite-scroll='getNext()' infinite-scroll-disabled='scrollbusy'>
 								<!-- 1 -->
 								<div ng-repeat="complaint in complaints">
 									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
@@ -330,6 +330,7 @@
 									</div>
 								</div>
 								<!-- new_div ends  -->
+								<div ng-show='scrollbusy'>Loading data...</div>
 							</div>	
 						</div>
 					</div>
