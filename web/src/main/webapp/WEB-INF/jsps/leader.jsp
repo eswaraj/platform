@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
 <script src="${staticHost}/js/angular.min.js"></script>
 <script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
-<script src="${staticHost}/js/complaints.js"></script>
+<script src="${staticHost}/js/leader.js"></script>
 </head>
 <body ng-controller="complaintsController">
 <div id="fb-root"></div>
