@@ -7,17 +7,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-<html lang="en" ng-app="complaintsApp" >
+<html lang="en" >
 <head>
 <title>eSwaraj</title>
 <jsp:include page="include.jsp" />
 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
 <link rel="stylesheet" href="${staticHost}/css/leader.css" />
-<script src="${staticHost}/js/angular.min.js"></script>
-<script src="${staticHost}/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
-<script src="${staticHost}/js/complaints.js"></script>
 </head>
-<body ng-controller="complaintsController">
+<body>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -219,11 +216,6 @@
 						</tbody>
 						</table>
 					</div>
-
-					<h3 class="text-footer red_orng_clr_text">Select Position</h3>
-					<select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
-					</select>
-					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
 				</div>
 				<div class="col-sm-6">
 					
@@ -233,32 +225,43 @@
 							<!-- new_div starts -->
 							<div class="mla_unread_complaints" >
 								<!-- 1 -->
-								<div ng-repeat="complaint in complaints">
-									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
+								<c:forEach items="${complaintList}" var="oneComplaint">
+								<div>
+									<div class="list-row">
 										<div class="innerblock">
-											<span class="glyphicon glyphicon-fullscreen glyph_right_float" ng-class="{'glyphicon-collapse-up' : complaint.showMode}"></span>
+											<span class="glyphicon glyphicon-fullscreen glyph_right_float"></span>
 											<div class="col-sm-1 profile_pic_adjust">
-												<div class="profile-pic" ng-switch on="complaint.createdByPersons[0].name">
-													<div ng-switch-when="anonymous">
-														<a href="#!"><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 35px;" /></a>
-													</div>
-													<div ng-switch-default>
-														<a href="#!"><img src="{{complaint.createdByPersons[0].profilePhoto}}" alt="" /></a>
-													</div>
+												<div class="profile-pic">
+													<c:if test="${!empty oneComplaint.loggedBy[0].photo}">
+														<a href="#!" class="anchorlink" ><img src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
+													</c:if>
+													<c:if test="${empty oneComplaint.loggedBy[0].photo}">
+														<a href="#!" class="anchorlink" ><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 35px; max-width: 35px; border: 1px solid #ccc;" ></a>
+													</c:if>
 												</div>
 											</div>
 											<div class="profile-info profile_info_adjust">
 												<span>
-													<strong class="text-limit issue-id"><span>#</span>{{complaint.id}}</strong>
+													<strong class="text-limit issue-id"><span>#</span>${oneComplaint.id}</strong>
 													<span class="text-limit connector">by</span>
-													<a href="#!" class="text-limit username_adjust">{{complaint.createdByPersons[0].name}}</a>
+													<span class="text-limit username_adjust">
+														<c:forEach items="${oneComplaint.loggedBy}" var="onePerson">
+															<a href="#!" class="anchorlink" >${onePerson.name}</a>
+														</c:forEach>
+													</span>
 												</span>
 												<span class="comment_type_adjust">
 													<img src = "http://dev.eswaraj.com/images/potholeissue.jpg" class="issue-type-pic" alt="">
-													<a href="#!" class="text-limit issue-scope-type">Type - {{complaint.categories | rootCategory}}</a>
+													<a href="#!" class="text-limit issue-scope-type">
+													<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+														<c:if test="${oneCategory.root}">
+														Type - ${oneCategory.name}
+														</c:if>
+													</c:forEach>
+													</a>
 												</span>
 												<span class="comment_content_adjust">
-													<a href="#!" class="text-limit issue-scope">{{complaint.categories  | subCategory}}</a>
+													<a href="#!" class="text-limit issue-scope">${oneComplaint.categoryTitle}</a>
 												</span>
 												<br />
 												<span>
@@ -270,19 +273,19 @@
 												</span-->
 												<span>
 													<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus posttimestatus_adjust" alt="">
-													<a href="#!" class="location"><abbr class="text-limit timeago" title="{{complaint.complaintTime | dateFormatter}}">{{complaint.complaintTime | dateFormatter}}</abbr></a>
+													<a href="#!" class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></a>
 												</span>
 											</div>
 										</div>
 									</div>
 
-									<div class="innerdiv-list-row" ng-class="{'innerdiv-box-shadow' : complaint.showMode}" ng-show="complaint.showMode">
+									<div class="innerdiv-list-row">
 									   <div class="innerdiv-innerblock">
 											<div class="innerdiv-issue-info" >
 
 												<p class="issue-title">
 													<!--a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a-->
-													<a href="#!" class="innerdiv-issue-scope">{{complaint.categories  | subCategory}}</a>
+													<a href="#!" class="innerdiv-issue-scope">${oneComplaint.categoryTitle}</a>
 												</p>
 
 											</div>
@@ -294,48 +297,40 @@
 												<div id="comments_box" class="div_comments_box">
 
 												<!-- Old Comments -->
-													<div ng-repeat="comment in complaint.comments" ng-show="comment.adminComment">
+													<c:forEach items="${oneComplaint.comments}" var="oneComplaintcomment">
+													<div>
 														<div id="old_comments_block">
 
-															<a href="#!" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+															<a href="#!" class="profile-pic-comments"><img src="${oneComplaintcomment.postedBy.profilePhoto}" alt=""></a>
 
 															<p class="comments_whom">
-																<a href="#!" class="username">{{comment.postedBy.name}}</a>
+																<a href="#!" class="username">${oneComplaintcomment.postedBy.name}}</a>
 																<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
-																<a href="#!" class="location"><abbr class="timeago" title="{{comment.creationTime}}">{{comment.creationTime | dateFormatter}}</abbr></a>
-																<img src="http://dev.eswaraj.com/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin" ng-show="comment.adminComment">
+																<a href="#!" class="location"><abbr class="timeago" title="${oneComplaintcomment.creationTime}">${oneComplaintcomment.creationTime}</abbr></a>
+																<c:if test="${oneComplaintcomment.adminComment}">
+																<img src="http://dev.eswaraj.com/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin">
+																</c:if>
 															</p>
 
 															<div class="comments-info" >
-																	{{comment.text}}
+																	${oneComplaintcomment.text}
 															</div>
-
-															<!--div class="comments-info" >
-																<textcollapse>
-																	{{comment.text}}
-																</textcollapse>
-															</div-->
 
 														</div>
 
 													</div>
 
+													</c:forEach>
+
 													<div id="show_full_comments_page">
-														<a href="http://dev.eswaraj.com/complaint/{{complaint.id}}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
-														<a href="#!" id="collapse_comments_box" class="comments_controller" ng-click="showDetailsAndMarkViewed($event, complaint)">Close</a>
+														<a href="http://dev.eswaraj.com/complaint/${oneComplaint.id}" id="show_all_comments" class="comments_controller">Go to Complaint Page >></a>
+														<a href="#!" id="collapse_comments_box" class="comments_controller">Close</a>
 													</div>
 	
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- new_div ends  -->
-								<div class="pagination-wrapper">
-									<ul class="pagination">
-										<li><a href="#!" ng-click="getPrevious()">&laquo;</a></li>
-										<li><a href="#!" ng-click="getNext()">&raquo;</a></li>
-									</ul>
 								</div>
 							</div>	
 						</div>
