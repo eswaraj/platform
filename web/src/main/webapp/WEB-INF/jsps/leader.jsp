@@ -268,9 +268,6 @@
 													<i class="glyphicon glyphicon-map-marker glyph_adjust"></i>
 													<a href="#!" class="text-limit location_adjust">Cessna Business Park main road,Keverappa Layout</a>
 												</span>
-												<!--span class="comment_status_adjust">
-													<a href="#!" class="text-limit issue-scope-status">Status - {{complaint.politicalAdminComplaintStatus}}</a>
-												</span-->
 												<span>
 													<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus posttimestatus_adjust" alt="">
 													<a href="#!" class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></a>
@@ -284,7 +281,6 @@
 											<div class="innerdiv-issue-info" >
 
 												<p class="issue-title">
-													<!--a href="#!" class="innerdiv-issue-scope">{{complaint.title}}</a-->
 													<a href="#!" class="innerdiv-issue-scope">${oneComplaint.categoryTitle}</a>
 												</p>
 
@@ -304,7 +300,7 @@
 															<a href="#!" class="profile-pic-comments"><img src="${oneComplaintcomment.postedBy.profilePhoto}" alt=""></a>
 
 															<p class="comments_whom">
-																<a href="#!" class="username">${oneComplaintcomment.postedBy.name}}</a>
+																<a href="#!" class="username">${oneComplaintcomment.postedBy.name}</a>
 																<img src = "http://dev.eswaraj.com/images/time.png" class="posttimestatus" alt="" />
 																<a href="#!" class="location"><abbr class="timeago" title="${oneComplaintcomment.creationTime}">${oneComplaintcomment.creationTime}</abbr></a>
 																<c:if test="${oneComplaintcomment.adminComment}">
