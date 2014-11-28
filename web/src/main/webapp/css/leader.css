@@ -791,3 +791,16 @@ float: left;
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open > .dropdown-toggle.btn-info {
 color: #080808;
 }
+
+.cal_contents{
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+padding: 0px 10px 0px 10px;
+}
+
+.mla_cal_contents{
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+background: #FFF;
+}
+

@@ -229,7 +229,7 @@
 					
 					<h3 class="red_orng_clr_text mla_calendar_head">MLA Calendar</h3>
 					<div class="mla_cal_contents">
-						<img src="${staticHost}/images/conf_cal_sample.png" width="100%" alt="">
+						<img src="${staticHost}/images/conf_cal_sample.png" width="100%" alt="" class="cal_contents">
 					</div>
 
 					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
