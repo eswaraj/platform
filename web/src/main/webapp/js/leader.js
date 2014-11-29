@@ -1,4 +1,4 @@
-var complaintsApp = angular.module('complaintsApp', ['infinite-scroll']);
+var complaintsApp = angular.module('complaintsApp', []);
 
 complaintsApp.controller('complaintsController', function ($scope, $http) {
     var allComplaints = [];
