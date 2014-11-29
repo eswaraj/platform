@@ -236,7 +236,7 @@
 					<div class="listing-wrapper">
 						<div class="listing">
 							<!-- new_div starts -->
-							<div class="mla_unread_complaints" infinite-scroll='getNext()' >
+							<div class="mla_unread_complaints" when-scrolled="getNext()" >
 								<!-- 1 -->
 								<div ng-repeat="complaint in complaints">
 									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
