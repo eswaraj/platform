@@ -234,9 +234,9 @@
 
 					<h3 class="red_orng_clr_text mla_comm_feed">MLA Comments Feed</h3>
 					<div class="listing-wrapper">
-						<div class="listing">
+						<div class="listing" when-scrolled="getNext()" >
 							<!-- new_div starts -->
-							<div class="mla_unread_complaints" when-scrolled="getNext()" >
+							<div class="mla_unread_complaints" >
 								<!-- 1 -->
 								<div ng-repeat="complaint in complaints">
 									<div class="list-row" ng-click="showDetailsAndMarkViewed($event, complaint)">
