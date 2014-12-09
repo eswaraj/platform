@@ -3,6 +3,7 @@ package com.eswaraj.domain.repo;
 import java.util.Collection;
 
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Complaint;
@@ -10,6 +11,7 @@ import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 
 public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalBodyAdmin>{
 	
@@ -36,5 +38,8 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 
     @Query("start complaint=node({0}) match (complaint)-[PSB:POLITICAL_SERVED_BY]->(PoliticalAdmin) where PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' return PoliticalAdmin")
     Collection<PoliticalBodyAdmin> getAllPoliticalAdminOfComplaint(Complaint complaint);
+
+    @Query("start location=node({0}),politicalBodyType=node({1})  match (location)-[:BELONGS_TO]-(politicalBodyAdmin)-[:OF_TYPE]->(politicalBodyType) with politicalBodyAdmin, location,  politicalBodyType optional match (politicalBodyAdmin)-[:IS]-(person) with politicalBodyAdmin, location,  politicalBodyType, person optional match (party)-[:OF]-(politicalBodyAdmin) where politicalBodyAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' or politicalBodyAdmin.__type__='PoliticalBodyAdmin' return politicalBodyAdmin, politicalBodyType, location, person, party")
+    EndResult<PoliticalBodyAdminExtended> getAllPoliticalAdminByLocationAndPoliticalBodyType(Long locationId, Long politicalBodyTypeId);
 
 }

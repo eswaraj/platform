@@ -75,6 +75,9 @@ public class PoliticalPartyBean extends BaseBean {
     }
 
     public List<Party> getParties() {
+        if (parties == null) {
+            init();
+        }
         return parties;
     }
 

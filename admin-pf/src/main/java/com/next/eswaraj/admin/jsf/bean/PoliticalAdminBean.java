@@ -4,20 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.el.ELContext;
-import javax.el.ExpressionFactory;
-import javax.el.MethodExpression;
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
-import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.component.menuitem.UIMenuItem;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.NodeUnselectEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.MarkerDragEvent;
 import org.primefaces.event.map.StateChangeEvent;
 import org.primefaces.model.TreeNode;
@@ -33,12 +29,17 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class PoliticalAdminBean {
+public class PoliticalAdminBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
@@ -53,8 +54,38 @@ public class PoliticalAdminBean {
 
     private List<LocationSearchResult> locationSearchResults;
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private List<Person> personSearchResults;
 
+    private List<PoliticalBodyType> politicalBodyTypes;
+
+    private PoliticalBodyType selectedPoliticalBodyType;
+
+    private DataTable dataTable;
+    
+    private List<PoliticalBodyAdminExtended> politicalBodyAdmins;
+
+    private PoliticalBodyAdmin selectedPoliticalBodyAdmin = new PoliticalBodyAdmin();
+
+    private boolean enableRightSidePanel = true;
+
+    private boolean showListPanel = true;
+
+    private Person selectedPerson = new Person();
+    
+    private Party selectedPoliticalParty;
+
+    private String createAdminButtonTitle = "Create";
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+/*
+ * 
+    private String biodata;
+    private Date dob;
+    private String gender;
+    private String profilePhoto;
+    private String voterId;
+    private Address address;
+ */
     @PostConstruct
     public void init() {
         Location location;
@@ -66,16 +97,33 @@ public class PoliticalAdminBean {
             TreeNode topLocation = new CustomTreeNode(new Document(location.getName(), "-", "Folder", location), root);
             topLocation.setSelected(true);
             selectedLocationNode = topLocation;
+            selectNode(selectedLocationNode);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
+    public void createPerson() {
+        logger.info("Creating New Person");
+        selectedPerson = new Person();
+    }
+
     public List<LocationSearchResult> searchLocation(String query) {
         try {
             locationSearchResults = adminService.searchLocationByName(query);
             return locationSearchResults;
+        } catch (ApplicationException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public List<Person> searchPerson(String query) {
+        try {
+            personSearchResults = adminService.searchPersonByName(query);
+            return personSearchResults;
         } catch (ApplicationException e) {
             e.printStackTrace();
         }
@@ -135,29 +183,38 @@ public class PoliticalAdminBean {
 
     public void onNodeSelect(NodeSelectEvent event) {
         TreeNode nodeSelected = event.getTreeNode();
+        selectNode(nodeSelected);
+
+    }
+
+    private void selectNode(TreeNode nodeSelected) {
+        showListPanel = true;
         Object data = nodeSelected.getData();
         if (data instanceof Document) {
+            enableRightSidePanel = true;
             selectedLocationNode = nodeSelected;
-            Document document = (Document) data;
+            selectedNode = nodeSelected;
 
             try {
-                List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) nodeSelected.getData()).getLocation().getLocationType().getId());
-                createTabs(locationTypes, document.getLocation());
+                politicalBodyTypes = adminService.getAllPoliticalBodyTypeOfLocation(((Document) nodeSelected.getData()).getLocation().getId());
+                if (politicalBodyTypes.size() == 1) {
+                    selectedPoliticalBodyType = politicalBodyTypes.get(0);
+                    onSelectPoliticalBodyType();
+                }
             } catch (ApplicationException e) {
                 e.printStackTrace();
             } finally {
                 disableSaveCancelButtons(false);
             }
         } else {
+            enableRightSidePanel = false;
+            disableCreateAdminButton = true;
             selectedLocationNode = nodeSelected.getParent();
-            System.out.println("selectedLocationNode = " + selectedLocationNode);
             LocationType selectedLocationType = ((LocationTypeDocument) nodeSelected.getData()).getLocationType();
             List<LocationType> locationTypes = new ArrayList<>(1);
             locationTypes.add(selectedLocationType);
-            System.out.println("createButtonsAndMenus for = " + selectedLocationType);
-            createTabs(locationTypes, ((Document) selectedLocationNode.getData()).getLocation());
             disableSaveCancelButtons(true);
-            System.out.println("Done");
+            politicalBodyAdmins = new ArrayList<PoliticalBodyAdminExtended>();
         }
     }
 
@@ -181,67 +238,86 @@ public class PoliticalAdminBean {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    public void saveLocation() {
-        System.out.println("saving Location " + selectedNode.getData());
-        Document document = (Document)selectedNode.getData();
-        document.setName(document.getLocation().getName());
+    public void savePerson(ActionEvent event) {
+        logger.info("saving Person " + selectedPerson);
+
         try {
-            System.out.println("LocationType " + document.getLocation().getLocationType());
-            Location location = adminService.saveLocation(document.getLocation());
-            document.setLocation(location);
+            selectedPerson = adminService.savePerson(selectedPerson);
+            logger.info("Saved Person " + selectedPerson);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Error", e);
+        }
+    }
+
+    public void saveAdmin(ActionEvent event) {
+        logger.info("saving Admin " + selectedPoliticalBodyAdmin);
+        Location location = ((Document) selectedLocationNode.getData()).getLocation();
+        logger.info("Location " + location);
+        logger.info("Person " + selectedPerson);
+        logger.info("selectedPoliticalBodyType " + selectedPoliticalBodyType);
+        selectedPoliticalBodyAdmin.setLocation(location);
+        selectedPoliticalBodyAdmin.setPerson(selectedPerson);
+        selectedPoliticalBodyAdmin.setPoliticalBodyType(selectedPoliticalBodyType);
+        selectedPoliticalBodyAdmin.setParty(selectedPoliticalParty);
+        try {
+            if (selectedPoliticalBodyAdmin.getParty() == null) {
+                sendErrorMessage("Error", "Please Select a Party");
+            }
+            selectedPoliticalBodyAdmin = adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin);
+            showListPanel = true;
+            sendInfoMessage("Success", "Admin Saved Succesfully");
+            refreshPoliticalBodyAdmins();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Error", e);
+        }
+    }
+
+    public void cancelAdmin() {
+        showListPanel = true;
+    }
+
+    private void disableSaveCancelButtons(boolean disabled) {
+        /*
+        CommandButton saveLocationButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("political_admin_form:savePerson");
+        CommandButton canceButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("political_admin_form:cancel");
+        saveLocationButton.setDisabled(disabled);
+        canceButton.setDisabled(disabled);
+        */
+
+    }
+
+    public void createAdmin() {
+        showListPanel = false;
+        selectedPoliticalBodyAdmin = new PoliticalBodyAdmin();
+        selectedPerson = new Person();
+    }
+
+    private boolean disableCreateAdminButton = true;
+
+    private void refreshPoliticalBodyAdmins() {
+        try {
+            Document document = (Document) selectedLocationNode.getData();
+            politicalBodyAdmins = adminService.getPoliticalAdminOfLocationAndAdminType(document.getLocation().getId(), selectedPoliticalBodyType.getId());
         } catch (ApplicationException e) {
             e.printStackTrace();
         }
     }
+    public void onSelectPoliticalBodyType() {
+        if (selectedPoliticalBodyType != null) {
 
-    private void disableSaveCancelButtons(boolean disabled) {
-        CommandButton saveLocationButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:saveLocation");
-        CommandButton canceButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:cancel");
-        saveLocationButton.setDisabled(disabled);
-        canceButton.setDisabled(disabled);
-
-    }
-
-    private void createTabs(List<LocationType> locationTypes, Location selectedLocation) {
-
-        UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:buttonPanel");
-        UIComponent contextMenu = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:contextMenu");
-        component.getChildren().clear();
-        contextMenu.getChildren().clear();
-        FacesContext facesCtx = FacesContext.getCurrentInstance();
-        ELContext elContext = facesCtx.getELContext();
-        Application app = facesCtx.getApplication();
-        ExpressionFactory elFactory = app.getExpressionFactory();
-        System.out.println("component=" + component);
-        System.out.println("locationTypes=" + locationTypes);
-        for (LocationType oneLocationType : locationTypes) {
-            CommandButton submit = new CommandButton();
-            submit.setValue("Create " + oneLocationType.getName());
-            submit.setUpdate(":location_form");
-            submit.setId("create" + oneLocationType.getId());
-            MethodExpression methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createChildLocation( " + oneLocationType.getId() + "," + selectedLocation.getId()
-                    + ")}",
-                    null, new Class[] {});
-            submit.setActionExpression(methodExpression);
-            // createButtons.getChildren().add(submit);
-            if (component != null) {
-                component.getChildren().add(submit);
-            }
-
-            UIMenuItem menuItem = new UIMenuItem();
-            // menuItem.setParam("value","Create City");
-            menuItem.setValue("Create " + oneLocationType.getName());
-            menuItem.setUpdate("location_form");
-            menuItem.setId("createMenu" + oneLocationType.getId());
-            methodExpression = elFactory.createMethodExpression(elContext, "#{locationBean.createChildLocation(" + oneLocationType.getId() + "," + selectedLocation.getId() + ")}", null,
-                    new Class[] {});
-            menuItem.setActionExpression(methodExpression);
-            if (contextMenu != null) {
-                contextMenu.getChildren().add(menuItem);
-            }
+            refreshPoliticalBodyAdmins();
+            disableCreateAdminButton = false;
+            createAdminButtonTitle = "Create " + selectedPoliticalBodyType.getName();
+        } else {
+            disableCreateAdminButton = true;
+            createAdminButtonTitle = "Create";
+            politicalBodyAdmins = new ArrayList<PoliticalBodyAdminExtended>();
         }
-
     }
+
+
     public void cancel() {
         if (selectedLocationNode != null) {
             if (((Document) selectedLocationNode.getData()).getLocation().getId() == null) {
@@ -259,63 +335,18 @@ public class PoliticalAdminBean {
             }
         }
     }
-    public void createChildLocation(Long locationTypeId, Long locationId) {
-        System.out.println("Creating SOmething : " + locationTypeId + ", " + locationId);
-        if (selectedLocationNode != null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Creating under ", selectedNode.getData().toString());
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            loadNodeChild(selectedLocationNode);
-            TreeNode parentNode = getParentNodeForNewChild(selectedLocationNode, locationTypeId);
-            parentNode.setExpanded(true);
-            Location location = new Location();
-            LocationType locationType;
-            try {
-                System.out.println("Getting LocationType " + locationTypeId);
-                Location parentLocation = adminService.getLocationById(locationId);
-                locationType = adminService.getLocationTypeById(locationTypeId);
-                location.setLocationType(locationType);
-                location.setParentLocation(parentLocation);
-                System.out.println("locationType = " + locationType);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            location.setName("New");
-            location.setUrlIdentifier("");
-            selectedNode.setExpanded(true);
-            selectedNode.setSelected(false);
-            selectedNode = new CustomTreeNode(new Document("NEW", "-", "Folder", location), parentNode);
-            selectedNode.setSelected(true);
-            selectedLocationNode = selectedNode;
-            disableSaveCancelButtons(false);
-        }
-    }
-
-    private TreeNode getParentNodeForNewChild(TreeNode selectedLocationNode, Long locationTypeId) {
-        List<TreeNode> childrenNodes = selectedLocationNode.getChildren();
-        if (childrenNodes.isEmpty()) {
-            return selectedLocationNode;
-        }
-        if(childrenNodes.get(0).getData() instanceof Document){
-            return selectedLocationNode;
-        }
-                
-        for(TreeNode oneChildNode : childrenNodes){
-            System.out.println(((LocationTypeDocument) oneChildNode.getData()).getLocationType().getId() + "== " + locationTypeId);
-            if (((LocationTypeDocument) oneChildNode.getData()).getLocationType().getId().equals(locationTypeId)) {
-                System.out.println("Found Parent Node");
-                return oneChildNode;
-            }
-        }
-        return selectedLocationNode;
-    }
 
     public void displaySelectedSingle() {
         if (selectedNode != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected", selectedNode.getData().toString());
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+    }
+
+    public void onItemSelect(SelectEvent event) {
+        LocationSearchResult locationSearchResult = (LocationSearchResult) event.getObject();
+        System.out.println("Item Selected : " + locationSearchResult.getLocation().toString());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", locationSearchResult.getLocation().toString()));
     }
 
     public void deleteNode() {
@@ -364,5 +395,124 @@ public class PoliticalAdminBean {
 
     public void setLocationSearchResults(List<LocationSearchResult> locationSearchResults) {
         this.locationSearchResults = locationSearchResults;
+    }
+
+    public DataTable getDataTable() {
+        return dataTable;
+    }
+
+    public void setDataTable(DataTable dataTable) {
+        this.dataTable = dataTable;
+    }
+
+    public List<PoliticalBodyType> getPoliticalBodyTypes() {
+        return politicalBodyTypes;
+    }
+
+    public void setPoliticalBodyTypes(List<PoliticalBodyType> politicalBodyTypes) {
+        this.politicalBodyTypes = politicalBodyTypes;
+    }
+
+    public PoliticalBodyType getSelectedPoliticalBodyType() {
+        return selectedPoliticalBodyType;
+    }
+
+    public void setSelectedPoliticalBodyType(PoliticalBodyType selectedPoliticalBodyType) {
+        this.selectedPoliticalBodyType = selectedPoliticalBodyType;
+        if (selectedPoliticalBodyType == null) {
+            disableCreateAdminButton = true;
+        }
+    }
+
+    public List<PoliticalBodyAdminExtended> getPoliticalBodyAdmins() {
+        return politicalBodyAdmins;
+    }
+
+    public void setPoliticalBodyAdmins(List<PoliticalBodyAdminExtended> politicalBodyAdmins) {
+        this.politicalBodyAdmins = politicalBodyAdmins;
+    }
+
+    public PoliticalBodyAdmin getSelectedPoliticalBodyAdmin() {
+        return selectedPoliticalBodyAdmin;
+    }
+
+    public boolean isEditPersonAllowed() {
+        if (selectedPerson == null || selectedPerson.getId() == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setSelectedPoliticalBodyAdmin(PoliticalBodyAdmin selectedPoliticalBodyAdmin) {
+        try {
+            System.out.println("selectedPoliticalBodyAdmin=" + selectedPoliticalBodyAdmin);
+            this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
+            this.selectedPerson = adminService.getPersonById(selectedPoliticalBodyAdmin.getPerson().getId());
+            this.selectedPoliticalBodyType = adminService.getPoliticalBodyTypeById(selectedPoliticalBodyAdmin.getPoliticalBodyType().getId());
+            if (selectedPoliticalBodyAdmin.getParty() != null) {
+                this.selectedPoliticalParty = adminService.getPartyById(selectedPoliticalBodyAdmin.getParty().getId());
+            }
+            System.out.println("selectedPerson=" + selectedPerson);
+            System.out.println("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
+            showListPanel = false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public boolean isEnableRightSidePanel() {
+        return enableRightSidePanel;
+    }
+
+    public void setEnableRightSidePanel(boolean enableRightSidePanel) {
+        this.enableRightSidePanel = enableRightSidePanel;
+    }
+
+    public boolean isShowListPanel() {
+        return showListPanel;
+    }
+
+    public void setShowListPanel(boolean showListPanel) {
+        this.showListPanel = showListPanel;
+    }
+
+    public Person getSelectedPerson() {
+        return selectedPerson;
+    }
+
+    public void setSelectedPerson(Person selectedPerson) {
+        this.selectedPerson = selectedPerson;
+    }
+
+    public List<Person> getPersonSearchResults() {
+        return personSearchResults;
+    }
+
+    public void setPersonSearchResults(List<Person> personSearchResults) {
+        this.personSearchResults = personSearchResults;
+    }
+
+    public boolean isDisableCreateAdminButton() {
+        return disableCreateAdminButton;
+    }
+
+    public void setDisableCreateAdminButton(boolean disableCreateAdminButton) {
+        this.disableCreateAdminButton = disableCreateAdminButton;
+    }
+
+    public String getCreateAdminButtonTitle() {
+        return createAdminButtonTitle;
+    }
+
+    public void setCreateAdminButtonTitle(String createAdminButtonTitle) {
+        this.createAdminButtonTitle = createAdminButtonTitle;
+    }
+
+    public Party getSelectedPoliticalParty() {
+        return selectedPoliticalParty;
+    }
+
+    public void setSelectedPoliticalParty(Party selectedPoliticalParty) {
+        this.selectedPoliticalParty = selectedPoliticalParty;
     }
 }

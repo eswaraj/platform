@@ -18,14 +18,18 @@ import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 import com.eswaraj.domain.repo.PartyRepository;
+import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 
@@ -58,6 +62,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PartyRepository partyRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -262,6 +269,11 @@ public class AdminServiceImpl implements AdminService {
         return dbPoliticalTypes;
     }
 
+    @Override
+    public List<PoliticalBodyType> getAllPoliticalBodyTypeOfLocation(Long locationId) throws ApplicationException {
+        return politicalBodyTypeRepository.getAllPoliticalBodyTypesOfLocation(locationId);
+    }
+
     private <T> List<T> convertToList(EndResult<T> dbResult) {
         List<T> returnList = new ArrayList<>();
         for (T oneT : dbResult) {
@@ -279,6 +291,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public PoliticalBodyType getPoliticalBodyTypeById(Long politicalBodyTypeId) throws ApplicationException {
+        return politicalBodyTypeRepository.findOne(politicalBodyTypeId);
+    }
+
+
+    @Override
     public List<Party> getAllParties() throws ApplicationException {
         List<Party> parties = partyRepository.getAllParties();
         return parties;
@@ -290,8 +308,43 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Party getPartyById(Long partyId) throws ApplicationException {
+        return partyRepository.findOne(partyId);
+    }
+
+    @Override
     public List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException {
         System.out.println("Searching for Name : " + "name:*" + name + "*");
         return convertToList(locationRepository.searchLocationByLocationName("name:*" + name + "*"));
     }
+
+    @Override
+    public List<PoliticalBodyAdminExtended> getPoliticalAdminOfLocationAndAdminType(Long locationId, Long politicalBodyAdminTypeId) throws ApplicationException {
+        System.out.println("locationId : " + locationId + ", politicalBodyAdminTypeId:" + politicalBodyAdminTypeId);
+        EndResult<PoliticalBodyAdminExtended> result = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(locationId, politicalBodyAdminTypeId);
+        return convertToList(result);
+    }
+
+    @Override
+    public List<Person> searchPersonByName(String name) throws ApplicationException {
+        return personRepository.searchPersonByName("name:*" + name + "*");
+    }
+
+    @Override
+    public Person savePerson(Person person) throws ApplicationException {
+        return personRepository.save(person);
+    }
+
+    @Override
+    public PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        return politicalBodyAdminRepository.save(politicalBodyAdmin);
+    }
+
+    @Override
+    public Person getPersonById(Long personId) throws ApplicationException {
+        return personRepository.findOne(personId);
+    }
+
+
+
 }

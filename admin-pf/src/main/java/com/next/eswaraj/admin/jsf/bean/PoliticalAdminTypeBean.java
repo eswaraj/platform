@@ -68,6 +68,9 @@ public class PoliticalAdminTypeBean extends BaseBean {
     }
 
     public List<PoliticalBodyType> getPoliticalBodyTypes() {
+        if (politicalBodyTypes == null) {
+            init();
+        }
         return politicalBodyTypes;
     }
 
@@ -86,6 +89,9 @@ public class PoliticalAdminTypeBean extends BaseBean {
     }
 
     public List<LocationType> getLocationTypes() {
+        if (locationTypes == null) {
+            init();
+        }
         return locationTypes;
     }
 

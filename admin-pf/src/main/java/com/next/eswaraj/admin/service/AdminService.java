@@ -8,8 +8,11 @@ import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 
 public interface AdminService {
 
@@ -43,11 +46,27 @@ public interface AdminService {
 
     List<PoliticalBodyType> getAllPoliticalBodyTypes() throws ApplicationException;
 
+    List<PoliticalBodyType> getAllPoliticalBodyTypeOfLocation(Long locationId) throws ApplicationException;
+
     PoliticalBodyType savePoliticalBodyType(PoliticalBodyType politicalBodyType) throws ApplicationException;
+
+    PoliticalBodyType getPoliticalBodyTypeById(Long politicalBodyTypeId) throws ApplicationException;
 
     List<Party> getAllParties() throws ApplicationException;
 
     Party saveParty(Party party) throws ApplicationException;
 
+    Party getPartyById(Long partyId) throws ApplicationException;
+
     List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException;
+
+    List<PoliticalBodyAdminExtended> getPoliticalAdminOfLocationAndAdminType(Long locationid, Long politicalBodyAdminTypeId) throws ApplicationException;
+
+    PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException;
+
+    List<Person> searchPersonByName(String name) throws ApplicationException;
+
+    Person savePerson(Person person) throws ApplicationException;
+
+    Person getPersonById(Long personId) throws ApplicationException;
 }
