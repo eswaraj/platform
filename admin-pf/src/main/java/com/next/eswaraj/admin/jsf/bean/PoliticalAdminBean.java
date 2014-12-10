@@ -272,6 +272,7 @@ public class PoliticalAdminBean extends BaseBean {
                 refreshPoliticalBodyAdmins();
             }
         } catch (Exception e) {
+            sendErrorMessage("Error", e.getMessage());
             e.printStackTrace();
             logger.error("Error", e);
         }
