@@ -41,7 +41,9 @@
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="political_admin_form">
 			<p:panel id="mainPanel" header="Political Admin">
-            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+				<p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+
+
 				<h:panelGrid columns="8" id="buttonPanel">
 				</h:panelGrid>
 				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
@@ -117,7 +119,7 @@
 									</p:blockUI>
 									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form"
 										disabled="#{politicalAdminBean.disableCreateAdminButton}" actionListener="#{politicalAdminBean.createAdmin}"
-										styleClass="ui-priority-primary">
+										styleClass="ui-priority-primary" process="@this:createAdmin">
 									</p:commandButton>
 									<p:dataTable var="onePoliticalAdmin" value="#{politicalAdminBean.politicalBodyAdmins}">
 										<p:column headerText="Id">
@@ -148,7 +150,7 @@
 											<f:facet name="header">
 												<h:outputText value="Update" />
 											</f:facet>
-											<p:commandLink update="@form" title="Update" id="updateAdmin">
+											<p:commandLink update="@form" title="Update" id="updateAdmin" process="@this:updateAdmin">
 												<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 													height="20" />
 												<f:setPropertyActionListener value="#{onePoliticalAdmin.politicalBodyAdmin}"
@@ -179,7 +181,9 @@
 												<p:outputLabel value="Gender : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.gender}" />
 												<p:outputLabel value="Date Of Birth : " />
-												<h:outputText value="#{politicalAdminBean.selectedPerson.dob}" />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.dob}">
+													<f:convertDateTime pattern="dd-MMM-yyyy" />
+												</h:outputText>
 												<p:outputLabel value="Email : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.email}" />
 												<p:outputLabel value="LandLine 1 : " />
@@ -198,20 +202,24 @@
 											</h:panelGrid>
 
 										</h:panelGrid>
-                                      <p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
-                                            process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
-										
+										<p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
+											process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
+
 									</p:fieldset>
 
 
 									<p:fieldset legend="Admin Detail" style="margin-bottom:20px">
+									<p:message for="startDate" display="text" />
+									<p:message for="officeEmail" display="text" />
 										<h:panelGrid columns="4" cellpadding="5">
-                                            <p:outputLabel value="Political Body Type " />
-                                            <h:outputText value="#{politicalAdminBean.selectedPoliticalBodyType.name}" />
-                                            <p:outputLabel value="Location" />
-                                            <h:outputText value="#{politicalAdminBean.selectedLocationNode.data.location.name}" />
+											<p:outputLabel value="Political Body Type " />
+											<h:outputText value="#{politicalAdminBean.selectedPoliticalBodyType.name}" />
+											<p:outputLabel value="Location" />
+											<h:outputText value="#{politicalAdminBean.selectedLocationNode.data.location.name}" />
 											<p:outputLabel value="Office Email" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.email}" />
+											<p:inputText id="officeEmail" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.email}" validatorMessage="Not a valid email">
+					                            <f:validateRegex pattern="^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
+					                        </p:inputText>
 											<p:outputLabel value="Facebook Page" />
 											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbPage}" />
 											<p:outputLabel value="Facebook Account" />
@@ -227,18 +235,22 @@
 											<p:outputLabel value="Office Mobile2" />
 											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile2}" />
 											<p:outputLabel value="Start Date" />
-											<p:calendar value="#{politicalAdminBean.selectedPoliticalBodyAdmin.startDate}" pattern="dd-MMM-yyyy" />
+											<p:calendar id="startDate" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.startDate}" pattern="dd-MMM-yyyy"
+												required="true" requiredMessage="Start date can not be empty" />
 											<p:outputLabel value="End Date" />
 											<p:calendar value="#{politicalAdminBean.selectedPoliticalBodyAdmin.endDate}" pattern="dd-MMM-yyyy" />
+											
+											
 										</h:panelGrid>
 									</p:fieldset>
 									<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
-										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}"
+										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true" requiredMessage="Please select a Political Party"
 											value="#{politicalAdminBean.selectedPoliticalParty}">
 											<f:selectItem itemLabel="Select Party" itemValue="" />
 											<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
 												itemValue="#{oneReult}" />
 										</p:selectOneMenu>
+										<p:message for="politicalParty" display="text" />
 									</p:fieldset>
 									<h:panelGrid columns="2" id="saveCancelButtonPanelForAdmin">
 										<p:commandButton id="savePoliticalAdmin" value="Save Admin" process="@this:formPanel" update="@form"
@@ -267,11 +279,20 @@
 			</p:panel>
 			<p:dialog header="Save Person" widgetVar="personDialog" modal="true">
 				<p:outputPanel id="personDialogPanel">
+					<p:messages id="dialogMessages" showDetail="false" autoUpdate="true" closable="true" />
 					<h:panelGrid columns="4" id="personPanelGrid">
 						<p:outputLabel value="Name" />
-						<p:inputText id="name" value="#{politicalAdminBean.selectedPerson.name}" style="width:200px" />
+						<p:inputText id="name" value="#{politicalAdminBean.selectedPerson.name}" required="true"
+							requiredMessage="Name can not be empty" style="width:200px" />
 						<p:outputLabel value="Email" />
-						<p:inputText id="email" value="#{politicalAdminBean.selectedPerson.email}" style="width:200px" />
+						<p:inputText id="email" value="#{politicalAdminBean.selectedPerson.email}" style="width:200px"
+							validatorMessage="Not a valid email">
+							<f:validateRegex pattern="^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
+						</p:inputText>
+						<p:outputLabel value="Date of Birth" />
+						<p:calendar value="#{politicalAdminBean.selectedPerson.dob}" pattern="dd-MMM-yyyy" style="width:200px" />
+						<p:outputLabel value="Voter Id" />
+						<p:inputText id="volterId" value="#{politicalAdminBean.selectedPerson.voterId}" style="width:200px" />
 						<p:outputLabel value="LandLine 1" />
 						<p:inputText id="landline1" value="#{politicalAdminBean.selectedPerson.landlineNumber1}" style="width:200px" />
 						<p:outputLabel value="LandLine 2" />
@@ -285,11 +306,12 @@
 
 					</h:panelGrid>
 					<h:panelGrid columns="2" id="saveCancelButtonPanel">
-						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form"
-							actionListener="#{politicalAdminBean.savePerson}" styleClass="ui-priority-primary">
+						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form:formPanel"
+							ajax="true" actionListener="#{politicalAdminBean.savePerson}"
+							oncomplete="if(!args.validationFailed) PF('personDialog').hide();" styleClass="ui-priority-primary">
 						</p:commandButton>
 						<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{politicalAdminBean.cancel}"
-							styleClass="ui-priority-primary" process="@this:personDialogPanel">
+							styleClass="ui-priority-primary" process="@this:cancel">
 						</p:commandButton>
 						<p:blockUI block="@form" trigger="savePerson">Saving<br />
 							<p:graphicImage width="80"

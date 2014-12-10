@@ -245,6 +245,7 @@ public class PoliticalAdminBean extends BaseBean {
             selectedPerson = adminService.savePerson(selectedPerson);
             logger.info("Saved Person " + selectedPerson);
         } catch (Exception e) {
+            sendErrorMessage("Error", e.getMessage());
             e.printStackTrace();
             logger.error("Error", e);
         }
@@ -262,12 +263,14 @@ public class PoliticalAdminBean extends BaseBean {
         selectedPoliticalBodyAdmin.setParty(selectedPoliticalParty);
         try {
             if (selectedPoliticalBodyAdmin.getParty() == null) {
-                sendErrorMessage("Error", "Please Select a Party");
+                sendErrorMessage("political_admin_form:politicalParty", "Error", "Please Select a Party");
             }
-            selectedPoliticalBodyAdmin = adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin);
-            showListPanel = true;
-            sendInfoMessage("Success", "Admin Saved Succesfully");
-            refreshPoliticalBodyAdmins();
+            if (isValidInput()) {
+                selectedPoliticalBodyAdmin = adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin);
+                showListPanel = true;
+                sendInfoMessage("Success", "Admin Saved Succesfully");
+                refreshPoliticalBodyAdmins();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("Error", e);
