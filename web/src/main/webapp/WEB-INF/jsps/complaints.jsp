@@ -22,6 +22,13 @@
 
 							</head>
                             <body ng-controller="complaintsController">
+								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
+									opacity: 0.4;
+									position: fixed;
+									height: 100%;
+									width: 100%;
+									z-index: -1;
+								">
                                 <div class="outerwrapper main_content_page">
                                     <jsp:include page="header.jsp" />
                                     <div class="container-fluid">

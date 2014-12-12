@@ -12,6 +12,8 @@ margin-top: 0px;
 	width: 100%;
 	float: left;
 	position: relative;
+	background-color: #FFF;
+	cursor: pointer;
 }
 
 .list-row:hover {
@@ -349,6 +351,7 @@ text-decoration:none;
     visibility: hidden;*/
 	float: left;
 	width: 100%;
+	background-color: #FFF;
 }
 	
 .innerdiv-box-shadow{
