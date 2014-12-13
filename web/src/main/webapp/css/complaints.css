@@ -649,7 +649,7 @@ width: 37%;
 height: 30px;
 background-color: #FD6B37;
 color: #FFFFFF;
-border-radius: 3px;
+border-radius: 10px;
 }
 
 .text-footer{
@@ -865,14 +865,6 @@ margin-top: 15px;
 margin-bottom: 15px;
 border: 0;
 border-top: 1px solid #CDCDCD;
-}
-
-.dropdownlist{
-height: 30px;
-background-color: #FD6B37;
-color: #FFFFFF;
-border-radius: 10px;
-width: 100%;
 }
 
 .close-btn {
