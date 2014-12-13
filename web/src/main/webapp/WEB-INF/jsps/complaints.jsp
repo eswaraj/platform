@@ -73,7 +73,7 @@
 																<strong class="filter_temporal">Filter by Time</strong>
 															</p>
 
-															<select class="select dropdownlist">
+															<select class="select dropdownlist dlist_width">
 																<option selected>Select</option>
 																<option>Today</option>
 																<option>Yesterday</option>
@@ -89,7 +89,7 @@
 															<p>
 																<strong class="filter_spatial">Filter by Location</strong>
 															</p>
-															<select class="select dropdownlist">
+															<select class="select dropdownlist dlist_width">
 																<option selected>Select</option>
 																<option>Cessna Business Park main road</option>
 																<option>Mahadevapura, More Mall</option>
