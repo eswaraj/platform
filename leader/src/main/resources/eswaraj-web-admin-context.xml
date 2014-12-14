@@ -28,6 +28,11 @@
             </util:properties>
         </property>
     </bean>
+    <!-- Redis related -->
+    <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
+        p:host-name="${redis_server}" p:port="${redis_port}" 
+        />
+    <bean 
     <bean id="redisTemplate" 
         class="org.springframework.data.redis.core.RedisTemplate" 
         p:connection-factory-ref="jedisConnFactory" 
