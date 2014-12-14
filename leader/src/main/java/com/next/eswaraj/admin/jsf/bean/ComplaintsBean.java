@@ -45,16 +45,44 @@ public class ComplaintsBean {
             complaints = adminService.getPoliticalAdminComplaintsAll(84069L);
             for (ComplaintSearchResult oneComplaintSearchResult : complaints) {
                 System.out.println("Complaint : " + oneComplaintSearchResult.getComplaint().getId());
-                for (Location oneLocation : oneComplaintSearchResult.getLocation()) {
-                    System.out.println("   Location : " + oneLocation.getId());
+                if (oneComplaintSearchResult.getLocation() != null) {
+                    System.out.println("  Location Class : " + oneComplaintSearchResult.getLocation().getClass());
+                    try{
+                        for (Location oneLocation : oneComplaintSearchResult.getLocation()) {
+                            System.out.println("   Location : " + oneLocation.getId());
+                        }
+
+                    }catch(Exception ex){
+                        System.out.println("   Location(EX) : " + oneComplaintSearchResult.getLocation());
+                    }
                 }
-                for (Person oneComplaintLoggedByPerson : oneComplaintSearchResult.getComplaintLoggedByPerson()) {
-                    System.out.println("   ComplaintLoggedByPerson : " + oneComplaintLoggedByPerson.getId());
+                if (oneComplaintSearchResult.getComplaintLoggedByPerson() != null) {
+                    System.out.println("  Person Class : " + oneComplaintSearchResult.getComplaintLoggedByPerson().getClass());
+                    try {
+                        for (Person onePerson : oneComplaintSearchResult.getComplaintLoggedByPerson()) {
+                            System.out.println("   Person : " + onePerson.getId());
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("   Person(EX) : " + oneComplaintSearchResult.getComplaintLoggedByPerson());
+                    }
                 }
-                for (Photo onePhoto : oneComplaintSearchResult.getComplaintPhoto()) {
-                    System.out.println("   onePhoto : " + onePhoto.getId());
+
+                if (oneComplaintSearchResult.getComplaintPhoto() != null) {
+                    System.out.println("  Photo Class : " + oneComplaintSearchResult.getComplaintPhoto().getClass());
+                    try {
+                        for (Photo onePhoto : oneComplaintSearchResult.getComplaintPhoto()) {
+                            System.out.println("   Photo : " + onePhoto.getId());
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("   Photo(EX) : " + oneComplaintSearchResult.getComplaintPhoto());
+                    }
                 }
-                System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
+                try {
+                        System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
+                } catch (Exception ex) {
+                    System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin());
+                }
+                
 
             }
         } catch (Exception e) {

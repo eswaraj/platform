@@ -1,9 +1,8 @@
 package com.eswaraj.domain.nodes.extended;
 
-import java.util.List;
-
 import org.springframework.data.neo4j.annotation.QueryResult;
 import org.springframework.data.neo4j.annotation.ResultColumn;
+import org.springframework.data.neo4j.conversion.EndResult;
 
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Location;
@@ -18,15 +17,15 @@ public interface ComplaintSearchResult {
     Complaint getComplaint();
 
     @ResultColumn("location")
-    List<Location> getLocation();
+    EndResult<Location> getLocation();
 
     @ResultColumn("complaintPoliticalAdmin")
     ComplaintPoliticalAdmin getComplaintPoliticalAdmin();
 
     @ResultColumn("person")
-    List<Person> getComplaintLoggedByPerson();
+    EndResult<Person> getComplaintLoggedByPerson();
 
     @ResultColumn("photo")
-    List<Photo> getComplaintPhoto();
+    EndResult<Photo> getComplaintPhoto();
 
 }
