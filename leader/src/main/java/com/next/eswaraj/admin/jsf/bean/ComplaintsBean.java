@@ -12,9 +12,9 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
-import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -48,7 +48,7 @@ public class ComplaintsBean {
                 for (Location oneLocation : oneComplaintSearchResult.getLocation()) {
                     System.out.println("   Location : " + oneLocation.getId());
                 }
-                for (ComplaintLoggedByPerson oneComplaintLoggedByPerson : oneComplaintSearchResult.getComplaintLoggedByPerson()) {
+                for (Person oneComplaintLoggedByPerson : oneComplaintSearchResult.getComplaintLoggedByPerson()) {
                     System.out.println("   ComplaintLoggedByPerson : " + oneComplaintLoggedByPerson.getId());
                 }
                 for (Photo onePhoto : oneComplaintSearchResult.getComplaintPhoto()) {
