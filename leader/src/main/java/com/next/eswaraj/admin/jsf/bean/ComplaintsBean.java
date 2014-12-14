@@ -45,6 +45,9 @@ public class ComplaintsBean {
     }
 
     public List<ComplaintSearchResult> getComplaints() {
+        if (complaints == null || complaints.isEmpty()) {
+            init();
+        }
         return complaints;
     }
 
