@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.next.eswaraj.admin.service.AdminService;
+import com.next.eswaraj.web.session.SessionUtil;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
@@ -20,6 +21,9 @@ public class ComplaintsBean {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private SessionUtil sessionUtil;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -30,7 +34,10 @@ public class ComplaintsBean {
     @PostConstruct
     public void init() {
         try {
-            logger.info("Getting Location From DB");
+            logger.info("Getting Complaints From DB");
+            // HttpServletRequest httpServletRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            // UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+            complaints = adminService.getPoliticalAdminComplaintsAll(84069L);
         } catch (Exception e) {
             e.printStackTrace();
         }
