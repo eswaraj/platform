@@ -12,6 +12,8 @@ margin-top: 0px;
 	width: 100%;
 	float: left;
 	position: relative;
+	background-color: #FFF;
+	cursor: pointer;
 }
 
 .list-row:hover {
@@ -349,6 +351,7 @@ text-decoration:none;
     visibility: hidden;*/
 	float: left;
 	width: 100%;
+	background-color: #FFF;
 }
 	
 .innerdiv-box-shadow{
@@ -646,7 +649,7 @@ width: 37%;
 height: 30px;
 background-color: #FD6B37;
 color: #FFFFFF;
-border-radius: 3px;
+border-radius: 10px;
 }
 
 .text-footer{
@@ -839,7 +842,7 @@ background-color: #5bc0de;
 .list-group-item:first-child {
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
-margin-top: 5%;
+margin-top: 2%;
 }
 
 .list-group-item:last-child {
@@ -862,14 +865,6 @@ margin-top: 15px;
 margin-bottom: 15px;
 border: 0;
 border-top: 1px solid #CDCDCD;
-}
-
-.dropdownlist{
-height: 30px;
-background-color: #FD6B37;
-color: #FFFFFF;
-border-radius: 10px;
-width: 100%;
 }
 
 .close-btn {
