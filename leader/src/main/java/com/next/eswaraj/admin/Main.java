@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -94,9 +95,22 @@ public class Main extends SpringBootServletInitializer implements SocialConfigur
     }
 
     @Bean
-    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
-        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet);
-        registration.addUrlMappings("/");
+    public DispatcherServlet dispatcherServlet() {
+        return new DispatcherServlet();
+    }
+
+    /**
+     * Register dispatcherServlet programmatically
+     * 
+     * @return ServletRegistrationBean
+     */
+    @Bean
+    public ServletRegistrationBean dispatcherServletRegistration() {
+
+        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet(), "/");
+
+        registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
+
         return registration;
     }
 
