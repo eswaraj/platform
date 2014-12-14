@@ -10,14 +10,14 @@
 <configuration>
   <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
-    <File>${catalina.home}/logs/eswaraj-admin.log</File>
+    <File>${catalina.home}/logs/eswaraj-leader.log</File>
     <Encoding>UTF-8</Encoding>
     <encoder>
       <pattern>%d %t %p [%c] - %m%n</pattern>
     </encoder>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <maxIndex>20</maxIndex>
-      <FileNamePattern>${catalina.home}/logs/eswaraj-admin.log.%i</FileNamePattern>
+      <FileNamePattern>${catalina.home}/logs/eswaraj-leader.log.%i</FileNamePattern>
     </rollingPolicy>
     <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
       <MaxFileSize>50MB</MaxFileSize>

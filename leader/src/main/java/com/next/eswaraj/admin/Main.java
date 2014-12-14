@@ -40,6 +40,7 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.next.eswaraj.web.filters.SpringLoginFilter;
 import com.next.eswaraj.web.session.SessionUtil;
@@ -49,6 +50,7 @@ import com.next.eswaraj.web.session.SessionUtil;
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
+@EnableWebMvc
 public class Main extends SpringBootServletInitializer implements SocialConfigurer {
 
 
