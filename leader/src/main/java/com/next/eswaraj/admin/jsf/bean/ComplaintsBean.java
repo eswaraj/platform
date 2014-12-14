@@ -46,6 +46,10 @@ public class ComplaintsBean {
 
     }
 
+    public void cancel() {
+        showList = true;
+    }
+
     public List<ComplaintSearchResult> getComplaints() {
         if (complaints == null || complaints.isEmpty()) {
             init();
