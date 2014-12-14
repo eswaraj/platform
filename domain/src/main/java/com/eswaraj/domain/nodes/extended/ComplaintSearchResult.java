@@ -21,7 +21,7 @@ public interface ComplaintSearchResult {
     List<Location> getLocation();
 
     @ResultColumn("complaintPoliticalAdmin")
-    List<ComplaintPoliticalAdmin> getComplaintPoliticalAdmin();
+    ComplaintPoliticalAdmin getComplaintPoliticalAdmin();
 
     @ResultColumn("complaintLoggedByPerson")
     List<ComplaintLoggedByPerson> getComplaintLoggedByPerson();

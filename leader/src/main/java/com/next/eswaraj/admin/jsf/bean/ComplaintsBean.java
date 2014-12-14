@@ -15,7 +15,6 @@ import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
-import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -55,9 +54,7 @@ public class ComplaintsBean {
                 for (Photo onePhoto : oneComplaintSearchResult.getComplaintPhoto()) {
                     System.out.println("   onePhoto : " + onePhoto.getId());
                 }
-                for (ComplaintPoliticalAdmin oneComplaintPoliticalAdmin : oneComplaintSearchResult.getComplaintPoliticalAdmin()) {
-                    System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintPoliticalAdmin.getId());
-                }
+                System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
 
             }
         } catch (Exception e) {
