@@ -40,6 +40,7 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.next.eswaraj.web.filters.SpringLoginFilter;
@@ -82,11 +83,20 @@ public class Main extends SpringBootServletInitializer implements SocialConfigur
         registry.addConnectionFactory(new FacebookConnectionFactory(facebookAppId, facebookAppSecret));
         return registry;
     }
+
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
         FacesServlet servlet = new FacesServlet();
 
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(servlet, "*.jsf", "*.xhtml");
+
+        return servletRegistrationBean;
+    }
+
+    @Bean
+    public ServletRegistrationBean dispatcherServletRegistrationBean() {
+        DispatcherServlet dispatcherServlet = new DispatcherServlet();
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/");
         return servletRegistrationBean;
     }
 
