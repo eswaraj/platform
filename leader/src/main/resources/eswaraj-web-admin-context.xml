@@ -28,6 +28,9 @@
             </util:properties>
         </property>
     </bean>
+    <bean 
+    id="stringRedisSerializer" 
+    class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
     <!-- Redis related -->
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
         p:host-name="${redis_server}" p:port="${redis_port}" 
