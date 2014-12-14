@@ -7,8 +7,8 @@ import org.springframework.data.neo4j.annotation.ResultColumn;
 
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
-import com.eswaraj.domain.nodes.relationships.ComplaintPhoto;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 
 @QueryResult
@@ -21,12 +21,12 @@ public interface ComplaintSearchResult {
     List<Location> getLocation();
 
     @ResultColumn("complaintPoliticalAdmin")
-    ComplaintPoliticalAdmin getComplaintPoliticalAdmin();
+    List<ComplaintPoliticalAdmin> getComplaintPoliticalAdmin();
 
     @ResultColumn("complaintLoggedByPerson")
     List<ComplaintLoggedByPerson> getComplaintLoggedByPerson();
 
-    @ResultColumn("complaintPhoto")
-    List<ComplaintPhoto> getComplaintPhoto();
+    @ResultColumn("photo")
+    List<Photo> getComplaintPhoto();
 
 }

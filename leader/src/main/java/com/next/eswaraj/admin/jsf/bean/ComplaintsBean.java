@@ -11,7 +11,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
+import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -40,6 +44,22 @@ public class ComplaintsBean {
             // HttpServletRequest httpServletRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
             // UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
             complaints = adminService.getPoliticalAdminComplaintsAll(84069L);
+            for (ComplaintSearchResult oneComplaintSearchResult : complaints) {
+                System.out.println("Complaint : " + oneComplaintSearchResult.getComplaint().getId());
+                for (Location oneLocation : oneComplaintSearchResult.getLocation()) {
+                    System.out.println("   Location : " + oneLocation.getId());
+                }
+                for (ComplaintLoggedByPerson oneComplaintLoggedByPerson : oneComplaintSearchResult.getComplaintLoggedByPerson()) {
+                    System.out.println("   ComplaintLoggedByPerson : " + oneComplaintLoggedByPerson.getId());
+                }
+                for (Photo onePhoto : oneComplaintSearchResult.getComplaintPhoto()) {
+                    System.out.println("   onePhoto : " + onePhoto.getId());
+                }
+                for (ComplaintPoliticalAdmin oneComplaintPoliticalAdmin : oneComplaintSearchResult.getComplaintPoliticalAdmin()) {
+                    System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintPoliticalAdmin.getId());
+                }
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
