@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -49,6 +50,7 @@ import com.next.eswaraj.web.session.SessionUtil;
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
+@EnableAutoConfiguration
 public class Main extends SpringBootServletInitializer implements SocialConfigurer {
 
 
