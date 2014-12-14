@@ -16,7 +16,7 @@ body {
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Location">
 				<p:panelGrid columns="2">
-					<p:outputPanel id="listView">
+					<p:outputPanel id="listView" rendered="#{!complaintsBean.showList}">
 						<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}">
 							<p:column headerText="Id">
 								<h:outputText value="#{oneComplaint.complaint.id}" />
@@ -25,6 +25,9 @@ body {
 							<p:column headerText="Title">
 								<h:outputText value="#{oneComplaint.complaint.title}" />
 							</p:column>
+                            <p:column headerText="Description">
+                                <h:outputText value="#{oneComplaint.complaint.description}" />
+                            </p:column>
 							<p:column style="width:100px;">
                             <f:facet name="header">
                                 <h:outputText value="Update" />
@@ -40,7 +43,7 @@ body {
 
 						</p:dataTable>
 					</p:outputPanel>
-					<p:outputPanel id="formView" rendered="false">
+					<p:outputPanel id="formView" rendered="#{!complaintsBean.showList}">
 						<p:panelGrid columns="2">
 							<p:outputLabel value="Title"></p:outputLabel>
 							<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" style="width:200px" />

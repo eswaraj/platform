@@ -26,7 +26,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ComplaintSearchResult> getPoliticalAdminComplaintsAll(Long politicalAdminId) throws ApplicationException {
-        return convertToList(complaintRepository.searchAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, 0, 10));
+        return convertToList(complaintRepository.searchAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, 0, 1000));
     }
 
     private <T> List<T> convertToList(EndResult<T> dbResult) {

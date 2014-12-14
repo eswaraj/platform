@@ -31,6 +31,8 @@ public class ComplaintsBean {
 
     private ComplaintSearchResult selectedComplaint;
 
+    private boolean showList = true;
+
     @PostConstruct
     public void init() {
         try {
@@ -61,6 +63,15 @@ public class ComplaintsBean {
 
     public void setSelectedComplaint(ComplaintSearchResult selectedComplaint) {
         this.selectedComplaint = selectedComplaint;
+        showList = false;
+    }
+
+    public boolean isShowList() {
+        return showList;
+    }
+
+    public void setShowList(boolean showList) {
+        this.showList = showList;
     }
 
 }

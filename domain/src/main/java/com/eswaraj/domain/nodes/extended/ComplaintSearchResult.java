@@ -18,7 +18,7 @@ public interface ComplaintSearchResult {
     Complaint getComplaint();
 
     @ResultColumn("location")
-    Location getLocation();
+    List<Location> getLocation();
 
     @ResultColumn("complaintPoliticalAdmin")
     ComplaintPoliticalAdmin getComplaintPoliticalAdmin();
