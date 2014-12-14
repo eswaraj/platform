@@ -17,7 +17,7 @@ body {
 			<p:panel id="mainPanel" header="Location">
 				<p:panelGrid columns="2">
 					<p:outputPanel id="listView">
-						<p:dataTable var="oneComplaint" value="#{complaintBean.complaints}">
+						<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}">
 							<p:column headerText="Id">
 								<h:outputText value="#{oneComplaint.complaint.id}" />
 							</p:column>
@@ -33,7 +33,7 @@ body {
                                 <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
                                     height="20" />
                                 <f:setPropertyActionListener value="#{oneComplaint}"
-                                    target="#{complaintBean.selectedComplaint}" />
+                                    target="#{complaintsBean.selectedComplaint}" />
                             </p:commandLink>
                         </p:column>
 							
@@ -43,21 +43,21 @@ body {
 					<p:outputPanel id="formView">
 						<p:panelGrid columns="2">
 							<p:outputLabel value="Title"></p:outputLabel>
-							<h:outputText id="name" value="#{complaintBean.selectedComplaint.complaint.title}" style="width:200px" />
+							<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" style="width:200px" />
 
 							<p:outputLabel value="Description"></p:outputLabel>
-							<h:outputText id="description" value="#{complaintBean.selectedComplaint.complaint.description}" style="width:200px" />
+							<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}" style="width:200px" />
 
 							<p:outputLabel value="Latitude"></p:outputLabel>
-							<h:outputText id="latitude" value="#{complaintBean.selectedComplaint.complaint.latitude}" style="width:200px" />
+							<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.latitude}" style="width:200px" />
 
 							<p:outputLabel value="Longitude"></p:outputLabel>
-							<h:outputText id="longitude" value="#{complaintBean.selectedComplaint.complaint.longitude}" style="width:200px" />
+							<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}" style="width:200px" />
 
 						</p:panelGrid>
 					</p:outputPanel>
 					<p:commandButton id="searchHashTag" value="Search Hashtag Users" update="@form"
-						actionListener="#{complaintBean.saveComplaint}" styleClass="ui-priority-primary">
+						actionListener="#{complaintsBean.saveComplaint}" styleClass="ui-priority-primary">
 					</p:commandButton>
 				</p:panelGrid>
 			</p:panel>
