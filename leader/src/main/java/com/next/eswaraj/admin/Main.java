@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -50,7 +49,6 @@ import com.next.eswaraj.web.session.SessionUtil;
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
-@EnableAutoConfiguration
 public class Main extends SpringBootServletInitializer implements SocialConfigurer {
 
 
@@ -72,6 +70,8 @@ public class Main extends SpringBootServletInitializer implements SocialConfigur
     private String facebookAppId;
     @Value("${eswaraj_facebook_app_secret}")
     private String facebookAppSecret;
+    @Value("${db_url}")
+    private String dbUrl;
 
     @Bean
     public ConnectionFactoryLocator connectionFactoryLocator() {
@@ -95,7 +95,8 @@ public class Main extends SpringBootServletInitializer implements SocialConfigur
 
     @Bean
     public GraphDatabaseService graphDatabaseService() {
-        return new SpringRestGraphDatabase("http://localhost:7474/db/data");
+        System.out.println("****** Creating Graph Database Service for " + dbUrl);
+        return new SpringRestGraphDatabase(dbUrl);
     }
 
     @Bean(name = "neo4jTemplate")
