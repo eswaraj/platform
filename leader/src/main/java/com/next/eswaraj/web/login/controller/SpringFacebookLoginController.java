@@ -15,10 +15,10 @@ import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -26,7 +26,7 @@ import com.eswaraj.core.service.PersonService;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
 import com.eswaraj.web.dto.UserDto;
 
-@Controller
+@RestController
 public class SpringFacebookLoginController extends BaseSocialLoginController<Facebook> {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
