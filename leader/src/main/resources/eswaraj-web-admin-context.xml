@@ -28,6 +28,16 @@
             </util:properties>
         </property>
     </bean>
+    <bean id="redisTemplate" 
+        class="org.springframework.data.redis.core.RedisTemplate" 
+        p:connection-factory-ref="jedisConnFactory" 
+        p:keySerializer-ref="stringRedisSerializer"
+        />
+    
+    <bean id="stringRedisTemplate" 
+        class="org.springframework.data.redis.core.StringRedisTemplate" 
+        p:connection-factory-ref="jedisConnFactory" 
+        />
 
 
 </beans>
