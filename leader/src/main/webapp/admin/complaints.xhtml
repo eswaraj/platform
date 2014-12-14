@@ -22,7 +22,7 @@ body {
 								<h:outputText value="#{oneComplaint.complaint.id}" />
 							</p:column>
 
-							<p:column headerText="Name">
+							<p:column headerText="Title">
 								<h:outputText value="#{oneComplaint.complaint.title}" />
 							</p:column>
 							<p:column style="width:100px;">
@@ -40,7 +40,7 @@ body {
 
 						</p:dataTable>
 					</p:outputPanel>
-					<p:outputPanel id="formView">
+					<p:outputPanel id="formView" rendered="false">
 						<p:panelGrid columns="2">
 							<p:outputLabel value="Title"></p:outputLabel>
 							<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" style="width:200px" />
