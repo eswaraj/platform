@@ -94,10 +94,10 @@ public class Main extends SpringBootServletInitializer implements SocialConfigur
     }
 
     @Bean
-    public ServletRegistrationBean dispatcherServletRegistrationBean() {
-        DispatcherServlet dispatcherServlet = new DispatcherServlet();
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/");
-        return servletRegistrationBean;
+    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
+        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet);
+        registration.addUrlMappings("/");
+        return registration;
     }
 
     @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
