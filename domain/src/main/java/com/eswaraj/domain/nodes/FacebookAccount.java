@@ -9,6 +9,7 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class FacebookAccount extends BaseNode {
 
+    @Indexed(indexName = "FacebookUserNameIdx")
     private String userName;
 
     @Indexed(indexName = "FacebookUserIdIdx", unique = true)

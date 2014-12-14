@@ -1,0 +1,66 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+body {
+	font-size: 14px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="complaint_form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:panel id="mainPanel" header="Location">
+				<p:panelGrid columns="2">
+					<p:outputPanel id="listView">
+						<p:dataTable var="oneComplaint" value="#{complaintBean.complaints}">
+							<p:column headerText="Id">
+								<h:outputText value="#{oneComplaint.complaint.id}" />
+							</p:column>
+
+							<p:column headerText="Name">
+								<h:outputText value="#{oneComplaint.complaint.title}" />
+							</p:column>
+							<p:column style="width:100px;">
+                            <f:facet name="header">
+                                <h:outputText value="Update" />
+                            </f:facet>
+                            <p:commandLink update="@form" title="View">
+                                <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+                                    height="20" />
+                                <f:setPropertyActionListener value="#{oneComplaint}"
+                                    target="#{complaintBean.selectedComplaint}" />
+                            </p:commandLink>
+                        </p:column>
+							
+
+						</p:dataTable>
+					</p:outputPanel>
+					<p:outputPanel id="formView">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Title"></p:outputLabel>
+							<h:outputText id="name" value="#{complaintBean.selectedComplaint.complaint.title}" style="width:200px" />
+
+							<p:outputLabel value="Description"></p:outputLabel>
+							<h:outputText id="description" value="#{complaintBean.selectedComplaint.complaint.description}" style="width:200px" />
+
+							<p:outputLabel value="Latitude"></p:outputLabel>
+							<h:outputText id="latitude" value="#{complaintBean.selectedComplaint.complaint.latitude}" style="width:200px" />
+
+							<p:outputLabel value="Longitude"></p:outputLabel>
+							<h:outputText id="longitude" value="#{complaintBean.selectedComplaint.complaint.longitude}" style="width:200px" />
+
+						</p:panelGrid>
+					</p:outputPanel>
+					<p:commandButton id="searchHashTag" value="Search Hashtag Users" update="@form"
+						actionListener="#{complaintBean.saveComplaint}" styleClass="ui-priority-primary">
+					</p:commandButton>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

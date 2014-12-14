@@ -24,5 +24,7 @@
 	    <module>web</module>
             <module>cache</module>
             <module>tasks</module>
+            <module>leader</module>
+
 	</modules>
 </project>
