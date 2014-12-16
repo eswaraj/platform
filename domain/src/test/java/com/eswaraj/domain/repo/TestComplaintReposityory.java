@@ -16,8 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.Complaint.Status;
+import com.eswaraj.domain.nodes.DataClient;
+import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
+import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.validator.exception.ValidationException;
 
 
@@ -38,6 +48,16 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
 	@Autowired DepartmentRepository departmentRepository;
 	@Autowired PersonRepository personRepository;
 	@Autowired ComplaintLoggedByPersonRepository complaintLoggedByPersonRepository;
+    @Autowired
+    PoliticalBodyAdminRepository politicalBodyAdminRepository;
+    @Autowired
+    PoliticalBodyTypeRepository politicalBodyTypeRepository;
+    @Autowired
+    LocationTypeRepository locationTypeRepository;
+    @Autowired
+    PartyRepository partyRepository;
+    @Autowired
+    ComplaintPoliticalAdminRepository complaintPoliticalAdminRepository;
 	
 	@Test
 	public void shouldSaveComplaint() {
@@ -331,5 +351,62 @@ public class TestComplaintReposityory extends BaseNeo4jEswarajTest{
         
         System.out.println("complaintLoggedByPerson1=" + complaintLoggedByPerson1.getId());
         System.out.println("complaintLoggedByPerson2=" + complaintLoggedByPerson2.getId());
+    }
+
+    @Test
+    public void queryDataUsingSearchComplaint(){
+        Person person = createPerson(personRepository, "Ravi Sharma");
+        DataClient dataClient = new DataClient();
+        dataClient.setName("India");
+        LocationType locationType = createLocationType(locationTypeRepository, "AC", null, dataClient, true);
+
+        PoliticalBodyType politicalBodyType = createPoliticalBodyType(politicalBodyTypeRepository, "MLA", "MLA", "MLA", locationType);
+
+        Location location = createLocation(locationRepository, "XYZ", locationType, null);
+        Party party = createParty(partyRepository, "AAP", "AAP");
+        PoliticalBodyAdmin politicalBodyAdmin = createPoliticalBodyAdmin(politicalBodyAdminRepository, true, "abc@gef.com", new Date(), new Date(), null, null, "", "", location, "", "", party,
+                person,
+                politicalBodyType, "s");
+
+        Category category1 = new Category("cat1");
+        category1.setRoot(true);
+        category1 = categoryRepository.save(category1);
+        Category category2 = new Category("cat2");
+        category2.setRoot(false);
+        category2.setParentCategory(category1);
+        category2 = categoryRepository.save(category2);
+        Set<Category> categories = new HashSet<>();
+        categories.add(category1);
+        categories.add(category2);
+
+        Complaint complaint = new Complaint();
+        complaint.setCategories(categories);
+        complaint.setDescription("Test Com");
+        complaint.setStatus(Status.Pending);
+        complaint.setTitle("Test Complaint");
+        complaint.setDateCreated(new Date());
+        complaint = complaintRepository.save(complaint);
+
+        ComplaintLoggedByPerson complaintLoggedByPerson = new ComplaintLoggedByPerson();
+        complaintLoggedByPerson.setComplaint(complaint);
+        complaintLoggedByPerson.setPerson(person);
+        complaintLoggedByPerson = complaintLoggedByPersonRepository.save(complaintLoggedByPerson);
+
+        ComplaintPoliticalAdmin complaintPoliticalAdmin = new ComplaintPoliticalAdmin();
+        complaintPoliticalAdmin.setComplaint(complaint);
+        complaintPoliticalAdmin.setPoliticalBodyAdmin(politicalBodyAdmin);
+        complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.Pending);
+        complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
+
+        List<ComplaintSearchResult> result = complaintRepository.getAllPagedComplaintsOfPoliticalAdmin(politicalBodyAdmin.getId(), 0, 10);
+        for (ComplaintSearchResult oneComplaintSearchResult : result) {
+            System.out.println(oneComplaintSearchResult.getComplaint());
+            System.out.println(oneComplaintSearchResult.getComplaintPoliticalAdmin());
+
+            for (Category oneCategory : oneComplaintSearchResult.getComplaint().getCategories()) {
+                System.out.println("oneCategory : " + oneCategory);
+            }
+        }
+
     }
 }

@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -23,6 +24,7 @@ public class Complaint extends BaseNode {
     private double lattitude;
     private double longitude;
     @RelatedTo(type = "BELONGS_TO")
+    @Fetch
     private Set<Category> categories;
     @RelatedTo(type = "SERVED_BY")
     private ExecutiveBodyAdmin administrator;

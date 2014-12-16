@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.repo.ComplaintRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -18,15 +20,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private ComplaintRepository complaintRepository;
+    @Autowired
+    private PoliticalBodyAdminRepository politicalBodyAdminRepository;
 
     @Override
     public List<Complaint> getPoliticalAdminComplaints(Long politicalAdminId) throws ApplicationException {
-        return complaintRepository.getAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, 0, 10);
+        return null;
     }
 
     @Override
     public List<ComplaintSearchResult> getPoliticalAdminComplaintsAll(Long politicalAdminId) throws ApplicationException {
-        return convertToList(complaintRepository.searchAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, 0, 1000));
+        return complaintRepository.searchAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, 0, 1000);
     }
 
     private <T> List<T> convertToList(EndResult<T> dbResult) {
@@ -35,6 +39,11 @@ public class AdminServiceImpl implements AdminService {
             returnList.add(oneT);
         }
         return returnList;
+    }
+
+    @Override
+    public List<PoliticalBodyAdmin> getUserPoliticalBodyAdmins(Long userId) throws ApplicationException {
+        return politicalBodyAdminRepository.getActivePoliticalAdminHistoryByUserId(userId);
     }
 
 }

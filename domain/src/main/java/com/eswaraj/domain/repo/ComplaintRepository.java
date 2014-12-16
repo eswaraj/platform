@@ -3,7 +3,6 @@ package com.eswaraj.domain.repo;
 import java.util.List;
 
 import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Category;
@@ -52,16 +51,18 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
             + "skip {1} limit {2}")
     public List<Complaint> getAllPagedComplaintsOfLocation(long locationId, long start, long end);
 
-    @Query("start politicalAdmin=node({0}) match complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
-            + "skip {1} limit {2}")
-    public List<Complaint> getAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
-
     @Query("start politicalAdmin=node({0}), category=node({1}) match category<-[:BELONGS_TO]-complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
             + "skip {2} limit {3}")
     public List<Complaint> getAllPagedComplaintsOfPoliticalAdminAndCategry(long politicalAdminId, long categoryId, long start, long end);
 
-    @Query("start politicalAdmin=node({0}) match complaint-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]->(politicalAdmin) with complaint,complaintPoliticalAdmin match (complaint)-[:AT]-(location) with complaint,complaintPoliticalAdmin, location match (complaint)-[:LODGED_BY]-(person) with complaint,complaintPoliticalAdmin, location,person match (complaint)-[:PHOTOS_OF_COMPLAINT]-(photo)  where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint,complaintPoliticalAdmin,location,person,photo order by complaint.dateCreated DESC"
+    // @Query("start politicalAdmin=node({0}) match complaint-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]->(politicalAdmin) with complaint,complaintPoliticalAdmin match (complaint)-[:AT]-(location) with complaint,complaintPoliticalAdmin, location match (complaint)-[:LODGED_BY]-(person) with complaint,complaintPoliticalAdmin, location,person optional match (complaint)-[:PHOTOS_OF_COMPLAINT]-(photo)  where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint,complaintPoliticalAdmin,location,person,photo order by complaint.dateCreated DESC"
+    @Query("start politicalAdmin=node({0}) match complaint-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]->(politicalAdmin) with complaint,complaintPoliticalAdmin match (complaint)-[:AT]-(location) with complaint,complaintPoliticalAdmin, location match (complaint)-[:LODGED_BY]-(person)  where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint,complaintPoliticalAdmin,location,person order by complaint.dateCreated DESC"
             + " skip {1} limit {2}")
-    public EndResult<ComplaintSearchResult> searchAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
+    public List<ComplaintSearchResult> searchAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
+    
+    @Query("start politicalAdmin=node({0}) match politicalAdmin<-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]-(complaint)-[:BELONGS_TO]-(categories) with complaint,complaintPoliticalAdmin,categories match (complaint)-[:LODGED_BY]-(person) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint,complaintPoliticalAdmin,collect(categories) ,collect(person) as persons order by complaint.dateCreated DESC "
+            + " skip {1} limit {2}")
+    public List<ComplaintSearchResult> getAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
+
 
 }

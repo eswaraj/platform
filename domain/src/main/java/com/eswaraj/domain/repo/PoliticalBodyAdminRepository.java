@@ -1,6 +1,7 @@
 package com.eswaraj.domain.repo;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.conversion.EndResult;
@@ -35,6 +36,9 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 
     @Query("start person=node({0}) match (person)<-[:IS]-(PoliticalAdmin) where PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' and PoliticalAdmin.active=true return PoliticalAdmin")
     Collection<PoliticalBodyAdmin> getActivePoliticalAdminHistoryByPerson(Person person);
+
+    @Query("start user=node({0}) match (user)-[:ATTACHED_TO]->(person)<-[:IS]-(PoliticalAdmin) where (PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' or PoliticalAdmin.__type__='PoliticalBodyAdmin') and PoliticalAdmin.active=true return PoliticalAdmin")
+    List<PoliticalBodyAdmin> getActivePoliticalAdminHistoryByUserId(Long userId);
 
     @Query("start complaint=node({0}) match (complaint)-[PSB:POLITICAL_SERVED_BY]->(PoliticalAdmin) where PoliticalAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' return PoliticalAdmin")
     Collection<PoliticalBodyAdmin> getAllPoliticalAdminOfComplaint(Complaint complaint);

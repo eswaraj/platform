@@ -3,6 +3,8 @@ package com.next.eswaraj.admin.jsf.bean;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +13,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import com.eswaraj.domain.nodes.Location;
-import com.eswaraj.domain.nodes.Person;
-import com.eswaraj.domain.nodes.Photo;
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.web.dto.UserDto;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -34,57 +36,20 @@ public class ComplaintsBean {
 
     private ComplaintSearchResult selectedComplaint;
 
+    private List<PoliticalBodyAdmin> userPoliticalBodyAdmins;
+    
+    private PoliticalBodyAdmin selectedPoliticalBodyAdmin;
+
     private boolean showList = true;
 
     @PostConstruct
     public void init() {
         try {
             logger.info("Getting Complaints From DB");
-            // HttpServletRequest httpServletRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            // UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
-            complaints = adminService.getPoliticalAdminComplaintsAll(84069L);
-            for (ComplaintSearchResult oneComplaintSearchResult : complaints) {
-                System.out.println("Complaint : " + oneComplaintSearchResult.getComplaint().getId());
-                if (oneComplaintSearchResult.getLocation() != null) {
-                    System.out.println("  Location Class : " + oneComplaintSearchResult.getLocation().getClass());
-                    try{
-                        for (Location oneLocation : oneComplaintSearchResult.getLocation()) {
-                            System.out.println("   Location : " + oneLocation.getId());
-                        }
+            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+            userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
 
-                    }catch(Exception ex){
-                        System.out.println("   Location(EX) : " + oneComplaintSearchResult.getLocation());
-                    }
-                }
-                if (oneComplaintSearchResult.getComplaintLoggedByPerson() != null) {
-                    System.out.println("  Person Class : " + oneComplaintSearchResult.getComplaintLoggedByPerson().getClass());
-                    try {
-                        for (Person onePerson : oneComplaintSearchResult.getComplaintLoggedByPerson()) {
-                            System.out.println("   Person : " + onePerson.getId());
-                        }
-                    } catch (Exception ex) {
-                        System.out.println("   Person(EX) : " + oneComplaintSearchResult.getComplaintLoggedByPerson());
-                    }
-                }
-
-                if (oneComplaintSearchResult.getComplaintPhoto() != null) {
-                    System.out.println("  Photo Class : " + oneComplaintSearchResult.getComplaintPhoto().getClass());
-                    try {
-                        for (Photo onePhoto : oneComplaintSearchResult.getComplaintPhoto()) {
-                            System.out.println("   Photo : " + onePhoto.getId());
-                        }
-                    } catch (Exception ex) {
-                        System.out.println("   Photo(EX) : " + oneComplaintSearchResult.getComplaintPhoto());
-                    }
-                }
-                try {
-                        System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
-                } catch (Exception ex) {
-                    System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin());
-                }
-                
-
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,6 +65,28 @@ public class ComplaintsBean {
             init();
         }
         return complaints;
+    }
+
+    public void onSelectPoliticalBodyAdmin() {
+
+        if (selectedPoliticalBodyAdmin == null) {
+
+        } else {
+            try {
+                complaints = adminService.getPoliticalAdminComplaintsAll(selectedPoliticalBodyAdmin.getId());
+                for (ComplaintSearchResult oneComplaintSearchResult : complaints) {
+                    System.out.println("Complaint : " + oneComplaintSearchResult.getComplaint().getId());
+                    try {
+                        System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
+                    } catch (Exception ex) {
+                        System.out.println("   oneComplaintPoliticalAdmin(Ex) : " + oneComplaintSearchResult.getComplaintPoliticalAdmin());
+                    }
+
+                }
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void setComplaints(List<ComplaintSearchResult> complaints) {
@@ -121,6 +108,22 @@ public class ComplaintsBean {
 
     public void setShowList(boolean showList) {
         this.showList = showList;
+    }
+
+    public List<PoliticalBodyAdmin> getUserPoliticalBodyAdmins() {
+        return userPoliticalBodyAdmins;
+    }
+
+    public void setUserPoliticalBodyAdmins(List<PoliticalBodyAdmin> userPoliticalBodyAdmins) {
+        this.userPoliticalBodyAdmins = userPoliticalBodyAdmins;
+    }
+
+    public PoliticalBodyAdmin getSelectedPoliticalBodyAdmin() {
+        return selectedPoliticalBodyAdmin;
+    }
+
+    public void setSelectedPoliticalBodyAdmin(PoliticalBodyAdmin selectedPoliticalBodyAdmin) {
+        this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
     }
 
 }
