@@ -364,7 +364,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     public List<PoliticalAdminComplaintDto> getAllComplaintsOfPoliticalAdmin(Long politicalAdminId, Long start, Long totalComplaints) throws ApplicationException {
         PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
         politicalBodyAdmin.setId(politicalAdminId);
-        List<Complaint> complaints = complaintRepository.getAllPagedComplaintsOfPoliticalAdmin(politicalAdminId, start, totalComplaints);
+        List<Complaint> complaints = complaintRepository.getPagedComplaintsOfPoliticalAdmin(politicalAdminId, start, totalComplaints);
         return convertComplaintList(complaints, politicalBodyAdmin);
     }
 
