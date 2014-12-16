@@ -45,11 +45,11 @@ public class ComplaintsBean {
     @PostConstruct
     public void init() {
         try {
-            logger.info("Getting Complaints From DB");
+            logger.info("Getting Political Admin Records From DB");
             HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
             userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
-
+            logger.info("Records : " + userPoliticalBodyAdmins);
         } catch (Exception e) {
             e.printStackTrace();
         }
