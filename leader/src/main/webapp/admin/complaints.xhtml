@@ -4,6 +4,7 @@
 	<h:head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 		<style>
 body {
 	font-size: 14px;
@@ -31,14 +32,17 @@ body {
                                     </p:blockUI>
 						<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}">
 							<p:column headerText="Id">
-								<h:outputText value="#{oneComplaint.complaint.id}" />
+								<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 							</p:column>
 
+                            <p:column headerText="Category">
+                                <h:outputText value="#{oneComplaint.rootCategory.name}" /> -> <h:outputText value="#{oneComplaint.subCategory.name}" />
+                            </p:column>
 							<p:column headerText="Title">
-								<h:outputText value="#{oneComplaint.complaint.title}" />
+								<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.title}" />
 							</p:column>
-							<p:column headerText="Description">
-								<h:outputText value="#{oneComplaint.complaint.description}" />
+							<p:column headerText="Status">
+								<h:outputText value="#{oneComplaint.complaintPoliticalAdmin.status}" />
 							</p:column>
 							<p:column style="width:100px;">
 								<f:facet name="header">
@@ -47,7 +51,7 @@ body {
 								<p:commandLink id="updateAndView" update="@form" title="View">
 									<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 										height="20" />
-									<f:setPropertyActionListener value="#{oneComplaint}" target="#{complaintsBean.selectedComplaint}" />
+									<f:setPropertyActionListener value="#{oneComplaint.complaintSearchResult}" target="#{complaintsBean.selectedComplaint}" />
 								</p:commandLink>
 								<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
                             <p:graphicImage width="80"
@@ -75,8 +79,8 @@ body {
 
 						</p:panelGrid>
 						<p:gmap center="#{complaintsBean.selectedComplaint.complaint.lattitude},#{complaintsBean.selectedComplaint.complaint.longitude}" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{complaintsBean.mapModel}" />
-						<p:galleria value="#{complaintsBean.images}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
-						    <p:graphicImage name="demo/images/nature/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+						<p:galleria value="#{complaintsBean.images}" var="image" panelWidth="800" panelHeight="513" showCaption="false">
+						    <p:graphicImage value="#{image}" alt="Image Description for #{image}" title="#{image}"/>
 						</p:galleria>
 						<p:dataTable var="onePerson" value="#{complaintsBean.complaintCreators}">
                             <p:column headerText="Name">

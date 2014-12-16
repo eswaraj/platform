@@ -1,7 +1,9 @@
 package com.next.eswaraj.admin.jsf.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -19,11 +21,13 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.web.dto.UserDto;
+import com.next.eswaraj.admin.jsf.dto.ComplaintSearchResultDto;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -39,7 +43,7 @@ public class ComplaintsBean {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private List<ComplaintSearchResult> complaints;
+    private List<ComplaintSearchResultDto> complaints;
 
     private ComplaintSearchResult selectedComplaint;
 
@@ -57,6 +61,8 @@ public class ComplaintsBean {
 
     private List<Person> complaintCreators;
 
+    private Map<Long, Category> categoryMap = new HashMap<Long, Category>();
+
     @PostConstruct
     public void init() {
         try {
@@ -65,6 +71,13 @@ public class ComplaintsBean {
             UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
             userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
             logger.info("Records : " + userPoliticalBodyAdmins);
+
+            List<Category> allCategories = adminService.getAllcategories();
+            logger.info("allCategories : " + allCategories);
+            for (Category oneCategory : allCategories) {
+                logger.info("oneCategory : " + oneCategory);
+                categoryMap.put(oneCategory.getId(), oneCategory);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,7 +88,7 @@ public class ComplaintsBean {
         showList = true;
     }
 
-    public List<ComplaintSearchResult> getComplaints() {
+    public List<ComplaintSearchResultDto> getComplaints() {
         if (complaints == null || complaints.isEmpty()) {
             init();
         }
@@ -88,8 +101,22 @@ public class ComplaintsBean {
 
         } else {
             try {
-                complaints = adminService.getPoliticalAdminComplaintsAll(selectedPoliticalBodyAdmin.getId());
+                List<ComplaintSearchResult> complaints = adminService.getPoliticalAdminComplaintsAll(selectedPoliticalBodyAdmin.getId());
                 for (ComplaintSearchResult oneComplaintSearchResult : complaints) {
+                    Category rootCategory = null;
+                    Category subCategory = null;
+                    for (Category oneCategory : oneComplaintSearchResult.getComplaint().getCategories()) {
+                        Category loadedCategory = categoryMap.get(oneCategory.getId());
+                        if (loadedCategory != null) {
+                            if(loadedCategory.isRoot()){
+                                rootCategory = loadedCategory;
+                            }else{
+                                subCategory = loadedCategory;
+                            }
+                        }
+                    }
+                    ComplaintSearchResultDto oneComplaintSearchResultDto = new ComplaintSearchResultDto(oneComplaintSearchResult, rootCategory, subCategory);
+                    this.complaints.add(oneComplaintSearchResultDto);
                     System.out.println("Complaint : " + oneComplaintSearchResult.getComplaint().getId());
                     try {
                         System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
@@ -104,7 +131,7 @@ public class ComplaintsBean {
         }
     }
 
-    public void setComplaints(List<ComplaintSearchResult> complaints) {
+    public void setComplaints(List<ComplaintSearchResultDto> complaints) {
         this.complaints = complaints;
     }
 

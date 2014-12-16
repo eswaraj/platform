@@ -3,6 +3,7 @@ package com.next.eswaraj.admin.service;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
@@ -20,4 +21,6 @@ public interface AdminService {
     List<Photo> getComplaintPhotos(Long complaintId) throws ApplicationException;
 
     List<Person> getComplaintCreators(Long complaintId) throws ApplicationException;
+
+    List<Category> getAllcategories() throws ApplicationException;
 }
