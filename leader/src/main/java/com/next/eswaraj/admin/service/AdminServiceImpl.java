@@ -70,7 +70,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Category> getAllcategories() throws ApplicationException {
-        return convertToList(categoryRepository.findAll());
+        return categoryRepository.getAllCategories();
     }
 
 }

@@ -27,4 +27,8 @@ public interface CategoryRepository extends GraphRepository<Category>{
 
     @Query("start complaint=node({0}) match (complaint)-[:BELONGS_TO]->(category) where category.__type__ = 'com.eswaraj.domain.nodes.Category' return category")
     public Collection<Category> getCategoriesOfComplaints(Complaint complaint);
+
+    @Query("match category where category.__type__ = 'com.eswaraj.domain.nodes.Category' or category.__type__ = 'Category' return category")
+    public List<Category> getAllCategories();
+
 }
