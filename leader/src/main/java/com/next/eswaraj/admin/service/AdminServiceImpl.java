@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.repo.ComplaintRepository;
+import com.eswaraj.domain.repo.PersonRepository;
+import com.eswaraj.domain.repo.PhotoRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 
 @Service
@@ -22,6 +26,10 @@ public class AdminServiceImpl implements AdminService {
     private ComplaintRepository complaintRepository;
     @Autowired
     private PoliticalBodyAdminRepository politicalBodyAdminRepository;
+    @Autowired
+    private PhotoRepository photoRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public List<Complaint> getPoliticalAdminComplaints(Long politicalAdminId) throws ApplicationException {
@@ -44,6 +52,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<PoliticalBodyAdmin> getUserPoliticalBodyAdmins(Long userId) throws ApplicationException {
         return politicalBodyAdminRepository.getActivePoliticalAdminHistoryByUserId(userId);
+    }
+
+    @Override
+    public List<Photo> getComplaintPhotos(Long complaintId) throws ApplicationException {
+        return photoRepository.getComplaintPhotos(complaintId);
+    }
+
+    @Override
+    public List<Person> getComplaintCreators(Long complaintId) throws ApplicationException {
+        return personRepository.getPersonsLoggedComplaint(complaintId);
     }
 
 }

@@ -44,11 +44,15 @@ body {
 								<f:facet name="header">
 									<h:outputText value="Update" />
 								</f:facet>
-								<p:commandLink update="@form" title="View">
+								<p:commandLink id="updateAndView" update="@form" title="View">
 									<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 										height="20" />
 									<f:setPropertyActionListener value="#{oneComplaint}" target="#{complaintsBean.selectedComplaint}" />
 								</p:commandLink>
+								<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
+                            <p:graphicImage width="80"
+                                value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+                        </p:blockUI>
 							</p:column>
 
 
@@ -64,15 +68,29 @@ body {
 								style="width:200px" />
 
 							<p:outputLabel value="Latitude"></p:outputLabel>
-							<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.latitude}" style="width:200px" />
+							<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.lattitude}" style="width:200px" />
 
 							<p:outputLabel value="Longitude"></p:outputLabel>
 							<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}" style="width:200px" />
 
 						</p:panelGrid>
+						<p:gmap center="#{complaintsBean.selectedComplaint.complaint.lattitude},#{complaintsBean.selectedComplaint.complaint.longitude}" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{complaintsBean.mapModel}" />
+						<p:galleria value="#{complaintsBean.images}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
+						    <p:graphicImage name="demo/images/nature/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+						</p:galleria>
+						<p:dataTable var="onePerson" value="#{complaintsBean.complaintCreators}">
+                            <p:column headerText="Name">
+                                <h:outputText value="#{onePerson.name}" />
+                            </p:column>
+                        </p:dataTable>
+												
 						<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{complaintsBean.cancel}"
 							styleClass="ui-priority-primary">
 						</p:commandButton>
+						<p:blockUI block="@form" trigger="cancel">Loading...<br />
+                            <p:graphicImage width="80"
+                                value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+                        </p:blockUI>
 					</p:outputPanel>
 				</p:panelGrid>
 			</p:panel>

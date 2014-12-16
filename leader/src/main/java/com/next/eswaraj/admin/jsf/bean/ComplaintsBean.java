@@ -1,11 +1,16 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.web.dto.UserDto;
@@ -41,6 +48,14 @@ public class ComplaintsBean {
     private PoliticalBodyAdmin selectedPoliticalBodyAdmin;
 
     private boolean showList = true;
+
+    private MapModel mapModel;
+
+    private List<Photo> complaintPhotos;
+
+    private List<String> images;
+
+    private List<Person> complaintCreators;
 
     @PostConstruct
     public void init() {
@@ -100,6 +115,23 @@ public class ComplaintsBean {
     public void setSelectedComplaint(ComplaintSearchResult selectedComplaint) {
         this.selectedComplaint = selectedComplaint;
         showList = false;
+        mapModel = new DefaultMapModel();
+        LatLng coord1 = new LatLng(selectedComplaint.getComplaint().getLattitude(), selectedComplaint.getComplaint().getLongitude());
+
+        // Basic marker
+        mapModel.addOverlay(new Marker(coord1, selectedComplaint.getComplaint().getTitle()));
+
+        try {
+            images = new ArrayList<String>();
+            complaintPhotos = adminService.getComplaintPhotos(selectedComplaint.getComplaint().getId());
+            complaintCreators = adminService.getComplaintCreators(selectedComplaint.getComplaint().getId());
+            for (Photo onePhoto : complaintPhotos) {
+                images.add(onePhoto.getOrgUrl());
+            }
+        } catch (ApplicationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public boolean isShowList() {
@@ -124,6 +156,38 @@ public class ComplaintsBean {
 
     public void setSelectedPoliticalBodyAdmin(PoliticalBodyAdmin selectedPoliticalBodyAdmin) {
         this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
+    }
+
+    public MapModel getMapModel() {
+        return mapModel;
+    }
+
+    public void setMapModel(MapModel mapModel) {
+        this.mapModel = mapModel;
+    }
+
+    public List<Photo> getComplaintPhotos() {
+        return complaintPhotos;
+    }
+
+    public void setComplaintPhotos(List<Photo> complaintPhotos) {
+        this.complaintPhotos = complaintPhotos;
+    }
+
+    public List<Person> getComplaintCreators() {
+        return complaintCreators;
+    }
+
+    public void setComplaintCreators(List<Person> complaintCreators) {
+        this.complaintCreators = complaintCreators;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
 }

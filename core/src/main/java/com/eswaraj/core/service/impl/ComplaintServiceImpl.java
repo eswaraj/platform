@@ -528,7 +528,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
     @Override
     public List<PhotoDto> getComplaintPhotos(Long complaintId) throws ApplicationException {
-        Collection<Photo> photos = photoRepository.getComplaintPhotos(complaintId);
+        List<Photo> photos = photoRepository.getComplaintPhotos(complaintId);
         logger.info("complaintPhotos : {}", photos);
         return photoConvertor.convertBeanList(photos);
     }
