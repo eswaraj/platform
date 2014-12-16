@@ -9,6 +9,9 @@
 body {
 	font-size: 14px;
 }
+.topAlignPanelColumns td {
+    vertical-align: top;
+}
 </style>
 	</h:head>
 	<h:body>
@@ -45,6 +48,11 @@ body {
 							<p:column headerText="Status">
 								<h:outputText value="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}" />
 							</p:column>
+                            <p:column headerText="Reported">
+                            <h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                                </h:outputText>
+                            </p:column>
 							<p:column style="width:100px;">
 								<f:facet name="header">
 									<h:outputText value="Update" />
@@ -65,20 +73,27 @@ body {
 						</p:dataTable>
 					</p:outputPanel>
 					<p:outputPanel id="formView" rendered="#{!complaintsBean.showList}">
-						<h:panelGrid columns="2">
-							<p:panelGrid columns="2">
+						<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+							<p:panelGrid columns="2" >
+							<f:facet name="header">
+							<h:outputText value="#{complaintsBean.selectedComplaint.complaint.title}"/>
+							</f:facet>
 								<p:outputLabel value="Title"></p:outputLabel>
-								<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" style="width:200px" />
+								<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" />
 
 								<p:outputLabel value="Description"></p:outputLabel>
-								<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}"
-									style="width:200px" />
+								<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}"/>
+
+                                <p:outputLabel value="Date Reported"></p:outputLabel>
+                                <h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                                </h:outputText>
 
 								<p:outputLabel value="Latitude"></p:outputLabel>
-								<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.lattitude}" style="width:200px" />
+								<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.lattitude}" />
 
 								<p:outputLabel value="Longitude"></p:outputLabel>
-								<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}" style="width:200px" />
+								<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}"  />
 
 							</p:panelGrid>
 							<p:gmap
