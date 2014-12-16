@@ -16,7 +16,7 @@ body {
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Complaints">
 				<p:panelGrid columns="2">
-					<p:outputPanel id="listView" rendered="#{!complaintsBean.showList}">
+					<p:outputPanel id="listView" rendered="#{complaintsBean.showList}">
 						<p:selectOneMenu id="politicalBodyAdmin" converter="#{politicalBodyAdminJsfConvertor}"
 							 value="#{complaintsBean.selectedPoliticalBodyAdmin}">
 							<f:selectItem itemLabel="Select One" itemValue="" />
