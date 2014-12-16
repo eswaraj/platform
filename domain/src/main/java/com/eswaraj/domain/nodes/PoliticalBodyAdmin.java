@@ -164,6 +164,13 @@ public class PoliticalBodyAdmin extends BaseNode {
     public void setUrlIdentifier(String urlIdentifier) {
         this.urlIdentifier = urlIdentifier;
     }
+    @Override
+    public String toString() {
+        return "PoliticalBodyAdmin [politicalBodyType=" + politicalBodyType + ", location=" + location + ", person=" + person + ", party=" + party + ", officeAddress=" + officeAddress
+                + ", homeAddress=" + homeAddress + ", email=" + email + ", fbPage=" + fbPage + ", fbAccount=" + fbAccount + ", twitterHandle=" + twitterHandle + ", landLine1=" + landLine1
+                + ", landLine2=" + landLine2 + ", mobile1=" + mobile1 + ", mobile2=" + mobile2 + ", startDate=" + startDate + ", endDate=" + endDate + ", active=" + active + ", urlIdentifier="
+                + urlIdentifier + ", id=" + id + "]";
+    }
 	
 	
 }
