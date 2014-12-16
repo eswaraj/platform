@@ -19,25 +19,26 @@ body {
 				<p:panelGrid columns="2">
 					<p:outputPanel id="listView" rendered="#{complaintsBean.showList}">
 						<p:selectOneMenu id="politicalBodyAdmin" converter="#{politicalBodyAdminJsfConvertor}"
-							 value="#{complaintsBean.selectedPoliticalBodyAdmin}">
+							value="#{complaintsBean.selectedPoliticalBodyAdmin}">
 							<f:selectItem itemLabel="Select One" itemValue="" />
-							<f:selectItems value="#{complaintsBean.userPoliticalBodyAdmins}" var="oneReult" itemLabel="#{oneReult.politicalBodyType.name}"
-								itemValue="#{oneReult}" />
+							<f:selectItems value="#{complaintsBean.userPoliticalBodyAdmins}" var="oneReult"
+								itemLabel="#{oneReult.politicalBodyType.name}" itemValue="#{oneReult}" />
 							<p:ajax event="valueChange" listener="#{complaintsBean.onSelectPoliticalBodyAdmin}" update="@form" />
 
 						</p:selectOneMenu>
-                        <p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
-                                        <p:graphicImage width="80"
-                                            value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
-                                    </p:blockUI>
+						<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
+							<p:graphicImage width="80"
+								value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+						</p:blockUI>
 						<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}">
 							<p:column headerText="Id">
 								<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 							</p:column>
 
-                            <p:column headerText="Category">
-                                <h:outputText value="#{oneComplaint.rootCategory.name}" /> -> <h:outputText value="#{oneComplaint.subCategory.name}" />
-                            </p:column>
+							<p:column headerText="Category">
+								<h:outputText value="#{oneComplaint.rootCategory.name}" /> -> <h:outputText
+									value="#{oneComplaint.subCategory.name}" />
+							</p:column>
 							<p:column headerText="Title">
 								<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.title}" />
 							</p:column>
@@ -51,50 +52,57 @@ body {
 								<p:commandLink id="updateAndView" update="@form" title="View">
 									<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 										height="20" />
-									<f:setPropertyActionListener value="#{oneComplaint.complaintSearchResult}" target="#{complaintsBean.selectedComplaint}" />
+									<f:setPropertyActionListener value="#{oneComplaint.complaintSearchResult}"
+										target="#{complaintsBean.selectedComplaint}" />
 								</p:commandLink>
 								<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
-                            <p:graphicImage width="80"
-                                value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
-                        </p:blockUI>
+									<p:graphicImage width="80"
+										value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+								</p:blockUI>
 							</p:column>
 
 
 						</p:dataTable>
 					</p:outputPanel>
 					<p:outputPanel id="formView" rendered="#{!complaintsBean.showList}">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="Title"></p:outputLabel>
-							<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" style="width:200px" />
+						<h:panelGrid columns="2">
+							<p:panelGrid columns="2">
+								<p:outputLabel value="Title"></p:outputLabel>
+								<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" style="width:200px" />
 
-							<p:outputLabel value="Description"></p:outputLabel>
-							<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}"
-								style="width:200px" />
+								<p:outputLabel value="Description"></p:outputLabel>
+								<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}"
+									style="width:200px" />
 
-							<p:outputLabel value="Latitude"></p:outputLabel>
-							<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.lattitude}" style="width:200px" />
+								<p:outputLabel value="Latitude"></p:outputLabel>
+								<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.lattitude}" style="width:200px" />
 
-							<p:outputLabel value="Longitude"></p:outputLabel>
-							<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}" style="width:200px" />
+								<p:outputLabel value="Longitude"></p:outputLabel>
+								<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}" style="width:200px" />
 
-						</p:panelGrid>
-						<p:gmap center="#{complaintsBean.selectedComplaint.complaint.lattitude},#{complaintsBean.selectedComplaint.complaint.longitude}" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{complaintsBean.mapModel}" />
+							</p:panelGrid>
+							<p:gmap
+                            center="#{complaintsBean.selectedComplaint.complaint.lattitude},#{complaintsBean.selectedComplaint.complaint.longitude}"
+                            zoom="13" type="HYBRID" style="width:400px;height:400px" model="#{complaintsBean.mapModel}" />
+						</h:panelGrid>
+
+						
 						<p:galleria value="#{complaintsBean.images}" var="image" panelWidth="800" panelHeight="513" showCaption="false">
-						    <p:graphicImage value="#{image}" alt="Image Description for #{image}" title="#{image}"/>
+							<p:graphicImage value="#{image}" alt="Image Description for #{image}" title="#{image}" />
 						</p:galleria>
 						<p:dataTable var="onePerson" value="#{complaintsBean.complaintCreators}">
-                            <p:column headerText="Name">
-                                <h:outputText value="#{onePerson.name}" />
-                            </p:column>
-                        </p:dataTable>
-												
+							<p:column headerText="Name">
+								<h:outputText value="#{onePerson.name}" />
+							</p:column>
+						</p:dataTable>
+
 						<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{complaintsBean.cancel}"
 							styleClass="ui-priority-primary">
 						</p:commandButton>
 						<p:blockUI block="@form" trigger="cancel">Loading...<br />
-                            <p:graphicImage width="80"
-                                value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
-                        </p:blockUI>
+							<p:graphicImage width="80"
+								value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+						</p:blockUI>
 					</p:outputPanel>
 				</p:panelGrid>
 			</p:panel>
