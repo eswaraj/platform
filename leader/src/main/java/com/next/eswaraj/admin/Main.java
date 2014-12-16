@@ -48,7 +48,8 @@ import com.next.eswaraj.web.filters.SpringLoginFilter;
 import com.next.eswaraj.web.session.SessionUtil;
 
 @Configuration
-@ComponentScan(basePackages = { "com.next.eswaraj.web.login.controller", "com.next.eswaraj.web.session", "com.next.eswaraj.admin.jsf.bean", "com.next.eswaraj.admin.service" })
+@ComponentScan(basePackages = { "com.next.eswaraj.web.login.controller", "com.next.eswaraj.web.session", "com.next.eswaraj.admin.jsf.bean", "com.next.eswaraj.admin.service",
+        "com.next.eswaraj.admin.jsf.convertors" })
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
