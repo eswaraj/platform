@@ -17,7 +17,7 @@ body {
 			<p:panel id="mainPanel" header="Location">
 				<p:panelGrid columns="2">
 					<p:outputPanel id="listView" rendered="#{!complaintsBean.showList}">
-						<p:selectOneMenu id="adminType" converter="#{politicalBodyAdminConvertor}"
+						<p:selectOneMenu id="adminType" converter="#{politicalBodyAdminJsfConvertor}"
 							 value="#{complaintsBean.selectedPoliticalBodyAdmin}">
 							<f:selectItem itemLabel="Select One" itemValue="" />
 							<f:selectItems value="#{complaintsBean.userPoliticalBodyAdmins}" var="oneReult" itemLabel="#{oneReult.politicalBodyType.name}"

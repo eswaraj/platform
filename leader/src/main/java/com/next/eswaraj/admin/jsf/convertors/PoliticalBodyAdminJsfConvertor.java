@@ -15,12 +15,12 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.next.eswaraj.admin.jsf.bean.ComplaintsBean;
 
 @Component
-public class PoliticalBodyAdminConvertor implements Converter {
+public class PoliticalBodyAdminJsfConvertor implements Converter {
 
     @Autowired
     private ComplaintsBean complaintsBean;
 
-    public PoliticalBodyAdminConvertor() {
+    public PoliticalBodyAdminJsfConvertor() {
     }
 
 
