@@ -102,6 +102,7 @@ public class ComplaintsBean {
         } else {
             try {
                 List<ComplaintSearchResult> complaints = adminService.getPoliticalAdminComplaintsAll(selectedPoliticalBodyAdmin.getId());
+                this.complaints = new ArrayList<ComplaintSearchResultDto>();
                 for (ComplaintSearchResult oneComplaintSearchResult : complaints) {
                     Category rootCategory = null;
                     Category subCategory = null;
