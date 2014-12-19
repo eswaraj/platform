@@ -46,6 +46,10 @@ public class ComplaintPoliticalAdmin extends BaseRelationship {
         this.status = status;
     }
 
+    public void setStatus(String status) {
+        this.status = PoliticalAdminComplaintStatus.valueOf(status);
+    }
+
     public boolean isViewed() {
         return viewed;
     }
@@ -60,6 +64,11 @@ public class ComplaintPoliticalAdmin extends BaseRelationship {
 
     public void setViewDate(Date viewDate) {
         this.viewDate = viewDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ComplaintPoliticalAdmin [complaint=" + complaint + ", politicalBodyAdmin=" + politicalBodyAdmin + ", status=" + status + ", viewed=" + viewed + ", viewDate=" + viewDate + "]";
     }
 
 }

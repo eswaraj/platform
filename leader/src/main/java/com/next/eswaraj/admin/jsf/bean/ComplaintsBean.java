@@ -99,10 +99,13 @@ public class ComplaintsBean extends BaseBean {
         try{
             selectedComplaint.getComplaintPoliticalAdmin();
             ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintPoliticalAdmin();
+            System.out.println("complaintPoliticalAdmin : " + complaintPoliticalAdmin);
             complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
+
             Complaint complaint = selectedComplaint.getComplaint();
             System.out.println("Saving Comment: " + comment);
-            if (comment != null && !comment.trim().equals("")) {
+            System.out.println("Selected politicalBodyAdmin = " + selectedPoliticalBodyAdmin);
+            if (comment != null && !comment.trim().equals("") && selectedPoliticalBodyAdmin != null) {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
                 UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
                 adminService.saveComplaintComment(complaint, selectedPoliticalBodyAdmin, userDto.getPerson().getId(), comment);

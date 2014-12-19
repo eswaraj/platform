@@ -106,6 +106,7 @@ public class AdminServiceImpl implements AdminService {
         comment.setPoliticalBodyAdmin(politicalBodyAdmin);
         comment.setText(text);
         comment = commentRepository.save(comment);
+        System.out.println("Save Comment = " + comment);
         return comment;
     }
 
