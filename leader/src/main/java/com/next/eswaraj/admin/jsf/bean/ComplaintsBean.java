@@ -26,6 +26,7 @@ import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
+import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
@@ -70,6 +71,8 @@ public class ComplaintsBean extends BaseBean {
 
     private String comment;
 
+    private String updatedStatus;
+
     @PostConstruct
     public void init() {
         try {
@@ -98,9 +101,14 @@ public class ComplaintsBean extends BaseBean {
     public void updateComplaint(){
         try{
             selectedComplaint.getComplaintPoliticalAdmin();
+
             ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintPoliticalAdmin();
-            System.out.println("complaintPoliticalAdmin : " + complaintPoliticalAdmin);
-            complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
+            if (updatedStatus != null && !updatedStatus.trim().equals("") && complaintPoliticalAdmin.getStatus() != null && !complaintPoliticalAdmin.getStatus().name().equals(updatedStatus)) {
+                complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.valueOf(updatedStatus));
+                System.out.println("complaintPoliticalAdmin : " + complaintPoliticalAdmin);
+                complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
+
+            }
 
             Complaint complaint = selectedComplaint.getComplaint();
             System.out.println("Saving Comment: " + comment);
@@ -184,7 +192,11 @@ public class ComplaintsBean extends BaseBean {
 
         // Basic marker
         mapModel.addOverlay(new Marker(coord1, selectedComplaint.getComplaint().getTitle()));
-
+        if (selectedComplaint.getComplaintPoliticalAdmin().getStatus() != null) {
+            updatedStatus = selectedComplaint.getComplaintPoliticalAdmin().getStatus().name();
+        } else {
+            updatedStatus = "";
+        }
         try {
             images = new ArrayList<String>();
             complaintPhotos = adminService.getComplaintPhotos(selectedComplaint.getComplaint().getId());
@@ -269,6 +281,14 @@ public class ComplaintsBean extends BaseBean {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getUpdatedStatus() {
+        return updatedStatus;
+    }
+
+    public void setUpdatedStatus(String updatedStatus) {
+        this.updatedStatus = updatedStatus;
     }
 
 }
