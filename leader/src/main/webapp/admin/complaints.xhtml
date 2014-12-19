@@ -92,7 +92,7 @@ body {
 
 
 								<p:outputLabel value="Status"></p:outputLabel>
-								<p:selectOneMenu id="console" value="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
+								<p:selectOneMenu id="console" value="#{complaintsBean.selectedComplaint.complaintPoliticalAdmin.status}"
 									style="width:125px">
 									<f:selectItem itemLabel="Select One" itemValue="" />
 									<f:selectItem itemLabel="Pending" itemValue="Pending" />
@@ -103,10 +103,10 @@ body {
 
 
 								<p:outputLabel value="Comment"></p:outputLabel>
-								<p:inputTextarea rows="6" cols="33" />
+								<p:inputTextarea rows="6" cols="33" valud="#{complaintsBean.comment}" />
 
 								<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{complaintsBean.cancel}"
-									styleClass="ui-priority-primary">
+									styleClass="ui-priority-primary" process="@this:cancel">
 								</p:commandButton>
 								<p:commandButton id="save" value="Save" update="@form" actionListener="#{complaintsBean.updateComplaint}"
 									styleClass="ui-priority-primary">
@@ -115,6 +115,10 @@ body {
 									<p:graphicImage width="80"
 										value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
 								</p:blockUI>
+                                <p:blockUI block="@form" trigger="save">Saving...<br />
+                                    <p:graphicImage width="80"
+                                        value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+                                </p:blockUI>
 							</p:panelGrid>
 
 
@@ -128,7 +132,11 @@ body {
 							<p:graphicImage value="#{image}" alt="Image Description for #{image}" title="#{image}" />
 						</p:galleria>
 						<p:dataTable var="onePerson" value="#{complaintsBean.complaintCreators}">
+						  <f:facet name="header">
+                                Reported By
+                            </f:facet>
 							<p:column headerText="Name">
+							<p:graphicImage value="#{onePerson.profilePhoto}"  />
 								<h:outputText value="#{onePerson.name}" />
 							</p:column>
 						</p:dataTable>

@@ -10,6 +10,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 
 public interface AdminService {
 
@@ -28,4 +29,9 @@ public interface AdminService {
     Complaint saveComplaint(Complaint complaint) throws ApplicationException;
 
     List<Comment> getComplaintComments(Long complaintId) throws ApplicationException;
+
+    ComplaintPoliticalAdmin saveComplaintPoliticalAdmin(ComplaintPoliticalAdmin complaintPoliticalAdmin) throws ApplicationException;
+
+    Comment saveComplaintComment(Complaint complaint, PoliticalBodyAdmin politicalBodyAdmin, Long personId, String text) throws ApplicationException;
+
 }

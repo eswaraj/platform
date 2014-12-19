@@ -28,6 +28,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.web.dto.UserDto;
 import com.next.eswaraj.admin.jsf.dto.ComplaintSearchResultDto;
 import com.next.eswaraj.admin.service.AdminService;
@@ -67,6 +68,8 @@ public class ComplaintsBean extends BaseBean {
 
     private Map<Long, Category> categoryMap = new HashMap<Long, Category>();
 
+    private String comment;
+
     @PostConstruct
     public void init() {
         try {
@@ -94,8 +97,18 @@ public class ComplaintsBean extends BaseBean {
 
     public void updateComplaint(){
         try{
-            Complaint  complaint =  selectedComplaint.getComplaint();
-            complaint = adminService.saveComplaint(complaint);
+            selectedComplaint.getComplaintPoliticalAdmin();
+            ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintPoliticalAdmin();
+            complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
+            Complaint complaint = selectedComplaint.getComplaint();
+            if (comment != null && !comment.trim().equals("")) {
+                HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+                adminService.saveComplaintComment(complaint, selectedPoliticalBodyAdmin, userDto.getPerson().getId(), comment);
+                comment = "";
+            }
+            sendInfoMessage("Success", "Updated Succesfully");
+            refreshComplaintList();
         }catch(Exception ex){
             sendErrorMessage("Error", ex.getMessage());
             logger.error("Unable to save Complaint", ex);
@@ -110,7 +123,11 @@ public class ComplaintsBean extends BaseBean {
     }
 
     public void onSelectPoliticalBodyAdmin() {
+        refreshComplaintList();
 
+    }
+
+    private void refreshComplaintList() {
         if (selectedPoliticalBodyAdmin == null) {
 
         } else {
@@ -239,6 +256,14 @@ public class ComplaintsBean extends BaseBean {
 
     public void setComplaintComments(List<Comment> complaintComments) {
         this.complaintComments = complaintComments;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
 }

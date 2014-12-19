@@ -1,6 +1,7 @@
 package com.next.eswaraj.admin.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
@@ -85,6 +87,24 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Comment> getComplaintComments(Long complaintId) throws ApplicationException {
         return commentRepository.findAllCommentsByComplaintId(complaintId);
+    }
+
+    @Override
+    public ComplaintPoliticalAdmin saveComplaintPoliticalAdmin(ComplaintPoliticalAdmin complaintPoliticalAdmin) throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Comment saveComplaintComment(Complaint complaint, PoliticalBodyAdmin politicalBodyAdmin, Long personId, String text) throws ApplicationException {
+        Person createdBy = personRepository.findOne(personId);
+        Comment comment = new Comment();
+        comment.setCreatedBy(createdBy);
+        comment.setCreationTime(new Date());
+        comment.setPoliticalBodyAdmin(politicalBodyAdmin);
+        comment.setText(text);
+        comment = commentRepository.save(comment);
+        return comment;
     }
 
 }
