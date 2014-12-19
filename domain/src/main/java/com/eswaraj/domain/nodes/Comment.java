@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -17,6 +18,7 @@ import com.eswaraj.domain.base.BaseNode;
 public class Comment extends BaseNode {
 
     private String text;
+    @Fetch
     private Person createdBy;
     private PoliticalBodyAdmin politicalBodyAdmin;
     private Date creationTime;

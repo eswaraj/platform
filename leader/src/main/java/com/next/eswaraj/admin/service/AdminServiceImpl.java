@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PhotoRepository;
@@ -34,6 +36,8 @@ public class AdminServiceImpl implements AdminService {
     private PersonRepository personRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public List<Complaint> getPoliticalAdminComplaints(Long politicalAdminId) throws ApplicationException {
@@ -71,6 +75,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Category> getAllcategories() throws ApplicationException {
         return categoryRepository.getAllCategories();
+    }
+
+    @Override
+    public Complaint saveComplaint(Complaint complaint) throws ApplicationException {
+        return complaintRepository.save(complaint);
+    }
+
+    @Override
+    public List<Comment> getComplaintComments(Long complaintId) throws ApplicationException {
+        return commentRepository.findAllCommentsByComplaintId(complaintId);
     }
 
 }

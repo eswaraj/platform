@@ -9,8 +9,9 @@
 body {
 	font-size: 14px;
 }
+
 .topAlignPanelColumns td {
-    vertical-align: top;
+	vertical-align: top;
 }
 </style>
 	</h:head>
@@ -48,11 +49,11 @@ body {
 							<p:column headerText="Status">
 								<h:outputText value="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}" />
 							</p:column>
-                            <p:column headerText="Reported">
-                            <h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
-                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-                                </h:outputText>
-                            </p:column>
+							<p:column headerText="Reported">
+								<h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
+									<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" />
+								</h:outputText>
+							</p:column>
 							<p:column style="width:100px;">
 								<f:facet name="header">
 									<h:outputText value="Update" />
@@ -74,34 +75,55 @@ body {
 					</p:outputPanel>
 					<p:outputPanel id="formView" rendered="#{!complaintsBean.showList}">
 						<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
-							<p:panelGrid columns="2" >
-							<f:facet name="header">
-							<h:outputText value="#{complaintsBean.selectedComplaint.complaint.title}"/>
-							</f:facet>
+							<p:panelGrid columns="2">
+								<f:facet name="header">
+									<h:outputText value="#{complaintsBean.selectedComplaint.complaint.title}" />
+								</f:facet>
 								<p:outputLabel value="Title"></p:outputLabel>
 								<h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" />
 
 								<p:outputLabel value="Description"></p:outputLabel>
-								<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}"/>
+								<h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}" />
 
-                                <p:outputLabel value="Date Reported"></p:outputLabel>
-                                <h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
-                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-                                </h:outputText>
+								<p:outputLabel value="Date Reported"></p:outputLabel>
+								<h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
+									<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" />
+								</h:outputText>
 
-								<p:outputLabel value="Latitude"></p:outputLabel>
-								<h:outputText id="latitude" value="#{complaintsBean.selectedComplaint.complaint.lattitude}" />
 
-								<p:outputLabel value="Longitude"></p:outputLabel>
-								<h:outputText id="longitude" value="#{complaintsBean.selectedComplaint.complaint.longitude}"  />
+								<p:outputLabel value="Status"></p:outputLabel>
+								<p:selectOneMenu id="console" value="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
+									style="width:125px">
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItem itemLabel="Pending" itemValue="Pending" />
+									<f:selectItem itemLabel="Duplicate" itemValue="Duplicate" />
+									<f:selectItem itemLabel="Merged" itemValue="Merged" />
+									<f:selectItem itemLabel="Done" itemValue="Done" />
+								</p:selectOneMenu>
 
+
+								<p:outputLabel value="Comment"></p:outputLabel>
+								<p:inputTextarea rows="6" cols="33" />
+
+								<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{complaintsBean.cancel}"
+									styleClass="ui-priority-primary">
+								</p:commandButton>
+								<p:commandButton id="save" value="Save" update="@form" actionListener="#{complaintsBean.updateComplaint}"
+									styleClass="ui-priority-primary">
+								</p:commandButton>
+								<p:blockUI block="@form" trigger="cancel">Loading...<br />
+									<p:graphicImage width="80"
+										value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+								</p:blockUI>
 							</p:panelGrid>
+
+
 							<p:gmap
-                            center="#{complaintsBean.selectedComplaint.complaint.lattitude},#{complaintsBean.selectedComplaint.complaint.longitude}"
-                            zoom="13" type="HYBRID" style="width:400px;height:400px" model="#{complaintsBean.mapModel}" />
+								center="#{complaintsBean.selectedComplaint.complaint.lattitude},#{complaintsBean.selectedComplaint.complaint.longitude}"
+								zoom="13" type="HYBRID" style="width:400px;height:400px" model="#{complaintsBean.mapModel}" />
 						</h:panelGrid>
 
-						
+
 						<p:galleria value="#{complaintsBean.images}" var="image" panelWidth="800" panelHeight="513" showCaption="false">
 							<p:graphicImage value="#{image}" alt="Image Description for #{image}" title="#{image}" />
 						</p:galleria>
@@ -111,13 +133,19 @@ body {
 							</p:column>
 						</p:dataTable>
 
-						<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{complaintsBean.cancel}"
-							styleClass="ui-priority-primary">
-						</p:commandButton>
-						<p:blockUI block="@form" trigger="cancel">Loading...<br />
-							<p:graphicImage width="80"
-								value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
-						</p:blockUI>
+						<p:dataTable var="oneComment" value="#{complaintsBean.complaintComments}">
+							<f:facet name="header">
+					            Comments
+					        </f:facet>
+							<p:column headerText="Created By">
+							    <p:graphicImage value="#{oneComment.createdBy.profilePhoto}"  />
+								<h:outputText value="#{oneComment.createdBy.name}" />
+							</p:column>
+                            <p:column headerText="Comment">
+                                <h:outputText value="#{oneComment.text}" />
+                            </p:column>
+						</p:dataTable>
+
 					</p:outputPanel>
 				</p:panelGrid>
 			</p:panel>

@@ -22,6 +22,8 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Comment;
+import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
@@ -33,7 +35,7 @@ import com.next.eswaraj.web.session.SessionUtil;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class ComplaintsBean {
+public class ComplaintsBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
@@ -61,6 +63,8 @@ public class ComplaintsBean {
 
     private List<Person> complaintCreators;
 
+    private List<Comment> complaintComments;
+
     private Map<Long, Category> categoryMap = new HashMap<Long, Category>();
 
     @PostConstruct
@@ -86,6 +90,16 @@ public class ComplaintsBean {
 
     public void cancel() {
         showList = true;
+    }
+
+    public void updateComplaint(){
+        try{
+            Complaint  complaint =  selectedComplaint.getComplaint();
+            complaint = adminService.saveComplaint(complaint);
+        }catch(Exception ex){
+            sendErrorMessage("Error", ex.getMessage());
+            logger.error("Unable to save Complaint", ex);
+        }
     }
 
     public List<ComplaintSearchResultDto> getComplaints() {
@@ -153,6 +167,7 @@ public class ComplaintsBean {
             images = new ArrayList<String>();
             complaintPhotos = adminService.getComplaintPhotos(selectedComplaint.getComplaint().getId());
             complaintCreators = adminService.getComplaintCreators(selectedComplaint.getComplaint().getId());
+            complaintComments = adminService.getComplaintComments(selectedComplaint.getComplaint().getId());
             for (Photo onePhoto : complaintPhotos) {
                 images.add(onePhoto.getOrgUrl());
             }
@@ -216,6 +231,14 @@ public class ComplaintsBean {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public List<Comment> getComplaintComments() {
+        return complaintComments;
+    }
+
+    public void setComplaintComments(List<Comment> complaintComments) {
+        this.complaintComments = complaintComments;
     }
 
 }
