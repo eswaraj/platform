@@ -16,9 +16,11 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.relationships.ComplaintComment;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
+import com.eswaraj.domain.repo.ComplaintCommentRepository;
 import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.PersonRepository;
@@ -43,6 +45,8 @@ public class AdminServiceImpl implements AdminService {
     private CommentRepository commentRepository;
     @Autowired
     private ComplaintPoliticalAdminRepository complaintPoliticalAdminRepository;
+    @Autowired
+    private ComplaintCommentRepository complaintCommentRepository;
 
     @Override
     public List<Complaint> getPoliticalAdminComplaints(Long politicalAdminId) throws ApplicationException {
@@ -107,6 +111,13 @@ public class AdminServiceImpl implements AdminService {
         comment.setText(text);
         comment = commentRepository.save(comment);
         System.out.println("Save Comment = " + comment);
+
+        ComplaintComment complaintComment = new ComplaintComment();
+        complaintComment.setComment(comment);
+        complaintComment.setComplaint(complaint);
+        complaintComment.setDateCreated(new Date());
+        complaintComment.setDateModified(new Date());
+        complaintComment = complaintCommentRepository.save(complaintComment);
         return comment;
     }
 
