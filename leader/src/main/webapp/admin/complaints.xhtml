@@ -103,7 +103,7 @@ body {
 
 
 								<p:outputLabel value="Comment"></p:outputLabel>
-								<p:inputTextarea rows="6" cols="33" valud="#{complaintsBean.comment}" />
+								<p:inputTextarea rows="6" cols="33" value="#{complaintsBean.comment}" />
 
 								<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{complaintsBean.cancel}"
 									styleClass="ui-priority-primary" process="@this:cancel">

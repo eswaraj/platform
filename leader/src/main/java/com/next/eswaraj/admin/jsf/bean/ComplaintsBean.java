@@ -101,6 +101,7 @@ public class ComplaintsBean extends BaseBean {
             ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintPoliticalAdmin();
             complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
             Complaint complaint = selectedComplaint.getComplaint();
+            System.out.println("Saving Comment: " + comment);
             if (comment != null && !comment.trim().equals("")) {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
                 UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
@@ -108,6 +109,7 @@ public class ComplaintsBean extends BaseBean {
                 comment = "";
             }
             sendInfoMessage("Success", "Updated Succesfully");
+            showList = true;
             refreshComplaintList();
         }catch(Exception ex){
             sendErrorMessage("Error", ex.getMessage());

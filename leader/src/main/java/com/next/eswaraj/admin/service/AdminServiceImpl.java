@@ -19,6 +19,7 @@ import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
+import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PhotoRepository;
@@ -40,6 +41,8 @@ public class AdminServiceImpl implements AdminService {
     private CategoryRepository categoryRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private ComplaintPoliticalAdminRepository complaintPoliticalAdminRepository;
 
     @Override
     public List<Complaint> getPoliticalAdminComplaints(Long politicalAdminId) throws ApplicationException {
@@ -91,8 +94,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ComplaintPoliticalAdmin saveComplaintPoliticalAdmin(ComplaintPoliticalAdmin complaintPoliticalAdmin) throws ApplicationException {
-        // TODO Auto-generated method stub
-        return null;
+        return complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
     }
 
     @Override
