@@ -35,8 +35,6 @@
 					</p>
 				</div>
 				<div class="innerblock">
-					<p>${user.id}</p>
-					<p>${user.externalId}</p>
 					<p class="political_details">Political Details :</p>
 					<p class="read">
 						Ward : <strong id="ward_details">${user.person.personAddress.ward.name}</strong>
