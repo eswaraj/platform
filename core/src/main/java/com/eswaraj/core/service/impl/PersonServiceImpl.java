@@ -127,12 +127,24 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
     @Override
     public UserDto registerDevice(DeviceDto deviceDto, String userExternalId) throws ApplicationException {
-        Device device = deviceRepository.findByPropertyValue("deviceId", deviceDto.getDeviceId());
+
+        User user = registerDevice(deviceDto.getDeviceId(), deviceDto.getDeviceTypeRef(), "");
+        
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user, userDto);
+        // userDto.setDevice(deviceConvertor.convertBean(device));
+        userDto.setPerson(personConvertor.convertBean(user.getPerson()));
+
+        return userDto;
+    }
+
+    private User registerDevice(String deviceId, String deviceTypeRef, String userExternalId) throws ApplicationException {
+        Device device = deviceRepository.findByPropertyValue("deviceId", deviceId);
         if (device == null) {
             // This means we have never seen this device so create new one
             device = new Device();
-            device.setDeviceId(deviceDto.getDeviceId());
-            device.setDeviceType(DeviceType.valueOf(deviceDto.getDeviceTypeRef()));
+            device.setDeviceId(deviceId);
+            device.setDeviceType(DeviceType.valueOf(deviceTypeRef));
             device = deviceRepository.save(device);
         }
 
@@ -145,7 +157,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         } else {
             user.setPerson(personRepository.findOne(user.getPerson().getId()));
         }
-        
+
         UserDevice userDevice = userDeviceRepository.getUserDeviceRelation(user, device);
         if (userDevice == null) {
             userDevice = new UserDevice();
@@ -153,26 +165,14 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             userDevice.setUser(user);
             userDevice = userDeviceRepository.save(userDevice);
         }
-        
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user, userDto);
-        userDto.setDevice(deviceConvertor.convertBean(device));
-        userDto.setPerson(personConvertor.convertBean(user.getPerson()));
 
-        return userDto;
+        return user;
     }
 
     @Override
     public UserDto registerFacebookAccount(RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
-        if (StringUtils.isEmpty(registerFacebookAccountRequest.getUserExternalId())) {
-            throw new ApplicationException("User id is not provided");
-        }
         // First make sure user is registered
-        User user = userRepository.findByPropertyValue("externalId", registerFacebookAccountRequest.getUserExternalId());
-        if (user == null) {
-            logger.error("No such user exists {}", registerFacebookAccountRequest.getUserExternalId());
-            throw new ApplicationException("Invalid User");
-        }
+        User user = registerDevice(registerFacebookAccountRequest.getDeviceId(), registerFacebookAccountRequest.getDeviceTypeRef(), registerFacebookAccountRequest.getUserExternalId());
 
         // Fetch user profile from facebook
         Facebook facebook = new FacebookTemplate(registerFacebookAccountRequest.getToken());
