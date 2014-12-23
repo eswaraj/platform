@@ -171,29 +171,29 @@ public class ComplaintsBean extends BaseBean {
         return selectedComplaint;
     }
 
-    public void setSelectedComplaint(ComplaintSearchResult selectedComplaint) {
-        this.selectedComplaint = selectedComplaint;
+    public void setSelectedComplaint(ComplaintSearchResult complaintSearchResult) {
+        this.selectedComplaint = complaintSearchResult;
         showList = false;
         mapModel = new DefaultMapModel();
-        LatLng coord1 = new LatLng(selectedComplaint.getComplaint().getLattitude(), selectedComplaint.getComplaint().getLongitude());
+        LatLng coord1 = new LatLng(complaintSearchResult.getComplaint().getLattitude(), complaintSearchResult.getComplaint().getLongitude());
 
         // Basic marker
-        mapModel.addOverlay(new Marker(coord1, selectedComplaint.getComplaint().getTitle()));
-        if (selectedComplaint.getComplaintPoliticalAdmin().getStatus() != null) {
-            updatedStatus = selectedComplaint.getComplaintPoliticalAdmin().getStatus().name();
+        mapModel.addOverlay(new Marker(coord1, complaintSearchResult.getComplaint().getTitle()));
+        if (complaintSearchResult.getComplaintPoliticalAdmin().getStatus() != null) {
+            updatedStatus = complaintSearchResult.getComplaintPoliticalAdmin().getStatus().name();
         } else {
             updatedStatus = "";
         }
         try {
             images = new ArrayList<String>();
-            complaintPhotos = adminService.getComplaintPhotos(selectedComplaint.getComplaint().getId());
-            complaintCreators = adminService.getComplaintCreators(selectedComplaint.getComplaint().getId());
-            complaintComments = adminService.getComplaintComments(selectedComplaint.getComplaint().getId());
+            complaintPhotos = adminService.getComplaintPhotos(complaintSearchResult.getComplaint().getId());
+            complaintCreators = adminService.getComplaintCreators(complaintSearchResult.getComplaint().getId());
+            complaintComments = adminService.getComplaintComments(complaintSearchResult.getComplaint().getId());
             for (Photo onePhoto : complaintPhotos) {
                 images.add(onePhoto.getOrgUrl());
             }
-            if (!selectedComplaint.getComplaintPoliticalAdmin().isViewed()) {
-                adminService.markComplaintViewed(selectedComplaint.getComplaint().getId(), selectedPoliticalBodyAdmin.getId());
+            if (!complaintSearchResult.getComplaintPoliticalAdmin().isViewed()) {
+                adminService.markComplaintViewed(complaintSearchResult.getComplaint().getId(), selectedPoliticalBodyAdmin.getId());
             }
 
         } catch (ApplicationException e) {
