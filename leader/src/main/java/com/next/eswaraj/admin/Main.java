@@ -23,6 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
@@ -54,6 +55,7 @@ import com.next.eswaraj.web.session.SessionUtil;
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
 @EnableWebMvc
+@EnableAspectJAutoProxy
 public class Main extends SpringBootServletInitializer implements SocialConfigurer {
 
 
