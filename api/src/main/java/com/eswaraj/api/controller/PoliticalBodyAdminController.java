@@ -53,7 +53,7 @@ public class PoliticalBodyAdminController extends BaseController {
         String pbRedisKey = appKeyService.getPoliticalBodyAdminObjectKey(String.valueOf(pbAdminIdString));
         logger.info("pbRedisKey = {}", pbRedisKey);
         String hashKey = appKeyService.getEnityInformationHashKey();
-        String pbInfo = (String) stringRedisTemplate.opsForHash().get(pbRedisKey, hashKey);
+        String pbInfo = stringRedisTemplate.opsForValue().get(pbRedisKey);
         return pbInfo;
     }
 
