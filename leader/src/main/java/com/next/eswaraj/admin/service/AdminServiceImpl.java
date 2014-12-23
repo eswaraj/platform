@@ -14,6 +14,7 @@ import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
+import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
@@ -127,6 +128,7 @@ public class AdminServiceImpl implements AdminService {
         if (!complaintPoliticalAdmin.isViewed()) {
             complaintPoliticalAdmin.setViewDate(new Date());
             complaintPoliticalAdmin.setViewed(true);
+            complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.Viewed);
             complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
         }
     }
