@@ -105,14 +105,11 @@ public class ComplaintsBean extends BaseBean {
             ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintPoliticalAdmin();
             if (updatedStatus != null && !updatedStatus.trim().equals("") && complaintPoliticalAdmin.getStatus() != null && !complaintPoliticalAdmin.getStatus().name().equals(updatedStatus)) {
                 complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.valueOf(updatedStatus));
-                System.out.println("complaintPoliticalAdmin : " + complaintPoliticalAdmin);
                 complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
 
             }
 
             Complaint complaint = selectedComplaint.getComplaint();
-            System.out.println("Saving Comment: " + comment);
-            System.out.println("Selected politicalBodyAdmin = " + selectedPoliticalBodyAdmin);
             if (comment != null && !comment.trim().equals("") && selectedPoliticalBodyAdmin != null) {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
                 UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
@@ -162,12 +159,6 @@ public class ComplaintsBean extends BaseBean {
                     }
                     ComplaintSearchResultDto oneComplaintSearchResultDto = new ComplaintSearchResultDto(oneComplaintSearchResult, rootCategory, subCategory);
                     this.complaints.add(oneComplaintSearchResultDto);
-                    System.out.println("Complaint : " + oneComplaintSearchResult.getComplaint().getId());
-                    try {
-                        System.out.println("   oneComplaintPoliticalAdmin : " + oneComplaintSearchResult.getComplaintPoliticalAdmin().getId());
-                    } catch (Exception ex) {
-                        System.out.println("   oneComplaintPoliticalAdmin(Ex) : " + oneComplaintSearchResult.getComplaintPoliticalAdmin());
-                    }
 
                 }
             } catch (ApplicationException e) {
