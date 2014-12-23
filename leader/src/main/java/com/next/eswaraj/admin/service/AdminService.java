@@ -34,4 +34,6 @@ public interface AdminService {
 
     Comment saveComplaintComment(Complaint complaint, PoliticalBodyAdmin politicalBodyAdmin, Long personId, String text) throws ApplicationException;
 
+    void markComplaintViewed(Long complaintId, Long politicalBodyAdminId) throws ApplicationException;
+
 }

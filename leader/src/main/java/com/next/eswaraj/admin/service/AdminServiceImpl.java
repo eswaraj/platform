@@ -121,4 +121,14 @@ public class AdminServiceImpl implements AdminService {
         return comment;
     }
 
+    @Override
+    public void markComplaintViewed(Long complaintId, Long politicalBodyAdminId) throws ApplicationException {
+        ComplaintPoliticalAdmin complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(complaintId, politicalBodyAdminId);
+        if (!complaintPoliticalAdmin.isViewed()) {
+            complaintPoliticalAdmin.setViewDate(new Date());
+            complaintPoliticalAdmin.setViewed(true);
+            complaintPoliticalAdmin = complaintPoliticalAdminRepository.save(complaintPoliticalAdmin);
+        }
+    }
+
 }

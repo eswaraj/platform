@@ -192,6 +192,10 @@ public class ComplaintsBean extends BaseBean {
             for (Photo onePhoto : complaintPhotos) {
                 images.add(onePhoto.getOrgUrl());
             }
+            if (!selectedComplaint.getComplaintPoliticalAdmin().isViewed()) {
+                adminService.markComplaintViewed(selectedComplaint.getComplaint().getId(), selectedPoliticalBodyAdmin.getId());
+            }
+
         } catch (ApplicationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

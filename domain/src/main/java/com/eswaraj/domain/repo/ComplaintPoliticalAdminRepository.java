@@ -18,4 +18,6 @@ public interface ComplaintPoliticalAdminRepository extends GraphRepository<Compl
     @Query("start complaint=node({0}), politicalBodyAdmin=node({1}) match (complaint)-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]->(politicalBodyAdmin) return complaintPoliticalAdmin")
     ComplaintPoliticalAdmin getComplaintPoliticalAdminRelation(Complaint complaint, PoliticalBodyAdmin politicalBodyAdmin);
 
+    @Query("start complaint=node({0}), politicalBodyAdmin=node({1}) match (complaint)-[complaintPoliticalAdmin:POLITICAL_SERVED_BY]->(politicalBodyAdmin) return complaintPoliticalAdmin")
+    ComplaintPoliticalAdmin getComplaintPoliticalAdminRelation(Long complaintId, Long politicalBodyAdminId);
 }
