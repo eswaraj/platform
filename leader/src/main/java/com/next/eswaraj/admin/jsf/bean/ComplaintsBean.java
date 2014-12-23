@@ -76,16 +76,12 @@ public class ComplaintsBean extends BaseBean {
     @PostConstruct
     public void init() {
         try {
-            logger.info("Getting Political Admin Records From DB");
             HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
             userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
-            logger.info("Records : " + userPoliticalBodyAdmins);
 
             List<Category> allCategories = adminService.getAllcategories();
-            logger.info("allCategories : " + allCategories);
             for (Category oneCategory : allCategories) {
-                logger.info("oneCategory : " + oneCategory);
                 categoryMap.put(oneCategory.getId(), oneCategory);
             }
         } catch (Exception e) {
