@@ -8,7 +8,7 @@ import org.springframework.util.StopWatch;
 @Aspect
 public class JsfBeanPerformanceAspect {
 
-    @Around("com.next.eswaraj.admin.jsf.bean.ComplaintsBean.setSelectedComplaint()")
+    @Around("com.next.eswaraj.admin.jsf.bean.ComplaintsBean.setSelectedComplaint(*)")
     public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
         StopWatch stopWatch = new StopWatch("setSelectedComplaint");
