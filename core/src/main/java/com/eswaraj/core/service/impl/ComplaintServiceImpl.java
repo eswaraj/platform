@@ -298,10 +298,14 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                 locations.add(oneLocation);
                 addAllParentLocationsToComplaint(locations, oneLocation, complaintLocations);
 
+            }
+            for (Location oneLocation : locations) {
+                logger.info("Searching Active Political Admin For : " + oneLocation.getId() + ", " + oneLocation.getName());
                 oneLocationPoliticalBodyAdmins = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocation(oneLocation);
                 if (oneLocationPoliticalBodyAdmins != null && !oneLocationPoliticalBodyAdmins.isEmpty()) {
                     politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
                 }
+
             }
             complaint.setLocations(locations);
 
@@ -320,6 +324,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         }
         ComplaintPoliticalAdmin complaintPoliticalAdmin;
         for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalBodyAdmins) {
+            logger.info("Adding Admin {}  to complaint {}", onePoliticalBodyAdmin.getId(), complaint.getId());
             complaintPoliticalAdmin = complaintPoliticalAdminRepository.getComplaintPoliticalAdminRelation(complaint, onePoliticalBodyAdmin);
             if (complaintPoliticalAdmin == null) {
                 complaintPoliticalAdmin = new ComplaintPoliticalAdmin();

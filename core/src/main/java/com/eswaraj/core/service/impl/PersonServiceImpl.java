@@ -180,7 +180,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         String facebookUserId = facebookUserProfile.getId();
         FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
         if (facebookAccount == null) {
-            // Create a new new afcebook account and attach it to user
+            // Create a new new facebook account and attach it to user
             facebookAccount = new FacebookAccount();
             facebookAccount.setDateCreated(new Date());
             facebookAccount.setDateModified(new Date());
