@@ -2,6 +2,7 @@ package com.eswaraj.api.controller;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
@@ -74,14 +75,23 @@ public class ComplaintController extends BaseController{
 
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
-    public @ResponseBody List<ComplaintDto> getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
+    public @ResponseBody String getUserComplaints(@PathVariable Long userId, @RequestParam(value = "start", required = false) Integer start,
             @RequestParam(value = "count", required = false) Integer end) throws ApplicationException {
+
+
+
+        List<ComplaintDto> userComplaints = null;
 		if(start == null){
-			return complaintService.getAllUserComplaints(userId);	
+            userComplaints = complaintService.getAllUserComplaints(userId);
 		}else{
-			return complaintService.getPagedUserComplaints(userId, start, end);	
+            userComplaints = complaintService.getPagedUserComplaints(userId, start, end);
 		}
-		
+        List<Long> ids = new ArrayList<Long>();
+        for (ComplaintDto oneComplaintDto : userComplaints) {
+            ids.add(oneComplaintDto.getId());
+        }
+        return complaintCache.getComplaintsByIds(ids);
+
 	}
 
     @RequestMapping(value = "/api/v0/device/complaints/{userId}", method = RequestMethod.GET)

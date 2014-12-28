@@ -1,5 +1,7 @@
 package com.eswaraj.cache;
 
+import java.util.List;
+
 import com.eswaraj.core.exceptions.ApplicationException;
 
 public interface ComplaintCache {
@@ -13,4 +15,6 @@ public interface ComplaintCache {
     String getComplaintsOfLocation(Long locationId, int start, int count) throws ApplicationException;
 
     String getComplaintsOfLocationCategory(Long locationId, Long categoryId, int start, int count) throws ApplicationException;
+
+    String getComplaintsByIds(List<Long> complaintIds) throws ApplicationException;
 }

@@ -147,4 +147,24 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
         */
     }
 
+    @Override
+    public String getComplaintsByIds(List<Long> complaintIds) throws ApplicationException {
+        List<String> rediskeys = new ArrayList<String>();
+        for (Long complaintId : complaintIds) {
+            String redisKeyForComplaint = appKeyService.getComplaintObjectKey(complaintId);
+            rediskeys.add(redisKeyForComplaint);
+        }
+
+        JsonArray jsonArray = new JsonArray();
+        if (!rediskeys.isEmpty()) {
+            List<String> complaintData = complaintStringRedisTemplate.opsForValue().multiGet(rediskeys);
+
+            for (String oneComplaintAsString : complaintData) {
+                JsonObject jsonObject = (JsonObject) jsonParser.parse(oneComplaintAsString);
+                jsonArray.add(jsonObject);
+            }
+        }
+        return jsonArray.toString();
+    }
+
 }
