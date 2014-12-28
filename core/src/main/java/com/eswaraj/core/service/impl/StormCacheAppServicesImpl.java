@@ -29,6 +29,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
@@ -217,14 +218,20 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             complaintJsonObject.add("locations", jsonArray);
         }
         
-        Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
-        if (!CollectionUtils.isEmpty(persons)) {
+        List<ComplaintLoggedByPerson> complaintLoggedByPersons = complaintLoggedByPersonRepository.getComplaintLoggedByPersonRelation(complaint);
+        if (!CollectionUtils.isEmpty(complaintLoggedByPersons)) {
             JsonArray jsonArray = new JsonArray();
-            for (Person person : persons) {
+            for (ComplaintLoggedByPerson oneComplaintLoggedByPerson : complaintLoggedByPersons) {
                 JsonObject personJsonObject = new JsonObject();
-                personJsonObject.addProperty("externalId", person.getExternalId());
-                personJsonObject.addProperty("name", person.getName());
-                personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+                Person person = oneComplaintLoggedByPerson.getPerson();
+                if (oneComplaintLoggedByPerson.isAnonymous()) {
+                    personJsonObject.addProperty("name", "Anonymous");
+                    personJsonObject.addProperty("profilePhoto", "https://cdn3.iconfinder.com/data/icons/humano2/72x72/emblems/emblem-people.png");
+                } else {
+                    personJsonObject.addProperty("externalId", person.getExternalId());
+                    personJsonObject.addProperty("name", person.getName());
+                    personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+                }
                 jsonArray.add(personJsonObject);
             }
             complaintJsonObject.add("createdBy", jsonArray);
@@ -243,6 +250,17 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 photosArray.add(locationJsonObject);
             }
             complaintJsonObject.add("photos", photosArray);
+        }
+        Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
+        if (persons != null && !persons.isEmpty()) {
+            JsonArray jsonArray = new JsonArray();
+            for (Person person : persons) {
+                JsonObject personJsonObject = new JsonObject();
+                personJsonObject.addProperty("name", person.getName());
+                personJsonObject.addProperty("photo", person.getProfilePhoto());
+                jsonArray.add(personJsonObject);
+            }
+            complaintJsonObject.add("loggedBy", jsonArray);
         }
         return complaintJsonObject;
     }

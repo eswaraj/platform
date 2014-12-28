@@ -157,7 +157,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         ComplaintMessage complaintMessage = updateLocationAndAdmins(complaint);
 		complaint = complaintRepository.save(complaint);
 
-        creatComplaintPersonRelation(complaint, person);
+        creatComplaintPersonRelation(complaint, person, saveComplaintRequestDto.isAnonymous());
 
         complaintMessage.setId(complaint.getId());
 
@@ -168,7 +168,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 		return complaintConvertor.convertBean(complaint);
 	}
 
-    private void creatComplaintPersonRelation(Complaint complaint, Person person){
+    private void creatComplaintPersonRelation(Complaint complaint, Person person, boolean anonymous) {
         logger.info("comlaint = {}", complaint);
         logger.info("person = {}", person);
         ComplaintLoggedByPerson complaintLoggedByPerson = complaintLoggedByPersonRepository.getComplaintLoggedByPersonRelation(complaint, person);
@@ -177,6 +177,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             complaintLoggedByPerson = new ComplaintLoggedByPerson();
             complaintLoggedByPerson.setComplaint(complaint);
             complaintLoggedByPerson.setPerson(person);
+            complaintLoggedByPerson.setAnonymous(anonymous);
             complaintLoggedByPerson = complaintLoggedByPersonRepository.save(complaintLoggedByPerson);
         }
 	}

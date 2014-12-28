@@ -16,6 +16,7 @@ public class ComplaintLoggedByPerson extends BaseRelationship {
     @EndNode
     @Fetch
     Person person;
+    private boolean anonymous;
 	
 	public Complaint getComplaint() {
 		return complaint;
@@ -30,6 +31,13 @@ public class ComplaintLoggedByPerson extends BaseRelationship {
 		this.person = person;
 	}
 
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
     @Override
     public String toString() {
         return "ComplaintLoggedByPerson [complaint=" + complaint + ", person=" + person + ", id=" + id + "]";
