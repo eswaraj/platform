@@ -78,7 +78,7 @@ public class ComplaintController extends BaseController{
     public @ResponseBody List<ComplaintDto> getDeviceComplaints(@PathVariable String deviceId, @RequestParam(value = "start", required = false) Integer start,
             @RequestParam(value = "count", required = false) Integer end) throws ApplicationException {
 		if(start == null){
-			return complaintService.getAllUserComplaints(deviceId);	
+			return complaintService.getAllDeviceComplaints(deviceId);	
 		}else{
 			return complaintService.getPagedDeviceComplaints(deviceId, start, end);	
 		}

@@ -13,6 +13,7 @@ public class SaveComplaintRequestDto extends ComplaintDto {
 
 	private static final long serialVersionUID = 1L;
     private String userExternalid;
+    private String googleLocationJson;
     private boolean anonymous;
 
     public String getUserExternalid() {
@@ -29,6 +30,14 @@ public class SaveComplaintRequestDto extends ComplaintDto {
 
     public void setAnonymous(boolean anonymous) {
         this.anonymous = anonymous;
+    }
+
+    public String getGoogleLocationJson() {
+        return googleLocationJson;
+    }
+
+    public void setGoogleLocationJson(String googleLocationJson) {
+        this.googleLocationJson = googleLocationJson;
     }
 
     @Override

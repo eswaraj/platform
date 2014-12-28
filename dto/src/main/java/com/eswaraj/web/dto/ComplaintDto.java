@@ -21,7 +21,10 @@ public class ComplaintDto extends BaseDto {
 	private double lattitude;
 	private double longitude;
     private Long complaintTime;
+    private String status;
 	private List<PhotoDto> images;
+    private List<PersonDto> createdBy;
+    private List<CategoryDto> categories;
 	
 	public String getTitle() {
 		return title;
@@ -74,6 +77,29 @@ public class ComplaintDto extends BaseDto {
         this.complaintTime = complaintTime;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<PersonDto> getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(List<PersonDto> createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public List<CategoryDto> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryDto> categories) {
+        this.categories = categories;
+    }
     @Override
 	public String toString() {
 		return "ComplaintDto [title=" + title + ", description=" + description

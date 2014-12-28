@@ -265,7 +265,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 
 	@Override
-    public List<ComplaintDto> getAllUserComplaints(String userExternalId)
+    public List<ComplaintDto> getAllDeviceComplaints(String userExternalId)
 			throws ApplicationException {
         Person person = personRepository.findByPropertyValue("externalId", userExternalId);
 		List<Complaint> personComplaints = complaintRepository.getAllComplaintsLodgedByPerson(person); 
