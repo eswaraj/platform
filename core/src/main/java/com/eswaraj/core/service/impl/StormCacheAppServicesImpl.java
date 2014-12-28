@@ -251,17 +251,6 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             }
             complaintJsonObject.add("photos", photosArray);
         }
-        Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
-        if (persons != null && !persons.isEmpty()) {
-            JsonArray jsonArray = new JsonArray();
-            for (Person person : persons) {
-                JsonObject personJsonObject = new JsonObject();
-                personJsonObject.addProperty("name", person.getName());
-                personJsonObject.addProperty("photo", person.getProfilePhoto());
-                jsonArray.add(personJsonObject);
-            }
-            complaintJsonObject.add("loggedBy", jsonArray);
-        }
         return complaintJsonObject;
     }
 
