@@ -29,7 +29,6 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
-import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
@@ -218,12 +217,11 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             complaintJsonObject.add("locations", jsonArray);
         }
         
-        List<ComplaintLoggedByPerson> complaintLoggedByPersons = complaintLoggedByPersonRepository.getComplaintLoggedByPersonRelation(complaint);
-        if (!CollectionUtils.isEmpty(complaintLoggedByPersons)) {
+        Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
+        if (!CollectionUtils.isEmpty(persons)) {
             JsonArray jsonArray = new JsonArray();
-            for (ComplaintLoggedByPerson oneComplaintLoggedByPerson : complaintLoggedByPersons) {
+            for (Person person : persons) {
                 JsonObject personJsonObject = new JsonObject();
-                Person person = oneComplaintLoggedByPerson.getPerson();
                 personJsonObject.addProperty("externalId", person.getExternalId());
                 personJsonObject.addProperty("name", person.getName());
                 personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
@@ -245,17 +243,6 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 photosArray.add(locationJsonObject);
             }
             complaintJsonObject.add("photos", photosArray);
-        }
-        Collection<Person> persons = personRepository.getPersonsLoggedComplaint(complaint);
-        if (persons != null && !persons.isEmpty()) {
-            JsonArray jsonArray = new JsonArray();
-            for (Person person : persons) {
-                JsonObject personJsonObject = new JsonObject();
-                personJsonObject.addProperty("name", person.getName());
-                personJsonObject.addProperty("photo", person.getProfilePhoto());
-                jsonArray.add(personJsonObject);
-            }
-            complaintJsonObject.add("loggedBy", jsonArray);
         }
         return complaintJsonObject;
     }
