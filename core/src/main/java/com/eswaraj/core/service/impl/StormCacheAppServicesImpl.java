@@ -29,9 +29,11 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
+import com.eswaraj.domain.repo.ComplaintLoggedByPersonRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
 import com.eswaraj.domain.repo.ExecutivePostRepository;
@@ -74,6 +76,8 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     private AddressRepository addressRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private ComplaintLoggedByPersonRepository complaintLoggedByPersonRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -212,6 +216,20 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 jsonArray.add(locationJsonObject);
             }
             complaintJsonObject.add("locations", jsonArray);
+        }
+        
+        List<ComplaintLoggedByPerson> complaintLoggedByPersons = complaintLoggedByPersonRepository.getComplaintLoggedByPersonRelation(complaint);
+        if (!CollectionUtils.isEmpty(complaintLoggedByPersons)) {
+            JsonArray jsonArray = new JsonArray();
+            for (ComplaintLoggedByPerson oneComplaintLoggedByPerson : complaintLoggedByPersons) {
+                JsonObject personJsonObject = new JsonObject();
+                Person person = oneComplaintLoggedByPerson.getPerson();
+                personJsonObject.addProperty("externalId", person.getExternalId());
+                personJsonObject.addProperty("name", person.getName());
+                personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+                jsonArray.add(personJsonObject);
+            }
+            complaintJsonObject.add("createdBy", jsonArray);
         }
         Collection<Photo> complaintPhotos = photoRepository.getComplaintPhotos(complaint);
         logger.info("Existing Photos for Complaint : {} = {}", complaint.getId(), complaintPhotos);

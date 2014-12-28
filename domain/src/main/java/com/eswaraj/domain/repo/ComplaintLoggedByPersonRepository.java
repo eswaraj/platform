@@ -1,5 +1,7 @@
 package com.eswaraj.domain.repo;
 
+import java.util.List;
+
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
@@ -17,5 +19,8 @@ public interface ComplaintLoggedByPersonRepository extends GraphRepository<Compl
 	
     @Query("start complaint=node({0}), person=node({1}) match (complaint)-[complaintLoggedByPerson:LODGED_BY]->(person) return complaintLoggedByPerson")
     ComplaintLoggedByPerson getComplaintLoggedByPersonRelation(Complaint complaint, Person person);
+
+    @Query("start complaint=node({0}) match (complaint)-[complaintLoggedByPerson:LODGED_BY]->(person) return complaintLoggedByPerson")
+    List<ComplaintLoggedByPerson> getComplaintLoggedByPersonRelation(Complaint complaint);
 
 }
