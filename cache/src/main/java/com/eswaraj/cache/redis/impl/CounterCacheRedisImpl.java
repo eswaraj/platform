@@ -1,5 +1,6 @@
 package com.eswaraj.cache.redis.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,46 @@ public class CounterCacheRedisImpl extends BaseCacheRedisImpl implements Counter
     @Override
     public JsonObject getLast30DayLocationCounters(Long locationId, Date endDate) throws ApplicationException {
         return getLastNDayLocationCounters(locationId, endDate, 30);
+    }
+
+    @Override
+    public Long getLocationComplaintCounter(Long locationId) throws ApplicationException {
+        String rediskey = appKeyService.getLocationKey(locationId);
+        String hash = appKeyService.getTotalComplaintCounterKey("");
+        logger.info("Getting from hash for Key : {}, hash : {}", rediskey, hash);
+        return (Long) complaintStringRedisTemplate.opsForHash().get(rediskey, hash);
+    }
+
+    @Override
+    public Long getLocationCategoryComplaintCounter(Long locationId, Long categoryId) throws ApplicationException {
+        String rediskey = appKeyService.getLocationKey(locationId);
+        String categoryKey = appKeyService.getCategoryKey(categoryId);
+        String hash = appKeyService.getTotalComplaintCounterKey(categoryKey);
+        logger.info("Getting from hash for Key : {}, hash : {}", rediskey, hash);
+        return (Long) complaintStringRedisTemplate.opsForHash().get(rediskey, hash);
+    }
+
+    @Override
+    public List<Long> getLocationCategoryComplaintCounter(Long locationId, List<Long> categoryIds) throws ApplicationException {
+        String rediskey = appKeyService.getLocationKey(locationId);
+        List<Object> hashes = new ArrayList<Object>();
+        for (Long oneCategoryId : categoryIds) {
+            String categoryKey = appKeyService.getCategoryKey(oneCategoryId);
+            String hash = appKeyService.getTotalComplaintCounterKey(categoryKey);
+            hashes.add(hash);
+        }
+        logger.info("Getting from hash for Key : {}, hashes : {}", rediskey, hashes);
+        List<Long> returnList = new ArrayList<Long>(hashes.size());
+        List<Object> redisValues = complaintStringRedisTemplate.opsForHash().multiGet(rediskey, hashes);
+        for(Object oneValue:redisValues){
+            if (oneValue == null) {
+                returnList.add(0L);
+            } else {
+                returnList.add((Long) oneValue);
+            }
+
+        }
+        return returnList;
     }
 
 }
