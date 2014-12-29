@@ -5,8 +5,10 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eswaraj.cache.CommentCache;
 import com.eswaraj.cache.ComplaintCache;
+import com.eswaraj.cache.LocationCache;
+import com.eswaraj.cache.LocationPointCache;
+import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
@@ -42,6 +47,7 @@ import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
 import com.eswaraj.web.dto.comment.CommentSaveResponseDto;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -71,7 +77,18 @@ public class ComplaintController extends BaseController{
     @Autowired
     private CommentCache commentCache;
 
+    @Autowired
+    private LocationPointCache locationPointCache;
+
+    @Autowired
+    private LocationCache locationCache;
+
+    @Autowired
+    private PoliticalAdminCache politicalAdminCache;
+
     private JsonParser jsonParser = new JsonParser();
+
+    private Gson gson = new Gson();
 
 
     @RequestMapping(value = "/api/v0/user/complaints/{userId}", method = RequestMethod.GET)
@@ -103,7 +120,7 @@ public class ComplaintController extends BaseController{
 	}
 	
     @RequestMapping(value = "/api/v0/complaint", method = RequestMethod.POST)
-	public @ResponseBody ComplaintDto saveComplaint(HttpServletRequest httpServletRequest) throws ApplicationException, IOException, ServletException {
+    public @ResponseBody String saveComplaint(HttpServletRequest httpServletRequest) throws ApplicationException, IOException, ServletException {
 		
 		printInfo(httpServletRequest);
 		Part saveComplaintRequestPart = httpServletRequest.getPart("SaveComplaintRequest");
@@ -117,7 +134,23 @@ public class ComplaintController extends BaseController{
         logger.info("Complaint Saved : {}", savedComplaintDto);
 		addPhoto(httpServletRequest, savedComplaintDto);
 		
-		return savedComplaintDto;
+        Set<Long> locationIds = locationPointCache.getPointLocations(savedComplaintDto.getLattitude(), savedComplaintDto.getLongitude());
+        Set<String> allPbAdmins = new HashSet<String>();
+        for (Long oneLocationId : locationIds) {
+            Set<String> pbAdminIds = locationCache.getLocationPoliticalAdmins(oneLocationId);
+            if (pbAdminIds != null && !pbAdminIds.isEmpty()) {
+                allPbAdmins.addAll(pbAdminIds);
+            }
+        }
+
+        JsonArray pbAdminJsonArray = politicalAdminCache.getPoliticalBodyAdminByIds(allPbAdmins);
+        
+        JsonObject returnJsonObject = new JsonObject();
+        returnJsonObject.add("complaint", gson.toJsonTree(savedComplaintDto));
+        returnJsonObject.add("politicalbodyadmin", pbAdminJsonArray);
+
+
+        return returnJsonObject.toString();
 	}
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}", method = RequestMethod.GET)
