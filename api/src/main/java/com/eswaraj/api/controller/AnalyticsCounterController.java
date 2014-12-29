@@ -43,24 +43,40 @@ public class AnalyticsCounterController extends BaseController {
         logger.info("getting data from Redis for key {}", redisKeyForAllTime);
         Long count = (Long) redisTemplate.opsForValue().get(redisKeyForAllTime);
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("count", count);
+        if (count == null) {
+            jsonObject.addProperty("count", 0);
+        } else {
+            jsonObject.addProperty("count", count);
+        }
+
         return jsonObject.toString();
     }
 
     @RequestMapping(value = "/stats/counter/location/{locationId}/parentcategory/{parentCategoryId}", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationParentCategoryCounts(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long parentCategoryId) throws ApplicationException {
-        /*
-        List<CategoryDto> childCategories = appService.getAllChildCategoryOfParentCategory(parentCategoryId);
-        JsonArray jsonArray = getCountersForLocationAndCategories(locationId, childCategories);
-        return jsonArray.toString();
-        */
-        return "dsd";
+
+        String allCategories = categoryCache.getAllCategories();
+        Type listType = new TypeToken<ArrayList<CategoryWithChildCategoryDto>>() {
+        }.getType();
+        List<CategoryWithChildCategoryDto> categories = new Gson().fromJson(allCategories, listType);
+        List<CategoryWithChildCategoryDto> childCategories = null;
+        for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
+            if (oneCategoryWithChildCategoryDto.getId().equals(parentCategoryId)) {
+                childCategories = oneCategoryWithChildCategoryDto.getChildCategories();
+            }
+        }
+
+        if (childCategories != null) {
+            JsonArray jsonArray = getCountersForLocationAndCategories(locationId, childCategories);
+            return jsonArray.toString();
+        }
+        return "[]";
     }
 
     @RequestMapping(value = "/stats/counter/location/{locationId}", method = RequestMethod.GET)
     @ResponseBody
-    public String getLocationAllCategoryCounts(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long parentCategoryId) throws ApplicationException {
+    public String getLocationAllCategoryCounts(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
         String allCategories = categoryCache.getAllCategories();
 
