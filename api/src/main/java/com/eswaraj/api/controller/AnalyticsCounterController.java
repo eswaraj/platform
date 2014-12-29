@@ -1,5 +1,6 @@
 package com.eswaraj.api.controller;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.CategoryCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.web.dto.CategoryDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -25,6 +30,10 @@ public class AnalyticsCounterController extends BaseController {
     private RedisTemplate redisTemplate;
     @Autowired
     private AppKeyService appKeyService;
+    @Autowired
+    private CategoryCache categoryCache;
+
+    private Gson gson = new Gson();
 
     @RequestMapping(value = "/stats/counter/location/{locationId}/category/{categoryId}", method = RequestMethod.GET)
     @ResponseBody
@@ -52,15 +61,18 @@ public class AnalyticsCounterController extends BaseController {
     @RequestMapping(value = "/stats/counter/location/{locationId}", method = RequestMethod.GET)
     @ResponseBody
     public String getLocationAllCategoryCounts(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long parentCategoryId) throws ApplicationException {
-        /*
-         * List<CategoryDto> rootCategories = appService.getAllRootCategories();
-         * JsonArray jsonArray = getCountersForLocationAndCategories(locationId,
-         * rootCategories); return jsonArray.toString();
-         */
-        return "Test";
+
+        String allCategories = categoryCache.getAllCategories();
+
+        Type listType = new TypeToken<ArrayList<CategoryWithChildCategoryDto>>() {
+        }.getType();
+        List<CategoryWithChildCategoryDto> categories = new Gson().fromJson(allCategories, listType);
+
+        JsonArray jsonArray = getCountersForLocationAndCategories(locationId, categories);
+        return jsonArray.toString();
     }
 
-    private JsonArray getCountersForLocationAndCategories(Long locationId, List<CategoryDto> categories) {
+    private JsonArray getCountersForLocationAndCategories(Long locationId, List<CategoryWithChildCategoryDto> categories) {
         JsonArray jsonArray = new JsonArray();
         if (categories != null && !categories.isEmpty()) {
             List<String> allKeys = new ArrayList<>(categories.size());
@@ -70,6 +82,7 @@ public class AnalyticsCounterController extends BaseController {
                 logger.info("getting data from Redis for key {}", redisKeyForAllTime);
                 allKeys.add(redisKeyForAllTime);
             }
+
             List<Long> result = redisTemplate.opsForValue().multiGet(allKeys);
             int i = 0;
             for (Long oneCount : result) {
