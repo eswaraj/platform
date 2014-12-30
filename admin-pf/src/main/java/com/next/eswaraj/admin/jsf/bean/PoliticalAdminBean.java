@@ -271,6 +271,8 @@ public class PoliticalAdminBean extends BaseBean {
             }
             if (isValidInput()) {
                 selectedPoliticalBodyAdmin = adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin);
+                System.out.println("queueService=" + queueService);
+                logger.warn("queueService=" + queueService);
                 queueService.sendPoliticalBodyAdminUpdateMessage(selectedPoliticalBodyAdmin.getLocation().getId(), selectedPoliticalBodyAdmin.getId());
                 showListPanel = true;
                 sendInfoMessage("Success", "Admin Saved Succesfully");
