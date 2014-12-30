@@ -148,7 +148,7 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
         jsonObject.addProperty("politicalBodyAdminId", politicalBodyAdminId);
         jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.POLITICAL_BODY_ADMIN_UPDATE_MESSAGE_TYPE);
 
-        logger.debug("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
+        logger.info("Sending message {} to queue {}", jsonObject.toString(), awsLocationQueueName);
         awsQueueManager.sendMessage(awsCategoryUpdateQueueName, jsonObject.toString());
 
     }
