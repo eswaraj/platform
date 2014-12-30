@@ -1,0 +1,77 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	min-height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="storm_admin_form">
+			<p:panel id="mainPanel" header="Political Admin">
+				<p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+
+
+				<h:panelGrid columns="1" styleClass="topAlignPanelColumns">
+
+					<h:panelGrid columns="1" styleClass="topAlignPanelColumns">
+						<p:commandButton id="reprocessAllComplaints" value="Reprocess All Complaints" update="@form"
+							actionListener="#{politicalAdminBean.reprocessAllComplaints}" styleClass="ui-priority-primary"
+							process="@this:reprocessAllComplaints">
+						</p:commandButton>
+					</h:panelGrid>
+					<p:commandButton id="reprocessAllLocations" value="Reprocess All Locations" update="@form"
+						actionListener="#{politicalAdminBean.reprocessAllLocations}" styleClass="ui-priority-primary"
+						process="@this:reprocessAllLocations">
+					</p:commandButton>
+					<p:commandButton id="reprocessAllPersons" value="Reprocess All Persons" update="@form"
+                        actionListener="#{politicalAdminBean.reprocessAllPersons}" styleClass="ui-priority-primary"
+                        process="@this:reprocessAllPersons">
+                    </p:commandButton>
+                    <p:commandButton id="reprocessAllComments" value="Reprocess All Persons" update="@form"
+                        actionListener="#{politicalAdminBean.reprocessAllComments}" styleClass="ui-priority-primary"
+                        process="@this:reprocessAllComments">
+                    </p:commandButton>
+
+				</h:panelGrid>
+				<p:blockUI block="@form" trigger="@form:reprocessAllComplaints,@form:reprocessAllLocations,@form:reprocessAllPersons,@form:reprocessAllComments">LOADING<br />
+					<p:graphicImage width="80"
+						value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+				</p:blockUI>
+
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

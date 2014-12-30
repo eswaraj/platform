@@ -92,4 +92,28 @@ public class LocalQueueServiceImpl implements QueueService {
         return null;
     }
 
+    @Override
+    public void sendReprocesAllComplaints() throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void sendReprocesAllLocations() throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void sendReprocesAllPersons() throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void sendReprocesAllComments() throws ApplicationException {
+        // TODO Auto-generated method stub
+
+    }
+
 }

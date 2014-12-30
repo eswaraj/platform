@@ -198,13 +198,10 @@ public class LocationBean {
                                         System.out.println("Cooridinates : " + coordinatesStr);
                                         Polygon polygon = new Polygon();
                                         String[] latLngs = coordinatesStr.split(" ");
-                                        int count = 0;
                                         for (String oneLatLng : latLngs) {
 
                                             String[] ll = oneLatLng.split(",");
                                             polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
-                                            count++;
-                                            System.out.println(count + ". oneLatLng : " + oneLatLng);
                                         }
 
                                         polygon.setStrokeColor("#FF9900");

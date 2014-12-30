@@ -27,6 +27,14 @@ public interface QueueService {
 
     void sendReprocesAllComplaintOfLocation(Long locationId) throws ApplicationException;
 
+    void sendReprocesAllComplaints() throws ApplicationException;
+
+    void sendReprocesAllLocations() throws ApplicationException;
+
+    void sendReprocesAllPersons() throws ApplicationException;
+
+    void sendReprocesAllComments() throws ApplicationException;
+
     void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException;
 
     ComplaintViewedByPoliticalAdminMessage receiveComplaintViewedByPoliticalLeaderMessage() throws ApplicationException;

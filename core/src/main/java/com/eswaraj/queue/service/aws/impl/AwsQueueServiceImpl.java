@@ -17,8 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 /**
- * Will create this bean manually in core project's eswaraj-core.xml, so that we
- * can control which Quueue Service to use i.e. Aws or Kafka
+ * Will create this bean manually in core project's eswaraj-core.xml, so that we can control which Queue Service to use i.e. Aws or Kafka
  * 
  * @author Ravi
  *
@@ -190,5 +189,31 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
         return gson.fromJson(message, CommentSavedMessage.class);
     }
 
-    
+    @Override
+    public void sendReprocesAllComplaints() throws ApplicationException {
+        logger.debug("Sending message {} to queue {}", "test-Wrog json", awsReProcessAllComplaintQueueName);
+        awsQueueManager.sendMessage(awsReProcessAllComplaintQueueName, "Test-Wrong Json Intentionally");
+    }
+
+    @Override
+    public void sendReprocesAllLocations() throws ApplicationException {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.REFRESH_ALL_LOCATION_MESSAGE_TYPE);
+        awsQueueManager.sendMessage(awsCategoryUpdateQueueName, jsonObject.toString());
+    }
+
+    @Override
+    public void sendReprocesAllPersons() throws ApplicationException {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.REFRESH_ALL_PERSON_MESSAGE_TYPE);
+        awsQueueManager.sendMessage(awsCategoryUpdateQueueName, jsonObject.toString());
+    }
+
+    @Override
+    public void sendReprocesAllComments() throws ApplicationException {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.REFRESH_ALL_COMMENT_MESSAGE_TYPE);
+        awsQueueManager.sendMessage(awsCategoryUpdateQueueName, jsonObject.toString());
+    }
+
 }
