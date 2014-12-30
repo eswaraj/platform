@@ -27,7 +27,7 @@ public class Location extends BaseNode {
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
-    private String headerImageUrl;
+    private String mobileHeaderImageUrl;
 
     private String urlIdentifier;
 
@@ -87,12 +87,12 @@ public class Location extends BaseNode {
 		this.parentLocation = parentLocation;
 	}
 
-    public String getHeaderImageUrl() {
-        return headerImageUrl;
+    public String getMobileHeaderImageUrl() {
+        return mobileHeaderImageUrl;
     }
 
-    public void setHeaderImageUrl(String headerImageUrl) {
-        this.headerImageUrl = headerImageUrl;
+    public void setMobileHeaderImageUrl(String mobileHeaderImageUrl) {
+        this.mobileHeaderImageUrl = mobileHeaderImageUrl;
     }
 
     public Double getLongitude() {

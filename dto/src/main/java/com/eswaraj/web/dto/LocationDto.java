@@ -12,7 +12,7 @@ public class LocationDto extends BaseDto {
     private String boundaryFile;
     private String urlIdentifier;
 
-    private String headerImageUrl;
+    private String mobileHeaderImageUrl;
 	
 	private Long totalNumberOfHouses;
 	
@@ -161,18 +161,22 @@ public class LocationDto extends BaseDto {
         this.urlIdentifier = urlIdentifier;
     }
 
-    public String getHeaderImageUrl() {
-        return headerImageUrl;
+    public String getMobileHeaderImageUrl() {
+        return mobileHeaderImageUrl;
     }
 
-    public void setHeaderImageUrl(String headerImageUrl) {
-        this.headerImageUrl = headerImageUrl;
+    public void setMobileHeaderImageUrl(String mobileHeaderImageUrl) {
+        this.mobileHeaderImageUrl = mobileHeaderImageUrl;
     }
     @Override
-	public String toString() {
-		return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", latitude=" + latitude
-				+ ", longitude=" + longitude + ", getId()=" + getId() + "]";
-	}
+    public String toString() {
+        return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", latitude=" + latitude + ", longitude=" + longitude
+                + ", boundaryFile=" + boundaryFile + ", urlIdentifier=" + urlIdentifier + ", mobileHeaderImageUrl=" + mobileHeaderImageUrl + ", totalNumberOfHouses=" + totalNumberOfHouses
+                + ", totalPopulation=" + totalPopulation + ", totalMalePopulation=" + totalMalePopulation + ", totalFemalePopulation=" + totalFemalePopulation + ", totalLiteratePopulation="
+                + totalLiteratePopulation + ", totalMaleLiteratePopulation=" + totalMaleLiteratePopulation + ", totalFemaleLiteratePopulation=" + totalFemaleLiteratePopulation
+                + ", totalWorkingPopulation=" + totalWorkingPopulation + ", totalMaleWorkingPopulation=" + totalMaleWorkingPopulation + ", totalFemaleWorkingPopulation="
+                + totalFemaleWorkingPopulation + ", area=" + area + ", perimeter=" + perimeter + ", id=" + id + "]";
+    }
 	@Override
 	public int hashCode() {
 		final int prime = 31;
