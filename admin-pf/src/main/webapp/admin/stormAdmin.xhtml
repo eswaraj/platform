@@ -48,20 +48,20 @@
 
 					<h:panelGrid columns="1" styleClass="topAlignPanelColumns">
 						<p:commandButton id="reprocessAllComplaints" value="Reprocess All Complaints" update="@form"
-							actionListener="#{politicalAdminBean.reprocessAllComplaints}" styleClass="ui-priority-primary"
+							actionListener="#{stormAdminBean.reprocessAllComplaints}" styleClass="ui-priority-primary"
 							process="@this:reprocessAllComplaints">
 						</p:commandButton>
 					</h:panelGrid>
 					<p:commandButton id="reprocessAllLocations" value="Reprocess All Locations" update="@form"
-						actionListener="#{politicalAdminBean.reprocessAllLocations}" styleClass="ui-priority-primary"
+						actionListener="#{stormAdminBean.reprocessAllLocations}" styleClass="ui-priority-primary"
 						process="@this:reprocessAllLocations">
 					</p:commandButton>
 					<p:commandButton id="reprocessAllPersons" value="Reprocess All Persons" update="@form"
-                        actionListener="#{politicalAdminBean.reprocessAllPersons}" styleClass="ui-priority-primary"
+                        actionListener="#{stormAdminBean.reprocessAllPersons}" styleClass="ui-priority-primary"
                         process="@this:reprocessAllPersons">
                     </p:commandButton>
-                    <p:commandButton id="reprocessAllComments" value="Reprocess All Persons" update="@form"
-                        actionListener="#{politicalAdminBean.reprocessAllComments}" styleClass="ui-priority-primary"
+                    <p:commandButton id="reprocessAllComments" value="Reprocess All Comments" update="@form"
+                        actionListener="#{stormAdminBean.reprocessAllComments}" styleClass="ui-priority-primary"
                         process="@this:reprocessAllComments">
                     </p:commandButton>
 
