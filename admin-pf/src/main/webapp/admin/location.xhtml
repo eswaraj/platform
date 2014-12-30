@@ -84,8 +84,14 @@
 						<p:outputPanel rendered="#{not empty locationBean.selectedNode}">
 						
 							<h:panelGrid columns="2">
+                                <p:outputLabel value="Id"></p:outputLabel>
+                                <p:inputText disabled="true"  id="id" value="#{locationBean.selectedLocationNode.data.location.id}" style="width:200px" />
+
 								<p:outputLabel value="Name"></p:outputLabel>
 								<p:inputText id="name" value="#{locationBean.selectedLocationNode.data.location.name}" style="width:200px" />
+
+                                <p:outputLabel value="Mobile Header Image Url"></p:outputLabel>
+                                <p:inputText id="mobileHeaderImageUrl" value="#{locationBean.selectedLocationNode.data.location.headerImageUrl}" style="width:200px" />
 
 								<p:outputLabel value="URL Identifier"></p:outputLabel>
 								<p:inputText disabled="true"  id="urlId" value="#{locationBean.selectedLocationNode.data.location.urlIdentifier}" style="width:200px" />

@@ -27,6 +27,8 @@ public class Location extends BaseNode {
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
+    private String headerImageUrl;
+
     private String urlIdentifier;
 
     private String boundaryFile;
@@ -85,7 +87,15 @@ public class Location extends BaseNode {
 		this.parentLocation = parentLocation;
 	}
 
-	public Double getLongitude() {
+    public String getHeaderImageUrl() {
+        return headerImageUrl;
+    }
+
+    public void setHeaderImageUrl(String headerImageUrl) {
+        this.headerImageUrl = headerImageUrl;
+    }
+
+    public Double getLongitude() {
 		return longitude;
 	}
 

@@ -44,18 +44,19 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
 	public List<Complaint> getPagedComplaintsLodgedForLocation(Location location, int start, int end);
 	
 	
-    @Query("match complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated ASC " + "skip {0} limit {1}")
+    @Query("match complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint order by complaint.dateCreated ASC "
+            + "skip {0} limit {1}")
     public List<Complaint> getAllPagedComplaints(long start, long end);
 
-    @Query("start location=node({0}) match complaint-[:AT]-(location) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated ASC "
+    @Query("start location=node({0}) match complaint-[:AT]-(location) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint order by complaint.dateCreated ASC "
             + "skip {1} limit {2}")
     public List<Complaint> getAllPagedComplaintsOfLocation(long locationId, long start, long end);
 
-    @Query("start politicalAdmin=node({0}) match complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
+    @Query("start politicalAdmin=node({0}) match complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint order by complaint.dateCreated DESC "
             + "skip {1} limit {2}")
     public List<Complaint> getPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
 
-    @Query("start politicalAdmin=node({0}), category=node({1}) match category<-[:BELONGS_TO]-complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' return complaint order by complaint.dateCreated DESC "
+    @Query("start politicalAdmin=node({0}), category=node({1}) match category<-[:BELONGS_TO]-complaint-[:POLITICAL_SERVED_BY]->(politicalAdmin) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' or complaint.__type__ = 'Complaint' return complaint order by complaint.dateCreated DESC "
             + "skip {2} limit {3}")
     public List<Complaint> getAllPagedComplaintsOfPoliticalAdminAndCategry(long politicalAdminId, long categoryId, long start, long end);
 

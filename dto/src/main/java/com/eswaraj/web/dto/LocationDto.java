@@ -11,6 +11,8 @@ public class LocationDto extends BaseDto {
 	private Double longitude;
     private String boundaryFile;
     private String urlIdentifier;
+
+    private String headerImageUrl;
 	
 	private Long totalNumberOfHouses;
 	
@@ -157,6 +159,14 @@ public class LocationDto extends BaseDto {
 
     public void setUrlIdentifier(String urlIdentifier) {
         this.urlIdentifier = urlIdentifier;
+    }
+
+    public String getHeaderImageUrl() {
+        return headerImageUrl;
+    }
+
+    public void setHeaderImageUrl(String headerImageUrl) {
+        this.headerImageUrl = headerImageUrl;
     }
     @Override
 	public String toString() {
