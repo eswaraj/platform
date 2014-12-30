@@ -100,6 +100,7 @@ public class AnalyticsCounterController extends BaseController {
                 jsonObject.addProperty("name", categories.get(i).getName());
                 jsonObject.addProperty("id", categories.get(i).getId());
                 jsonArray.add(jsonObject);
+                i++;
             }
         }
         return jsonArray;
