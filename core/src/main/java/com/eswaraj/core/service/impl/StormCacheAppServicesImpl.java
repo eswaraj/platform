@@ -249,7 +249,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 locationJsonObject.addProperty("orgUrl", onePhoto.getOrgUrl());
                 photosArray.add(locationJsonObject);
             }
-            complaintJsonObject.add("photos", photosArray);
+            complaintJsonObject.add("images", photosArray);
         }
         return complaintJsonObject;
     }
