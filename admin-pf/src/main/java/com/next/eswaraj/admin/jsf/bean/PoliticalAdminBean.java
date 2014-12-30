@@ -35,6 +35,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
+import com.eswaraj.queue.service.QueueService;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -43,6 +44,9 @@ public class PoliticalAdminBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private QueueService queueService;
 
     private TreeNode root;
 
@@ -267,6 +271,7 @@ public class PoliticalAdminBean extends BaseBean {
             }
             if (isValidInput()) {
                 selectedPoliticalBodyAdmin = adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin);
+                queueService.sendPoliticalBodyAdminUpdateMessage(selectedPoliticalBodyAdmin.getLocation().getId(), selectedPoliticalBodyAdmin.getId());
                 showListPanel = true;
                 sendInfoMessage("Success", "Admin Saved Succesfully");
                 refreshPoliticalBodyAdmins();
