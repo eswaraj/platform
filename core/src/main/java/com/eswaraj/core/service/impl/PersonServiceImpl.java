@@ -178,6 +178,8 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         Facebook facebook = new FacebookTemplate(registerFacebookAccountRequest.getToken());
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
+        logger.info("facebook.getApplicationNamespace() =  {} ", facebook.getApplicationNamespace());
+        logger.info("facebookUserId =  {} ", facebookUserId);
         FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
         if (facebookAccount == null) {
             // Create a new new facebook account and attach it to user

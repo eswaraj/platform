@@ -58,7 +58,13 @@ public class CounterCacheRedisImpl extends BaseCacheRedisImpl implements Counter
         String rediskey = appKeyService.getLocationCounterKey(locationId);
         String hash = appKeyService.getTotalComplaintCounterKey("");
         logger.info("Getting from hash for Key : {}, hash : {}", rediskey, hash);
-        return (Long) complaintStringRedisTemplate.opsForHash().get(rediskey, hash);
+        Long returnCounter = 0L;
+        try {
+            Object redisValue = complaintStringRedisTemplate.opsForHash().get(rediskey, hash);
+            returnCounter = Long.parseLong(String.valueOf(redisValue));
+        } catch (Exception ex) {
+        }
+        return returnCounter;
     }
 
     @Override
@@ -67,7 +73,13 @@ public class CounterCacheRedisImpl extends BaseCacheRedisImpl implements Counter
         String categoryKey = appKeyService.getCategoryCounterKey(categoryId);
         String hash = appKeyService.getTotalComplaintCounterKey(categoryKey);
         logger.info("Getting from hash for Key : {}, hash : {}", rediskey, hash);
-        return (Long) complaintStringRedisTemplate.opsForHash().get(rediskey, hash);
+        Long returnCounter = 0L;
+        try {
+            Object redisValue = complaintStringRedisTemplate.opsForHash().get(rediskey, hash);
+            returnCounter = Long.parseLong(String.valueOf(redisValue));
+        } catch (Exception ex) {
+        }
+        return returnCounter;
     }
 
     @Override
@@ -86,7 +98,12 @@ public class CounterCacheRedisImpl extends BaseCacheRedisImpl implements Counter
             if (oneValue == null) {
                 returnList.add(0L);
             } else {
-                returnList.add((Long) oneValue);
+                try {
+                    returnList.add(Long.parseLong(String.valueOf(oneValue)));
+                } catch (Exception ex) {
+                    returnList.add(0L);
+                }
+
             }
 
         }
