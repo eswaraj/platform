@@ -55,7 +55,7 @@ public class AnalyticsCounterController extends BaseController {
         String allCategories = categoryCache.getAllCategories();
         Type listType = new TypeToken<ArrayList<CategoryWithChildCategoryDto>>() {
         }.getType();
-        List<CategoryWithChildCategoryDto> categories = new Gson().fromJson(allCategories, listType);
+        List<CategoryWithChildCategoryDto> categories = gson.fromJson(allCategories, listType);
         List<CategoryWithChildCategoryDto> childCategories = null;
         for (CategoryWithChildCategoryDto oneCategoryWithChildCategoryDto : categories) {
             if (oneCategoryWithChildCategoryDto.getId().equals(parentCategoryId)) {
@@ -78,7 +78,7 @@ public class AnalyticsCounterController extends BaseController {
 
         Type listType = new TypeToken<ArrayList<CategoryWithChildCategoryDto>>() {
         }.getType();
-        List<CategoryWithChildCategoryDto> categories = new Gson().fromJson(allCategories, listType);
+        List<CategoryWithChildCategoryDto> categories = gson.fromJson(allCategories, listType);
 
         JsonArray jsonArray = getCountersForLocationAndCategories(locationId, categories);
         return jsonArray.toString();
