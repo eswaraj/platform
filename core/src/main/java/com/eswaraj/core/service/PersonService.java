@@ -7,6 +7,7 @@ import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
+import com.eswaraj.web.dto.UpdateMobileUserRequestDto;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.device.RegisterGcmDeviceId;
@@ -40,6 +41,8 @@ public interface PersonService {
     UserDto registerFacebookAccountWebUser(RegisterFacebookAccountWebRequest registerFacebookAccountWebRequest) throws ApplicationException;
 
     UserDto updateUserInfo(UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException;
+
+    UserDto updateMobileUserInfo(UpdateMobileUserRequestDto updateMobileUserRequestDto) throws ApplicationException;
 
     List<PersonDto> getPersons(int page, int count) throws ApplicationException;
 

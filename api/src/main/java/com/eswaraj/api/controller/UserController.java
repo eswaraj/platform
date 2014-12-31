@@ -22,6 +22,7 @@ import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.RegisterDeviceRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
+import com.eswaraj.web.dto.UpdateMobileUserRequestDto;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.device.RegisterGcmDeviceId;
@@ -37,6 +38,11 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
         return personService.updateUserInfo(updateUserRequestWebDto);
+    }
+
+    @RequestMapping(value = "/api/v0/mobile/user/profile", method = RequestMethod.POST)
+    public @ResponseBody UserDto updateMobileUser(HttpServletRequest httpServletRequest, @RequestBody UpdateMobileUserRequestDto updateMobileRequestDto) throws ApplicationException {
+        return personService.updateMobileUserInfo(updateMobileRequestDto);
     }
 
     @RequestMapping(value = "/api/v0/user/facebook", method = RequestMethod.POST)

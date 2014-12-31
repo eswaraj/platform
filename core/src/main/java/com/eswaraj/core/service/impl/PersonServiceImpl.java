@@ -51,6 +51,7 @@ import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.RegisterFacebookAccountWebRequest;
+import com.eswaraj.web.dto.UpdateMobileUserRequestDto;
 import com.eswaraj.web.dto.UpdateUserRequestWebDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.device.RegisterGcmDeviceId;
@@ -352,6 +353,17 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);
         return convertUser(user);
+    }
+
+    @Override
+    public UserDto updateMobileUserInfo(UpdateMobileUserRequestDto updateMobileUserRequestDto) throws ApplicationException {
+        Facebook facebook = new FacebookTemplate(updateMobileUserRequestDto.getToken());
+        FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
+        String facebookUserId = facebookUserProfile.getId();
+        logger.info("Getting Facebook Account for Id : {}", facebookUserId);
+        User user = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
+        updateMobileUserRequestDto.setUserId(user.getId());
+        return updateUserInfo(updateMobileUserRequestDto);
     }
 
     private void updateAddressLocationBasedOnLatLong(Address address) throws ApplicationException {
