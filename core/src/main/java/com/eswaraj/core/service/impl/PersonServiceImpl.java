@@ -371,6 +371,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     }
 
     private User getUserByFacebookTokenInternal(String facebookToken) {
+        logger.info("facebookToken : {}", facebookToken);
         Facebook facebook = new FacebookTemplate(facebookToken);
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
