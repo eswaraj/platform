@@ -45,6 +45,11 @@ public class UserController extends BaseController {
         return personService.updateMobileUserInfo(updateMobileRequestDto);
     }
 
+    @RequestMapping(value = "/api/v0/mobile/user/profile/{facebookToken}", method = RequestMethod.GET)
+    public @ResponseBody UserDto getUser(HttpServletRequest httpServletRequest, @PathVariable String facebookToken) throws ApplicationException {
+        return personService.getUserByFacebookToken(facebookToken);
+    }
+
     @RequestMapping(value = "/api/v0/user/facebook", method = RequestMethod.POST)
     public @ResponseBody UserDto registerFacebookUser(HttpServletRequest httpServletRequest, @RequestBody RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
         return personService.registerFacebookAccount(registerFacebookAccountRequest);

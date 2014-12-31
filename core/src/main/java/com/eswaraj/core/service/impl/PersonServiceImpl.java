@@ -357,13 +357,26 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
     @Override
     public UserDto updateMobileUserInfo(UpdateMobileUserRequestDto updateMobileUserRequestDto) throws ApplicationException {
-        Facebook facebook = new FacebookTemplate(updateMobileUserRequestDto.getToken());
+        User user = getUserByFacebookTokenInternal(updateMobileUserRequestDto.getToken());
+        updateMobileUserRequestDto.setUserId(user.getId());
+        return updateUserInfo(updateMobileUserRequestDto);
+    }
+
+    @Override
+    public UserDto getUserByFacebookToken(String facebookToken) throws ApplicationException {
+        User user = getUserByFacebookTokenInternal(facebookToken);
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user, userDto);
+        return convertUser(user);
+    }
+
+    private User getUserByFacebookTokenInternal(String facebookToken) {
+        Facebook facebook = new FacebookTemplate(facebookToken);
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
         User user = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
-        updateMobileUserRequestDto.setUserId(user.getId());
-        return updateUserInfo(updateMobileUserRequestDto);
+        return user;
     }
 
     private void updateAddressLocationBasedOnLatLong(Address address) throws ApplicationException {

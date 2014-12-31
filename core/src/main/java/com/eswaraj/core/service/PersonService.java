@@ -44,6 +44,8 @@ public interface PersonService {
 
     UserDto updateMobileUserInfo(UpdateMobileUserRequestDto updateMobileUserRequestDto) throws ApplicationException;
 
+    UserDto getUserByFacebookToken(String facebookTokenId) throws ApplicationException;
+
     List<PersonDto> getPersons(int page, int count) throws ApplicationException;
 
 }
