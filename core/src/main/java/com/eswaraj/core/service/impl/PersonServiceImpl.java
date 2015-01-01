@@ -218,12 +218,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             user = mergeUser(facebookAccountExistingUser, user);
 
         }
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user, userDto);
-        userDto.setPerson(personConvertor.convertBean(user.getPerson()));
-        userDto.setFacebookAccount(facebookAccountConvertor.convertBean(facebookAccount));
-
-        return userDto;
+        return convertUser(user);
     }
 
     private User mergeUser(User targetUser, User user) {
