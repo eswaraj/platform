@@ -1,6 +1,8 @@
 package com.eswaraj.api.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eswaraj.cache.LocationCache;
+import com.eswaraj.cache.LocationPointCache;
+import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
 import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
+import com.google.gson.JsonArray;
 
 @Controller
 public class PoliticalBodyAdminController extends BaseController {
@@ -39,6 +45,12 @@ public class PoliticalBodyAdminController extends BaseController {
     private AppKeyService appKeyService;
     @Autowired
     private AppService appService;
+    @Autowired
+    private LocationPointCache locationPointCache;
+    @Autowired
+    private LocationCache locationCache;
+    @Autowired
+    private PoliticalAdminCache politicalAdminCache;
 
     @RequestMapping(value = "/api/v0/leader", method = RequestMethod.GET)
     public @ResponseBody String getLeader(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
@@ -76,6 +88,29 @@ public class PoliticalBodyAdminController extends BaseController {
             throws ApplicationException {
         PoliticalBodyAdminStaffDto politicalBodyAdminStaffDto = appService.deletePoliticalAdminStaff(politicalAdminStaffId);
         return politicalBodyAdminStaffDto;
+    }
+
+    @RequestMapping(value = "/api/v0/leaders", method = RequestMethod.GET)
+    public @ResponseBody String getMyLeaders(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
+        Double lat = getDoubleParameter(httpServletRequest, "lat", null);
+        Double lng = getDoubleParameter(httpServletRequest, "long", null);
+        if (lat == null | lng == null) {
+            throw new ApplicationException("Lat/Long parameter must be provided");
+        }
+        Set<Long> locations = locationPointCache.getPointLocations(lat, lng);
+        logger.info("Locations at {} , {} are {}", lat, lng, locations);
+
+        Set<String> allPbAdminIds = new HashSet<String>();
+        for (Long oneLocationId : locations) {
+            Set<String> oneLocationPbAdminIds = locationCache.getLocationPoliticalAdmins(oneLocationId);
+            logger.info("PoliticalBoydAdmins at Location {}  are {}", oneLocationId, oneLocationPbAdminIds);
+            if(oneLocationPbAdminIds !=null && !oneLocationPbAdminIds.isEmpty()){
+                allPbAdminIds.addAll(oneLocationPbAdminIds);
+            }
+        }
+        
+        JsonArray jsonArray = politicalAdminCache.getPoliticalBodyAdminByIds(allPbAdminIds);
+        return jsonArray.toString();
     }
 
 }

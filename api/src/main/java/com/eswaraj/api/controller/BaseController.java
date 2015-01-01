@@ -66,6 +66,20 @@ public class BaseController {
         return returnValue;
     }
 
+    protected Double getDoubleParameter(HttpServletRequest httpServletRequest, String parameter, Double defaultValue) {
+        String paramValue = httpServletRequest.getParameter(parameter);
+        if (paramValue == null) {
+            return defaultValue;
+        }
+        Double returnValue = defaultValue;
+        try {
+            returnValue = Double.parseDouble(paramValue);
+        } catch (Exception ex) {
+            logger.warn("Unable to parser {} as Double", paramValue);
+        }
+        return returnValue;
+    }
+
     protected String getFileName(String submittedFileName) {
         return UUID.randomUUID().toString() + submittedFileName.substring(submittedFileName.lastIndexOf("."));
     }
