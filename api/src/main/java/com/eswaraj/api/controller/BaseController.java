@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
+import com.eswaraj.web.dto.ErrorMessageDto;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
@@ -64,6 +68,24 @@ public class BaseController {
 
     protected String getFileName(String submittedFileName) {
         return UUID.randomUUID().toString() + submittedFileName.substring(submittedFileName.lastIndexOf("."));
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    public ErrorMessageDto onApplicationException(ApplicationException applicationException) {
+        logger.error("Application Exception : ", applicationException);
+        ErrorMessageDto errorMessageDto = new ErrorMessageDto();
+        errorMessageDto.setMessage(applicationException.getMessage());
+        return errorMessageDto;
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    public ErrorMessageDto onException(Exception applicationException) {
+        logger.error("Application Exception : ", applicationException);
+        ErrorMessageDto errorMessageDto = new ErrorMessageDto();
+        errorMessageDto.setMessage(applicationException.getMessage());
+        return errorMessageDto;
     }
 
 }
