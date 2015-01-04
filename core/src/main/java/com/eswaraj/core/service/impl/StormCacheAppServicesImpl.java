@@ -229,10 +229,11 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                     personJsonObject.addProperty("name", "Anonymous");
                     personJsonObject.addProperty("profilePhoto", "https://cdn3.iconfinder.com/data/icons/humano2/72x72/emblems/emblem-people.png");
                 } else {
-                    personJsonObject.addProperty("externalId", person.getExternalId());
                     personJsonObject.addProperty("name", person.getName());
                     personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
                 }
+                personJsonObject.addProperty("externalId", person.getExternalId());
+                personJsonObject.addProperty("id", person.getId());
                 jsonArray.add(personJsonObject);
             }
             complaintJsonObject.add("createdBy", jsonArray);
