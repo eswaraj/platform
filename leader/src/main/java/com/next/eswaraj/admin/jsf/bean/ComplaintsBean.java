@@ -30,6 +30,8 @@ import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
+import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.UserDto;
 import com.next.eswaraj.admin.jsf.dto.ComplaintSearchResultDto;
 import com.next.eswaraj.admin.service.AdminService;
@@ -44,6 +46,9 @@ public class ComplaintsBean extends BaseBean {
 
     @Autowired
     private SessionUtil sessionUtil;
+
+    @Autowired
+    private QueueService queueService;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -194,6 +199,11 @@ public class ComplaintsBean extends BaseBean {
             }
             if (!complaintSearchResult.getComplaintPoliticalAdmin().isViewed()) {
                 adminService.markComplaintViewed(complaintSearchResult.getComplaint().getId(), selectedPoliticalBodyAdmin.getId());
+                ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage = new ComplaintViewedByPoliticalAdminMessage();
+                complaintViewedByPoliticalAdminMessage.setComplaintId(complaintSearchResult.getComplaint().getId());
+                complaintViewedByPoliticalAdminMessage.setPersonId(selectedPoliticalBodyAdmin.getPerson().getId());
+                complaintViewedByPoliticalAdminMessage.setPoliticalAdminId(selectedPoliticalBodyAdmin.getId());
+                queueService.sendComplaintViewedByPoliticalLeaderMessage(complaintViewedByPoliticalAdminMessage);
             }
 
         } catch (ApplicationException e) {
