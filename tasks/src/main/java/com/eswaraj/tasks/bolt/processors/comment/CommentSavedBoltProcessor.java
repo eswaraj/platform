@@ -78,7 +78,8 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
                 pbaJsonObject.addProperty("self", self);
                 messageJson.add("viewedBy", pbaJsonObject);
 
-                SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(message, NotificationMessage.POLITICAL_ADMIN_COMMENTED_MESSAGE_TYPE, deviceList);
+                SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(messageJson.toString(), NotificationMessage.POLITICAL_ADMIN_COMMENTED_MESSAGE_TYPE,
+                        deviceList);
                 writeToParticularStream(inputTuple, new Values(sendMobileNotificationMessage), "SendMobileNotificationStream");
             }
 
