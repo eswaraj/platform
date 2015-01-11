@@ -528,7 +528,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
         complaint.setStatus(Complaint.Status.valueOf(complaintStatusChangeByPersonRequestDto.getStatus()));
         complaint = complaintRepository.save(complaint);
-
+        ComplaintMessage complaintMessage = buildComplaintMessage(complaint);
+        queueService.sendComplaintCreatedMessage(complaintMessage);
         return complaintConvertor.convertBean(complaint);
     }
 
