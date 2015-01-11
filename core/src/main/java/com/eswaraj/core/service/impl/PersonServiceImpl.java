@@ -294,6 +294,9 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
             // Update Person Info too
             Person person = personRepository.getPersonByUser(user);
+            if (person == null) {
+                person = new Person();
+            }
             updatePersonInfoFromFacebook(person, facebookUserProfile);
         } else {
             user = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
