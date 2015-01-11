@@ -33,6 +33,8 @@ public interface QueueService {
 
     void sendReprocesAllPersons() throws ApplicationException;
 
+    void sendRefreshPerson(Long personId) throws ApplicationException;
+
     void sendReprocesAllComments() throws ApplicationException;
 
     void sendComplaintViewedByPoliticalLeaderMessage(ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage) throws ApplicationException;

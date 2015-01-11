@@ -61,6 +61,7 @@
 				<value>RefreshAllChildLocationPBAListStream</value>
 				<value>RefreshAllCommentStream</value>
 				<value>RefreshAllPersonStream</value>
+				<value>RefreshPersonStream</value>
 			</list>
 		</property>
 		<!-- Properties define which services will be available for spout -->
@@ -127,6 +128,7 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
+                <entry key="DataChangeSpout" value="RefreshPersonStream" />
             </map>
         </property>
     </bean>
