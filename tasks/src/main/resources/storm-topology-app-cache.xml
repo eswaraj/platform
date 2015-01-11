@@ -34,8 +34,6 @@
 				<ref bean="RefreshAllCommentsBoltProcessorBean" />
 				<ref bean="RefreshAllPersonBoltBean" />
 				<ref bean="RefreshPersonBoltBean" />
-				<ref bean="SendMobileNotificationBoltBean" />
-				
 				
 			</list>
 		</property>
