@@ -217,7 +217,9 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         } else {
             // Retrieve user attached to Facebook account and merge it to user
             // userExternalId
-            User facebookAccountExistingUser = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
+            FacebookAccount existingFacebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+            User facebookAccountExistingUser = userRepository.getUserByFacebookUser(existingFacebookAccount);
+            // User facebookAccountExistingUser = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
             // facebookAccountExistingUser will become main user(anonymous) and
             // user will be merged into it
             user = mergeUser(facebookAccountExistingUser, user);
@@ -308,7 +310,8 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             }
             updatePersonInfoFromFacebook(person, facebookUserProfile);
         } else {
-            user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
+            user = userRepository.getUserByFacebookUser(facebookAccount);
+            // user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
             FacebookAppPermission facebookAppPermission = facebookAppPermissionRepository.getFacebookAccountAndAppRelation(facebookAccount, facebookApp);
             if (facebookAppPermission == null) {
                 logger.error("No Relation found between facebook App and Facebook account");
@@ -383,7 +386,9 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
-        User user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
+        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+        User user = userRepository.getUserByFacebookUser(facebookAccount);
+        // User user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
         return user;
     }
 

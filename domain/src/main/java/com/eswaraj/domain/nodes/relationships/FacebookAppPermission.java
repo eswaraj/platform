@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
@@ -16,6 +17,7 @@ public class FacebookAppPermission {
     @GraphId
     protected Long id;
 
+    @Indexed
 	private String token;
 	private Date expireTime;
     @StartNode
