@@ -60,7 +60,7 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
             PersonDto person = personService.getPersonById(complaintViewByPoliticalAdminMessage.getPersonId());
             PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getPoliticalBodyTypeId());
             LocationDto location = locationService.getLocationById(politicalBodyAdminDto.getLocationId());
-            String message = "Your complaint #" + complaintViewByPoliticalAdminMessage.getComplaintId() + " has been viewed by " + politicalBodyTypeDto.getShortName() + " - " + person.getName()
+            String message = "Your complaint #" + complaintViewByPoliticalAdminMessage.getComplaintId() + " has been viewed by " + person.getName() + " " + politicalBodyTypeDto.getShortName()
                     + " of " + location.getName();
             PersonDto politicalPerson = person;
             boolean self = true;
@@ -80,8 +80,6 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
             pbaJsonObject.addProperty("position", politicalBodyTypeDto.getShortName());
             pbaJsonObject.addProperty("self", self);
             messageJson.add("viewedBy", pbaJsonObject);
-
-            messageJson.addProperty("political", complaintViewByPoliticalAdminMessage.getComplaintId());
 
             SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(messageJson.toString(), NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList);
             writeToStream(inputTuple, new Values(sendMobileNotificationMessage));
