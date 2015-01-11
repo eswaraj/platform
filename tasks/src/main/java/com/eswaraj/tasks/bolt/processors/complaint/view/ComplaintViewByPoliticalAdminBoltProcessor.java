@@ -23,6 +23,7 @@ import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
 import com.eswaraj.web.dto.device.NotificationMessage;
+import com.google.gson.JsonObject;
 
 @Component
 public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProcessor {
@@ -55,11 +56,27 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
             PersonDto person = personService.getPersonById(complaintViewByPoliticalAdminMessage.getPersonId());
             PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getPoliticalBodyTypeId());
             String message = "Your complaint has been viewed by " + politicalBodyTypeDto.getShortName() + " - " + person.getName();
+            PersonDto politicalPerson = person;
+            boolean self = true;
             if (!person.getId().equals(politicalBodyAdminDto.getPersonId())) {
-                PersonDto politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
+                politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
                 message = "Your complaint has been viewed by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName();
+                self = false;
             }
-            SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(message, NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList);
+            JsonObject messageJson = new JsonObject();
+            messageJson.addProperty("message", message);
+            messageJson.addProperty("complaintId", complaintViewByPoliticalAdminMessage.getComplaintId());
+            JsonObject pbaJsonObject = new JsonObject();
+            pbaJsonObject.addProperty("id", politicalBodyAdminDto.getId());
+            pbaJsonObject.addProperty("name", politicalPerson.getName());
+            pbaJsonObject.addProperty("profilePhoto", politicalPerson.getProfilePhoto());
+            pbaJsonObject.addProperty("position", politicalBodyTypeDto.getShortName());
+            pbaJsonObject.addProperty("self", self);
+            messageJson.add("viewedBy", pbaJsonObject);
+
+            messageJson.addProperty("political", complaintViewByPoliticalAdminMessage.getComplaintId());
+
+            SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(messageJson.toString(), NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList);
             writeToStream(inputTuple, new Values(sendMobileNotificationMessage));
         } catch (Exception ex) {
             logError("Unable to send message to devices ", ex);

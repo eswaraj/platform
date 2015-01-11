@@ -60,10 +60,23 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
                 PersonDto person = personService.getPersonById(commentSavedMessage.getPersonId());
                 PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getPoliticalBodyTypeId());
                 String message = "A Comment made by " + politicalBodyTypeDto.getShortName() + " - " + person.getName() + " on your complaint";
+                PersonDto politicalPerson = person;
+                boolean self = true;
                 if (!person.getId().equals(politicalBodyAdminDto.getPersonId())) {
-                    PersonDto politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
+                    politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
                     message = "A Comment made by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName() + " on your complaint";
                 }
+
+                JsonObject messageJson = new JsonObject();
+                messageJson.addProperty("message", message);
+                messageJson.addProperty("complaintId", commentSavedMessage.getComplaintId());
+                JsonObject pbaJsonObject = new JsonObject();
+                pbaJsonObject.addProperty("id", politicalBodyAdminDto.getId());
+                pbaJsonObject.addProperty("name", politicalPerson.getName());
+                pbaJsonObject.addProperty("profilePhoto", politicalPerson.getProfilePhoto());
+                pbaJsonObject.addProperty("position", politicalBodyTypeDto.getShortName());
+                pbaJsonObject.addProperty("self", self);
+                messageJson.add("viewedBy", pbaJsonObject);
 
                 SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(message, NotificationMessage.POLITICAL_ADMIN_COMMENTED_MESSAGE_TYPE, deviceList);
                 writeToParticularStream(inputTuple, new Values(sendMobileNotificationMessage), "SendMobileNotificationStream");

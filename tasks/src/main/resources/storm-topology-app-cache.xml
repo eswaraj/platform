@@ -34,6 +34,7 @@
 				<ref bean="RefreshAllCommentsBoltProcessorBean" />
 				<ref bean="RefreshAllPersonBoltBean" />
 				<ref bean="RefreshPersonBoltBean" />
+				<ref bean="SendMobileNotificationBoltBean" />
 				
 				
 			</list>
@@ -190,6 +191,17 @@
 		</property>
 
 	</bean>
+	<bean id="SendMobileNotificationBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+        <property name="componentId" value="SendMobileNotificationBolt" />
+        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
+
+        <property name="paralellism" value="1" />
+        <property name="sourceComponentStreams">
+            <map>
+                <entry key="CommentSavedBolt" value="SendMobileNotificationStream" />
+            </map>
+        </property>
+    </bean>
 	<bean id="RefreshCommentBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="RefreshCommentBolt" />
 		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshCommentBoltProcessor" />
