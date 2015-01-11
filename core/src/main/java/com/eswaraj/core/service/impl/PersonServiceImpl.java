@@ -234,6 +234,9 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         // Comment
         // Admin Records
         // Complaint Endorsment
+        if (targetUser == null) {
+            return user;
+        }
         return targetUser;
     }
 
