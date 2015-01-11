@@ -270,6 +270,9 @@ public class PoliticalAdminBean extends BaseBean {
                 sendErrorMessage("political_admin_form:politicalParty", "Error", "Please Select a Party");
             }
             if (isValidInput()) {
+                if (selectedPoliticalBodyAdmin.getId() == null) {
+                    selectedPoliticalBodyAdmin.setActive(true);
+                }
                 selectedPoliticalBodyAdmin = adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin);
                 System.out.println("queueService=" + queueService);
                 logger.warn("queueService=" + queueService);
