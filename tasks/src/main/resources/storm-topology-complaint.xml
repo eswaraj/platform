@@ -386,8 +386,6 @@
         <property name="fields">
             <list>
                 <value>Message</value>
-                <value>MessageType</value>
-                <value>DeviceList</value>
             </list>
         </property>
 

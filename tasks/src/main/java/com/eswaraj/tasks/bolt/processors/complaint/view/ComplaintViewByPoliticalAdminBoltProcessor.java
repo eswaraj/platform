@@ -16,6 +16,7 @@ import com.eswaraj.core.service.PersonService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
+import com.eswaraj.tasks.spout.mesage.SendMobileNotificationMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
@@ -58,8 +59,8 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
                 PersonDto politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
                 message = "Your complaint has been viewed by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName();
             }
-
-            writeToStream(inputTuple, new Values(message, NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList));
+            SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(message, NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList);
+            writeToStream(inputTuple, new Values(sendMobileNotificationMessage));
         } catch (Exception ex) {
             logError("Unable to send message to devices ", ex);
         }
