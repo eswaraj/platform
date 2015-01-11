@@ -26,6 +26,6 @@ public interface UserRepository extends GraphRepository<User>{
     // @Query("start facebookAccount=node:FacebookUserIdIdx({0}) match (user)<-[:OF_USER]-(facebookAccount) where user.__type__ = 'User' or user.__type__ = 'com.eswaraj.domain.nodes.User' return user")
     // public User getUserByFacebookUserId(String facebookUserId);
 
-    @Query("start facebookAccount={0} match (user)<-[:OF_USER]-(facebookAccount) where user.__type__ = 'User' or user.__type__ = 'com.eswaraj.domain.nodes.User' return user")
+    @Query("start facebookAccount=node({0}) match (user)<-[:OF_USER]-(facebookAccount) where user.__type__ = 'User' or user.__type__ = 'com.eswaraj.domain.nodes.User' return user")
     public User getUserByFacebookUser(FacebookAccount facebookAccount);
 }
