@@ -140,8 +140,10 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     }
 
     private User registerDevice(String deviceId, String deviceTypeRef, String userExternalId) throws ApplicationException {
+        logger.info("Registering Device {} ,{}, {}", deviceId, deviceTypeRef, userExternalId);
         Device device = deviceRepository.findByPropertyValue("deviceId", deviceId);
         if (device == null) {
+            logger.info("Device Do not exists {} so creating new one", deviceId);
             // This means we have never seen this device so create new one
             device = new Device();
             device.setDeviceId(deviceId);
@@ -160,6 +162,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         }
 
         UserDevice userDevice = userDeviceRepository.getUserDeviceRelation(user, device);
+        logger.info("userDevice : {} ", userDevice);
         if (userDevice == null) {
             userDevice = new UserDevice();
             userDevice.setDevice(device);
@@ -174,7 +177,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     public UserDto registerFacebookAccount(RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
         // First make sure user is registered
         User user = registerDevice(registerFacebookAccountRequest.getDeviceId(), registerFacebookAccountRequest.getDeviceTypeRef(), registerFacebookAccountRequest.getUserExternalId());
-
+        logger.info("user =  {} ", user);
         // Fetch user profile from facebook
         Facebook facebook = new FacebookTemplate(registerFacebookAccountRequest.getToken());
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
@@ -183,6 +186,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         logger.info("facebookUserId =  {} ", facebookUserId);
         FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
         if (facebookAccount == null) {
+            logger.info("facebook Account Doesnt Exists so creating new one ");
             // Create a new new facebook account and attach it to user
             facebookAccount = new FacebookAccount();
             facebookAccount.setDateCreated(new Date());
@@ -208,6 +212,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
             // Update Person Info too
             Person person = personRepository.getPersonByUser(user);
+            logger.info("Person for User {}", person);
             updatePersonInfoFromFacebook(person, facebookUserProfile);
         } else {
             // Retrieve user attached to Facebook account and merge it to user
@@ -218,6 +223,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             user = mergeUser(facebookAccountExistingUser, user);
 
         }
+        logger.info("Converting User {}", user);
         return convertUser(user);
     }
 

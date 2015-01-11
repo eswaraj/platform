@@ -128,15 +128,18 @@ public class BaseService implements Serializable {
     }
 
     protected User createAnonymousUserAndPerson() throws ApplicationException {
+        logger.info("Creating Anonymous User and Person");
         Person person = new Person();
         person.setName("anonymous");
         person.setExternalId(UUID.randomUUID().toString());
         person = personRepository.save(person);
+        logger.info("Person Created : {}", person);
 
         User user = new User();
         user.setPerson(person);
         user.setExternalId(UUID.randomUUID().toString());
         user = userRepository.save(user);
+        logger.info("User Created : {}", user);
         return user;
     }
 
