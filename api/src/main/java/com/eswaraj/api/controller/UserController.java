@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
+import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PoliticalPositionDto;
 import com.eswaraj.web.dto.RegisterDeviceRequest;
@@ -34,28 +35,38 @@ public class UserController extends BaseController {
     private PersonService personService;
     @Autowired
     private AppService appService;
+    @Autowired
+    private QueueService queueService;
 
     @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
-        return personService.updateUserInfo(updateUserRequestWebDto);
+        UserDto userDto = personService.updateUserInfo(updateUserRequestWebDto);
+        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        return userDto;
     }
 
     @RequestMapping(value = "/api/v0/mobile/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateMobileUser(HttpServletRequest httpServletRequest, @RequestBody UpdateMobileUserRequestDto updateMobileRequestDto) throws ApplicationException {
-        return personService.updateMobileUserInfo(updateMobileRequestDto);
+        UserDto userDto = personService.updateMobileUserInfo(updateMobileRequestDto);
+        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        return userDto;
     }
 
     @RequestMapping(value = "/api/v0/mobile/user/profile/{facebookToken}", method = RequestMethod.GET)
     public @ResponseBody UserDto getUser(HttpServletRequest httpServletRequest, @PathVariable String facebookToken) throws ApplicationException {
-        return personService.getUserByFacebookToken(facebookToken);
+        UserDto userDto = personService.getUserByFacebookToken(facebookToken);
+        return userDto;
     }
 
     @RequestMapping(value = "/api/v0/user/facebook", method = RequestMethod.POST)
     public @ResponseBody UserDto registerFacebookUser(HttpServletRequest httpServletRequest, @RequestBody RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
-        return personService.registerFacebookAccount(registerFacebookAccountRequest);
+        UserDto userDto = personService.registerFacebookAccount(registerFacebookAccountRequest);
+        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        return userDto;
     }
 
     @RequestMapping(value = "/api/v0/user/device", method = RequestMethod.POST)
+    @Deprecated
     public @ResponseBody UserDto registerDevice(HttpServletRequest httpServletRequest, @RequestBody RegisterDeviceRequest registerDeviceRequest) throws ApplicationException {
         return personService.registerDevice(registerDeviceRequest, registerDeviceRequest.getUserExternalId());
     }
@@ -71,6 +82,7 @@ public class UserController extends BaseController {
             throws ApplicationException {
         logger.info("Registering user : " + registerFacebookAccountWebRequest);
         UserDto userDto = personService.registerFacebookAccountWebUser(registerFacebookAccountWebRequest);
+        queueService.sendRefreshPerson(userDto.getPerson().getId());
         return userDto;
     }
 
