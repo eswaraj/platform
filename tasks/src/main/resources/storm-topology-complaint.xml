@@ -39,6 +39,7 @@
 				<ref bean="LocationWiseComplaintZsetBoltBean" />
 				<ref bean="SendMobileNotificationBoltBean" />
                 <ref bean="ComplaintRefreshBoltBean" />
+                <ref bean="ComplaintViewByPoliticalAdminBoltBean" />
 				</list>
 		</property>
 	</bean>
