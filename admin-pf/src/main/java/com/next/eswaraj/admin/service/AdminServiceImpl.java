@@ -1,6 +1,7 @@
 package com.next.eswaraj.admin.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
@@ -34,6 +36,7 @@ import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.domain.validator.exception.ValidationException;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -339,6 +342,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        politicalBodyAdmin.setActive(isActive(politicalBodyAdmin));
+        if (politicalBodyAdmin.getLocation().getUrlIdentifier().startsWith("/")) {
+            politicalBodyAdmin.setUrlIdentifier("/leader" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        } else {
+            politicalBodyAdmin.setUrlIdentifier("/leader/" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        }
         validateWithExistingData(politicalBodyAdmin);
         return politicalBodyAdminRepository.save(politicalBodyAdmin);
     }
@@ -346,6 +355,21 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Person getPersonById(Long personId) throws ApplicationException {
         return personRepository.findOne(personId);
+    }
+
+    private boolean isActive(PoliticalBodyAdmin politicalBodyAdmin) {
+        if (politicalBodyAdmin.getStartDate() == null) {
+            throw new ValidationException("Start date can not be null");
+        }
+        boolean active = false;
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(politicalBodyAdmin.getStartDate());
+        startDate = DateUtil.getStartOfDay(startDate);
+        Calendar today = Calendar.getInstance();
+        if (today.after(startDate) && (politicalBodyAdmin.getEndDate() == null || politicalBodyAdmin.getEndDate().after(today.getTime()))) {
+            active = true;
+        }
+        return active;
     }
 
     private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
