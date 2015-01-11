@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.queue.service.QueueService;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -30,6 +31,9 @@ public class CategoryBean {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private QueueService queueService;
 
     private TreeNode root;
 
@@ -105,6 +109,7 @@ public class CategoryBean {
                 category.setParentCategory(((CategoryDocument) parentNode.getData()).getCategory());
             }
             category = adminService.saveCategory(category);
+            queueService.sendCategoryUpdateMessage(category.getId());
             ((CategoryDocument) selectedNode.getData()).setCategory(category);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Category Saved Succesfully");
             FacesContext.getCurrentInstance().addMessage(null, message);

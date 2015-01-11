@@ -68,4 +68,14 @@ public class StormAdminBean extends BaseBean {
             sendErrorMessage("Error", "Unable to reproces all Comment");
         }
     }
+
+    public void reprocessAllCategories() {
+        try {
+            queueService.sendCategoryUpdateMessage(0L);
+            sendInfoMessage("Success", "Comment reporcess started, it may take few minutes to complete");
+        } catch (ApplicationException e) {
+            e.printStackTrace();
+            sendErrorMessage("Error", "Unable to reproces all Comment");
+        }
+    }
 }
