@@ -12,6 +12,7 @@ import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.PersonService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
@@ -19,6 +20,7 @@ import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.spout.mesage.SendMobileNotificationMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.DeviceDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
@@ -36,6 +38,8 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
     private AppService appService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private LocationService locationService;
     @Override
     public Result processTuple(Tuple inputTuple) {
         ComplaintViewedByPoliticalAdminMessage complaintViewByPoliticalAdminMessage = (ComplaintViewedByPoliticalAdminMessage) inputTuple.getValue(0);
@@ -55,12 +59,15 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
             PoliticalBodyAdminDto politicalBodyAdminDto = appService.getPoliticalBodyAdminById(complaintViewByPoliticalAdminMessage.getPoliticalAdminId());
             PersonDto person = personService.getPersonById(complaintViewByPoliticalAdminMessage.getPersonId());
             PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getPoliticalBodyTypeId());
-            String message = "Your complaint has been viewed by " + politicalBodyTypeDto.getShortName() + " - " + person.getName();
+            LocationDto location = locationService.getLocationById(politicalBodyAdminDto.getLocationId());
+            String message = "Your complaint #" + complaintViewByPoliticalAdminMessage.getComplaintId() + " has been viewed by " + politicalBodyTypeDto.getShortName() + " - " + person.getName()
+                    + " of " + location.getName();
             PersonDto politicalPerson = person;
             boolean self = true;
             if (!person.getId().equals(politicalBodyAdminDto.getPersonId())) {
                 politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
-                message = "Your complaint has been viewed by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName();
+                message = "Your complaint #" + complaintViewByPoliticalAdminMessage.getComplaintId() + " has been viewed by " + person.getName() + " on behalf of " + politicalPerson.getName() + "("
+                        + politicalBodyTypeDto.getShortName() + " of " + location.getName() + ")";
                 self = false;
             }
             JsonObject messageJson = new JsonObject();

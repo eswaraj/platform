@@ -11,6 +11,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.service.AppService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.service.PersonService;
 import com.eswaraj.core.service.StormCacheAppServices;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
@@ -19,6 +20,7 @@ import com.eswaraj.tasks.spout.mesage.RefreshCommentMessage;
 import com.eswaraj.tasks.spout.mesage.SendMobileNotificationMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.DeviceDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
@@ -34,6 +36,8 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
     private AppService appService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private LocationService locationService;
     @Override
     public Result processTuple(Tuple inputTuple) {
         CommentSavedMessage commentSavedMessage = (CommentSavedMessage) inputTuple.getValue(0);
@@ -58,13 +62,17 @@ public class CommentSavedBoltProcessor extends AbstractBoltProcessor {
                 }
                 PoliticalBodyAdminDto politicalBodyAdminDto = appService.getPoliticalBodyAdminById(commentSavedMessage.getPoliticalAdminId());
                 PersonDto person = personService.getPersonById(commentSavedMessage.getPersonId());
+                LocationDto location = locationService.getLocationById(politicalBodyAdminDto.getLocationId());
+
                 PoliticalBodyTypeDto politicalBodyTypeDto = appService.getPoliticalBodyTypeById(politicalBodyAdminDto.getPoliticalBodyTypeId());
-                String message = "A Comment made by " + politicalBodyTypeDto.getShortName() + " - " + person.getName() + " on your complaint";
+                String message = person.getName() + ", " + politicalBodyTypeDto.getShortName() + " of " + location.getName() + " has commented on your complaint #"
+                        + commentSavedMessage.getComplaintId();
                 PersonDto politicalPerson = person;
                 boolean self = true;
                 if (!person.getId().equals(politicalBodyAdminDto.getPersonId())) {
                     politicalPerson = personService.getPersonById(politicalBodyAdminDto.getPersonId());
-                    message = "A Comment made by " + person.getName() + " on behalf of " + politicalBodyTypeDto.getShortName() + " - " + politicalPerson.getName() + " on your complaint";
+                    message = person.getName() + " on behalf of " + person.getName() + "(" + politicalBodyTypeDto.getShortName() + " of " + location.getName() + ") has commented on your complaint #"
+                            + commentSavedMessage.getComplaintId();
                 }
 
                 JsonObject messageJson = new JsonObject();
