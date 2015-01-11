@@ -308,7 +308,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             }
             updatePersonInfoFromFacebook(person, facebookUserProfile);
         } else {
-            user = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
+            user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
             FacebookAppPermission facebookAppPermission = facebookAppPermissionRepository.getFacebookAccountAndAppRelation(facebookAccount, facebookApp);
             if (facebookAppPermission == null) {
                 logger.error("No Relation found between facebook App and Facebook account");
@@ -383,7 +383,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
-        User user = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
+        User user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
         return user;
     }
 
