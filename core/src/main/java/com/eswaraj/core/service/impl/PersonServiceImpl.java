@@ -210,10 +210,6 @@ public class PersonServiceImpl extends BaseService implements PersonService {
 
             facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);
 
-            // Update Person Info too
-            Person person = personRepository.getPersonByUser(user);
-            logger.info("Person for User {}", person);
-            updatePersonInfoFromFacebook(person, facebookUserProfile);
         } else {
             // Retrieve user attached to Facebook account and merge it to user
             // userExternalId
@@ -223,8 +219,11 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             // facebookAccountExistingUser will become main user(anonymous) and
             // user will be merged into it
             user = mergeUser(facebookAccountExistingUser, user);
-
         }
+        // Update Person Info too
+        Person person = personRepository.getPersonByUser(user);
+        logger.info("Person for User {}", person);
+        updatePersonInfoFromFacebook(person, facebookUserProfile);
         logger.info("Converting User {}", user);
         return convertUser(user);
     }

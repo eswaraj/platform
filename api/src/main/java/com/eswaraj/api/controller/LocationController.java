@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +41,11 @@ public class LocationController extends BaseController {
         redisUtil.addLocationsExpandOperation(locations);
         List<Map> results = redisUtil.executeAll();
         return convertToJsonArray(results.get(0).values()).toString();
+    }
+
+    @RequestMapping(value = "/api/v0/location/{locationId}", method = RequestMethod.GET)
+    public @ResponseBody String getLocationById(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String locationId) throws ApplicationException {
+        return locationCache.getLocationInfoById(locationId);
     }
 
 }
