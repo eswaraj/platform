@@ -38,7 +38,7 @@ public class SendMobileNotificationBoltProcessor extends AbstractBoltProcessor {
         String message = sendMobileNotificationMessage.getMessage();
         String messageType = sendMobileNotificationMessage.getMessageType();
         List<String> deviceList = sendMobileNotificationMessage.getDeviceList();
-        logDebug("Got message : {}, messageType :{} and deviceList :{}", message, messageType, deviceList);
+        logInfo("Got message : {}, messageType :{} and deviceList :{}", message, messageType, deviceList);
         try {
             sendMessage(message, messageType, deviceList);
         } catch (Exception ex) {
