@@ -129,6 +129,7 @@ public class ComplaintController extends BaseController{
 		String saveComplaintRequestString = writer.toString();
 		
 		SaveComplaintRequestDto saveComplaintRequestDto = new Gson().fromJson(saveComplaintRequestString, SaveComplaintRequestDto.class);
+        logger.info("saveComplaintRequestDto : {}", saveComplaintRequestDto);
         updateRandomDelhiPoint(saveComplaintRequestDto);
 		ComplaintDto savedComplaintDto = complaintService.saveComplaint(saveComplaintRequestDto);
         logger.info("Complaint Saved : {}", savedComplaintDto);

@@ -278,6 +278,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         politicalBodyJsonObject.addProperty("personExternalId", person.getExternalId());
         politicalBodyJsonObject.addProperty("gender", person.getGender());
         politicalBodyJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
+        politicalBodyJsonObject.addProperty("biodata", person.getBiodata());
         addPropertyIfNotNull(politicalBodyJsonObject, "landlineNumber1", person.getLandlineNumber1());
         addPropertyIfNotNull(politicalBodyJsonObject, "landlineNumber2", person.getLandlineNumber2());
         addPropertyIfNotNull(politicalBodyJsonObject, "mobileNumber1", person.getMobileNumber1());
