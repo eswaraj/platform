@@ -204,7 +204,7 @@
 
 										</h:panelGrid>
                                          <h:panelGrid columns="1">
-                                            <h:outputText value="#{politicalAdminBean.selectedPerson.bioData}" escape="false"/>
+                                            <h:outputText value="#{politicalAdminBean.selectedPerson.biodata}" escape="false"/>
                                             </h:panelGrid>
 										
 										<p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
@@ -324,7 +324,7 @@
 					</h:panelGrid>
 					<h:panelGrid columns="1" >
 					<p:outputLabel value="Bio Data" />
-					   <p:editor id="bioDataEditor" widgetVar="bioDataEditorWidget" value="#{politicalAdminBean.selectedPerson.bioData}" width="600" />
+					   <p:editor id="biodataEditor" widgetVar="biodataEditorWidget" value="#{politicalAdminBean.selectedPerson.biodata}" width="600" />
 					</h:panelGrid>
  
 					<h:panelGrid columns="2" id="saveCancelButtonPanel">

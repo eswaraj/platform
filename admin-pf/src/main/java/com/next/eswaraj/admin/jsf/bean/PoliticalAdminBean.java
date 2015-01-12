@@ -248,6 +248,7 @@ public class PoliticalAdminBean extends BaseBean {
         try {
             selectedPerson = adminService.savePerson(selectedPerson);
             logger.info("Saved Person " + selectedPerson);
+            queueService.sendRefreshPerson(selectedPerson.getId());
         } catch (Exception e) {
             sendErrorMessage("Error", e.getMessage());
             e.printStackTrace();
