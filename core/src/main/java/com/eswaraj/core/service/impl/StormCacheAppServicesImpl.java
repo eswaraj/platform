@@ -425,6 +425,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         personJsonObject.addProperty("gender", person.getGender());
         personJsonObject.addProperty("profilePhoto", person.getProfilePhoto());
         personJsonObject.addProperty("id", person.getId());
+        personJsonObject.addProperty("biodata", person.getBiodata());
         return personJsonObject;
     }
 
