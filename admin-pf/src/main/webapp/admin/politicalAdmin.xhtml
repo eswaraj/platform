@@ -170,10 +170,11 @@
 										<p:autoComplete id="searchPerson" value="#{politicalAdminBean.selectedPerson}" minQueryLength="3"
 											completeMethod="#{politicalAdminBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
 											itemValue="#{onePerson}" converter="#{personConvertor}" forceSelection="true">
-											<p:ajax event="itemSelect" update="@this:formPanel" />
+											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}"/>
 										</p:autoComplete>
 										<p:commandButton actionListener="#{politicalAdminBean.createPerson}" value="Create Person" id="createPerson"
-											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
+											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" 
+											disabled="#{politicalAdminBean.updateMode}"/>
 										<h:panelGrid columns="2" cellpadding="5">
 											<h:panelGrid columns="4" cellpadding="5">
 												<p:outputLabel value="Name : " />
@@ -252,7 +253,7 @@
 									</p:fieldset>
 									<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
 										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true" requiredMessage="Please select a Political Party"
-											value="#{politicalAdminBean.selectedPoliticalParty}">
+											value="#{politicalAdminBean.selectedPoliticalParty}" disabled="#{politicalAdminBean.updateMode && !empty politicalAdminBean.selectedPoliticalParty}">
 											<f:selectItem itemLabel="Select Party" itemValue="" />
 											<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
 												itemValue="#{oneReult}" />

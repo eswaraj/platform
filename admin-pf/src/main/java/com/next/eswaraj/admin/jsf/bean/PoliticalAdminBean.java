@@ -80,6 +80,8 @@ public class PoliticalAdminBean extends BaseBean {
 
     private String createAdminButtonTitle = "Create";
 
+    private boolean updateMode = false;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 /*
  * 
@@ -307,6 +309,7 @@ public class PoliticalAdminBean extends BaseBean {
         showListPanel = false;
         selectedPoliticalBodyAdmin = new PoliticalBodyAdmin();
         selectedPerson = new Person();
+        updateMode = false;
     }
 
     private boolean disableCreateAdminButton = true;
@@ -470,6 +473,7 @@ public class PoliticalAdminBean extends BaseBean {
             System.out.println("selectedPerson=" + selectedPerson);
             System.out.println("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
             showListPanel = false;
+            updateMode = true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -529,5 +533,13 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void setSelectedPoliticalParty(Party selectedPoliticalParty) {
         this.selectedPoliticalParty = selectedPoliticalParty;
+    }
+
+    public boolean isUpdateMode() {
+        return updateMode;
+    }
+
+    public void setUpdateMode(boolean updateMode) {
+        this.updateMode = updateMode;
     }
 }
