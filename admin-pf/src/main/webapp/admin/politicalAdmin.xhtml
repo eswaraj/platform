@@ -179,6 +179,8 @@
 											<h:panelGrid columns="4" cellpadding="5">
 												<p:outputLabel value="Name : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.name}" />
+                                                <p:outputLabel value="Id : " />
+                                                <h:outputText value="#{politicalAdminBean.selectedPerson.id}" />
 												<p:outputLabel value="Gender : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.gender}" />
 												<p:outputLabel value="Date Of Birth : " />
@@ -205,6 +207,9 @@
 
 										</h:panelGrid>
                                          <h:panelGrid columns="1">
+                                         <f:facet name="header">
+                                         BioData
+                                         </f:facet>
                                             <h:outputText value="#{politicalAdminBean.selectedPerson.biodata}" escape="false"/>
                                             </h:panelGrid>
 										
@@ -218,6 +223,8 @@
 									<p:message for="startDate" display="text" />
 									<p:message for="officeEmail" display="text" />
 										<h:panelGrid columns="4" cellpadding="5">
+                                            <p:outputLabel value="Id : " />
+                                            <h:outputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.id}" />
 											<p:outputLabel value="Political Body Type " />
 											<h:outputText value="#{politicalAdminBean.selectedPoliticalBodyType.name}" />
 											<p:outputLabel value="Location" />
@@ -253,7 +260,7 @@
 									</p:fieldset>
 									<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
 										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true" requiredMessage="Please select a Political Party"
-											value="#{politicalAdminBean.selectedPoliticalParty}" disabled="#{politicalAdminBean.updateMode && !empty politicalAdminBean.selectedPoliticalParty}">
+											value="#{politicalAdminBean.selectedPoliticalParty}" disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
 											<f:selectItem itemLabel="Select Party" itemValue="" />
 											<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
 												itemValue="#{oneReult}" />
