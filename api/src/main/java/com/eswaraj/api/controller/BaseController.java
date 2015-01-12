@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
@@ -86,6 +88,7 @@ public class BaseController {
 
     @ExceptionHandler
     @ResponseBody
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessageDto onApplicationException(ApplicationException applicationException) {
         logger.error("Application Exception : ", applicationException);
         ErrorMessageDto errorMessageDto = new ErrorMessageDto();
@@ -95,6 +98,7 @@ public class BaseController {
 
     @ExceptionHandler
     @ResponseBody
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessageDto onException(Exception applicationException) {
         logger.error("Application Exception : ", applicationException);
         ErrorMessageDto errorMessageDto = new ErrorMessageDto();
