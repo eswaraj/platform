@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.convertors.CategoryConvertor;
 import com.eswaraj.core.convertors.ComplaintConvertor;
@@ -65,6 +66,8 @@ import com.eswaraj.web.dto.PoliticalAdminComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
 import com.eswaraj.web.dto.comment.CommentSaveResponseDto;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Implementation for complaint service
@@ -118,6 +121,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private ComplaintCommentRepository complaintCommentRepository;
 
+    private JsonParser jsonParser = new JsonParser();
+
 	@Override
 	public List<ComplaintDto> getPagedUserComplaints(Long userId, int start, int end) throws ApplicationException{
 		User user = getObjectIfExistsElseThrowExcetpion(userId, "User", userRepository);
@@ -152,7 +157,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             complaint.setDateCreated(new Date());
             complaint.setDateModified(new Date());
         }
+        
 
+        updateLocationAddress(saveComplaintRequestDto, complaint);
 
         ComplaintMessage complaintMessage = updateLocationAndAdmins(complaint);
 		complaint = complaintRepository.save(complaint);
@@ -167,6 +174,19 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
 		return complaintConvertor.convertBean(complaint);
 	}
+
+    private void updateLocationAddress(SaveComplaintRequestDto saveComplaintRequestDto, Complaint complaint) {
+        try {
+            String googleAddress = saveComplaintRequestDto.getGoogleLocationJson();
+            if (!StringUtils.isEmpty(googleAddress)) {
+                JsonObject jsonObject = (JsonObject) jsonParser.parse(googleAddress);
+                String locationAddress = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("formatted_address").getAsString();
+                complaint.setLocationAddress(locationAddress);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private void creatComplaintPersonRelation(Complaint complaint, Person person, boolean anonymous) {
         logger.info("comlaint = {}", complaint);

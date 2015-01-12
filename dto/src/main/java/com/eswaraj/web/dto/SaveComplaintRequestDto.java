@@ -42,7 +42,7 @@ public class SaveComplaintRequestDto extends ComplaintDto {
 
     @Override
     public String toString() {
-        return "SaveComplaintRequestDto [userExternalid=" + userExternalid + ", anonymous=" + anonymous + ", toString()=" + super.toString() + "]";
+        return "SaveComplaintRequestDto [userExternalid=" + userExternalid + ", googleLocationJson=" + googleLocationJson + ", anonymous=" + anonymous + "]";
     }
 	
 }

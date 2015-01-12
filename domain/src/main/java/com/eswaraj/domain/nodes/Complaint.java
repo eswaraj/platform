@@ -35,6 +35,7 @@ public class Complaint extends BaseNode {
     private Long complaintTime;
     @Indexed
     private String nearByKey;
+    private String locationAddress;
 
     public Complaint() {
         this.status = Status.Pending;
@@ -148,6 +149,14 @@ public class Complaint extends BaseNode {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getLocationAddress() {
+        return locationAddress;
+    }
+
+    public void setLocationAddress(String locationAddress) {
+        this.locationAddress = locationAddress;
     }
 
 }
