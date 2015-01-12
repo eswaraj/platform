@@ -197,11 +197,16 @@
 												<p:outputLabel value="Voter Id : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.voterId}" />
 											</h:panelGrid>
+											
 											<h:panelGrid>
 												<p:graphicImage value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
 											</h:panelGrid>
 
 										</h:panelGrid>
+                                         <h:panelGrid columns="1">
+                                            <h:outputText value="#{politicalAdminBean.selectedPerson.bioData}" escape="false"/>
+                                            </h:panelGrid>
+										
 										<p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
 											process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
 
@@ -239,6 +244,8 @@
 												required="true" requiredMessage="Start date can not be empty" />
 											<p:outputLabel value="End Date" />
 											<p:calendar value="#{politicalAdminBean.selectedPoliticalBodyAdmin.endDate}" pattern="dd-MMM-yyyy" />
+                                            <p:outputLabel value="URL Identifier" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedPoliticalBodyAdmin.urlIdentifier}" />
 											
 											
 										</h:panelGrid>
@@ -291,6 +298,13 @@
 						</p:inputText>
 						<p:outputLabel value="Date of Birth" />
 						<p:calendar value="#{politicalAdminBean.selectedPerson.dob}" pattern="dd-MMM-yyyy" style="width:200px" />
+						<p:outputLabel value="Gender" />
+				        <p:selectOneMenu id="console" value="#{politicalAdminBean.selectedPerson.gender}" style="width:125px">
+				            <f:selectItem itemLabel="Select One" itemValue="" />
+				            <f:selectItem itemLabel="Male" itemValue="male" />
+				            <f:selectItem itemLabel="Female" itemValue="female" />
+				        </p:selectOneMenu>
+        
 						<p:outputLabel value="Voter Id" />
 						<p:inputText id="volterId" value="#{politicalAdminBean.selectedPerson.voterId}" style="width:200px" />
 						<p:outputLabel value="LandLine 1" />
@@ -303,8 +317,16 @@
 						<p:outputLabel value="Mobile 2" />
 						<p:inputMask id="mobile2" value="#{politicalAdminBean.selectedPerson.mobileNumber2}" mask="9999999999"
 							style="width:200px" />
+                        <p:outputLabel value="Profile Photo" />
+                        <p:inputText id="profilePhoto" value="#{politicalAdminBean.selectedPerson.profilePhoto}" style="width:200px" />
+							
 
 					</h:panelGrid>
+					<h:panelGrid columns="1" >
+					<p:outputLabel value="Bio Data" />
+					   <p:editor id="bioDataEditor" widgetVar="bioDataEditorWidget" value="#{politicalAdminBean.selectedPerson.bioData}" width="600" />
+					</h:panelGrid>
+ 
 					<h:panelGrid columns="2" id="saveCancelButtonPanel">
 						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form:formPanel"
 							ajax="true" actionListener="#{politicalAdminBean.savePerson}"
