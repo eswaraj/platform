@@ -49,12 +49,7 @@ public class DataChangeSpout extends EswarajBaseSpout {
                 writeToParticularStream(new Values(message), "RefreshAllPersonStream");
                 break;
             case DataMessageTypes.REFRESH_ONE_PERSON_MESSAGE_TYPE:
-                Long personId = jsonObject.get("personId").getAsLong();
-                String system = null;
-                if (jsonObject.get("system") != null) {
-                    system = jsonObject.get("system").getAsString();
-                }
-                writeToParticularStream(new Values(personId, system), "RefreshPersonStream");
+                writeToParticularStream(new Values(message), "RefreshPersonStream");
                 break;
 
             }

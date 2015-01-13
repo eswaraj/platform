@@ -34,7 +34,7 @@
 				<ref bean="RefreshAllCommentsBoltProcessorBean" />
 				<ref bean="RefreshAllPersonBoltBean" />
 				<ref bean="RefreshPersonBoltBean" />
-				
+
 			</list>
 		</property>
 	</bean>
@@ -113,34 +113,28 @@
 		</property>
 	</bean>
 	<bean id="RefreshAllPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="RefreshAllPersonBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllPersonBoltProcessor" />
-        <property name="outputStream" value="RefreshPersonStream" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="DataChangeSpout" value="RefreshAllPersonStream" />
-            </map>
-        </property>
-    </bean>
-    <bean id="RefreshPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="RefreshPersonBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPersonBoltProcessor" />
-        <property name="outputStream" value="SendMobileNotificationStream" />
-        <property name="fields">
-            <list>
-                <value>PersonId</value>
-                <value>System</value>
-            </list>
-        </property>
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
-                <entry key="DataChangeSpout" value="RefreshPersonStream" />
-            </map>
-        </property>
-    </bean>
-	
-	
+		<property name="componentId" value="RefreshAllPersonBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshAllPersonBoltProcessor" />
+		<property name="outputStream" value="RefreshPersonStream" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="DataChangeSpout" value="RefreshAllPersonStream" />
+			</map>
+		</property>
+	</bean>
+	<bean id="RefreshPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
+		<property name="componentId" value="RefreshPersonBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPersonBoltProcessor" />
+		<property name="outputStream" value="SendMobileNotificationStream" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
+				<entry key="DataChangeSpout" value="RefreshPersonStream" />
+			</map>
+		</property>
+	</bean>
+
+
 	<bean id="LocationUpdatedBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="LocationUpdatedBolt" />
 		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.LocationUpdatedBoltProcessor" />
@@ -199,17 +193,17 @@
 
 	</bean>
 	<bean id="SendMobileNotificationBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="SendMobileNotificationBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
+		<property name="componentId" value="SendMobileNotificationBolt" />
+		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
 
-        <property name="paralellism" value="1" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="CommentSavedBolt" value="SendMobileNotificationStream" />
-                <entry key="RefreshPersonBolt" value="SendMobileNotificationStream" />
-            </map>
-        </property>
-    </bean>
+		<property name="paralellism" value="1" />
+		<property name="sourceComponentStreams">
+			<map>
+				<entry key="CommentSavedBolt" value="SendMobileNotificationStream" />
+				<entry key="RefreshPersonBolt" value="SendMobileNotificationStream" />
+			</map>
+		</property>
+	</bean>
 	<bean id="RefreshCommentBoltProcessorBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
 		<property name="componentId" value="RefreshCommentBolt" />
 		<property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.comment.RefreshCommentBoltProcessor" />

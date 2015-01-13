@@ -12,6 +12,7 @@ import com.eswaraj.core.service.PersonService;
 import com.eswaraj.tasks.bolt.processors.AbstractBoltProcessor;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.PersonDto;
+import com.google.gson.JsonObject;
 
 @Component
 public class RefreshAllPersonBoltProcessor extends AbstractBoltProcessor {
@@ -33,7 +34,9 @@ public class RefreshAllPersonBoltProcessor extends AbstractBoltProcessor {
                 for (PersonDto onePerson : persons) {
                     logInfo("     onePerson : " + onePerson);
                     if (onePerson != null) {
-                    writeToStream(input, new Values(onePerson.getId(), "AllPersonRefreshBolt"));
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("personId", onePerson.getId());
+                    writeToStream(input, new Values(jsonObject.toString()));
                     }
                 }
                 page++;

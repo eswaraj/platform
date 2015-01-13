@@ -18,6 +18,7 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.device.NotificationMessage;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Component
 public class RefreshPersonBoltProcessor extends AbstractBoltProcessor {
@@ -28,8 +29,13 @@ public class RefreshPersonBoltProcessor extends AbstractBoltProcessor {
     private AppService appService;
     @Override
     public Result processTuple(Tuple inputTuple) throws Exception {
-        Long personId = (Long) inputTuple.getValue(0);
-        String system = (String) inputTuple.getValue(1);
+        JsonObject jsonObject = (JsonObject) new JsonParser().parse((String) inputTuple.getValue(0));
+        Long personId = jsonObject.get("personId").getAsLong();
+        String system = null;
+        if (jsonObject.get("system") != null) {
+            system = jsonObject.get("system").getAsString();
+        }
+
         logDebug("Got personId : {} to refresh from System {}", personId, system);
         personCache.refreshPerson(personId);
         if ("web".equalsIgnoreCase(system)) {
