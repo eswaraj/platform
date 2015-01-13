@@ -110,5 +110,7 @@ public interface AppService {
 
     List<DeviceDto> getDevicesForComplaint(Long complaintId) throws ApplicationException;
 
+    List<DeviceDto> getAllDevicesForPerson(Long personId) throws ApplicationException;
+
     Set<String> getAllCurrentPoliticalAdminIdsOfLocation(Long lcoationId) throws ApplicationException;
 }

@@ -125,6 +125,7 @@
     <bean id="RefreshPersonBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="RefreshPersonBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPersonBoltProcessor" />
+        <property name="outputStream" value="SendMobileNotificationStream" />
         <property name="sourceComponentStreams">
             <map>
                 <entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
@@ -199,6 +200,7 @@
         <property name="sourceComponentStreams">
             <map>
                 <entry key="CommentSavedBolt" value="SendMobileNotificationStream" />
+                <entry key="RefreshPersonBolt" value="SendMobileNotificationStream" />
             </map>
         </property>
     </bean>

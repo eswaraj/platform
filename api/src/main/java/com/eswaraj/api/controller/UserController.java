@@ -41,14 +41,14 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/api/v0/web/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateUser(HttpServletRequest httpServletRequest, @RequestBody UpdateUserRequestWebDto updateUserRequestWebDto) throws ApplicationException {
         UserDto userDto = personService.updateUserInfo(updateUserRequestWebDto);
-        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        queueService.sendRefreshPerson(userDto.getPerson().getId(), "web");
         return userDto;
     }
 
     @RequestMapping(value = "/api/v0/mobile/user/profile", method = RequestMethod.POST)
     public @ResponseBody UserDto updateMobileUser(HttpServletRequest httpServletRequest, @RequestBody UpdateMobileUserRequestDto updateMobileRequestDto) throws ApplicationException {
         UserDto userDto = personService.updateMobileUserInfo(updateMobileRequestDto);
-        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        queueService.sendRefreshPerson(userDto.getPerson().getId(), "mobile");
         return userDto;
     }
 
@@ -61,7 +61,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/api/v0/user/facebook", method = RequestMethod.POST)
     public @ResponseBody UserDto registerFacebookUser(HttpServletRequest httpServletRequest, @RequestBody RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
         UserDto userDto = personService.registerFacebookAccount(registerFacebookAccountRequest);
-        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        queueService.sendRefreshPerson(userDto.getPerson().getId(), "web");
         return userDto;
     }
 
@@ -82,7 +82,7 @@ public class UserController extends BaseController {
             throws ApplicationException {
         logger.info("Registering user : " + registerFacebookAccountWebRequest);
         UserDto userDto = personService.registerFacebookAccountWebUser(registerFacebookAccountWebRequest);
-        queueService.sendRefreshPerson(userDto.getPerson().getId());
+        queueService.sendRefreshPerson(userDto.getPerson().getId(), "web");
         return userDto;
     }
 

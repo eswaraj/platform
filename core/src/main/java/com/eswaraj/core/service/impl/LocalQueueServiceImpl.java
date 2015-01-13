@@ -117,7 +117,7 @@ public class LocalQueueServiceImpl implements QueueService {
     }
 
     @Override
-    public void sendRefreshPerson(Long personId) throws ApplicationException {
+    public void sendRefreshPerson(Long personId, String system) throws ApplicationException {
         // TODO Auto-generated method stub
 
     }

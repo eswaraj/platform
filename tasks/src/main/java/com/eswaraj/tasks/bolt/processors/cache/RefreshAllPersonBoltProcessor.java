@@ -33,7 +33,7 @@ public class RefreshAllPersonBoltProcessor extends AbstractBoltProcessor {
                 for (PersonDto onePerson : persons) {
                     logInfo("     onePerson : " + onePerson);
                     if (onePerson != null) {
-                        writeToStream(input, new Values(onePerson.getId()));
+                    writeToStream(input, new Values(onePerson.getId(), "AllPersonRefreshBolt"));
                     }
                 }
                 page++;

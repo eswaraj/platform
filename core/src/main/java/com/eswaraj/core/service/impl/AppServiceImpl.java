@@ -574,4 +574,10 @@ public class AppServiceImpl extends BaseService implements AppService {
         return pbAdminIds;
     }
 
+    @Override
+    public List<DeviceDto> getAllDevicesForPerson(Long personId) throws ApplicationException {
+        List<Device> devices = deviceRepository.getAllDevicesOfPerson(personId);
+        return deviceConvertor.convertBeanList(devices);
+    }
+
 }
