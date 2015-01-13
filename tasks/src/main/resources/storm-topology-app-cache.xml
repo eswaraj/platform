@@ -126,6 +126,12 @@
         <property name="componentId" value="RefreshPersonBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.cache.RefreshPersonBoltProcessor" />
         <property name="outputStream" value="SendMobileNotificationStream" />
+        <property name="fields">
+            <list>
+                <value>PersonId</value>
+                <value>System</value>
+            </list>
+        </property>
         <property name="sourceComponentStreams">
             <map>
                 <entry key="RefreshAllPersonBolt" value="RefreshPersonStream" />
