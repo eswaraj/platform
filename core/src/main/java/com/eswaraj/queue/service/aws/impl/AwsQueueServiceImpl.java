@@ -219,8 +219,8 @@ public class AwsQueueServiceImpl implements QueueService, Serializable {
     @Override
     public void sendRefreshPerson(Long personId, String system) throws ApplicationException {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.REFRESH_ALL_PERSON_MESSAGE_TYPE);
-        jsonObject.addProperty("personId", DataMessageTypes.REFRESH_ONE_PERSON_MESSAGE_TYPE);
+        jsonObject.addProperty(DataMessageTypes.MESSAGE_TYPE, DataMessageTypes.REFRESH_ONE_PERSON_MESSAGE_TYPE);
+        jsonObject.addProperty("personId", personId);
         jsonObject.addProperty("system", system);
         awsQueueManager.sendMessage(awsCategoryUpdateQueueName, jsonObject.toString());
     }
