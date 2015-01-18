@@ -117,7 +117,7 @@
 										<p:graphicImage width="80"
 											value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
 									</p:blockUI>
-									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form"
+									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form" ajax="false"
 										disabled="#{politicalAdminBean.disableCreateAdminButton}" actionListener="#{politicalAdminBean.createAdmin}"
 										styleClass="ui-priority-primary" process="@this:createAdmin">
 									</p:commandButton>
@@ -174,7 +174,7 @@
 										</p:autoComplete>
 										<p:commandButton actionListener="#{politicalAdminBean.createPerson}" value="Create Person" id="createPerson"
 											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel"
-											disabled="#{politicalAdminBean.updateMode}" />
+											disabled="#{politicalAdminBean.updateMode}" ajax="false" />
 										<h:panelGrid columns="2" cellpadding="5">
 											<h:panelGrid columns="4" cellpadding="5">
 												<p:outputLabel value="Name : " />
@@ -214,7 +214,7 @@
 										</h:panelGrid>
 
 										<p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
-											process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
+											ajax="false" process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
 
 									</p:fieldset>
 
@@ -271,9 +271,9 @@
 									</p:fieldset>
 									<h:panelGrid columns="2" id="saveCancelButtonPanelForAdmin">
 										<p:commandButton id="savePoliticalAdmin" value="Save Admin" process="@this:formPanel" update="@form"
-											actionListener="#{politicalAdminBean.saveAdmin}" styleClass="ui-priority-primary">
+											ajax="false" actionListener="#{politicalAdminBean.saveAdmin}" styleClass="ui-priority-primary">
 										</p:commandButton>
-										<p:commandButton id="cancelAdmin" value="Cancel" update="@form"
+										<p:commandButton id="cancelAdmin" value="Cancel" update="@form" ajax="false"
 											actionListener="#{politicalAdminBean.cancelAdmin}" styleClass="ui-priority-primary"
 											process="@this:cancelAdmin">
 										</p:commandButton>
@@ -346,11 +346,11 @@
 
 					<h:panelGrid columns="2" id="saveCancelButtonPanel">
 						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form:formPanel"
-							ajax="true" actionListener="#{politicalAdminBean.savePerson}"
+							ajax="false" actionListener="#{politicalAdminBean.savePerson}"
 							oncomplete="if(!args.validationFailed) PF('personDialog').hide();" styleClass="ui-priority-primary">
 						</p:commandButton>
 						<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{politicalAdminBean.cancel}"
-							styleClass="ui-priority-primary" process="@this:cancel">
+							ajax="false" styleClass="ui-priority-primary" process="@this:cancel">
 						</p:commandButton>
 						<p:blockUI block="@form" trigger="savePerson">Saving<br />
 							<p:graphicImage width="80"

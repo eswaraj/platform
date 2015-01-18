@@ -86,10 +86,10 @@
 					</p:panelGrid>
 					<p:outputPanel id="buttonView">
 						<p:commandButton value="Cancel" process="@this:cancel" update="@form" actionListener="#{politicalPartyBean.cancel}"
-							styleClass="ui-priority-primary" id="cancel">
+							ajax="false" styleClass="ui-priority-primary" id="cancel">
 						</p:commandButton>
 						<p:commandButton id="saveCategory" value="Save Political Body Admin Type" update="@form"
-							actionListener="#{politicalPartyBean.saveParty}" styleClass="ui-priority-primary">
+							ajax="false" actionListener="#{politicalPartyBean.saveParty}" styleClass="ui-priority-primary">
 						</p:commandButton>
 					</p:outputPanel>
 				</p:outputPanel>

@@ -115,10 +115,10 @@
 
 						<h:panelGrid columns="6" id="buttonPanel" rendered="#{not empty categoryBean.selectedNode}">
 							<p:commandButton id="saveCategory" value="Save" update="@form" actionListener="#{categoryBean.saveCategory}"
-								styleClass="ui-priority-primary">
+								ajax="false" styleClass="ui-priority-primary">
 							</p:commandButton>
 							<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{categoryBean.cancel}"
-								styleClass="ui-priority-primary">
+								ajax="false" styleClass="ui-priority-primary">
 							</p:commandButton>
 							<p:blockUI block="@form" trigger="saveCategory">Saving<br />
 								<p:graphicImage width="80"
