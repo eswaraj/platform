@@ -23,6 +23,7 @@ public class Category extends BaseNode{
 	private String headerImageUrl;
 	private String videoUrl;
     private String urlIdentifier;
+    private String color;
 	    
     public Category() {}
     public Category(String name) {
@@ -81,6 +82,13 @@ public class Category extends BaseNode{
         this.urlIdentifier = urlIdentifier;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
     @Override
 	public String toString() {
 		return "Category [name=" + name + ", description=" + description

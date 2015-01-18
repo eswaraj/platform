@@ -20,6 +20,7 @@ public class CategoryDto extends BaseDto{
     private String imageUrl;
 	private String headerImageUrl;
 	private String videoUrl;
+    private String color;
 
 	public String getName() {
 		return name;
@@ -63,7 +64,16 @@ public class CategoryDto extends BaseDto{
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
-	@Override
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @Override
 	public String toString() {
 		return "CategoryDto [name=" + name + ", description=" + description
 				+ ", parentCategoryId=" + parentCategoryId + ", root=" + root
