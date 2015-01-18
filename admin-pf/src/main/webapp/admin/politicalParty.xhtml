@@ -37,7 +37,7 @@
 	</h:head>
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
-		<h:form id="political_party_form">
+		<h:form id="political_party_form" enctype="multipart/form-data">
 			<p:panel id="mainPanel" header="Political Parties">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:outputPanel id="listView" rendered="#{politicalPartyBean.showList}">
@@ -80,13 +80,13 @@
                         <h:panelGrid columns="1">
                             <p:graphicImage style="max-width:400px;" id="imageUrl" value="#{politicalPartyBean.selectedParty.imageUrl}" />
                             <p:fileUpload fileUploadListener="#{politicalPartyBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                auto="true" update="messages, headerImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                                auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
                         </h:panelGrid>
 
 					</p:panelGrid>
 					<p:outputPanel id="buttonView">
-						<p:commandButton value="Cancel" update="@form" actionListener="#{politicalPartyBean.cancel}"
-							styleClass="ui-priority-primary">
+						<p:commandButton value="Cancel" process="@this:cancel" update="@form" actionListener="#{politicalPartyBean.cancel}"
+							styleClass="ui-priority-primary" id="cancel">
 						</p:commandButton>
 						<p:commandButton id="saveCategory" value="Save Political Body Admin Type" update="@form"
 							actionListener="#{politicalPartyBean.saveParty}" styleClass="ui-priority-primary">
