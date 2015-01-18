@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.queue.service.QueueService;
+import com.eswaraj.queue.service.aws.impl.AwsImageUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -34,6 +36,9 @@ public class CategoryBean {
 
     @Autowired
     private QueueService queueService;
+
+    @Autowired
+    private AwsImageUploadUtil awsImageUploadUtil;
 
     private TreeNode root;
 
@@ -120,6 +125,42 @@ public class CategoryBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
 
         }
+    }
+
+    public void handleHeaderFileUpload(FileUploadEvent event) {
+        String imageType = ".jpg";
+        Category category = ((CategoryDocument) selectedNode.getData()).getCategory();
+        String remoteFileName = category.getId() + "_header" + imageType;
+        try {
+            String httpFilePath = awsImageUploadUtil.uploadCategoryImageJpeg(remoteFileName, event.getFile().getInputstream());
+            category.setHeaderImageUrl(httpFilePath);
+            category = adminService.saveCategory(category);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        String imageType = ".jpg";
+        Category category = ((CategoryDocument) selectedNode.getData()).getCategory();
+        String remoteFileName = category.getId() + imageType;
+        try {
+            String httpFilePath = awsImageUploadUtil.uploadCategoryImageJpeg(remoteFileName, event.getFile().getInputstream());
+            category.setImageUrl(httpFilePath);
+            category = adminService.saveCategory(category);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
     }
 
     public void cancel() {
