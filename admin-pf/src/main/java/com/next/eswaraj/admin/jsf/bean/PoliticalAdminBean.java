@@ -203,7 +203,7 @@ public class PoliticalAdminBean extends BaseBean {
         String imageType = ".jpg";
         String remoteFileName = selectedPerson.getId() + imageType;
         try {
-            String httpFilePath = awsImageUploadUtil.uploadProfileImage(remoteFileName, event.getFile().getInputstream());
+            String httpFilePath = awsImageUploadUtil.uploadProfileImageJpeg(remoteFileName, event.getFile().getInputstream());
             selectedPerson.setProfilePhoto(httpFilePath);
             selectedPerson = adminService.savePerson(selectedPerson);
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
