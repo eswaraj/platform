@@ -104,7 +104,7 @@
 							<p:outputLabel value="Video URL(Youtube)"></p:outputLabel>
 							<p:inputText id="videoUrl" value="#{categoryBean.selectedNode.data.category.videoUrl}" style="width:200px" />
                             <p:outputLabel value="Color"></p:outputLabel>
-                            <p:inputText id="color" value="#{categoryBean.selectedNode.data.category.color}" style="width:200px" />
+                            <p:colorPicker value="#{categoryBean.selectedNode.data.category.color}" mode="inline" />
 							<p:outputLabel value="URL Identifier"></p:outputLabel>
 							<p:inputText disabled="true" id="urlIdentifier" value="#{categoryBean.selectedNode.data.category.urlIdentifier}"
 								style="width:200px" />
