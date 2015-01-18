@@ -100,9 +100,13 @@ public class AwsImageUploadUtil {
         return httpPath;
     }
 
-    public String uploadCategoryImageJpeg(String remoteFileName, InputStream localFilePathToUpload) throws FileNotFoundException {
+    public String uploadCategoryImage(String remoteFileName, InputStream localFilePathToUpload, String imageType) throws FileNotFoundException {
+        String contentTypeHeader = "image/jpeg";
+        if (".png".equalsIgnoreCase(imageType)) {
+            contentTypeHeader = "image/png";
+        }
         String remoteFileNameAndPath = categoryPicBaseDirectory + "/" + remoteFileName;
-        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, "image/jpeg");
+        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, contentTypeHeader);
         String httpPath = s3BaseHttpForProfilePic + "/" + categoryPicBaseDirectory + "/" + remoteFileName;
         return httpPath;
     }

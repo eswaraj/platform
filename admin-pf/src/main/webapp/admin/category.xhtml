@@ -91,15 +91,14 @@
                             <h:panelGrid columns="1">
                                 <p:graphicImage style="max-width:200px;" id="imageUrl" value="#{categoryBean.selectedNode.data.category.imageUrl}" />
                                 <p:fileUpload fileUploadListener="#{categoryBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                    auto="true" update="messages, profilePic" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+                                    auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
                             </h:panelGrid>
 
-							<p:inputText id="imageUrl" value="#{categoryBean.selectedNode.data.category.imageUrl}" style="width:200px" />
 							<p:outputLabel value="Header Image URL"></p:outputLabel>
 							<h:panelGrid columns="1">
-								<p:graphicImage style="max-width:200px;" id="headerImageUrl" value="#{categoryBean.selectedNode.data.category.headerImageUrl}" />
+								<p:graphicImage style="max-width:400px;" id="headerImageUrl" value="#{categoryBean.selectedNode.data.category.headerImageUrl}" />
 								<p:fileUpload fileUploadListener="#{categoryBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
-									auto="true" update="messages, profilePic" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+									auto="true" update="messages, headerImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
 							</h:panelGrid>
 
 							<p:outputLabel value="Video URL(Youtube)"></p:outputLabel>

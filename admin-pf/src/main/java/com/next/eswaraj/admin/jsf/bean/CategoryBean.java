@@ -127,14 +127,26 @@ public class CategoryBean {
         }
     }
 
-    public void handleHeaderFileUpload(FileUploadEvent event) {
+    private String getImageType(FileUploadEvent event) {
         String imageType = ".jpg";
+        if ("image/png".equals(event.getFile().getContentType())) {
+            imageType = ".png";
+        }
+        if ("image/jpeg".equals(event.getFile().getContentType())) {
+            imageType = ".jpg";
+        }
+        return imageType;
+    }
+
+    public void handleHeaderFileUpload(FileUploadEvent event) {
+        String imageType = getImageType(event);
         Category category = ((CategoryDocument) selectedNode.getData()).getCategory();
         String remoteFileName = category.getId() + "_header" + imageType;
         try {
-            String httpFilePath = awsImageUploadUtil.uploadCategoryImageJpeg(remoteFileName, event.getFile().getInputstream());
+            String httpFilePath = awsImageUploadUtil.uploadCategoryImage(remoteFileName, event.getFile().getInputstream(), imageType);
             category.setHeaderImageUrl(httpFilePath);
             category = adminService.saveCategory(category);
+            ((CategoryDocument) selectedNode.getData()).setCategory(category);
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
@@ -146,13 +158,14 @@ public class CategoryBean {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
-        String imageType = ".jpg";
+        String imageType = getImageType(event);
         Category category = ((CategoryDocument) selectedNode.getData()).getCategory();
         String remoteFileName = category.getId() + imageType;
         try {
-            String httpFilePath = awsImageUploadUtil.uploadCategoryImageJpeg(remoteFileName, event.getFile().getInputstream());
+            String httpFilePath = awsImageUploadUtil.uploadCategoryImage(remoteFileName, event.getFile().getInputstream(), imageType);
             category.setImageUrl(httpFilePath);
             category = adminService.saveCategory(category);
+            ((CategoryDocument) selectedNode.getData()).setCategory(category);
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
