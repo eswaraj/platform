@@ -75,6 +75,14 @@
 						<p:inputText value="#{politicalPartyBean.selectedParty.name}" style="width:600px" />
 						<p:outputLabel value="Short Name" />
 						<p:inputText value="#{politicalPartyBean.selectedParty.shortName}" style="width:200px" />
+
+                        <p:outputLabel value="Image URL"></p:outputLabel>
+                        <h:panelGrid columns="1">
+                            <p:graphicImage style="max-width:400px;" id="imageUrl" value="#{politicalPartyBean.selectedParty.imageUrl}" />
+                            <p:fileUpload fileUploadListener="#{politicalPartyBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                auto="true" update="messages, headerImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                        </h:panelGrid>
+
 					</p:panelGrid>
 					<p:outputPanel id="buttonView">
 						<p:commandButton value="Cancel" update="@form" actionListener="#{politicalPartyBean.cancel}"

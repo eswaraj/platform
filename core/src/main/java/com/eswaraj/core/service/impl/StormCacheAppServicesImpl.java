@@ -137,6 +137,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                     politicalBodyJsonObject.addProperty("partyExternalId", party.getExternalId());
                     politicalBodyJsonObject.addProperty("partyName", party.getName());
                     politicalBodyJsonObject.addProperty("partyShortName", party.getShortName());
+                    politicalBodyJsonObject.addProperty("partyImageUrl", party.getImageUrl());
                 }
 
                 politicalBodyType = politicalBodyTypeRepository.findOne(onePoliticalBodyAdmin.getPoliticalBodyType().getId());
@@ -297,6 +298,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
             addPropertyIfNotNull(partyJsonObject, "name", party.getName());
             addPropertyIfNotNull(partyJsonObject, "shortName", party.getShortName());
             addPropertyIfNotNull(partyJsonObject, "id", party.getId());
+            addPropertyIfNotNull(partyJsonObject, "imageUrl", party.getImageUrl());
             politicalBodyJsonObject.add("party", partyJsonObject);
         }
 

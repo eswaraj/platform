@@ -3,7 +3,12 @@ package com.next.eswaraj.admin.jsf.bean;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.queue.service.aws.impl.AwsImageUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -24,6 +30,11 @@ public class PoliticalPartyBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
+    
+    @Autowired
+    private AwsImageUploadUtil awsImageUploadUtil;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
     public void init() {
@@ -52,6 +63,24 @@ public class PoliticalPartyBean extends BaseBean {
             showList = true;
         } catch (ApplicationException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+
+        String imageType = ".jpg";
+        String remoteFileName = selectedParty.getId() + imageType;
+        try {
+            String httpFilePath = awsImageUploadUtil.uploadProfileImageJpeg(remoteFileName, event.getFile().getInputstream());
+            selectedParty.setImageUrl(httpFilePath);
+            selectedParty = adminService.saveParty(selectedParty);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
     }
