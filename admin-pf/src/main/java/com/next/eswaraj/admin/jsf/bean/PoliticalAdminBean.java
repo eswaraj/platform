@@ -209,6 +209,7 @@ public class PoliticalAdminBean extends BaseBean {
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
             FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }

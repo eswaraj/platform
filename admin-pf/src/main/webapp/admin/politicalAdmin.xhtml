@@ -332,7 +332,7 @@
 						</h:panelGrid>
 						<h:panelGrid columns="1">
 							<p:graphicImage style="width:200px;" id="profilePic" value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
-							<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="true" auto="true" 
+							<p:fileUpload fileUploadListener="#{politicalAdminBean.handleFileUpload}" mode="advanced" dragDropSupport="true" auto="true" 
 								update="messages" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
 						</h:panelGrid>
 
