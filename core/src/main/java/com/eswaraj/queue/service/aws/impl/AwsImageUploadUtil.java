@@ -42,6 +42,9 @@ public class AwsImageUploadUtil {
     @Value("${profile_pic_base_directory}")
     private String profilePicBaseDirectory;
 
+    @Value("${s3_bucket}")
+    private String s3Bucket;
+
     @Value("${s3_base_http_path_profile_pic}")
     private String s3BaseHttpForProfilePic;
 
@@ -79,7 +82,7 @@ public class AwsImageUploadUtil {
 
 	public String uploadProfileImage(String remoteFileName, InputStream localFilePathToUpload) throws FileNotFoundException {
         String remoteFileNameAndPath = profilePicBaseDirectory + "/" + remoteFileName;
-        uploadFileToS3(accessKey, accessSecret, profilePicBaseDirectory, remoteFileNameAndPath, localFilePathToUpload);
+        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload);
         String httpPath = s3BaseHttpForProfilePic + "/" + profilePicBaseDirectory + "/" + remoteFileName;
 		return httpPath;
 	}
