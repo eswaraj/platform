@@ -170,17 +170,17 @@
 										<p:autoComplete id="searchPerson" value="#{politicalAdminBean.selectedPerson}" minQueryLength="3"
 											completeMethod="#{politicalAdminBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
 											itemValue="#{onePerson}" converter="#{personConvertor}" forceSelection="true">
-											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}"/>
+											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}" />
 										</p:autoComplete>
 										<p:commandButton actionListener="#{politicalAdminBean.createPerson}" value="Create Person" id="createPerson"
-											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" 
-											disabled="#{politicalAdminBean.updateMode}"/>
+											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel"
+											disabled="#{politicalAdminBean.updateMode}" />
 										<h:panelGrid columns="2" cellpadding="5">
 											<h:panelGrid columns="4" cellpadding="5">
 												<p:outputLabel value="Name : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.name}" />
-                                                <p:outputLabel value="Id : " />
-                                                <h:outputText value="#{politicalAdminBean.selectedPerson.id}" />
+												<p:outputLabel value="Id : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.id}" />
 												<p:outputLabel value="Gender : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.gender}" />
 												<p:outputLabel value="Date Of Birth : " />
@@ -200,19 +200,19 @@
 												<p:outputLabel value="Voter Id : " />
 												<h:outputText value="#{politicalAdminBean.selectedPerson.voterId}" />
 											</h:panelGrid>
-											
+
 											<h:panelGrid>
 												<p:graphicImage value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
 											</h:panelGrid>
 
 										</h:panelGrid>
-                                         <h:panelGrid columns="1">
-                                         <f:facet name="header">
+										<h:panelGrid columns="1">
+											<f:facet name="header">
                                          BioData
                                          </f:facet>
-                                            <h:outputText value="#{politicalAdminBean.selectedPerson.biodata}" escape="false"/>
-                                            </h:panelGrid>
-										
+											<h:outputText value="#{politicalAdminBean.selectedPerson.biodata}" escape="false" />
+										</h:panelGrid>
+
 										<p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
 											process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
 
@@ -220,19 +220,20 @@
 
 
 									<p:fieldset legend="Admin Detail" style="margin-bottom:20px">
-									<p:message for="startDate" display="text" />
-									<p:message for="officeEmail" display="text" />
+										<p:message for="startDate" display="text" />
+										<p:message for="officeEmail" display="text" />
 										<h:panelGrid columns="4" cellpadding="5">
-                                            <p:outputLabel value="Id : " />
-                                            <h:outputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.id}" />
+											<p:outputLabel value="Id : " />
+											<h:outputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.id}" />
 											<p:outputLabel value="Political Body Type " />
 											<h:outputText value="#{politicalAdminBean.selectedPoliticalBodyType.name}" />
 											<p:outputLabel value="Location" />
 											<h:outputText value="#{politicalAdminBean.selectedLocationNode.data.location.name}" />
 											<p:outputLabel value="Office Email" />
-											<p:inputText id="officeEmail" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.email}" validatorMessage="Not a valid email">
-					                            <f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
-					                        </p:inputText>
+											<p:inputText id="officeEmail" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.email}"
+												validatorMessage="Not a valid email">
+												<f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
+											</p:inputText>
 											<p:outputLabel value="Facebook Page" />
 											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbPage}" />
 											<p:outputLabel value="Facebook Account" />
@@ -248,19 +249,20 @@
 											<p:outputLabel value="Office Mobile2" />
 											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile2}" />
 											<p:outputLabel value="Start Date" />
-											<p:calendar id="startDate" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.startDate}" pattern="dd-MMM-yyyy"
-												required="true" requiredMessage="Start date can not be empty" />
+											<p:calendar id="startDate" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.startDate}"
+												pattern="dd-MMM-yyyy" required="true" requiredMessage="Start date can not be empty" />
 											<p:outputLabel value="End Date" />
 											<p:calendar value="#{politicalAdminBean.selectedPoliticalBodyAdmin.endDate}" pattern="dd-MMM-yyyy" />
-                                            <p:outputLabel value="URL Identifier" />
-                                            <p:outputLabel value="#{politicalAdminBean.selectedPoliticalBodyAdmin.urlIdentifier}" />
-											
-											
+											<p:outputLabel value="URL Identifier" />
+											<p:outputLabel value="#{politicalAdminBean.selectedPoliticalBodyAdmin.urlIdentifier}" />
+
+
 										</h:panelGrid>
 									</p:fieldset>
 									<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
-										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true" requiredMessage="Please select a Political Party"
-											value="#{politicalAdminBean.selectedPoliticalParty}" disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
+										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true"
+											requiredMessage="Please select a Political Party" value="#{politicalAdminBean.selectedPoliticalParty}"
+											disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
 											<f:selectItem itemLabel="Select Party" itemValue="" />
 											<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
 												itemValue="#{oneReult}" />
@@ -295,46 +297,53 @@
 			<p:dialog header="Save Person" widgetVar="personDialog" modal="true">
 				<p:outputPanel id="personDialogPanel">
 					<p:messages id="dialogMessages" showDetail="false" autoUpdate="true" closable="true" />
-					<h:panelGrid columns="4" id="personPanelGrid">
-						<p:outputLabel value="Name" />
-						<p:inputText id="name" value="#{politicalAdminBean.selectedPerson.name}" required="true"
-							requiredMessage="Name can not be empty" style="width:200px" />
-						<p:outputLabel value="Email" />
-						<p:inputText id="email" value="#{politicalAdminBean.selectedPerson.email}" style="width:200px"
-							validatorMessage="Not a valid email">
-							<f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
-						</p:inputText>
-						<p:outputLabel value="Date of Birth" />
-						<p:calendar value="#{politicalAdminBean.selectedPerson.dob}" pattern="dd-MMM-yyyy" style="width:200px" />
-						<p:outputLabel value="Gender" />
-				        <p:selectOneMenu id="console" value="#{politicalAdminBean.selectedPerson.gender}" style="width:125px">
-				            <f:selectItem itemLabel="Select One" itemValue="" />
-				            <f:selectItem itemLabel="Male" itemValue="male" />
-				            <f:selectItem itemLabel="Female" itemValue="female" />
-				        </p:selectOneMenu>
-        
-						<p:outputLabel value="Voter Id" />
-						<p:inputText id="volterId" value="#{politicalAdminBean.selectedPerson.voterId}" style="width:200px" />
-						<p:outputLabel value="LandLine 1" />
-						<p:inputText id="landline1" value="#{politicalAdminBean.selectedPerson.landlineNumber1}" style="width:200px" />
-						<p:outputLabel value="LandLine 2" />
-						<p:inputText id="landline2" value="#{politicalAdminBean.selectedPerson.landlineNumber2}" style="width:200px" />
-						<p:outputLabel value="Mobile 1" />
-						<p:inputMask id="mobile1" value="#{politicalAdminBean.selectedPerson.mobileNumber1}" mask="9999999999"
-							style="width:200px" />
-						<p:outputLabel value="Mobile 2" />
-						<p:inputMask id="mobile2" value="#{politicalAdminBean.selectedPerson.mobileNumber2}" mask="9999999999"
-							style="width:200px" />
-                        <p:outputLabel value="Profile Photo" />
-                        <p:inputText id="profilePhoto" value="#{politicalAdminBean.selectedPerson.profilePhoto}" style="width:200px" />
-							
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="4" id="personPanelGrid">
+							<p:outputLabel value="Name" />
+							<p:inputText id="name" value="#{politicalAdminBean.selectedPerson.name}" required="true"
+								requiredMessage="Name can not be empty" style="width:200px" />
+							<p:outputLabel value="Email" />
+							<p:inputText id="email" value="#{politicalAdminBean.selectedPerson.email}" style="width:200px"
+								validatorMessage="Not a valid email">
+								<f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
+							</p:inputText>
+							<p:outputLabel value="Date of Birth" />
+							<p:calendar value="#{politicalAdminBean.selectedPerson.dob}" pattern="dd-MMM-yyyy" style="width:200px" />
+							<p:outputLabel value="Gender" />
+							<p:selectOneMenu id="console" value="#{politicalAdminBean.selectedPerson.gender}" style="width:125px">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItem itemLabel="Male" itemValue="male" />
+								<f:selectItem itemLabel="Female" itemValue="female" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Voter Id" />
+							<p:inputText id="volterId" value="#{politicalAdminBean.selectedPerson.voterId}" style="width:200px" />
+							<p:outputLabel value="LandLine 1" />
+							<p:inputText id="landline1" value="#{politicalAdminBean.selectedPerson.landlineNumber1}" style="width:200px" />
+							<p:outputLabel value="LandLine 2" />
+							<p:inputText id="landline2" value="#{politicalAdminBean.selectedPerson.landlineNumber2}" style="width:200px" />
+							<p:outputLabel value="Mobile 1" />
+							<p:inputMask id="mobile1" value="#{politicalAdminBean.selectedPerson.mobileNumber1}" mask="9999999999"
+								style="width:200px" />
+							<p:outputLabel value="Mobile 2" />
+							<p:inputMask id="mobile2" value="#{politicalAdminBean.selectedPerson.mobileNumber2}" mask="9999999999"
+								style="width:200px" />
+
+						</h:panelGrid>
+						<h:panelGrid columns="1">
+							<p:graphicImage style="width:200px;" id="profilePic" value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
+							<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="true" auto="true" 
+								update="messages" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+						</h:panelGrid>
 
 					</h:panelGrid>
-					<h:panelGrid columns="1" >
-					<p:outputLabel value="Bio Data" />
-					   <p:editor id="biodataEditor" widgetVar="biodataEditorWidget" value="#{politicalAdminBean.selectedPerson.biodata}" width="600" />
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Bio Data" />
+						<p:editor id="biodataEditor" widgetVar="biodataEditorWidget" value="#{politicalAdminBean.selectedPerson.biodata}"
+							width="600" />
 					</h:panelGrid>
- 
+
 					<h:panelGrid columns="2" id="saveCancelButtonPanel">
 						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form:formPanel"
 							ajax="true" actionListener="#{politicalAdminBean.savePerson}"
