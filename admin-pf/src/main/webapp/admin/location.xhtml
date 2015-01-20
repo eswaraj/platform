@@ -145,10 +145,10 @@
 
 										</h:panelGrid>
 										<h:panelGrid columns="1">
-											<p:graphicImage style="max-width:200px;" id="mobileHeaderImageUrl"
+											<p:graphicImage style="max-width:200px;" id="mobileHeaderImageUrlPreview"
 												value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" />
-											<p:fileUpload fileUploadListener="#{locationBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
-												auto="true" update="messages, mobileHeaderImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+											<p:fileUpload id="mobileHeaderImageUrlUploader" fileUploadListener="#{locationBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
+												auto="true" update="@form:messages, @form:tabView:mobileHeaderImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
 										</h:panelGrid>
 
 									</p:tab>
