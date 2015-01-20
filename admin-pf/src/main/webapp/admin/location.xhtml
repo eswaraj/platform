@@ -77,8 +77,7 @@
 								<p:menuitem value="Delete" update="doc" actionListener="#{locationBean.deleteNode}" icon="ui-icon-close" />
 							</p:contextMenu>
 							<p:blockUI block="@form" trigger="doc">LOADING<br />
-								<p:graphicImage width="80"
-									value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
+								<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 							</p:blockUI>
 						</p:outputPanel>
 						<p:outputPanel id="formView">
@@ -202,8 +201,7 @@
 										styleClass="ui-priority-primary">
 									</p:commandButton>
 									<p:blockUI block="@form" trigger="saveLocation">Saving<br />
-										<p:graphicImage width="80"
-											value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
+										<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 									</p:blockUI>
 
 								</h:panelGrid>
