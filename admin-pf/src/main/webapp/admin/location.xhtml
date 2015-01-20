@@ -53,7 +53,7 @@
 									<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
 									<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
 									<p:ajax event="select"
-										update=":location_form:formView,:location_form:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
+										update=":location_form:formView,:location_form:tabView:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
 										listener="#{locationBean.onNodeSelect}" />
 									<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
 
@@ -83,7 +83,7 @@
 						</p:outputPanel>
 						<p:outputPanel id="formView">
 							<p:outputPanel rendered="#{not empty locationBean.selectedNode}">
-								<p:tabView>
+								<p:tabView id="tabView">
 									<p:tab title="Main">
 										<h:panelGrid columns="4">
 											<p:outputLabel value="Id"></p:outputLabel>
