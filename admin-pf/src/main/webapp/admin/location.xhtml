@@ -93,51 +93,65 @@
 											<p:outputLabel value="Name"></p:outputLabel>
 											<p:inputText id="name" value="#{locationBean.selectedLocationNode.data.location.name}" style="width:200px" />
 
-											<p:outputLabel value="Mobile Header Image Url"></p:outputLabel>
-											<p:inputText id="mobileHeaderImageUrl"
-												value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" style="width:200px" />
-
 											<p:outputLabel value="URL Identifier"></p:outputLabel>
 											<p:inputText disabled="true" id="urlId"
 												value="#{locationBean.selectedLocationNode.data.location.urlIdentifier}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Houses"></p:outputLabel>
-                                            <p:inputText id="totalNumberOfHouses" value="#{locationBean.selectedLocationNode.data.location.totalNumberOfHouses}" style="width:200px" />
+											<p:outputLabel value="Total Houses"></p:outputLabel>
+											<p:inputText id="totalNumberOfHouses"
+												value="#{locationBean.selectedLocationNode.data.location.totalNumberOfHouses}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Populations"></p:outputLabel>
-                                            <p:inputText id="totalPopulation" value="#{locationBean.selectedLocationNode.data.location.totalPopulation}" style="width:200px" />
+											<p:outputLabel value="Total Populations"></p:outputLabel>
+											<p:inputText id="totalPopulation" value="#{locationBean.selectedLocationNode.data.location.totalPopulation}"
+												style="width:200px" />
 
-                                            <p:outputLabel value="Total Male Populations"></p:outputLabel>
-                                            <p:inputText id="totalMalePopulation" value="#{locationBean.selectedLocationNode.data.location.totalMalePopulation}" style="width:200px" />
+											<p:outputLabel value="Total Male Populations"></p:outputLabel>
+											<p:inputText id="totalMalePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalMalePopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Female Populations"></p:outputLabel>
-                                            <p:inputText id="totalFemalePopulation" value="#{locationBean.selectedLocationNode.data.location.totalFemalePopulation}" style="width:200px" />
+											<p:outputLabel value="Total Female Populations"></p:outputLabel>
+											<p:inputText id="totalFemalePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalFemalePopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Literate Population"></p:outputLabel>
-                                            <p:inputText id="totalLiteratePopulation" value="#{locationBean.selectedLocationNode.data.location.totalLiteratePopulation}" style="width:200px" />
+											<p:outputLabel value="Total Literate Population"></p:outputLabel>
+											<p:inputText id="totalLiteratePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalLiteratePopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Male Literate Population"></p:outputLabel>
-                                            <p:inputText id="totalMaleLiteratePopulation" value="#{locationBean.selectedLocationNode.data.location.totalMaleLiteratePopulation}" style="width:200px" />
+											<p:outputLabel value="Total Male Literate Population"></p:outputLabel>
+											<p:inputText id="totalMaleLiteratePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalMaleLiteratePopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Female Literate Population"></p:outputLabel>
-                                            <p:inputText id="totalFemaleLiteratePopulation" value="#{locationBean.selectedLocationNode.data.location.totalFemaleLiteratePopulation}" style="width:200px" />
+											<p:outputLabel value="Total Female Literate Population"></p:outputLabel>
+											<p:inputText id="totalFemaleLiteratePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalFemaleLiteratePopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Working Population"></p:outputLabel>
-                                            <p:inputText id="totalWorkingPopulation" value="#{locationBean.selectedLocationNode.data.location.totalWorkingPopulation}" style="width:200px" />
+											<p:outputLabel value="Total Working Population"></p:outputLabel>
+											<p:inputText id="totalWorkingPopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalWorkingPopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Male Working Population"></p:outputLabel>
-                                            <p:inputText id="totalMaleWorkingPopulation" value="#{locationBean.selectedLocationNode.data.location.totalMaleWorkingPopulation}" style="width:200px" />
+											<p:outputLabel value="Total Male Working Population"></p:outputLabel>
+											<p:inputText id="totalMaleWorkingPopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalMaleWorkingPopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Total Female Working Population"></p:outputLabel>
-                                            <p:inputText id="totalFemaleWorkingPopulation" value="#{locationBean.selectedLocationNode.data.location.totalFemaleWorkingPopulation}" style="width:200px" />
+											<p:outputLabel value="Total Female Working Population"></p:outputLabel>
+											<p:inputText id="totalFemaleWorkingPopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalFemaleWorkingPopulation}" style="width:200px" />
 
-                                            <p:outputLabel value="Area(Sq Km)"></p:outputLabel>
-                                            <p:inputText id="area" value="#{locationBean.selectedLocationNode.data.location.area}" style="width:200px" />
+											<p:outputLabel value="Area(Sq Km)"></p:outputLabel>
+											<p:inputText id="area" value="#{locationBean.selectedLocationNode.data.location.area}" style="width:200px" />
 
-                                            <p:outputLabel value="Perimeter(Km)"></p:outputLabel>
-                                            <p:inputText id="perimeter" value="#{locationBean.selectedLocationNode.data.location.perimeter}" style="width:200px" />
+											<p:outputLabel value="Perimeter(Km)"></p:outputLabel>
+											<p:inputText id="perimeter" value="#{locationBean.selectedLocationNode.data.location.perimeter}"
+												style="width:200px" />
 
 										</h:panelGrid>
+										<h:panelGrid columns="1">
+											<p:graphicImage style="max-width:200px;" id="mobileHeaderImageUrl"
+												value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" />
+											<p:fileUpload fileUploadListener="#{locationBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
+												auto="true" update="messages, mobileHeaderImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+										</h:panelGrid>
+
 									</p:tab>
 									<p:tab title="Map">
 										<p:outputPanel id="mapPanel">
@@ -159,7 +173,8 @@
 												zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
 												rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
 												style="width:500px;height:500px">
-												<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:tabView:longitude,@form:tabView:latitude" />
+												<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}"
+													update="@form:tabView:longitude,@form:tabView:latitude" />
 												<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
 												<p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:tabView:depth" />
 

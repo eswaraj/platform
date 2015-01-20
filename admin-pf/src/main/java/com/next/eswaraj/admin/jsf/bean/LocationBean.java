@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.menuitem.UIMenuItem;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -43,6 +44,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.queue.service.aws.impl.AwsImageUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -51,6 +53,9 @@ public class LocationBean {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private AwsImageUploadUtil awsImageUploadUtil;
 
     private TreeNode root;
 
@@ -279,6 +284,37 @@ public class LocationBean {
         CommandButton canceButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:cancel");
         saveLocationButton.setDisabled(disabled);
         canceButton.setDisabled(disabled);
+
+    }
+
+    private String getImageType(FileUploadEvent event) {
+        String imageType = ".jpg";
+        if ("image/png".equals(event.getFile().getContentType())) {
+            imageType = ".png";
+        }
+        if ("image/jpeg".equals(event.getFile().getContentType())) {
+            imageType = ".jpg";
+        }
+        return imageType;
+    }
+
+    public void handleHeaderFileUpload(FileUploadEvent event) {
+        String imageType = getImageType(event);
+        Document document = (Document) selectedNode.getData();
+        Location location = document.getLocation();
+        String remoteFileName = location.getId() + "_header" + imageType;
+        try {
+            String httpFilePath = awsImageUploadUtil.uploadLocationHeaderImage(remoteFileName, event.getFile().getInputstream(), imageType);
+            location.setMobileHeaderImageUrl(httpFilePath);
+            location = adminService.saveLocation(location);
+            document.setLocation(location);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
 
     }
 
