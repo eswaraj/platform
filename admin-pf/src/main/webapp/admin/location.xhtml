@@ -147,48 +147,70 @@
 										<h:panelGrid columns="1">
 											<p:graphicImage style="max-width:200px;" id="mobileHeaderImageUrlPreview"
 												value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" />
-											<p:fileUpload id="mobileHeaderImageUrlUploader" fileUploadListener="#{locationBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
-												auto="true" update="@form:messages, @form:tabView:mobileHeaderImageUrlPreview" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+											<p:fileUpload id="mobileHeaderImageUrlUploader" fileUploadListener="#{locationBean.handleHeaderFileUpload}"
+												mode="advanced" dragDropSupport="true" auto="true"
+												update="@form:messages, @form:tabView:mobileHeaderImageUrlPreview" sizeLimit="200000" fileLimit="3"
+												allowTypes="/(\.|\/)(jpe?g|png)$/" />
 										</h:panelGrid>
 
 									</p:tab>
 									<p:tab title="Map">
-										<p:outputPanel id="mapPanel">
-											<h:panelGrid columns="6">
-												<p:outputLabel value="Latitude"></p:outputLabel>
-												<p:inputText disabled="true" id="latitude"
-													value="#{locationBean.selectedLocationNode.data.location.latitude}" style="width:200px" />
+										<h:panelGrid columns="6">
+											<p:outputLabel value="Latitude"></p:outputLabel>
+											<p:inputText disabled="true" id="latitude"
+												value="#{locationBean.selectedLocationNode.data.location.latitude}" style="width:200px" />
 
-												<p:outputLabel value="Longitude"></p:outputLabel>
-												<p:inputText disabled="true" id="longitude"
-													value="#{locationBean.selectedLocationNode.data.location.longitude}" style="width:200px" />
+											<p:outputLabel value="Longitude"></p:outputLabel>
+											<p:inputText disabled="true" id="longitude"
+												value="#{locationBean.selectedLocationNode.data.location.longitude}" style="width:200px" />
 
-												<p:outputLabel value="Depth"></p:outputLabel>
-												<p:inputText disabled="true" id="depth" value="#{locationBean.selectedLocationNode.data.location.depth}"
-													style="width:200px" />
+											<p:outputLabel value="Depth"></p:outputLabel>
+											<p:inputText disabled="true" id="depth" value="#{locationBean.selectedLocationNode.data.location.depth}"
+												style="width:200px" />
+										</h:panelGrid>
+										<h:panelGrid columns="2">
+											<p:outputPanel id="mapPanel">
+
+
+												<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}"
+													zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
+													rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
+													style="width:500px;height:500px">
+													<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}"
+														update="@form:tabView:longitude,@form:tabView:latitude" />
+													<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
+													<p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:tabView:depth" />
+
+												</p:gmap>
+
+											</p:outputPanel>
+											<h:panelGrid columns="1">
+											<p:fileUpload id="kmlFileUploader" fileUploadListener="#{locationBean.handleKmlFileUpload}"
+                                                mode="advanced" dragDropSupport="true" auto="true"
+                                                update="@form:messages" sizeLimit="20000000" fileLimit="1"
+                                                allowTypes="/(\.|\/)(kml)$/" />
+                                                
+											<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
+												<p:column headerText="File name">
+													<h:outputText
+														value="#{oneBoundaryFile.originalFileName}" />
+												</p:column>
+
+												<p:column headerText="Date">
+													<h:outputText value="#{oneBoundaryFile.uploadDate}" >
+													<f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
+													</h:outputText>
+												</p:column>
+                                                <p:column headerText="Status">
+                                                    <h:outputText value="#{oneBoundaryFile.status}" />
+                                                </p:column>
+                                                <p:column headerText="Active">
+                                                    <h:outputText value="#{oneBoundaryFile.active}" />
+                                                </p:column>
+											</p:dataTable>
 											</h:panelGrid>
+										</h:panelGrid>
 
-											<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}"
-												zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
-												rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
-												style="width:500px;height:500px">
-												<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}"
-													update="@form:tabView:longitude,@form:tabView:latitude" />
-												<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
-												<p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:tabView:depth" />
-
-											</p:gmap>
-										</p:outputPanel>
-										<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
-											<p:column headerText="File name">
-												<h:outputText
-													value="#{oneBoundaryFile.originalFileName}(#{oneBoundaryFile.status}, Active=#{oneBoundaryFile.active})" />
-											</p:column>
-
-											<p:column headerText="Date">
-												<h:outputText value="#{oneBoundaryFile.uploadDate}" />
-											</p:column>
-										</p:dataTable>
 									</p:tab>
 								</p:tabView>
 
