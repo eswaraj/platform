@@ -213,6 +213,8 @@ public class LocationBean {
 
         LatLng coord1 = new LatLng(lat, lng);
 
+        draggableModel.getMarkers().clear();
+        draggableModel.getPolygons().clear();
         // Draggable
         draggableModel.addOverlay(new Marker(coord1, location.getName()));
         for (Marker premarker : draggableModel.getMarkers()) {
