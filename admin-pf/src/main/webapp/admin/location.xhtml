@@ -42,34 +42,35 @@
 		<h:form id="location_form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Location">
-                <h:panelGrid columns="8" id="buttonPanel">
-                </h:panelGrid>
+				<h:panelGrid columns="8" id="buttonPanel">
+				</h:panelGrid>
 				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
 					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
 						<p:outputPanel id="treeView">
-						<p:scrollPanel  mode="native" style="width:300px;height:600px;"> 
-							<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
-								selection="#{locationBean.selectedNode}">
-								<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
-								<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
-								<p:ajax event="select" update=":location_form:formView,:location_form:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
-									listener="#{locationBean.onNodeSelect}" />
-								<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
+							<p:scrollPanel mode="native" style="width:300px;height:600px;">
+								<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+									selection="#{locationBean.selectedNode}">
+									<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
+									<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
+									<p:ajax event="select"
+										update=":location_form:formView,:location_form:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
+										listener="#{locationBean.onNodeSelect}" />
+									<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
 
-								<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
-									<h:outputText value="#{doc.name}" />
-								</p:treeNode>
-								<p:treeNode type="document" icon="ui-icon-document">
-									<h:outputText value="#{doc.name}" />
-								</p:treeNode>
-								<p:treeNode type="picture" icon="ui-icon-image">
-									<h:outputText value="#{doc.name}" />
-								</p:treeNode>
-								<p:treeNode type="mp3" icon="ui-icon-video">
-									<h:outputText value="#{doc.name}" />
-								</p:treeNode>
-							</p:tree>
-							</p:scrollPanel> 
+									<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="document" icon="ui-icon-document">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="picture" icon="ui-icon-image">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="mp3" icon="ui-icon-video">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+								</p:tree>
+							</p:scrollPanel>
 							<p:contextMenu for="doc" id="contextMenu">
 								<p:menuitem value="Create" update="messages" actionListener="#{locationBean.displaySelectedSingle}"
 									icon="ui-icon-search" />
@@ -80,70 +81,124 @@
 									value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
 							</p:blockUI>
 						</p:outputPanel>
-						<p:outputPanel id="formView" >
-						<p:outputPanel rendered="#{not empty locationBean.selectedNode}">
-						
-							<h:panelGrid columns="2">
-                                <p:outputLabel value="Id"></p:outputLabel>
-                                <p:inputText disabled="true"  id="id" value="#{locationBean.selectedLocationNode.data.location.id}" style="width:200px" />
+						<p:outputPanel id="formView">
+							<p:outputPanel rendered="#{not empty locationBean.selectedNode}">
+								<p:tabView>
+									<p:tab title="Main">
+										<h:panelGrid columns="4">
+											<p:outputLabel value="Id"></p:outputLabel>
+											<p:inputText disabled="true" id="id" value="#{locationBean.selectedLocationNode.data.location.id}"
+												style="width:200px" />
 
-								<p:outputLabel value="Name"></p:outputLabel>
-								<p:inputText id="name" value="#{locationBean.selectedLocationNode.data.location.name}" style="width:200px" />
+											<p:outputLabel value="Name"></p:outputLabel>
+											<p:inputText id="name" value="#{locationBean.selectedLocationNode.data.location.name}" style="width:200px" />
 
-                                <p:outputLabel value="Mobile Header Image Url"></p:outputLabel>
-                                <p:inputText id="mobileHeaderImageUrl" value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" style="width:200px" />
+											<p:outputLabel value="Mobile Header Image Url"></p:outputLabel>
+											<p:inputText id="mobileHeaderImageUrl"
+												value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" style="width:200px" />
 
-								<p:outputLabel value="URL Identifier"></p:outputLabel>
-								<p:inputText disabled="true"  id="urlId" value="#{locationBean.selectedLocationNode.data.location.urlIdentifier}" style="width:200px" />
+											<p:outputLabel value="URL Identifier"></p:outputLabel>
+											<p:inputText disabled="true" id="urlId"
+												value="#{locationBean.selectedLocationNode.data.location.urlIdentifier}" style="width:200px" />
 
-								<p:outputLabel value="Latitude"></p:outputLabel>
-								<p:inputText disabled="true" id="latitude" value="#{locationBean.selectedLocationNode.data.location.latitude}"
-									style="width:200px" />
+                                            <p:outputLabel value="Total Houses"></p:outputLabel>
+                                            <p:inputText id="totalNumberOfHouses" value="#{locationBean.selectedLocationNode.data.location.totalNumberOfHouses}" style="width:200px" />
 
-								<p:outputLabel value="Longitude"></p:outputLabel>
-								<p:inputText disabled="true" id="longitude" value="#{locationBean.selectedLocationNode.data.location.longitude}"
-									style="width:200px" />
+                                            <p:outputLabel value="Total Populations"></p:outputLabel>
+                                            <p:inputText id="totalPopulation" value="#{locationBean.selectedLocationNode.data.location.totalPopulation}" style="width:200px" />
 
-                                <p:outputLabel value="Depth"></p:outputLabel>
-                                <p:inputText disabled="true" id="depth" value="#{locationBean.selectedLocationNode.data.location.depth}"
-                                    style="width:200px" />
+                                            <p:outputLabel value="Total Male Populations"></p:outputLabel>
+                                            <p:inputText id="totalMalePopulation" value="#{locationBean.selectedLocationNode.data.location.totalMalePopulation}" style="width:200px" />
 
-							</h:panelGrid>
-							<h:panelGrid columns="6" id="saveCancelButtonPanel" >
-                            <p:commandButton id="saveLocation" value="Save" update="@form"
-                                actionListener="#{locationBean.saveLocation}" styleClass="ui-priority-primary">
-                            </p:commandButton>
-                            <p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{locationBean.cancel}"
-                                styleClass="ui-priority-primary">
-                            </p:commandButton>
-                            <p:blockUI block="@form" trigger="saveLocation">Saving<br />
-                                <p:graphicImage width="80" value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
-                            </p:blockUI>
+                                            <p:outputLabel value="Total Female Populations"></p:outputLabel>
+                                            <p:inputText id="totalFemalePopulation" value="#{locationBean.selectedLocationNode.data.location.totalFemalePopulation}" style="width:200px" />
 
-                        </h:panelGrid>
-							<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
-								<p:column headerText="File name">
-									<h:outputText value="#{oneBoundaryFile.originalFileName}(#{oneBoundaryFile.status}, Active=#{oneBoundaryFile.active})" />
-								</p:column>
+                                            <p:outputLabel value="Total Literate Population"></p:outputLabel>
+                                            <p:inputText id="totalLiteratePopulation" value="#{locationBean.selectedLocationNode.data.location.totalLiteratePopulation}" style="width:200px" />
 
-								<p:column headerText="Date">
-									<h:outputText value="#{oneBoundaryFile.uploadDate}" />
-								</p:column>
-							</p:dataTable>
-						</p:outputPanel>
+                                            <p:outputLabel value="Total Male Literate Population"></p:outputLabel>
+                                            <p:inputText id="totalMaleLiteratePopulation" value="#{locationBean.selectedLocationNode.data.location.totalMaleLiteratePopulation}" style="width:200px" />
+
+                                            <p:outputLabel value="Total Female Literate Population"></p:outputLabel>
+                                            <p:inputText id="totalFemaleLiteratePopulation" value="#{locationBean.selectedLocationNode.data.location.totalFemaleLiteratePopulation}" style="width:200px" />
+
+                                            <p:outputLabel value="Total Working Population"></p:outputLabel>
+                                            <p:inputText id="totalWorkingPopulation" value="#{locationBean.selectedLocationNode.data.location.totalWorkingPopulation}" style="width:200px" />
+
+                                            <p:outputLabel value="Total Male Working Population"></p:outputLabel>
+                                            <p:inputText id="totalMaleWorkingPopulation" value="#{locationBean.selectedLocationNode.data.location.totalMaleWorkingPopulation}" style="width:200px" />
+
+                                            <p:outputLabel value="Total Female Working Population"></p:outputLabel>
+                                            <p:inputText id="totalFemaleWorkingPopulation" value="#{locationBean.selectedLocationNode.data.location.totalFemaleWorkingPopulation}" style="width:200px" />
+
+                                            <p:outputLabel value="Area(Sq Km)"></p:outputLabel>
+                                            <p:inputText id="area" value="#{locationBean.selectedLocationNode.data.location.area}" style="width:200px" />
+
+                                            <p:outputLabel value="Perimeter(Km)"></p:outputLabel>
+                                            <p:inputText id="perimeter" value="#{locationBean.selectedLocationNode.data.location.perimeter}" style="width:200px" />
+
+										</h:panelGrid>
+									</p:tab>
+									<p:tab title="Census">
+
+									</p:tab>
+									<p:tab title="Map">
+										<p:outputPanel id="mapPanel">
+											<h:panelGrid columns="6">
+												<p:outputLabel value="Latitude"></p:outputLabel>
+												<p:inputText disabled="true" id="latitude"
+													value="#{locationBean.selectedLocationNode.data.location.latitude}" style="width:200px" />
+
+												<p:outputLabel value="Longitude"></p:outputLabel>
+												<p:inputText disabled="true" id="longitude"
+													value="#{locationBean.selectedLocationNode.data.location.longitude}" style="width:200px" />
+
+												<p:outputLabel value="Depth"></p:outputLabel>
+												<p:inputText disabled="true" id="depth" value="#{locationBean.selectedLocationNode.data.location.depth}"
+													style="width:200px" />
+											</h:panelGrid>
+
+											<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}"
+												zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
+												rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
+												style="width:500px;height:500px">
+												<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />
+												<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
+												<p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:depth" />
+
+											</p:gmap>
+										</p:outputPanel>
+										<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
+											<p:column headerText="File name">
+												<h:outputText
+													value="#{oneBoundaryFile.originalFileName}(#{oneBoundaryFile.status}, Active=#{oneBoundaryFile.active})" />
+											</p:column>
+
+											<p:column headerText="Date">
+												<h:outputText value="#{oneBoundaryFile.uploadDate}" />
+											</p:column>
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>
+
+
+								<h:panelGrid columns="6" id="saveCancelButtonPanel">
+									<p:commandButton id="saveLocation" value="Save" update="@form" actionListener="#{locationBean.saveLocation}"
+										styleClass="ui-priority-primary">
+									</p:commandButton>
+									<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{locationBean.cancel}"
+										styleClass="ui-priority-primary">
+									</p:commandButton>
+									<p:blockUI block="@form" trigger="saveLocation">Saving<br />
+										<p:graphicImage width="80"
+											value="https://d13yacurqjgara.cloudfront.net/users/157197/screenshots/968023/framely.gif" />
+									</p:blockUI>
+
+								</h:panelGrid>
+
+							</p:outputPanel>
 						</p:outputPanel>
 					</h:panelGrid>
-                    <p:outputPanel id="mapPanel">
-                    
-					<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}" zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
-						rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
-						style="width:700px;height:500px">
-						<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}" update="@form:longitude,@form:latitude" />
-						<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
-                        <p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:depth" />
-                    
-					</p:gmap>
-					</p:outputPanel>
 				</h:panelGrid>
 
 			</p:panel>
