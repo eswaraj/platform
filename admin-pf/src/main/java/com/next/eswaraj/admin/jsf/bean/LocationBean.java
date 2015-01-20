@@ -74,6 +74,8 @@ public class LocationBean {
     private Double lat;
     private Double lng;
     private List<LocationBoundaryFile> locationBoundaryFiles;
+    
+    private LocationBoundaryFile selectedKml;
 
     @PostConstruct
     public void init() {
@@ -144,6 +146,25 @@ public class LocationBean {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    private LocationBoundaryFile getActiveLocationBoundaryFile(Location location) throws ApplicationException {
+        LocationBoundaryFile activeLocationBoundaryFile = null;
+        if (location != null) {
+            locationBoundaryFiles = adminService.getLocationBoundaryFiles(location.getId());
+            System.out.println("locationBoundaryFiles = " + locationBoundaryFiles);
+            if (!locationBoundaryFiles.isEmpty()) {
+                System.out.println("Select Active File = ");
+                
+                for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
+                    activeLocationBoundaryFile = oneLocationBoundaryFile;
+                    if (oneLocationBoundaryFile.isActive()) {
+                        break;
+                    }
+                }
+            }
+        }
+        return activeLocationBoundaryFile;
+    }
+
     public void onNodeSelect(NodeSelectEvent event) {
         TreeNode nodeSelected = event.getTreeNode();
         Object data = nodeSelected.getData();
@@ -152,84 +173,12 @@ public class LocationBean {
             draggableModel.getMarkers().clear();
             draggableModel.getPolygons().clear();
             Document document = (Document) data;
-            lat = document.getLocation().getLatitude();
-            lng = document.getLocation().getLongitude();
-            if (lat == null || lat == 0.0) {
-                lat = 28.871187;
-                document.getLocation().setLatitude(lat);
-            }
-            if (lng == null || lng == 0.0) {
-                lng = 77.095337;
-                document.getLocation().setLongitude(lng);
-            }
 
-            LatLng coord1 = new LatLng(lat, lng);
 
-            // Draggable
-            draggableModel.addOverlay(new Marker(coord1, document.getLocation().getName()));
-            for (Marker premarker : draggableModel.getMarkers()) {
-                premarker.setDraggable(true);
-            }
             try {
-                if (document.getLocation() != null) {
-                    locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
-                    System.out.println("locationBoundaryFiles = " + locationBoundaryFiles);
-                    if (!locationBoundaryFiles.isEmpty()) {
-                        System.out.println("Select Active File = ");
-                        LocationBoundaryFile activeLocationBoundaryFile = null;
-                        for (LocationBoundaryFile oneLocationBoundaryFile : locationBoundaryFiles) {
-                            activeLocationBoundaryFile = oneLocationBoundaryFile;
-                            if (oneLocationBoundaryFile.isActive()) {
-                                break;
-                            }
-                        }
-                        System.out.println("activeLocationBoundaryFile = " + activeLocationBoundaryFile);
-                        System.out.println("Creating Polygon");
-                        if (activeLocationBoundaryFile != null) {
-                            try {
-                                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                                org.w3c.dom.Document doc = dBuilder.parse(activeLocationBoundaryFile.getFileNameAndPath());
-                                // org.w3c.dom.Document doc =
-                                // dBuilder.parse("https://s3-us-west-2.amazonaws.com/eswaraj-dev/locations/72848/41b8ccc9-9b3b-435d-9d20-a1217703539b_201409111918.kml");
-                                NodeList coordinates = doc.getElementsByTagName("coordinates");
-                                for (int temp = 0; temp < coordinates.getLength(); temp++) {
-
-                                    Node nNode = coordinates.item(temp);
-
-                                    System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
-                                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                                        Element eElement = (Element) nNode;
-
-                                        String coordinatesStr = eElement.getTextContent();
-                                        System.out.println("Cooridinates : " + coordinatesStr);
-                                        Polygon polygon = new Polygon();
-                                        String[] latLngs = coordinatesStr.split(" ");
-                                        for (String oneLatLng : latLngs) {
-
-                                            String[] ll = oneLatLng.split(",");
-                                            polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
-                                        }
-
-                                        polygon.setStrokeColor("#FF9900");
-                                        polygon.setFillColor("#FF9900");
-                                        polygon.setStrokeOpacity(0.7);
-                                        polygon.setFillOpacity(0.7);
-
-                                        draggableModel.addOverlay(polygon);
-
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-                }
-
+                Location location = document.getLocation();
+                LocationBoundaryFile activeLocationBoundaryFile = getActiveLocationBoundaryFile(location);
+                createMarkerAndKmlBoundary(location, activeLocationBoundaryFile);
                 List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) nodeSelected.getData()).getLocation().getLocationType().getId());
                 createButtonsAndMenus(locationTypes, document.getLocation());
             } catch (ApplicationException e) {
@@ -250,11 +199,81 @@ public class LocationBean {
         }
     }
 
+    private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
+        lat = location.getLatitude();
+        lng = location.getLongitude();
+        if (lat == null || lat == 0.0) {
+            lat = 28.871187;
+            location.setLatitude(lat);
+        }
+        if (lng == null || lng == 0.0) {
+            lng = 77.095337;
+            location.setLongitude(lng);
+        }
+
+        LatLng coord1 = new LatLng(lat, lng);
+
+        // Draggable
+        draggableModel.addOverlay(new Marker(coord1, location.getName()));
+        for (Marker premarker : draggableModel.getMarkers()) {
+            premarker.setDraggable(true);
+        }
+        try {
+            if (locationBoundaryFile != null) {
+                try {
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    org.w3c.dom.Document doc = dBuilder.parse(locationBoundaryFile.getFileNameAndPath());
+                    // org.w3c.dom.Document doc =
+                    // dBuilder.parse("https://s3-us-west-2.amazonaws.com/eswaraj-dev/locations/72848/41b8ccc9-9b3b-435d-9d20-a1217703539b_201409111918.kml");
+                    NodeList coordinates = doc.getElementsByTagName("coordinates");
+                    for (int temp = 0; temp < coordinates.getLength(); temp++) {
+
+                        Node nNode = coordinates.item(temp);
+
+                        System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                        if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                            Element eElement = (Element) nNode;
+
+                            String coordinatesStr = eElement.getTextContent();
+                            System.out.println("Cooridinates : " + coordinatesStr);
+                            Polygon polygon = new Polygon();
+                            String[] latLngs = coordinatesStr.split(" ");
+                            for (String oneLatLng : latLngs) {
+
+                                String[] ll = oneLatLng.split(",");
+                                polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
+                            }
+
+                            polygon.setStrokeColor("#FF9900");
+                            polygon.setFillColor("#FF9900");
+                            polygon.setStrokeOpacity(0.7);
+                            polygon.setFillOpacity(0.7);
+
+                            draggableModel.addOverlay(polygon);
+
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disableSaveCancelButtons(false);
+        }
+    }
+
     public void onStateChange(StateChangeEvent event) {
         LatLngBounds bounds = event.getBounds();
         int zoomLevel = event.getZoomLevel();
         ((Document) selectedLocationNode.getData()).getLocation().setDepth(zoomLevel);
     }
+
     public void onMarkerDrag(MarkerDragEvent event) {
         Marker marker = event.getMarker();
         if (selectedNode.getData() instanceof Document) {
@@ -272,7 +291,7 @@ public class LocationBean {
 
     public void saveLocation() {
         System.out.println("saving Location " + selectedNode.getData());
-        Document document = (Document)selectedNode.getData();
+        Document document = (Document) selectedNode.getData();
         document.setName(document.getLocation().getName());
         try {
             System.out.println("LocationType " + document.getLocation().getLocationType());
@@ -516,5 +535,20 @@ public class LocationBean {
 
     public void setSelectedLocationNode(TreeNode selectedLocationNode) {
         this.selectedLocationNode = selectedLocationNode;
+    }
+
+    public LocationBoundaryFile getSelectedKml() {
+        return selectedKml;
+    }
+
+    public void setSelectedKml(LocationBoundaryFile selectedKml) {
+        this.selectedKml = selectedKml;
+        Object data = selectedNode.getData();
+        if (data instanceof Document) {
+            Document document = ((Document) data);
+            Location selectedLocation = document.getLocation();
+            createMarkerAndKmlBoundary(selectedLocation, selectedKml);
+        }
+        
     }
 }

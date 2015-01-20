@@ -190,7 +190,7 @@
                                                 update="@form:messages" sizeLimit="20000000" fileLimit="1"
                                                 allowTypes="/(\.|\/)(kml)$/" />
                                                 
-											<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}">
+											<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}" selectionMode="single" selection="#{locationBean.selectedKmlFile}" rowKey="#{oneBoundaryFile.id}">
 												<p:column headerText="File name">
 													<h:outputText
 														value="#{oneBoundaryFile.originalFileName}" />
