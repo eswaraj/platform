@@ -1,8 +1,10 @@
 package com.next.eswaraj.admin.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
@@ -69,4 +71,6 @@ public interface AdminService {
     Person savePerson(Person person) throws ApplicationException;
 
     Person getPersonById(Long personId) throws ApplicationException;
+    
+    LocationBoundaryFile createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException;
 }

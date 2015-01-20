@@ -1,20 +1,27 @@
 package com.next.eswaraj.admin.service;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
 import org.neo4j.rest.graphdb.RestResultException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.FileService;
+import com.eswaraj.core.util.DateTimeUtil;
 import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
@@ -37,6 +44,7 @@ import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
+import com.eswaraj.queue.service.QueueService;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -54,7 +62,16 @@ public class AdminServiceImpl implements AdminService {
     private LocationRepository locationRepository;
 
     @Autowired
+    private DateTimeUtil dateTimeUtil;
+
+    @Value("${aws_s3_directory_for_location_files:locations}")
+    private String awsDirectoryForLocationFiles;
+
+    @Autowired
     private LocationBoundaryFileRepository locationBoundaryFileRepository;
+
+    @Autowired
+    private QueueService queueService;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -70,6 +87,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public LocationType saveLocationType(LocationType locationType) throws ApplicationException {
@@ -429,6 +448,53 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return false;
+    }
+
+    @Override
+    public LocationBoundaryFile createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException {
+        Location location = locationRepository.findOne(locationId);
+        if (location == null) {
+            throw new ApplicationException("No such location exists[id=" + locationId + "]");
+        }
+        System.out.println("createNewLocationBoundaryFile Started");
+        LocationBoundaryFile existingLocationBoundayrFile = locationBoundaryFileRepository.getActiveLocationBoundaryFile(location);
+        String currenttime = dateTimeUtil.getCurrentTimeYYYYMMDDHHMMSS();
+        if (existingLocationBoundayrFile != null) {
+            if (existingLocationBoundayrFile.getStatus().equals("Pending") || existingLocationBoundayrFile.getStatus().equals("Processing")) {
+                throw new ApplicationException("Another file is being processed you can not upload new file until the previous file is processed");
+            }
+            existingLocationBoundayrFile.setActive(false);
+            existingLocationBoundayrFile = locationBoundaryFileRepository.save(existingLocationBoundayrFile);
+        }
+        String fileDir = awsDirectoryForLocationFiles + "/" + location.getId();
+        String fileName = UUID.randomUUID().toString() + "_" + currenttime + ".kml";
+        logger.info("saving file {}", fileName);
+        // save file to a storage
+        String httpPath = fileService.saveFile(fileDir, fileName, inputStream);
+        System.out.println("httpPath Saved = " + httpPath);
+        // create LocationBoudaryFile
+        LocationBoundaryFile locationBoundaryFile = new LocationBoundaryFile();
+        locationBoundaryFile.setLocation(location);
+        locationBoundaryFile.setFileNameAndPath(httpPath);
+        locationBoundaryFile.setStatus("Pending");
+        locationBoundaryFile.setUploadDate(new Date());
+        locationBoundaryFile.setActive(true);
+        locationBoundaryFile.setOriginalFileName(originalFilename);
+
+        locationBoundaryFile = locationBoundaryFileRepository.save(locationBoundaryFile);
+        System.out.println("locationBoundaryFile Saved = " + locationBoundaryFile);
+        // Updaye Locaion Object with KMl file
+        location.setBoundaryFile(httpPath);
+        location = locationRepository.save(location);
+
+        Long existingLocationBoundaryFileId = null;
+        if (existingLocationBoundayrFile != null) {
+            existingLocationBoundaryFileId = existingLocationBoundayrFile.getId();
+        }
+
+        queueService.sendLocationFileUploadMessage(existingLocationBoundaryFileId, locationBoundaryFile.getId(), locationId);
+
+        return locationBoundaryFile;
     }
 
 

@@ -42,7 +42,6 @@ import org.w3c.dom.NodeList;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
-import com.eswaraj.core.service.LocationService;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -58,9 +57,6 @@ public class LocationBean {
 
     @Autowired
     private AwsImageUploadUtil awsImageUploadUtil;
-
-    @Autowired
-    private LocationService locationService;
 
     @Autowired
     private FileService fileService;
@@ -330,7 +326,7 @@ public class LocationBean {
         Document document = (Document) selectedNode.getData();
         Location location = document.getLocation();
         try {
-            locationService.createNewLocationBoundaryFile(location.getId(), event.getFile().getFileName(), event.getFile().getInputstream(), fileService);
+            adminService.createNewLocationBoundaryFile(location.getId(), event.getFile().getFileName(), event.getFile().getInputstream(), fileService);
             locationBoundaryFiles = adminService.getLocationBoundaryFiles(document.getLocation().getId());
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
