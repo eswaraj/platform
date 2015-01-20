@@ -115,6 +115,11 @@ body {
             <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
         </f:facet>
     </p:menubar>
+    <p:outputLabel for="theme" value="Choose Theme" /> 
+        <p:themeSwitcher id="theme" style="width:165px">
+            <f:selectItem itemLabel="Choose Theme" itemValue="" />
+            <f:selectItems value="#{themeService.themes}" />
+        </p:themeSwitcher>
 	</h:form>
 
 	
