@@ -290,7 +290,7 @@
 				</h:panelGrid>
 
 			</p:panel>
-			<p:dialog header="Save Person" widgetVar="personDialog" modal="true">
+			<p:dialog header="Save Person" widgetVar="personDialog" modal="true" showEffect="clip" hideEffect="clip" position="centre top">
 				<p:outputPanel id="personDialogPanel">
 					<p:messages id="dialogMessages" showDetail="false" autoUpdate="true" closable="true" />
 					<h:panelGrid columns="2">
@@ -334,11 +334,14 @@
 
 					</h:panelGrid>
 
-					<h:panelGrid columns="1">
-						<p:outputLabel value="Bio Data" />
+					<p:panelGrid columns="1">
+					<f:facet name="header">
+					   <p:outputLabel value="Bio Data" />
+					</f:facet>
+						
 						<p:editor id="biodataEditor" widgetVar="biodataEditorWidget" value="#{politicalAdminBean.selectedPerson.biodata}"
 							width="600" />
-					</h:panelGrid>
+					</p:panelGrid>
 
 					<h:panelGrid columns="2" id="saveCancelButtonPanel">
 						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form:formPanel"

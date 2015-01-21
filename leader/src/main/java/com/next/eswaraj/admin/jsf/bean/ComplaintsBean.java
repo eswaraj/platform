@@ -90,6 +90,10 @@ public class ComplaintsBean extends BaseBean {
             for (Category oneCategory : allCategories) {
                 categoryMap.put(oneCategory.getId(), oneCategory);
             }
+            if (userPoliticalBodyAdmins.size() == 1) {
+                selectedPoliticalBodyAdmin = userPoliticalBodyAdmins.get(0);
+                onSelectPoliticalBodyAdmin();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
