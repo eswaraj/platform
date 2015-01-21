@@ -14,6 +14,8 @@ public class Initializer implements ServletContextInitializer {
         System.err.println("------------------------------------");
         servletContext.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", "true");
         servletContext.setInitParameter("primefaces.THEME", "start");
+        servletContext.setInitParameter("facelets.SKIP_COMMENTS", "true");
+
     }
 
 }
