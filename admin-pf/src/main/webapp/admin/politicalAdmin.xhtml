@@ -39,7 +39,7 @@
 	</h:head>
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
-		<h:form id="political_admin_form"  enctype="multipart/form-data">
+		<h:form id="political_admin_form" enctype="multipart/form-data">
 			<p:panel id="mainPanel" header="Political Admin">
 				<p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
 
@@ -115,9 +115,10 @@
 									<p:blockUI block="@form" trigger="adminType">Loading...<br />
 										<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 									</p:blockUI>
-									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form" ajax="true"
-										disabled="#{politicalAdminBean.disableCreateAdminButton}" actionListener="#{politicalAdminBean.createAdmin}"
-										styleClass="ui-priority-primary" process="@this:createAdmin">
+									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form"
+										ajax="true" disabled="#{politicalAdminBean.disableCreateAdminButton}"
+										actionListener="#{politicalAdminBean.createAdmin}" styleClass="ui-priority-primary"
+										process="@this:createAdmin">
 									</p:commandButton>
 									<p:dataTable var="onePoliticalAdmin" value="#{politicalAdminBean.politicalBodyAdmins}">
 										<p:column headerText="Id">
@@ -168,6 +169,13 @@
 											completeMethod="#{politicalAdminBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
 											itemValue="#{onePerson}" converter="#{personConvertor}" forceSelection="true">
 											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}" />
+											<p:column>
+												<p:graphicImage value="#{onePerson.profilePhoto}"  style="height:100px;"/>
+											</p:column>
+
+											<p:column>
+												<h:outputText value="#{onePerson.name}" />
+											</p:column>
 										</p:autoComplete>
 										<p:commandButton actionListener="#{politicalAdminBean.createPerson}" value="Create Person" id="createPerson"
 											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel"
@@ -290,7 +298,8 @@
 				</h:panelGrid>
 
 			</p:panel>
-			<p:dialog header="Save Person" widgetVar="personDialog" modal="true" showEffect="clip" hideEffect="clip" position="centre top">
+			<p:dialog header="Save Person" widgetVar="personDialog" modal="true" showEffect="clip" hideEffect="clip"
+				position="centre top">
 				<p:outputPanel id="personDialogPanel">
 					<p:messages id="dialogMessages" showDetail="false" autoUpdate="true" closable="true" />
 					<h:panelGrid columns="2">
@@ -328,17 +337,17 @@
 						</h:panelGrid>
 						<h:panelGrid columns="1">
 							<p:graphicImage style="width:200px;" id="profilePic" value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
-							<p:fileUpload fileUploadListener="#{politicalAdminBean.handleFileUpload}" mode="advanced" dragDropSupport="true" auto="true" 
-								update="messages, profilePic" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+							<p:fileUpload fileUploadListener="#{politicalAdminBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, profilePic" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
 						</h:panelGrid>
 
 					</h:panelGrid>
 
 					<p:panelGrid columns="1">
-					<f:facet name="header">
-					   <p:outputLabel value="Bio Data" />
-					</f:facet>
-						
+						<f:facet name="header">
+							<p:outputLabel value="Bio Data" />
+						</f:facet>
+
 						<p:editor id="biodataEditor" widgetVar="biodataEditorWidget" value="#{politicalAdminBean.selectedPerson.biodata}"
 							width="600" />
 					</p:panelGrid>
