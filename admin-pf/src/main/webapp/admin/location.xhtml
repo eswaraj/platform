@@ -185,29 +185,34 @@
 
 											</p:outputPanel>
 											<h:panelGrid columns="1">
-											<p:fileUpload id="kmlFileUploader" fileUploadListener="#{locationBean.handleKmlFileUpload}"
-                                                mode="advanced" dragDropSupport="true" auto="true"
-                                                update="@form:messages" sizeLimit="20000000" fileLimit="1"
-                                                allowTypes="/(\.|\/)(kml)$/" />
-                                                
-											<p:dataTable var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}" selectionMode="single" selection="#{locationBean.selectedKmlFile}" rowKey="#{oneBoundaryFile.id}">
-												<p:column headerText="File name">
-													<h:outputText
-														value="#{oneBoundaryFile.originalFileName}" />
-												</p:column>
+												<p:fileUpload id="kmlFileUploader" fileUploadListener="#{locationBean.handleKmlFileUpload}" mode="advanced"
+													dragDropSupport="true" auto="true" update="@form:messages" sizeLimit="20000000" fileLimit="1"
+													allowTypes="/(\.|\/)(kml)$/" />
+												<p:blockUI block="@form" trigger="kmlFileUploader">Uploading<br />
+													<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+												</p:blockUI>
+                                                <p:blockUI block="@form" trigger="kmlTable">Refreshing<br />
+                                                    <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                                                </p:blockUI>
 
-												<p:column headerText="Date">
-													<h:outputText value="#{oneBoundaryFile.uploadDate}" >
-													<f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
-													</h:outputText>
-												</p:column>
-                                                <p:column headerText="Status">
-                                                    <h:outputText value="#{oneBoundaryFile.status}" />
-                                                </p:column>
-                                                <p:column headerText="Active">
-                                                    <h:outputText value="#{oneBoundaryFile.active}" />
-                                                </p:column>
-											</p:dataTable>
+												<p:dataTable id="kmlTable" var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}"
+													selectionMode="single" selection="#{locationBean.selectedKml}" rowKey="#{oneBoundaryFile.id}">
+													<p:column headerText="File name">
+														<h:outputText value="#{oneBoundaryFile.originalFileName}" />
+													</p:column>
+													<p:ajax event="rowSelect" listener="#{locationBean.onKmlRowSelect}" update="@form:tabView:mapPanel" />
+													<p:column headerText="Date">
+														<h:outputText value="#{oneBoundaryFile.uploadDate}">
+															<f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
+														</h:outputText>
+													</p:column>
+													<p:column headerText="Status">
+														<h:outputText value="#{oneBoundaryFile.status}" />
+													</p:column>
+													<p:column headerText="Active">
+														<h:outputText value="#{oneBoundaryFile.active}" />
+													</p:column>
+												</p:dataTable>
 											</h:panelGrid>
 										</h:panelGrid>
 

@@ -21,6 +21,7 @@ import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.NodeUnselectEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.MarkerDragEvent;
 import org.primefaces.event.map.StateChangeEvent;
 import org.primefaces.model.TreeNode;
@@ -177,8 +178,8 @@ public class LocationBean {
 
             try {
                 Location location = document.getLocation();
-                LocationBoundaryFile activeLocationBoundaryFile = getActiveLocationBoundaryFile(location);
-                createMarkerAndKmlBoundary(location, activeLocationBoundaryFile);
+                selectedKml = getActiveLocationBoundaryFile(location);
+                createMarkerAndKmlBoundary(location, selectedKml);
                 List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) nodeSelected.getData()).getLocation().getLocationType().getId());
                 createButtonsAndMenus(locationTypes, document.getLocation());
             } catch (ApplicationException e) {
@@ -545,12 +546,16 @@ public class LocationBean {
 
     public void setSelectedKml(LocationBoundaryFile selectedKml) {
         this.selectedKml = selectedKml;
+
+    }
+
+    public void onKmlRowSelect(SelectEvent event) {
+        logger.info("onKmlRowSelect : updating Boundary layer");
         Object data = selectedNode.getData();
         if (data instanceof Document) {
             Document document = ((Document) data);
             Location selectedLocation = document.getLocation();
             createMarkerAndKmlBoundary(selectedLocation, selectedKml);
         }
-        
     }
 }
