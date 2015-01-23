@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -42,6 +44,8 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
     private AppKeyService appKeyService;
     @Autowired
     private LocationService locationService;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -96,11 +100,13 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
     private void updatePopulationDataForLocation(Document doc, Long locationId) {
         try {
             NodeList dataList = doc.getElementsByTagName("SimpleData");
+            logger.info("Got SImple Data {}", dataList.getLength());
             LocationDto location = locationService.getLocationById(locationId);
             for (int temp = 0; temp < dataList.getLength(); temp++) {
                 Node nNode = dataList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element node = (Element) nNode;
+                    logger.info(node.getAttribute("name") + " = " + node.getTextContent());
                     if (node.getAttribute("name").equals("T_NO_HH")) {
                         location.setTotalNumberOfHouses((long) Double.parseDouble(node.getTextContent()));
                     }
@@ -128,8 +134,9 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
 
                 }
             }
-
-            locationService.saveLocation(location);
+            logger.info("Saving location : {}", location);
+            location = locationService.saveLocation(location);
+            logger.info("Saved location : {}", location);
         } catch (Exception ex) {
             logError("unable to update location data", ex);
         }

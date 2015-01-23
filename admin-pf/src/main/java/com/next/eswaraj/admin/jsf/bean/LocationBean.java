@@ -305,6 +305,18 @@ public class LocationBean {
         }
     }
 
+    public void refreshLocation() {
+        System.out.println("Refresh Location " + selectedNode.getData());
+        Document document = (Document) selectedNode.getData();
+        try {
+            System.out.println("LocationType " + document.getLocation().getLocationType());
+            Location location = adminService.getLocationById(document.getLocation().getId());
+            document.setLocation(location);
+        } catch (ApplicationException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void disableSaveCancelButtons(boolean disabled) {
         CommandButton saveLocationButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:saveLocation");
         CommandButton canceButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:cancel");

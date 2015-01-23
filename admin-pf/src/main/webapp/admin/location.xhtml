@@ -227,9 +227,15 @@
 									<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{locationBean.cancel}"
 										styleClass="ui-priority-primary">
 									</p:commandButton>
+                                    <p:commandButton id="refreshLocation" value="Refresh location" update="@form" actionListener="#{locationBean.refreshLocation}"
+                                        styleClass="ui-priority-primary">
+                                    </p:commandButton>
 									<p:blockUI block="@form" trigger="saveLocation">Saving<br />
 										<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 									</p:blockUI>
+                                    <p:blockUI block="@form" trigger="refreshLocation">Loading<br />
+                                        <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                                    </p:blockUI>
 
 								</h:panelGrid>
 
