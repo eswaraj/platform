@@ -178,8 +178,7 @@ public class LocationBean {
 
             try {
                 Location location = document.getLocation();
-                selectedKml = getActiveLocationBoundaryFile(location);
-                createMarkerAndKmlBoundary(location, selectedKml);
+                refreshKmls(location);
                 List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) nodeSelected.getData()).getLocation().getLocationType().getId());
                 createButtonsAndMenus(locationTypes, document.getLocation());
             } catch (ApplicationException e) {
@@ -198,6 +197,11 @@ public class LocationBean {
             disableSaveCancelButtons(true);
             System.out.println("Done");
         }
+    }
+
+    private void refreshKmls(Location location) throws ApplicationException {
+        selectedKml = getActiveLocationBoundaryFile(location);
+        createMarkerAndKmlBoundary(location, selectedKml);
     }
 
     private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
@@ -312,6 +316,7 @@ public class LocationBean {
             System.out.println("LocationType " + document.getLocation().getLocationType());
             Location location = adminService.getLocationById(document.getLocation().getId());
             document.setLocation(location);
+            refreshKmls(location);
         } catch (ApplicationException e) {
             e.printStackTrace();
         }
