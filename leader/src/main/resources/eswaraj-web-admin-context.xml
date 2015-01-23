@@ -15,7 +15,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.eswaraj.queue.service.aws.impl" />
 	<neo4j:repositories base-package="com.next.social.team.task" />
-    <bean class="com.eswaraj.core.service.impl.LocalFileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
+    <bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
     </bean>
     
     <bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
