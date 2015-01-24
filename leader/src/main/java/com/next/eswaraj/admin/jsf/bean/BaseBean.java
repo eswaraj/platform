@@ -3,7 +3,12 @@ package com.next.eswaraj.admin.jsf.bean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BaseBean {
+
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected void sendInfoMessage(String summary, String detail) {
         FacesMessage faceMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);

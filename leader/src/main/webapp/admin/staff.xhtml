@@ -36,7 +36,7 @@ body {
 						<p:outputLabel value="Search Person" />
 						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
 							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
-							converter="#{personJsfConvertor}" forceSelection="true">
+							converter="#{personJsfConvertor}">
 							<p:ajax event="itemSelect" update="@this" />
 							<p:column>
 								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
@@ -78,9 +78,9 @@ body {
                 <p:commandButton value="Add Staff" id="addToStaff" ajax="true" process="@this:addToStaff" 
                   rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
                 <p:commandButton value="Remove Staff" id="removeStaff" ajax="true"
-                  rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.removeSelectePersonAdminStaff}" update="@form" />
+                  rendered="#{staffBean.showRemoveStaffButton}" actionListener="#{staffBean.removeSelectePersonAdminStaff}" update="@form" />
                 <p:commandButton value="Cancel" id="cancel" ajax="true" process="@this:cancel" 
-                  rendered="#{staffBean.showCreateStaffButton, cancel}" actionListener="#{staffBean.cancel}" update="@form" />
+                  actionListener="#{staffBean.cancel}" update="@form" />
                         <p:blockUI block="@form" trigger="removeStaff, addToStaff">Updating...<br />
                             <p:graphicImage width="80" value="./images/ajax-loader.gif" />
                         </p:blockUI>

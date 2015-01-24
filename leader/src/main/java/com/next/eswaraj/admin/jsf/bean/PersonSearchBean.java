@@ -39,6 +39,12 @@ public class PersonSearchBean extends BaseBean {
 
     public List<Person> searchPerson(String query) {
         try {
+            if (query.contains(" ")) {
+                // Somehow JSF calling this method after selecting an item, so to avoid that doing this check
+                // will look for solution later
+                logger.info("Not running Search Query");
+                return personSearchResults;
+            }
             personSearchResults = adminService.searchPersonByName(query);
             return personSearchResults;
         } catch (ApplicationException e) {
