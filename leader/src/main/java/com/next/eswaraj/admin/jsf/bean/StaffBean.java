@@ -50,12 +50,10 @@ public class StaffBean extends BaseBean {
 
     private boolean showList = true;
 
-    private boolean showPersonDetail = true;
-
-
     @PostConstruct
     public void init() {
         try {
+            personSearchBean.setSelectedPerson(null);
             HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
             userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
@@ -79,6 +77,7 @@ public class StaffBean extends BaseBean {
         try {
             adminService.savePoliticalBodyAdminStaff(selectedPoliticalBodyAdmin, selectedPerson, "staff");
             refreshStaffList();
+            personSearchBean.setSelectedPerson(null);
         } catch (ApplicationException e) {
             sendErrorMessage("Error : Unable to save Staff", e.getMessage());
         }
@@ -139,10 +138,6 @@ public class StaffBean extends BaseBean {
 
     public boolean isShowPersonDetail() {
         return personSearchBean.getSelectedPerson() != null;
-    }
-
-    public void setShowPersonDetail(boolean showPersonDetail) {
-        this.showPersonDetail = showPersonDetail;
     }
 
 }
