@@ -39,11 +39,23 @@ body {
 							itemValue="#{onePerson}" converter="#{personJsfConvertor}">
 							<p:ajax event="itemSelect" update="@form" />
 							<p:column>
-								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
+								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:60px;" />
 							</p:column>
 
 							<p:column>
-								<h:outputText value="#{onePerson.name}" />
+							     <p:gridPanel columns="4">
+							     <h:outputText value="Name" />
+							     <h:outputText value="#{onePerson.name}" />
+                                 <h:outputText value="Email" />
+                                 <h:outputText value="#{onePerson.email}" />
+                                 <h:outputText value="Gender" />
+                                 <h:outputText value="#{onePerson.gender}" />
+                                 <h:outputText value="Date Of Birth" />
+                                 <h:outputText value="#{personSearchBean.selectedPerson.dob}">
+                                    <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                </h:outputText>
+							     </p:gridPanel>
+								
 							</p:column>
 						</p:autoComplete>
 						<h:panelGrid columns="2" cellpadding="5" rendered="#{staffBean.showPersonDetail}">
