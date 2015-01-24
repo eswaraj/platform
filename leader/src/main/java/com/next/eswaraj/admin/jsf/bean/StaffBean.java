@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.queue.service.QueueService;
@@ -48,6 +50,8 @@ public class StaffBean extends BaseBean {
 
     private boolean showList = true;
 
+    private boolean showPersonDetail = true;
+
 
     @PostConstruct
     public void init() {
@@ -70,12 +74,26 @@ public class StaffBean extends BaseBean {
         showList = true;
     }
 
+    public void saveAdminStaff() {
+        Person selectedPerson = personSearchBean.getSelectedPerson();
+        try {
+            adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin, selectedPerson, "staff");
+            refreshStaffList();
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error : Unable to save Staff", e.getMessage());
+        }
+    }
     public void onSelectPoliticalBodyAdmin() {
         refreshStaffList();
 
     }
 
     private void refreshStaffList() {
+        try {
+            staff = adminService.getAdminStaffList(selectedPoliticalBodyAdmin.getId());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -117,6 +135,14 @@ public class StaffBean extends BaseBean {
 
     public void setSelectedStaff(PoliticalBodyAdminStaffSearchResult selectedStaff) {
         this.selectedStaff = selectedStaff;
+    }
+
+    public boolean isShowPersonDetail() {
+        return personSearchBean.getSelectedPerson() != null;
+    }
+
+    public void setShowPersonDetail(boolean showPersonDetail) {
+        this.showPersonDetail = showPersonDetail;
     }
 
 }

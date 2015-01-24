@@ -16,6 +16,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
@@ -146,5 +147,22 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Person> searchPersonByName(String name) throws ApplicationException {
         return personRepository.searchPersonByName("name:*" + name + "*");
+    }
+
+    @Override
+    public PoliticalBodyAdminStaff savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException {
+
+        PoliticalBodyAdminStaff dbPoliticalBodyAdminStaff = politicalBodyAdminStaffRepository.getStaffByPoliticalAdminAndPerson(politicalBodyAdmin, person);
+
+        if (dbPoliticalBodyAdminStaff == null) {
+            dbPoliticalBodyAdminStaff = new PoliticalBodyAdminStaff();
+            dbPoliticalBodyAdminStaff.setPoliticalBodyAdmin(politicalBodyAdmin);
+            dbPoliticalBodyAdminStaff.setPerson(person);
+        }
+
+        dbPoliticalBodyAdminStaff.setPost(post);
+
+        dbPoliticalBodyAdminStaff = politicalBodyAdminStaffRepository.save(dbPoliticalBodyAdminStaff);
+        return dbPoliticalBodyAdminStaff;
     }
 }

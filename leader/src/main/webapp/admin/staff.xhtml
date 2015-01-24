@@ -38,7 +38,7 @@ body {
 						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
 							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
 							converter="#{personJsfConvertor}" forceSelection="true">
-							<p:ajax event="itemSelect" update="@this:formPanel" />
+							<p:ajax event="itemSelect" update="@this" />
 							<p:column>
 								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
 							</p:column>
@@ -47,38 +47,38 @@ body {
 								<h:outputText value="#{onePerson.name}" />
 							</p:column>
 						</p:autoComplete>
-						<h:panelGrid columns="2" cellpadding="5">
+						<h:panelGrid columns="2" cellpadding="5" rendered="#{!empty personSearchBean.selectedPerson}">
 							<h:panelGrid columns="4" cellpadding="5">
 								<p:outputLabel value="Name : " />
-								<h:outputText value="#{staffBean.selectedPerson.name}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.name}" />
 								<p:outputLabel value="Id : " />
-								<h:outputText value="#{staffBean.selectedPerson.id}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.id}" />
 								<p:outputLabel value="Gender : " />
-								<h:outputText value="#{staffBean.selectedPerson.gender}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.gender}" />
 								<p:outputLabel value="Date Of Birth : " />
-								<h:outputText value="#{staffBean.selectedPerson.dob}">
+								<h:outputText value="#{personSearchBean.selectedPerson.dob}">
 									<f:convertDateTime pattern="dd-MMM-yyyy" />
 								</h:outputText>
 								<p:outputLabel value="Email : " />
-								<h:outputText value="#{staffBean.selectedPerson.email}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.email}" />
 								<p:outputLabel value="LandLine 1 : " />
-								<h:outputText value="#{staffBean.selectedPerson.landlineNumber1}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.landlineNumber1}" />
 								<p:outputLabel value="LandLine 2 : " />
-								<h:outputText value="#{staffBean.selectedPerson.landlineNumber2}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.landlineNumber2}" />
 								<p:outputLabel value="Mobile 1 : " />
-								<h:outputText value="#{staffBean.selectedPerson.mobileNumber1}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.mobileNumber1}" />
 								<p:outputLabel value="Mobile 2 : " />
-								<h:outputText value="#{staffBean.selectedPerson.mobileNumber2}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.mobileNumber2}" />
 								<p:outputLabel value="Voter Id : " />
-								<h:outputText value="#{staffBean.selectedPerson.voterId}" />
+								<h:outputText value="#{personSearchBean.selectedPerson.voterId}" />
 							</h:panelGrid>
 
 							<h:panelGrid>
-								<p:graphicImage style="width:200px;" value="#{staffBean.selectedPerson.profilePhoto}" />
+								<p:graphicImage style="width:200px;" value="#{personSearchBean.selectedPerson.profilePhoto}" />
 							</h:panelGrid>
-
+                <p:commandButton value="Add to Staff" id="addToStaff" ajax="true" process="@this:addToStaff" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
 						</h:panelGrid>
-						<p:dataTable var="oneStaff" value="#{staffBean.staff}">
+						<p:dataTable var="oneStaff" value="#{staffBean.staff}" >
 							<p:column headerText="Id">
 								<h:outputText value="#{oneStaff.person.id}" />
 							</p:column>
