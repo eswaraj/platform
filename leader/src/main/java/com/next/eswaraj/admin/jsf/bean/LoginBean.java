@@ -61,10 +61,13 @@ public class LoginBean extends BaseBean {
 
         // Destroy beans first
         BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) applicationCtx.getAutowireCapableBeanFactory();
-        ((DefaultListableBeanFactory) beanFactory).destroySingleton("staffBean");
-        ((DefaultListableBeanFactory) beanFactory).destroySingleton("personSearchBean");
-        ((DefaultListableBeanFactory) beanFactory).destroySingleton("complaintsBean");
+        logger.info("Destroying beans  {} , {} , {} ", ((DefaultListableBeanFactory) beanFactory).getBean("staffBean"));
 
+        ((DefaultListableBeanFactory) beanFactory).destroyScopedBean("staffBean");
+        ((DefaultListableBeanFactory) beanFactory).destroyScopedBean("personSearchBean");
+        ((DefaultListableBeanFactory) beanFactory).destroyScopedBean("complaintsBean");
+
+        logger.info("Beans Destroyed  {} , {} , {} ", ((DefaultListableBeanFactory) beanFactory).getBean("staffBean"));
         refreshPage();
     }
 
