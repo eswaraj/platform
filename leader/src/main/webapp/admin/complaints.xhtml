@@ -32,7 +32,7 @@ body {
 						</p:selectOneMenu>
 						<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
 							<p:graphicImage width="80"
-								value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+								value="./images/ajax-loader.gif" />
 						</p:blockUI>
 						<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}">
 							<p:column headerText="Id">
@@ -66,7 +66,7 @@ body {
 								</p:commandLink>
 								<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
 									<p:graphicImage width="80"
-										value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+										value="./images/ajax-loader.gif" />
 								</p:blockUI>
 							</p:column>
 
@@ -113,11 +113,11 @@ body {
 								</p:commandButton>
 								<p:blockUI block="@form" trigger="cancel">Loading...<br />
 									<p:graphicImage width="80"
-										value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+                                        value="./images/ajax-loader.gif" />
 								</p:blockUI>
                                 <p:blockUI block="@form" trigger="save">Saving...<br />
                                     <p:graphicImage width="80"
-                                        value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+                                        value="./images/ajax-loader.gif" />
                                 </p:blockUI>
 							</p:panelGrid>
 
