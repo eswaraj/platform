@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
-import com.next.eswaraj.admin.jsf.bean.ComplaintsBean;
+import com.next.eswaraj.admin.jsf.bean.LoginBean;
 
 @Component
 public class PoliticalBodyAdminJsfConvertor implements Converter {
 
     @Autowired
-    private ComplaintsBean complaintsBean;
+    private LoginBean loginBean;
 
     public PoliticalBodyAdminJsfConvertor() {
     }
@@ -28,8 +28,8 @@ public class PoliticalBodyAdminJsfConvertor implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-                System.out.println("complaintsBean : " + complaintsBean);
-                List<PoliticalBodyAdmin> politicalBodyAdmins = complaintsBean.getUserPoliticalBodyAdmins();
+                System.out.println("complaintsBean : " + loginBean);
+                List<PoliticalBodyAdmin> politicalBodyAdmins = loginBean.getUserPoliticalBodyAdmins();
                 long id = Long.parseLong(value);
                 for (PoliticalBodyAdmin onePoliticalBodyAdmin : politicalBodyAdmins) {
                     if (onePoliticalBodyAdmin.getId().equals(id)) {

@@ -51,15 +51,14 @@ public class ComplaintsBean extends BaseBean {
     @Autowired
     private QueueService queueService;
 
+    @Autowired
+    private LoginBean loginBean;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private List<ComplaintSearchResultDto> complaints;
 
     private ComplaintSearchResult selectedComplaint;
-
-    private List<PoliticalBodyAdmin> userPoliticalBodyAdmins;
-    
-    private PoliticalBodyAdmin selectedPoliticalBodyAdmin;
 
     private boolean showList = true;
 
@@ -82,18 +81,11 @@ public class ComplaintsBean extends BaseBean {
     @PostConstruct
     public void init() {
         try {
-            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
-            userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
-
             List<Category> allCategories = adminService.getAllcategories();
             for (Category oneCategory : allCategories) {
                 categoryMap.put(oneCategory.getId(), oneCategory);
             }
-            if (userPoliticalBodyAdmins.size() == 1) {
-                selectedPoliticalBodyAdmin = userPoliticalBodyAdmins.get(0);
-                onSelectPoliticalBodyAdmin();
-            }
+            refreshComplaintList();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,6 +108,8 @@ public class ComplaintsBean extends BaseBean {
             }
 
             Complaint complaint = selectedComplaint.getComplaint();
+            PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
+
             if (comment != null && !comment.trim().equals("") && selectedPoliticalBodyAdmin != null) {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
                 UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
@@ -146,12 +140,9 @@ public class ComplaintsBean extends BaseBean {
         return complaints;
     }
 
-    public void onSelectPoliticalBodyAdmin() {
-        refreshComplaintList();
-
-    }
 
     private void refreshComplaintList() {
+        PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
         if (selectedPoliticalBodyAdmin == null) {
 
         } else {
@@ -194,7 +185,7 @@ public class ComplaintsBean extends BaseBean {
         showList = false;
         mapModel = new DefaultMapModel();
         LatLng coord1 = new LatLng(complaintSearchResult.getComplaint().getLattitude(), complaintSearchResult.getComplaint().getLongitude());
-
+        PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
         // Basic marker
         mapModel.addOverlay(new Marker(coord1, complaintSearchResult.getComplaint().getTitle()));
         if (complaintSearchResult.getComplaintPoliticalAdmin().getStatus() != null) {
@@ -231,22 +222,6 @@ public class ComplaintsBean extends BaseBean {
 
     public void setShowList(boolean showList) {
         this.showList = showList;
-    }
-
-    public List<PoliticalBodyAdmin> getUserPoliticalBodyAdmins() {
-        return userPoliticalBodyAdmins;
-    }
-
-    public void setUserPoliticalBodyAdmins(List<PoliticalBodyAdmin> userPoliticalBodyAdmins) {
-        this.userPoliticalBodyAdmins = userPoliticalBodyAdmins;
-    }
-
-    public PoliticalBodyAdmin getSelectedPoliticalBodyAdmin() {
-        return selectedPoliticalBodyAdmin;
-    }
-
-    public void setSelectedPoliticalBodyAdmin(PoliticalBodyAdmin selectedPoliticalBodyAdmin) {
-        this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
     }
 
     public MapModel getMapModel() {

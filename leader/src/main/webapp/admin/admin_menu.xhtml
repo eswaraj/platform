@@ -73,7 +73,6 @@ body {
 			<f:facet name="options">
 				<p:selectOneMenu id="politicalBodyAdminMenu" converter="#{politicalBodyAdminJsfConvertor}"
 					value="#{loginBean.selectedPoliticalBodyAdmin}">
-					<f:selectItem itemLabel="Select One" itemValue="" />
 					<f:selectItems value="#{loginBean.userPoliticalBodyAdmins}" var="oneReult"
 						itemLabel="#{oneReult.politicalBodyType.name}" itemValue="#{oneReult}" />
 					<p:ajax event="valueChange" listener="#{loginBean.onSelectPoliticalBodyAdmin}" update="@form" />

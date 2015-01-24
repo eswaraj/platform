@@ -43,7 +43,7 @@ body {
 							</p:column>
 
 							<p:column>
-							     <p:gridPanel columns="4">
+							     <p:panelgrid columns="4">
 							     <h:outputText value="Name" />
 							     <h:outputText value="#{onePerson.name}" />
                                  <h:outputText value="Email" />
@@ -54,11 +54,12 @@ body {
                                  <h:outputText value="#{personSearchBean.selectedPerson.dob}">
                                     <f:convertDateTime pattern="dd-MMM-yyyy" />
                                 </h:outputText>
-							     </p:gridPanel>
+							     </p:panelgrid>
 								
 							</p:column>
 						</p:autoComplete>
-						<h:panelGrid columns="2" cellpadding="5" rendered="#{staffBean.showPersonDetail}">
+						<p:outputPanel id="listView" rendered="#{staffBean.showPersonDetail}">
+						<h:panelGrid columns="2" cellpadding="5">
 							<h:panelGrid columns="4" cellpadding="5">
 								<p:outputLabel value="Name : " />
 								<h:outputText value="#{personSearchBean.selectedPerson.name}" />
@@ -101,6 +102,7 @@ body {
 								<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 							</p:blockUI>
 						</h:panelGrid>
+						</p:outputPanel>
 
 						<p:dataTable var="oneStaff" value="#{staffBean.staff}">
 							<p:column headerText="Id">

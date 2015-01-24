@@ -22,18 +22,6 @@ body {
 			<p:panel id="mainPanel" header="Complaints">
 				<p:panelGrid columns="2">
 					<p:outputPanel id="listView" rendered="#{complaintsBean.showList}">
-						<p:selectOneMenu id="politicalBodyAdmin" converter="#{politicalBodyAdminJsfConvertor}"
-							value="#{complaintsBean.selectedPoliticalBodyAdmin}">
-							<f:selectItem itemLabel="Select One" itemValue="" />
-							<f:selectItems value="#{complaintsBean.userPoliticalBodyAdmins}" var="oneReult"
-								itemLabel="#{oneReult.politicalBodyType.name}" itemValue="#{oneReult}" />
-							<p:ajax event="valueChange" listener="#{complaintsBean.onSelectPoliticalBodyAdmin}" update="@form" />
-
-						</p:selectOneMenu>
-						<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
-							<p:graphicImage width="80"
-								value="./images/ajax-loader.gif" />
-						</p:blockUI>
 						<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}">
 							<p:column headerText="Id">
 								<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
