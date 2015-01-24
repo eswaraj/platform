@@ -35,8 +35,8 @@ body {
 						</p:blockUI>
 						<p:outputLabel value="Search Person" />
 						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
-							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
-							converter="#{personJsfConvertor}">
+							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
+							itemValue="#{onePerson}" converter="#{personJsfConvertor}">
 							<p:ajax event="itemSelect" update="@form" />
 							<p:column>
 								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
@@ -75,18 +75,22 @@ body {
 							<h:panelGrid>
 								<p:graphicImage style="width:200px;" value="#{personSearchBean.selectedPerson.profilePhoto}" />
 							</h:panelGrid>
-                <p:commandButton value="Add Staff" id="addToStaff" ajax="true" process="@this:addToStaff" 
-                  rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
-                <p:commandButton value="Remove Staff" id="removeStaff" ajax="true"
-                  rendered="#{staffBean.showRemoveStaffButton}" actionListener="#{staffBean.removeSelectePersonAdminStaff}" update="@form" />
-                <p:commandButton value="Cancel" id="cancel" ajax="true" process="@this:cancel" 
-                  actionListener="#{staffBean.cancel}" update="@form" />
-                        <p:blockUI block="@form" trigger="removeStaff, addToStaff">Updating...<br />
-                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
-                        </p:blockUI>
 
 						</h:panelGrid>
-						<p:dataTable var="oneStaff" value="#{staffBean.staff}" >
+						<h:panelGrid columns="3">
+
+							<p:commandButton value="Add Staff" id="addToStaff" ajax="true" process="@this:addToStaff"
+								rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
+							<p:commandButton value="Remove Staff" id="removeStaff" ajax="true" rendered="#{staffBean.showRemoveStaffButton}"
+								actionListener="#{staffBean.removeSelectePersonAdminStaff}" update="@form" />
+							<p:commandButton value="Cancel" id="cancel" ajax="true" process="@this:cancel"
+								actionListener="#{staffBean.cancel}" update="@form" />
+							<p:blockUI block="@form" trigger="removeStaff, addToStaff">Updating...<br />
+								<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+							</p:blockUI>
+						</h:panelGrid>
+
+						<p:dataTable var="oneStaff" value="#{staffBean.staff}">
 							<p:column headerText="Id">
 								<h:outputText value="#{oneStaff.person.id}" />
 							</p:column>

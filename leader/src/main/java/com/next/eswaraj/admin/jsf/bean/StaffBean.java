@@ -104,10 +104,10 @@ public class StaffBean extends BaseBean {
         try {
             logger.info("Removing politicalBodyAdminStaff : {}", politicalBodyAdminStaff);
             adminService.removePoliticalBodyAdminStaff(politicalBodyAdminStaff);
-            refreshStaffList();
         } catch (ApplicationException e) {
             sendErrorMessage("Error : Unable to save Staff", e.getMessage());
         }
+        refreshStaffList();
     }
     public void onSelectPoliticalBodyAdmin() {
         refreshStaffList();
