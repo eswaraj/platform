@@ -15,12 +15,12 @@ import com.eswaraj.domain.nodes.Person;
 import com.next.eswaraj.admin.jsf.bean.PersonSearchBean;
 
 @Component
-public class PersonConvertor implements Converter {
+public class PersonJsfConvertor implements Converter {
 
     @Autowired
     private PersonSearchBean personSearchBean;
 
-    public PersonConvertor() {
+    public PersonJsfConvertor() {
     }
 
 
