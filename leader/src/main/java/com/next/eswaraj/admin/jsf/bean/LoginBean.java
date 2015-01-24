@@ -63,7 +63,7 @@ public class LoginBean extends BaseBean {
         while (paramNames.hasMoreElements()) {
             logger.info("param : " + paramNames.nextElement());
         }
-        request.getSession().removeAttribute("scopedTarget.loginBean");
+        request.getSession().removeAttribute("scopedTarget.staffBean");
         request.getSession().removeAttribute("scopedTarget.complaintsBean");
         refreshPage();
     }
