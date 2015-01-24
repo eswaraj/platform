@@ -13,8 +13,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.queue.service.QueueService;
@@ -35,6 +33,9 @@ public class StaffBean extends BaseBean {
     @Autowired
     private QueueService queueService;
 
+    @Autowired
+    private PersonSearchBean personSearchBean;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private List<PoliticalBodyAdminStaffSearchResult> staff;
@@ -44,10 +45,6 @@ public class StaffBean extends BaseBean {
     private List<PoliticalBodyAdmin> userPoliticalBodyAdmins;
     
     private PoliticalBodyAdmin selectedPoliticalBodyAdmin;
-
-    private Person selectedPerson;
-
-    private List<Person> personSearchResults;
 
     private boolean showList = true;
 
@@ -79,17 +76,6 @@ public class StaffBean extends BaseBean {
     }
 
     private void refreshStaffList() {
-
-    }
-
-    public List<Person> searchPerson(String query) {
-        try {
-            personSearchResults = adminService.searchPersonByName(query);
-            return personSearchResults;
-        } catch (ApplicationException e) {
-            e.printStackTrace();
-        }
-        return null;
 
     }
 
@@ -131,22 +117,6 @@ public class StaffBean extends BaseBean {
 
     public void setSelectedStaff(PoliticalBodyAdminStaffSearchResult selectedStaff) {
         this.selectedStaff = selectedStaff;
-    }
-
-    public Person getSelectedPerson() {
-        return selectedPerson;
-    }
-
-    public void setSelectedPerson(Person selectedPerson) {
-        this.selectedPerson = selectedPerson;
-    }
-
-    public List<Person> getPersonSearchResults() {
-        return personSearchResults;
-    }
-
-    public void setPersonSearchResults(List<Person> personSearchResults) {
-        this.personSearchResults = personSearchResults;
     }
 
 }
