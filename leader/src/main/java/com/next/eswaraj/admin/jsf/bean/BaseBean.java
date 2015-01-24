@@ -1,7 +1,10 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +37,33 @@ public class BaseBean {
             return false;
         }
         return true;
+    }
+
+    public void buildAndRedirect(String url) {
+        try {
+            HttpServletRequest httpServletRequest = getHttpServletRequest();
+            FacesContext.getCurrentInstance().getExternalContext().redirect(buildUrl(httpServletRequest, url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshPage() {
+        try {
+            HttpServletRequest httpServletRequest = getHttpServletRequest();
+            String url = httpServletRequest.getRequestURI();
+            FacesContext.getCurrentInstance().getExternalContext().redirect(buildUrl(httpServletRequest, url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String buildUrl(HttpServletRequest httpServletRequest, String url) {
+        return httpServletRequest.getContextPath() + url;
+    }
+
+    public static HttpServletRequest getHttpServletRequest() {
+        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 
 }

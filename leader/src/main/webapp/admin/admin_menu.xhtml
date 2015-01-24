@@ -1,5 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
 	<link rel="shortcut icon" href="https://s3.amazonaws.com/myaap/favicon.ico" />
 	<!-- 
 	<style type="text/css">
@@ -60,17 +60,31 @@ body {
 -->
 	<h:form>
 		<p:menubar>
-        <p:submenu label="Setup" icon="ui-icon-document">
-            <p:submenu label="New" icon="ui-icon-contact">
-                <p:menuitem value="Project" url="./terms.xhtml" />
-                <p:menuitem value="Other" url="#" />
-            </p:submenu>
-            <p:menuitem value="Staff" url="./staff.xhtml" />
-            <p:menuitem value="Complaints" url="./complaints.xhtml" />
-            <p:separator />
-            <p:menuitem value="Quit" url="#" />
-        </p:submenu>
-        <!-- 
+			<p:submenu label="Setup" icon="ui-icon-document">
+				<p:submenu label="New" icon="ui-icon-contact">
+					<p:menuitem value="Project" url="./terms.xhtml" />
+					<p:menuitem value="Other" url="#" />
+				</p:submenu>
+				<p:menuitem value="Staff" url="./staff.xhtml" />
+				<p:menuitem value="Complaints" url="./complaints.xhtml" />
+				<p:separator />
+				<p:menuitem value="Quit" url="#" />
+			</p:submenu>
+			<f:facet name="options">
+				<p:selectOneMenu id="politicalBodyAdminMenu" converter="#{politicalBodyAdminJsfConvertor}"
+					value="#{loginBean.selectedPoliticalBodyAdmin}">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItems value="#{loginBean.userPoliticalBodyAdmins}" var="oneReult"
+						itemLabel="#{oneReult.politicalBodyType.name}" itemValue="#{oneReult}" />
+					<p:ajax event="valueChange" listener="#{loginBean.onSelectPoliticalBodyAdmin}" update="@form" />
+
+				</p:selectOneMenu>
+				<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
+					<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+				</p:blockUI>
+			</f:facet>
+
+			<!-- 
         <p:submenu label="HashTags" icon="ui-icon-pencil">
             <p:menuitem value="Related HashTags" url="./related_hashtags.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
             <p:menuitem value="Top Users" url="./hashtag_user.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
@@ -107,8 +121,8 @@ body {
             <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
         </f:facet>
          -->
-    </p:menubar>
+		</p:menubar>
 	</h:form>
 
-	
+
 </ui:composition>

@@ -1,5 +1,6 @@
 package com.next.eswaraj.web.session;
 
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -53,4 +54,10 @@ public class SessionUtil {
     public UserDto getLoggedInUserFromSession(HttpServletRequest httpServletRequest) {
         return (UserDto) httpServletRequest.getSession().getAttribute(LOGGED_IN_USER_SESSION_PARAM);
     }
+
+    public UserDto getLoggedInUserFromSession() {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        return getLoggedInUserFromSession(httpServletRequest);
+    }
+
 }
