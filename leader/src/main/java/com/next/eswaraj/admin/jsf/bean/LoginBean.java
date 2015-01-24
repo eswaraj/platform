@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -65,15 +63,8 @@ public class LoginBean extends BaseBean {
         while (paramNames.hasMoreElements()) {
             logger.info("param : " + paramNames.nextElement());
         }
-        // Destroy beans first
-        BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) applicationCtx.getAutowireCapableBeanFactory();
-        logger.info("Destroying beans  {} , {} , {} ", ((DefaultListableBeanFactory) beanFactory).getBean("staffBean"));
-
-        ((DefaultListableBeanFactory) beanFactory).destroyScopedBean("staffBean");
-        ((DefaultListableBeanFactory) beanFactory).destroyScopedBean("personSearchBean");
-        ((DefaultListableBeanFactory) beanFactory).destroyScopedBean("complaintsBean");
-
-        logger.info("Beans Destroyed  {} , {} , {} ", ((DefaultListableBeanFactory) beanFactory).getBean("staffBean"));
+        request.getSession().removeAttribute("scopedTarget.loginBean");
+        request.getSession().removeAttribute("scopedTarget.complaintsBean");
         refreshPage();
     }
 
