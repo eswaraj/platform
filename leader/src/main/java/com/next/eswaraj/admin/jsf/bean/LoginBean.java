@@ -1,8 +1,10 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,7 @@ public class LoginBean extends BaseBean {
 
     @Autowired
     private ApplicationContext applicationCtx;
-
+    
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -58,7 +60,11 @@ public class LoginBean extends BaseBean {
     }
 
     public void onSelectPoliticalBodyAdmin() {
-
+        HttpServletRequest request = getHttpServletRequest();
+        Enumeration<String> paramNames = request.getSession().getAttributeNames();
+        while (paramNames.hasMoreElements()) {
+            logger.info("param : " + paramNames.nextElement());
+        }
         // Destroy beans first
         BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) applicationCtx.getAutowireCapableBeanFactory();
         logger.info("Destroying beans  {} , {} , {} ", ((DefaultListableBeanFactory) beanFactory).getBean("staffBean"));
