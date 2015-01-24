@@ -102,6 +102,7 @@ public class StaffBean extends BaseBean {
 
     private void removeAdminStaff(PoliticalBodyAdminStaff politicalBodyAdminStaff) {
         try {
+            logger.info("Removing politicalBodyAdminStaff : {}", politicalBodyAdminStaff);
             adminService.removePoliticalBodyAdminStaff(politicalBodyAdminStaff);
             refreshStaffList();
         } catch (ApplicationException e) {

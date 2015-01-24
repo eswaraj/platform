@@ -37,7 +37,7 @@ body {
 						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
 							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
 							converter="#{personJsfConvertor}">
-							<p:ajax event="itemSelect" update="@this" />
+							<p:ajax event="itemSelect" update="@form" />
 							<p:column>
 								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
 							</p:column>
@@ -103,9 +103,8 @@ body {
 										height="20" />
 									<f:setPropertyActionListener value="#{oneStaff}" target="#{staffBean.selectedStaff}" />
 								</p:commandLink>
-								<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
-									<p:graphicImage width="80"
-										value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+								<p:blockUI block="@form" trigger="updateAndView">Deleting...<br />
+									<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 								</p:blockUI>
 							</p:column>
 						</p:dataTable>

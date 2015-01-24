@@ -176,7 +176,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public PoliticalBodyAdminStaff removePoliticalBodyAdminStaff(PoliticalBodyAdminStaff politicalBodyAdminStaff) throws ApplicationException {
-        politicalBodyAdminStaffRepository.delete(politicalBodyAdminStaff);
+        politicalBodyAdminStaffRepository.delete(politicalBodyAdminStaff.getId());
         return politicalBodyAdminStaff;
     }
 }
