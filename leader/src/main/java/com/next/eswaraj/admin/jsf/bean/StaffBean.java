@@ -3,8 +3,6 @@ package com.next.eswaraj.admin.jsf.bean;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,6 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.queue.service.QueueService;
-import com.eswaraj.web.dto.UserDto;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -37,6 +34,9 @@ public class StaffBean extends BaseBean {
     private QueueService queueService;
 
     @Autowired
+    private LoginBean loginBean;
+
+    @Autowired
     private PersonSearchBean personSearchBean;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -45,24 +45,13 @@ public class StaffBean extends BaseBean {
 
     private PoliticalBodyAdminStaffSearchResult selectedStaff;
 
-    private List<PoliticalBodyAdmin> userPoliticalBodyAdmins;
-    
-    private PoliticalBodyAdmin selectedPoliticalBodyAdmin;
-
     private boolean showList = true;
 
     @PostConstruct
     public void init() {
         try {
             personSearchBean.setSelectedPerson(null);
-            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
-            userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(userDto.getId());
-
-            if (userPoliticalBodyAdmins.size() == 1) {
-                selectedPoliticalBodyAdmin = userPoliticalBodyAdmins.get(0);
-                onSelectPoliticalBodyAdmin();
-            }
+            refreshStaffList();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,7 +64,9 @@ public class StaffBean extends BaseBean {
 
     public void saveAdminStaff() {
         Person selectedPerson = personSearchBean.getSelectedPerson();
+        PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
         try {
+
             if (selectedPerson.getId().equals(selectedPoliticalBodyAdmin.getPerson().getId())) {
                 sendErrorMessage("Error", "You can not add your self as Staff");
             }
@@ -109,13 +100,10 @@ public class StaffBean extends BaseBean {
         }
         refreshStaffList();
     }
-    public void onSelectPoliticalBodyAdmin() {
-        refreshStaffList();
-
-    }
 
     private void refreshStaffList() {
         try {
+            PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
             staff = adminService.getAdminStaffList(selectedPoliticalBodyAdmin.getId());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -129,22 +117,6 @@ public class StaffBean extends BaseBean {
 
     public void setShowList(boolean showList) {
         this.showList = showList;
-    }
-
-    public List<PoliticalBodyAdmin> getUserPoliticalBodyAdmins() {
-        return userPoliticalBodyAdmins;
-    }
-
-    public void setUserPoliticalBodyAdmins(List<PoliticalBodyAdmin> userPoliticalBodyAdmins) {
-        this.userPoliticalBodyAdmins = userPoliticalBodyAdmins;
-    }
-
-    public PoliticalBodyAdmin getSelectedPoliticalBodyAdmin() {
-        return selectedPoliticalBodyAdmin;
-    }
-
-    public void setSelectedPoliticalBodyAdmin(PoliticalBodyAdmin selectedPoliticalBodyAdmin) {
-        this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
     }
 
     public List<PoliticalBodyAdminStaffSearchResult> getStaff() {
@@ -178,7 +150,7 @@ public class StaffBean extends BaseBean {
     }
 
     public boolean isShowCreateStaffButton() {
-        if (personSearchBean.getSelectedPerson() == null || selectedPoliticalBodyAdmin == null) {
+        if (personSearchBean.getSelectedPerson() == null || loginBean.getSelectedPoliticalBodyAdmin() == null) {
             return false;
         }
         if (getStaffForPerson(personSearchBean.getSelectedPerson()) == null) {

@@ -22,17 +22,6 @@ body {
 			<p:panel id="mainPanel" header="staff">
 				<p:panelGrid columns="2">
 					<p:outputPanel id="listView" rendered="#{staffBean.showList}">
-						<p:selectOneMenu id="politicalBodyAdmin" converter="#{politicalBodyAdminJsfConvertor}"
-							value="#{staffBean.selectedPoliticalBodyAdmin}">
-							<f:selectItem itemLabel="Select One" itemValue="" />
-							<f:selectItems value="#{staffBean.userPoliticalBodyAdmins}" var="oneReult"
-								itemLabel="#{oneReult.politicalBodyType.name}" itemValue="#{oneReult}" />
-							<p:ajax event="valueChange" listener="#{staffBean.onSelectPoliticalBodyAdmin}" update="@form" />
-
-						</p:selectOneMenu>
-						<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
-							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
-						</p:blockUI>
 						<p:outputLabel value="Search Person" />
 						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
 							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
