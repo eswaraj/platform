@@ -7,6 +7,9 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -32,6 +35,9 @@ public class LoginBean extends BaseBean {
 
     private UserDto user;
 
+    @Autowired
+    private ApplicationContext applicationCtx;
+
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -52,6 +58,13 @@ public class LoginBean extends BaseBean {
     }
 
     public void onSelectPoliticalBodyAdmin() {
+
+        // Destroy beans first
+        BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) applicationCtx.getAutowireCapableBeanFactory();
+        ((DefaultListableBeanFactory) beanFactory).destroySingleton("staffBean");
+        ((DefaultListableBeanFactory) beanFactory).destroySingleton("personSearchBean");
+        ((DefaultListableBeanFactory) beanFactory).destroySingleton("complaintsBean");
+
         refreshPage();
     }
 

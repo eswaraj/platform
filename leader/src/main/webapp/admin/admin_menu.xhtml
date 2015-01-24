@@ -79,7 +79,7 @@ body {
 					<p:ajax event="valueChange" listener="#{loginBean.onSelectPoliticalBodyAdmin}" update="@form" />
 
 				</p:selectOneMenu>
-				<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
+				<p:blockUI block="@form" trigger="politicalBodyAdminMenu">Loading...<br />
 					<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 				</p:blockUI>
 			</f:facet>
