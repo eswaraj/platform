@@ -10,6 +10,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 
 public interface AdminService {
@@ -35,5 +36,9 @@ public interface AdminService {
     Comment saveComplaintComment(Complaint complaint, PoliticalBodyAdmin politicalBodyAdmin, Long personId, String text) throws ApplicationException;
 
     void markComplaintViewed(Long complaintId, Long politicalBodyAdminId) throws ApplicationException;
+    
+    List<PoliticalBodyAdminStaffSearchResult> getAdminStaffList(Long politicalBodyAdminId) throws ApplicationException;
+
+    List<Person> searchPersonByName(String name) throws ApplicationException;
 
 }

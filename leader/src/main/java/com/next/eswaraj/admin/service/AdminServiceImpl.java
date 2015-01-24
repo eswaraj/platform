@@ -17,6 +17,7 @@ import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
 import com.eswaraj.domain.repo.CategoryRepository;
@@ -27,6 +28,7 @@ import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PhotoRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminStaffRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -48,6 +50,8 @@ public class AdminServiceImpl implements AdminService {
     private ComplaintPoliticalAdminRepository complaintPoliticalAdminRepository;
     @Autowired
     private ComplaintCommentRepository complaintCommentRepository;
+    @Autowired
+    private PoliticalBodyAdminStaffRepository politicalBodyAdminStaffRepository;
 
     @Override
     public List<Complaint> getPoliticalAdminComplaints(Long politicalAdminId) throws ApplicationException {
@@ -133,4 +137,14 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public List<PoliticalBodyAdminStaffSearchResult> getAdminStaffList(Long politicalBodyAdminId) throws ApplicationException {
+        List<PoliticalBodyAdminStaffSearchResult> staff = politicalBodyAdminStaffRepository.searchPoliticalAdminStaffForAdmin(politicalBodyAdminId);
+        return staff;
+    }
+
+    @Override
+    public List<Person> searchPersonByName(String name) throws ApplicationException {
+        return personRepository.searchPersonByName("name:*" + name + "*");
+    }
 }

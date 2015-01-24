@@ -22,6 +22,8 @@ public class Photo extends BaseNode {
 	private String mediumUrl;
 	private String largeUrl;
 	
+    private String status;
+
 	public String getOrgUrl() {
 		return orgUrl;
 	}
@@ -64,9 +66,18 @@ public class Photo extends BaseNode {
 	public void setLargeUrl(String largeUrl) {
 		this.largeUrl = largeUrl;
 	}
-	@Override
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
     public String toString() {
         return "Photo [orgUrl=" + orgUrl + ", orgWidth=" + orgWidth + ", orgHeight=" + orgHeight + ", squareUrl=" + squareUrl + ", smallUrl=" + smallUrl + ", mediumUrl=" + mediumUrl + ", largeUrl="
-                + largeUrl + ", id=" + id + "]";
+                + largeUrl + ", status=" + status + ", id=" + id + "]";
     }
 }
