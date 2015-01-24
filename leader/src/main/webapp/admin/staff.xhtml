@@ -31,8 +31,7 @@ body {
 
 						</p:selectOneMenu>
 						<p:blockUI block="@form" trigger="politicalBodyAdmin">Loading...<br />
-							<p:graphicImage width="80"
-								value="https://d13yacurqjgara.cloudfront.net/users/3064/screenshots/652966/tacticat-loading.gif" />
+							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 						</p:blockUI>
 						<p:outputLabel value="Search Person" />
 						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
@@ -76,7 +75,16 @@ body {
 							<h:panelGrid>
 								<p:graphicImage style="width:200px;" value="#{personSearchBean.selectedPerson.profilePhoto}" />
 							</h:panelGrid>
-                <p:commandButton value="Add to Staff" id="addToStaff" ajax="true" process="@this:addToStaff" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
+                <p:commandButton value="Add Staff" id="addToStaff" ajax="true" process="@this:addToStaff" 
+                  rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
+                <p:commandButton value="Remove Staff" id="removeStaff" ajax="true"
+                  rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.removeSelectePersonAdminStaff}" update="@form" />
+                <p:commandButton value="Cancel" id="cancel" ajax="true" process="@this:cancel" 
+                  rendered="#{staffBean.showCreateStaffButton, cancel}" actionListener="#{staffBean.cancel}" update="@form" />
+                        <p:blockUI block="@form" trigger="removeStaff, addToStaff">Updating...<br />
+                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                        </p:blockUI>
+
 						</h:panelGrid>
 						<p:dataTable var="oneStaff" value="#{staffBean.staff}" >
 							<p:column headerText="Id">

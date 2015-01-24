@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.UserDto;
@@ -69,15 +70,40 @@ public class StaffBean extends BaseBean {
     }
 
     public void cancel() {
-        showList = true;
+        personSearchBean.setSelectedPerson(null);
     }
 
     public void saveAdminStaff() {
         Person selectedPerson = personSearchBean.getSelectedPerson();
         try {
-            adminService.savePoliticalBodyAdminStaff(selectedPoliticalBodyAdmin, selectedPerson, "staff");
+            if (selectedPerson.getId().equals(selectedPoliticalBodyAdmin.getPerson().getId())) {
+                sendErrorMessage("Error", "You can not add your self as Staff");
+            }
+            if (isValidInput()) {
+                adminService.savePoliticalBodyAdminStaff(selectedPoliticalBodyAdmin, selectedPerson, "staff");
+                refreshStaffList();
+                personSearchBean.setSelectedPerson(null);
+            }
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error : Unable to save Staff", e.getMessage());
+        }
+    }
+
+    public void removeAdminStaff() {
+        removeAdminStaff(selectedStaff.getPoliticalBodyAdminStaff());
+    }
+
+    public void removeSelectePersonAdminStaff() {
+        PoliticalBodyAdminStaffSearchResult staffTobeDeleted = getStaffForPerson(personSearchBean.getSelectedPerson());
+        if (staffTobeDeleted != null) {
+            removeAdminStaff(staffTobeDeleted.getPoliticalBodyAdminStaff());
+        }
+    }
+
+    private void removeAdminStaff(PoliticalBodyAdminStaff politicalBodyAdminStaff) {
+        try {
+            adminService.removePoliticalBodyAdminStaff(politicalBodyAdminStaff);
             refreshStaffList();
-            personSearchBean.setSelectedPerson(null);
         } catch (ApplicationException e) {
             sendErrorMessage("Error : Unable to save Staff", e.getMessage());
         }
@@ -133,11 +159,35 @@ public class StaffBean extends BaseBean {
     }
 
     public void setSelectedStaff(PoliticalBodyAdminStaffSearchResult selectedStaff) {
-        this.selectedStaff = selectedStaff;
+        removeAdminStaff(selectedStaff.getPoliticalBodyAdminStaff());
+        this.selectedStaff = null;
     }
 
     public boolean isShowPersonDetail() {
         return personSearchBean.getSelectedPerson() != null;
+    }
+
+    private PoliticalBodyAdminStaffSearchResult getStaffForPerson(Person person) {
+        for (PoliticalBodyAdminStaffSearchResult oneStaff : staff) {
+            if (oneStaff.getPerson().getId().equals(person.getId())) {
+                return oneStaff;
+            }
+        }
+        return null;
+    }
+
+    public boolean isShowCreateStaffButton() {
+        if (personSearchBean.getSelectedPerson() == null || selectedPoliticalBodyAdmin == null) {
+            return false;
+        }
+        if (getStaffForPerson(personSearchBean.getSelectedPerson()) == null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isShowRemoveStaffButton() {
+        return !isShowCreateStaffButton();
     }
 
 }

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
@@ -34,6 +37,7 @@ import com.eswaraj.domain.repo.PoliticalBodyAdminStaffRepository;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private ComplaintRepository complaintRepository;
@@ -146,6 +150,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Person> searchPersonByName(String name) throws ApplicationException {
+        logger.info("Searching person by Name : {}", name);
+        if (StringUtils.isEmpty(name)) {
+            return new ArrayList<Person>();
+        }
         return personRepository.searchPersonByName("name:*" + name + "*");
     }
 
@@ -164,5 +172,11 @@ public class AdminServiceImpl implements AdminService {
 
         dbPoliticalBodyAdminStaff = politicalBodyAdminStaffRepository.save(dbPoliticalBodyAdminStaff);
         return dbPoliticalBodyAdminStaff;
+    }
+
+    @Override
+    public PoliticalBodyAdminStaff removePoliticalBodyAdminStaff(PoliticalBodyAdminStaff politicalBodyAdminStaff) throws ApplicationException {
+        politicalBodyAdminStaffRepository.delete(politicalBodyAdminStaff);
+        return politicalBodyAdminStaff;
     }
 }

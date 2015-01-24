@@ -44,4 +44,6 @@ public interface AdminService {
 
     PoliticalBodyAdminStaff savePoliticalBodyAdminStaff(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException;
 
+    PoliticalBodyAdminStaff removePoliticalBodyAdminStaff(PoliticalBodyAdminStaff politicalBodyAdminStaff) throws ApplicationException;
+
 }
