@@ -150,7 +150,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public PoliticalBodyAdminStaff savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException {
+    public PoliticalBodyAdminStaff savePoliticalBodyAdminStaff(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException {
 
         PoliticalBodyAdminStaff dbPoliticalBodyAdminStaff = politicalBodyAdminStaffRepository.getStaffByPoliticalAdminAndPerson(politicalBodyAdmin, person);
 

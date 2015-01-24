@@ -77,7 +77,7 @@ public class StaffBean extends BaseBean {
     public void saveAdminStaff() {
         Person selectedPerson = personSearchBean.getSelectedPerson();
         try {
-            adminService.savePoliticalBodyAdmin(selectedPoliticalBodyAdmin, selectedPerson, "staff");
+            adminService.savePoliticalBodyAdminStaff(selectedPoliticalBodyAdmin, selectedPerson, "staff");
             refreshStaffList();
         } catch (ApplicationException e) {
             sendErrorMessage("Error : Unable to save Staff", e.getMessage());

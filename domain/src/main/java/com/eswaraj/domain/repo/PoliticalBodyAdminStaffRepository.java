@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
@@ -19,4 +20,9 @@ public interface PoliticalBodyAdminStaffRepository extends GraphRepository<Polit
     @Query("start politicalBodyAdmin=node({0})  match (person)<-[:IS]-(politicalBodyAdminStaff)-[:WORKING_FOR]->politicalBodyAdmin return politicalBodyAdminStaff, person")
     List<PoliticalBodyAdminStaffSearchResult> searchPoliticalAdminStaffForAdmin(Long politicalBodyAdminId);
 
+    @Query("start politicalBodyAdmin=node({0}), person=node({1})  match (person)<-[:IS]-(politicalBodyAdminStaff)-[:WORKING_FOR]->politicalBodyAdmin return politicalBodyAdminStaff")
+    PoliticalBodyAdminStaff getStaffByPoliticalAdminAndPerson(PoliticalBodyAdmin politicalBodyAdmin, Person person);
+
+    @Query("start politicalBodyAdmin=node({0}), person=node({1})  match (person)<-[:IS]-(politicalBodyAdminStaff)-[:WORKING_FOR]->politicalBodyAdmin return politicalBodyAdminStaff")
+    PoliticalBodyAdminStaff getStaffByPoliticalAdminAndPerson(Long politicalBodyAdminId, Long personId);
 }

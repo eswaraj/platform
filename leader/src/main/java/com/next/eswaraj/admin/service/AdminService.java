@@ -42,6 +42,6 @@ public interface AdminService {
 
     List<Person> searchPersonByName(String name) throws ApplicationException;
 
-    PoliticalBodyAdminStaff savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException;
+    PoliticalBodyAdminStaff savePoliticalBodyAdminStaff(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException;
 
 }
