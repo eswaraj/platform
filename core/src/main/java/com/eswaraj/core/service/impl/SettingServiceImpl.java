@@ -11,7 +11,7 @@ import com.eswaraj.domain.nodes.Setting;
 import com.eswaraj.domain.repo.SettingRepository;
 
 @Service
-public class SettingServiceImpl extends BaseService implements SettingService {
+public class SettingServiceImpl extends DbBaseService implements SettingService {
 
     private static final long serialVersionUID = 1L;
     @Autowired
