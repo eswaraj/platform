@@ -33,7 +33,10 @@ import com.eswaraj.cache.PoliticalAdminCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
+import com.eswaraj.core.service.SettingService;
 import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.domain.nodes.Setting;
+import com.eswaraj.domain.nodes.Setting.SettingNames;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
@@ -70,6 +73,9 @@ public class ComplaintController extends BaseController{
     private QueueService queueService;
     @Autowired
     private StormCacheAppServices stormCacheAppServices;
+
+    @Autowired
+    private SettingService settingService;
 
     @Autowired
     private ComplaintCache complaintCache;
@@ -236,7 +242,11 @@ public class ComplaintController extends BaseController{
         return stormCacheAppServices.getComment(commentSaveResponseDto.getId()).toString();
     }
 
-    private void updateRandomDelhiPoint(SaveComplaintRequestDto saveComplaintRequestDto) {
+    private void updateRandomDelhiPoint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
+        Setting setting = settingService.getSetting(SettingNames.FAKE_DELHI_POINTS.getName());
+        if (setting != null && setting.getValue().equalsIgnoreCase("false")) {
+            return;
+        }
         Double[][] delhiPoints = { { 77.04124994150143, 28.623132677360626 }, { 77.03290098437007, 28.62572366266242 }, { 77.02688134045275, 28.631229145737702 },
                 { 77.04084506670374, 28.62302782260635 }, { 77.0316069082104, 28.623910892538678 }, { 77.03226119037603, 28.622169846160872 }, { 77.03833192102502, 28.627098104023915 },
                 { 77.02911718817295, 28.62723331624312 }, { 77.03134915723099, 28.628478560676783 }, { 77.02709769991337, 28.623584337323965 }, { 77.05134874040998, 28.622902869899004 },
