@@ -46,5 +46,10 @@ public class PoliticalBodyAdminStaff extends BaseNode {
     public void setPost(String post) {
         this.post = post;
     }
+
+    @Override
+    public String toString() {
+        return "PoliticalBodyAdminStaff [politicalBodyAdmin=" + politicalBodyAdmin + ", person=" + person + ", post=" + post + "]";
+    }
 	
 }

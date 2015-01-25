@@ -3,6 +3,8 @@ package com.eswaraj.core.service.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
@@ -184,6 +186,17 @@ public class BaseService implements Serializable {
             facebookApp = facebookAppRepository.save(facebookApp);
         }
         return facebookApp;
+    }
+
+    public <DbType> List<DbType> convertToList(EndResult<DbType> dbTypeCollection) throws ApplicationException {
+        if (dbTypeCollection == null) {
+            return new ArrayList<DbType>();
+        }
+        List<DbType> webTypeList = new ArrayList<>();
+        for (DbType oneDbType : dbTypeCollection) {
+            webTypeList.add(oneDbType);
+        }
+        return webTypeList;
     }
 
 }

@@ -26,6 +26,7 @@ import com.eswaraj.core.convertors.PhotoConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.ComplaintService;
+import com.eswaraj.core.service.SettingService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
@@ -35,6 +36,8 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalAdminComplaintStatus;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.Setting;
+import com.eswaraj.domain.nodes.Setting.SettingNames;
 import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
 import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
@@ -81,6 +84,9 @@ import com.google.gson.JsonParser;
 public class ComplaintServiceImpl extends BaseService implements ComplaintService {
 	
     private static final long serialVersionUID = 1L;
+
+    @Autowired
+    private SettingService settingService;
     @Autowired
 	private ComplaintRepository complaintRepository;
     @Autowired
@@ -139,6 +145,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
 	@Override
 	public ComplaintDto saveComplaint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
+        Setting setting = settingService.getSetting(SettingNames.ALLOW_COMPLAINT.getName());
+        if (setting != null && setting.getValue().equalsIgnoreCase("false")) {
+            throw new ApplicationException("Complaint Creation is disabled");
+        }
+
         logger.info("Saving Complaint : {}", saveComplaintRequestDto);
 		Complaint complaint = complaintConvertor.convert(saveComplaintRequestDto);
         logger.info("Converted  Complaint : {}", complaint);
