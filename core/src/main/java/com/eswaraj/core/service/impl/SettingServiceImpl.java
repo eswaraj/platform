@@ -3,8 +3,6 @@ package com.eswaraj.core.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -20,20 +18,20 @@ public class SettingServiceImpl extends BaseService implements SettingService {
     private SettingRepository settingRepository;
 
     @Override
-    @CachePut(value = "settings", key = "setting.#setting.name")
+    // @CachePut(value = "settings")
     public Setting saveSetting(Setting setting) throws ApplicationException {
         setting = settingRepository.save(setting);
         return setting;
     }
 
     @Override
-    @Cacheable(value = "settings", key = "all.settings")
+    // @Cacheable(value = "settings", key = "all.settings")
     public List<Setting> getAllSettings() throws ApplicationException {
         return convertToList(settingRepository.findAll());
     }
 
     @Override
-    @Cacheable(value = "settings", key = "all.settings")
+    // @Cacheable(value = "settings", key = "setting.#setting.name")
     public Setting getSetting(String settingName) throws ApplicationException {
         List<Setting> allSettings = getAllSettings();
         for (Setting oneSetting : allSettings) {
