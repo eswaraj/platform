@@ -14,16 +14,27 @@ import com.eswaraj.domain.base.BaseNode;
 public class Setting extends BaseNode{
 
     public enum SettingNames {
-        ALLOW_COMPLAINT("allow.complaint"), FAKE_DELHI_POINTS("fake.location");
+        ALLOW_COMPLAINT("allow.complaint", "Setting to disbale complaint creation in the system, set value as False to disable"), FAKE_DELHI_POINTS("fake.location",
+                "Seting to enable Fake Delhi Points");
 
         private String name;
+        private String description;
 
-        SettingNames(String name) {
+        SettingNames(String name, String description) {
             this.name = name;
+            this.description = description;
         }
 
         public String getName() {
             return name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
     }
 	private String name;

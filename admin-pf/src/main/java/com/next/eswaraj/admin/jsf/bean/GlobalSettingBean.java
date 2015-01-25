@@ -1,6 +1,8 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.SettingService;
 import com.eswaraj.domain.nodes.Setting;
+import com.eswaraj.domain.nodes.Setting.SettingNames;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -32,6 +35,20 @@ public class GlobalSettingBean extends BaseBean {
     public void init() {
         try {
             settings = settingService.getAllSettings();
+            Map<String, Setting> settingMap = new HashMap<String, Setting>();
+            for (Setting oneSetting : settings) {
+                settingMap.put(oneSetting.getName(), oneSetting);
+            }
+            SettingNames[] settingNames = Setting.SettingNames.values();
+            for (SettingNames oneSettingName : settingNames) {
+                if (settingMap.get(oneSettingName.getName()) == null) {
+                    Setting setting = new Setting();
+                    setting.setName(oneSettingName.getName());
+                    setting.setType("Global");
+                    setting.setDescription(oneSettingName.getDescription());
+                    settings.add(setting);
+                }
+            }
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
         }

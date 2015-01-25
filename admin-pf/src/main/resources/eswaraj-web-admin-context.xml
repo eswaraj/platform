@@ -22,6 +22,10 @@
 	
 	<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
 	</bean>
+	
+    <bean class="com.eswaraj.core.service.impl.SettingServiceImpl" autowire-candidate="default" autowire="byName" id="settingService" name="settingService" scope="singleton">
+    </bean>
+		
     
     <bean id="propertyPlaceholderConfigurer"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
