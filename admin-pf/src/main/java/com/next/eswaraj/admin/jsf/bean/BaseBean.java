@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class BaseBean {
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
     protected void sendInfoMessage(String summary, String detail) {
         FacesMessage faceMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, faceMessage);

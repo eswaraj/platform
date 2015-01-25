@@ -38,30 +38,28 @@
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="golbal_settings_form" enctype="multipart/form-data">
-			<p:panel id="mainPanel" header="Political Parties">
+			<p:panel id="mainPanel" header="Settings">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-				<p:outputPanel id="listView" rendered="#{globalSettingBean.showList}">
-					<p:dataTable var="onePoliticalParty" value="#{globalSettingBean.settings}" editable="true" editMode="cell">
-						<p:column headerText="Id">
-							<h:outputText value="#{onePoliticalParty.id}" />
-						</p:column>
+				<p:dataTable var="onePoliticalParty" value="#{globalSettingBean.settings}" editable="true" editMode="cell">
+					<p:column headerText="Id">
+						<h:outputText value="#{onePoliticalParty.id}" />
+					</p:column>
 
-						<p:column headerText="Name">
-							<h:outputText value="#{onePoliticalParty.name}" />
-						</p:column>
-						<p:column headerText="Value">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{onePoliticalParty.value}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText value="#{onePoliticalParty.value}" style="width:96%" label="Value" />
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{onePoliticalParty.name}" />
+					</p:column>
+					<p:column headerText="Value">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{onePoliticalParty.value}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{onePoliticalParty.value}" style="width:96%" label="Value" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-					</p:dataTable>
-				</p:outputPanel>
+				</p:dataTable>
 			</p:panel>
 		</h:form>
 	</h:body>

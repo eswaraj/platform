@@ -6,8 +6,6 @@ import javax.annotation.PostConstruct;
 
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -29,8 +27,6 @@ public class GlobalSettingBean extends BaseBean {
     
     @Autowired
     private SettingService settingService;
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
     public void init() {
@@ -64,5 +60,13 @@ public class GlobalSettingBean extends BaseBean {
             sendErrorMessage("Error", "Unable to save Setting", e);
         }
 
+    }
+
+    public List<Setting> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(List<Setting> settings) {
+        this.settings = settings;
     }
 }
