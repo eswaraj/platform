@@ -46,6 +46,8 @@ public class GlobalSettingBean extends BaseBean {
                     setting.setName(oneSettingName.getName());
                     setting.setType("Global");
                     setting.setDescription(oneSettingName.getDescription());
+                    setting.setValue(oneSettingName.getDefaultValue());
+                    setting = settingService.saveSetting(setting);
                     settings.add(setting);
                 }
             }
