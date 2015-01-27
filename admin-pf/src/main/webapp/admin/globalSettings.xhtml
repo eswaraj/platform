@@ -41,6 +41,8 @@
 			<p:panel id="mainPanel" header="Settings">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:dataTable var="onePoliticalParty" value="#{globalSettingBean.settings}" editable="true" editMode="cell">
+				<p:ajax event="cellEdit" listener="#{globalSettingBean.onCellEdit}" update=":form:msgs" />
+ 
 					<p:column headerText="Id">
 						<h:outputText value="#{onePoliticalParty.id}" />
 					</p:column>
