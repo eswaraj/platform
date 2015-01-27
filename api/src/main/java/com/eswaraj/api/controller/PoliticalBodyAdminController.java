@@ -69,6 +69,17 @@ public class PoliticalBodyAdminController extends BaseController {
         return pbInfo;
     }
 
+    @RequestMapping(value = "/api/v0/leader/{politicalBodyAdminId}", method = RequestMethod.GET)
+    public @ResponseBody String getLeader(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String politicalBodyAdminId) throws ApplicationException {
+        // First Redis Operation
+        logger.info("politicalBodyAdminId = {}", politicalBodyAdminId);
+        // Second Redis operation
+        String pbRedisKey = appKeyService.getPoliticalBodyAdminObjectKey(politicalBodyAdminId);
+        logger.info("pbRedisKey = {}", pbRedisKey);
+        String pbInfo = stringRedisTemplate.opsForValue().get(pbRedisKey);
+        return pbInfo;
+    }
+
     @RequestMapping(value = "/api/v0/leader/staff", method = RequestMethod.POST)
     public @ResponseBody List<PoliticalBodyAdminStaffDto> saveLeaderStaff(HttpServletRequest httpServletRequest, ModelAndView mv,
             @RequestBody SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException {
