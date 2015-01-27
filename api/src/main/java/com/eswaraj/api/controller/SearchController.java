@@ -43,8 +43,8 @@ public class SearchController extends BaseController {
     @RequestMapping(value = "/api/v0/search", method = RequestMethod.GET)
     public @ResponseBody String sendComplaintViewedMessage(HttpServletRequest httpServletRequest) throws ApplicationException {
         String searchParam = httpServletRequest.getParameter("q");
-        if(StringUtils.isEmpty(searchParam)){
-            return "[]";//empty array
+        if (StringUtils.isEmpty(searchParam)) {
+            return "[]";// empty array
         }
         SortedSet<SearchResult> searchResults = new TreeSet<SearchController.SearchResult>(new Comparator<SearchResult>() {
 
@@ -77,9 +77,11 @@ public class SearchController extends BaseController {
 
     private void addPoliticalAdminSearchResult(SortedSet<SearchResult> searchResults, String searchParam) {
         try {
-            List<PoliticalBodyAdminSearchResult> politicalBodyAdminSearchResult = personService.searchPoliticalBodyAdminByName(searchParam);
-            for (PoliticalBodyAdminSearchResult oneLeaderSearchResult : politicalBodyAdminSearchResult) {
-                searchResults.add(new SearchResult(oneLeaderSearchResult));
+            if (settingService.isAllowPoliticalAdminSearch()) {
+                List<PoliticalBodyAdminSearchResult> politicalBodyAdminSearchResult = personService.searchPoliticalBodyAdminByName(searchParam);
+                for (PoliticalBodyAdminSearchResult oneLeaderSearchResult : politicalBodyAdminSearchResult) {
+                    searchResults.add(new SearchResult(oneLeaderSearchResult));
+                }
             }
         } catch (Exception ex) {
             logger.error("Unable to search location", ex);
