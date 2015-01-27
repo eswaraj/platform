@@ -39,12 +39,14 @@ import com.eswaraj.domain.nodes.FacebookApp;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.User;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.UserDevice;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 import com.eswaraj.domain.repo.PersonRepository;
+import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.UserDeviceRepository;
 import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.web.dto.DeviceDto;
@@ -87,6 +89,8 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private PoliticalBodyAdminRepository politicalBodyAdminRepository;
 
     private SimpleDateFormat facebookDobFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -442,5 +446,11 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         Pageable pageable = new PageRequest(page, size, Sort.Direction.ASC, "id");
         Page<Person> persons = personRepository.findAll(pageable);
         return personConvertor.convertBeanList(persons);
+    }
+
+    @Override
+    public List<PoliticalBodyAdminSearchResult> searchPoliticalBodyAdminByName(String text) throws ApplicationException {
+        System.out.println("Searching for Name : " + "name:*" + text + "*");
+        return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName("name:*" + text + "*"));
     }
 }

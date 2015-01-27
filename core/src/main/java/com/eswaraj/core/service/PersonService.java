@@ -3,6 +3,7 @@ package com.eswaraj.core.service;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
@@ -47,5 +48,7 @@ public interface PersonService {
     UserDto getUserByFacebookToken(String facebookTokenId) throws ApplicationException;
 
     List<PersonDto> getPersons(int page, int count) throws ApplicationException;
+
+    List<PoliticalBodyAdminSearchResult> searchPoliticalBodyAdminByName(String text) throws ApplicationException;
 
 }

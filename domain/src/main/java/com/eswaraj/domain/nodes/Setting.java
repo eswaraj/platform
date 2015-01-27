@@ -15,7 +15,7 @@ public class Setting extends BaseNode{
 
     public enum SettingNames {
         ALLOW_COMPLAINT("allow.complaint", "Setting to disbale complaint creation in the system, set value as False to disable", "true"), FAKE_DELHI_POINTS("fake.location",
-                "Setting to enable Fake Delhi Points", "false");
+                "Setting to enable Fake Delhi Points", "false"), ALLOW_POLITICAL_ADMIN_SEARCH("allow.political.admin.search", "Setting to enable search political Admin in search API", "false");
 
         private String name;
         private String description;
@@ -47,6 +47,7 @@ public class Setting extends BaseNode{
             this.defaultValue = defaultValue;
         }
     }
+
 	private String name;
 	private String description;
     private String value;

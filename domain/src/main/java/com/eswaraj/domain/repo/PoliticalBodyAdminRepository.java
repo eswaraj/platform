@@ -13,6 +13,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 
 public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalBodyAdmin>{
 	
@@ -45,5 +46,8 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
 
     @Query("start location=node({0}),politicalBodyType=node({1})  match (location)-[:BELONGS_TO]-(politicalBodyAdmin)-[:OF_TYPE]->(politicalBodyType) with politicalBodyAdmin, location,  politicalBodyType optional match (politicalBodyAdmin)-[:IS]-(person) with politicalBodyAdmin, location,  politicalBodyType, person optional match (party)-[:OF]-(politicalBodyAdmin) where (politicalBodyAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' or politicalBodyAdmin.__type__='PoliticalBodyAdmin' ) or politicalBodyAdmin.__type__='PoliticalBodyAdmin' return politicalBodyAdmin, politicalBodyType, location, person, party")
     EndResult<PoliticalBodyAdminExtended> getAllPoliticalAdminByLocationAndPoliticalBodyType(Long locationId, Long politicalBodyTypeId);
+
+    @Query("start person=node:PersonNameFt({0}) match (politicalBodyAdmin)-[:IS]-(person) with politicalBodyAdmin,  person  match (location)-[:BELONGS_TO]-(politicalBodyAdmin)-[:OF_TYPE]->(politicalBodyType) with politicalBodyAdmin, location,  politicalBodyType,person  match (party)-[:OF]-(politicalBodyAdmin) where (politicalBodyAdmin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin' or politicalBodyAdmin.__type__='PoliticalBodyAdmin' ) return politicalBodyAdmin, politicalBodyType, location, person, party limit 10")
+    EndResult<PoliticalBodyAdminSearchResult> searchPoliticalAdminByName(String searchname);
 
 }

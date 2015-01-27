@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.web.dto.BoundaryDto;
 import com.eswaraj.web.dto.GeoPointDto;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
@@ -22,8 +23,6 @@ public interface LocationService {
 	List<LocationDto> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
 	
     List<LocationDto> getAllParents(Long locationId) throws ApplicationException;
-
-    List<LocationDto> searchLocationByName(String name) throws ApplicationException;
 
     List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException;
 
@@ -66,5 +65,8 @@ public interface LocationService {
     void updateAllLocationUrls() throws ApplicationException;
 
     List<LocationBoundaryFileDto> GetLocationAllBoundaryFile(Long locationId) throws ApplicationException;
+
+    
+    List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException;
 
 }

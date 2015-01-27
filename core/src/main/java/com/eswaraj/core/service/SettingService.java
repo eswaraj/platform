@@ -12,4 +12,10 @@ public interface SettingService {
     List<Setting> getAllSettings() throws ApplicationException;
 
     Setting getSetting(String settingName) throws ApplicationException;
+
+    boolean isAllowComplaint() throws ApplicationException;
+
+    boolean isFakeLocation() throws ApplicationException;
+
+    boolean isAllowPoliticalAdminSearch() throws ApplicationException;
 }

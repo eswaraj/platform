@@ -38,6 +38,7 @@ import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
@@ -491,9 +492,9 @@ public class LocationServiceImpl extends BaseService implements LocationService 
     }
 
     @Override
-    public List<LocationDto> searchLocationByName(String name) throws ApplicationException {
-        Collection<Location> locations = locationRepository.searchLocationByName("name:*" + name + "*");
-        return locationConvertor.convertBeanList(locations);
+    public List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException {
+        System.out.println("Searching for Name : " + "name:*" + name + "*");
+        return convertToList(locationRepository.searchLocationByLocationName("name:*" + name + "*"));
     }
 
     @Override
