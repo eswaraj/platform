@@ -63,6 +63,8 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
         Map<String, Setting> settingMap;
         try {
             settingMap = settingCache.get("All");
+            logger.info("settingMap : {} ", settingMap);
+            logger.info("Getting  settingName: {} ", settingName);
             return settingMap.get(settingName);
         } catch (ExecutionException e) {
             throw new ApplicationException(e);
@@ -72,13 +74,16 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
 
     private boolean getBooleanResult(Setting.SettingNames settingName) throws ApplicationException {
         Setting setting = getSetting(settingName.getName());
-        if ("true".equalsIgnoreCase(setting.getValue())) {
-            logger.info("{} - true", settingName.getName());
-            return true;
-        }
-        if ("false".equalsIgnoreCase(setting.getValue())) {
-            logger.info("{} - false", settingName.getName());
-            return false;
+        logger.info("Setting = {}", setting);
+        if (setting != null) {
+            if ("true".equalsIgnoreCase(setting.getValue())) {
+                logger.info("{} - true", settingName.getName());
+                return true;
+            }
+            if ("false".equalsIgnoreCase(setting.getValue())) {
+                logger.info("{} - false", settingName.getName());
+                return false;
+            }
         }
         if ("true".equalsIgnoreCase(settingName.getDefaultValue())) {
             logger.info("Default {} - true", settingName.getName());

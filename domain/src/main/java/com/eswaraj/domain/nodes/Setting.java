@@ -85,4 +85,9 @@ public class Setting extends BaseNode{
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "Setting [name=" + name + ", description=" + description + ", value=" + value + ", type=" + type + "]";
+    }
+
 }
