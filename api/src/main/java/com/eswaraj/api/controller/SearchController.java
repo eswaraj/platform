@@ -40,7 +40,7 @@ public class SearchController extends BaseController {
 
     Gson gson = new Gson();
 
-    @RequestMapping(value = "/api/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v0/search", method = RequestMethod.GET)
     public @ResponseBody String sendComplaintViewedMessage(HttpServletRequest httpServletRequest) throws ApplicationException {
         String searchParam = httpServletRequest.getParameter("q");
         if(StringUtils.isEmpty(searchParam)){
