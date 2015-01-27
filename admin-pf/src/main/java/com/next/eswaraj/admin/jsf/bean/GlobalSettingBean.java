@@ -73,6 +73,8 @@ public class GlobalSettingBean extends BaseBean {
     public void onCellEdit(CellEditEvent event) {
         Setting setting = settings.get(event.getRowIndex());
         try {
+            logger.info("Saving Setting {} : {}", setting.getName(), setting.getValue());
+            logger.info("Old Value {} : new Value{}", event.getOldValue(), event.getNewValue());
             setting = settingService.saveSetting(setting);
             sendInfoMessage("Saved", "Setting Saved Succesfully");
         } catch (Exception e) {
