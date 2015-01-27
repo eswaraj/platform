@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -30,7 +29,7 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
     LoadingCache<String, Map<String, Setting>> settingCache = CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(30, TimeUnit.SECONDS).build(new CacheLoader<String, Map<String, Setting>>() {
         @Override
         public Map<String, Setting> load(String key) throws Exception {
-            EndResult<Setting> allSettings = settingRepository.findAll();
+            List<Setting> allSettings = settingRepository.getAllSettings();
             Map<String, Setting> settingMap = new HashMap<String, Setting>();
             for (Setting oneSetting : allSettings) {
                 settingMap.put(oneSetting.getName(), oneSetting);
