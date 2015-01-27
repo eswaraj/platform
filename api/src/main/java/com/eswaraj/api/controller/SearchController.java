@@ -102,6 +102,7 @@ public class SearchController extends BaseController {
             this.type = "Location";
             this.subType = locationSearchResult.getLocationType().getName();
             this.name = locationSearchResult.getLocation().getName();
+            this.image = locationSearchResult.getLocation().getMobileHeaderImageUrl();
         }
 
         public SearchResult(PoliticalBodyAdminSearchResult politicalBodyAdminSearchResult) {
