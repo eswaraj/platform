@@ -51,6 +51,9 @@ public class SearchController extends BaseController {
             @Override
             public int compare(SearchResult o1, SearchResult o2) {
                 // TODO Auto-generated method stub
+                if (o1.getcName().equals(o2.getcName())) {
+                    return -1;
+                }
                 return o1.getName().compareTo(o2.getName());
             }
         });
