@@ -25,6 +25,7 @@ import com.eswaraj.core.util.DateTimeUtil;
 import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
+import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -36,6 +37,7 @@ import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.ElectionTypeRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
@@ -87,6 +89,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private ElectionTypeRepository electionTypeRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -498,5 +503,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
+    @Override
+    public List<ElectionType> getAllElectionTypes() throws ApplicationException {
+        return convertToList(electionTypeRepository.findAll());
+    }
+
+    @Override
+    public ElectionType saveElectionType(ElectionType electionType) throws ApplicationException {
+        return electionTypeRepository.save(electionType);
+    }
 
 }

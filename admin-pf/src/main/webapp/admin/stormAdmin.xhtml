@@ -68,6 +68,10 @@
                         actionListener="#{stormAdminBean.reprocessAllCategories}" styleClass="ui-priority-primary"
                         process="@this:reprocessAllCategories">
                     </p:commandButton>
+                    <p:commandButton id="reprocessAllPoliticalAdmins" value="Reprocess All Political Admins" update="@form"
+                        actionListener="#{stormAdminBean.reprocessAllPoliticalAdmins}" styleClass="ui-priority-primary"
+                        process="@this:reprocessAllPoliticalAdmins">
+                    </p:commandButton>
 
 				</h:panelGrid>
 				<p:blockUI block="@form" trigger="@form:reprocessAllComplaints,@form:reprocessAllLocations,@form:reprocessAllPersons,@form:reprocessAllComments">LOADING<br />

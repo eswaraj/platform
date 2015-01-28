@@ -6,6 +6,7 @@ import java.util.List;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -73,4 +74,8 @@ public interface AdminService {
     Person getPersonById(Long personId) throws ApplicationException;
     
     LocationBoundaryFile createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException;
+
+    List<ElectionType> getAllElectionTypes() throws ApplicationException;
+
+    ElectionType saveElectionType(ElectionType electionType) throws ApplicationException;
 }

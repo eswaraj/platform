@@ -391,6 +391,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         JsonObject ebaJsonObject = new JsonObject();
         ebaJsonObject.addProperty("name", ebaPerson.getName());
         ebaJsonObject.addProperty("profilePhoto", ebaPerson.getProfilePhoto());
+        ebaJsonObject.addProperty("biodata", ebaPerson.getBiodata());
         ebaJsonObject.addProperty("postTitle", ebaExecutivePost.getTitle());
         ebaJsonObject.addProperty("postShortTitle", ebaExecutivePost.getShortTitle());
         return ebaJsonObject;

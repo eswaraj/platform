@@ -78,4 +78,14 @@ public class StormAdminBean extends BaseBean {
             sendErrorMessage("Error", "Unable to reproces all Comment");
         }
     }
+
+    public void reprocessAllPoliticalAdmins() {
+        try {
+            // queueService.sendPoliticalBodyAdminUpdateMessage(locationId, politicalBodyAdminId);
+            sendErrorMessage("Error", "Not Implemented Yet");
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendErrorMessage("Error", "Unable to reproces all Comment");
+        }
+    }
 }

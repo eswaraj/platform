@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -11,6 +12,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.eswaraj.domain.base.BaseNode;
 
 @NodeEntity
+@TypeAlias("Address")
 public class Address extends BaseNode {
 
 	private String line1;

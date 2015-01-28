@@ -71,12 +71,8 @@ public class PoliticalBodyAdminController extends BaseController {
 
     @RequestMapping(value = "/api/v0/leader/{politicalBodyAdminId}", method = RequestMethod.GET)
     public @ResponseBody String getLeader(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String politicalBodyAdminId) throws ApplicationException {
-        // First Redis Operation
-        logger.info("politicalBodyAdminId = {}", politicalBodyAdminId);
-        // Second Redis operation
-        String pbRedisKey = appKeyService.getPoliticalBodyAdminObjectKey(politicalBodyAdminId);
-        logger.info("pbRedisKey = {}", pbRedisKey);
-        String pbInfo = stringRedisTemplate.opsForValue().get(pbRedisKey);
+        logger.info("getLeader by politicalBodyAdminId = {}", politicalBodyAdminId);
+        String pbInfo = politicalAdminCache.getPoliticalBodyAdminById(politicalBodyAdminId);
         return pbInfo;
     }
 
