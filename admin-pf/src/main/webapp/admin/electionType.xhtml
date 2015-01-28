@@ -42,7 +42,7 @@
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:outputPanel id="listView" rendered="#{electionTypeBean.showList}">
 					<p:commandButton value="Create Political Party" actionListener="#{electionTypeBean.createElectionType}" update="@form" />
-					<p:dataTable var="oneElectionType" value="#{electionTypeBean.parties}">
+					<p:dataTable var="oneElectionType" value="#{electionTypeBean.electionTypes}">
 						<p:column headerText="Id">
 							<h:outputText value="#{oneElectionType.id}" />
 						</p:column>

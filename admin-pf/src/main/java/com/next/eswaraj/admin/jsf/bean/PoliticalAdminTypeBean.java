@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import com.eswaraj.core.convertors.PoliticalBodyTypeConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
@@ -27,9 +26,6 @@ public class PoliticalAdminTypeBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
-
-    @Autowired
-    private PoliticalBodyTypeConvertor politicalBodyTypeConvertor;
 
     @PostConstruct
     public void init() {
