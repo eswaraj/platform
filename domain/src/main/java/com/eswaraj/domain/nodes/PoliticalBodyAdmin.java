@@ -30,7 +30,10 @@ public class PoliticalBodyAdmin extends BaseNode {
 	@RelatedTo(type="OF")
 	private Party party;
 
-	private Address officeAddress;
+    @RelatedTo(type = "ELECTED_BY")
+    private Election election;
+
+    private Address officeAddress;
 	private Address homeAddress;
 	
 	private String email;
@@ -163,6 +166,14 @@ public class PoliticalBodyAdmin extends BaseNode {
 
     public void setUrlIdentifier(String urlIdentifier) {
         this.urlIdentifier = urlIdentifier;
+    }
+
+    public Election getElection() {
+        return election;
+    }
+
+    public void setElection(Election election) {
+        this.election = election;
     }
     @Override
     public String toString() {

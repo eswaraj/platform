@@ -84,4 +84,6 @@ public interface AdminService {
 
     Election saveElection(Election election) throws ApplicationException;
 
+    Election getElectionById(Long electionId) throws ApplicationException;
+
 }

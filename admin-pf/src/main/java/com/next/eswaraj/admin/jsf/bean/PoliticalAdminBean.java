@@ -28,6 +28,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
@@ -68,6 +69,8 @@ public class PoliticalAdminBean extends BaseBean {
     private List<PoliticalBodyType> politicalBodyTypes;
 
     private PoliticalBodyType selectedPoliticalBodyType;
+
+    private Election selectedElection;
 
     private DataTable dataTable;
     
@@ -291,9 +294,13 @@ public class PoliticalAdminBean extends BaseBean {
         selectedPoliticalBodyAdmin.setPerson(selectedPerson);
         selectedPoliticalBodyAdmin.setPoliticalBodyType(selectedPoliticalBodyType);
         selectedPoliticalBodyAdmin.setParty(selectedPoliticalParty);
+        selectedPoliticalBodyAdmin.setElection(selectedElection);
         try {
             if (selectedPoliticalBodyAdmin.getParty() == null) {
                 sendErrorMessage("political_admin_form:politicalParty", "Error", "Please Select a Party");
+            }
+            if (selectedPoliticalBodyAdmin.getElection() == null) {
+                sendErrorMessage("political_admin_form:electionMessage", "Error", "Please Select an Election from which this leader was Elected");
             }
             if (isValidInput()) {
                 if (selectedPoliticalBodyAdmin.getId() == null) {
@@ -493,6 +500,9 @@ public class PoliticalAdminBean extends BaseBean {
             if (selectedPoliticalBodyAdmin.getParty() != null) {
                 this.selectedPoliticalParty = adminService.getPartyById(selectedPoliticalBodyAdmin.getParty().getId());
             }
+            if (selectedPoliticalBodyAdmin.getElection() != null) {
+                this.selectedElection = adminService.getElectionById(selectedPoliticalBodyAdmin.getElection().getId());
+            }
             System.out.println("selectedPerson=" + selectedPerson);
             System.out.println("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
             showListPanel = false;
@@ -564,5 +574,13 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void setUpdateMode(boolean updateMode) {
         this.updateMode = updateMode;
+    }
+
+    public Election getSelectedElection() {
+        return selectedElection;
+    }
+
+    public void setSelectedElection(Election selectedElection) {
+        this.selectedElection = selectedElection;
     }
 }

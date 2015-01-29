@@ -528,4 +528,9 @@ public class AdminServiceImpl implements AdminService {
         return electionRepository.save(election);
     }
 
+    @Override
+    public Election getElectionById(Long electionId) throws ApplicationException {
+        return electionRepository.findOne(electionId);
+    }
+
 }

@@ -273,6 +273,15 @@
 												itemValue="#{oneReult}" />
 										</p:selectOneMenu>
 										<p:message for="politicalParty" display="text" />
+										
+										<p:selectOneMenu id="election" converter="#{electionConvertor}" value="#{politicalAdminBean.selectedPoliticalBodyType}">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{politicalAdminBean.politicalBodyTypes}" var="oneReult" itemLabel="#{oneReult.name}"
+                                            itemValue="#{oneReult}" />
+                                        <p:ajax event="valueChange" listener="#{politicalAdminBean.onSelectPoliticalBodyType}" update="@form" />
+
+                                    </p:selectOneMenu>
+                                    <p:message for="electionMessage" display="text" />
 									</p:fieldset>
 									<h:panelGrid columns="2" id="saveCancelButtonPanelForAdmin">
 										<p:commandButton id="savePoliticalAdmin" value="Save Admin" process="@this:formPanel" update="@form"
