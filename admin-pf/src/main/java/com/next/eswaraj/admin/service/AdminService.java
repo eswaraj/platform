@@ -82,6 +82,8 @@ public interface AdminService {
 
     List<Election> getAllElections() throws ApplicationException;
 
+    List<Election> getElectionsByPoliticalAdminType(PoliticalBodyType politicalBodyType) throws ApplicationException;
+
     Election saveElection(Election election) throws ApplicationException;
 
     Election getElectionById(Long electionId) throws ApplicationException;

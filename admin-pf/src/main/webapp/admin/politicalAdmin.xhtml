@@ -280,7 +280,7 @@
 											<p:selectOneMenu id="election" converter="#{electionConvertor}"
 												value="#{politicalAdminBean.selectedElection}">
 												<f:selectItem itemLabel="Select One" itemValue="" />
-												<f:selectItems value="#{electionBean.elections}" var="oneReult" itemLabel="#{oneReult.name}"
+												<f:selectItems value="#{politicalAdminBean.politicalBodyTypeElections}" var="oneReult" itemLabel="#{oneReult.name}"
 													itemValue="#{oneReult}" />
 
 											</p:selectOneMenu>

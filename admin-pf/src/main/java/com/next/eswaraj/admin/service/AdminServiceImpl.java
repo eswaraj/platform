@@ -533,4 +533,9 @@ public class AdminServiceImpl implements AdminService {
         return electionRepository.findOne(electionId);
     }
 
+    @Override
+    public List<Election> getElectionsByPoliticalAdminType(PoliticalBodyType politicalBodyType) throws ApplicationException {
+        return electionRepository.findAllElectionsOfPoliticalBodyType(politicalBodyType);
+    }
+
 }

@@ -21,6 +21,7 @@ public class PoliticalBodyAdminValidator extends BaseValidator<PoliticalBodyAdmi
 		checkIfNull("PoliticalBodyType", politicalBodyAdmin.getPoliticalBodyType(), "Can not create a political Admin without a PoliticalBodyType attached to it");
 		checkIfNull("StartDate", politicalBodyAdmin.getStartDate(), "You must provide a start Date for political Admin");
         checkIfNull("UrlIdentifier", politicalBodyAdmin.getUrlIdentifier(), "Url identifier can not be null");
+        checkIfNull("Election", politicalBodyAdmin.getParty(), "Can not create a political Admin without an Election attached to it");
 		if(politicalBodyAdmin.getEndDate() != null){
 			if(politicalBodyAdmin.getEndDate().before(politicalBodyAdmin.getStartDate())){
 				throw new ValidationException("End Date can not be before Start Date");

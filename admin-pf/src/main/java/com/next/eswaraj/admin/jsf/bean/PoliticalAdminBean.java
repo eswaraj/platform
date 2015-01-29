@@ -76,6 +76,8 @@ public class PoliticalAdminBean extends BaseBean {
     
     private List<PoliticalBodyAdminExtended> politicalBodyAdmins;
 
+    private List<Election> politicalBodyTypeElections;
+
     private PoliticalBodyAdmin selectedPoliticalBodyAdmin = new PoliticalBodyAdmin();
 
     private boolean enableRightSidePanel = true;
@@ -348,6 +350,7 @@ public class PoliticalAdminBean extends BaseBean {
         try {
             Document document = (Document) selectedLocationNode.getData();
             politicalBodyAdmins = adminService.getPoliticalAdminOfLocationAndAdminType(document.getLocation().getId(), selectedPoliticalBodyType.getId());
+            politicalBodyTypeElections = adminService.getElectionsByPoliticalAdminType(selectedPoliticalBodyType);
         } catch (ApplicationException e) {
             e.printStackTrace();
         }
@@ -582,5 +585,13 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void setSelectedElection(Election selectedElection) {
         this.selectedElection = selectedElection;
+    }
+
+    public List<Election> getPoliticalBodyTypeElections() {
+        return politicalBodyTypeElections;
+    }
+
+    public void setPoliticalBodyTypeElections(List<Election> politicalBodyTypeElections) {
+        this.politicalBodyTypeElections = politicalBodyTypeElections;
     }
 }
