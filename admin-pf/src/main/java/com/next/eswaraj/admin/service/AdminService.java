@@ -6,6 +6,7 @@ import java.util.List;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
@@ -78,4 +79,9 @@ public interface AdminService {
     List<ElectionType> getAllElectionTypes() throws ApplicationException;
 
     ElectionType saveElectionType(ElectionType electionType) throws ApplicationException;
+
+    List<Election> getAllElections() throws ApplicationException;
+
+    Election saveElection(Election election) throws ApplicationException;
+
 }

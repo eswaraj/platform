@@ -11,16 +11,16 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.domain.nodes.ElectionType;
+import com.eswaraj.domain.nodes.Election;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class ElectionTypeBean extends BaseBean {
+public class ElectionBean extends BaseBean {
 
     private boolean showList;
-    private List<ElectionType> electionTypes;
-    private ElectionType selectedElectionType;
+    private List<Election> elections;
+    private Election selectedElection;
 
     @Autowired
     private AdminService adminService;
@@ -29,26 +29,26 @@ public class ElectionTypeBean extends BaseBean {
     public void init() {
         try {
             showList = true;
-            electionTypes = adminService.getAllElectionTypes();
+            elections = adminService.getAllElections();
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
         }
     }
 
-    public void createElectionType() {
-        selectedElectionType = new ElectionType();
+    public void createElection() {
+        selectedElection = new Election();
         showList = false;
     }
 
     public void cancel() {
-        selectedElectionType = new ElectionType();
+        selectedElection = new Election();
         showList = true;
     }
 
-    public void saveElectionType() {
+    public void saveElection() {
         try {
-            selectedElectionType = adminService.saveElectionType(selectedElectionType);
-            electionTypes = adminService.getAllElectionTypes();
+            selectedElection = adminService.saveElection(selectedElection);
+            elections = adminService.getAllElections();
             showList = true;
         } catch (ApplicationException e) {
             e.printStackTrace();
@@ -64,22 +64,22 @@ public class ElectionTypeBean extends BaseBean {
         this.showList = showList;
     }
 
-    public ElectionType getSelectedElectionType() {
-        return selectedElectionType;
+    public Election getSelectedElection() {
+        return selectedElection;
     }
 
-    public void setSelectedElectionType(ElectionType selectedElectionType) {
-        this.selectedElectionType = new ElectionType();
-        BeanUtils.copyProperties(selectedElectionType, this.selectedElectionType);
+    public void setSelectedElection(Election selectedElection) {
+        this.selectedElection = new Election();
+        BeanUtils.copyProperties(selectedElection, this.selectedElection);
         showList = false;
     }
 
-    public List<ElectionType> getElectionTypes() {
-        return electionTypes;
+    public List<Election> getElections() {
+        return elections;
     }
 
-    public void setElectionTypes(List<ElectionType> electionTypes) {
-        this.electionTypes = electionTypes;
+    public void setElections(List<Election> elections) {
+        this.elections = elections;
     }
 
 }

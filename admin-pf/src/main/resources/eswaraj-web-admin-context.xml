@@ -15,7 +15,8 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.eswaraj.queue.service.aws.impl" />
 	<context:component-scan base-package="com.eswaraj.core.util" />
-	<neo4j:repositories base-package="com.next.social.team.task" />
+	
+	<context:component-scan base-package="com.eswaraj.domain.validator" />
 	
 	<bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
 	</bean>
