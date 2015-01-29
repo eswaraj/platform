@@ -170,7 +170,7 @@
 											itemValue="#{onePerson}" converter="#{personConvertor}" forceSelection="true">
 											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}" />
 											<p:column>
-												<p:graphicImage value="#{onePerson.profilePhoto}"  style="height:80px;"/>
+												<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
 											</p:column>
 
 											<p:column>
@@ -264,23 +264,30 @@
 
 										</h:panelGrid>
 									</p:fieldset>
-									<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
-										<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true"
-											requiredMessage="Please select a Political Party" value="#{politicalAdminBean.selectedPoliticalParty}"
-											disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
-											<f:selectItem itemLabel="Select Party" itemValue="" />
-											<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
-												itemValue="#{oneReult}" />
-										</p:selectOneMenu>
-										<p:message for="politicalParty" display="text" />
-										
-										<p:selectOneMenu id="election" converter="#{electionConvertor}" value="#{politicalAdminBean.selectedElection}">
-                                        <f:selectItem itemLabel="Select One" itemValue="" />
-                                        <f:selectItems value="#{electionBean.elections}" var="oneReult" itemLabel="#{oneReult.name}" itemValue="#{oneReult}" />
+									<h:panelGrid columns="2">
+										<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
+											<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true"
+												requiredMessage="Please select a Political Party" value="#{politicalAdminBean.selectedPoliticalParty}"
+												disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
+												<f:selectItem itemLabel="Select Party" itemValue="" />
+												<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
+													itemValue="#{oneReult}" />
+											</p:selectOneMenu>
+											<p:message for="politicalParty" display="text" />
 
-                                    </p:selectOneMenu>
-                                    <p:message for="election" display="text" />
-									</p:fieldset>
+										</p:fieldset>
+										<p:fieldset legend="Election" style="margin-bottom:20px">
+											<p:selectOneMenu id="election" converter="#{electionConvertor}"
+												value="#{politicalAdminBean.selectedElection}">
+												<f:selectItem itemLabel="Select One" itemValue="" />
+												<f:selectItems value="#{electionBean.elections}" var="oneReult" itemLabel="#{oneReult.name}"
+													itemValue="#{oneReult}" />
+
+											</p:selectOneMenu>
+											<p:message for="election" display="text" />
+										</p:fieldset>
+									</h:panelGrid>
+
 									<h:panelGrid columns="2" id="saveCancelButtonPanelForAdmin">
 										<p:commandButton id="savePoliticalAdmin" value="Save Admin" process="@this:formPanel" update="@form"
 											ajax="true" actionListener="#{politicalAdminBean.saveAdmin}" styleClass="ui-priority-primary">
