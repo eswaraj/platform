@@ -3,6 +3,7 @@ package com.eswaraj.domain.nodes;
 import java.util.Date;
 
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -30,6 +31,7 @@ public class Election extends BaseNode {
     private Date resultDate;
 
     @RelatedTo(type = "OF_ELECTION_TYPE")
+    @Fetch
     private ElectionType electionType;
 
     public String getName() {
