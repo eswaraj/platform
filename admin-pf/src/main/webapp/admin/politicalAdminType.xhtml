@@ -90,6 +90,14 @@
 								<h:outputText value="#{t.name}" />
 							</p:column>
 						</p:selectOneMenu>
+						<p:outputLabel value="Election Type"></p:outputLabel>
+                        <p:selectOneMenu id="electionType" converter="#{electionTypeConvertor}"
+                            value="#{politicalAdminTypeBean.selectedPoliticalBodyType.electionType}">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItems value="#{electionTypeBean.electionTypes}" var="oneReult" itemLabel="#{oneReult.name}"
+                                itemValue="#{oneReult}" />
+                        </p:selectOneMenu>
+						
 					</p:panelGrid>
 					<p:outputPanel id="buttonView">
 						<p:commandButton value="Cancel" update="@form" actionListener="#{politicalAdminTypeBean.cancel}"

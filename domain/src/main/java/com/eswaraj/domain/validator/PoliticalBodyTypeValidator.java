@@ -24,7 +24,7 @@ public class PoliticalBodyTypeValidator extends BaseValidator<PoliticalBodyType>
 		if(politicalBodyType.getLocationType() == null){
 			throw new ValidationException("A political Body Type must be associated with a LocationType");
 		}
-		
+        checkIfNull("Election Type", politicalBodyType.getElectionType(), "Election Type can not be null or empty.");
 	}
 
 	@Override

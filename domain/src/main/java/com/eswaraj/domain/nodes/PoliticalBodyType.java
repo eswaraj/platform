@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
 
@@ -17,6 +18,9 @@ public class PoliticalBodyType extends BaseNode{
 	private String description;
     @Fetch
 	private LocationType locationType;
+
+    @RelatedTo(type = "ELECTED_VIA")
+    private ElectionType electionType;
 	
 	public String getShortName() {
 		return shortName;
@@ -42,7 +46,16 @@ public class PoliticalBodyType extends BaseNode{
 	public void setLocationType(LocationType locationType) {
 		this.locationType = locationType;
 	}
-	@Override
+
+    public ElectionType getElectionType() {
+        return electionType;
+    }
+
+    public void setElectionType(ElectionType electionType) {
+        this.electionType = electionType;
+    }
+
+    @Override
 	public String toString() {
 		return "PoliticalBodyType [shortName=" + shortName + ", name=" + name + ", description=" + description + ", locationType=" + locationType + ", id="
 				+ id + "]";

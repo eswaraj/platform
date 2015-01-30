@@ -17,7 +17,6 @@ public class ElectionTypeValidator extends BaseValidator<ElectionType> {
     @Override
     public void validateBeforeSave(ElectionType electionType) throws ValidationException {
         checkIfNull("Name", electionType.getName(), "ElectionType name can not be null or empty.");
-        checkIfNull("Leader Type", electionType.getPoliticalBodyType(), "Political leader type can not be null or empty.");
 	}
 
     @Override

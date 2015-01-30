@@ -50,9 +50,6 @@
 						<p:column headerText="Name">
 							<h:outputText value="#{oneElectionType.name}" />
 						</p:column>
-						<p:column headerText="Leader Type">
-							<h:outputText value="#{oneElectionType.politicalBodyType.name}" />
-						</p:column>
 
 						<p:column style="width:100px;">
 							<f:facet name="header">
@@ -75,14 +72,6 @@
 						<p:inputText value="#{electionTypeBean.selectedElectionType.name}" style="width:600px" />
 						<p:outputLabel value="Description" />
 						<p:inputTextarea rows="6" cols="50" value="#{electionTypeBean.selectedElectionType.description}"/>
-
-						<p:outputLabel value="Political Admin Type"></p:outputLabel>
-                        <p:selectOneMenu id="adminType" converter="#{politicalBodyTypeConvertor}"
-                            value="#{electionTypeBean.selectedElectionType.politicalBodyType}">
-                            <f:selectItem itemLabel="Select One" itemValue="" />
-                            <f:selectItems value="#{politicalAdminTypeBean.politicalBodyTypes}" var="oneReult" itemLabel="#{oneReult.name}"
-                                itemValue="#{oneReult}" />
-                        </p:selectOneMenu>
 
 					</p:panelGrid>
 					<p:outputPanel id="buttonView">
