@@ -10,7 +10,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 public interface ElectionRepository extends GraphRepository<Election> {
 
-    @Query("start politicalBodyType=node({0}) match (politicalBodyType)-[:SELECT_LEADER_TYPE]-(electionType)-[:SELECT_LEADER_TYPE]-(elections) return elections")
+    @Query("start politicalBodyType=node({0}) match (politicalBodyType)-[:ELECTED_VIA]-(electionType)-[:OF_ELECTION_TYPE]-(elections) return elections")
     public List<Election> findAllElectionsOfPoliticalBodyType(PoliticalBodyType politicalBodyType);
 
 }
