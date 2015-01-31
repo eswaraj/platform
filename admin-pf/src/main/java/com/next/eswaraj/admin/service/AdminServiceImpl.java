@@ -36,6 +36,7 @@ import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.repo.CategoryRepository;
@@ -51,6 +52,7 @@ import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.domain.repo.SystemCategoryRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.queue.service.QueueService;
 
@@ -107,6 +109,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private ElectionManifestoPromiseRepository electionManifestoPromiseRepository;
+
+    @Autowired
+    private SystemCategoryRepository systemCategoryRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -566,6 +571,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ElectionManifestoPromise> getElectionManifestoPromisesOfManifesto(Long electionManifestoId) throws ApplicationException {
         return electionManifestoPromiseRepository.getAllPromisesOfManifesto(electionManifestoId);
+    }
+
+    @Override
+    public SystemCategory saveSystemCategory(SystemCategory systemCategory) throws ApplicationException {
+        return systemCategoryRepository.save(systemCategory);
+    }
+
+    @Override
+    public List<SystemCategory> getAllSystemCategories() throws ApplicationException {
+        return convertToList(systemCategoryRepository.findAll());
     }
 
 }

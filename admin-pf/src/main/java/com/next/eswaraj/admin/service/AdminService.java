@@ -17,6 +17,7 @@ import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
+import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 
@@ -97,5 +98,9 @@ public interface AdminService {
     ElectionManifestoPromise saveElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise) throws ApplicationException;
 
     List<ElectionManifestoPromise> getElectionManifestoPromisesOfManifesto(Long electionManifestoId) throws ApplicationException;
+
+    SystemCategory saveSystemCategory(SystemCategory systemCategory) throws ApplicationException;
+
+    List<SystemCategory> getAllSystemCategories() throws ApplicationException;
 
 }
