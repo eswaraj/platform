@@ -176,6 +176,7 @@ public class ElectionManifestoBean extends BaseBean {
 
     public void setSelectedElectionManifestoPromise(ElectionManifestoPromise selectedElectionManifestoPromise) {
         this.selectedElectionManifestoPromise = selectedElectionManifestoPromise;
+        showPage = "EditElectionManifestoPromise";
     }
 
 }
