@@ -72,9 +72,27 @@ public class ElectionManifestoBean extends BaseBean {
         showPage = "ElectionManifestoList";
     }
 
+    public void cancelPromise() {
+        selectedElectionManifesto = new ElectionManifesto();
+        showPage = "ElectionManifestoPromiseList";
+    }
+
     public void saveElectionManifesto() {
         try {
             selectedElectionManifesto = adminService.saveElectionManifesto(selectedElectionManifesto);
+            electionManifestos = adminService.getElectionManifestos();
+            showPage = "ElectionManifestoList";
+        } catch (ApplicationException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void saveElectionManifestoPromise() {
+        try {
+            selectedElectionManifestoPromise.setElectionManifesto(selectedElectionManifesto);
+            selectedElectionManifestoPromise = adminService.saveElectionManifestoPromise(selectedElectionManifestoPromise);
+
             electionManifestos = adminService.getElectionManifestos();
             showPage = "ElectionManifestoList";
         } catch (ApplicationException e) {
@@ -109,7 +127,8 @@ public class ElectionManifestoBean extends BaseBean {
     }
 
     public void showPromiseView(ElectionManifesto selectedElectionManifesto) {
-        showPage = "EditElectionManifestoPromise";
+        showPage = "ElectionManifestoPromiseList";
+        this.selectedElectionManifesto = selectedElectionManifesto;
         // electionManifestoPromises = adminService
     }
     public ElectionManifesto getSelectedElectionManifesto() {

@@ -135,8 +135,8 @@
 				</p:outputPanel>
 				
 				
-				<p:outputPanel id="promiseListView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
-				<p:commandButton value="<< back"
+				<p:outputPanel id="promiseListView" rendered="#{electionManifestoBean.showPage eq 'ElectionManifestoPromiseList'}">
+				<p:commandButton value="back"
                         actionListener="#{electionManifestoBean.back}" update="@form" />
                     <p:commandButton value="Create Election Manifesto Promise"
                         actionListener="#{electionManifestoBean.createElectionManifestoPromise}" update="@form" />
@@ -165,6 +165,33 @@
                         </p:column>
 
                     </p:dataTable>
+                </p:outputPanel>
+                
+                
+                
+                <p:outputPanel id="formView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Title" />
+                        <p:inputText value="#{electionManifestoBean.selectedElectionManifestoPromise.title}" style="width:600px" />
+                        <p:outputLabel value="Description" />
+                        <p:inputTextarea rows="10" cols="80" value="#{electionManifestoBean.selectedElectionManifestoPromise.description}" />
+
+                    </p:panelGrid>
+                    <p:outputPanel id="buttonView">
+                        <p:commandButton value="Cancel" process="@this:cancelPromise" update="@form"
+                            actionListener="#{electionManifestoBean.cancelPromise}" ajax="true" styleClass="ui-priority-primary" id="cancel">
+                        </p:commandButton>
+                        <p:commandButton id="saveElectionManifestoPromise" value="Save Election Manifesto Promise" update="@form" ajax="true"
+                            actionListener="#{electionManifestoBean.saveElectionManifestoPromise}" styleClass="ui-priority-primary">
+                        </p:commandButton>
+                        <p:blockUI block="@form" trigger="saveElectionManifestoPromise">Saving<br />
+                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                        </p:blockUI>
+                        <p:blockUI block="@form" trigger="cancelPromise">Loading<br />
+                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                        </p:blockUI>
+
+                    </p:outputPanel>
                 </p:outputPanel>
 				
 			</p:panel>

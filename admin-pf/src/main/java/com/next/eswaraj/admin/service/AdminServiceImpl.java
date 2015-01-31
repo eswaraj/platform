@@ -27,6 +27,7 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
+import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
@@ -39,7 +40,7 @@ import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
-import com.eswaraj.domain.repo.ElectionManifestoPointRepository;
+import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
 import com.eswaraj.domain.repo.ElectionManifestoRepository;
 import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
@@ -105,7 +106,7 @@ public class AdminServiceImpl implements AdminService {
     private ElectionManifestoRepository electionManifestoRepository;
 
     @Autowired
-    private ElectionManifestoPointRepository electionManifestoPointRepository;
+    private ElectionManifestoPromiseRepository electionManifestoPromiseRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -555,6 +556,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ElectionManifesto saveElectionManifesto(ElectionManifesto electionManifesto) throws ApplicationException {
         return electionManifestoRepository.save(electionManifesto);
+    }
+
+    @Override
+    public ElectionManifestoPromise saveElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise) throws ApplicationException {
+        return electionManifestoPromiseRepository.save(electionManifestoPromise);
     }
 
 }
