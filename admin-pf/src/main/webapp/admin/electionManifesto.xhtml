@@ -41,7 +41,8 @@
 			<p:panel id="mainPanel" header="Election Manifestos">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:outputPanel id="listView" rendered="#{electionManifestoBean.showPage eq 'ElectionManifestoList'}">
-					<p:commandButton value="Create Election Manifesto" actionListener="#{electionManifestoBean.createElectionManifesto}" update="@form" />
+					<p:commandButton value="Create Election Manifesto"
+						actionListener="#{electionManifestoBean.createElectionManifesto}" update="@form" />
 					<p:dataTable var="oneElectionManifesto" value="#{electionManifestoBean.electionManifestos}">
 						<p:column headerText="Id">
 							<h:outputText value="#{oneElectionManifesto.id}" />
@@ -61,7 +62,8 @@
 							<p:commandLink update="@form" title="Update">
 								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 									height="20" />
-								<f:setPropertyActionListener value="#{oneElectionManifesto}" target="#{electionManifestoBean.selectedElectionManifesto}" />
+								<f:setPropertyActionListener value="#{oneElectionManifesto}"
+									target="#{electionManifestoBean.selectedElectionManifesto}" />
 							</p:commandLink>
 						</p:column>
 
@@ -70,17 +72,36 @@
 				<p:outputPanel id="formView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifesto'}">
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Name" />
-						<p:inputText value="#{electionManifestoBean.selectElectionManifesto.name}" style="width:600px" />
+						<p:inputText value="#{electionManifestoBean.selectedElectionManifesto.name}" style="width:600px" />
 						<p:outputLabel value="Description" />
-						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectedElectionManifesto.description}"/>
+						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectedElectionManifesto.description}" />
+						<p:outputLabel value="Election" />
+						<p:selectOneMenu id="election" converter="#{electionConvertor}"
+							value="#{electionManifestoBean.selectedElectionManifesto.election}">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItems value="#{electionBean.Elections}" var="oneReult" itemLabel="#{oneReult.name}"
+								itemValue="#{oneReult}" />
 
+						</p:selectOneMenu>
+						<p:outputLabel value="Party" />
+						<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true"
+							requiredMessage="Please select a Political Party"
+							value="#{electionManifestoBean.selectedElectionManifesto.party}">
+							<f:selectItem itemLabel="Select Party" itemValue="" />
+							<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
+								itemValue="#{oneReult}" />
+						</p:selectOneMenu>
 						<p:outputLabel value="Document"></p:outputLabel>
 						<h:panelGrid columns="1">
-						<h3>PDF</h3><object type="application/pdf" data="#{electionManifestoBean.selectedElectionManifesto.document.url}" height="300px" width="100%">
-            Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a> to download pdf instead.
-        </object>
-							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+							<h3>PDF</h3>
+							<object type="application/pdf" data="#{electionManifestoBean.selectedElectionManifesto.document.url}"
+								height="300px" width="100%">
+								Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a>
+								to download pdf instead.
+							</object>
+							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleFileUpload}" mode="advanced"
+								dragDropSupport="true" auto="true" update="messages" sizeLimit="200000" fileLimit="3"
+								allowTypes="/(\.|\/)(jpe?g|png)$/" />
 						</h:panelGrid>
 
 					</p:panelGrid>
@@ -88,15 +109,15 @@
 						<p:commandButton value="Cancel" process="@this:cancel" update="@form"
 							actionListener="#{electionManifestoBean.cancel}" ajax="true" styleClass="ui-priority-primary" id="cancel">
 						</p:commandButton>
-						<p:commandButton id="saveElectionManifesto" value="Save Political Body Admin Type" update="@form" ajax="true"
-							actionListener="#{electionManifestoBean.saveParty}" styleClass="ui-priority-primary">
+						<p:commandButton id="saveElectionManifesto" value="Save Election Manifesto" update="@form" ajax="true"
+							actionListener="#{electionManifestoBean.saveElectionManifesto}" styleClass="ui-priority-primary">
 						</p:commandButton>
 						<p:blockUI block="@form" trigger="saveElectionManifesto">Saving<br />
 							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 						</p:blockUI>
-                        <p:blockUI block="@form" trigger="cancel">Loading<br />
-                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
-                        </p:blockUI>
+						<p:blockUI block="@form" trigger="cancel">Loading<br />
+							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+						</p:blockUI>
 
 					</p:outputPanel>
 				</p:outputPanel>
