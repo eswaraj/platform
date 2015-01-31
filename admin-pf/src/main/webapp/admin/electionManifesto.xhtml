@@ -67,7 +67,7 @@
 
 					</p:dataTable>
 				</p:outputPanel>
-				<p:outputPanel id="formView" rendered="#{!electionManifestoBean.showPage eq 'EditElectionManifesto'}">
+				<p:outputPanel id="formView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifesto'}">
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Name" />
 						<p:inputText value="#{electionManifestoBean.selectElectionManifesto.name}" style="width:600px" />
