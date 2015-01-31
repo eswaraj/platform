@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -25,6 +26,7 @@ public class Category extends BaseNode{
     private String urlIdentifier;
     private String color;
     @RelatedTo(type = "SYSTEM_CATEGORY")
+    @Fetch
     private SystemCategory systemCategory;
 	    
     public Category() {}

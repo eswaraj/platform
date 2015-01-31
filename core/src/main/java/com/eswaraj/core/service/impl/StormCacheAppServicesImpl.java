@@ -196,6 +196,9 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 oneCategory = categoryRepository.findOne(oneCategory.getId());
                 if (!oneCategory.isRoot()) {
                     complaintJsonObject.addProperty("categoryTitle", oneCategory.getName());
+                    if (oneCategory.getSystemCategory() != null) {
+                        complaintJsonObject.addProperty("systemCategory", oneCategory.getSystemCategory().getName());
+                    }
                 }
                 categoryJsonObject.addProperty("externalId", oneCategory.getExternalId());
                 categoryJsonObject.addProperty("headerImageurl", oneCategory.getHeaderImageUrl());
