@@ -76,6 +76,14 @@ public class PoliticalBodyAdminController extends BaseController {
         return pbInfo;
     }
 
+    @RequestMapping(value = "/api/v0/leaders/location/{locationId}", method = RequestMethod.GET)
+    public @ResponseBody String getLeadersByLocation(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
+        logger.info("getLeaders by locationId = {}", locationId);
+        Set<String> politicalAdminIds = locationCache.getLocationPoliticalAdmins(locationId);
+        JsonArray jsonArray = politicalAdminCache.getPoliticalBodyAdminByIds(politicalAdminIds);
+        return jsonArray.toString();
+    }
+
     @RequestMapping(value = "/api/v0/leader/staff", method = RequestMethod.POST)
     public @ResponseBody List<PoliticalBodyAdminStaffDto> saveLeaderStaff(HttpServletRequest httpServletRequest, ModelAndView mv,
             @RequestBody SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException {
