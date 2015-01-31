@@ -95,4 +95,20 @@ public class ElectionManifestoBean extends BaseBean {
         showPage = "EditElectionManifesto";
     }
 
+    public String getShowPage() {
+        return showPage;
+    }
+
+    public void setShowPage(String showPage) {
+        this.showPage = showPage;
+    }
+
+    public List<ElectionManifesto> getElectionManifestos() {
+        return electionManifestos;
+    }
+
+    public void setElectionManifestos(List<ElectionManifesto> electionManifestos) {
+        this.electionManifestos = electionManifestos;
+    }
+
 }
