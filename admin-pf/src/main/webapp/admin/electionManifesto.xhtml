@@ -94,13 +94,16 @@
 						<p:outputLabel value="Document(PDF Only)"></p:outputLabel>
 						<h:panelGrid columns="1">
 							<h3>PDF</h3>
+							<p:otputPanel id="docViewer">
+							
 							<object type="application/pdf" data="#{electionManifestoBean.selectedElectionManifesto.document.url}"
 								height="300px" width="600px">
 								Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a>
 								to download pdf instead.
 							</object>
+							</p:otputPanel>
 							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleDocFileUpload}" mode="advanced"
-								dragDropSupport="true" auto="true" update="messages" sizeLimit="10000000" fileLimit="3"
+								dragDropSupport="true" auto="true" update="messages, docViewer" sizeLimit="10000000" fileLimit="3"
 								allowTypes="/(\.|\/)(pdf)$/" />
 						</h:panelGrid>
 
