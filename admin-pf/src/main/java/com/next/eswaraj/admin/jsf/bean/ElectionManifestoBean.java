@@ -103,7 +103,7 @@ public class ElectionManifestoBean extends BaseBean {
 
     }
 
-    public void showPromiseView() {
+    public void showPromiseView(ElectionManifesto selectedElectionManifesto) {
         showPage = "EditElectionManifestoPromise";
         // electionManifestoPromises = adminService
     }
