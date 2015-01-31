@@ -14,22 +14,23 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
-@TypeAlias("ElectionManifestoPoint")
-public class ElectionManifestoPoint extends BaseNode {
+@TypeAlias("ElectionManifestoPromise")
+public class ElectionManifestoPromise extends BaseNode {
 
-	private String name;
+    private String title;
 	
     private String description;
 
     @RelatedTo(type = "OF_ELECTION_MANIFESTO")
     private ElectionManifesto electionManifesto;
 
-    public String getName() {
-        return name;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

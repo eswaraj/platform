@@ -19,6 +19,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Document;
 import com.eswaraj.domain.nodes.Document.DocumentType;
 import com.eswaraj.domain.nodes.ElectionManifesto;
+import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
@@ -29,6 +30,9 @@ public class ElectionManifestoBean extends BaseBean {
     private String showPage;
     private List<ElectionManifesto> electionManifestos;
     private ElectionManifesto selectedElectionManifesto;
+
+    private List<ElectionManifestoPromise> electionManifestoPromises;
+    private ElectionManifestoPromise selectedElectionManifestoPromise;
 
     @Autowired
     private AdminService adminService;
@@ -51,6 +55,11 @@ public class ElectionManifestoBean extends BaseBean {
     public void createElectionManifesto() {
         selectedElectionManifesto = new ElectionManifesto();
         showPage = "EditElectionManifesto";
+    }
+
+    public void createElectionManifestoPromise() {
+        selectedElectionManifestoPromise = new ElectionManifestoPromise();
+        showPage = "EditElectionManifestoPromise";
     }
 
     public void cancel() {
@@ -94,6 +103,10 @@ public class ElectionManifestoBean extends BaseBean {
 
     }
 
+    public void showPromiseView() {
+        showPage = "EditElectionManifestoPromise";
+        // electionManifestoPromises = adminService
+    }
     public ElectionManifesto getSelectedElectionManifesto() {
         return selectedElectionManifesto;
     }
@@ -118,6 +131,22 @@ public class ElectionManifestoBean extends BaseBean {
 
     public void setElectionManifestos(List<ElectionManifesto> electionManifestos) {
         this.electionManifestos = electionManifestos;
+    }
+
+    public List<ElectionManifestoPromise> getElectionManifestoPromises() {
+        return electionManifestoPromises;
+    }
+
+    public void setElectionManifestoPromises(List<ElectionManifestoPromise> electionManifestoPromises) {
+        this.electionManifestoPromises = electionManifestoPromises;
+    }
+
+    public ElectionManifestoPromise getSelectedElectionManifestoPromise() {
+        return selectedElectionManifestoPromise;
+    }
+
+    public void setSelectedElectionManifestoPromise(ElectionManifestoPromise selectedElectionManifestoPromise) {
+        this.selectedElectionManifestoPromise = selectedElectionManifestoPromise;
     }
 
 }

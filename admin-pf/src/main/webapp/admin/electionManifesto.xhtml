@@ -66,6 +66,17 @@
 									target="#{electionManifestoBean.selectedElectionManifesto}" />
 							</p:commandLink>
 						</p:column>
+						<p:column style="width:100px;">
+                            <f:facet name="header">
+                                <h:outputText value="Promises" />
+                            </f:facet>
+                            <p:commandLink update="@form" title="Promises" actionListener="#{electionManifestoBean.showPromiseView}">
+                                <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+                                    height="20" />
+                                <f:setPropertyActionListener value="#{oneElectionManifesto}"
+                                    target="#{electionManifestoBean.selectedElectionManifesto}" />
+                            </p:commandLink>
+                        </p:column>
 
 					</p:dataTable>
 				</p:outputPanel>
@@ -94,14 +105,14 @@
 						<p:outputLabel value="Document(PDF Only)"></p:outputLabel>
 						<h:panelGrid columns="1">
 							<h3>PDF</h3>
-							<p:otputPanel id="docViewer">
+							<p:outputPanel id="docViewer">
 							
 							<object type="application/pdf" data="#{electionManifestoBean.selectedElectionManifesto.document.url}"
 								height="600px" width="900px">
 								Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a>
 								to download pdf instead.
 							</object>
-							</p:otputPanel>
+							</p:outputPanel>
 							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleDocFileUpload}" mode="advanced"
 								dragDropSupport="true" auto="true" update="messages, docViewer" sizeLimit="10000000" fileLimit="3"
 								allowTypes="/(\.|\/)(pdf)$/" />
@@ -124,6 +135,38 @@
 
 					</p:outputPanel>
 				</p:outputPanel>
+				
+				
+				<p:outputPanel id="promiseListView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
+                    <p:commandButton value="Create Election Manifesto Promise"
+                        actionListener="#{electionManifestoBean.createElectionManifestoPromise}" update="@form" />
+                    <p:dataTable var="oneElectionManifestoPromise" value="#{electionManifestoBean.electionManifestoPromises}">
+                        <p:column headerText="Id" style="width:100px;">
+                            <h:outputText value="#{oneElectionManifestoPromise.id}" />
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            <h:outputText value="#{oneElectionManifestoPromise.title}" />
+                        </p:column>
+                        <p:column headerText="description">
+                            <h:outputText value="#{oneElectionManifestoPromise.description}" />
+                        </p:column>
+
+                        <p:column style="width:100px;">
+                            <f:facet name="header">
+                                <h:outputText value="Update" />
+                            </f:facet>
+                            <p:commandLink update="@form" title="Update">
+                                <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+                                    height="20" />
+                                <f:setPropertyActionListener value="#{oneElectionManifestoPromise}"
+                                    target="#{electionManifestoBean.selectedElectionManifestoPromise}" />
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+				
 			</p:panel>
 		</h:form>
 	</h:body>
