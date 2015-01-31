@@ -136,6 +136,8 @@
 				
 				
 				<p:outputPanel id="promiseListView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
+				<p:commandButton value="<< back"
+                        actionListener="#{electionManifestoBean.back}" update="@form" />
                     <p:commandButton value="Create Election Manifesto Promise"
                         actionListener="#{electionManifestoBean.createElectionManifestoPromise}" update="@form" />
                     <p:dataTable var="oneElectionManifestoPromise" value="#{electionManifestoBean.electionManifestoPromises}">

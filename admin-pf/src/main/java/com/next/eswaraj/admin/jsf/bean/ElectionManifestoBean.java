@@ -67,6 +67,11 @@ public class ElectionManifestoBean extends BaseBean {
         showPage = "ElectionManifestoList";
     }
 
+    public void back() {
+        selectedElectionManifesto = new ElectionManifesto();
+        showPage = "ElectionManifestoList";
+    }
+
     public void saveElectionManifesto() {
         try {
             selectedElectionManifesto = adminService.saveElectionManifesto(selectedElectionManifesto);
