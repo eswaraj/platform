@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
@@ -88,14 +89,17 @@ public class CategoryBean {
 
     public void onNodeSelect(NodeSelectEvent event) {
         CommandButton createChildCategoryButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
+        SelectOneMenu systemCategoryselectOne = (SelectOneMenu) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
 
         System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass());
         if(event.getTreeNode() instanceof CustomTreeNode){
             //Enable Create Child Node Button
             createChildCategoryButton.setDisabled(false);
+            systemCategoryselectOne.setDisabled(true);
         }else{
             // Disable
             createChildCategoryButton.setDisabled(true);
+            systemCategoryselectOne.setDisabled(false);
         }
         // createButtons();
     }

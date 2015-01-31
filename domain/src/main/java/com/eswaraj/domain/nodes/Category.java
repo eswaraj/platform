@@ -24,6 +24,8 @@ public class Category extends BaseNode{
 	private String videoUrl;
     private String urlIdentifier;
     private String color;
+    @RelatedTo(type = "SYSTEM_CATEGORY")
+    private SystemCategory systemCategory;
 	    
     public Category() {}
     public Category(String name) {
@@ -88,6 +90,14 @@ public class Category extends BaseNode{
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public SystemCategory getSystemCategory() {
+        return systemCategory;
+    }
+
+    public void setSystemCategory(SystemCategory systemCategory) {
+        this.systemCategory = systemCategory;
     }
     @Override
 	public String toString() {

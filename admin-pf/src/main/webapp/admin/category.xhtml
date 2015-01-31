@@ -86,6 +86,13 @@
 							<p:inputText id="name" value="#{categoryBean.selectedNode.data.category.name}" style="width:200px" />
 							<p:outputLabel value="Description"></p:outputLabel>
 							<p:inputTextarea rows="6" cols="50" value="#{categoryBean.selectedNode.data.category.description}" />
+							<p:outputLabel value="System Category"></p:outputLabel>
+							<p:selectOneMenu id="systemCategory" converter="#{systemCategoryConvertor}" value="#{categoryBean.selectedNode.data.category.systemCategory}">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{systemCategoryBean.systemCategories}" var="oneReult" itemLabel="#{oneReult.name}"
+                                    itemValue="#{oneReult}" />
+                            </p:selectOneMenu>
+                                    
 							<p:outputLabel value="Image URL"></p:outputLabel>
                             <h:panelGrid columns="1">
                                 <p:graphicImage style="max-width:200px;" id="imageUrl" value="#{categoryBean.selectedNode.data.category.imageUrl}" />
