@@ -46,7 +46,7 @@ import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
-import com.eswaraj.queue.service.aws.impl.AwsImageUploadUtil;
+import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -57,7 +57,7 @@ public class LocationBean {
     private AdminService adminService;
 
     @Autowired
-    private AwsImageUploadUtil awsImageUploadUtil;
+    private AwsUploadUtil awsImageUploadUtil;
 
     @Autowired
     private FileService fileService;

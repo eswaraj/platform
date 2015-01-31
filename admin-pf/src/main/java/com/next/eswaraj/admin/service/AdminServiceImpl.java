@@ -26,6 +26,7 @@ import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Election;
+import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
@@ -38,6 +39,8 @@ import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.ElectionManifestoPointRepository;
+import com.eswaraj.domain.repo.ElectionManifestoRepository;
 import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
@@ -97,6 +100,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private ElectionRepository electionRepository;
+
+    @Autowired
+    private ElectionManifestoRepository electionManifestoRepository;
+
+    @Autowired
+    private ElectionManifestoPointRepository electionManifestoPointRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -536,6 +545,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Election> getElectionsByPoliticalAdminType(PoliticalBodyType politicalBodyType) throws ApplicationException {
         return electionRepository.findAllElectionsOfPoliticalBodyType(politicalBodyType);
+    }
+
+    @Override
+    public List<ElectionManifesto> getElectionManifestos() throws ApplicationException {
+        return convertToList(electionManifestoRepository.findAll());
+    }
+
+    @Override
+    public ElectionManifesto saveElectionManifesto(ElectionManifesto electionManifesto) throws ApplicationException {
+        return electionManifestoRepository.save(electionManifesto);
     }
 
 }

@@ -7,6 +7,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Election;
+import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
@@ -87,5 +88,9 @@ public interface AdminService {
     Election saveElection(Election election) throws ApplicationException;
 
     Election getElectionById(Long electionId) throws ApplicationException;
+
+    List<ElectionManifesto> getElectionManifestos() throws ApplicationException;
+
+    ElectionManifesto saveElectionManifesto(ElectionManifesto electionManifesto) throws ApplicationException;
 
 }

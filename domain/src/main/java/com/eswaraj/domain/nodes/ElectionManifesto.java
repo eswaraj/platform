@@ -27,6 +27,9 @@ public class ElectionManifesto extends BaseNode {
     @RelatedTo(type = "OF_PARTY")
     private Party party;
 
+    @RelatedTo(type = "MANIFESTO_DOCUMENT")
+    private Document document;
+
     public String getName() {
         return name;
     }
@@ -59,5 +62,12 @@ public class ElectionManifesto extends BaseNode {
         this.party = party;
     }
 
+    public Document getDocument() {
+        return document;
+    }
+
+    public void setDocument(Document document) {
+        this.document = document;
+    }
 
 }

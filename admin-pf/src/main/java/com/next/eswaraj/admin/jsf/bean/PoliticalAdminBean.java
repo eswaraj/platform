@@ -38,7 +38,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.queue.service.QueueService;
-import com.eswaraj.queue.service.aws.impl.AwsImageUploadUtil;
+import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -52,7 +52,7 @@ public class PoliticalAdminBean extends BaseBean {
     private QueueService queueService;
 
     @Autowired
-    private AwsImageUploadUtil awsImageUploadUtil;
+    private AwsUploadUtil awsImageUploadUtil;
 
     private TreeNode root;
 

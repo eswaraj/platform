@@ -27,7 +27,7 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.StorageClass;
 
 @Component
-public class AwsImageUploadUtil {
+public class AwsUploadUtil {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

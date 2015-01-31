@@ -1,0 +1,106 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="election_manifesto_form" enctype="multipart/form-data">
+			<p:panel id="mainPanel" header="Election Manifestos">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:outputPanel id="listView" rendered="#{electionManifestoBean.showPage eq 'ElectionManifestoList'}">
+					<p:commandButton value="Create Election Manifesto" actionListener="#{electionManifestoBean.createElectionManifesto}" update="@form" />
+					<p:dataTable var="oneElectionManifesto" value="#{electionManifestoBean.electionManifestos}">
+						<p:column headerText="Id">
+							<h:outputText value="#{oneElectionManifesto.id}" />
+						</p:column>
+
+						<p:column headerText="Name">
+							<h:outputText value="#{oneElectionManifesto.name}" />
+						</p:column>
+						<p:column headerText="description">
+							<h:outputText value="#{oneElectionManifesto.description}" />
+						</p:column>
+
+						<p:column style="width:100px;">
+							<f:facet name="header">
+								<h:outputText value="Update" />
+							</f:facet>
+							<p:commandLink update="@form" title="Update">
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+									height="20" />
+								<f:setPropertyActionListener value="#{oneElectionManifesto}" target="#{electionManifestoBean.selectedElectionManifesto}" />
+							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+				</p:outputPanel>
+				<p:outputPanel id="formView" rendered="#{!electionManifestoBean.showPage eq 'EditElectionManifesto'}">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Name" />
+						<p:inputText value="#{electionManifestoBean.selectElectionManifesto.name}" style="width:600px" />
+						<p:outputLabel value="Description" />
+						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectElectionManifesto.description}"/>
+
+						<p:outputLabel value="Document"></p:outputLabel>
+						<h:panelGrid columns="1">
+						<h3>PDF</h3><object type="application/pdf" data="#{electionManifestoBean.selectElectionManifesto.document.url}" height="300px" width="100%">
+            Your browser can't display pdf, <a href="#{electionManifestoBean.selectElectionManifesto.document.url}">click</a> to download pdf instead.
+        </object>
+							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+						</h:panelGrid>
+
+					</p:panelGrid>
+					<p:outputPanel id="buttonView">
+						<p:commandButton value="Cancel" process="@this:cancel" update="@form"
+							actionListener="#{electionManifestoBean.cancel}" ajax="true" styleClass="ui-priority-primary" id="cancel">
+						</p:commandButton>
+						<p:commandButton id="saveElectionManifesto" value="Save Political Body Admin Type" update="@form" ajax="true"
+							actionListener="#{electionManifestoBean.saveParty}" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:blockUI block="@form" trigger="saveElectionManifesto">Saving<br />
+							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+						</p:blockUI>
+                        <p:blockUI block="@form" trigger="cancel">Loading<br />
+                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                        </p:blockUI>
+
+					</p:outputPanel>
+				</p:outputPanel>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

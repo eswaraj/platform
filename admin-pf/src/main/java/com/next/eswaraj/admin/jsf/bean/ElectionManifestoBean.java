@@ -16,51 +16,51 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.domain.nodes.Party;
+import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class PoliticalPartyBean extends BaseBean {
+public class ElectionManifestoBean extends BaseBean {
 
-    private boolean showList;
-    private List<Party> parties;
-    private Party selectedParty;
+    private String showPage;
+    private List<ElectionManifesto> electionManifestos;
+    private ElectionManifesto selectedElectionManifesto;
 
     @Autowired
     private AdminService adminService;
     
     @Autowired
-    private AwsUploadUtil awsImageUploadUtil;
+    private AwsUploadUtil awsUploadUtil;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
     public void init() {
         try {
-            showList = true;
-            parties = adminService.getAllParties();
+            showPage = "ElectionManifestoList";
+            electionManifestos = adminService.getElectionManifestos();
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
         }
     }
 
-    public void createParty() {
-        selectedParty = new Party();
-        showList = false;
+    public void createElectionManifesto() {
+        selectedElectionManifesto = new ElectionManifesto();
+        showPage = "EditElectionManifesto";
     }
 
     public void cancel() {
-        selectedParty = new Party();
-        showList = true;
+        selectedElectionManifesto = new ElectionManifesto();
+        showPage = "ElectionManifestoList";
     }
 
-    public void saveParty() {
+    public void saveElectionManifesto() {
         try {
-            selectedParty = adminService.saveParty(selectedParty);
-            parties = adminService.getAllParties();
-            showList = true;
+            selectedElectionManifesto = adminService.saveElectionManifesto(selectedElectionManifesto);
+            electionManifestos = adminService.getElectionManifestos();
+            showPage = "ElectionManifestoList";
         } catch (ApplicationException e) {
             e.printStackTrace();
         }
@@ -70,11 +70,11 @@ public class PoliticalPartyBean extends BaseBean {
     public void handleFileUpload(FileUploadEvent event) {
 
         String imageType = ".jpg";
-        String remoteFileName = selectedParty.getId() + imageType;
+        String remoteFileName = selectedElectionManifesto.getId() + imageType;
         try {
-            String httpFilePath = awsImageUploadUtil.uploadProfileImageJpeg(remoteFileName, event.getFile().getInputstream());
-            selectedParty.setImageUrl(httpFilePath);
-            selectedParty = adminService.saveParty(selectedParty);
+            String httpFilePath = awsUploadUtil.uploadProfileImageJpeg(remoteFileName, event.getFile().getInputstream());
+            // selectedElectionManifesto.setImageUrl(httpFilePath);
+            selectedElectionManifesto = adminService.saveElectionManifesto(selectedElectionManifesto);
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
@@ -85,33 +85,14 @@ public class PoliticalPartyBean extends BaseBean {
 
     }
 
-    public boolean isShowList() {
-        return showList;
+    public ElectionManifesto getSelectedElectionManifesto() {
+        return selectedElectionManifesto;
     }
 
-    public void setShowList(boolean showList) {
-        this.showList = showList;
-    }
-
-    public Party getSelectedParty() {
-        return selectedParty;
-    }
-
-    public void setSelectedParty(Party selectedParty) {
-        this.selectedParty = new Party();
-        BeanUtils.copyProperties(selectedParty, this.selectedParty);
-        showList = false;
-    }
-
-    public List<Party> getParties() {
-        if (parties == null) {
-            init();
-        }
-        return parties;
-    }
-
-    public void setParties(List<Party> parties) {
-        this.parties = parties;
+    public void setSelectedElectionManifesto(ElectionManifesto selectedElectionManifesto) {
+        this.selectedElectionManifesto = new ElectionManifesto();
+        BeanUtils.copyProperties(selectedElectionManifesto, this.selectedElectionManifesto);
+        showPage = "EditElectionManifesto";
     }
 
 }

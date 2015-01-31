@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.queue.service.QueueService;
-import com.eswaraj.queue.service.aws.impl.AwsImageUploadUtil;
+import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -38,7 +38,7 @@ public class CategoryBean {
     private QueueService queueService;
 
     @Autowired
-    private AwsImageUploadUtil awsImageUploadUtil;
+    private AwsUploadUtil awsImageUploadUtil;
 
     private TreeNode root;
 
