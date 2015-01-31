@@ -89,7 +89,7 @@ public class CategoryBean {
 
     public void onNodeSelect(NodeSelectEvent event) {
         CommandButton createChildCategoryButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
-        SelectOneMenu systemCategoryselectOne = (SelectOneMenu) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
+        SelectOneMenu systemCategoryselectOne = (SelectOneMenu) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:systemCategory");
 
         System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass());
         if(event.getTreeNode() instanceof CustomTreeNode){
