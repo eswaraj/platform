@@ -141,7 +141,7 @@ public class AwsUploadUtil {
             type = "application/msdoc";
         }
         uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, type);
-        String httpPath = s3BaseHttpForProfilePic + "/" + profilePicBaseDirectory + "/" + remoteFileName;
+        String httpPath = s3BaseHttpForProfilePic + "/" + manifestoBaseDirectory + "/" + remoteFileName;
         return httpPath;
     }
 
