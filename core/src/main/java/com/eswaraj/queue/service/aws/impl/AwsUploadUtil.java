@@ -61,6 +61,9 @@ public class AwsUploadUtil {
     @Value("${s3_base_http_path_profile_pic}")
     private String s3BaseHttpForProfilePic;
 
+    @Value("${manifesto_base_directory}")
+    private String manifestoBaseDirectory;
+
     private void uploadFileToS3(String awsKey, String awsSecret, String bucketName, String remoteFileNameAndPath, String localFilePathToUpload) throws FileNotFoundException {
 
         AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(awsKey, awsSecret));
@@ -96,7 +99,7 @@ public class AwsUploadUtil {
         logger.info("File Uploaded");
     }
 
-    public String uploadProfileImageJpeg(String remoteFileName, InputStream localFilePathToUpload) throws FileNotFoundException {
+    public String uploadProfileImageJpeg(String remoteFileName, InputStream localFilePathToUpload, String type) throws FileNotFoundException {
         String remoteFileNameAndPath = profilePicBaseDirectory + "/" + remoteFileName;
         uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, "image/jpeg");
         String httpPath = s3BaseHttpForProfilePic + "/" + profilePicBaseDirectory + "/" + remoteFileName;
@@ -122,6 +125,23 @@ public class AwsUploadUtil {
         String remoteFileNameAndPath = locationPicBaseDirectory + "/" + remoteFileName;
         uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, contentTypeHeader);
         String httpPath = s3BaseHttpForProfilePic + "/" + locationPicBaseDirectory + "/" + remoteFileName;
+        return httpPath;
+    }
+
+    public String uploadManifestoDocument(String remoteFileName, InputStream localFilePathToUpload, String documentType) throws FileNotFoundException {
+        String remoteFileNameAndPath = manifestoBaseDirectory + "/" + remoteFileName;
+        String type = "application/octet-stream";
+        if (documentType.equalsIgnoreCase("pdf")) {
+            type = "application/pdf";
+        }
+        if (documentType.equalsIgnoreCase("rtf")) {
+            type = "text/rtf";
+        }
+        if (documentType.equalsIgnoreCase("doc")) {
+            type = "application/msdoc";
+        }
+        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, type);
+        String httpPath = s3BaseHttpForProfilePic + "/" + profilePicBaseDirectory + "/" + remoteFileName;
         return httpPath;
     }
 

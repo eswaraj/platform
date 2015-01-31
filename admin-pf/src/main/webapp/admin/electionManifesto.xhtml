@@ -44,7 +44,7 @@
 					<p:commandButton value="Create Election Manifesto"
 						actionListener="#{electionManifestoBean.createElectionManifesto}" update="@form" />
 					<p:dataTable var="oneElectionManifesto" value="#{electionManifestoBean.electionManifestos}">
-						<p:column headerText="Id">
+						<p:column headerText="Id" style="width:100px;">
 							<h:outputText value="#{oneElectionManifesto.id}" />
 						</p:column>
 
@@ -79,7 +79,7 @@
 						<p:selectOneMenu id="election" converter="#{electionConvertor}"
 							value="#{electionManifestoBean.selectedElectionManifesto.election}">
 							<f:selectItem itemLabel="Select One" itemValue="" />
-							<f:selectItems value="#{electionBean.Elections}" var="oneReult" itemLabel="#{oneReult.name}"
+							<f:selectItems value="#{electionBean.elections}" var="oneReult" itemLabel="#{oneReult.name}"
 								itemValue="#{oneReult}" />
 
 						</p:selectOneMenu>
@@ -99,8 +99,8 @@
 								Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a>
 								to download pdf instead.
 							</object>
-							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleFileUpload}" mode="advanced"
-								dragDropSupport="true" auto="true" update="messages" sizeLimit="200000" fileLimit="3"
+							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleDocFileUpload}" mode="advanced"
+								dragDropSupport="true" auto="true" update="messages" sizeLimit="2000000" fileLimit="3"
 								allowTypes="/(\.|\/)(jpe?g|png)$/" />
 						</h:panelGrid>
 

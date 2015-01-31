@@ -16,6 +16,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Document;
+import com.eswaraj.domain.nodes.Document.DocumentType;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
@@ -67,13 +69,20 @@ public class ElectionManifestoBean extends BaseBean {
 
     }
 
-    public void handleFileUpload(FileUploadEvent event) {
+    public void handleDocFileUpload(FileUploadEvent event) {
 
-        String imageType = ".jpg";
-        String remoteFileName = selectedElectionManifesto.getId() + imageType;
+        String imageType = ".pdf";
+        String remoteFileName = selectedElectionManifesto.getElection().getId() + "/" + selectedElectionManifesto.getParty().getId() + "/" + selectedElectionManifesto.getId() + imageType;
         try {
-            String httpFilePath = awsUploadUtil.uploadProfileImageJpeg(remoteFileName, event.getFile().getInputstream());
+            String httpFilePath = awsUploadUtil.uploadManifestoDocument(remoteFileName, event.getFile().getInputstream(), "pdf");
             // selectedElectionManifesto.setImageUrl(httpFilePath);
+            Document document = selectedElectionManifesto.getDocument();
+            if (document == null) {
+                document = new Document();
+            }
+            document.setUrl(httpFilePath);
+            document.setType(DocumentType.Pdf);
+            selectedElectionManifesto.setDocument(document);
             selectedElectionManifesto = adminService.saveElectionManifesto(selectedElectionManifesto);
             FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
