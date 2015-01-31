@@ -563,4 +563,9 @@ public class AdminServiceImpl implements AdminService {
         return electionManifestoPromiseRepository.save(electionManifestoPromise);
     }
 
+    @Override
+    public List<ElectionManifestoPromise> getElectionManifestoPromisesOfManifesto(Long electionManifestoId) throws ApplicationException {
+        return electionManifestoPromiseRepository.getAllPromisesOfManifesto(electionManifestoId);
+    }
+
 }

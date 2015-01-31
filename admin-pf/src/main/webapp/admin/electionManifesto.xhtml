@@ -169,7 +169,7 @@
                 
                 
                 
-                <p:outputPanel id="formView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
+                <p:outputPanel id="promiseFormView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Title" />
                         <p:inputText value="#{electionManifestoBean.selectedElectionManifestoPromise.title}" style="width:600px" />
@@ -177,9 +177,9 @@
                         <p:inputTextarea rows="10" cols="80" value="#{electionManifestoBean.selectedElectionManifestoPromise.description}" />
 
                     </p:panelGrid>
-                    <p:outputPanel id="buttonView">
+                    <p:outputPanel id="promiseButtonView">
                         <p:commandButton value="Cancel" process="@this:cancelPromise" update="@form"
-                            actionListener="#{electionManifestoBean.cancelPromise}" ajax="true" styleClass="ui-priority-primary" id="cancel">
+                            actionListener="#{electionManifestoBean.cancelPromise}" ajax="true" styleClass="ui-priority-primary" id="cancelPromise">
                         </p:commandButton>
                         <p:commandButton id="saveElectionManifestoPromise" value="Save Election Manifesto Promise" update="@form" ajax="true"
                             actionListener="#{electionManifestoBean.saveElectionManifestoPromise}" styleClass="ui-priority-primary">

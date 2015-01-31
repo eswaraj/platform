@@ -96,4 +96,6 @@ public interface AdminService {
 
     ElectionManifestoPromise saveElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise) throws ApplicationException;
 
+    List<ElectionManifestoPromise> getElectionManifestoPromisesOfManifesto(Long electionManifestoId) throws ApplicationException;
+
 }

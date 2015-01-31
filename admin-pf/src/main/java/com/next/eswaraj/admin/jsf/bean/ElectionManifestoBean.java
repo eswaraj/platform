@@ -93,8 +93,8 @@ public class ElectionManifestoBean extends BaseBean {
             selectedElectionManifestoPromise.setElectionManifesto(selectedElectionManifesto);
             selectedElectionManifestoPromise = adminService.saveElectionManifestoPromise(selectedElectionManifestoPromise);
 
-            electionManifestos = adminService.getElectionManifestos();
-            showPage = "ElectionManifestoList";
+            electionManifestoPromises = adminService.getElectionManifestoPromisesOfManifesto(selectedElectionManifesto.getId());
+            showPage = "ElectionManifestoPromiseList";
         } catch (ApplicationException e) {
             e.printStackTrace();
         }
@@ -129,6 +129,11 @@ public class ElectionManifestoBean extends BaseBean {
     public void showPromiseView(ElectionManifesto selectedElectionManifesto) {
         showPage = "ElectionManifestoPromiseList";
         this.selectedElectionManifesto = selectedElectionManifesto;
+        try {
+            electionManifestoPromises = adminService.getElectionManifestoPromisesOfManifesto(selectedElectionManifesto.getId());
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", "Unabel to Gte Promises from DB", e);
+        }
         // electionManifestoPromises = adminService
     }
     public ElectionManifesto getSelectedElectionManifesto() {
