@@ -131,7 +131,7 @@ public class ElectionManifestoBean extends BaseBean {
         this.selectedElectionManifesto = selectedElectionManifesto;
         try {
             electionManifestoPromises = adminService.getElectionManifestoPromisesOfManifesto(selectedElectionManifesto.getId());
-        } catch (ApplicationException e) {
+        } catch (Exception e) {
             sendErrorMessage("Error", "Unabel to Gte Promises from DB", e);
         }
         // electionManifestoPromises = adminService
