@@ -72,12 +72,12 @@
 						<p:outputLabel value="Name" />
 						<p:inputText value="#{electionManifestoBean.selectElectionManifesto.name}" style="width:600px" />
 						<p:outputLabel value="Description" />
-						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectElectionManifesto.description}"/>
+						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectedElectionManifesto.description}"/>
 
 						<p:outputLabel value="Document"></p:outputLabel>
 						<h:panelGrid columns="1">
-						<h3>PDF</h3><object type="application/pdf" data="#{electionManifestoBean.selectElectionManifesto.document.url}" height="300px" width="100%">
-            Your browser can't display pdf, <a href="#{electionManifestoBean.selectElectionManifesto.document.url}">click</a> to download pdf instead.
+						<h3>PDF</h3><object type="application/pdf" data="#{electionManifestoBean.selectedElectionManifesto.document.url}" height="300px" width="100%">
+            Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a> to download pdf instead.
         </object>
 							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
 								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
