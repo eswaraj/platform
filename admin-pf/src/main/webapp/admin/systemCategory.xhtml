@@ -61,7 +61,7 @@
 							<p:commandLink update="@form" title="Update">
 								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 									height="20" />
-								<f:setPropertyActionListener value="#{oneSystemCategory}" target="#{systemCategoryBean.selectedSystemcategory}" />
+								<f:setPropertyActionListener value="#{oneSystemCategory}" target="#{systemCategoryBean.selectedSystemCategory}" />
 							</p:commandLink>
 						</p:column>
 
@@ -70,9 +70,9 @@
 				<p:outputPanel id="formView" rendered="#{!systemCategoryBean.showList}">
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Name" />
-						<p:inputText value="#{systemCategoryBean.selectedSystemcategory.name}" style="width:600px" />
+						<p:inputText value="#{systemCategoryBean.selectedSystemCategory.name}" style="width:600px" />
 						<p:outputLabel value="Description" />
-						<p:inputText value="#{systemCategoryBean.selectedSystemcategory.description}" style="width:200px" />
+						<p:inputText value="#{systemCategoryBean.selectedSystemCategory.description}" style="width:200px" />
 
 					</p:panelGrid>
 					<p:outputPanel id="buttonView">
