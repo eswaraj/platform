@@ -9,7 +9,7 @@ import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 
 public interface ElectionManifestoPromiseRepository extends GraphRepository<ElectionManifestoPromise> {
 	
-    @Query("start electionManifesto=node({0}) match (electionManifesto)<-[:OF_ELECTION_MANIFESTO]-(electionManifestoPromise) where childCategory.__type__ = 'ElectionManifestoPromise' return electionManifestoPromise")
+    @Query("start electionManifesto=node({0}) match (electionManifesto)<-[:OF_ELECTION_MANIFESTO]-(electionManifestoPromise) where electionManifestoPromise.__type__ = 'ElectionManifestoPromise' return electionManifestoPromise")
     public List<ElectionManifestoPromise> getAllPromisesOfManifesto(Long electionManifestoId);
 
 }

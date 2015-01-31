@@ -59,24 +59,31 @@
 							<f:facet name="header">
 								<h:outputText value="Update" />
 							</f:facet>
-							<p:commandLink update="@form" title="Update">
+							<p:commandLink update="@form" title="Update" id="updateElectionManifesto">
 								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 									height="20" />
 								<f:setPropertyActionListener value="#{oneElectionManifesto}"
 									target="#{electionManifestoBean.selectedElectionManifesto}" />
 							</p:commandLink>
+		                     <p:blockUI block="@form" trigger="updateElectionManifesto">Loading<br />
+		                          <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+		                      </p:blockUI>
 						</p:column>
 						<p:column style="width:100px;">
                             <f:facet name="header">
                                 <h:outputText value="Promises" />
                             </f:facet>
-                            <p:commandLink update="@form" title="Promises" actionListener="#{electionManifestoBean.showPromiseView(oneElectionManifesto)}">
+                            <p:commandLink update="@form" title="Promises" id="viewPromises" actionListener="#{electionManifestoBean.showPromiseView(oneElectionManifesto)}">
                                 <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
                                     height="20" />
                             </p:commandLink>
+		                     <p:blockUI block="@form" trigger="viewPromises">Loading<br />
+		                          <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+		                      </p:blockUI>
                         </p:column>
 
 					</p:dataTable>
+					
 				</p:outputPanel>
 				<p:outputPanel id="formView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifesto'}">
 					<p:panelGrid columns="2">
