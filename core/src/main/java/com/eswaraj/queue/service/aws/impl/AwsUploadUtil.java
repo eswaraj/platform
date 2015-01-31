@@ -99,7 +99,7 @@ public class AwsUploadUtil {
         logger.info("File Uploaded");
     }
 
-    public String uploadProfileImageJpeg(String remoteFileName, InputStream localFilePathToUpload, String type) throws FileNotFoundException {
+    public String uploadProfileImageJpeg(String remoteFileName, InputStream localFilePathToUpload) throws FileNotFoundException {
         String remoteFileNameAndPath = profilePicBaseDirectory + "/" + remoteFileName;
         uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, "image/jpeg");
         String httpPath = s3BaseHttpForProfilePic + "/" + profilePicBaseDirectory + "/" + remoteFileName;
