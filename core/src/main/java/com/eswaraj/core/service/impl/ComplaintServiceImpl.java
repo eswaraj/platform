@@ -191,12 +191,31 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             String googleAddress = saveComplaintRequestDto.getGoogleLocationJson();
             if (!StringUtils.isEmpty(googleAddress)) {
                 JsonObject jsonObject = (JsonObject) jsonParser.parse(googleAddress);
-                String locationAddress = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("formatted_address").getAsString();
+                JsonObject mAddressLinesJsonObject = jsonObject.get("mAddressLines").getAsJsonObject();
+                StringBuilder sb = new StringBuilder();
+                addAddress(sb, mAddressLinesJsonObject, 0);
+                addAddress(sb, mAddressLinesJsonObject, 1);
+                addAddress(sb, mAddressLinesJsonObject, 2);
+                addAddress(sb, mAddressLinesJsonObject, 3);
+                addAddress(sb, mAddressLinesJsonObject, 4);
+                String locationAddress = sb.toString();
+                logger.info("Complaint Address : " + locationAddress);
                 complaint.setLocationAddress(locationAddress);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void addAddress(StringBuilder sb, JsonObject mAddressLinesJsonObject, int count) {
+        String field = String.valueOf(count);
+        if (mAddressLinesJsonObject.get(field) != null) {
+            if (count > 0) {
+                sb.append(", ");
+            }
+            sb.append(mAddressLinesJsonObject.get(field).getAsString());
+        }
+
     }
 
     private void creatComplaintPersonRelation(Complaint complaint, Person person, boolean anonymous) {

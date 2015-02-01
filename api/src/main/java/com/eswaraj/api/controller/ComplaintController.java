@@ -35,8 +35,6 @@ import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.SettingService;
 import com.eswaraj.core.service.StormCacheAppServices;
-import com.eswaraj.domain.nodes.Setting;
-import com.eswaraj.domain.nodes.Setting.SettingNames;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
@@ -243,8 +241,7 @@ public class ComplaintController extends BaseController{
     }
 
     private void updateRandomDelhiPoint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
-        Setting setting = settingService.getSetting(SettingNames.FAKE_DELHI_POINTS.getName());
-        if (setting != null && setting.getValue().equalsIgnoreCase("false")) {
+        if (!settingService.isFakeLocation()) {
             return;
         }
         Double[][] delhiPoints = { { 77.04124994150143, 28.623132677360626 }, { 77.03290098437007, 28.62572366266242 }, { 77.02688134045275, 28.631229145737702 },
