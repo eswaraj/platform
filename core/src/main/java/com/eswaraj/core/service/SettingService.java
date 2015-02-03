@@ -18,4 +18,8 @@ public interface SettingService {
     boolean isFakeLocation() throws ApplicationException;
 
     boolean isAllowPoliticalAdminSearch() throws ApplicationException;
+
+    boolean isAllowComplaintForUnknownLocation() throws ApplicationException;
+
+    String getMessageComplaintForUnknownLocation() throws ApplicationException;
 }

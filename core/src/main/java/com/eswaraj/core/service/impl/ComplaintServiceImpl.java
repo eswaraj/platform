@@ -335,6 +335,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         logger.info("Get Locations for Key : " + rediskey);
         Set<String> complaintLocations = stringRedisTemplate.opsForSet().members(rediskey);
         logger.info("Founds Locations for Key : " + complaintLocations);
+        if (!settingService.isAllowComplaintForUnknownLocation() && (complaintLocations == null || complaintLocations.isEmpty())) {
+            throw new ApplicationException(settingService.getMessageComplaintForUnknownLocation());
+        }
         Set<PoliticalBodyAdmin> politicalBodyAdmins = new HashSet<>();
         if (complaintLocations != null && !complaintLocations.isEmpty()) {
 

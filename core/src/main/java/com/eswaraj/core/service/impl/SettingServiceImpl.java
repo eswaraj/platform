@@ -71,6 +71,13 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
 
     }
 
+    private String getStringResult(Setting.SettingNames settingName) throws ApplicationException {
+        Setting setting = getSetting(settingName.getName());
+        if (setting == null) {
+            return settingName.getDefaultValue();
+        }
+        return setting.getValue();
+    }
     private boolean getBooleanResult(Setting.SettingNames settingName) throws ApplicationException {
         Setting setting = getSetting(settingName.getName());
         logger.info("Setting = {}", setting);
@@ -105,6 +112,16 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
     @Override
     public boolean isAllowPoliticalAdminSearch() throws ApplicationException {
         return getBooleanResult(SettingNames.ALLOW_POLITICAL_ADMIN_SEARCH);
+    }
+
+    @Override
+    public boolean isAllowComplaintForUnknownLocation() throws ApplicationException {
+        return getBooleanResult(SettingNames.ALLOW_COMPLAINT_FROM_UNKNOWN_LOCATION);
+    }
+
+    @Override
+    public String getMessageComplaintForUnknownLocation() throws ApplicationException {
+        return getStringResult(SettingNames.MESSAGE_COMPLAINT_FROM_UNKNOWN_LOCATION);
     }
 
 }
