@@ -210,9 +210,12 @@ public class PoliticalAdminBean extends BaseBean {
         try {
             String httpFilePath = awsImageUploadUtil.uploadProfileImageJpeg(remoteFileName, event.getFile().getInputstream());
             selectedPerson.setProfilePhoto(httpFilePath);
-            selectedPerson = adminService.savePerson(selectedPerson);
-            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            if (selectedPerson.getId() != null && selectedPerson.getId() > 0) {
+                // save it if person is already saved
+                selectedPerson = adminService.savePerson(selectedPerson);
+                FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
         } catch (Exception ex) {
             logger.error("Unable to upload File", ex);
             FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
