@@ -304,6 +304,15 @@ public class PoliticalAdminBean extends BaseBean {
             if (selectedPoliticalBodyAdmin.getElection() == null) {
                 sendErrorMessage("political_admin_form:election", "Error", "Please Select an Election from which this leader was Elected");
             }
+            if (selectedPoliticalBodyAdmin.getPerson() == null) {
+                sendErrorMessage(null, "Error", "Please search and select a person");
+            }
+            if (selectedPoliticalBodyAdmin.getLocation() == null) {
+                sendErrorMessage(null, "Error", "Please Select a Location");
+            }
+            if (selectedPoliticalBodyAdmin.getPoliticalBodyType() == null) {
+                sendErrorMessage(null, "Error", "Please Select a Political Body type");
+            }
             if (isValidInput()) {
                 if (selectedPoliticalBodyAdmin.getId() == null) {
                     selectedPoliticalBodyAdmin.setActive(true);
