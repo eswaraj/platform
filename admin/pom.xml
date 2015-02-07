@@ -91,10 +91,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.eswaraj</groupId>
-			<artifactId>eswaraj-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.eswaraj</groupId>
 			<artifactId>eswaraj-core</artifactId>
 		</dependency>
 		<dependency>
