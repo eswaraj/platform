@@ -82,15 +82,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.eswaraj</groupId>
-			<artifactId>eswaraj-api</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>log4j-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.eswaraj</groupId>
 			<artifactId>eswaraj-core</artifactId>
 		</dependency>
 		<dependency>
