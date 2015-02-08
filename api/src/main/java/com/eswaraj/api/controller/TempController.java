@@ -70,7 +70,7 @@ public class TempController extends BaseController {
         for (Person onePerson : persons) {
             System.out.println("onePerson : " + onePerson);
         }
-        return appService.getAllPersonsForLeaders();
+        return persons;
     }
 
 }
