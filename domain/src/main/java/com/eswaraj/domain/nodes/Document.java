@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -13,6 +14,7 @@ import com.eswaraj.domain.base.DocumentLanguage;
  *
  */
 @NodeEntity
+@TypeAlias("Document")
 public class Document extends BaseNode {
 
     private String url;

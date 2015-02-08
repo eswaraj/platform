@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -12,6 +13,7 @@ import com.eswaraj.domain.base.BaseNode;
  * @data Jun 13, 2014
  */
 @NodeEntity
+@TypeAlias("PoliticalBodyType")
 public class PoliticalBodyType extends BaseNode{
 	private String shortName;
 	private String name;

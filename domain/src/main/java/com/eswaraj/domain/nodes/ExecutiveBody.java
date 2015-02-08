@@ -1,4 +1,7 @@
-package com.eswaraj.domain.nodes;import org.springframework.data.neo4j.annotation.NodeEntity;
+package com.eswaraj.domain.nodes;
+
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -12,6 +15,7 @@ import com.eswaraj.domain.nodes.division.Boundary;
  */
 
 @NodeEntity
+@TypeAlias("ExecutiveBody")
 public class ExecutiveBody extends BaseNode {
 
 	private String name;

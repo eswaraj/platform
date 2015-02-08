@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -7,6 +8,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.eswaraj.domain.base.BaseNode;
 
 @NodeEntity
+@TypeAlias("FacebookAccount")
 public class FacebookAccount extends BaseNode {
 
     @Indexed(indexName = "FacebookUserNameIdx")

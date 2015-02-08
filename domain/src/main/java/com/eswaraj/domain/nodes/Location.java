@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -15,6 +16,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Location")
 public class Location extends BaseNode {
 
     @Indexed(indexName = "LocationNameFt", indexType = IndexType.FULLTEXT)

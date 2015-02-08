@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -17,6 +18,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Complaint")
 public class Complaint extends BaseNode {
 
     private String title;

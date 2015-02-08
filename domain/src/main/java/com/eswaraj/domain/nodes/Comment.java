@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
@@ -15,6 +16,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Comment")
 public class Comment extends BaseNode {
 
     private String text;

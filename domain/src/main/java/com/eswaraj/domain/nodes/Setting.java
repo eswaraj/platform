@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -11,6 +12,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Setting")
 public class Setting extends BaseNode{
 
     public enum SettingNames {

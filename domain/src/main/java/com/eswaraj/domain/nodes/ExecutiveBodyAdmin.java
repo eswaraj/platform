@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -14,6 +15,7 @@ import com.eswaraj.domain.base.BaseNode;
  */
 
 @NodeEntity
+@TypeAlias("ExecutiveBodyAdmin")
 public class ExecutiveBodyAdmin extends BaseNode {
 
 	@RelatedTo(type="REPORTS_TO")

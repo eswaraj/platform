@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.support.index.IndexType;
@@ -15,6 +16,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Person")
 public class Person extends BaseNode {
 
 	@Indexed(indexName="PersonNameFt", indexType=IndexType.FULLTEXT)
