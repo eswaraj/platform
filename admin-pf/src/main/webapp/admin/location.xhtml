@@ -53,7 +53,7 @@
 									<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
 									<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
 									<p:ajax event="select"
-										update=":location_form:formView,:location_form:tabView:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
+										update=":location_form"
 										listener="#{locationBean.onNodeSelect}" />
 									<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
 
@@ -188,7 +188,7 @@
 												<p:fileUpload id="kmlFileUploader" fileUploadListener="#{locationBean.handleKmlFileUpload}" mode="advanced"
 													dragDropSupport="true" auto="true" update="@form:messages" sizeLimit="20000000" fileLimit="1"
 													allowTypes="/(\.|\/)(kml)$/" />
-												<p:blockUI block="@form" trigger="kmlFileUploader">Uploading<br />
+												<p:blockUI block="@form" trigger="kmlFileUploader" update="@form">Uploading<br />
 													<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 												</p:blockUI>
                                                 <p:blockUI block="@form" trigger="kmlTable">Refreshing<br />
@@ -197,6 +197,9 @@
 
 												<p:dataTable id="kmlTable" var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}"
 													selectionMode="single" selection="#{locationBean.selectedKml}" rowKey="#{oneBoundaryFile.id}">
+													<p:column style="width:16px">
+											            <p:rowToggler />
+											        </p:column>
 													<p:column headerText="File name">
 														<h:outputText value="#{oneBoundaryFile.originalFileName}" />
 													</p:column>
@@ -208,7 +211,7 @@
 														<h:outputText value="#{oneBoundaryFile.active}" />
 													</p:column>
 													<p:rowExpansion>
-										            <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
+										            <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
 										 
 										                <h:outputText value="Upload Date" />
                                                         <h:outputText value="#{oneBoundaryFile.uploadDate}">
@@ -216,9 +219,7 @@
                                                         </h:outputText>
 										 
 										                <h:outputText value="Processing Time" />
-										                <h:outputText value="#{oneBoundaryFile.totalTimeToProcessMs}" />
-                                                        <h:outputText value="KML" />
-                                                        <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
+										                <h:outputText value="#{oneBoundaryFile.totalTimeToProcessMs} ms" />
                                                         <h:outputText value="KML" />
                                                         <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
 
