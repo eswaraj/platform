@@ -128,9 +128,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.eswaraj.cache</groupId>
+			<groupId>com.eswaraj</groupId>
 			<artifactId>eswaraj-cache</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
