@@ -238,7 +238,8 @@ public class AdminServiceImpl implements AdminService {
             }
         } else {
             Location parentLocation = location.getParentLocation();
-            if (!location.getLocationType().getParentLocationType().getId().equals(parentLocation.getLocationType().getId())) {
+            LocationType locationType = locationTypeRepository.findOne(location.getLocationType().getId());
+            if (!locationType.getParentLocationType().getId().equals(parentLocation.getLocationType().getId())) {
                 LocationType parentLocationType = locationTypeRepository.findOne(parentLocation.getLocationType().getId());
                 throw new ApplicationException("Can not create a Location of type [" + location.getLocationType().getName() + "], under location type [" + parentLocationType.getName() + "]");
             }

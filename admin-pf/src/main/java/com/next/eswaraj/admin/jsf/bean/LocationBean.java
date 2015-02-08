@@ -283,6 +283,7 @@ public class LocationBean {
 
     public void onMarkerDrag(MarkerDragEvent event) {
         Marker marker = event.getMarker();
+        logger.info("onMarkerDrag");
         if (selectedNode.getData() instanceof Document) {
             Document document = (Document) selectedNode.getData();
             document.getLocation().setLatitude(marker.getLatlng().getLat());
