@@ -226,7 +226,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Location saveLocation(Location location) throws ApplicationException {
         location.setUrlIdentifier(getLocationUrlIdentifier(location));
+        checkParentChildRule(location);
         return locationRepository.save(location);
+    }
+
+    private void checkParentChildRule(Location location) throws ApplicationException {
+        // LocationType parentLocationType = locationTypeRepository.findOne(location.getParentLocation().getLocationType().getId());
+        if (location.getParentLocation() == null) {
+            if (location.getLocationType().getParentLocationType() != null) {
+                throw new ApplicationException("Can not create a Location of type [" + location.getLocationType().getName() + "], without a parent Location");
+            }
+        } else {
+            Location parentLocation = location.getParentLocation();
+            if (!location.getLocationType().getParentLocationType().getId().equals(parentLocation.getLocationType().getId())) {
+                LocationType parentLocationType = locationTypeRepository.findOne(parentLocation.getLocationType().getId());
+                throw new ApplicationException("Can not create a Location of type [" + location.getLocationType().getName() + "], under location type [" + parentLocationType.getName() + "]");
+            }
+        }
     }
 
     @Override

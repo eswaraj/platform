@@ -54,7 +54,7 @@ public interface LocationService {
 	
     LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException;
 
-    LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active) throws ApplicationException;
+    LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active, long totalTimeToProcessMs) throws ApplicationException;
 
 	BoundaryDto saveBoundary(BoundaryDto boundaryDto) throws ApplicationException;
 	

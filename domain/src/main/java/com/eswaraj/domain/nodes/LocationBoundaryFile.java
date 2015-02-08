@@ -25,6 +25,7 @@ public class LocationBoundaryFile extends BaseNode {
 	private String status;
     private boolean active;
     private String originalFileName;
+    private Long totalTimeToProcessMs;
 
 	public String getFileNameAndPath() {
 		return fileNameAndPath;
@@ -65,6 +66,14 @@ public class LocationBoundaryFile extends BaseNode {
 
     public void setOriginalFileName(String originalFileName) {
         this.originalFileName = originalFileName;
+    }
+
+    public Long getTotalTimeToProcessMs() {
+        return totalTimeToProcessMs;
+    }
+
+    public void setTotalTimeToProcessMs(Long totalTimeToProcessMs) {
+        this.totalTimeToProcessMs = totalTimeToProcessMs;
     }
     @Override
     public String toString() {

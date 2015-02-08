@@ -505,7 +505,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
     }
 
     @Override
-    public LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active) throws ApplicationException {
+    public LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active, long totalTimeToProcessMs) throws ApplicationException {
         LocationBoundaryFile locationBoundaryFile = locationBoundaryFileRepository.findOne(locationBoundaryFileId);
         Collection<LocationBoundaryFile> allExistingLocationBoudaryFiles = locationBoundaryFileRepository.getAllLocationBoundaryFile(locationBoundaryFile.getLocation());
         for (LocationBoundaryFile oneLocationBoundaryFile : allExistingLocationBoudaryFiles) {
@@ -513,6 +513,7 @@ public class LocationServiceImpl extends BaseService implements LocationService 
                 // Update it as per parameters
                 oneLocationBoundaryFile.setStatus(status);
                 oneLocationBoundaryFile.setActive(active);
+                oneLocationBoundaryFile.setTotalTimeToProcessMs(totalTimeToProcessMs);
                 locationBoundaryFile = oneLocationBoundaryFile;
             } else {
                 oneLocationBoundaryFile.setStatus("Done");

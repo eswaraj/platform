@@ -37,6 +37,13 @@ public class MessageId<T> implements Serializable {
         this.startTime = startTime;
     }
 
+    public long getTimeSinceStart() {
+        if (startTime == 0) {
+            return 0L;
+        }
+        return System.currentTimeMillis() - startTime;
+    }
+
     @Override
     public String toString() {
         return "MessageId [data=" + data + ", retryCount=" + retryCount + ", startTime=" + startTime + "]";

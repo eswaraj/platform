@@ -59,7 +59,7 @@ public class LocationFileUploadSpout extends EswarajBaseSpout {
             // Call app Service
             try {
                 logInfo("Setting file {} status to {} and {}", newLocationBoundaryFileId, status, active);
-                getLocationService().setLocationBoundaryFileStatus(newLocationBoundaryFileId, status, active);
+                getLocationService().setLocationBoundaryFileStatus(newLocationBoundaryFileId, status, active, messageId.getTimeSinceStart());
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
