@@ -52,6 +52,7 @@ public class LocationController extends BaseController {
         return locationCache.getLocationInfoById(locationId);
     }
 
+
     @RequestMapping(value = "/api/v0/location/getchild/{parentId}", method = RequestMethod.GET)
     public @ResponseBody List<LocationDto> getChildLocationNode(ModelAndView mv, @PathVariable Long parentId) throws ApplicationException {
         List<LocationDto> locationDtos = locationService.getChildLocationsOfParent(parentId);
