@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +62,14 @@ public class TempController extends BaseController {
     @RequestMapping(value = "/api/unknown/leader/persons", method = RequestMethod.GET)
     public @ResponseBody List<Person> getPersonRecordForLeaders(HttpServletRequest httpServletRequest) throws ApplicationException {
 
+        return appService.getAllPersonsForLeaders();
+    }
+
+    @RequestMapping(value = "/api/unknown/leader/persons", method = RequestMethod.POST)
+    public @ResponseBody List<Person> savePersonRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody List<Person> persons) throws ApplicationException {
+        for (Person onePerson : persons) {
+            System.out.println("onePerson : " + onePerson);
+        }
         return appService.getAllPersonsForLeaders();
     }
 
