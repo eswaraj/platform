@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
@@ -113,4 +114,6 @@ public interface AppService {
     List<DeviceDto> getAllDevicesForPerson(Long personId) throws ApplicationException;
 
     Set<String> getAllCurrentPoliticalAdminIdsOfLocation(Long lcoationId) throws ApplicationException;
+
+    List<Person> getAllPersonsForLeaders() throws ApplicationException;
 }

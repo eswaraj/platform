@@ -580,4 +580,9 @@ public class AppServiceImpl extends BaseService implements AppService {
         return deviceConvertor.convertBeanList(devices);
     }
 
+    @Override
+    public List<Person> getAllPersonsForLeaders() throws ApplicationException {
+        return personRepository.getAllAdminPersons();
+    }
+
 }

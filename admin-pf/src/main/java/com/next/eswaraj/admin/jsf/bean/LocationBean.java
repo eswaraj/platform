@@ -51,7 +51,7 @@ import com.next.eswaraj.admin.service.AdminService;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-public class LocationBean {
+public class LocationBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
@@ -305,7 +305,8 @@ public class LocationBean {
             System.out.println("LocationType " + document.getLocation().getLocationType());
             Location location = adminService.saveLocation(document.getLocation());
             document.setLocation(location);
-        } catch (ApplicationException e) {
+        } catch (Exception e) {
+            sendErrorMessage("Error", e.getMessage(), e);
             e.printStackTrace();
         }
     }

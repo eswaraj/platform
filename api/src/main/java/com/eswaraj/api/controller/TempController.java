@@ -1,5 +1,7 @@
 package com.eswaraj.api.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.PersonService;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
@@ -53,6 +56,12 @@ public class TempController extends BaseController {
 
         queueService.sendCommentSavedMessage(commentSavedMessage);
         return "Comment Saved Message Sent";
+    }
+
+    @RequestMapping(value = "/api/unknown/leader/persons", method = RequestMethod.GET)
+    public @ResponseBody List<Person> getPersonRecordForLeaders(HttpServletRequest httpServletRequest) throws ApplicationException {
+
+        return appService.getAllPersonsForLeaders();
     }
 
 }
