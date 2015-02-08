@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.cache.LocationCache;
 import com.eswaraj.cache.LocationPointCache;
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.LocationDto;
 
 @Controller
 public class LocationController extends BaseController {
@@ -30,6 +32,8 @@ public class LocationController extends BaseController {
     private LocationPointCache locationPointCache;
     @Autowired
     private LocationCache locationCache;
+    @Autowired
+    private LocationService locationService;
 
     @RequestMapping(value = "/api/v0/getpointlocations", method = RequestMethod.GET)
     public @ResponseBody String getLocationAtPoint(HttpServletRequest httpServletRequest, ModelAndView mv) throws ApplicationException {
@@ -46,6 +50,12 @@ public class LocationController extends BaseController {
     @RequestMapping(value = "/api/v0/location/{locationId}", method = RequestMethod.GET)
     public @ResponseBody String getLocationById(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable String locationId) throws ApplicationException {
         return locationCache.getLocationInfoById(locationId);
+    }
+
+    @RequestMapping(value = "/api/v0/location/getchild/{parentId}", method = RequestMethod.GET)
+    public @ResponseBody List<LocationDto> getChildLocationNode(ModelAndView mv, @PathVariable Long parentId) throws ApplicationException {
+        List<LocationDto> locationDtos = locationService.getChildLocationsOfParent(parentId);
+        return locationDtos;
     }
 
 }
