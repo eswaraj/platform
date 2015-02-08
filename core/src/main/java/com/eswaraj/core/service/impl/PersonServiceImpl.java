@@ -3,6 +3,9 @@
  */
 package com.eswaraj.core.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -49,6 +52,7 @@ import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.UserDeviceRepository;
 import com.eswaraj.domain.repo.UserRepository;
+import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
@@ -91,6 +95,8 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     private AddressRepository addressRepository;
     @Autowired
     private PoliticalBodyAdminRepository politicalBodyAdminRepository;
+    @Autowired
+    private AwsUploadUtil awsUploadUtil;
 
     private SimpleDateFormat facebookDobFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -105,6 +111,29 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         logger.info("Address after save is {}", person.getAddress());
 		return personConvertor.convertBean(person);
 	}
+
+    @Override
+    public Person savePerson(Person person) throws ApplicationException {
+        person = personRepository.save(person);
+        String imageType = ".jpg";
+        String remoteFileName = person.getId() + imageType;
+        if (!StringUtils.isEmpty(person.getProfilePhoto())) {
+            InputStream localFilePathToUpload;
+            try {
+                localFilePathToUpload = new URL(person.getProfilePhoto()).openStream();
+                logger.info("Remote File Name : {}", remoteFileName);
+                logger.info("Downloading File : {}", person.getProfilePhoto());
+                String httpPath = awsUploadUtil.uploadProfileImageJpeg(remoteFileName, localFilePathToUpload);
+                person.setProfilePhoto(httpPath);
+                logger.info("Uplaoded File : {}", httpPath);
+                person = personRepository.save(person);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        logger.info("person after save is {}", person);
+        return (person);
+    }
 
 	@Override
 	public PersonDto getPersonById(Long personId) throws ApplicationException {

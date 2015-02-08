@@ -3,6 +3,7 @@ package com.eswaraj.core.service;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.PersonDto;
@@ -21,8 +22,18 @@ public interface PersonService {
 	 * @return
 	 * @throws ApplicationException
 	 */
+    @Deprecated
 	PersonDto savePerson(PersonDto personDto) throws ApplicationException;
 	
+    /**
+     * Temp Service to import Persons
+     * 
+     * @param person
+     * @return
+     * @throws ApplicationException
+     */
+    Person savePerson(Person person) throws ApplicationException;
+
 	PersonDto getPersonById(Long personId) throws ApplicationException;
 	
 	List<PersonDto> searchPersonStartWithName(String name) throws ApplicationException;

@@ -1,5 +1,7 @@
 package com.eswaraj.api.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
+import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 
 @Controller
 public class TempController extends BaseController {
@@ -28,6 +31,8 @@ public class TempController extends BaseController {
     private AppService appService;
     @Autowired
     private QueueService queueService;
+    @Autowired
+    private AwsUploadUtil awsUploadUtil;
 
     @RequestMapping(value = "/api/unknown/complaint/viewed", method = RequestMethod.GET)
     public @ResponseBody String sendComplaintViewedMessage(HttpServletRequest httpServletRequest) throws ApplicationException {
@@ -67,10 +72,17 @@ public class TempController extends BaseController {
 
     @RequestMapping(value = "/api/unknown/leader/persons", method = RequestMethod.POST)
     public @ResponseBody List<Person> savePersonRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody List<Person> persons) throws ApplicationException {
+        List<Person> returnedList = new ArrayList<Person>();
         for (Person onePerson : persons) {
+            onePerson.setId(null);
+            onePerson.setExternalId(null);
+            onePerson.setAddress(null);
+            onePerson.setDateCreated(new Date());
             System.out.println("onePerson : " + onePerson);
+            onePerson = personService.savePerson(onePerson);
+            returnedList.add(onePerson);
         }
-        return persons;
+        return returnedList;
     }
 
 }
