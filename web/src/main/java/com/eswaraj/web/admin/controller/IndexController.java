@@ -16,7 +16,7 @@ public class IndexController extends BaseController {
 	@Autowired
 	private LocationService locationService;
 	
-    @RequestMapping(value = "/index.html", method = RequestMethod.GET)
+    @RequestMapping(value = { "/index.html", "/" }, method = RequestMethod.GET)
     public ModelAndView showIndexPage(ModelAndView mv, HttpServletRequest httpServletRequest) {
         addGenericValues(mv, httpServletRequest);
 		mv.setViewName("home");
