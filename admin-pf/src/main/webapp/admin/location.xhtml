@@ -201,17 +201,29 @@
 														<h:outputText value="#{oneBoundaryFile.originalFileName}" />
 													</p:column>
 													<p:ajax event="rowSelect" listener="#{locationBean.onKmlRowSelect}" update="@form:tabView:mapPanel" />
-													<p:column headerText="Date">
-														<h:outputText value="#{oneBoundaryFile.uploadDate}">
-															<f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
-														</h:outputText>
-													</p:column>
 													<p:column headerText="Status">
 														<h:outputText value="#{oneBoundaryFile.status}" />
 													</p:column>
 													<p:column headerText="Active">
 														<h:outputText value="#{oneBoundaryFile.active}" />
 													</p:column>
+													<p:rowExpansion>
+										            <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
+										 
+										                <h:outputText value="Upload Date" />
+                                                        <h:outputText value="#{oneBoundaryFile.uploadDate}">
+                                                            <f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
+                                                        </h:outputText>
+										 
+										                <h:outputText value="Processing Time" />
+										                <h:outputText value="#{oneBoundaryFile.totalTimeToProcessMs}" />
+                                                        <h:outputText value="KML" />
+                                                        <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
+                                                        <h:outputText value="KML" />
+                                                        <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
+
+										            </p:panelGrid>
+										        </p:rowExpansion>
 												</p:dataTable>
 											</h:panelGrid>
 										</h:panelGrid>
