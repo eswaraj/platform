@@ -32,7 +32,7 @@ public class Main extends SpringBootServletInitializer {
         SpringApplication.run(Main.class, args);
     }
     
-    @Value("${db_ur}")
+    @Value("${db_url}")
     private String dbUrl;
 
     @Override
