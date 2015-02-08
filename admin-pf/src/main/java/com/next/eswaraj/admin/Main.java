@@ -3,6 +3,7 @@ package com.next.eswaraj.admin;
 import javax.faces.webapp.FacesServlet;
 
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -30,6 +31,9 @@ public class Main extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
+    
+    @Value("${db_ur}")
+    private String dbUrl;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -49,7 +53,8 @@ public class Main extends SpringBootServletInitializer {
 
     @Bean
     public GraphDatabaseService graphDatabaseService() {
-        return new SpringRestGraphDatabase("http://localhost:7474/db/data");
+        System.out.println("Creating DB Conenction at URL : " + dbUrl);
+        return new SpringRestGraphDatabase(dbUrl);
     }
 
     @Bean(name = "neo4jTemplate")
