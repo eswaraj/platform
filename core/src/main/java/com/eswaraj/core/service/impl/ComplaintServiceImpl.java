@@ -11,6 +11,7 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.SettingService;
+import com.eswaraj.core.service.UrlShortenService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
@@ -127,6 +129,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     @Autowired
     private ComplaintCommentRepository complaintCommentRepository;
 
+    @Autowired
+    private UrlShortenService urlShortenService;
+    @Value("${server_domain_and_context}")
+    private String serverUrl;
+
     private JsonParser jsonParser = new JsonParser();
 
 	@Override
@@ -174,6 +181,11 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
         ComplaintMessage complaintMessage = updateLocationAndAdmins(complaint);
 		complaint = complaintRepository.save(complaint);
+
+        if (complaint.getShortUrl() == null || complaint.getShortUrl().trim().equals("")) {
+            String complaintUrl = serverUrl + "/complaint/" + complaint.getId() + ".html";
+            complaint.setShortUrl(urlShortenService.getShortUrl(complaintUrl));
+        }
 
         creatComplaintPersonRelation(complaint, person, saveComplaintRequestDto.isAnonymous());
 

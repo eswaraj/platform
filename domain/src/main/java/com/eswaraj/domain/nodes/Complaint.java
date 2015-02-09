@@ -38,6 +38,7 @@ public class Complaint extends BaseNode {
     @Indexed
     private String nearByKey;
     private String locationAddress;
+    private String shortUrl;
 
     public Complaint() {
         this.status = Status.Pending;
@@ -159,6 +160,14 @@ public class Complaint extends BaseNode {
 
     public void setLocationAddress(String locationAddress) {
         this.locationAddress = locationAddress;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
 }

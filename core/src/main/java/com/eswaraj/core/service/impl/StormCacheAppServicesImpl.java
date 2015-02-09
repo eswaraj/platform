@@ -169,6 +169,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         complaintJsonObject.addProperty("longitude", complaint.getLongitude());
         complaintJsonObject.addProperty("status", complaint.getStatus().toString());
         complaintJsonObject.addProperty("locationAddress", complaint.getLocationAddress());
+        complaintJsonObject.addProperty("shortUrl", complaint.getShortUrl());
 
         if (complaint.getAdministrator() != null) {
             JsonArray ebaIds = new JsonArray();
