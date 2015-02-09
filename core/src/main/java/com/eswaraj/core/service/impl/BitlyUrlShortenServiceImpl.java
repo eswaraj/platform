@@ -31,7 +31,7 @@ public class BitlyUrlShortenServiceImpl implements UrlShortenService {
             String shortenServiceUrl = bitLyUrl + "v3/shorten?access_token=" + bitlyAccessToekn + "&longUrl=" + longUrl + "&domain=j.mp&format=json";
             String jsonResponse = httpUtil.getResponse(shortenServiceUrl);
             JsonObject jsonObject = jsonParser.parse(jsonResponse).getAsJsonObject();
-            return jsonObject.get("data").getAsJsonObject().get("expand").getAsJsonArray().get(0).getAsJsonObject().get("short_url").getAsString();
+            return jsonObject.get("data").getAsJsonObject().get("short_url").getAsString();
         } catch (IOException e) {
             throw new ApplicationException(e);
         }
