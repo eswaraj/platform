@@ -45,16 +45,16 @@ public interface LocationRepository extends GraphRepository<Location>{
 	@Query("start location=node:Location(locationType={0}) return location")
     public List<Location> findLocationByLocationtype(LocationType locationType);
 
-	@Query("start location=node:Location(name={0}) match (location)-[:PART_OF]->(parentlocation) return parentlocation")
+    @Query("start location=node:Location(name={0}) match (location)-[:PART_OF]->(parentlocation) return parentlocation order by childlocation.name")
     public Location getParentLocation(String locationName);
 
-	@Query("start location=node:Location(name={0}) match (location)<-[:PART_OF]-(childlocation) return childlocation")
+    @Query("start location=node:Location(name={0}) match (location)<-[:PART_OF]-(childlocation) return childlocation order by childlocation.name")
     public Collection<Location> findLocationByParentLocation(String parentLocationName);
 	
     @Query("start location=node({0}) match (location)<-[:PART_OF]-(childlocation) return childlocation order by childlocation.name")
     public List<Location> findLocationByParentLocation(Long parentLocationId);
 
-    @Query("start location=node({0}) match (location)<-[:PART_OF]-(childlocation) return childlocation")
+    @Query("start location=node({0}) match (location)<-[:PART_OF]-(childlocation) return childlocation order by childlocation.name")
     public Collection<Location> findLocationByParentLocation(Location location);
 
     @Query("start location=node:Location(name={0}) match (location)<-[:PART_OF]-(childlocation) where childlocation.locationType={1}  return childlocation  order by childlocation.name")
