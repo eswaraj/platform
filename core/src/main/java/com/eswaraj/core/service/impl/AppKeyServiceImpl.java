@@ -441,7 +441,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     }
 
     @Override
-    public String getPersonDailyComplaintCountKey(Long complaintId, Date date) {
-        return USER_DAILY_COMPLAINT_COUNT_PREFIX + "." + complaintId + "." + dayFormat.format(date);
+    public String getPersonDailyComplaintCountKey(String userId, Date date) {
+        return USER_DAILY_COMPLAINT_COUNT_PREFIX + userId + "." + dayFormat.format(date);
     }
 }

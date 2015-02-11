@@ -18,7 +18,7 @@ public interface ComplaintCache {
 
     String getComplaintsByIds(List<Long> complaintIds) throws ApplicationException;
 
-    Long getPersonComplaintsForTheDay(Long userId) throws ApplicationException;
+    Long getUserComplaintsForTheDay(String userId) throws ApplicationException;
 
-    Long incrementPersonComplaintsForTheDay(Long userId) throws ApplicationException;
+    Long incrementPersonComplaintsForTheDay(String userId) throws ApplicationException;
 }

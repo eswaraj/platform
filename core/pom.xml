@@ -84,10 +84,6 @@
 			<artifactId>spring-social-facebook</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.eswaraj</groupId>
-			<artifactId>eswaraj-cache</artifactId>
-		</dependency>
 	</dependencies>
 	<build>
 		<finalName>eswaraj-core</finalName>

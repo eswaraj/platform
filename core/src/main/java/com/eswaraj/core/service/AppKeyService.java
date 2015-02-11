@@ -113,6 +113,6 @@ public interface AppKeyService {
 
     String getPersonKey(String personId);
 
-    String getPersonDailyComplaintCountKey(Long userId, Date date);
+    String getPersonDailyComplaintCountKey(String userId, Date date);
 
 }

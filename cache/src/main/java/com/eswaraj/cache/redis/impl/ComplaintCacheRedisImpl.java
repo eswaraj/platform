@@ -171,7 +171,7 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
     }
 
     @Override
-    public Long getPersonComplaintsForTheDay(Long userId) throws ApplicationException {
+    public Long getUserComplaintsForTheDay(String userId) throws ApplicationException {
         String redisKey = appKeyService.getPersonDailyComplaintCountKey(userId, new Date());
         String count = complaintStringRedisTemplate.opsForValue().get(redisKey);
         if (count == null) {
@@ -181,7 +181,7 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
     }
 
     @Override
-    public Long incrementPersonComplaintsForTheDay(Long userId) throws ApplicationException {
+    public Long incrementPersonComplaintsForTheDay(String userId) throws ApplicationException {
         String redisKey = appKeyService.getPersonDailyComplaintCountKey(userId, new Date());
         Long count = complaintStringRedisTemplate.opsForValue().increment(redisKey, 1L);
         // Expire it just after midnight
