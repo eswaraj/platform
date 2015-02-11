@@ -169,7 +169,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         logger.info("User : {}", saveComplaintRequestDto.getUserExternalid());
         Person person = personRepository.getPersonByUser(user);
 
-        Long dailyUserTotalComplaints = complaintCache.getPersonComplaintsForTheDay(saveComplaintRequestDto.getPersonId());
+        Long dailyUserTotalComplaints = complaintCache.getPersonComplaintsForTheDay(person.getId());
         int maxComplaintPerDayPerPerson = settingService.getMaxDailyComplaintPerUser();
         if (dailyUserTotalComplaints >= maxComplaintPerDayPerPerson) {
             throw new ApplicationException("You have reached maximum total complaint quota for the day. We have placed Maximum quota to avoid abuse of the system.");
@@ -203,7 +203,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (newComplaint) {
             queueService.sendComplaintCreatedMessage(complaintMessage);
         }
-        complaintCache.incrementPersonComplaintsForTheDay(saveComplaintRequestDto.getPersonId());
+        complaintCache.incrementPersonComplaintsForTheDay(person.getId());
 
 		return complaintConvertor.convertBean(complaint);
 	}
