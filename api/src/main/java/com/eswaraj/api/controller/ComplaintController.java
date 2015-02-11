@@ -139,13 +139,7 @@ public class ComplaintController extends BaseController{
 		SaveComplaintRequestDto saveComplaintRequestDto = new Gson().fromJson(saveComplaintRequestString, SaveComplaintRequestDto.class);
         logger.info("saveComplaintRequestDto : {}", saveComplaintRequestDto);
         updateRandomDelhiPoint(saveComplaintRequestDto);
-        Long dailyUserTotalComplaints = complaintCache.getPersonComplaintsForTheDay(saveComplaintRequestDto.getPersonId());
-        int maxComplaintPerDayPerPerson = settingService.getMaxDailyComplaintPerUser();
-        if (dailyUserTotalComplaints >= maxComplaintPerDayPerPerson) {
-            throw new ApplicationException("You have reached maximum total complaint quota for the day. We have placed Maximum quota to avoid abuse of the system.");
-        }
 		ComplaintDto savedComplaintDto = complaintService.saveComplaint(saveComplaintRequestDto);
-        complaintCache.incrementPersonComplaintsForTheDay(saveComplaintRequestDto.getPersonId());
         logger.info("Complaint Saved : {}", savedComplaintDto);
 		addPhoto(httpServletRequest, savedComplaintDto);
 		

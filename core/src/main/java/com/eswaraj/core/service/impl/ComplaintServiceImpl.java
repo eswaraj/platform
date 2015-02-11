@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.eswaraj.cache.ComplaintCache;
 import com.eswaraj.core.convertors.CategoryConvertor;
 import com.eswaraj.core.convertors.ComplaintConvertor;
 import com.eswaraj.core.convertors.PhotoConvertor;
@@ -128,6 +129,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private CommentRepository commentRepository;
     @Autowired
     private ComplaintCommentRepository complaintCommentRepository;
+    @Autowired
+    private ComplaintCache complaintCache;
 
     @Autowired
     private UrlShortenService urlShortenService;
@@ -165,6 +168,13 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         User user = userRepository.findByPropertyValue("externalId", saveComplaintRequestDto.getUserExternalid());
         logger.info("User : {}", saveComplaintRequestDto.getUserExternalid());
         Person person = personRepository.getPersonByUser(user);
+
+        Long dailyUserTotalComplaints = complaintCache.getPersonComplaintsForTheDay(saveComplaintRequestDto.getPersonId());
+        int maxComplaintPerDayPerPerson = settingService.getMaxDailyComplaintPerUser();
+        if (dailyUserTotalComplaints >= maxComplaintPerDayPerPerson) {
+            throw new ApplicationException("You have reached maximum total complaint quota for the day. We have placed Maximum quota to avoid abuse of the system.");
+        }
+
 		boolean newComplaint = true;
         if (complaint.getId() != null && complaint.getId() > 0) {
             newComplaint = false;
@@ -193,6 +203,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (newComplaint) {
             queueService.sendComplaintCreatedMessage(complaintMessage);
         }
+        complaintCache.incrementPersonComplaintsForTheDay(saveComplaintRequestDto.getPersonId());
 
 		return complaintConvertor.convertBean(complaint);
 	}
