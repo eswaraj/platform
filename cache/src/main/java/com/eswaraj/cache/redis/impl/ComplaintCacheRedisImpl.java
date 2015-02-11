@@ -1,10 +1,12 @@
 package com.eswaraj.cache.redis.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -182,6 +184,9 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
     public Long incrementPersonComplaintsForTheDay(Long userId) throws ApplicationException {
         String redisKey = appKeyService.getPersonDailyComplaintCountKey(userId, new Date());
         Long count = complaintStringRedisTemplate.opsForValue().increment(redisKey, 1L);
+        // Expire it just after midnight
+        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        complaintStringRedisTemplate.expire(redisKey, 24 - currentHour, TimeUnit.HOURS);
         return count;
     }
 
