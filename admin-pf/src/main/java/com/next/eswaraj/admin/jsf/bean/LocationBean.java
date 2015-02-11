@@ -290,6 +290,8 @@ public class LocationBean extends BaseBean {
         logger.info("onMarkerDrag");
         if (selectedNode.getData() instanceof Document) {
             logger.info("Updating Lat Long {} {} ", marker.getLatlng().getLat(), marker.getLatlng().getLng());
+            lat = marker.getLatlng().getLat();
+            lng = marker.getLatlng().getLng();
             Document document = (Document) selectedNode.getData();
             document.getLocation().setLatitude(marker.getLatlng().getLat());
             document.getLocation().setLongitude(marker.getLatlng().getLng());
