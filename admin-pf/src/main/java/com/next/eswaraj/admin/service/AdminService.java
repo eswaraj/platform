@@ -103,4 +103,6 @@ public interface AdminService {
 
     List<SystemCategory> getAllSystemCategories() throws ApplicationException;
 
+    void reprocessLocationFile(LocationBoundaryFile locationBoundaryFile) throws ApplicationException;
+
 }

@@ -238,7 +238,10 @@ public class AdminServiceImpl implements AdminService {
             }
         } else {
             Location parentLocation = location.getParentLocation();
+            logger.info("Location : {}", location);
+            logger.info("parentLocation : {}", parentLocation);
             LocationType locationType = locationTypeRepository.findOne(location.getLocationType().getId());
+            logger.info("locationType : {}", locationType);
             if (!locationType.getParentLocationType().getId().equals(parentLocation.getLocationType().getId())) {
                 LocationType parentLocationType = locationTypeRepository.findOne(parentLocation.getLocationType().getId());
                 throw new ApplicationException("Can not create a Location of type [" + location.getLocationType().getName() + "], under location type [" + parentLocationType.getName() + "]");
@@ -598,6 +601,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<SystemCategory> getAllSystemCategories() throws ApplicationException {
         return convertToList(systemCategoryRepository.findAll());
+    }
+
+    @Override
+    public void reprocessLocationFile(LocationBoundaryFile locationBoundaryFile) throws ApplicationException {
+        queueService.sendLocationFileUploadMessage(null, locationBoundaryFile.getId(), locationBoundaryFile.getLocation().getId());
+
     }
 
 }

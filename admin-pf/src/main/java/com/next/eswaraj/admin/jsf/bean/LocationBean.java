@@ -379,6 +379,20 @@ public class LocationBean extends BaseBean {
 
     }
 
+    public void reprocessKmlFile() {
+        try {
+            logger.info("Selected KML : {}", selectedKml);
+            adminService.reprocessLocationFile(selectedKml);
+            FacesMessage message = new FacesMessage("Succesful", "File sent for reprocessing");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", "Unable to reporcess file");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
     private void createButtonsAndMenus(List<LocationType> locationTypes, Location selectedLocation) {
 
         UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("location_form:buttonPanel");
