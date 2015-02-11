@@ -207,6 +207,8 @@ public class LocationBean extends BaseBean {
     private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
         lat = location.getLatitude();
         lng = location.getLongitude();
+        logger.info("lat={}", lat);
+        logger.info("lng={}", lng);
         if (lat == null || lat == 0.0) {
             lat = 28.871187;
             location.setLatitude(lat);
@@ -215,6 +217,8 @@ public class LocationBean extends BaseBean {
             lng = 77.095337;
             location.setLongitude(lng);
         }
+        logger.info("lat={}", lat);
+        logger.info("lng={}", lng);
 
         LatLng coord1 = new LatLng(lat, lng);
 
@@ -285,6 +289,7 @@ public class LocationBean extends BaseBean {
         Marker marker = event.getMarker();
         logger.info("onMarkerDrag");
         if (selectedNode.getData() instanceof Document) {
+            logger.info("Updating Lat Long {} {} ", marker.getLatlng().getLat(), marker.getLatlng().getLng());
             Document document = (Document) selectedNode.getData();
             document.getLocation().setLatitude(marker.getLatlng().getLat());
             document.getLocation().setLongitude(marker.getLatlng().getLng());
