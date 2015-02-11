@@ -1,6 +1,7 @@
 package com.eswaraj.cache.redis.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -165,6 +166,23 @@ public class ComplaintCacheRedisImpl extends BaseCacheRedisImpl implements Compl
             }
         }
         return jsonArray.toString();
+    }
+
+    @Override
+    public Long getPersonComplaintsForTheDay(Long userId) throws ApplicationException {
+        String redisKey = appKeyService.getPersonDailyComplaintCountKey(userId, new Date());
+        String count = complaintStringRedisTemplate.opsForValue().get(redisKey);
+        if (count == null) {
+            return 0L;
+        }
+        return Long.parseLong(count);
+    }
+
+    @Override
+    public Long incrementPersonComplaintsForTheDay(Long userId) throws ApplicationException {
+        String redisKey = appKeyService.getPersonDailyComplaintCountKey(userId, new Date());
+        Long count = complaintStringRedisTemplate.opsForValue().increment(redisKey, 1L);
+        return count;
     }
 
 }

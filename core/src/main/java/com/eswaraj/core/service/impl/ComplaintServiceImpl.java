@@ -156,7 +156,6 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (setting != null && setting.getValue().equalsIgnoreCase("false")) {
             throw new ApplicationException("Complaint Creation is disabled");
         }
-
         logger.info("Saving Complaint : {}", saveComplaintRequestDto);
 		Complaint complaint = complaintConvertor.convert(saveComplaintRequestDto);
         logger.info("Converted  Complaint : {}", complaint);

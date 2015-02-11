@@ -224,10 +224,10 @@
                                                         <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
 
 										            </p:panelGrid>
-										            <h:commandButton value="Delete" action="#{locationBean.reprocessKmlFile}">
+										            <p:commandButton value="ReProcess File" action="#{locationBean.reprocessKmlFile}">
 												    <f:setPropertyActionListener target="#{locationBean.selectedKml}"
 												        value="#{oneBoundaryFile}" />
-												        </h:commandButton>
+												        </p:commandButton>
 										        </p:rowExpansion>
 												</p:dataTable>
 											</h:panelGrid>

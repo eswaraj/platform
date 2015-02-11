@@ -17,4 +17,8 @@ public interface ComplaintCache {
     String getComplaintsOfLocationCategory(Long locationId, Long categoryId, int start, int count) throws ApplicationException;
 
     String getComplaintsByIds(List<Long> complaintIds) throws ApplicationException;
+
+    Long getPersonComplaintsForTheDay(Long userId) throws ApplicationException;
+
+    Long incrementPersonComplaintsForTheDay(Long userId) throws ApplicationException;
 }

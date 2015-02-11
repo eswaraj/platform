@@ -20,7 +20,8 @@ public class Setting extends BaseNode{
                 "Setting to enable Fake Delhi Points", "false"), ALLOW_POLITICAL_ADMIN_SEARCH("allow.political.admin.search", "Setting to enable search political Admin in search API", "false"), ALLOW_COMPLAINT_FROM_UNKNOWN_LOCATION(
                 "allow.complaint.from.unknown.location", "Setting to enable/disable Complaint Creation if location was not found, true means complaint can be created", "false"), MESSAGE_COMPLAINT_FROM_UNKNOWN_LOCATION(
                 "message.complaint.from.unknown.location", "Error message shown to user if user location is not supported",
-                "Currently eSwaraj is not supported in your area, it will be coming soon in your area");
+                "Currently eSwaraj is not supported in your area, it will be coming soon in your area"), 
+                DAILY_MAX_COMPLAINT_PER_USER("daily.max.complaints.per.user","Maximum Number of Complaints user Can create per day", "5");
 
         private String name;
         private String description;

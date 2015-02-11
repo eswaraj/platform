@@ -40,6 +40,7 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
 
     private final String COMPLAINT_PREFIX = "CO.";
     private final String PERSON_PREFIX = "P.";
+    private final String USER_DAILY_COMPLAINT_COUNT_PREFIX = "UDC.";
 
     private final String GLOBAL_PREFIX = "Global.";
     private final String LOCATION_PREFIX = "LC.";
@@ -437,5 +438,10 @@ public class AppKeyServiceImpl implements AppKeyService, Serializable {
     @Override
     public String getPersonKey(String personId) {
         return PERSON_PREFIX + personId;
+    }
+
+    @Override
+    public String getPersonDailyComplaintCountKey(Long complaintId, Date date) {
+        return USER_DAILY_COMPLAINT_COUNT_PREFIX + "." + complaintId + "." + dayFormat.format(date);
     }
 }

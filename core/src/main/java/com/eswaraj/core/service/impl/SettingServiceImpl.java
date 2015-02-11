@@ -78,6 +78,14 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
         }
         return setting.getValue();
     }
+
+    private int getIntResult(Setting.SettingNames settingName) throws ApplicationException {
+        Setting setting = getSetting(settingName.getName());
+        if (setting == null) {
+            return Integer.parseInt(settingName.getDefaultValue());
+        }
+        return Integer.parseInt(setting.getValue());
+    }
     private boolean getBooleanResult(Setting.SettingNames settingName) throws ApplicationException {
         Setting setting = getSetting(settingName.getName());
         logger.info("Setting = {}", setting);
@@ -122,6 +130,11 @@ public class SettingServiceImpl extends DbBaseService implements SettingService 
     @Override
     public String getMessageComplaintForUnknownLocation() throws ApplicationException {
         return getStringResult(SettingNames.MESSAGE_COMPLAINT_FROM_UNKNOWN_LOCATION);
+    }
+
+    @Override
+    public int getMaxDailyComplaintPerUser() throws ApplicationException {
+        return getIntResult(SettingNames.DAILY_MAX_COMPLAINT_PER_USER);
     }
 
 }

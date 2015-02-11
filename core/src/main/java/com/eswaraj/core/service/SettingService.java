@@ -22,4 +22,6 @@ public interface SettingService {
     boolean isAllowComplaintForUnknownLocation() throws ApplicationException;
 
     String getMessageComplaintForUnknownLocation() throws ApplicationException;
+
+    int getMaxDailyComplaintPerUser() throws ApplicationException;
 }
