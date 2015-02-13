@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
+import com.eswaraj.core.service.SettingService;
 import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PhotoDto;
@@ -51,6 +52,8 @@ public class ComplaintController extends BaseController{
 	private FileService fileService;
 	@Value("${aws_s3_directory_for_complaint_photo}") 
 	private String awsDirectoryForComplaintPhoto;
+    @Autowired
+    private SettingService settingService;
 
     @RequestMapping(value = "/complaint/{complaintId}", method = RequestMethod.GET)
     public ModelAndView showComplaint(HttpServletRequest httpServletRequest, ModelAndView mv, @PathVariable Long complaintId)
@@ -105,7 +108,7 @@ public class ComplaintController extends BaseController{
 		
 		SaveComplaintRequestDto saveComplaintRequestDto = new Gson().fromJson(saveComplaintRequestString, SaveComplaintRequestDto.class);
         updateRandomDelhiPoint(saveComplaintRequestDto);
-		ComplaintDto savedComplaintDto = complaintService.saveComplaint(saveComplaintRequestDto);
+        ComplaintDto savedComplaintDto = complaintService.saveComplaint(saveComplaintRequestDto, (long) settingService.getMaxDailyComplaintPerUser());
         System.out.println("Complaint Saved : " + savedComplaintDto);
 		addPhoto(httpServletRequest, savedComplaintDto);
 		
