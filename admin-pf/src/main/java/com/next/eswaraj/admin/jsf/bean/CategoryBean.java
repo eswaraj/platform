@@ -88,23 +88,25 @@ public class CategoryBean {
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
+        onNodeSelect(event.getTreeNode());
+
+        // createButtons();
+    }
+
+    private void onNodeSelect(TreeNode node) {
         CommandButton createChildCategoryButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
         SelectOneMenu systemCategoryselectOne = (SelectOneMenu) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:systemCategory");
-
-
-
-        if(event.getTreeNode() instanceof CustomTreeNode){
+        if (node instanceof CustomTreeNode) {
             //Enable Create Child Node Button
-            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((CategoryDocument) ((CustomTreeNode) event.getTreeNode()).getData()).getCategory().isRoot());
+            System.out.println("node.class = " + node.getClass() + " , " + ((CategoryDocument) ((CustomTreeNode) node).getData()).getCategory().isRoot());
             createChildCategoryButton.setDisabled(false);
             systemCategoryselectOne.setDisabled(true);
         }else{
-            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((CategoryDocument) ((DefaultTreeNode) event.getTreeNode()).getData()).getCategory().isRoot());
+            System.out.println("node.class = " + node.getClass() + " , " + ((CategoryDocument) ((DefaultTreeNode) node).getData()).getCategory().isRoot());
             // Disable
             createChildCategoryButton.setDisabled(true);
             systemCategoryselectOne.setDisabled(false);
         }
-        // createButtons();
     }
 
     public void onNodeUnselect(NodeUnselectEvent event) {
@@ -208,6 +210,7 @@ public class CategoryBean {
             }
             selectedNode = new CustomTreeNode(new CategoryDocument("NEW", "-", "Folder", category), root);
             selectedNode.setSelected(true);
+            onNodeSelect(selectedNode);
         }
     }
     public void createChildCategory() {
@@ -219,6 +222,7 @@ public class CategoryBean {
             selectedNode.setSelected(false);
             selectedNode = new DefaultTreeNode(new CategoryDocument("NEW", "-", "Folder", category), selectedNode);
             selectedNode.setSelected(true);
+            onNodeSelect(selectedNode);
         }
     }
 
