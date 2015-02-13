@@ -95,11 +95,11 @@ public class CategoryBean {
 
         if(event.getTreeNode() instanceof CustomTreeNode){
             //Enable Create Child Node Button
-            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((Category) ((CustomTreeNode) event.getTreeNode()).getData()).isRoot());
+            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((CategoryDocument) ((CustomTreeNode) event.getTreeNode()).getData()).getCategory().isRoot());
             createChildCategoryButton.setDisabled(false);
             systemCategoryselectOne.setDisabled(true);
         }else{
-            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((Category) ((DefaultTreeNode) event.getTreeNode()).getData()).isRoot());
+            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((CategoryDocument) ((DefaultTreeNode) event.getTreeNode()).getData()).getCategory().isRoot());
             // Disable
             createChildCategoryButton.setDisabled(true);
             systemCategoryselectOne.setDisabled(false);

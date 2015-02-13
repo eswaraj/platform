@@ -93,31 +93,31 @@
                                     itemValue="#{oneReult}" />
                             </p:selectOneMenu>
                                     
-							<p:outputLabel value="Image URL" rendered="#{categoryBean.selectedNode.data.root}"></p:outputLabel>
-                            <h:panelGrid columns="1"  rendered="#{categoryBean.selectedNode.data.root}">
+							<p:outputLabel value="Image URL" rendered="#{categoryBean.selectedNode.data.category.root}"></p:outputLabel>
+                            <h:panelGrid columns="1"  rendered="#{categoryBean.selectedNode.data.category.root}">
                                 <p:graphicImage style="max-width:200px;" id="imageUrl" value="#{categoryBean.selectedNode.data.category.imageUrl}" />
                                 <p:fileUpload fileUploadListener="#{categoryBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
                                     auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
                             </h:panelGrid>
 
-							<p:outputLabel value="Header Image URL"  rendered="#{categoryBean.selectedNode.data.root}"></p:outputLabel>
-							<h:panelGrid columns="1"  rendered="#{categoryBean.selectedNode.data.root}">
+							<p:outputLabel value="Header Image URL"  rendered="#{categoryBean.selectedNode.data.category.root}"></p:outputLabel>
+							<h:panelGrid columns="1"  rendered="#{categoryBean.selectedNode.data.category.root}">
 								<p:graphicImage style="max-width:400px;" id="headerImageUrl" value="#{categoryBean.selectedNode.data.category.headerImageUrl}" />
 								<p:fileUpload fileUploadListener="#{categoryBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
 									auto="true" update="messages, headerImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
 							</h:panelGrid>
 
-							<p:outputLabel value="Video URL(Youtube)"  rendered="#{categoryBean.selectedNode.data.root}"></p:outputLabel>
-							<p:inputText  rendered="#{categoryBean.selectedNode.data.root}" id="videoUrl" value="#{categoryBean.selectedNode.data.category.videoUrl}" style="width:200px" />
-                            <p:outputLabel  rendered="#{categoryBean.selectedNode.data.root}" value="Color"></p:outputLabel>
-                            <p:colorPicker  rendered="#{categoryBean.selectedNode.data.root}" value="#{categoryBean.selectedNode.data.category.color}" mode="inline" />
+							<p:outputLabel value="Video URL(Youtube)"  rendered="#{categoryBean.selectedNode.data.category.root}"></p:outputLabel>
+							<p:inputText  rendered="#{categoryBean.selectedNode.data.category.root}" id="videoUrl" value="#{categoryBean.selectedNode.data.category.videoUrl}" style="width:200px" />
+                            <p:outputLabel  rendered="#{categoryBean.selectedNode.data.category.root}" value="Color"></p:outputLabel>
+                            <p:colorPicker  rendered="#{categoryBean.selectedNode.data.category.root}" value="#{categoryBean.selectedNode.data.category.color}" mode="inline" />
 							<p:outputLabel value="URL Identifier"></p:outputLabel>
 							<p:inputText disabled="true" id="urlIdentifier" value="#{categoryBean.selectedNode.data.category.urlIdentifier}"
 								style="width:200px" />
 
 						</h:panelGrid>
 
-						<p:media value="#{categoryBean.selectedNode.data.category.videoUrl}" width="420" height="315" player="flash" />
+						<p:media rendered="#{categoryBean.selectedNode.data.category.root}" value="#{categoryBean.selectedNode.data.category.videoUrl}" width="420" height="315" player="flash" />
 
 						<h:panelGrid columns="6" id="buttonPanel" rendered="#{not empty categoryBean.selectedNode}">
 							<p:commandButton id="saveCategory" value="Save" update="@form" actionListener="#{categoryBean.saveCategory}"
