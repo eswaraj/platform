@@ -91,7 +91,8 @@ public class CategoryBean {
         CommandButton createChildCategoryButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
         SelectOneMenu systemCategoryselectOne = (SelectOneMenu) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:systemCategory");
 
-        System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass());
+        System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((Category) ((CustomTreeNode) event.getTreeNode()).getData()).isRoot());
+
         if(event.getTreeNode() instanceof CustomTreeNode){
             //Enable Create Child Node Button
             createChildCategoryButton.setDisabled(false);
@@ -214,7 +215,7 @@ public class CategoryBean {
             category.setName("New");
             selectedNode.setExpanded(true);
             selectedNode.setSelected(false);
-            selectedNode = new CustomTreeNode(new CategoryDocument("NEW", "-", "Folder", category), selectedNode);
+            selectedNode = new DefaultTreeNode(new CategoryDocument("NEW", "-", "Folder", category), selectedNode);
             selectedNode.setSelected(true);
         }
     }
