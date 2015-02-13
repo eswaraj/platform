@@ -57,9 +57,13 @@ public class LocationCacheRedisImpl extends BaseCacheRedisImpl implements Locati
 
     @Override
     public void setLocationPoliticalAdmins(Long locationId, Set<String> pbAdminIds) throws ApplicationException {
-
+        logger.info("Adding Pb Admins {} for Location {}", pbAdminIds, locationId);
         String locationPoliticalAdminKey = appKeyService.getLocationPoliticalAdminKey(locationId.toString());
         locationStringRedisTemplate.delete(locationPoliticalAdminKey);
+        if (pbAdminIds == null || pbAdminIds.isEmpty()) {
+            logger.warn("No PB Admin Found for location {} ", locationId);
+            return;
+        }
         locationStringRedisTemplate.opsForSet().add(locationPoliticalAdminKey, pbAdminIds.toArray(new String[pbAdminIds.size()]));
 
     }

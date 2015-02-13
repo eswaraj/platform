@@ -32,6 +32,7 @@ public class Person extends BaseNode {
     private String profilePhoto;
     private String voterId;
 	private Address address;
+    private Integer complaintLimit;
 	public String getName() {
 		return name;
 	}
@@ -110,6 +111,13 @@ public class Person extends BaseNode {
         this.profilePhoto = profilePhoto;
     }
 
+    public Integer getComplaintLimit() {
+        return complaintLimit;
+    }
+
+    public void setComplaintLimit(Integer complaintLimit) {
+        this.complaintLimit = complaintLimit;
+    }
     @Override
     public String toString() {
         return "Person [name=" + name + ", biodata=" + biodata + ", dob=" + dob + ", gender=" + gender + ", email=" + email + ", landlineNumber1=" + landlineNumber1 + ", landlineNumber2="

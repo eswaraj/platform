@@ -151,7 +151,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 	}
 
 	@Override
-	public ComplaintDto saveComplaint(SaveComplaintRequestDto saveComplaintRequestDto) throws ApplicationException {
+    public ComplaintDto saveComplaint(SaveComplaintRequestDto saveComplaintRequestDto, Long dailyUserTotalComplaints) throws ApplicationException {
         Setting setting = settingService.getSetting(SettingNames.ALLOW_COMPLAINT.getName());
         if (setting != null && setting.getValue().equalsIgnoreCase("false")) {
             throw new ApplicationException("Complaint Creation is disabled");
@@ -165,6 +165,14 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         User user = userRepository.findByPropertyValue("externalId", saveComplaintRequestDto.getUserExternalid());
         logger.info("User : {}", saveComplaintRequestDto.getUserExternalid());
         Person person = personRepository.getPersonByUser(user);
+
+        int maxComplaintPerDayPerPerson = settingService.getMaxDailyComplaintPerUser();
+        if (person.getComplaintLimit() != null) {
+            maxComplaintPerDayPerPerson = person.getComplaintLimit();
+        }
+        if (maxComplaintPerDayPerPerson >= 0 && dailyUserTotalComplaints >= maxComplaintPerDayPerPerson) {
+            throw new ApplicationException("You have reached maximum total complaint quota for the day. We have placed Maximum quota to avoid abuse of the system.");
+        }
 
 		boolean newComplaint = true;
         if (complaint.getId() != null && complaint.getId() > 0) {

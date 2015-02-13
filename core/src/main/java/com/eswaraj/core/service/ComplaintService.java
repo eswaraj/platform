@@ -51,7 +51,7 @@ public interface ComplaintService {
 	
     void mergeComplaints(List<Long> complaintIds) throws ApplicationException;
 
-	ComplaintDto saveComplaint(SaveComplaintRequestDto complaintDto) throws ApplicationException;
+    ComplaintDto saveComplaint(SaveComplaintRequestDto complaintDto, Long dailyUserTotalComplaints) throws ApplicationException;
 	
     ComplaintMessage updateLocationAndAdmins(Long complaintId) throws ApplicationException;
 
