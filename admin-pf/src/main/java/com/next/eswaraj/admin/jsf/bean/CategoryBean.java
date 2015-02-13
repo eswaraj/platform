@@ -91,13 +91,15 @@ public class CategoryBean {
         CommandButton createChildCategoryButton = (CommandButton) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:createChildCategory");
         SelectOneMenu systemCategoryselectOne = (SelectOneMenu) FacesContext.getCurrentInstance().getViewRoot().findComponent("category_form:systemCategory");
 
-        System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((Category) ((CustomTreeNode) event.getTreeNode()).getData()).isRoot());
+
 
         if(event.getTreeNode() instanceof CustomTreeNode){
             //Enable Create Child Node Button
+            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((Category) ((CustomTreeNode) event.getTreeNode()).getData()).isRoot());
             createChildCategoryButton.setDisabled(false);
             systemCategoryselectOne.setDisabled(true);
         }else{
+            System.out.println("event.getTreeNode().class = " + event.getTreeNode().getClass() + " , " + ((Category) ((DefaultTreeNode) event.getTreeNode()).getData()).isRoot());
             // Disable
             createChildCategoryButton.setDisabled(true);
             systemCategoryselectOne.setDisabled(false);
