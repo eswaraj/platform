@@ -86,10 +86,10 @@
 						<p:commandButton value="Cancel" process="@this:cancel" update="@form"
 							actionListener="#{politicalPartyBean.cancel}" ajax="true" styleClass="ui-priority-primary" id="cancel">
 						</p:commandButton>
-						<p:commandButton id="saveCategory" value="Save Political Body Admin Type" update="@form" ajax="true"
+						<p:commandButton id="saveParty" value="Save Party" update="@form" ajax="true"
 							actionListener="#{politicalPartyBean.saveParty}" styleClass="ui-priority-primary">
 						</p:commandButton>
-						<p:blockUI block="@form" trigger="saveCategory">Saving<br />
+						<p:blockUI block="@form" trigger="saveParty">Saving<br />
 							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 						</p:blockUI>
                         <p:blockUI block="@form" trigger="cancel">Loading<br />

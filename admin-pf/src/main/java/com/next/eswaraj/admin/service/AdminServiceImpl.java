@@ -322,6 +322,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Category saveCategory(Category category) throws ApplicationException {
+        String urlIdentifier = category.getName().toLowerCase();
+        urlIdentifier = urlIdentifier.replace("&", "");
+        urlIdentifier = urlIdentifier.replace(" ", "-");
+        category.setUrlIdentifier(urlIdentifier);
+
         category = categoryRepository.save(category);
         return category;
     }
