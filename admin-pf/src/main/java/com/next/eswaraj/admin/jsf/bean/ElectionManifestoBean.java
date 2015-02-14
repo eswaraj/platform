@@ -68,12 +68,12 @@ public class ElectionManifestoBean extends BaseBean {
     }
 
     public void back() {
-        selectedElectionManifesto = new ElectionManifesto();
+        selectedElectionManifestoPromise = new ElectionManifestoPromise();
         showPage = "ElectionManifestoList";
     }
 
     public void cancelPromise() {
-        selectedElectionManifesto = new ElectionManifesto();
+        selectedElectionManifestoPromise = new ElectionManifestoPromise();
         showPage = "ElectionManifestoPromiseList";
     }
 
