@@ -12,4 +12,7 @@ public interface ElectionManifestoPromiseRepository extends GraphRepository<Elec
     @Query("start electionManifesto=node({0}) match (electionManifesto)<-[:OF_ELECTION_MANIFESTO]-(electionManifestoPromise) where electionManifestoPromise.__type__ = 'ElectionManifestoPromise' return electionManifestoPromise")
     public List<ElectionManifestoPromise> getAllPromisesOfManifesto(Long electionManifestoId);
 
+    @Query("start politicalAdmin=node({0}) match (politicalAdmin)-[:OF]-(party), (politicalAdmin)-[:ELECTED_BY]-(election) with party,election,politicalAdmin match (election)-[:OF_ELECTION]-(electionManifesto)-[:OF_PARTY]-(party) with  party,election,politicalAdmin,electionManifesto match (electionManifesto)-[:OF_ELECTION_MANIFESTO]-(electionPromises) return electionPromises;")
+    public List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Long electionManifestoId);
+
 }
