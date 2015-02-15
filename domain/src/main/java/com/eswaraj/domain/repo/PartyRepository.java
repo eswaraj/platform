@@ -11,7 +11,7 @@ public interface PartyRepository extends GraphRepository<Party>{
 	
 	public Party getById(Long id);
 
-    @Query("match party where (party.__type__ = 'com.eswaraj.domain.nodes.Party' or party.__type__ = 'Party') return party order by party.name ASC ")
+    @Query("match party where party.__type__ = 'Party' return party order by party.name ASC ")
     public List<Party> getAllParties();
 
 }

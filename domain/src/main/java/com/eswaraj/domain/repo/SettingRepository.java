@@ -9,7 +9,7 @@ import com.eswaraj.domain.nodes.Setting;
 
 public interface SettingRepository extends GraphRepository<Setting> {
 	
-    @Query("match setting where (setting.__type__='com.eswaraj.domain.nodes.Setting' or setting.__type__='Setting' ) return setting")
+    @Query("match setting where setting.__type__='Setting' return setting")
     public List<Setting> getAllSettings();
 
 }

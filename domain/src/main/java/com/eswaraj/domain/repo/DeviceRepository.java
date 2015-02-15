@@ -16,13 +16,13 @@ import com.eswaraj.domain.nodes.User;
  */
 public interface DeviceRepository extends GraphRepository<Device> {
 
-    @Query("start user=node({0}) match (user)-[:USER_DEVICE]->(device) where device.__type__ = 'com.eswaraj.domain.nodes.Device' return device")
+    @Query("start user=node({0}) match (user)-[:USER_DEVICE]->(device) where device.__type__ = 'Device' return device")
     public List<Device> getAllDevicesOfUser(User user);
 
-    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person)-[:ATTACHED_TO]-(user)-[:USER_DEVICE]-(device) where device.__type__ = 'com.eswaraj.domain.nodes.Device' return device")
+    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person)-[:ATTACHED_TO]-(user)-[:USER_DEVICE]-(device) where device.__type__ = 'Device' return device")
     public List<Device> getDevicesForComplaint(Long complaintId);
 
-    @Query("start person=node({0}) match (person)-[:ATTACHED_TO]-(user)-[:USER_DEVICE]->(device) where device.__type__ = 'com.eswaraj.domain.nodes.Device' or device.__type__ = 'Device' return device")
+    @Query("start person=node({0}) match (person)-[:ATTACHED_TO]-(user)-[:USER_DEVICE]->(device) where device.__type__ = 'Device' return device")
     public List<Device> getAllDevicesOfPerson(Long personId);
 
 }

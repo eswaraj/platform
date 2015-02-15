@@ -17,16 +17,16 @@ public interface PersonRepository extends GraphRepository<Person>{
 	//@Query("start n=node:PersonNameFt(name:*avi*) return n")
     List<Person> searchPersonByName(String name);
 
-    @Query("start user=node({0}) match (user)-[:ATTACHED_TO]->(person) where person.__type__ = 'Person' or person.__type__='com.eswaraj.domain.nodes.Person' return person")
+    @Query("start user=node({0}) match (user)-[:ATTACHED_TO]->(person) where person.__type__ = 'Person' return person")
     public Person getPersonByUser(User user);
 
-    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person) where person.__type__ = 'Person' or person.__type__='com.eswaraj.domain.nodes.Person' return person")
+    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person) where person.__type__ = 'Person' return person")
     public Collection<Person> getPersonsLoggedComplaint(Complaint complaint);
 
-    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person) where person.__type__ = 'Person' or person.__type__='com.eswaraj.domain.nodes.Person' return person")
+    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person) where person.__type__ = 'Person' return person")
     public List<Person> getPersonsLoggedComplaint(Long complaintId);
 
-    @Query("match (person)-[:IS]-(admin) where (person.__type__ = 'Person' or person.__type__='com.eswaraj.domain.nodes.Person') and (admin.__type__='PoliticalBodyAdmin' or admin.__type__='com.eswaraj.domain.nodes.PoliticalBodyAdmin') return person")
+    @Query("match (person)-[:IS]-(admin) where person.__type__ = 'Person'  and admin.__type__='PoliticalBodyAdmin' return person")
     public List<Person> getAllAdminPersons();
 
 }

@@ -66,7 +66,7 @@ public interface LocationRepository extends GraphRepository<Location>{
     @Query("start location=node({0}) match (location)<-[:PART_OF]-(childlocation) where childlocation.urlIdentifier={1} return childlocation")
     public Location findLocationByParentLocationAndUrlId(Location parentLocation, String urlId);
 
-    @Query("match location where location.__type__ = 'com.eswaraj.domain.nodes.Location' return location order by location.id ASC " + "skip {0} limit {1}")
+    @Query("match location where location.__type__ = 'Location' return location order by location.id ASC " + "skip {0} limit {1}")
     public List<Location> getAllPagedLocations(long start, long pageSize);
 
 }
