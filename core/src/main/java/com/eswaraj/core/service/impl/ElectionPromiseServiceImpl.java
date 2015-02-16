@@ -1,5 +1,7 @@
 package com.eswaraj.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ElectionPromiseService;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
-import com.google.gson.Gson;
+import com.eswaraj.web.dto.v1.ElectionManifestoPromiseDto;
 
 @Service
 @Transactional
@@ -21,13 +23,22 @@ public class ElectionPromiseServiceImpl extends BaseService implements ElectionP
     @Autowired
     private ElectionManifestoPromiseRepository electionManifestoPromiseRepository;
 
-    private Gson gson = new Gson();
-
     @Override
-    public String getElectionPromisesByPoliticalAdminId(Long politicalAdminId) throws ApplicationException {
+    public List<ElectionManifestoPromiseDto> getElectionPromisesByPoliticalAdminId(Long politicalAdminId) throws ApplicationException {
         logger.info("getting Election promises for leader {}", politicalAdminId);
         List<ElectionManifestoPromise> electionManifestoPromises = electionManifestoPromiseRepository.getAllPromisesOfPoliticalAdmin(politicalAdminId);
-        return gson.toJson(electionManifestoPromises);
+        if(electionManifestoPromises == null || electionManifestoPromises.isEmpty()){
+            return Collections.emptyList();
+        }
+        List<ElectionManifestoPromiseDto> returnDtos = new ArrayList<ElectionManifestoPromiseDto>(electionManifestoPromises.size());
+        for (ElectionManifestoPromise oneElectionManifestoPromise : electionManifestoPromises) {
+            ElectionManifestoPromiseDto oneElectionManifestoPromiseDto = new ElectionManifestoPromiseDto();
+            oneElectionManifestoPromiseDto.setDescription(oneElectionManifestoPromise.getDescription());
+            oneElectionManifestoPromiseDto.setId(oneElectionManifestoPromise.getId());
+            oneElectionManifestoPromiseDto.setTitle(oneElectionManifestoPromise.getTitle());
+            returnDtos.add(oneElectionManifestoPromiseDto);
+        }
+        return returnDtos;
     }
 
 }

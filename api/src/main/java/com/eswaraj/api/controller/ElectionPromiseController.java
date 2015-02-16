@@ -1,5 +1,7 @@
 package com.eswaraj.api.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ElectionPromiseService;
+import com.eswaraj.web.dto.v1.ElectionManifestoPromiseDto;
 
 @Controller
 public class ElectionPromiseController extends BaseController {
@@ -26,7 +29,7 @@ public class ElectionPromiseController extends BaseController {
 
 
     @RequestMapping(value = "/api/v0/promises/{politicalAdminId}", method = RequestMethod.GET)
-    public @ResponseBody String getAllCategories(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException {
+    public @ResponseBody List<ElectionManifestoPromiseDto> getAllCategories(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException {
         return electionPromiseService.getElectionPromisesByPoliticalAdminId(politicalAdminId);
     }
 
