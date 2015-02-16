@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -32,6 +33,7 @@ import org.springframework.data.neo4j.support.mapping.Neo4jMappingContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import com.next.eswaraj.admin.jsf.filter.SpringLoginFilter;
 import com.next.eswaraj.admin.util.SessionUtil;
@@ -55,6 +57,7 @@ public class Main extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(new Class[] { Main.class, Initializer.class, XmlResource.class });
     }
+
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
         FacesServlet servlet = new FacesServlet();  
@@ -62,6 +65,26 @@ public class Main extends SpringBootServletInitializer {
 		return servletRegistrationBean;
     }
     
+    @Bean
+    public DispatcherServlet dispatcherServlet() {
+        return new DispatcherServlet();
+    }
+
+    /**
+     * Register dispatcherServlet programmatically
+     * 
+     * @return ServletRegistrationBean
+     */
+    @Bean
+    public ServletRegistrationBean dispatcherServletRegistration() {
+
+        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet(), "/");
+
+        registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
+
+        return registration;
+    }
+
     @ImportResource({ "classpath:eswaraj-domain.xml", "classpath:eswaraj-web-admin-context.xml" })
     public static class XmlResource {
 
