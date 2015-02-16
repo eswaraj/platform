@@ -8,7 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +28,13 @@ public class TimingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        chain.doFilter(httpServletRequest, response);
+        Long startTime = System.currentTimeMillis();
+        chain.doFilter(request, response);
+
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        long timeTakenInMs = System.currentTimeMillis() - startTime;
+        logger.info("Total Time taken to proces request {} ms", timeTakenInMs);
+        httpServletResponse.setHeader("timeTakenInMs", String.valueOf(timeTakenInMs));
     }
 
     @Override
