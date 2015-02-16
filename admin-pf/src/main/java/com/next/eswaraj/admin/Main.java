@@ -1,13 +1,24 @@
 package com.next.eswaraj.admin;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.webapp.FacesServlet;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +31,10 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.mapping.Neo4jMappingContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.next.eswaraj.admin.jsf.filter.SpringLoginFilter;
+import com.next.eswaraj.admin.util.SessionUtil;
 
 @Configuration
 @ComponentScan(basePackages = {})
@@ -80,6 +95,50 @@ public class Main extends SpringBootServletInitializer {
     @Bean
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         return new ThreadPoolTaskExecutor();
+    }
+
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        SpringLoginFilter securityFilter = new SpringLoginFilter();
+        List<String> urlPatterns = new ArrayList<String>();
+        urlPatterns.add("*.xhtml");
+        registrationBean.setUrlPatterns(urlPatterns);
+        registrationBean.setFilter(securityFilter);
+        return registrationBean;
+    }
+
+    // Put Servlets and Filters in their own nested class so they don't force early
+    // instantiation of ManagementServerProperties.
+    @Configuration
+    protected static class ApplicationContextFilterConfiguration {
+
+        @Bean
+        public Filter applicationContextIdFilter(ApplicationContext context) {
+            return new ApplicationContextHeaderFilter(context);
+        }
+
+    }
+
+    /**
+     * {@link OncePerRequestFilter} to add the {@literal X-Application-Context} if required.
+     */
+    private static class ApplicationContextHeaderFilter extends OncePerRequestFilter {
+
+        private final ApplicationContext applicationContext;
+
+        SessionUtil sessionUtil;
+
+        public ApplicationContextHeaderFilter(ApplicationContext applicationContext) {
+            this.applicationContext = applicationContext;
+        }
+
+        @Override
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            System.out.println("Doing Internal Filtering " + request.getPathInfo() + "," + request.getRequestURL().toString() + ", sessionUtil=" + sessionUtil);
+            filterChain.doFilter(request, response);
+        }
+
     }
 
 }
