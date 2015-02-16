@@ -65,11 +65,13 @@ public class UserController extends BaseController {
         return userDto;
     }
 
+    /*
     @RequestMapping(value = "/api/v0/user/device", method = RequestMethod.POST)
     @Deprecated
     public @ResponseBody UserDto registerDevice(HttpServletRequest httpServletRequest, @RequestBody RegisterDeviceRequest registerDeviceRequest) throws ApplicationException {
         return personService.registerDevice(registerDeviceRequest, registerDeviceRequest.getUserExternalId());
     }
+    */
 
     @RequestMapping(value = "/api/v0/user/device/gcm", method = RequestMethod.POST)
     public @ResponseBody String registerdAndroidDeviceGcmId(HttpServletRequest httpServletRequest, @RequestBody RegisterGcmDeviceId registerGcmDeviceId) throws ApplicationException {
