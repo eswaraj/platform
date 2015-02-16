@@ -274,11 +274,16 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             for (UserDevice oneUserDevice : userDevices) {
                 logger.info("Creating new userDevice and deleting oLd");
 
-                UserDevice newUserDevice = new UserDevice();
-                newUserDevice.setDevice(oneUserDevice.getDevice());
-                newUserDevice.setUser(targetUser);
-                newUserDevice = userDeviceRepository.save(newUserDevice);
-                logger.info("Created : {}", newUserDevice);
+                UserDevice newUserDevice = userDeviceRepository.getUserDeviceRelation(targetUser, oneUserDevice.getDevice());
+                if (newUserDevice == null) {
+                    newUserDevice = new UserDevice();
+                    newUserDevice.setDevice(oneUserDevice.getDevice());
+                    newUserDevice.setUser(targetUser);
+                    newUserDevice = userDeviceRepository.save(newUserDevice);
+                    logger.info("Created : {}", newUserDevice);
+                } else {
+                    logger.info("Existing : {}", newUserDevice);
+                }
                 userDeviceRepository.delete(oneUserDevice);
                 logger.info("Deleted : {}", oneUserDevice);
             }
