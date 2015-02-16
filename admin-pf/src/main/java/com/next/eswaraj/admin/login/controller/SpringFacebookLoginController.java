@@ -36,7 +36,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
 
     @Value("${eswaraj_facebook_app_id}")
 	private String facebokAppId;
-    @Value("${leader_domain_and_context}/web/login/facebooksuccess")
+    @Value("${admin_domain_and_context}/web/login/facebooksuccess")
 	private String facebookRedirectUrl;
     @Value("${eswaraj_facebook_app_id}")
     private String facebookAppId;
