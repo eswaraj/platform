@@ -37,10 +37,11 @@ import com.next.eswaraj.admin.jsf.filter.SpringLoginFilter;
 import com.next.eswaraj.admin.util.SessionUtil;
 
 @Configuration
-@ComponentScan(basePackages = {})
+@ComponentScan(basePackages = { "com.next.eswaraj.admin.login.controller", "com.next.eswaraj.web.session", "com.next.eswaraj.admin.jsf.bean", "com.next.eswaraj.admin.service",
+        "com.next.eswaraj.admin.jsf.convertors" })
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
-@ImportResource({ "classpath:eswaraj-domain.xml", "classpath:eswaraj-web-admin-context.xml" })
+@ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
 public class Main extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
