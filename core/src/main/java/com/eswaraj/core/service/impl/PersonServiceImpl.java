@@ -262,15 +262,31 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     }
 
     private User mergeUser(User targetUser, User user) {
-        // Person
-        // Complaints
-        // Device
-        // Comment
-        // Admin Records
-        // Complaint Endorsment
         if (targetUser == null) {
             return user;
         }
+        // Person
+        // Complaints
+        // Device
+        List<UserDevice> userDevices = userDeviceRepository.getAllUserDeviceRelationOfUser(user);
+        logger.info("Merging User Devices");
+        if (userDevices != null && !userDevices.isEmpty()) {
+            for (UserDevice oneUserDevice : userDevices) {
+                logger.info("Creating new userDevice and deleting oLd");
+
+                UserDevice newUserDevice = new UserDevice();
+                newUserDevice.setDevice(oneUserDevice.getDevice());
+                newUserDevice.setUser(targetUser);
+                newUserDevice = userDeviceRepository.save(newUserDevice);
+                logger.info("Created : {}", newUserDevice);
+                userDeviceRepository.delete(oneUserDevice);
+                logger.info("Deleted : {}", oneUserDevice);
+            }
+        }
+        // Comment
+        // Admin Records
+        // Complaint Endorsment
+        userRepository.delete(user);
         return targetUser;
     }
 
