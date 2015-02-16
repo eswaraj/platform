@@ -40,6 +40,7 @@ public class SpringLoginFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
         logger.info("Requested URL " + httpServletRequest.getRequestURL().toString());
         UserDto user = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        logger.info("Logged In User = " + user);
         if (user == null) {
             // No user logegd In
             String redirectUrl = "/web/login/facebook?redirect_url=" + httpServletRequest.getRequestURI();
@@ -47,7 +48,7 @@ public class SpringLoginFilter implements Filter {
             ((HttpServletResponse) response).sendRedirect(redirectUrl);
             return;
         }
-        if (user.getFacebookAccount() != null && user.getFacebookAccount().getUserName().equals("ping")) {
+        if (user.getFacebookAccount() != null && user.getFacebookAccount().getUserName().equals("ping2ravi")) {
             chain.doFilter(httpServletRequest, response);
             return;
         }

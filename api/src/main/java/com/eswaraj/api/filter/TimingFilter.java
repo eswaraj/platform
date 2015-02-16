@@ -29,9 +29,10 @@ public class TimingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Long startTime = System.currentTimeMillis();
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setHeader("startTime", String.valueOf(startTime));
         chain.doFilter(request, response);
 
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         long timeTakenInMs = System.currentTimeMillis() - startTime;
         logger.info("Total Time taken to proces request {} ms", timeTakenInMs);
         httpServletResponse.setHeader("timeTakenInMs", String.valueOf(timeTakenInMs));
