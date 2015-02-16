@@ -47,7 +47,7 @@ public class SpringLoginFilter implements Filter {
             ((HttpServletResponse) response).sendRedirect(redirectUrl);
             return;
         }
-        if (user.getFacebookAccount().getUserName().equals("ping")) {
+        if (user.getFacebookAccount() != null && user.getFacebookAccount().getUserName().equals("ping")) {
             chain.doFilter(httpServletRequest, response);
             return;
         }
