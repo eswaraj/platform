@@ -35,7 +35,9 @@ public class TimingFilter implements Filter {
 
         long timeTakenInMs = System.currentTimeMillis() - startTime;
         logger.info("Total Time taken to proces request {} ms", timeTakenInMs);
+        logger.info("is commited:  {} ", httpServletResponse.isCommitted());
         httpServletResponse.setHeader("timeTakenInMs", String.valueOf(timeTakenInMs));
+
     }
 
     @Override
