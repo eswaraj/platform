@@ -18,6 +18,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.SystemCategory;
+import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 
@@ -104,5 +105,9 @@ public interface AdminService {
     List<SystemCategory> getAllSystemCategories() throws ApplicationException;
 
     void reprocessLocationFile(LocationBoundaryFile locationBoundaryFile) throws ApplicationException;
+    
+    List<TimelineItem> getTimelineItems(int first, int pageSize) throws ApplicationException;
+
+    TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException;
 
 }

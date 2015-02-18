@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -37,6 +39,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.SystemCategory;
+import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.repo.CategoryRepository;
@@ -53,6 +56,7 @@ import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.domain.repo.SystemCategoryRepository;
+import com.eswaraj.domain.repo.TimelineItemRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.queue.service.QueueService;
 
@@ -112,6 +116,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private SystemCategoryRepository systemCategoryRepository;
+
+    @Autowired
+    private TimelineItemRepository timelineItemRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -612,6 +619,18 @@ public class AdminServiceImpl implements AdminService {
     public void reprocessLocationFile(LocationBoundaryFile locationBoundaryFile) throws ApplicationException {
         queueService.sendLocationFileUploadMessage(null, locationBoundaryFile.getId(), locationBoundaryFile.getLocation().getId());
 
+    }
+
+    @Override
+    public List<TimelineItem> getTimelineItems(int first, int pageSize) throws ApplicationException {
+        Pageable pageable = new PageRequest((first + 1)/pageSize, pageSize);
+        timelineItemRepository.findAll(pageable);
+        return null;
+    }
+
+    @Override
+    public TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException {
+        return timelineItemRepository.save(timelineItem);
     }
 
 }

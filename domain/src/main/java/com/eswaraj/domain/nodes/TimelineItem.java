@@ -23,6 +23,7 @@ public class TimelineItem extends BaseNode {
     private Date updateTime;
     private Date creationTime;
     private Person createdBy;
+    private String youtubeUrl;
 
     public String getTitle() {
         return title;
@@ -62,6 +63,14 @@ public class TimelineItem extends BaseNode {
 
     public void setCreatedBy(Person createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
     }
 
 }
