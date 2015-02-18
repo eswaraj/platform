@@ -48,7 +48,7 @@ public class SpringLoginFilter implements Filter {
             ((HttpServletResponse) response).sendRedirect(redirectUrl);
             return;
         }
-        if (user.getPerson().getEmail().equalsIgnoreCase("ping2ravi@yahoo.com")) {
+        if (user.getPerson().getEmail().equalsIgnoreCase("ping2ravi@yahoo.com") || user.getPerson().getEmail().equalsIgnoreCase("helloshailendra@yahoo.com")) {
             chain.doFilter(httpServletRequest, response);
             return;
         }
