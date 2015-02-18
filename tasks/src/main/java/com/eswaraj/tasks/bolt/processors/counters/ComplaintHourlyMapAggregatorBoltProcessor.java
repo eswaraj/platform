@@ -33,7 +33,7 @@ public class ComplaintHourlyMapAggregatorBoltProcessor extends AbstractBoltProce
             long startOfHour = getStartOfHour(creationDate);
             long endOfHour = getEndOfHour(creationDate);
 
-            String cypherQuery = "match complaint where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.nearByKey={nearByKey} and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
+            String cypherQuery = "match complaint where complaint.__type__ = 'Complaint' and complaint.nearByKey={nearByKey} and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
 
             String dbNearByKey = appKeyService.buildLocationKeyForNearByComplaints(complaintCreatedMessage.getLattitude(), complaintCreatedMessage.getLongitude());
             

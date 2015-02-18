@@ -27,7 +27,7 @@ public class GlobalHourlyCounterBoltProcessor extends AbstractBoltProcessor {
 
         String redisKey = appKeyService.getGlobalComplaintCounterKey();
         String hashKey = appKeyService.getHourKey(creationDate);
-        String cypherQuery = "match n where n.__type__ = 'com.eswaraj.domain.nodes.Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
+        String cypherQuery = "match n where n.__type__ = 'Complaint' and n.complaintTime >= {startTime} and n.complaintTime<= {endTime} return count(n) as totalComplaint";
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("startTime", startOfHour);

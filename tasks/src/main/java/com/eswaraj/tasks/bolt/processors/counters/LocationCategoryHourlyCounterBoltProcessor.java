@@ -37,7 +37,7 @@ public class LocationCategoryHourlyCounterBoltProcessor extends AbstractBoltProc
         }
         for (Long oneLocation : locations) {
             for (Long oneCategory : categories) {
-                String cypherQuery = "start location=node({locationId}), category=node({categoryId}) match (location)<-[:AT]-(complaint)-[:BELONGS_TO]->(category) where complaint.__type__ = 'com.eswaraj.domain.nodes.Complaint' and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
+                String cypherQuery = "start location=node({locationId}), category=node({categoryId}) match (location)<-[:AT]-(complaint)-[:BELONGS_TO]->(category) where complaint.__type__ = 'Complaint' and complaint.complaintTime >= {startTime} and complaint.complaintTime<= {endTime} return count(complaint) as totalComplaint";
 
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("categoryId", oneCategory);
