@@ -636,8 +636,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<PoliticalBodyAdminSearchResult> searchPoliticalAdmin(String searchQuery) throws ApplicationException {
-        // TODO Auto-generated method stub
-        return null;
+        return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName(searchQuery));
     }
 
 }

@@ -74,6 +74,7 @@ public class TimelineItemBean extends BaseBean {
 
     public List<PoliticalBodyAdminSearchResult> completeAdmin(String query) {
         try {
+            logger.info("Searching for {}", query);
             allAdmins = adminService.searchPoliticalAdmin(query);
         } catch (Exception e) {
             sendErrorMessage("Error", "Unable to search Admins", e);

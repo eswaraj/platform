@@ -47,7 +47,7 @@
 							<h:outputText value="#{oneTimelineItem.id}" />
 						</p:column>
 
-						<p:column headerText="Name">
+						<p:column headerText="Title">
 							<h:outputText value="#{oneTimelineItem.title}" />
 						</p:column>
 
@@ -66,10 +66,10 @@
 				</p:outputPanel>
 				<p:outputPanel id="formView" rendered="#{!timelineItemBean.showList}">
 					<p:panelGrid columns="2">
-						<p:outputLabel value="Name" />
-						<p:inputText value="#{timelineItemBean.selectedTimelineItem.name}" style="width:600px" />
+						<p:outputLabel value="Title" />
+						<p:inputText value="#{timelineItemBean.selectedTimelineItem.title}" style="width:600px" />
 						<p:outputLabel value="Description" />
-						<p:editor id="description" widgetVar="editorWidget" value="#{timelineItemBean.selectedTimelineItem.shortName}"
+						<p:editor id="description" widgetVar="editorWidget" value="#{timelineItemBean.selectedTimelineItem.description}"
 							width="600" />
 						<p:outputLabel value="Update Time" />
 						<p:calendar id="datetime" value="#{timelineItemBean.selectedTimelineItem.updateTime}"
@@ -79,14 +79,10 @@
 
 						<p:outputLabel value="Political Admins" for="admins" />
 						<p:autoComplete id="admins" multiple="true" value="#{timelineItemBean.selectedAdmins}"
-							completeMethod="#{timelineItemBean.completeTheme}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}"
+							completeMethod="#{timelineItemBean.completeAdmin}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}"
 							itemValue="#{oneAdmin}" converter="#{politicalBodyAdminSearchResultConvertor}" forceSelection="true">
-							<p:column style="width:10%">
-								<h:outputText styleClass="ui-theme ui-theme-#{theme.name}" />
-							</p:column>
-
 							<p:column>
-								<h:outputText value="#{theme.displayName}" />
+								<h:outputText value="#{oneAdmin.person.name}" />
 							</p:column>
 						</p:autoComplete>
 
