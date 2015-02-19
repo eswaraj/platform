@@ -1,7 +1,6 @@
 package com.eswaraj.api.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +20,7 @@ import com.eswaraj.cache.LocationPointCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
+import com.google.gson.JsonArray;
 
 @Controller
 public class LocationController extends BaseController {
@@ -43,10 +43,11 @@ public class LocationController extends BaseController {
         Set<Long> locations = locationPointCache.getPointLocations(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         // Second redis Operation
         logger.info("locations = " + locations);
-        redisUtil.addLocationsExpandOperation(locations);
-        List<Map> results = redisUtil.executeAll();
-        logger.info("results = " + results);
-        return convertToJsonArray(results.get(0).values()).toString();
+        // redisUtil.addLocationsExpandOperation(locations);
+        // List<Map> results = redisUtil.executeAll();
+        JsonArray jsonArray = locationCache.getLocationsByIds(locations);
+        logger.info("jsonArray = " + jsonArray);
+        return jsonArray.toString();
     }
 
     @RequestMapping(value = "/api/v0/location/{locationId}", method = RequestMethod.GET)

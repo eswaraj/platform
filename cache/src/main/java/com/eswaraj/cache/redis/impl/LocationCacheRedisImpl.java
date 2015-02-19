@@ -1,5 +1,8 @@
 package com.eswaraj.cache.redis.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import com.eswaraj.cache.LocationCache;
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @Component
@@ -72,6 +76,26 @@ public class LocationCacheRedisImpl extends BaseCacheRedisImpl implements Locati
     public Set<String> getLocationPoliticalAdmins(Long locationId) throws ApplicationException {
         String locationPoliticalAdminKey = appKeyService.getLocationPoliticalAdminKey(locationId.toString());
         return locationStringRedisTemplate.opsForSet().members(locationPoliticalAdminKey);
+    }
+
+    @Override
+    public JsonArray getLocationsByIds(Collection<Long> locationIds) throws ApplicationException {
+        JsonArray jsonArray = new JsonArray();
+        if(locationIds == null || locationIds.isEmpty()){
+            return jsonArray;
+        }
+        List<String> redisKeys = new ArrayList<String>(locationIds.size());
+        for(Long oneId : locationIds){
+            String redisKey = appKeyService.getLocationKey(oneId);
+            logger.info("redisKey : {}", redisKey);
+            redisKeys.add(redisKey);
+        }
+        List<String> locationsFromRedis = locationStringRedisTemplate.opsForValue().multiGet(redisKeys);
+
+        for (String oneLocation : locationsFromRedis) {
+            jsonArray.add(jsonParser.parse(oneLocation));
+        }
+        return jsonArray;
     }
 
 }
