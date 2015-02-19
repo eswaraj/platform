@@ -9,15 +9,12 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.next.eswaraj.admin.jsf.bean.TimelineItemBean;
 
 @Component
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 public class PoliticalBodyAdminSearchResultConvertor implements Converter {
 
     @Autowired
