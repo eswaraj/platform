@@ -79,11 +79,20 @@
 
 						<p:outputLabel value="Political Admins" for="admins" />
 						<p:autoComplete id="admins" multiple="true" value="#{timelineItemBean.selectedAdmins}"
-							completeMethod="#{timelineItemBean.completeAdmin}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}"
-							itemValue="#{oneAdmin}" converter="#{politicalBodyAdminSearchResultConvertor}" forceSelection="true">
+							completeMethod="#{timelineItemBean.completeAdmin}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}-#{oneAdmin.politicalBodyType.shortName}-#{oneAdmin.location.name}"
+							itemValue="#{oneAdmin.person.name}" converter="#{politicalBodyAdminSearchResultConvertor}" forceSelection="true">
+                           <p:column>
+                              <p:graphicImage value="#{oneAdmin.person.profilePhoto}" style="max-height:80px;" />
+                           </p:column>
 							<p:column>
 								<h:outputText value="#{oneAdmin.person.name}" />
 							</p:column>
+							<p:column>
+                                <h:outputText value="#{oneAdmin.politicalBodyType.shortName}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{oneAdmin.location.name}" />
+                            </p:column>
 						</p:autoComplete>
 
 						<p:outputLabel value="Image 1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
