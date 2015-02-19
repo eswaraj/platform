@@ -266,6 +266,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             return user;
         }
         // Person
+
         // Complaints
         // Device
         List<UserDevice> userDevices = userDeviceRepository.getAllUserDeviceRelationOfUser(user);
@@ -291,7 +292,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         // Comment
         // Admin Records
         // Complaint Endorsment
-        userRepository.delete(user);
+        // userRepository.delete(user);
         return targetUser;
     }
 
