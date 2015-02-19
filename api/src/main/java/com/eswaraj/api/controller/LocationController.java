@@ -42,8 +42,10 @@ public class LocationController extends BaseController {
         // First Redis operation
         Set<Long> locations = locationPointCache.getPointLocations(Double.parseDouble(httpServletRequest.getParameter("lat")), Double.parseDouble(httpServletRequest.getParameter("long")));
         // Second redis Operation
+        logger.info("locations = " + locations);
         redisUtil.addLocationsExpandOperation(locations);
         List<Map> results = redisUtil.executeAll();
+        logger.info("results = " + results);
         return convertToJsonArray(results.get(0).values()).toString();
     }
 
