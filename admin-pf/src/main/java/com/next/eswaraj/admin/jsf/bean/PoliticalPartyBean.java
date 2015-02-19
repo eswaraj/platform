@@ -68,7 +68,6 @@ public class PoliticalPartyBean extends BaseBean {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
-
         String imageType = ".jpg";
         String remoteFileName = selectedParty.getId() + imageType;
         try {

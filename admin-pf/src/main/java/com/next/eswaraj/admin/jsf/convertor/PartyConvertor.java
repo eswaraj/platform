@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.domain.nodes.Party;
 import com.next.eswaraj.admin.jsf.bean.PoliticalPartyBean;
 
-@Component
+@Component("jsfPartyConvertor")
 public class PartyConvertor implements Converter {
 
     @Autowired

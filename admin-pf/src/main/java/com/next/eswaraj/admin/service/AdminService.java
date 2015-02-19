@@ -21,6 +21,7 @@ import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 
 public interface AdminService {
 
@@ -69,6 +70,8 @@ public interface AdminService {
     List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException;
 
     List<PoliticalBodyAdminExtended> getPoliticalAdminOfLocationAndAdminType(Long locationid, Long politicalBodyAdminTypeId) throws ApplicationException;
+
+    List<PoliticalBodyAdminSearchResult> searchPoliticalAdmin(String searchQuery) throws ApplicationException;
 
     PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException;
 

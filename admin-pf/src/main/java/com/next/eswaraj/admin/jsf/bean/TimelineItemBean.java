@@ -1,9 +1,15 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,7 +17,11 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Document;
+import com.eswaraj.domain.nodes.Document.DocumentType;
 import com.eswaraj.domain.nodes.TimelineItem;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
+import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -21,10 +31,16 @@ public class TimelineItemBean extends BaseBean {
     private boolean showList;
     private List<TimelineItem> timelineItems;
     private TimelineItem selectedTimelineItem;
+    private List<PoliticalBodyAdminSearchResult> allAdmins;
+    
+    private Set<PoliticalBodyAdminSearchResult> selectedAdmins;
 
     @Autowired
     private AdminService adminService;
     
+    @Autowired
+    private AwsUploadUtil awsUploadUtil;
+
     @PostConstruct
     public void init() {
         try {
@@ -56,6 +72,112 @@ public class TimelineItemBean extends BaseBean {
 
     }
 
+    public List<PoliticalBodyAdminSearchResult> completeAdmin(String query) {
+        try {
+            allAdmins = adminService.searchPoliticalAdmin(query);
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Unable to search Admins", e);
+        }
+        return allAdmins;
+    }
+
+    public void handleFileUpload1(FileUploadEvent event) {
+        String imageType = ".jpg";
+        String remoteFileName = selectedTimelineItem.getId() + "_1" + imageType;
+        try {
+            String httpFilePath = uploadFile(event, remoteFileName);
+            selectedTimelineItem.setImage1(httpFilePath);
+            selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
+    public void handleFileUpload2(FileUploadEvent event) {
+        String imageType = ".jpg";
+        String remoteFileName = selectedTimelineItem.getId() + "_2" + imageType;
+        try {
+            String httpFilePath = uploadFile(event, remoteFileName);
+            selectedTimelineItem.setImage2(httpFilePath);
+            selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    public void handleFileUpload3(FileUploadEvent event) {
+        String imageType = ".jpg";
+        String remoteFileName = selectedTimelineItem.getId() + "_3" + imageType;
+        try {
+            String httpFilePath = uploadFile(event, remoteFileName);
+            selectedTimelineItem.setImage3(httpFilePath);
+            selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
+    public void handleFileUpload4(FileUploadEvent event) {
+        String imageType = ".jpg";
+        String remoteFileName = selectedTimelineItem.getId() + "_4" + imageType;
+        try {
+            String httpFilePath = uploadFile(event, remoteFileName);
+            selectedTimelineItem.setImage4(httpFilePath);
+            selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
+    public String uploadFile(FileUploadEvent event, String remoteFileName) throws FileNotFoundException, IOException {
+        String httpFilePath = awsUploadUtil.uploadTimelineImageJpeg(remoteFileName, event.getFile().getInputstream());
+        return httpFilePath;
+    }
+
+    public void handleDocFileUpload(FileUploadEvent event) {
+
+        String imageType = ".pdf";
+        String remoteFileName = selectedTimelineItem.getId() + imageType;
+        try {
+            String httpFilePath = awsUploadUtil.uploadTimelineDocument(remoteFileName, event.getFile().getInputstream(), "pdf");
+            // selectedElectionManifesto.setImageUrl(httpFilePath);
+            Document document = selectedTimelineItem.getDocument();
+            if (document == null) {
+                document = new Document();
+            }
+            document.setUrl(httpFilePath);
+            document.setType(DocumentType.Pdf);
+            selectedTimelineItem.setDocument(document);
+            selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            logger.error("Unable to upload File", ex);
+            FacesMessage message = new FacesMessage("Failed", event.getFile().getFileName() + " is failed to uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
     public boolean isShowList() {
         return showList;
     }
@@ -80,6 +202,22 @@ public class TimelineItemBean extends BaseBean {
 
     public void setTimelineItems(List<TimelineItem> timelineItems) {
         this.timelineItems = timelineItems;
+    }
+
+    public List<PoliticalBodyAdminSearchResult> getAllAdmins() {
+        return allAdmins;
+    }
+
+    public void setAllAdmins(List<PoliticalBodyAdminSearchResult> allAdmins) {
+        this.allAdmins = allAdmins;
+    }
+
+    public Set<PoliticalBodyAdminSearchResult> getSelectedAdmins() {
+        return selectedAdmins;
+    }
+
+    public void setSelectedAdmins(Set<PoliticalBodyAdminSearchResult> selectedAdmins) {
+        this.selectedAdmins = selectedAdmins;
     }
 
 }

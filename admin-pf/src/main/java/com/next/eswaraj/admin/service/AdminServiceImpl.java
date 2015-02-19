@@ -42,6 +42,7 @@ import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
@@ -631,6 +632,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException {
         return timelineItemRepository.save(timelineItem);
+    }
+
+    @Override
+    public List<PoliticalBodyAdminSearchResult> searchPoliticalAdmin(String searchQuery) throws ApplicationException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

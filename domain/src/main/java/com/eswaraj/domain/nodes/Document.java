@@ -23,6 +23,8 @@ public class Document extends BaseNode {
 	
     private DocumentType type;
 
+    private Long size;
+
     public enum DocumentType {
         Pdf, MsDoc
     }
@@ -49,6 +51,14 @@ public class Document extends BaseNode {
 
     public void setLanguage(DocumentLanguage language) {
         this.language = language;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 	
 }

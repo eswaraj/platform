@@ -100,7 +100,7 @@
 
 						</p:selectOneMenu>
 						<p:outputLabel value="Party" />
-						<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true"
+						<p:selectOneMenu id="politicalParty" converter="#{jsfPartyConvertor}" required="true"
 							requiredMessage="Please select a Political Party"
 							value="#{electionManifestoBean.selectedElectionManifesto.party}">
 							<f:selectItem itemLabel="Select Party" itemValue="" />

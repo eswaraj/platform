@@ -50,4 +50,8 @@ public interface PoliticalBodyAdminRepository extends GraphRepository<PoliticalB
     @Query("start person=node:PersonNameFt({0}) match (politicalBodyAdmin)-[:IS]-(person) with politicalBodyAdmin,  person  match (location)-[:BELONGS_TO]-(politicalBodyAdmin)-[:OF_TYPE]->(politicalBodyType) with politicalBodyAdmin, location,  politicalBodyType,person  match (party)-[:OF]-(politicalBodyAdmin) where politicalBodyAdmin.__type__='PoliticalBodyAdmin' return politicalBodyAdmin, politicalBodyType, location, person, party limit 10")
     EndResult<PoliticalBodyAdminSearchResult> searchPoliticalAdminByName(String searchname);
 
+    @Query("start person=node:PersonNameFt({0})  match (politicalBodyAdmin)-[:IS]-(person) with politicalBodyAdmin, person  match (location)-[:BELONGS_TO]-(politicalBodyAdmin)-[:OF_TYPE]->(politicalBodyType) with politicalBodyAdmin, location,  politicalBodyType,person  optional match (party)-[:OF]-(politicalBodyAdmin) where politicalBodyAdmin.__type__='PoliticalBodyAdmin' return politicalBodyAdmin, politicalBodyType, location, person, party limit 10")
+    @Deprecated
+    EndResult<PoliticalBodyAdminExtended> getAllPoliticalAdminByPersonName(String personName);
+
 }

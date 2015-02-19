@@ -49,6 +49,9 @@ public class AwsUploadUtil {
     @Value("${profile_pic_base_directory}")
     private String profilePicBaseDirectory;
 
+    @Value("${timeline_base_directory:timeline}")
+    private String timelineBaseDirectory;
+
     @Value("${category_pic_base_directory}")
     private String categoryPicBaseDirectory;
 
@@ -106,6 +109,20 @@ public class AwsUploadUtil {
         return httpPath;
     }
 
+    public String uploadTimelineImageJpeg(String remoteFileName, InputStream localFilePathToUpload) throws FileNotFoundException {
+        String remoteFileNameAndPath = timelineBaseDirectory + "/" + remoteFileName;
+        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, "image/jpeg");
+        String httpPath = s3BaseHttpForProfilePic + "/" + timelineBaseDirectory + "/" + remoteFileName;
+        return httpPath;
+    }
+
+    public String uploadTimelineImagePng(String remoteFileName, InputStream localFilePathToUpload) throws FileNotFoundException {
+        String remoteFileNameAndPath = timelineBaseDirectory + "/" + remoteFileName;
+        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, "image/png");
+        String httpPath = s3BaseHttpForProfilePic + "/" + timelineBaseDirectory + "/" + remoteFileName;
+        return httpPath;
+    }
+
     public String uploadCategoryImage(String remoteFileName, InputStream localFilePathToUpload, String imageType) throws FileNotFoundException {
         String contentTypeHeader = "image/jpeg";
         if (".png".equalsIgnoreCase(imageType)) {
@@ -142,6 +159,23 @@ public class AwsUploadUtil {
         }
         uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, type);
         String httpPath = s3BaseHttpForProfilePic + "/" + manifestoBaseDirectory + "/" + remoteFileName;
+        return httpPath;
+    }
+
+    public String uploadTimelineDocument(String remoteFileName, InputStream localFilePathToUpload, String documentType) throws FileNotFoundException {
+        String remoteFileNameAndPath = timelineBaseDirectory + "/" + remoteFileName;
+        String type = "application/octet-stream";
+        if (documentType.equalsIgnoreCase("pdf")) {
+            type = "application/pdf";
+        }
+        if (documentType.equalsIgnoreCase("rtf")) {
+            type = "text/rtf";
+        }
+        if (documentType.equalsIgnoreCase("doc")) {
+            type = "application/msdoc";
+        }
+        uploadFileToS3(accessKey, accessSecret, s3Bucket, remoteFileNameAndPath, localFilePathToUpload, type);
+        String httpPath = s3BaseHttpForProfilePic + "/" + timelineBaseDirectory + "/" + remoteFileName;
         return httpPath;
     }
 
