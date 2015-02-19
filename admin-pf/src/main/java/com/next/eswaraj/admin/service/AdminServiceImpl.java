@@ -636,7 +636,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<PoliticalBodyAdminSearchResult> searchPoliticalAdmin(String searchQuery) throws ApplicationException {
-        return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName(searchQuery));
+        return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName("name:*" + searchQuery + "*"));
     }
 
 }
