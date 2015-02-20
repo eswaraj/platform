@@ -508,7 +508,7 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void setSelectedPoliticalBodyAdmin(PoliticalBodyAdmin selectedPoliticalBodyAdmin) {
         try {
-            System.out.println("selectedPoliticalBodyAdmin=" + selectedPoliticalBodyAdmin);
+            logger.info("selectedPoliticalBodyAdmin=" + selectedPoliticalBodyAdmin);
             this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
             this.selectedPerson = adminService.getPersonById(selectedPoliticalBodyAdmin.getPerson().getId());
             this.selectedPoliticalBodyType = adminService.getPoliticalBodyTypeById(selectedPoliticalBodyAdmin.getPoliticalBodyType().getId());
@@ -518,12 +518,12 @@ public class PoliticalAdminBean extends BaseBean {
             if (selectedPoliticalBodyAdmin.getElection() != null) {
                 this.selectedElection = adminService.getElectionById(selectedPoliticalBodyAdmin.getElection().getId());
             }
-            System.out.println("selectedPerson=" + selectedPerson);
-            System.out.println("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
+            logger.info("selectedPerson=" + selectedPerson);
+            logger.info("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
             showListPanel = false;
             updateMode = true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to select Politicla Body Admin", ex);
         }
     }
 

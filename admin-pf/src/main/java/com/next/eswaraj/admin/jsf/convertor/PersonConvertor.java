@@ -8,6 +8,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,12 @@ import com.next.eswaraj.admin.jsf.bean.PoliticalAdminBean;
 @Component("jsfPersonConvertor")
 public class PersonConvertor implements Converter {
 
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private PoliticalAdminBean politicalAdminBean;
 
     public PersonConvertor() {
+        logger.info("Creating jsf person convertor");
     }
 
 
@@ -28,6 +32,7 @@ public class PersonConvertor implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
+                logger.info("value : " + value);
                 List<Person> persons = politicalAdminBean.getPersonSearchResults();
                 if (persons == null) {
                     return politicalAdminBean.getSelectedPerson();
