@@ -104,7 +104,7 @@
 							<p:outputPanel rendered="#{not empty politicalAdminBean.selectedNode}">
 
 								<p:outputPanel id="listPanel" rendered="#{politicalAdminBean.showListPanel}">
-									<p:selectOneMenu id="adminType" converter="#{politicalBodyTypeConvertor}"
+									<p:selectOneMenu id="adminType" converter="#{jsfPoliticalBodyTypeConvertor}"
 										disabled="#{!politicalAdminBean.enableRightSidePanel}" value="#{politicalAdminBean.selectedPoliticalBodyType}">
 										<f:selectItem itemLabel="Select One" itemValue="" />
 										<f:selectItems value="#{politicalAdminBean.politicalBodyTypes}" var="oneReult" itemLabel="#{oneReult.name}"

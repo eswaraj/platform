@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.next.eswaraj.admin.jsf.bean.PoliticalAdminTypeBean;
 
-@Component
+@Component("jsfPoliticalBodyTypeConvertor")
 public class PoliticalBodyTypeConvertor implements Converter {
 
     @Autowired
