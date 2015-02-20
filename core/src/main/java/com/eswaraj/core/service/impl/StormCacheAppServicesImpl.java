@@ -288,6 +288,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         addPropertyIfNotNull(politicalBodyJsonObject, "landlineNumber2", person.getLandlineNumber2());
         addPropertyIfNotNull(politicalBodyJsonObject, "mobileNumber1", person.getMobileNumber1());
         addPropertyIfNotNull(politicalBodyJsonObject, "mobileNumber2", person.getMobileNumber2());
+        addPropertyIfNotNull(politicalBodyJsonObject, "email", person.getEmail());
         
         Location location = locationRepository.findOne(onePoliticalBodyAdmin.getLocation().getId());
         JsonObject locationJsonObject = new JsonObject();
