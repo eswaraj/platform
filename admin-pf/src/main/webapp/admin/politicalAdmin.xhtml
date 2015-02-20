@@ -277,7 +277,7 @@
 
 										</p:fieldset>
 										<p:fieldset legend="Election" style="margin-bottom:20px">
-											<p:selectOneMenu id="election" converter="#{electionConvertor}"
+											<p:selectOneMenu id="election" converter="#{jsfElectionConvertor}"
 												value="#{politicalAdminBean.selectedElection}">
 												<f:selectItem itemLabel="Select One" itemValue="" />
 												<f:selectItems value="#{politicalAdminBean.politicalBodyTypeElections}" var="oneReult" itemLabel="#{oneReult.name}"

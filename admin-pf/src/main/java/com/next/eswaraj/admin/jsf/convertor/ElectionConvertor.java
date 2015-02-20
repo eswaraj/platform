@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.domain.nodes.Election;
 import com.next.eswaraj.admin.jsf.bean.ElectionBean;
 
-@Component
+@Component("jsfElectionConvertor")
 public class ElectionConvertor implements Converter {
 
     @Autowired

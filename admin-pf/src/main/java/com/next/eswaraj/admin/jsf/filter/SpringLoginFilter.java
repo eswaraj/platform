@@ -38,7 +38,7 @@ public class SpringLoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
-        logger.info("Requested URL " + httpServletRequest.getRequestURL().toString());
+        // logger.info("Requested URL " + httpServletRequest.getRequestURL().toString());
         UserDto user = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         // logger.info("Logged In User = " + user);
         if (user == null) {
