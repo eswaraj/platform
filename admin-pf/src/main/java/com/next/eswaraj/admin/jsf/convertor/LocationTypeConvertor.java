@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.domain.nodes.LocationType;
 import com.next.eswaraj.admin.jsf.bean.PoliticalAdminTypeBean;
 
-@Component
+@Component("jsfLocationTypeConvertor")
 public class LocationTypeConvertor implements Converter {
 
     @Autowired

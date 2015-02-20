@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.domain.nodes.Person;
 import com.next.eswaraj.admin.jsf.bean.PoliticalAdminBean;
 
-@Component
+@Component("jsfPersonConvertor")
 public class PersonConvertor implements Converter {
 
     @Autowired

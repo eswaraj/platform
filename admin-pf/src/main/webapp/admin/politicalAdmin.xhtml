@@ -167,7 +167,7 @@
 										<p:outputLabel value="Search Person" />
 										<p:autoComplete id="searchPerson" value="#{politicalAdminBean.selectedPerson}" minQueryLength="3"
 											completeMethod="#{politicalAdminBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
-											itemValue="#{onePerson}" converter="#{personConvertor}" forceSelection="true">
+											itemValue="#{onePerson}" converter="#{jsfPersonConvertor}" forceSelection="true">
 											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}" />
 											<p:column>
 												<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
@@ -266,7 +266,7 @@
 									</p:fieldset>
 									<h:panelGrid columns="2">
 										<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
-											<p:selectOneMenu id="politicalParty" converter="#{partyConvertor}" required="true"
+											<p:selectOneMenu id="politicalParty" converter="#{jsfPartyConvertor}" required="true"
 												requiredMessage="Please select a Political Party" value="#{politicalAdminBean.selectedPoliticalParty}"
 												disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
 												<f:selectItem itemLabel="Select Party" itemValue="" />

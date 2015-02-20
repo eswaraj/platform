@@ -81,7 +81,7 @@
 						<p:outputLabel value="Description" />
 						<p:inputTextarea rows="6" cols="60" value="#{politicalAdminTypeBean.selectedPoliticalBodyType.description}" />
 						<p:outputLabel for="locationType" value="Location Type" />
-						<p:selectOneMenu id="locationType" value="#{politicalAdminTypeBean.selectedPoliticalBodyType.locationType}" converter="#{locationTypeConvertor}"
+						<p:selectOneMenu id="locationType" value="#{politicalAdminTypeBean.selectedPoliticalBodyType.locationType}" converter="#{jsfLocationTypeConvertor}"
 							panelStyle="width:180px" effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
 							<f:selectItems value="#{politicalAdminTypeBean.locationTypes}" var="locationType" itemLabel="#{locationType.name}"
 								itemValue="#{locationType}" />
