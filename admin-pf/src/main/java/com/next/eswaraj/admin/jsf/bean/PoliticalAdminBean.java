@@ -138,10 +138,12 @@ public class PoliticalAdminBean extends BaseBean {
 
     public List<Person> searchPerson(String query) {
         try {
+            logger.info("Searching Person for {}", query);
             personSearchResults = adminService.searchPersonByName(query);
+            logger.info("personSearchResults {}", personSearchResults);
             return personSearchResults;
-        } catch (ApplicationException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Unable to search person", e);
         }
         return null;
 
@@ -548,6 +550,7 @@ public class PoliticalAdminBean extends BaseBean {
     }
 
     public void setSelectedPerson(Person selectedPerson) {
+        logger.info("Setting selected person to {}", selectedPerson);
         this.selectedPerson = selectedPerson;
     }
 

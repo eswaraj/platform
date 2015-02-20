@@ -34,21 +34,25 @@ public class PersonConvertor implements Converter {
             try {
                 logger.info("value : " + value);
                 List<Person> persons = politicalAdminBean.getPersonSearchResults();
-                if (persons == null) {
+                if (persons == null || persons.isEmpty()) {
+                    logger.info("No Seach Result so returning : {}", politicalAdminBean.getSelectedPerson());
                     return politicalAdminBean.getSelectedPerson();
                 } else {
                     long id = Long.parseLong(value);
                     for (Person onePerson : persons) {
                         if (onePerson.getId().equals(id)) {
+                            logger.info("onePerson returning : {}", onePerson);
                             return onePerson;
                         }
                     }
                 }
+                logger.info("return null");
                 return null;
             } catch (NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
             }
         } else {
+            logger.info("return null else");
             return null;
         }
     }
