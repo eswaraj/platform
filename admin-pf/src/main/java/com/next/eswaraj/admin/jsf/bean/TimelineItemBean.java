@@ -24,6 +24,7 @@ import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
+import com.next.eswaraj.admin.jsf.convertor.ElectionPromiseConvertor;
 import com.next.eswaraj.admin.jsf.convertor.LocationSearchResultConvertor;
 import com.next.eswaraj.admin.service.AdminService;
 
@@ -53,12 +54,16 @@ public class TimelineItemBean extends BaseBean {
     @Autowired
     private LocationSearchResultConvertor locationSearchResultConvertor;
 
+    @Autowired
+    private ElectionPromiseConvertor electionPromiseConvertor;
+
     @PostConstruct
     public void init() {
         try {
             showList = true;
             timelineItems = adminService.getTimelineItems(0, 20);
             promises = adminService.getAllPromises();
+            electionPromiseConvertor.setPromises(promises);
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
         }

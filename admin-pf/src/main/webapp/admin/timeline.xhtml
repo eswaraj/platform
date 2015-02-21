@@ -165,10 +165,10 @@
 						<p:commandButton value="Cancel" process="@this:cancel" update="@form" actionListener="#{timelineItemBean.cancel}"
 							ajax="true" styleClass="ui-priority-primary" id="cancel">
 						</p:commandButton>
-						<p:commandButton id="saveUpdate" value="Save Update" update="@form" ajax="true"
-							actionListener="#{timelineItemBean.saveUpdate}" styleClass="ui-priority-primary">
+						<p:commandButton id="saveTimelineItem" value="Save Update" update="@form" ajax="true"
+							actionListener="#{timelineItemBean.saveTimelineItem}" styleClass="ui-priority-primary">
 						</p:commandButton>
-						<p:blockUI block="@form" trigger="saveUpdate">Saving<br />
+						<p:blockUI block="@form" trigger="saveTimelineItem">Saving<br />
 							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 						</p:blockUI>
 						<p:blockUI block="@form" trigger="cancel">Loading<br />
