@@ -40,7 +40,7 @@ import com.next.eswaraj.admin.util.SessionUtil;
 
 @Configuration
 @ComponentScan(basePackages = { "com.next.eswaraj.admin.login.controller", "com.next.eswaraj.admin.util", "com.next.eswaraj.admin.jsf.bean", "com.next.eswaraj.admin.service",
-        "com.next.eswaraj.admin.jsf.convertors" })
+        "com.next.eswaraj.admin.jsf.convertor" })
 @EnableNeo4jRepositories(basePackages = "com.eswaraj.domain.repo")
 @EnableScheduling
 @ImportResource({ "classpath:eswaraj-core.xml", "classpath:eswaraj-web-admin-context.xml" })
