@@ -28,12 +28,28 @@ public class PoliticalBodyAdminSearchResultConvertor implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-                System.out.println("timelineItemBean : " + timelineItemBean);
-                List<PoliticalBodyAdminSearchResult> elections = timelineItemBean.getAllAdmins();
+                System.out.println("Checking : " + value);
                 long id = Long.parseLong(value);
-                for (PoliticalBodyAdminSearchResult onePoliticalBodyAdminSearchResult : elections) {
-                    if (onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId().equals(id)) {
-                        return onePoliticalBodyAdminSearchResult;
+                List<PoliticalBodyAdminSearchResult> allAdmins = timelineItemBean.getAllAdmins();
+                if (allAdmins != null) {
+                    for (PoliticalBodyAdminSearchResult onePoliticalBodyAdminSearchResult : allAdmins) {
+                        System.out.println("onePoliticalBodyAdminSearchResult : " + onePoliticalBodyAdminSearchResult.getPerson().getName() + ","
+                                + onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId());
+                        if (onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId().equals(id)) {
+                            System.out.println("Found in All Admins");
+                            return onePoliticalBodyAdminSearchResult;
+                        }
+                    }
+                }
+                allAdmins = timelineItemBean.getSelectedAdmins();
+                if (allAdmins != null) {
+                    for (PoliticalBodyAdminSearchResult onePoliticalBodyAdminSearchResult : allAdmins) {
+                        System.out.println("onePoliticalBodyAdminSearchResult : " + onePoliticalBodyAdminSearchResult.getPerson().getName() + ","
+                                + onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId());
+                        if (onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId().equals(id)) {
+                            System.out.println("Found in Selected Admins");
+                            return onePoliticalBodyAdminSearchResult;
+                        }
                     }
                 }
                 return null;
