@@ -2,6 +2,7 @@ package com.next.eswaraj.admin.jsf.bean;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,9 +21,12 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Document;
 import com.eswaraj.domain.nodes.Document.DocumentType;
+import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.TimelineItem;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
+import com.next.eswaraj.admin.jsf.convertor.LocationSearchResultConvertor;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -35,11 +40,16 @@ public class TimelineItemBean extends BaseBean {
     
     private Set<PoliticalBodyAdminSearchResult> selectedAdmins;
 
+    private Set<Location> selectedLocations;
+
     @Autowired
     private AdminService adminService;
     
     @Autowired
     private AwsUploadUtil awsUploadUtil;
+
+    @Autowired
+    private LocationSearchResultConvertor locationSearchResultConvertor;
 
     @PostConstruct
     public void init() {
@@ -80,6 +90,26 @@ public class TimelineItemBean extends BaseBean {
             sendErrorMessage("Error", "Unable to search Admins", e);
         }
         return allAdmins;
+    }
+
+    public void handleAdminSelect(SelectEvent event) {
+        PoliticalBodyAdminSearchResult selectedAdmin = (PoliticalBodyAdminSearchResult) event.getObject();
+        if (selectedLocations == null) {
+            selectedLocations = new HashSet<Location>();
+        }
+        selectedLocations.add(selectedAdmin.getLocation());
+    }
+
+    public List<LocationSearchResult> completeLocation(String query) {
+        List<LocationSearchResult> locations = null;
+        try {
+            logger.info("Searching for {}", query);
+            locations = adminService.searchLocationByName(query);
+            locationSearchResultConvertor.setLocations(locations);
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Unable to search Admins", e);
+        }
+        return locations;
     }
 
     public void handleFileUpload1(FileUploadEvent event) {
@@ -219,6 +249,14 @@ public class TimelineItemBean extends BaseBean {
 
     public void setSelectedAdmins(Set<PoliticalBodyAdminSearchResult> selectedAdmins) {
         this.selectedAdmins = selectedAdmins;
+    }
+
+    public Set<Location> getSelectedLocations() {
+        return selectedLocations;
+    }
+
+    public void setSelectedLocations(Set<Location> selectedLocations) {
+        this.selectedLocations = selectedLocations;
     }
 
 }
