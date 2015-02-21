@@ -44,6 +44,8 @@ public class TimelineItemBean extends BaseBean {
 
     private List<ElectionManifestoPromise> promises;
 
+    private List<ElectionManifestoPromise> selectedPromises;
+
     @Autowired
     private AdminService adminService;
     
@@ -276,6 +278,14 @@ public class TimelineItemBean extends BaseBean {
 
     public void setPromises(List<ElectionManifestoPromise> promises) {
         this.promises = promises;
+    }
+
+    public List<ElectionManifestoPromise> getSelectedPromises() {
+        return selectedPromises;
+    }
+
+    public void setSelectedPromises(List<ElectionManifestoPromise> selectedPromises) {
+        this.selectedPromises = selectedPromises;
     }
 
 }
