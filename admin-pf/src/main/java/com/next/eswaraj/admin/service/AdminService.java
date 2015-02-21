@@ -1,6 +1,7 @@
 package com.next.eswaraj.admin.service;
 
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -114,5 +115,9 @@ public interface AdminService {
     List<TimelineItem> getTimelineItems(int first, int pageSize) throws ApplicationException;
 
     TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException;
+
+    List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Long electionManifestoId) throws ApplicationException;
+
+    List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Collection<Long> electionManifestoIds) throws ApplicationException;
 
 }

@@ -81,8 +81,7 @@
 						<p:autoComplete id="admins" multiple="true" value="#{timelineItemBean.selectedAdmins}"
 							completeMethod="#{timelineItemBean.completeAdmin}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}-#{oneAdmin.politicalBodyType.shortName}-#{oneAdmin.location.name}"
 							itemValue="#{oneAdmin.person.name}" converter="#{politicalBodyAdminSearchResultConvertor}" forceSelection="true">
-							<p:ajax event="itemSelect" listener="#{timelineItemBean.handleAdminSelect}" update="@form" global="false" />
-							<p:ajax event="change" listener="#{timelineItemBean.handleAdminChange}" process="@form"/> 
+							<p:ajax event="itemSelect" listener="#{timelineItemBean.handleAdminSelect}" update="@form:promises" global="false" />
 							
                            <p:column>
                               <p:graphicImage value="#{oneAdmin.person.profilePhoto}" style="max-height:80px;" />
@@ -109,6 +108,11 @@
                                 <h:outputText value="#{oneLocation.locationType.name}" />
                             </p:column>
                         </p:autoComplete>
+                        <h:outputLabel for="promises" value="Election Promises" />
+				        <p:selectCheckboxMenu id="promises" value="#{timelineItemBean.selectedPromises}" label="Election Promises"
+				                              filter="true" filterMatchMode="contains" panelStyle="width:250px">
+				            <f:selectItems value="#{timelineItemBean.promises}" />
+				        </p:selectCheckboxMenu>
 
 						<p:outputLabel value="Image 1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
 						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">

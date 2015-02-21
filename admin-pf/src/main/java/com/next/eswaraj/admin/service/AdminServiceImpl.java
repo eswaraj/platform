@@ -644,4 +644,14 @@ public class AdminServiceImpl implements AdminService {
         return convertToList(politicalBodyAdminRepository.getAllCurrentPoliticalAdmins());
     }
 
+    @Override
+    public List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Long electionManifestoId) throws ApplicationException {
+        return electionManifestoPromiseRepository.getAllPromisesOfPoliticalAdmin(electionManifestoId);
+    }
+
+    @Override
+    public List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Collection<Long> electionManifestoIds) throws ApplicationException {
+        return electionManifestoPromiseRepository.getAllPromisesOfPoliticalAdmin(electionManifestoIds);
+    }
+
 }

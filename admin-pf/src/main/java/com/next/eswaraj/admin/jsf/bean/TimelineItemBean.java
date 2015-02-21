@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Document;
 import com.eswaraj.domain.nodes.Document.DocumentType;
+import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
@@ -41,6 +41,8 @@ public class TimelineItemBean extends BaseBean {
     private List<PoliticalBodyAdminSearchResult> selectedAdmins;
 
     private List<Location> selectedLocations;
+
+    private List<ElectionManifestoPromise> promises;
 
     @Autowired
     private AdminService adminService;
@@ -94,26 +96,17 @@ public class TimelineItemBean extends BaseBean {
 
     public void handleAdminSelect(SelectEvent event) {
         logger.info("handleAdminSelect : " + event.getObject());
-        if (selectedLocations == null) {
-            selectedLocations = new ArrayList<Location>();
-        }
-        selectedLocations.clear();
-        for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
-            logger.info("handleAdminSelect addning one Location " + oneSelectedAdmin.getLocation());
-            selectedLocations.add(oneSelectedAdmin.getLocation());
-        }
-
-    }
-
-    public void handleAdminChange(AjaxBehaviorEvent event) {
-        logger.info("handleAdminChange : " + event.getSource());
-        if (selectedLocations == null) {
-            selectedLocations = new ArrayList<Location>();
-        }
-        selectedLocations.clear();
-        for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
-            logger.info("handleAdminChange addning one Location " + oneSelectedAdmin.getLocation());
-            selectedLocations.add(oneSelectedAdmin.getLocation());
+        if (!selectedAdmins.isEmpty()) {
+            List<Long> adminIds = new ArrayList<Long>();
+            for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
+                logger.info("handleAdminSelect addning one Location " + oneSelectedAdmin.getLocation());
+                adminIds.add(oneSelectedAdmin.getPoliticalBodyAdmin().getId());
+            }
+            try {
+                promises = adminService.getAllPromisesOfPoliticalAdmin(adminIds);
+            } catch (Exception e) {
+                sendErrorMessage("Error", "Unable to get promises of selected Admins", e);
+            }
         }
 
     }
@@ -275,6 +268,14 @@ public class TimelineItemBean extends BaseBean {
 
     public void setSelectedLocations(List<Location> selectedLocations) {
         this.selectedLocations = selectedLocations;
+    }
+
+    public List<ElectionManifestoPromise> getPromises() {
+        return promises;
+    }
+
+    public void setPromises(List<ElectionManifestoPromise> promises) {
+        this.promises = promises;
     }
 
 }
