@@ -654,4 +654,9 @@ public class AdminServiceImpl implements AdminService {
         return electionManifestoPromiseRepository.getAllPromisesOfPoliticalAdmin(electionManifestoIds);
     }
 
+    @Override
+    public List<ElectionManifestoPromise> getAllPromises() throws ApplicationException {
+        return convertToList(electionManifestoPromiseRepository.findAll());
+    }
+
 }

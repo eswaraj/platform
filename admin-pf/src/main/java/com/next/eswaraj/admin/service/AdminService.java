@@ -120,4 +120,5 @@ public interface AdminService {
 
     List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Collection<Long> electionManifestoIds) throws ApplicationException;
 
+    List<ElectionManifestoPromise> getAllPromises() throws ApplicationException;
 }

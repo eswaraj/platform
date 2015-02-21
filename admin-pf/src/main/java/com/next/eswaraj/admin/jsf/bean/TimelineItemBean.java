@@ -10,7 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -60,6 +59,7 @@ public class TimelineItemBean extends BaseBean {
         try {
             showList = true;
             timelineItems = adminService.getTimelineItems(0, 20);
+            promises = adminService.getAllPromises();
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
         }
@@ -77,7 +77,22 @@ public class TimelineItemBean extends BaseBean {
 
     public void saveTimelineItem() {
         try {
-            selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
+            System.out.println("********************");
+            if (selectedLocations == null) {
+                selectedLocations = new ArrayList<Location>();
+            }
+            for (PoliticalBodyAdminSearchResult oneAdmin : selectedAdmins) {
+                System.out.println("oneAdmin : = " + oneAdmin.getPerson().getName() + ", " + oneAdmin.getPoliticalBodyType().getShortName() + ", " + oneAdmin.getLocation().getName());
+                selectedLocations.add(oneAdmin.getLocation());
+            }
+            for (Location oneLocation : selectedLocations) {
+                System.out.println("oneLocation : " + oneLocation.getName());
+            }
+            for (ElectionManifestoPromise onePromise : selectedPromises) {
+                System.out.println("onePromise : " + onePromise.getTitle());
+            }
+            System.out.println("********************");
+            // selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
             timelineItems = adminService.getTimelineItems(0, 20);
             showList = true;
         } catch (Exception e) {
@@ -94,23 +109,6 @@ public class TimelineItemBean extends BaseBean {
             sendErrorMessage("Error", "Unable to search Admins", e);
         }
         return allAdmins;
-    }
-
-    public void handleAdminSelect(SelectEvent event) {
-        logger.info("handleAdminSelect : " + event.getObject());
-        if (!selectedAdmins.isEmpty()) {
-            List<Long> adminIds = new ArrayList<Long>();
-            for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
-                logger.info("handleAdminSelect addning one Location " + oneSelectedAdmin.getLocation());
-                adminIds.add(oneSelectedAdmin.getPoliticalBodyAdmin().getId());
-            }
-            try {
-                promises = adminService.getAllPromisesOfPoliticalAdmin(adminIds);
-            } catch (Exception e) {
-                sendErrorMessage("Error", "Unable to get promises of selected Admins", e);
-            }
-        }
-
     }
 
     public List<LocationSearchResult> completeLocation(String query) {
