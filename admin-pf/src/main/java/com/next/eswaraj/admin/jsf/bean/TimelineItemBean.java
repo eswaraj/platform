@@ -93,11 +93,14 @@ public class TimelineItemBean extends BaseBean {
 
     public void handleAdminSelect(SelectEvent event) {
         logger.info("handleAdminSelect : " + event.getObject());
-        PoliticalBodyAdminSearchResult selectedAdmin = (PoliticalBodyAdminSearchResult) event.getObject();
         if (selectedLocations == null) {
             selectedLocations = new ArrayList<Location>();
         }
-        selectedLocations.add(selectedAdmin.getLocation());
+        selectedLocations.clear();
+        for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
+            selectedLocations.add(oneSelectedAdmin.getLocation());
+        }
+
     }
 
     public List<LocationSearchResult> completeLocation(String query) {
