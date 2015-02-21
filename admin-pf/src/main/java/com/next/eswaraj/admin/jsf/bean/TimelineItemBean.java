@@ -20,7 +20,6 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Document;
 import com.eswaraj.domain.nodes.Document.DocumentType;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
-import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
@@ -39,7 +38,7 @@ public class TimelineItemBean extends BaseBean {
     
     private List<PoliticalBodyAdminSearchResult> selectedAdmins;
 
-    private List<Location> selectedLocations;
+    private List<LocationSearchResult> selectedLocations;
 
     private List<ElectionManifestoPromise> promises;
 
@@ -79,14 +78,13 @@ public class TimelineItemBean extends BaseBean {
         try {
             System.out.println("********************");
             if (selectedLocations == null) {
-                selectedLocations = new ArrayList<Location>();
+                selectedLocations = new ArrayList<LocationSearchResult>();
             }
             for (PoliticalBodyAdminSearchResult oneAdmin : selectedAdmins) {
                 System.out.println("oneAdmin : = " + oneAdmin.getPerson().getName() + ", " + oneAdmin.getPoliticalBodyType().getShortName() + ", " + oneAdmin.getLocation().getName());
-                selectedLocations.add(oneAdmin.getLocation());
             }
-            for (Location oneLocation : selectedLocations) {
-                System.out.println("oneLocation : " + oneLocation.getName());
+            for (LocationSearchResult oneLocation : selectedLocations) {
+                System.out.println("oneLocation : " + oneLocation.getLocation().getName());
             }
             for (ElectionManifestoPromise onePromise : selectedPromises) {
                 System.out.println("onePromise : " + onePromise.getTitle());
@@ -262,11 +260,11 @@ public class TimelineItemBean extends BaseBean {
         this.selectedAdmins = selectedAdmins;
     }
 
-    public List<Location> getSelectedLocations() {
+    public List<LocationSearchResult> getSelectedLocations() {
         return selectedLocations;
     }
 
-    public void setSelectedLocations(List<Location> selectedLocations) {
+    public void setSelectedLocations(List<LocationSearchResult> selectedLocations) {
         this.selectedLocations = selectedLocations;
     }
 

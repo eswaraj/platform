@@ -96,7 +96,7 @@
 						</p:autoComplete>
 						
 						<p:outputLabel value="Location" for="locations" />
-						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
+						<h:panelGrid columns="1" >
 						   <p:outputLabel value="locations for admins will be added automatically, add any extra location by searching here" />
                            <p:autoComplete id="locations" multiple="true" value="#{timelineItemBean.selectedLocations}"
                             completeMethod="#{timelineItemBean.completeLocation}" var="oneLocation" itemLabel="#{oneLocation.location.name}-#{oneLocation.locationType.name}"
