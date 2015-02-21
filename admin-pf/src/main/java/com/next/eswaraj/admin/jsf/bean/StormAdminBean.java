@@ -93,7 +93,7 @@ public class StormAdminBean extends BaseBean {
                 queueService.sendPoliticalBodyAdminUpdateMessage(onePoliticalBodyAdminSearchResult.getLocation().getId(), onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId());
             }
             //
-            sendErrorMessage("Error", "Not Implemented Yet");
+            sendInfoMessage("Success", "Admin reporcess started, it may take few minutes to complete");
         } catch (Exception e) {
             e.printStackTrace();
             sendErrorMessage("Error", "Unable to reproces all Comment");
