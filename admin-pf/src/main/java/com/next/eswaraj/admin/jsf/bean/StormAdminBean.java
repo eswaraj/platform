@@ -1,5 +1,7 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -10,7 +12,9 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.queue.service.QueueService;
+import com.next.eswaraj.admin.service.AdminService;
 
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
@@ -18,6 +22,9 @@ public class StormAdminBean extends BaseBean {
 
     @Autowired
     private QueueService queueService;
+
+    @Autowired
+    private AdminService adminService;
 
     
 
@@ -81,7 +88,11 @@ public class StormAdminBean extends BaseBean {
 
     public void reprocessAllPoliticalAdmins() {
         try {
-            // queueService.sendPoliticalBodyAdminUpdateMessage(locationId, politicalBodyAdminId);
+            List<PoliticalBodyAdminSearchResult> admins = adminService.getAllActivePoliticalAdmin();
+            for (PoliticalBodyAdminSearchResult onePoliticalBodyAdminSearchResult : admins) {
+                queueService.sendPoliticalBodyAdminUpdateMessage(onePoliticalBodyAdminSearchResult.getLocation().getId(), onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin().getId());
+            }
+            //
             sendErrorMessage("Error", "Not Implemented Yet");
         } catch (Exception e) {
             e.printStackTrace();

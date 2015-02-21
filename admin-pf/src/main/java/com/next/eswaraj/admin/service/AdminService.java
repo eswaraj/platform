@@ -73,6 +73,8 @@ public interface AdminService {
 
     List<PoliticalBodyAdminSearchResult> searchPoliticalAdmin(String searchQuery) throws ApplicationException;
 
+    List<PoliticalBodyAdminSearchResult> getAllActivePoliticalAdmin() throws ApplicationException;
+
     PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException;
 
     List<Person> searchPersonByName(String name) throws ApplicationException;

@@ -639,4 +639,9 @@ public class AdminServiceImpl implements AdminService {
         return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName("name:*" + searchQuery + "*"));
     }
 
+    @Override
+    public List<PoliticalBodyAdminSearchResult> getAllActivePoliticalAdmin() throws ApplicationException {
+        return convertToList(politicalBodyAdminRepository.getAllCurrentPoliticalAdmins());
+    }
+
 }

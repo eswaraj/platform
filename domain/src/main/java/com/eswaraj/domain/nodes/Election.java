@@ -81,6 +81,12 @@ public class Election extends BaseNode {
     public void setElectionType(ElectionType electionType) {
         this.electionType = electionType;
     }
+
+    @Override
+    public String toString() {
+        return "Election [name=" + name + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", resultDate=" + resultDate + ", electionType=" + electionType
+                + ", id=" + id + "]";
+    }
 	
 
 }
