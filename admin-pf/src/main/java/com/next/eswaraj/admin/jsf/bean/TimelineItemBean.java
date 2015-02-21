@@ -2,9 +2,8 @@ package com.next.eswaraj.admin.jsf.bean;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -38,9 +37,9 @@ public class TimelineItemBean extends BaseBean {
     private TimelineItem selectedTimelineItem;
     private List<PoliticalBodyAdminSearchResult> allAdmins;
     
-    private Set<PoliticalBodyAdminSearchResult> selectedAdmins;
+    private List<PoliticalBodyAdminSearchResult> selectedAdmins;
 
-    private Set<Location> selectedLocations;
+    private List<Location> selectedLocations;
 
     @Autowired
     private AdminService adminService;
@@ -93,9 +92,10 @@ public class TimelineItemBean extends BaseBean {
     }
 
     public void handleAdminSelect(SelectEvent event) {
+        logger.info("handleAdminSelect : " + event.getObject());
         PoliticalBodyAdminSearchResult selectedAdmin = (PoliticalBodyAdminSearchResult) event.getObject();
         if (selectedLocations == null) {
-            selectedLocations = new HashSet<Location>();
+            selectedLocations = new ArrayList<Location>();
         }
         selectedLocations.add(selectedAdmin.getLocation());
     }
@@ -243,19 +243,19 @@ public class TimelineItemBean extends BaseBean {
         this.allAdmins = allAdmins;
     }
 
-    public Set<PoliticalBodyAdminSearchResult> getSelectedAdmins() {
+    public List<PoliticalBodyAdminSearchResult> getSelectedAdmins() {
         return selectedAdmins;
     }
 
-    public void setSelectedAdmins(Set<PoliticalBodyAdminSearchResult> selectedAdmins) {
+    public void setSelectedAdmins(List<PoliticalBodyAdminSearchResult> selectedAdmins) {
         this.selectedAdmins = selectedAdmins;
     }
 
-    public Set<Location> getSelectedLocations() {
+    public List<Location> getSelectedLocations() {
         return selectedLocations;
     }
 
-    public void setSelectedLocations(Set<Location> selectedLocations) {
+    public void setSelectedLocations(List<Location> selectedLocations) {
         this.selectedLocations = selectedLocations;
     }
 

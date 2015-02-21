@@ -99,7 +99,7 @@
 						<p:outputLabel value="Location" for="locations" />
                         <p:autoComplete id="locations" multiple="true" value="#{timelineItemBean.selectedLocations}"
                             completeMethod="#{timelineItemBean.completeLocation}" var="oneLocation" itemLabel="#{oneLocation.location.name}-#{oneLocation.locationType.name}"
-                            itemValue="#{oneLocation.location.name}" converter="#{locationSearchResultConvertor}" forceSelection="true">
+                            itemValue="#{oneLocation}" converter="#{locationSearchResultConvertor}" forceSelection="true">
                             <p:column>
                                 <h:outputText value="#{oneLocation.location.name}" />
                             </p:column>
