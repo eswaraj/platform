@@ -82,6 +82,8 @@
 							completeMethod="#{timelineItemBean.completeAdmin}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}-#{oneAdmin.politicalBodyType.shortName}-#{oneAdmin.location.name}"
 							itemValue="#{oneAdmin.person.name}" converter="#{politicalBodyAdminSearchResultConvertor}" forceSelection="true">
 							<p:ajax event="itemSelect" listener="#{timelineItemBean.handleAdminSelect}" update="@form" global="false" />
+							<p:ajax event="change" listener="#{timelineItemBean.handleAdminChange}" process="@form"/> 
+							
                            <p:column>
                               <p:graphicImage value="#{oneAdmin.person.profilePhoto}" style="max-height:80px;" />
                            </p:column>

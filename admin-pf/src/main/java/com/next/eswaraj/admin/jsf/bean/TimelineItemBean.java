@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
@@ -98,6 +99,20 @@ public class TimelineItemBean extends BaseBean {
         }
         selectedLocations.clear();
         for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
+            logger.info("handleAdminSelect addning one Location " + oneSelectedAdmin.getLocation());
+            selectedLocations.add(oneSelectedAdmin.getLocation());
+        }
+
+    }
+
+    public void handleAdminChange(AjaxBehaviorEvent event) {
+        logger.info("handleAdminChange : " + event.getSource());
+        if (selectedLocations == null) {
+            selectedLocations = new ArrayList<Location>();
+        }
+        selectedLocations.clear();
+        for (PoliticalBodyAdminSearchResult oneSelectedAdmin : selectedAdmins) {
+            logger.info("handleAdminChange addning one Location " + oneSelectedAdmin.getLocation());
             selectedLocations.add(oneSelectedAdmin.getLocation());
         }
 
