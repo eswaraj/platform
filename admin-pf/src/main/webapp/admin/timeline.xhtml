@@ -109,9 +109,10 @@
                             </p:column>
                         </p:autoComplete>
                         <h:outputLabel for="promises" value="Election Promises" />
-				        <p:selectCheckboxMenu id="promises" value="#{timelineItemBean.selectedPromises}" label="Election Promises"
+				        <p:selectCheckboxMenu id="promises" value="#{timelineItemBean.selectedPromises}" label="Election Promises" converter="#{jsfElectionPromiseConvertor}"
 				                              filter="true" filterMatchMode="contains" panelStyle="width:250px">
-				            <f:selectItems value="#{timelineItemBean.promises}" />
+				            <f:selectItems value="#{timelineItemBean.promises}" var="onePromise" itemLabel="#{onePromise.title}" itemValue="#{onePromise}" />
+ 
 				        </p:selectCheckboxMenu>
 
 						<p:outputLabel value="Image 1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
