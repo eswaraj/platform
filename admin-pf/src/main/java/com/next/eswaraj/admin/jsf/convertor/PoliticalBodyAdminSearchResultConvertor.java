@@ -67,7 +67,9 @@ public class PoliticalBodyAdminSearchResultConvertor implements Converter {
             if (object instanceof String) {
                 return "";
             }
-            return String.valueOf(((PoliticalBodyAdminSearchResult) object).getPoliticalBodyAdmin().getId());
+            PoliticalBodyAdminSearchResult politicalBodyAdminSearchResult = ((PoliticalBodyAdminSearchResult) object);
+            System.out.println("getAsString : "+politicalBodyAdminSearchResult.getPerson().getName()+", "+politicalBodyAdminSearchResult.getPoliticalBodyAdmin().getId());
+            return String.valueOf(politicalBodyAdminSearchResult.getPoliticalBodyAdmin().getId());
         } else {
             return null;
         }
