@@ -85,6 +85,12 @@ public class TimelineItemBean extends BaseBean {
     public void cancel() {
         selectedTimelineItem = new TimelineItem();
         showList = true;
+        try {
+            timelineItems = adminService.getTimelineItems(0, 20);
+            System.out.println("All Timelines : " + timelineItems);
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", e.getMessage());
+        }
     }
 
     public void clearAlllData() {
