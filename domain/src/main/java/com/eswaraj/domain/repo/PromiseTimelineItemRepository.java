@@ -17,7 +17,7 @@ public interface PromiseTimelineItemRepository extends GraphRepository<PromiseTi
     @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return promiseTimelineItem")
     List<PromiseTimelineItem> getAllPromiseTimelineItemRelationOfElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise);
 
-    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return timelineItem order by updateTime desc")
+    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc")
     List<TimelineItem> getAllTimelineItemOfElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise);
 
     @Query("start timelineItem=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return electionManifestoPromise")
