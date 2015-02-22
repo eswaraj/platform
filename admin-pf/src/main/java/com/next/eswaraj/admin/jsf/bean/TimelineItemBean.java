@@ -263,6 +263,7 @@ public class TimelineItemBean extends BaseBean {
         try {
             selectedLocations = adminService.getTimelineLocations(selectedTimelineItem);
             selectedPromises = adminService.getTimelinePromises(selectedTimelineItem);
+            selectedAdmins = adminService.getTimelineAdmins(selectedTimelineItem);
         } catch (Exception e) {
             sendErrorMessage("Error", "Internal Server Error", e);
         }

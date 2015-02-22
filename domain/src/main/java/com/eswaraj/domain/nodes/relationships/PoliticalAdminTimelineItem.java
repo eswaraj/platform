@@ -8,7 +8,7 @@ import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.TimelineItem;
 
-@RelationshipEntity(type = "PA_TIMEINE")
+@RelationshipEntity(type = "PA_TIMELINE")
 public class PoliticalAdminTimelineItem extends BaseRelationship {
 
     @StartNode

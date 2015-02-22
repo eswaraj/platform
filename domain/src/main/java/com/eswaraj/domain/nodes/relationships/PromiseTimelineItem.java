@@ -8,7 +8,7 @@ import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.TimelineItem;
 
-@RelationshipEntity(type = "PR_TIMEINE")
+@RelationshipEntity(type = "PR_TIMELINE")
 public class PromiseTimelineItem extends BaseRelationship {
 
     @StartNode

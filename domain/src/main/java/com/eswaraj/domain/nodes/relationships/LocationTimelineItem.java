@@ -8,7 +8,7 @@ import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.TimelineItem;
 
-@RelationshipEntity(type = "LC_TIMEINE")
+@RelationshipEntity(type = "LC_TIMELINE")
 public class LocationTimelineItem extends BaseRelationship {
 
     @StartNode

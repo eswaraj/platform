@@ -129,4 +129,6 @@ public interface AdminService {
     List<LocationSearchResult> getTimelineLocations(TimelineItem timelineItem) throws ApplicationException;
 
     List<ElectionManifestoPromise> getTimelinePromises(TimelineItem timelineItem) throws ApplicationException;
+
+    List<PoliticalBodyAdminSearchResult> getTimelineAdmins(TimelineItem timelineItem) throws ApplicationException;
 }

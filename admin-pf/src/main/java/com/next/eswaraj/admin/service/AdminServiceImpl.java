@@ -782,4 +782,9 @@ public class AdminServiceImpl implements AdminService {
     public List<ElectionManifestoPromise> getTimelinePromises(TimelineItem timelineItem) throws ApplicationException {
         return promiseTimelineItemRepository.getAllElectionManifestoPromisesOfTimelineItem(timelineItem);
     }
+
+    @Override
+    public List<PoliticalBodyAdminSearchResult> getTimelineAdmins(TimelineItem timelineItem) throws ApplicationException {
+        return convertToList(politicalAdminTimelineItemRepository.getAllPoliticalBodyAdminSearchResultOfTimelineItem(timelineItem));
+    }
 }

@@ -55,11 +55,14 @@
 							<f:facet name="header">
 								<h:outputText value="Update" />
 							</f:facet>
-							<p:commandLink update="@form" title="Update">
+							<p:commandLink update="@form" title="Update" id="update">
 								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 									height="20" />
 								<f:setPropertyActionListener value="#{oneTimelineItem}" target="#{timelineItemBean.selectedTimelineItem}" />
 							</p:commandLink>
+							<p:blockUI block="@form" trigger="update">Saving<br />
+                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                        </p:blockUI>
 						</p:column>
 
 					</p:dataTable>
