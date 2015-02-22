@@ -3,7 +3,9 @@ package com.next.eswaraj.admin.jsf.bean;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -20,12 +22,14 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Document;
 import com.eswaraj.domain.nodes.Document.DocumentType;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
+import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.jsf.convertor.ElectionPromiseConvertor;
 import com.next.eswaraj.admin.jsf.convertor.LocationSearchResultConvertor;
+import com.next.eswaraj.admin.jsf.convertor.PoliticalBodyAdminSearchResultConvertor;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -57,6 +61,9 @@ public class TimelineItemBean extends BaseBean {
     @Autowired
     private ElectionPromiseConvertor electionPromiseConvertor;
 
+    @Autowired
+    private PoliticalBodyAdminSearchResultConvertor politicalBodyAdminSearchResultConvertor;
+
     @PostConstruct
     public void init() {
         try {
@@ -79,22 +86,34 @@ public class TimelineItemBean extends BaseBean {
         showList = true;
     }
 
+    public void clearAlllData() {
+        selectedAdmins.clear();
+        selectedLocations.clear();
+        selectedPromises.clear();
+        locationSearchResultConvertor.clear();
+        politicalBodyAdminSearchResultConvertor.clear();
+    }
     public void saveTimelineItem() {
         try {
             System.out.println("********************");
             if (selectedLocations == null) {
                 selectedLocations = new ArrayList<LocationSearchResult>();
             }
+            Set<Location> locations = new HashSet<Location>();
             for (PoliticalBodyAdminSearchResult oneAdmin : selectedAdmins) {
                 System.out.println("oneAdmin : = " + oneAdmin.getPerson().getName() + ", " + oneAdmin.getPoliticalBodyType().getShortName() + ", " + oneAdmin.getLocation().getName());
+                locations.add(oneAdmin.getLocation());
             }
             for (LocationSearchResult oneLocation : selectedLocations) {
                 System.out.println("oneLocation : " + oneLocation.getLocation().getName());
+                locations.add(oneLocation.getLocation());
             }
             for (ElectionManifestoPromise onePromise : selectedPromises) {
                 System.out.println("onePromise : " + onePromise.getTitle());
             }
             System.out.println("********************");
+            adminService.saveTimelineItem(selectedTimelineItem, selectedAdmins, locations, promises);
+            clearAlllData();
             // selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
             timelineItems = adminService.getTimelineItems(0, 20);
             showList = true;
@@ -119,7 +138,6 @@ public class TimelineItemBean extends BaseBean {
         try {
             logger.info("Searching for {}", query);
             locations = adminService.searchLocationByName(query);
-            locationSearchResultConvertor.setLocations(locations);
         } catch (Exception e) {
             sendErrorMessage("Error", "Unable to search Admins", e);
         }

@@ -3,6 +3,7 @@ package com.next.eswaraj.admin.service;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
@@ -113,6 +114,9 @@ public interface AdminService {
     void reprocessLocationFile(LocationBoundaryFile locationBoundaryFile) throws ApplicationException;
     
     List<TimelineItem> getTimelineItems(int first, int pageSize) throws ApplicationException;
+
+    TimelineItem saveTimelineItem(TimelineItem timelineItem, List<PoliticalBodyAdminSearchResult> politicalBodyAdminSearchResults, Set<Location> locations, List<ElectionManifestoPromise> promises)
+            throws ApplicationException;
 
     TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException;
 

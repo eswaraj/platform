@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.neo4j.cypher.MissingIndexException;
@@ -25,6 +26,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.util.DateTimeUtil;
 import com.eswaraj.core.util.DateUtil;
+import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Election;
@@ -43,6 +45,9 @@ import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
+import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
+import com.eswaraj.domain.nodes.relationships.PoliticalAdminTimelineItem;
+import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
@@ -51,11 +56,14 @@ import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
+import com.eswaraj.domain.repo.LocationTimelineItemRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
+import com.eswaraj.domain.repo.PoliticalAdminTimelineItemRepository;
 import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
+import com.eswaraj.domain.repo.PromiseTimelineItemRepository;
 import com.eswaraj.domain.repo.SystemCategoryRepository;
 import com.eswaraj.domain.repo.TimelineItemRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
@@ -120,6 +128,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private TimelineItemRepository timelineItemRepository;
+
+    @Autowired
+    private LocationTimelineItemRepository locationTimelineItemRepository;
+
+    @Autowired
+    private PoliticalAdminTimelineItemRepository politicalAdminTimelineItemRepository;
+
+    @Autowired
+    private PromiseTimelineItemRepository promiseTimelineItemRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -630,11 +647,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException {
-        return timelineItemRepository.save(timelineItem);
-    }
-
-    @Override
     public List<PoliticalBodyAdminSearchResult> searchPoliticalAdmin(String searchQuery) throws ApplicationException {
         return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName("name:*" + searchQuery + "*"));
     }
@@ -659,4 +671,93 @@ public class AdminServiceImpl implements AdminService {
         return convertToList(electionManifestoPromiseRepository.findAll());
     }
 
+    @Override
+    public TimelineItem saveTimelineItem(TimelineItem timelineItem, List<PoliticalBodyAdminSearchResult> politicalBodyAdminSearchResults, Set<Location> locations,
+            List<ElectionManifestoPromise> promises) throws ApplicationException {
+        timelineItem = timelineItemRepository.save(timelineItem);
+
+        // Add Political Admin to Timeline Item
+        addTimelineItemToPoliticalBodyAdmins(timelineItem, politicalBodyAdminSearchResults);
+
+        // Add Locations to TimeLine
+        addTimelineItemToLocations(timelineItem, locations);
+
+        // Add Promises to Timeline
+        addTimelineItemToElectionManifestoPromises(timelineItem, promises);
+
+        return timelineItem;
+    }
+
+    private void addTimelineItemToElectionManifestoPromises(TimelineItem timelineItem, List<ElectionManifestoPromise> promises) {
+        List<ElectionManifestoPromise> dbElectionManifestoPromises = promiseTimelineItemRepository.getAllElectionManifestoPromisesOfTimelineItem(timelineItem);
+        PromiseTimelineItem onePromiseTimelineItem;
+        for (ElectionManifestoPromise oneElectionManifestoPromise : promises) {
+            onePromiseTimelineItem = promiseTimelineItemRepository.getPromiseTimelineItemRelation(oneElectionManifestoPromise, timelineItem);
+            if (onePromiseTimelineItem == null) {
+                onePromiseTimelineItem = new PromiseTimelineItem(oneElectionManifestoPromise, timelineItem);
+                onePromiseTimelineItem = promiseTimelineItemRepository.save(onePromiseTimelineItem);
+            }
+            removeFromList(dbElectionManifestoPromises, oneElectionManifestoPromise);
+        }
+        // Any remaining dbLocationTimelineItems shud be deleted from Db
+        for (ElectionManifestoPromise oneElectionManifestoPromise : dbElectionManifestoPromises) {
+            onePromiseTimelineItem = promiseTimelineItemRepository.getPromiseTimelineItemRelation(oneElectionManifestoPromise, timelineItem);
+            if (onePromiseTimelineItem != null) {
+                promiseTimelineItemRepository.delete(onePromiseTimelineItem);
+            }
+        }
+    }
+
+    private void addTimelineItemToLocations(TimelineItem timelineItem, Collection<Location> locations) {
+        List<Location> dbLocations = locationTimelineItemRepository.getAllLocationOfTimelineItem(timelineItem);
+        LocationTimelineItem oneLocationTimelineItem;
+        for (Location oneLocation : locations) {
+            oneLocationTimelineItem = locationTimelineItemRepository.getLocationTimelineItemRelation(oneLocation, timelineItem);
+            if (oneLocationTimelineItem == null) {
+                oneLocationTimelineItem = new LocationTimelineItem(oneLocation, timelineItem);
+                oneLocationTimelineItem = locationTimelineItemRepository.save(oneLocationTimelineItem);
+            }
+            removeFromList(dbLocations, oneLocation);
+        }
+        // Any remaining dbLocationTimelineItems shud be deleted from Db
+        for (Location oneLocation : dbLocations) {
+            oneLocationTimelineItem = locationTimelineItemRepository.getLocationTimelineItemRelation(oneLocation, timelineItem);
+            if (oneLocationTimelineItem != null) {
+                locationTimelineItemRepository.delete(oneLocationTimelineItem);
+            }
+        }
+    }
+    private void addTimelineItemToPoliticalBodyAdmins(TimelineItem timelineItem, List<PoliticalBodyAdminSearchResult> politicalBodyAdminSearchResults) {
+        List<PoliticalBodyAdmin> dbPoliticalAdminTimelineItems = politicalAdminTimelineItemRepository.getAllPoliticalBodyAdminOfTimelineItem(timelineItem);
+        PoliticalAdminTimelineItem onePoliticalAdminTimelineItem;
+        for (PoliticalBodyAdminSearchResult onePoliticalBodyAdminSearchResult : politicalBodyAdminSearchResults) {
+            onePoliticalAdminTimelineItem = politicalAdminTimelineItemRepository.getPoliticalAdminTimelineItemRelation(onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin(), timelineItem);
+            if (onePoliticalAdminTimelineItem == null) {
+                onePoliticalAdminTimelineItem = new PoliticalAdminTimelineItem(onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin(), timelineItem);
+                onePoliticalAdminTimelineItem = politicalAdminTimelineItemRepository.save(onePoliticalAdminTimelineItem);
+            }
+            removeFromList(dbPoliticalAdminTimelineItems, onePoliticalBodyAdminSearchResult.getPoliticalBodyAdmin());
+        }
+        // Any remaining dbPoliticalAdminTimelineItems shud be deleted from Db
+        for (PoliticalBodyAdmin onePoliticalBodyAdmin : dbPoliticalAdminTimelineItems) {
+            onePoliticalAdminTimelineItem = politicalAdminTimelineItemRepository.getPoliticalAdminTimelineItemRelation(onePoliticalBodyAdmin, timelineItem);
+            if (onePoliticalAdminTimelineItem != null) {
+                politicalAdminTimelineItemRepository.delete(onePoliticalAdminTimelineItem);
+            }
+        }
+    }
+    private <T extends BaseNode> void removeFromList(List<T> list, T itemToRemove) {
+        for (T oneItem : list) {
+            if (itemToRemove.getId().equals(oneItem.getId())) {
+                list.remove(oneItem);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException {
+        timelineItem = timelineItemRepository.save(timelineItem);
+        return timelineItem;
+    }
 }
