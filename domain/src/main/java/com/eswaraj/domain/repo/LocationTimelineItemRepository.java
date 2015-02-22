@@ -13,19 +13,19 @@ import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
 
 public interface LocationTimelineItemRepository extends GraphRepository<LocationTimelineItem> {
 	
-    @Query("start location=node({0}), timelineItem=node({1}) match (location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return locationTimelineItem")
+    @Query("start location=node({0}), timelineItem=node({1}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return locationTimelineItem")
     LocationTimelineItem getLocationTimelineItemRelation(Location location, TimelineItem timelineItem);
 
-    @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return locationTimelineItem")
+    @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return locationTimelineItem")
     List<LocationTimelineItem> getAllLocationTimelineItemRelationOfLocation(Location location);
 
-    @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return timelineItem order by updateTime desc")
+    @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return timelineItem order by updateTime desc")
     List<TimelineItem> getAllTimelineItemOfLocation(Location location);
 
-    @Query("start timelineItem=node({0}) match (location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location")
+    @Query("start timelineItem=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return location")
     List<Location> getAllLocationOfTimelineItem(TimelineItem timelineItem);
 
-    @Query("start timelineItem=node({0}) match (locationType)-[:OF_TYPE]-(location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location, locationType")
+    @Query("start timelineItem=node({0}) match (locationType)-[:OF_TYPE]-(location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return location, locationType")
     EndResult<LocationSearchResult> getAllLocationSearchResultOfTimelineItem(TimelineItem timelineItem);
 
 }
