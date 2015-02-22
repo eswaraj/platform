@@ -22,7 +22,7 @@ public interface PoliticalAdminTimelineItemRepository extends GraphRepository<Po
     @Query("start politicalBodyAdmin=node({0}) match (politicalBodyAdmin)-[politicalAdminTimelineItem:PA_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc")
     List<TimelineItem> getAllTimelineItemOfPoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin);
 
-    @Query("start politicalBodyAdmin=node({0}) match (politicalBodyAdmin)-[politicalAdminTimelineItem:PA_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc skip {2} limit {3}")
+    @Query("start politicalBodyAdmin=node({0}) match (politicalBodyAdmin)-[politicalAdminTimelineItem:PA_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc skip {1} limit {2}")
     List<TimelineItem> getPagedTimelineItemOfPoliticalBodyAdmin(Long politicalAdminId, int start, int size);
 
     @Query("start timelineItem=node({0}) match (politicalBodyAdmin)-[politicalAdminTimelineItem:PA_TIMELINE]-(timelineItem) return politicalBodyAdmin")

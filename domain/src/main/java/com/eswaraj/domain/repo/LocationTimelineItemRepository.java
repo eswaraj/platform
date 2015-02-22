@@ -22,7 +22,7 @@ public interface LocationTimelineItemRepository extends GraphRepository<Location
     @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc")
     List<TimelineItem> getAllTimelineItemOfLocation(Location location);
 
-    @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc skip {2} limit {3}")
+    @Query("start location=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc skip {1} limit {2}")
     List<TimelineItem> getPagedTimelineItemOfLocation(Long locationid, int start, int size);
 
     @Query("start timelineItem=node({0}) match (location)-[locationTimelineItem:LC_TIMELINE]-(timelineItem) return location")
