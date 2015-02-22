@@ -11,16 +11,16 @@ import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
 
 public interface PromiseTimelineItemRepository extends GraphRepository<PromiseTimelineItem> {
 	
-    @Query("start electionManifestoPromise=node({0}), timelineItem=node({1}) match (electionManifestoPromise)-[promiseTimelineItem:LC_TIMEINE]-(timelineItem) return promiseTimelineItem")
+    @Query("start electionManifestoPromise=node({0}), timelineItem=node({1}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMEINE]-(timelineItem) return promiseTimelineItem")
     PromiseTimelineItem getPromiseTimelineItemRelation(ElectionManifestoPromise electionManifestoPromise, TimelineItem timelineItem);
 
-    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:LC_TIMEINE]-(timelineItem) return promiseTimelineItem")
+    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMEINE]-(timelineItem) return promiseTimelineItem")
     List<PromiseTimelineItem> getAllPromiseTimelineItemRelationOfElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise);
 
-    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:LC_TIMEINE]-(timelineItem) return timelineItem order by updateTime desc")
+    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMEINE]-(timelineItem) return timelineItem order by updateTime desc")
     List<TimelineItem> getAllTimelineItemOfElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise);
 
-    @Query("start timelineItem=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:LC_TIMEINE]-(timelineItem) return electionManifestoPromise")
+    @Query("start timelineItem=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMEINE]-(timelineItem) return electionManifestoPromise")
     List<ElectionManifestoPromise> getAllElectionManifestoPromisesOfTimelineItem(TimelineItem timelineItem);
 
 }
