@@ -30,7 +30,7 @@ public class TimelineItem extends BaseNode {
     private String image2;
     private String image3;
     private String image4;
-    @RelatedTo(type = "TIMELINEITEM_DOCUMENT")
+    @RelatedTo(type = "TLI_DOC")
     @Fetch
     private Document document;
 
