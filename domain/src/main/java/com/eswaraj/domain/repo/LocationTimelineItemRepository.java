@@ -25,7 +25,7 @@ public interface LocationTimelineItemRepository extends GraphRepository<Location
     @Query("start timelineItem=node({0}) match (location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location")
     List<Location> getAllLocationOfTimelineItem(TimelineItem timelineItem);
 
-    @Query("start timelineItem=node({0}) match (locatioType)-[:OF_TYPE]-(location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location, locationType")
+    @Query("start timelineItem=node({0}) match (locationType)-[:OF_TYPE]-(location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location, locationType")
     EndResult<LocationSearchResult> getAllLocationSearchResultOfTimelineItem(TimelineItem timelineItem);
 
 }
