@@ -122,4 +122,10 @@ public class TimelineItem extends BaseNode {
         this.document = document;
     }
 
+    @Override
+    public String toString() {
+        return "TimelineItem [title=" + title + ", description=" + description + ", updateTime=" + updateTime + ", creationTime=" + creationTime + ", createdBy=" + createdBy + ", youtubeUrl="
+                + youtubeUrl + ", image1=" + image1 + ", image2=" + image2 + ", image3=" + image3 + ", image4=" + image4 + ", document=" + document + ", id=" + id + "]";
+    }
+
 }

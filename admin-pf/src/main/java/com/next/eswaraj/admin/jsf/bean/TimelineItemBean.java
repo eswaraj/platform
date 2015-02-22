@@ -71,6 +71,7 @@ public class TimelineItemBean extends BaseBean {
             timelineItems = adminService.getTimelineItems(0, 20);
             promises = adminService.getAllPromises();
             electionPromiseConvertor.setPromises(promises);
+            System.out.println("All Timelines : " + timelineItems);
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
         }
@@ -256,8 +257,10 @@ public class TimelineItemBean extends BaseBean {
     }
 
     public void setSelectedTimelineItem(TimelineItem selectedTimelineItem) {
+        System.out.println("selectedTimelineItem : " + selectedTimelineItem);
         this.selectedTimelineItem = new TimelineItem();
         BeanUtils.copyProperties(selectedTimelineItem, this.selectedTimelineItem);
+        System.out.println("this.selectedTimelineItem : " + this.selectedTimelineItem);
         showList = false;
         // Load all Relations from DB
         try {
