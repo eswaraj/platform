@@ -30,6 +30,7 @@ public class TimelineItem extends BaseNode {
     private String image2;
     private String image3;
     private String image4;
+    private String type;
     @RelatedTo(type = "TLI_DOC")
     @Fetch
     private Document document;
@@ -120,6 +121,14 @@ public class TimelineItem extends BaseNode {
 
     public void setDocument(Document document) {
         this.document = document;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

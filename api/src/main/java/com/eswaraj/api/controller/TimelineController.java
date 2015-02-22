@@ -43,4 +43,11 @@ public class TimelineController extends BaseController {
         return timelineService.getTimelineItemsOfLocation(locationId, start, size);
     }
 
+    @RequestMapping(value = "/api/v0/timeline/promise/{promiseId}", method = RequestMethod.GET)
+    public @ResponseBody List<TimelineItemDto> getTimelineItemsOfPromise(ModelAndView mv, HttpServletRequest httpServletRequest, @PathVariable Long promiseId) throws ApplicationException {
+        int start = getIntParameter(httpServletRequest, "start", 0);
+        int size = getIntParameter(httpServletRequest, "size", 10);
+        return timelineService.getTimelineItemsOfPromise(promiseId, start, size);
+    }
+
 }

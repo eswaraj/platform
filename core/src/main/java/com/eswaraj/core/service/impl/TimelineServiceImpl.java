@@ -38,44 +38,22 @@ public class TimelineServiceImpl implements TimelineService {
     @Override
     public List<TimelineItemDto> getTimelineItemsOfPoliticalAdmin(Long politicalAdminId, int start, int size) throws ApplicationException {
         List<TimelineItem> dbTimeLineItems = politicalAdminTimelineItemRepository.getPagedTimelineItemOfPoliticalBodyAdmin(politicalAdminId, start, size);
-        List<TimelineItemDto> returnList = new ArrayList<TimelineItemDto>();
-        for (TimelineItem oneTimelineItem : dbTimeLineItems) {
-            TimelineItemDto oneTimelineItemDto = new TimelineItemDto();
-            BeanUtils.copyProperties(oneTimelineItem, oneTimelineItemDto);
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage1());
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage2());
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage3());
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage4());
-            addVideo(oneTimelineItemDto, oneTimelineItem.getYoutubeUrl());
-            addDocument(oneTimelineItemDto, oneTimelineItem.getDocument());
-
-            returnList.add(oneTimelineItemDto);
-        }
-        return returnList;
+        return convert(dbTimeLineItems);
     }
 
     @Override
     public List<TimelineItemDto> getTimelineItemsOfLocation(Long locationId, int start, int size) throws ApplicationException {
         List<TimelineItem> dbTimeLineItems = locationTimelineItemRepository.getPagedTimelineItemOfLocation(locationId, start, size);
-        List<TimelineItemDto> returnList = new ArrayList<TimelineItemDto>();
-        for (TimelineItem oneTimelineItem : dbTimeLineItems) {
-            TimelineItemDto oneTimelineItemDto = new TimelineItemDto();
-            BeanUtils.copyProperties(oneTimelineItem, oneTimelineItemDto);
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage1());
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage2());
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage3());
-            addImage(oneTimelineItemDto, oneTimelineItem.getImage4());
-            addVideo(oneTimelineItemDto, oneTimelineItem.getYoutubeUrl());
-            addDocument(oneTimelineItemDto, oneTimelineItem.getDocument());
-
-            returnList.add(oneTimelineItemDto);
-        }
-        return returnList;
+        return convert(dbTimeLineItems);
     }
 
     @Override
     public List<TimelineItemDto> getTimelineItemsOfPromise(Long promiseId, int start, int size) throws ApplicationException {
         List<TimelineItem> dbTimeLineItems = promiseTimelineItemRepository.getPagesTimelineItemOfElectionManifestoPromise(promiseId, start, size);
+        return convert(dbTimeLineItems);
+    }
+
+    private List<TimelineItemDto> convert(List<TimelineItem> dbTimeLineItems) {
         List<TimelineItemDto> returnList = new ArrayList<TimelineItemDto>();
         for (TimelineItem oneTimelineItem : dbTimeLineItems) {
             TimelineItemDto oneTimelineItemDto = new TimelineItemDto();
@@ -86,7 +64,9 @@ public class TimelineServiceImpl implements TimelineService {
             addImage(oneTimelineItemDto, oneTimelineItem.getImage4());
             addVideo(oneTimelineItemDto, oneTimelineItem.getYoutubeUrl());
             addDocument(oneTimelineItemDto, oneTimelineItem.getDocument());
-
+            if (StringUtils.isEmpty(oneTimelineItem.getType())) {
+                oneTimelineItemDto.setType("generic");
+            }
             returnList.add(oneTimelineItemDto);
         }
         return returnList;

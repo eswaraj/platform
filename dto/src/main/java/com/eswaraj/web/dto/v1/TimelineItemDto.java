@@ -14,6 +14,7 @@ public class TimelineItemDto {
     private List<String> youtubeUrl;
     private List<String> images;
     private List<String> documents;
+    private String type;
 
     public Long getId() {
         return id;
@@ -85,5 +86,13 @@ public class TimelineItemDto {
 
     public void setDocuments(List<String> documents) {
         this.documents = documents;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
