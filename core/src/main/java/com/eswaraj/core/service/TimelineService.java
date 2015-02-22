@@ -11,4 +11,6 @@ public interface TimelineService {
     List<TimelineItemDto> getTimelineItemsOfPoliticalAdmin(Long politicalAdminId, int start, int size) throws ApplicationException;
 
     List<TimelineItemDto> getTimelineItemsOfLocation(Long locationId, int start, int size) throws ApplicationException;
+
+    List<TimelineItemDto> getTimelineItemsOfPromise(Long promiseId, int start, int size) throws ApplicationException;
 }

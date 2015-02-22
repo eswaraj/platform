@@ -15,6 +15,7 @@ import com.eswaraj.domain.nodes.Document;
 import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.repo.LocationTimelineItemRepository;
 import com.eswaraj.domain.repo.PoliticalAdminTimelineItemRepository;
+import com.eswaraj.domain.repo.PromiseTimelineItemRepository;
 import com.eswaraj.domain.repo.TimelineItemRepository;
 import com.eswaraj.web.dto.v1.TimelineItemDto;
 
@@ -30,6 +31,9 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Autowired
     private LocationTimelineItemRepository locationTimelineItemRepository;
+
+    @Autowired
+    private PromiseTimelineItemRepository promiseTimelineItemRepository;
 
     @Override
     public List<TimelineItemDto> getTimelineItemsOfPoliticalAdmin(Long politicalAdminId, int start, int size) throws ApplicationException {
@@ -69,6 +73,26 @@ public class TimelineServiceImpl implements TimelineService {
         return returnList;
     }
 
+    @Override
+    public List<TimelineItemDto> getTimelineItemsOfPromise(Long promiseId, int start, int size) throws ApplicationException {
+        List<TimelineItem> dbTimeLineItems = promiseTimelineItemRepository.getPagesTimelineItemOfElectionManifestoPromise(promiseId, start, size);
+        List<TimelineItemDto> returnList = new ArrayList<TimelineItemDto>();
+        for (TimelineItem oneTimelineItem : dbTimeLineItems) {
+            TimelineItemDto oneTimelineItemDto = new TimelineItemDto();
+            BeanUtils.copyProperties(oneTimelineItem, oneTimelineItemDto);
+            addImage(oneTimelineItemDto, oneTimelineItem.getImage1());
+            addImage(oneTimelineItemDto, oneTimelineItem.getImage2());
+            addImage(oneTimelineItemDto, oneTimelineItem.getImage3());
+            addImage(oneTimelineItemDto, oneTimelineItem.getImage4());
+            addVideo(oneTimelineItemDto, oneTimelineItem.getYoutubeUrl());
+            addDocument(oneTimelineItemDto, oneTimelineItem.getDocument());
+
+            returnList.add(oneTimelineItemDto);
+        }
+        return returnList;
+    }
+
+
     private void addImage(TimelineItemDto oneTimelineItemDto, String image) {
         if (StringUtils.isEmpty(image)) {
             return;
@@ -98,6 +122,7 @@ public class TimelineServiceImpl implements TimelineService {
         }
         oneTimelineItemDto.getDocuments().add(document.getUrl());
     }
+
 
 
 }

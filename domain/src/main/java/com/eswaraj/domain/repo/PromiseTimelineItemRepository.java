@@ -20,6 +20,9 @@ public interface PromiseTimelineItemRepository extends GraphRepository<PromiseTi
     @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc")
     List<TimelineItem> getAllTimelineItemOfElectionManifestoPromise(ElectionManifestoPromise electionManifestoPromise);
 
+    @Query("start electionManifestoPromise=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return timelineItem order by timelineItem.updateTime desc skip {1} limit {2}")
+    List<TimelineItem> getPagesTimelineItemOfElectionManifestoPromise(Long electionManifestoPromiseId, int start, int size);
+
     @Query("start timelineItem=node({0}) match (electionManifestoPromise)-[promiseTimelineItem:PR_TIMELINE]-(timelineItem) return electionManifestoPromise")
     List<ElectionManifestoPromise> getAllElectionManifestoPromisesOfTimelineItem(TimelineItem timelineItem);
 
