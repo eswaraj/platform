@@ -3,10 +3,12 @@ package com.eswaraj.domain.repo;
 import java.util.List;
 
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.TimelineItem;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
 
 public interface LocationTimelineItemRepository extends GraphRepository<LocationTimelineItem> {
@@ -22,5 +24,8 @@ public interface LocationTimelineItemRepository extends GraphRepository<Location
 
     @Query("start timelineItem=node({0}) match (location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location")
     List<Location> getAllLocationOfTimelineItem(TimelineItem timelineItem);
+
+    @Query("start timelineItem=node({0}) match (locatioType)-[:OF_TYPE]-(location)-[locationTimelineItem:LC_TIMEINE]-(timelineItem) return location, locationType")
+    EndResult<LocationSearchResult> getAllLocationSearchResultOfTimelineItem(TimelineItem timelineItem);
 
 }

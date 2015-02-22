@@ -125,4 +125,8 @@ public interface AdminService {
     List<ElectionManifestoPromise> getAllPromisesOfPoliticalAdmin(Collection<Long> electionManifestoIds) throws ApplicationException;
 
     List<ElectionManifestoPromise> getAllPromises() throws ApplicationException;
+
+    List<LocationSearchResult> getTimelineLocations(TimelineItem timelineItem) throws ApplicationException;
+
+    List<ElectionManifestoPromise> getTimelinePromises(TimelineItem timelineItem) throws ApplicationException;
 }

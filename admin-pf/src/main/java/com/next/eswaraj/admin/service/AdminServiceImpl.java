@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.conversion.EndResult;
@@ -381,6 +382,14 @@ public class AdminServiceImpl implements AdminService {
         return returnList;
     }
 
+    private <T> List<T> convertToList(Page<T> dbResult) {
+        List<T> returnList = new ArrayList<>();
+        for (T oneT : dbResult) {
+            returnList.add(oneT);
+        }
+        return returnList;
+    }
+
     @Override
     public PoliticalBodyType savePoliticalBodyType(PoliticalBodyType politicalBodyType) throws ApplicationException {
         if (politicalBodyType.getLocationType() == null) {
@@ -642,8 +651,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<TimelineItem> getTimelineItems(int first, int pageSize) throws ApplicationException {
         Pageable pageable = new PageRequest((first + 1)/pageSize, pageSize);
-        timelineItemRepository.findAll(pageable);
-        return null;
+        return convertToList(timelineItemRepository.findAll(pageable));
     }
 
     @Override
@@ -759,5 +767,15 @@ public class AdminServiceImpl implements AdminService {
     public TimelineItem saveTimelineItem(TimelineItem timelineItem) throws ApplicationException {
         timelineItem = timelineItemRepository.save(timelineItem);
         return timelineItem;
+    }
+
+    @Override
+    public List<LocationSearchResult> getTimelineLocations(TimelineItem timelineItem) throws ApplicationException {
+        return convertToList(locationTimelineItemRepository.getAllLocationSearchResultOfTimelineItem(timelineItem));
+    }
+
+    @Override
+    public List<ElectionManifestoPromise> getTimelinePromises(TimelineItem timelineItem) throws ApplicationException {
+        return promiseTimelineItemRepository.getAllElectionManifestoPromisesOfTimelineItem(timelineItem);
     }
 }

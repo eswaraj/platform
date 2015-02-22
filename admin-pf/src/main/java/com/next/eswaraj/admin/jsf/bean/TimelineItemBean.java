@@ -112,7 +112,7 @@ public class TimelineItemBean extends BaseBean {
                 System.out.println("onePromise : " + onePromise.getTitle());
             }
             System.out.println("********************");
-            adminService.saveTimelineItem(selectedTimelineItem, selectedAdmins, locations, promises);
+            adminService.saveTimelineItem(selectedTimelineItem, selectedAdmins, locations, selectedPromises);
             clearAlllData();
             // selectedTimelineItem = adminService.saveTimelineItem(selectedTimelineItem);
             timelineItems = adminService.getTimelineItems(0, 20);
@@ -257,6 +257,13 @@ public class TimelineItemBean extends BaseBean {
         this.selectedTimelineItem = new TimelineItem();
         BeanUtils.copyProperties(selectedTimelineItem, this.selectedTimelineItem);
         showList = false;
+        // Load all Relations from DB
+        try {
+            selectedLocations = adminService.getTimelineLocations(selectedTimelineItem);
+            selectedPromises = adminService.getTimelinePromises(selectedTimelineItem);
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Internal Server Error", e);
+        }
     }
 
     public List<TimelineItem> getTimelineItems() {
