@@ -720,8 +720,10 @@ public class AdminServiceImpl implements AdminService {
         List<Location> dbLocations = locationTimelineItemRepository.getAllLocationOfTimelineItem(timelineItem);
         LocationTimelineItem oneLocationTimelineItem;
         for (Location oneLocation : locations) {
+            System.out.println("Searching LocationTimelineItem for " + oneLocation.getName() + " , " + timelineItem.getTitle());
             oneLocationTimelineItem = locationTimelineItemRepository.getLocationTimelineItemRelation(oneLocation, timelineItem);
             if (oneLocationTimelineItem == null) {
+                System.out.println("Creating LocationTimelineItem for " + oneLocation.getName() + " , " + timelineItem.getTitle());
                 oneLocationTimelineItem = new LocationTimelineItem(oneLocation, timelineItem);
                 oneLocationTimelineItem = locationTimelineItemRepository.save(oneLocationTimelineItem);
             }
@@ -731,6 +733,8 @@ public class AdminServiceImpl implements AdminService {
         for (Location oneLocation : dbLocations) {
             oneLocationTimelineItem = locationTimelineItemRepository.getLocationTimelineItemRelation(oneLocation, timelineItem);
             if (oneLocationTimelineItem != null) {
+                System.out.println("Removin LocationTimelineItem for " + oneLocationTimelineItem.getLocation().getId() + " , " + oneLocationTimelineItem.getTimelineItem().getId() + " , "
+                        + oneLocationTimelineItem.getId());
                 locationTimelineItemRepository.delete(oneLocationTimelineItem);
             }
         }

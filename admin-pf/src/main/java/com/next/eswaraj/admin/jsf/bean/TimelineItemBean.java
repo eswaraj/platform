@@ -105,8 +105,10 @@ public class TimelineItemBean extends BaseBean {
                 locations.add(oneAdmin.getLocation());
             }
             for (LocationSearchResult oneLocation : selectedLocations) {
-                System.out.println("oneLocation : " + oneLocation.getLocation().getName());
                 locations.add(oneLocation.getLocation());
+            }
+            for (Location oneLocation : locations) {
+                System.out.println("oneLocation : " + oneLocation.getName());
             }
             for (ElectionManifestoPromise onePromise : selectedPromises) {
                 System.out.println("onePromise : " + onePromise.getTitle());

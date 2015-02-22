@@ -121,28 +121,28 @@
 						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
 							<p:graphicImage style="max-width:400px;" id="imageUrl1" value="#{timelineItemBean.selectedTimelineItem.image1}" />
 							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload1}" mode="advanced" dragDropSupport="true"
-								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+								auto="true" update="messages, imageUrl1" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
 						</h:panelGrid>
 
 						<p:outputLabel value="Image 2" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
 						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
 							<p:graphicImage style="max-width:400px;" id="imageUrl2" value="#{timelineItemBean.selectedTimelineItem.image2}" />
 							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload2}" mode="advanced" dragDropSupport="true"
-								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+								auto="true" update="messages, imageUrl2" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
 						</h:panelGrid>
 
 						<p:outputLabel value="Image 3" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
 						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
 							<p:graphicImage style="max-width:400px;" id="imageUrl3" value="#{timelineItemBean.selectedTimelineItem.image3}" />
 							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload3}" mode="advanced" dragDropSupport="true"
-								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+								auto="true" update="messages, imageUrl3" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
 						</h:panelGrid>
 
 						<p:outputLabel value="Image 4" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
 						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
 							<p:graphicImage style="max-width:400px;" id="imageUrl4" value="#{timelineItemBean.selectedTimelineItem.image4}" />
 							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload4}" mode="advanced" dragDropSupport="true"
-								auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+								auto="true" update="messages, imageUrl4" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
 						</h:panelGrid>
 
 						<p:outputLabel value="Document(PDF Only)" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
