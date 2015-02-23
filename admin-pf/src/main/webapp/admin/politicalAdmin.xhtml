@@ -289,17 +289,18 @@
 									</h:panelGrid>
 									<h:panelGrid columns="1">
                                         <p:fieldset legend="FB login Details" style="margin-bottom:20px">
+                                        <h:panelGrid columns="4">
                                             <p:outputLabel value="Facebook User Name" />
-                                            <h:inputText value="#{politicalAdminBean.selectedFacebookAccount.userName}" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.userName}" />
                                             <p:outputLabel value="Facebook User ID" />
-                                            <h:inputText value="#{politicalAdminBean.selectedFacebookAccount.facebookUserId}" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.facebookUserId}" />
                                             <p:outputLabel value="Name" />
-                                            <h:inputText value="#{politicalAdminBean.selectedFacebookAccount.name}" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.name}" />
                                             <p:outputLabel value="Gender" />
-                                            <h:inputText value="#{politicalAdminBean.selectedFacebookAccount.gender}" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.gender}" />
                                             <p:outputLabel value="Email" />
-                                            <h:inputText value="#{politicalAdminBean.selectedFacebookAccount.email}" />
-                                            
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.email}" />
+                                        </h:panelGrid>
                                         </p:fieldset>
                                     </h:panelGrid>
 

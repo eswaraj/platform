@@ -9,10 +9,10 @@ import com.eswaraj.domain.nodes.User;
 
 public interface FacebookAccountRepository extends GraphRepository<FacebookAccount> {
 	
-    @Query("start user=node({0}) match (user)-[:OF_USER]->(facebookAccount) where facebookAccount.__type__ = 'FacebookAccount' return facebookAccount")
+    @Query("start user=node({0}) match (user)-[:OF_USER]-(facebookAccount) where facebookAccount.__type__ = 'FacebookAccount' return facebookAccount")
     public FacebookAccount getFacebookAccountByUser(User user);
 
-    @Query("start person=node({0}) match (person)-[:ATTACHED_TO]-(user)-[:OF_USER]->(facebookAccount) where facebookAccount.__type__ = 'FacebookAccount' return facebookAccount")
+    @Query("start person=node({0}) match (person)-[:ATTACHED_TO]-(user)-[:OF_USER]-(facebookAccount) where facebookAccount.__type__ = 'FacebookAccount' return facebookAccount")
     public FacebookAccount getFacebookAccountByPerson(Person person);
 
 }

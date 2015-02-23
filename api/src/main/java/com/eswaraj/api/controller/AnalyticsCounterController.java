@@ -35,7 +35,7 @@ public class AnalyticsCounterController extends BaseController {
 
     private Gson gson = new Gson();
 
-    @RequestMapping(value = "/stats/counter/location/{locationId}/category/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = { "/api/v0/stats/counter/location/{locationId}/category/{categoryId}", "/stats/counter/location/{locationId}/category/{categoryId}" }, method = RequestMethod.GET)
     @ResponseBody
     public String getLocationCategoryCount(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long categoryId) throws ApplicationException {
         Long count = counterCache.getLocationCategoryComplaintCounter(locationId, categoryId);
@@ -48,7 +48,7 @@ public class AnalyticsCounterController extends BaseController {
         return jsonObject.toString();
     }
 
-    @RequestMapping(value = "/stats/counter/location/{locationId}/parentcategory/{parentCategoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = { "/api/v0/stats/counter/location/{locationId}/parentcategory/{parentCategoryId}", "/stats/counter/location/{locationId}/parentcategory/{parentCategoryId}" }, method = RequestMethod.GET)
     @ResponseBody
     public String getLocationParentCategoryCounts(ModelAndView mv, @PathVariable Long locationId, @PathVariable Long parentCategoryId) throws ApplicationException {
 
@@ -70,7 +70,7 @@ public class AnalyticsCounterController extends BaseController {
         return "[]";
     }
 
-    @RequestMapping(value = "/stats/counter/location/{locationId}", method = RequestMethod.GET)
+    @RequestMapping(value = { "/api/v0/stats/counter/location/{locationId}", "/stats/counter/location/{locationId}" }, method = RequestMethod.GET)
     @ResponseBody
     public String getLocationAllCategoryCounts(ModelAndView mv, @PathVariable Long locationId) throws ApplicationException {
 
