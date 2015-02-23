@@ -36,7 +36,6 @@
 				<ref bean="ReProcessAllComplaintBoltBean" />
 				<ref bean="ComplaintProcessorBoltBean" />
 				<ref bean="LocationWiseComplaintZsetBoltBean" />
-				<ref bean="SendMobileNotificationComplaintBoltBean" />
                 <ref bean="ComplaintRefreshBoltBean" />
 				</list>
 		</property>
@@ -66,17 +65,6 @@
 
 	</bean>
 
-	<bean id="SendMobileNotificationComplaintBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="SendMobileNotificationComplaintBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.mobile.notification.SendMobileNotificationBoltProcessor" />
-        <property name="paralellism" value="1" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="ComplaintViewByPoliticalAdminBolt" value="SendMobileNotificationStream" />
-            </map>
-        </property>
-    </bean>
-    
     <bean id="ComplaintRefreshBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
         <property name="componentId" value="ComplaintRefreshBolt" />
         <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.ComplaintRefreshBoltProcessor" />
