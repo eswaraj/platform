@@ -34,6 +34,7 @@ public class SendMobileNotificationBoltProcessor extends AbstractBoltProcessor {
     private AppService appService;
     @Override
     public Result processTuple(Tuple inputTuple) {
+        logInfo("Got message");
         SendMobileNotificationMessage sendMobileNotificationMessage = (SendMobileNotificationMessage) inputTuple.getValue(0);
         String message = sendMobileNotificationMessage.getMessage();
         String messageType = sendMobileNotificationMessage.getMessageType();

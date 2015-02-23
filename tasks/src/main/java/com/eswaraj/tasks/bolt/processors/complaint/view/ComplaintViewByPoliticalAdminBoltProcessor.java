@@ -82,7 +82,7 @@ public class ComplaintViewByPoliticalAdminBoltProcessor extends AbstractBoltProc
             messageJson.add("viewedBy", pbaJsonObject);
 
             SendMobileNotificationMessage sendMobileNotificationMessage = new SendMobileNotificationMessage(messageJson.toString(), NotificationMessage.POLITICAL_ADMIN_VIEW_MESSAGE_TYPE, deviceList);
-            writeToStream(inputTuple, new Values(sendMobileNotificationMessage));
+            writeToParticularStream(inputTuple, new Values(sendMobileNotificationMessage), "SendMobileNotificationStream");
         } catch (Exception ex) {
             logError("Unable to send message to devices ", ex);
         }

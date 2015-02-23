@@ -104,7 +104,9 @@ public class StaffBean extends BaseBean {
     private void refreshStaffList() {
         try {
             PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
-            staff = adminService.getAdminStaffList(selectedPoliticalBodyAdmin.getId());
+            if (selectedPoliticalBodyAdmin != null) {
+                staff = adminService.getAdminStaffList(selectedPoliticalBodyAdmin.getId());
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
