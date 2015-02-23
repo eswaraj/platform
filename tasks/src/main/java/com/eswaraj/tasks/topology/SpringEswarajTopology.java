@@ -1,6 +1,7 @@
 package com.eswaraj.tasks.topology;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class SpringEswarajTopology {
 	private String kafkaZookeeper;
     private List<EswarajBaseSpout> spoutConfigs;
     private List<EswarajBaseBolt> boltConfigs;
+    private Map<String, Object> topologyProperties;
 
 	public SpringEswarajTopology() {
 		
@@ -68,6 +70,13 @@ public class SpringEswarajTopology {
         conf.setMaxSpoutPending(maxSpoutPending);
         // conf.setNumAckers(2);
         conf.setMessageTimeoutSecs(messageTimeoutSeconds);
+
+        if (topologyProperties != null) {
+            for (Entry<String, Object> oneProperty : topologyProperties.entrySet()) {
+                System.out.println("oneProperty.getKey()=[" + oneProperty.getValue() + "]");
+                conf.put(oneProperty.getKey(), oneProperty.getValue());
+            }
+        }
         System.out.println("messageTimeoutSeconds=[" + messageTimeoutSeconds + "]");
         StormTopology stormTopology = buildTopology();
         StormSubmitter.submitTopology(getName(), conf, stormTopology);
@@ -153,5 +162,13 @@ public class SpringEswarajTopology {
 
     public void setMessageTimeoutSeconds(int messageTimeoutSeconds) {
         this.messageTimeoutSeconds = messageTimeoutSeconds;
+    }
+
+    public Map<String, Object> getTopologyProperties() {
+        return topologyProperties;
+    }
+
+    public void setTopologyProperties(Map<String, Object> topologyProperties) {
+        this.topologyProperties = topologyProperties;
     }
 }

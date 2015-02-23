@@ -13,6 +13,14 @@
 		
 		<property name="numWorkers" value="4" />
 		<property name="numParallel" value="4" />
+		
+		<property name="topologyProperties">
+            <map>
+                <entry key="topology.receiver.buffer.size" value="32" />
+                <entry key="topology.executor.receive.buffer.size" value="16384" />
+                <entry key="topology.executor.send.buffer.size" value="16384" />
+            </map>
+        </property>
 
 		<property name="spoutConfigs">
 			<list>

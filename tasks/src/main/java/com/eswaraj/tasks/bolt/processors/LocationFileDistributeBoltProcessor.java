@@ -202,6 +202,8 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
         int count = 0;
         boolean first = true;
         int totalDivide = 0;
+        int totalLinesPerBatch = 10;
+        int totalPointsToProcess = 0;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
                 if (first) {
@@ -214,18 +216,19 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
                 sb.append(longitude.toString());
                 sb.append(",");
                 sb.append(latitude.toString());
+                totalPointsToProcess++;
             }
             count++;
-            if (count % 10 == 0) {
+            if (count % totalLinesPerBatch == 0) {
+                logInfo("Total Points to process in one batch : {}", totalPointsToProcess);
                 totalDivide++;
-                logInfo("Writing to stream");
                 writeToStream(inputTuple, new Values(boundaryCorrdinates, sb.toString(), locationId));
-                logInfo("Writing Done");
                 sb = new StringBuilder();
                 first = true;
+                totalPointsToProcess = 0;
             }
         }
-        if (count % 10 > 0) {
+        if (count % totalLinesPerBatch > 0) {
             writeToStream(inputTuple, new Values(boundaryCorrdinates, sb.toString(), locationId));
             totalDivide++;
         }

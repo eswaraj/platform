@@ -18,7 +18,6 @@
 			<list>
 				<ref bean="ComplaintCreatedSpoutBean" />
 				<ref bean="ReProcessAllComplaintsSpoutBean" />
-				<ref bean="ComplaintViwedByPoliticalAdminSpoutBean" />
 			</list>
 		</property>
 		<property name="boltConfigs">
@@ -39,21 +38,10 @@
 				<ref bean="LocationWiseComplaintZsetBoltBean" />
 				<ref bean="SendMobileNotificationComplaintBoltBean" />
                 <ref bean="ComplaintRefreshBoltBean" />
-                <ref bean="ComplaintViewByPoliticalAdminBoltBean" />
 				</list>
 		</property>
 	</bean>
 
-	   <bean id="ComplaintViwedByPoliticalAdminSpoutBean" class="com.eswaraj.tasks.spout.ComplaintViwedByPoliticalAdminSpout">
-        <property name="componentId" value="ComplaintViwedByPoliticalAdminSpout" />
-        <property name="outputStream" value="ComplaintViwedByPoliticalAdminStream" />
-
-        <!-- Properties define which services will be available for spout -->
-        <property name="initializeRedisServices" value="false" />
-        <property name="initializeQueueServices" value="true" />
-        <property name="initializeDbServices" value="false" />
-
-    </bean>
 
 	
 	<bean id="ComplaintCreatedSpoutBean" class="com.eswaraj.tasks.spout.ComplaintCreatedSpout">
@@ -371,24 +359,5 @@
 		</property>
 	</bean>
 	
-	<bean id="ComplaintViewByPoliticalAdminBoltBean" class="com.eswaraj.tasks.bolt.SimpleEswarajBolt">
-        <property name="componentId" value="ComplaintViewByPoliticalAdminBolt" />
-        <property name="boltProcessor" value="com.eswaraj.tasks.bolt.processors.complaint.view.ComplaintViewByPoliticalAdminBoltProcessor" />
-
-        <property name="outputStream" value="SendMobileNotificationStream" />
-        <property name="paralellism" value="1" />
-        <property name="sourceComponentStreams">
-            <map>
-                <entry key="ComplaintViwedByPoliticalAdminSpout" value="ComplaintViwedByPoliticalAdminStream" />
-            </map>
-        </property>
-        <property name="fields">
-            <list>
-                <value>Message</value>
-            </list>
-        </property>
-
-    </bean>
-
 
 </beans>
