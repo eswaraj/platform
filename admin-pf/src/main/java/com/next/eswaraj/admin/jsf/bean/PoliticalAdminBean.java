@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Election;
+import com.eswaraj.domain.nodes.FacebookAccount;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
@@ -69,6 +70,8 @@ public class PoliticalAdminBean extends BaseBean {
     private List<PoliticalBodyType> politicalBodyTypes;
 
     private PoliticalBodyType selectedPoliticalBodyType;
+
+    private FacebookAccount selectedFacebookAccount;
 
     private Election selectedElection;
 
@@ -520,6 +523,8 @@ public class PoliticalAdminBean extends BaseBean {
             if (selectedPoliticalBodyAdmin.getElection() != null) {
                 this.selectedElection = adminService.getElectionById(selectedPoliticalBodyAdmin.getElection().getId());
             }
+            selectedFacebookAccount = adminService.getFacebookAccountByPerson(selectedPerson);
+            logger.info("selectedFacebookAccount=" + selectedFacebookAccount);
             logger.info("selectedPerson=" + selectedPerson);
             logger.info("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
             showListPanel = false;
@@ -608,5 +613,13 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void setPoliticalBodyTypeElections(List<Election> politicalBodyTypeElections) {
         this.politicalBodyTypeElections = politicalBodyTypeElections;
+    }
+
+    public FacebookAccount getSelectedFacebookAccount() {
+        return selectedFacebookAccount;
+    }
+
+    public void setSelectedFacebookAccount(FacebookAccount selectedFacebookAccount) {
+        this.selectedFacebookAccount = selectedFacebookAccount;
     }
 }
