@@ -12,6 +12,7 @@ import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
+import com.eswaraj.domain.nodes.FacebookAccount;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -131,4 +132,6 @@ public interface AdminService {
     List<ElectionManifestoPromise> getTimelinePromises(TimelineItem timelineItem) throws ApplicationException;
 
     List<PoliticalBodyAdminSearchResult> getTimelineAdmins(TimelineItem timelineItem) throws ApplicationException;
+
+    FacebookAccount getFacebookAccountByPerson(Person person) throws ApplicationException;
 }

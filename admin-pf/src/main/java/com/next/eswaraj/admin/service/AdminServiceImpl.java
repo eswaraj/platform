@@ -34,6 +34,7 @@ import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
+import com.eswaraj.domain.nodes.FacebookAccount;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -55,6 +56,7 @@ import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
 import com.eswaraj.domain.repo.ElectionManifestoRepository;
 import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
+import com.eswaraj.domain.repo.FacebookAccountRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTimelineItemRepository;
@@ -135,6 +137,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PoliticalAdminTimelineItemRepository politicalAdminTimelineItemRepository;
+
+    @Autowired
+    private FacebookAccountRepository facebookAccountRepository;
 
     @Autowired
     private PromiseTimelineItemRepository promiseTimelineItemRepository;
@@ -786,5 +791,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<PoliticalBodyAdminSearchResult> getTimelineAdmins(TimelineItem timelineItem) throws ApplicationException {
         return convertToList(politicalAdminTimelineItemRepository.getAllPoliticalBodyAdminSearchResultOfTimelineItem(timelineItem));
+    }
+
+    @Override
+    public FacebookAccount getFacebookAccountByPerson(Person person) throws ApplicationException {
+        return facebookAccountRepository.getFacebookAccountByPerson(person);
     }
 }
