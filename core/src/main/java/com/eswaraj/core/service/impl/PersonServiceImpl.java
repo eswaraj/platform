@@ -209,16 +209,21 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     @Override
     public UserDto registerFacebookAccount(RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
         // First make sure user is registered
-        User user = registerDevice(registerFacebookAccountRequest.getDeviceId(), registerFacebookAccountRequest.getDeviceTypeRef(), registerFacebookAccountRequest.getUserExternalId());
-        logger.info("user =  {} ", user);
+        // User user = registerDevice(registerFacebookAccountRequest.getDeviceId(), registerFacebookAccountRequest.getDeviceTypeRef(), registerFacebookAccountRequest.getUserExternalId());
+        // logger.info("user =  {} ", user);
         // Fetch user profile from facebook
+        if (StringUtils.isEmpty(registerFacebookAccountRequest.getToken())) {
+            throw new ApplicationException("No Facebook token found");
+        }
         Facebook facebook = new FacebookTemplate(registerFacebookAccountRequest.getToken());
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("facebook.getApplicationNamespace() =  {} ", facebook.getApplicationNamespace());
         logger.info("facebookUserId =  {} ", facebookUserId);
         FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+        User user = null;
         if (facebookAccount == null) {
+            user = createAnonymousUserAndPerson();
             logger.info("facebook Account Doesnt Exists so creating new one ");
             // Create a new new facebook account and attach it to user
             facebookAccount = new FacebookAccount();
@@ -246,12 +251,29 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         } else {
             // Retrieve user attached to Facebook account and merge it to user
             // userExternalId
-            FacebookAccount existingFacebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
-            User facebookAccountExistingUser = userRepository.getUserByFacebookUser(existingFacebookAccount);
+            User facebookAccountExistingUser = userRepository.getUserByFacebookUser(facebookAccount);
             // User facebookAccountExistingUser = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
             // facebookAccountExistingUser will become main user(anonymous) and
             // user will be merged into it
-            user = mergeUser(facebookAccountExistingUser, user);
+            user = facebookAccountExistingUser;
+        }
+
+        Device device = deviceRepository.findByPropertyValue("deviceId", registerFacebookAccountRequest.getDeviceId());
+        if (device == null) {
+            logger.info("Device Do not exists {} so creating new one", registerFacebookAccountRequest.getDeviceId());
+            // This means we have never seen this device so create new one
+            device = new Device();
+            device.setDeviceId(registerFacebookAccountRequest.getDeviceId());
+            device.setDeviceType(DeviceType.valueOf(registerFacebookAccountRequest.getDeviceTypeRef()));
+            device = deviceRepository.save(device);
+        }
+        UserDevice userDevice = userDeviceRepository.getUserDeviceRelation(user, device);
+        logger.info("userDevice : {} ", userDevice);
+        if (userDevice == null) {
+            userDevice = new UserDevice();
+            userDevice.setDevice(device);
+            userDevice.setUser(user);
+            userDevice = userDeviceRepository.save(userDevice);
         }
         // Update Person Info too
         Person person = personRepository.getPersonByUser(user);
