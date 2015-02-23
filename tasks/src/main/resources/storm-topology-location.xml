@@ -16,9 +16,6 @@
 		
 		<property name="topologyProperties">
             <map>
-                <entry key="topology.receiver.buffer.size" value="32" />
-                <entry key="topology.executor.receive.buffer.size" value="16384" />
-                <entry key="topology.executor.send.buffer.size" value="16384" />
             </map>
         </property>
 
