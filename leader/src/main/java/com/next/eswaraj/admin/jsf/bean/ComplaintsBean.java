@@ -142,6 +142,7 @@ public class ComplaintsBean extends BaseBean {
 
 
     private void refreshComplaintList() {
+        loginBean.refreshLoginRoles();
         PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
         if (selectedPoliticalBodyAdmin == null) {
 
@@ -178,6 +179,10 @@ public class ComplaintsBean extends BaseBean {
 
     public ComplaintSearchResult getSelectedComplaint() {
         return selectedComplaint;
+    }
+
+    public void refreshComplaints() {
+        refreshComplaintList();
     }
 
     public void setSelectedComplaint(ComplaintSearchResult complaintSearchResult) {

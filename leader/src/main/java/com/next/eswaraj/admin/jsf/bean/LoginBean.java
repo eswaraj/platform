@@ -43,6 +43,11 @@ public class LoginBean extends BaseBean {
 
     @PostConstruct
     public void init() {
+        refreshLoginRoles();
+
+    }
+
+    public void refreshLoginRoles() {
         try {
             user = sessionUtil.getLoggedInUserFromSession();
             userPoliticalBodyAdmins = adminService.getUserPoliticalBodyAdmins(user.getId());
@@ -54,9 +59,7 @@ public class LoginBean extends BaseBean {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
     public void onSelectPoliticalBodyAdmin() {
         HttpServletRequest request = getHttpServletRequest();
         Enumeration<String> paramNames = request.getSession().getAttributeNames();
