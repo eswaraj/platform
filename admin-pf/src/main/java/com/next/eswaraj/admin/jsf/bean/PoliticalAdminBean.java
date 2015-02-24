@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Election;
@@ -126,7 +127,14 @@ public class PoliticalAdminBean extends BaseBean {
     }
 
     public void addPoliticalAdminEmail() {
-
+        try {
+            if (StringUtils.isEmpty(facebookAccountAdminEmail)) {
+                throw new ApplicationException("Please enter a facebook account email");
+            }
+            adminService.addFacebookAccountEmailForPerson(selectedPerson, facebookAccountAdminEmail);
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Unabel to add facebook account details", e);
+        }
     }
 
     public List<LocationSearchResult> searchLocation(String query) {

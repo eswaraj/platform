@@ -67,7 +67,8 @@ public class Main extends SpringBootServletInitializer {
     
     @Bean
     public DispatcherServlet dispatcherServlet() {
-        return new DispatcherServlet();
+        DispatcherServlet dispatcherServlet = new DispatcherServlet();
+        return dispatcherServlet;
     }
 
     /**
@@ -164,5 +165,7 @@ public class Main extends SpringBootServletInitializer {
         }
 
     }
+    
+
 
 }
