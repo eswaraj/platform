@@ -240,19 +240,19 @@
 												<f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
 											</p:inputText>
 											<p:outputLabel value="Facebook Page" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbPage}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbPage}" />
 											<p:outputLabel value="Facebook Account" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbAccount}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbAccount}" />
 											<p:outputLabel value="Twitter Handle" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.twitterHandle}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.twitterHandle}" />
 											<p:outputLabel value="Office Landline1" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.landLine1}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.landLine1}" />
 											<p:outputLabel value="Office Landline2" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.landLine2}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.landLine2}" />
 											<p:outputLabel value="Office Mobile1" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile1}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile1}" />
 											<p:outputLabel value="Office Mobile2" />
-											<h:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile2}" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile2}" />
 											<p:outputLabel value="Start Date" />
 											<p:calendar id="startDate" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.startDate}"
 												pattern="dd-MMM-yyyy" required="true" requiredMessage="Start date can not be empty" />
@@ -289,7 +289,7 @@
 									</h:panelGrid>
 									<h:panelGrid columns="1">
                                         <p:fieldset legend="FB login Details" style="margin-bottom:20px">
-                                        <h:panelGrid columns="4">
+                                        <h:panelGrid columns="4" rendered="#{!empty politicalAdminBean.selectedFacebookAccount}">
                                             <p:outputLabel value="Facebook User Name" />
                                             <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.userName}" />
                                             <p:outputLabel value="Facebook User ID" />
@@ -300,6 +300,29 @@
                                             <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.gender}" />
                                             <p:outputLabel value="Email" />
                                             <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.email}" />
+                                        </h:panelGrid>
+                                        <p:dataTable var="oneAppPermission" value="#{politicalAdminBean.selectedFacebookAccountPermissions}">
+                                        <p:column headerText="Id">
+                                            <h:outputText value="#{oneAppPermission.id}" />
+                                        </p:column>
+                                        <p:column headerText="App Name">
+                                            <h:outputText value="#{oneAppPermission.facebookApp.name}" />
+                                        </p:column>
+                                        <p:column headerText="App Id">
+                                            <h:outputText value="#{oneAppPermission.facebookApp.appId}" />
+                                        </p:column>
+
+                                        </p:dataTable>
+                                        
+                                        <h:panelGrid columns="3" rendered="#{empty politicalAdminBean.selectedFacebookAccount}">
+                                        <f:facet name="header">
+									        <p:outputLabel value="Add Email Id of MLA/MP's Facebook account" />
+									    </f:facet>
+                                            <p:outputLabel value="Email" />
+                                            <p:inputText value="#{politicalAdminBean.facebookAccountAdminEmail}" />
+                                            <p:commandButton id="addPoliticalAdminEmail" value="Add Email" process="@this:formPanel" update="@form"
+                                            ajax="true" actionListener="#{politicalAdminBean.addPoliticalAdminEmail}" styleClass="ui-priority-primary">
+                                        </p:commandButton>
                                         </h:panelGrid>
                                         </p:fieldset>
                                     </h:panelGrid>

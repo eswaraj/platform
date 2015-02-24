@@ -206,6 +206,17 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         return user;
     }
 
+    private FacebookAccount getExistingFacebookAccount(FacebookProfile facebookUserProfile) {
+        String facebookUserId = facebookUserProfile.getId();
+        logger.info("facebookUserId =  {} ", facebookUserId);
+        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+
+        if (facebookAccount == null && !StringUtils.isEmpty(facebookUserProfile.getEmail())) {
+            facebookAccount = facebookAccountRepository.findByPropertyValue("email", facebookUserProfile.getEmail());
+        }
+        return facebookAccount;
+
+    }
     @Override
     public UserDto registerFacebookAccount(RegisterFacebookAccountRequest registerFacebookAccountRequest) throws ApplicationException {
         // First make sure user is registered
@@ -216,12 +227,11 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             throw new ApplicationException("No Facebook token found");
         }
         Facebook facebook = new FacebookTemplate(registerFacebookAccountRequest.getToken());
-        FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
-        String facebookUserId = facebookUserProfile.getId();
         logger.info("facebook.getApplicationNamespace() =  {} ", facebook.getApplicationNamespace());
-        logger.info("facebookUserId =  {} ", facebookUserId);
-        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+        FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
+        FacebookAccount facebookAccount = getExistingFacebookAccount(facebookUserProfile);
         User user = null;
+        FacebookApp facebookApp = getOrCreateFacebookApp(registerFacebookAccountRequest.getFacebookAppId());
         if (facebookAccount == null) {
             user = createAnonymousUserAndPerson();
             logger.info("facebook Account Doesnt Exists so creating new one ");
@@ -238,24 +248,31 @@ public class PersonServiceImpl extends BaseService implements PersonService {
             facebookAccount.setExternalId(UUID.randomUUID().toString());
             facebookAccount = facebookAccountRepository.save(facebookAccount);
 
-            FacebookApp facebookApp = getOrCreateFacebookApp(registerFacebookAccountRequest.getFacebookAppId());
+
 
             FacebookAppPermission facebookAppPermission = new FacebookAppPermission();
             facebookAppPermission.setExpireTime(registerFacebookAccountRequest.getExpireTime());
             facebookAppPermission.setFacebookAccount(facebookAccount);
             facebookAppPermission.setFacebookApp(facebookApp);
             facebookAppPermission.setToken(registerFacebookAccountRequest.getToken());
+            facebookAppPermission.setLastLoginTime(new Date());
 
             facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);
 
         } else {
             // Retrieve user attached to Facebook account and merge it to user
             // userExternalId
-            User facebookAccountExistingUser = userRepository.getUserByFacebookUser(facebookAccount);
-            // User facebookAccountExistingUser = userRepository.getUserByFacebookUserId("facebookUserId: " + facebookUserId);
-            // facebookAccountExistingUser will become main user(anonymous) and
-            // user will be merged into it
-            user = facebookAccountExistingUser;
+            user = userRepository.getUserByFacebookUser(facebookAccount);
+
+            FacebookAppPermission facebookAppPermission = facebookAppPermissionRepository.getFacebookAccountAndAppRelation(facebookAccount, facebookApp);
+            if (facebookAppPermission == null) {
+                logger.warn("Now Facebook App Permission found for existing Facebook Account {}", facebookAccount);
+            } else {
+                facebookAppPermission.setExpireTime(registerFacebookAccountRequest.getExpireTime());
+                facebookAppPermission.setToken(registerFacebookAccountRequest.getToken());
+                facebookAppPermission.setLastLoginTime(new Date());
+                facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);
+            }
         }
 
         Device device = deviceRepository.findByPropertyValue("deviceId", registerFacebookAccountRequest.getDeviceId());
@@ -349,7 +366,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
-        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+        FacebookAccount facebookAccount = getExistingFacebookAccount(facebookUserProfile);
         User user;
         FacebookApp facebookApp = getOrCreateFacebookApp(registerFacebookAccountWebRequest.getFacebookAppId());
         if (facebookAccount == null) {
@@ -376,6 +393,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
                 facebookAppPermission.setExpireTime(new Date(registerFacebookAccountWebRequest.getExpireTime()));
             }
             facebookAppPermission.setToken(registerFacebookAccountWebRequest.getToken());
+            facebookAppPermission.setLastLoginTime(new Date());
 
             facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);
 
@@ -397,7 +415,9 @@ public class PersonServiceImpl extends BaseService implements PersonService {
                     facebookAppPermission.setExpireTime(new Date(registerFacebookAccountWebRequest.getExpireTime()));
                 }
                 facebookAppPermission.setToken(registerFacebookAccountWebRequest.getToken());
+                facebookAppPermission.setLastLoginTime(new Date());
                 facebookAppPermission = facebookAppPermissionRepository.save(facebookAppPermission);
+
             }
             Person person = personRepository.getPersonByUser(user);
             updatePersonInfoFromFacebook(person, facebookUserProfile);
@@ -462,7 +482,7 @@ public class PersonServiceImpl extends BaseService implements PersonService {
         FacebookProfile facebookUserProfile = facebook.userOperations().getUserProfile();
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
-        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+        FacebookAccount facebookAccount = getExistingFacebookAccount(facebookUserProfile);
         User user = userRepository.getUserByFacebookUser(facebookAccount);
         // User user = userRepository.getUserByFacebookUserId("facebookUserId='" + facebookUserId + "'");
         return user;

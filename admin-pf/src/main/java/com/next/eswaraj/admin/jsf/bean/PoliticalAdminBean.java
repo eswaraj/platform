@@ -38,6 +38,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
+import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
@@ -73,6 +74,8 @@ public class PoliticalAdminBean extends BaseBean {
 
     private FacebookAccount selectedFacebookAccount;
 
+    private List<FacebookAppPermission> selectedFacebookAccountPermissions;
+
     private Election selectedElection;
 
     private DataTable dataTable;
@@ -95,16 +98,10 @@ public class PoliticalAdminBean extends BaseBean {
 
     private boolean updateMode = false;
 
+    private String facebookAccountAdminEmail;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
-/*
- * 
-    private String biodata;
-    private Date dob;
-    private String gender;
-    private String profilePhoto;
-    private String voterId;
-    private Address address;
- */
+
     @PostConstruct
     public void init() {
         Location location;
@@ -126,6 +123,10 @@ public class PoliticalAdminBean extends BaseBean {
     public void createPerson() {
         logger.info("Creating New Person");
         selectedPerson = new Person();
+    }
+
+    public void addPoliticalAdminEmail() {
+
     }
 
     public List<LocationSearchResult> searchLocation(String query) {
@@ -523,7 +524,11 @@ public class PoliticalAdminBean extends BaseBean {
             if (selectedPoliticalBodyAdmin.getElection() != null) {
                 this.selectedElection = adminService.getElectionById(selectedPoliticalBodyAdmin.getElection().getId());
             }
+            selectedFacebookAccountPermissions = null;
             selectedFacebookAccount = adminService.getFacebookAccountByPerson(selectedPerson);
+            if (selectedFacebookAccount != null) {
+                selectedFacebookAccountPermissions = adminService.getFacebookAppPermission(selectedFacebookAccount);
+            }
             logger.info("selectedFacebookAccount=" + selectedFacebookAccount);
             logger.info("selectedPerson=" + selectedPerson);
             logger.info("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
@@ -621,5 +626,21 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void setSelectedFacebookAccount(FacebookAccount selectedFacebookAccount) {
         this.selectedFacebookAccount = selectedFacebookAccount;
+    }
+
+    public String getFacebookAccountAdminEmail() {
+        return facebookAccountAdminEmail;
+    }
+
+    public void setFacebookAccountAdminEmail(String facebookAccountAdminEmail) {
+        this.facebookAccountAdminEmail = facebookAccountAdminEmail;
+    }
+
+    public List<FacebookAppPermission> getSelectedFacebookAccountPermissions() {
+        return selectedFacebookAccountPermissions;
+    }
+
+    public void setSelectedFacebookAccountPermissions(List<FacebookAppPermission> selectedFacebookAccountPermissions) {
+        this.selectedFacebookAccountPermissions = selectedFacebookAccountPermissions;
     }
 }

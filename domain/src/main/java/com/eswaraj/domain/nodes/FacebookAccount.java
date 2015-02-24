@@ -21,6 +21,7 @@ public class FacebookAccount extends BaseNode {
     
     private String gender;
     
+    @Indexed(indexName = "FAEmail")
     private String email;
     
     @RelatedTo(type = "OF_USER")

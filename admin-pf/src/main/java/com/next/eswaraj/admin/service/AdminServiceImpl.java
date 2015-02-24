@@ -44,9 +44,11 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.TimelineItem;
+import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
+import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
 import com.eswaraj.domain.nodes.relationships.PoliticalAdminTimelineItem;
 import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
@@ -57,6 +59,7 @@ import com.eswaraj.domain.repo.ElectionManifestoRepository;
 import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
 import com.eswaraj.domain.repo.FacebookAccountRepository;
+import com.eswaraj.domain.repo.FacebookAppPermissionRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTimelineItemRepository;
@@ -69,6 +72,7 @@ import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.domain.repo.PromiseTimelineItemRepository;
 import com.eswaraj.domain.repo.SystemCategoryRepository;
 import com.eswaraj.domain.repo.TimelineItemRepository;
+import com.eswaraj.domain.repo.UserRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.queue.service.QueueService;
 
@@ -143,6 +147,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PromiseTimelineItemRepository promiseTimelineItemRepository;
+
+    @Autowired
+    private FacebookAppPermissionRepository facebookAppPermissionRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -796,5 +806,30 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public FacebookAccount getFacebookAccountByPerson(Person person) throws ApplicationException {
         return facebookAccountRepository.getFacebookAccountByPerson(person);
+    }
+
+    @Override
+    public FacebookAccount addFacebookAccountEmailForPerson(Person person, String email) throws ApplicationException {
+        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("email", email);
+        if (facebookAccount != null) {
+            throw new ApplicationException("A User already exists for email " + email + " in our system and it cant be linked");
+        }
+
+        User user = new User();
+        user.setPerson(person);
+        user.setExternalId(UUID.randomUUID().toString());
+        user = userRepository.save(user);
+
+        facebookAccount = new FacebookAccount();
+        facebookAccount.setEmail(email);
+        facebookAccount.setUser(user);
+        facebookAccount = facebookAccountRepository.save(facebookAccount);
+
+        return facebookAccount;
+    }
+
+    @Override
+    public List<FacebookAppPermission> getFacebookAppPermission(FacebookAccount facebookAccount) throws ApplicationException {
+        return facebookAppPermissionRepository.getFacebookAppPermissionByFacebookAccount(facebookAccount);
     }
 }

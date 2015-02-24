@@ -3,6 +3,7 @@ package com.eswaraj.domain.nodes.relationships;
 import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.EndNode;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
@@ -20,9 +21,12 @@ public class FacebookAppPermission {
     @Indexed
 	private String token;
 	private Date expireTime;
+    private Date lastLoginTime;
     @StartNode
+    @Fetch
     private FacebookAccount FacebookAccount;
     @EndNode
+    @Fetch
     private FacebookApp facebookApp;
 
     public Long getId() {
@@ -64,6 +68,14 @@ public class FacebookAppPermission {
 	public void setFacebookApp(FacebookApp facebookApp) {
 		this.facebookApp = facebookApp;
 	}
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
     @Override
     public String toString() {

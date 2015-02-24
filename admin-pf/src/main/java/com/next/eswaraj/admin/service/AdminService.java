@@ -25,6 +25,7 @@ import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
+import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 
 public interface AdminService {
 
@@ -134,4 +135,8 @@ public interface AdminService {
     List<PoliticalBodyAdminSearchResult> getTimelineAdmins(TimelineItem timelineItem) throws ApplicationException;
 
     FacebookAccount getFacebookAccountByPerson(Person person) throws ApplicationException;
+
+    FacebookAccount addFacebookAccountEmailForPerson(Person person, String email) throws ApplicationException;
+
+    List<FacebookAppPermission> getFacebookAppPermission(FacebookAccount facebookAccount) throws ApplicationException;
 }
