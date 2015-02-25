@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Controller
@@ -50,78 +51,63 @@ public class LeaderJoinController extends BaseController {
     private String leaderServerBaseUrl;
 
     @RequestMapping(value = "/web/join/eswaraj", method = RequestMethod.GET)
-    public ModelAndView join(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, ModelAndView mv) {
-        try {
-            String personId = httpServletRequest.getParameter("pid");
-            String requestId = httpServletRequest.getParameter("rid");
-            String emailId = httpServletRequest.getParameter("eid");
-            logger.info("personId : " + personId);
-            logger.info("requestId : " + requestId);
-            logger.info("emailId : " + emailId);
-            adminService.validateJoinRequest(personId, requestId, emailId);
-            // build facebook Login URL
+    public ModelAndView join(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, ModelAndView mv) throws ApplicationException {
+        String personId = httpServletRequest.getParameter("pid");
+        String requestId = httpServletRequest.getParameter("rid");
+        String emailId = httpServletRequest.getParameter("eid");
+        logger.info("personId : " + personId);
+        logger.info("requestId : " + requestId);
+        logger.info("emailId : " + emailId);
+        adminService.validateJoinRequest(personId, requestId, emailId);
+        // build facebook Login URL
 
-            facebookRedirectUrl = leaderServerBaseUrl + "/web/join/eswaraj/fbloginsuccess";
-            logger.info("Processing Facebook login " + facebookRedirectUrl);
-            FacebookConnectionFactory facebookConnectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory(Facebook.class);
+        facebookRedirectUrl = leaderServerBaseUrl + "/web/join/eswaraj/fbloginsuccess";
+        logger.info("Processing Facebook login " + facebookRedirectUrl);
+        FacebookConnectionFactory facebookConnectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory(Facebook.class);
 
-            OAuth2Operations oauthOperations = facebookConnectionFactory.getOAuthOperations();
-            OAuth2Parameters params = new OAuth2Parameters();
-            params.setRedirectUri(facebookRedirectUrl);
-            params.setScope(appPermissions);
-            String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
+        OAuth2Operations oauthOperations = facebookConnectionFactory.getOAuthOperations();
+        OAuth2Parameters params = new OAuth2Parameters();
+        params.setRedirectUri(facebookRedirectUrl);
+        params.setScope(appPermissions);
+        String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
 
-            // Add parameters to session
-            HttpSession httpSession = httpServletRequest.getSession(true);
-            httpSession.setAttribute("pid", personId);
-            httpSession.setAttribute("rid", requestId);
-            httpSession.setAttribute("eid", emailId);
-            
+        // Add parameters to session
+        HttpSession httpSession = httpServletRequest.getSession(true);
+        httpSession.setAttribute("pid", personId);
+        httpSession.setAttribute("rid", requestId);
+        httpSession.setAttribute("eid", emailId);
 
-            RedirectView rv = new RedirectView(authorizeUrl);
-            logger.info("url= {}", authorizeUrl);
-            mv.setView(rv);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        RedirectView rv = new RedirectView(authorizeUrl);
+        logger.info("url= {}", authorizeUrl);
+        mv.setView(rv);
 
         return mv;
     }
 
     @RequestMapping(value = "/web/join/eswaraj/fbloginsuccess", method = RequestMethod.GET)
-    public ModelAndView loginSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, ModelAndView mv) {
-        try {
-            FacebookConnectionFactory facebookConnectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory(Facebook.class);
-            OAuth2Operations oauthOperations = facebookConnectionFactory.getOAuthOperations();
-            String authorizationCode = httpServletRequest.getParameter("code");
-            logger.info("authorizationCode= {}", authorizationCode);
-            logger.info("facebookRedirectUrl= {}", facebookRedirectUrl);
-            AccessGrant accessGrant = oauthOperations.exchangeForAccess(authorizationCode, facebookRedirectUrl, null);
-            Connection<Facebook> facebookConnection = facebookConnectionFactory.createConnection(accessGrant);
+    public ModelAndView loginSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, ModelAndView mv) throws ApplicationException {
+        FacebookConnectionFactory facebookConnectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory(Facebook.class);
+        OAuth2Operations oauthOperations = facebookConnectionFactory.getOAuthOperations();
+        String authorizationCode = httpServletRequest.getParameter("code");
+        logger.info("authorizationCode= {}", authorizationCode);
+        logger.info("facebookRedirectUrl= {}", facebookRedirectUrl);
+        AccessGrant accessGrant = oauthOperations.exchangeForAccess(authorizationCode, facebookRedirectUrl, null);
+        Connection<Facebook> facebookConnection = facebookConnectionFactory.createConnection(accessGrant);
 
-            HttpSession httpSession = httpServletRequest.getSession(true);
-            String personId = (String) httpSession.getAttribute("pid");
-            String requestId = (String) httpSession.getAttribute("rid");
-            String emailId = (String) httpSession.getAttribute("eid");
+        HttpSession httpSession = httpServletRequest.getSession(true);
+        String personId = (String) httpSession.getAttribute("pid");
+        String requestId = (String) httpSession.getAttribute("rid");
+        String emailId = (String) httpSession.getAttribute("eid");
 
+        ConnectionData facebookConnectionData = facebookConnection.createData();
+        adminService.linkLeaderToFacebookAccount(personId, requestId, emailId, facebookConnectionData);
 
+        String redirectUrl = leaderServerBaseUrl + "/admin/complaints.xhtml";
+        logger.info("redirectUrl= {}", redirectUrl);
+        RedirectView rv = new RedirectView(redirectUrl);
+        logger.info("url= {}", redirectUrl);
+        mv.setView(rv);
 
-            ConnectionData facebookConnectionData = facebookConnection.createData();
-            adminService.linkLeaderToFacebookAccount(personId, requestId, emailId, facebookConnectionData);
-
-            String redirectUrl = leaderServerBaseUrl + "/admin/complaints.xhtml";
-            logger.info("redirectUrl= {}", redirectUrl);
-            RedirectView rv = new RedirectView(redirectUrl);
-            logger.info("url= {}", redirectUrl);
-            mv.setView(rv);
-
-        } catch (Exception ex) {
-            logger.error("unable to complete facebook login", ex);
-            String redirectUrl = httpServletRequest.getContextPath() + "/web/login/facebookfail";
-            RedirectView rv = new RedirectView(redirectUrl);
-            logger.info("url= {}", redirectUrl);
-            mv.setView(rv);
-        }
         return mv;
     }
 
