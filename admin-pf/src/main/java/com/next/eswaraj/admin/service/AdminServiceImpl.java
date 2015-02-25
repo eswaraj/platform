@@ -830,7 +830,7 @@ public class AdminServiceImpl implements AdminService {
         }
         leaderTempFacebookAccount.setEmail(email);
         leaderTempFacebookAccount.setPerson(person);
-        leaderTempFacebookAccount.setRequestId(UUID.fromString(email).toString());
+        leaderTempFacebookAccount.setRequestId(UUID.randomUUID().toString());
         leaderTempFacebookAccount.setDateCreated(new Date());
         leaderTempFacebookAccount.setUrl(leaderServerBaseUrl + "/web/join/eswaraj?pid=" + person.getId() + "&rid=" + leaderTempFacebookAccount.getRequestId() + "&eid=" + email);
         leaderTempFacebookAccount = leaderTempFacebookAccountRepository.save(leaderTempFacebookAccount);
