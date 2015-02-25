@@ -324,7 +324,7 @@
                                             <p:outputLabel value="Email" />
                                             <p:inputText value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.email}" />
                                             <p:outputLabel value="URL" />
-                                            <p:inputText value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.url}" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.url}" />
                                             <p:commandButton id="addPoliticalAdminEmail" value="Add Email" process="@this:formPanel" update="@form"
                                             ajax="true" actionListener="#{politicalAdminBean.addPoliticalAdminEmail}" styleClass="ui-priority-primary">
                                         </p:commandButton>

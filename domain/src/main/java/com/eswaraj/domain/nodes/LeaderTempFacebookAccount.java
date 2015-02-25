@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.eswaraj.domain.base.BaseNode;
 
 @NodeEntity
-@TypeAlias("LeaderFacebookTempAccount")
+@TypeAlias("LeaderTempFacebookAccount")
 public class LeaderTempFacebookAccount extends BaseNode {
 
     @Indexed(indexName = "FacebookUserNameIdx")
