@@ -2,10 +2,14 @@ package com.next.eswaraj.admin.service;
 
 import java.util.List;
 
+import org.springframework.social.connect.ConnectionData;
+
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.FacebookAccount;
+import com.eswaraj.domain.nodes.LeaderTempFacebookAccount;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
@@ -45,5 +49,13 @@ public interface AdminService {
     PoliticalBodyAdminStaff savePoliticalBodyAdminStaff(PoliticalBodyAdmin politicalBodyAdmin, Person person, String post) throws ApplicationException;
 
     PoliticalBodyAdminStaff removePoliticalBodyAdminStaff(PoliticalBodyAdminStaff politicalBodyAdminStaff) throws ApplicationException;
+
+    LeaderTempFacebookAccount getFacebookAccountRequestForPerson(Person person) throws ApplicationException;
+
+    FacebookAccount getFacebookAccountByPerson(Person person) throws ApplicationException;
+
+    void validateJoinRequest(String personId, String requestId, String emailId) throws ApplicationException;
+
+    void linkLeaderToFacebookAccount(String personId, String requestId, String emailId, ConnectionData facebookConnectionData) throws ApplicationException;
 
 }

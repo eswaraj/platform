@@ -301,7 +301,7 @@
                                             <p:outputLabel value="Email" />
                                             <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.email}" />
                                         </h:panelGrid>
-                                        <p:dataTable var="oneAppPermission" value="#{politicalAdminBean.selectedFacebookAccountPermissions}">
+                                        <p:dataTable var="oneAppPermission" rendered="#{!empty politicalAdminBean.selectedFacebookAccount}" value="#{politicalAdminBean.selectedFacebookAccountPermissions}">
                                         <p:column headerText="Id">
                                             <h:outputText value="#{oneAppPermission.id}" />
                                         </p:column>
@@ -311,15 +311,20 @@
                                         <p:column headerText="App Id">
                                             <h:outputText value="#{oneAppPermission.facebookApp.appId}" />
                                         </p:column>
+                                        <p:column headerText="Last Login time">
+                                            <h:outputText value="#{oneAppPermission.lastLoginTime}" />
+                                        </p:column>
 
                                         </p:dataTable>
                                         
-                                        <h:panelGrid columns="3" rendered="#{empty politicalAdminBean.selectedFacebookAccount}">
+                                        <h:panelGrid columns="2" rendered="#{empty politicalAdminBean.selectedFacebookAccount}">
                                         <f:facet name="header">
 									        <p:outputLabel value="Add Email Id of MLA/MP's Facebook account" />
 									    </f:facet>
                                             <p:outputLabel value="Email" />
-                                            <p:inputText value="#{politicalAdminBean.facebookAccountAdminEmail}" />
+                                            <p:inputText value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.email}" />
+                                            <p:outputLabel value="URL" />
+                                            <p:inputText value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.url}" />
                                             <p:commandButton id="addPoliticalAdminEmail" value="Add Email" process="@this:formPanel" update="@form"
                                             ajax="true" actionListener="#{politicalAdminBean.addPoliticalAdminEmail}" styleClass="ui-priority-primary">
                                         </p:commandButton>

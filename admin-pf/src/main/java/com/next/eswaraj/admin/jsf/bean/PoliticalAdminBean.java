@@ -31,6 +31,7 @@ import org.springframework.util.StringUtils;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.FacebookAccount;
+import com.eswaraj.domain.nodes.LeaderTempFacebookAccount;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
@@ -75,6 +76,8 @@ public class PoliticalAdminBean extends BaseBean {
 
     private FacebookAccount selectedFacebookAccount;
 
+    private LeaderTempFacebookAccount selectedLeaderTempFacebookAccount;
+
     private List<FacebookAppPermission> selectedFacebookAccountPermissions;
 
     private Election selectedElection;
@@ -98,8 +101,6 @@ public class PoliticalAdminBean extends BaseBean {
     private String createAdminButtonTitle = "Create";
 
     private boolean updateMode = false;
-
-    private String facebookAccountAdminEmail;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -128,10 +129,10 @@ public class PoliticalAdminBean extends BaseBean {
 
     public void addPoliticalAdminEmail() {
         try {
-            if (StringUtils.isEmpty(facebookAccountAdminEmail)) {
+            if (StringUtils.isEmpty(selectedLeaderTempFacebookAccount.getEmail())) {
                 throw new ApplicationException("Please enter a facebook account email");
             }
-            adminService.addFacebookAccountEmailForPerson(selectedPerson, facebookAccountAdminEmail);
+            selectedLeaderTempFacebookAccount = adminService.addFacebookAccountEmailForPerson(selectedPerson, selectedLeaderTempFacebookAccount.getEmail());
         } catch (Exception e) {
             sendErrorMessage("Error", "Unabel to add facebook account details", e);
         }
@@ -533,8 +534,14 @@ public class PoliticalAdminBean extends BaseBean {
                 this.selectedElection = adminService.getElectionById(selectedPoliticalBodyAdmin.getElection().getId());
             }
             selectedFacebookAccountPermissions = null;
+            selectedLeaderTempFacebookAccount = null;
             selectedFacebookAccount = adminService.getFacebookAccountByPerson(selectedPerson);
-            if (selectedFacebookAccount != null) {
+            if (selectedFacebookAccount == null) {
+                selectedLeaderTempFacebookAccount = adminService.getFacebookAccountRequestForPerson(selectedPerson);
+                if (selectedLeaderTempFacebookAccount == null) {
+                    selectedLeaderTempFacebookAccount = new LeaderTempFacebookAccount();
+                }
+            } else {
                 selectedFacebookAccountPermissions = adminService.getFacebookAppPermission(selectedFacebookAccount);
             }
             logger.info("selectedFacebookAccount=" + selectedFacebookAccount);
@@ -636,19 +643,19 @@ public class PoliticalAdminBean extends BaseBean {
         this.selectedFacebookAccount = selectedFacebookAccount;
     }
 
-    public String getFacebookAccountAdminEmail() {
-        return facebookAccountAdminEmail;
-    }
-
-    public void setFacebookAccountAdminEmail(String facebookAccountAdminEmail) {
-        this.facebookAccountAdminEmail = facebookAccountAdminEmail;
-    }
-
     public List<FacebookAppPermission> getSelectedFacebookAccountPermissions() {
         return selectedFacebookAccountPermissions;
     }
 
     public void setSelectedFacebookAccountPermissions(List<FacebookAppPermission> selectedFacebookAccountPermissions) {
         this.selectedFacebookAccountPermissions = selectedFacebookAccountPermissions;
+    }
+
+    public LeaderTempFacebookAccount getSelectedLeaderTempFacebookAccount() {
+        return selectedLeaderTempFacebookAccount;
+    }
+
+    public void setSelectedLeaderTempFacebookAccount(LeaderTempFacebookAccount selectedLeaderTempFacebookAccount) {
+        this.selectedLeaderTempFacebookAccount = selectedLeaderTempFacebookAccount;
     }
 }

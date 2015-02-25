@@ -13,6 +13,7 @@ import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.FacebookAccount;
+import com.eswaraj.domain.nodes.LeaderTempFacebookAccount;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -136,7 +137,9 @@ public interface AdminService {
 
     FacebookAccount getFacebookAccountByPerson(Person person) throws ApplicationException;
 
-    FacebookAccount addFacebookAccountEmailForPerson(Person person, String email) throws ApplicationException;
+    LeaderTempFacebookAccount addFacebookAccountEmailForPerson(Person person, String email) throws ApplicationException;
+
+    LeaderTempFacebookAccount getFacebookAccountRequestForPerson(Person person) throws ApplicationException;
 
     List<FacebookAppPermission> getFacebookAppPermission(FacebookAccount facebookAccount) throws ApplicationException;
 }

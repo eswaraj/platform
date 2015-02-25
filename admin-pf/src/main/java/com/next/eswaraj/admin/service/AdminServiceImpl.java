@@ -35,6 +35,7 @@ import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
 import com.eswaraj.domain.nodes.FacebookAccount;
+import com.eswaraj.domain.nodes.LeaderTempFacebookAccount;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -44,7 +45,6 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.TimelineItem;
-import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
@@ -60,6 +60,7 @@ import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
 import com.eswaraj.domain.repo.FacebookAccountRepository;
 import com.eswaraj.domain.repo.FacebookAppPermissionRepository;
+import com.eswaraj.domain.repo.LeaderTempFacebookAccountRepository;
 import com.eswaraj.domain.repo.LocationBoundaryFileRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTimelineItemRepository;
@@ -96,6 +97,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Value("${aws_s3_directory_for_location_files:locations}")
     private String awsDirectoryForLocationFiles;
+
+    @Value("${leader_domain_and_context}")
+    private String leaderServerBaseUrl;
 
     @Autowired
     private LocationBoundaryFileRepository locationBoundaryFileRepository;
@@ -153,6 +157,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LeaderTempFacebookAccountRepository leaderTempFacebookAccountRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -809,27 +816,35 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public FacebookAccount addFacebookAccountEmailForPerson(Person person, String email) throws ApplicationException {
-        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("email", email);
-        if (facebookAccount != null) {
-            throw new ApplicationException("A User already exists for email " + email + " in our system and it cant be linked");
+    public LeaderTempFacebookAccount addFacebookAccountEmailForPerson(Person person, String email) throws ApplicationException {
+        LeaderTempFacebookAccount existingLeaderTempFacebookAccount = leaderTempFacebookAccountRepository.findByPropertyValue("email", email);
+
+        LeaderTempFacebookAccount leaderTempFacebookAccount = leaderTempFacebookAccountRepository.getLeaderTempFacebookAccountByPerson(person);
+        if (leaderTempFacebookAccount == null) {
+            leaderTempFacebookAccount = new LeaderTempFacebookAccount();
+        } else {
+            if (existingLeaderTempFacebookAccount != null && !existingLeaderTempFacebookAccount.getId().equals(leaderTempFacebookAccount.getId())) {
+                throw new ApplicationException("A User Request already exists for email " + email + " in our system which i slinked to person " + person.getId() + ", " + person.getName()
+                        + "and it cant be linked");
+            }
         }
+        leaderTempFacebookAccount.setEmail(email);
+        leaderTempFacebookAccount.setPerson(person);
+        leaderTempFacebookAccount.setRequestId(UUID.fromString(email).toString());
+        leaderTempFacebookAccount.setDateCreated(new Date());
+        leaderTempFacebookAccount.setUrl(leaderServerBaseUrl + "/web/join/eswaraj?pid=" + person.getId() + "&rid=" + leaderTempFacebookAccount.getRequestId() + "&eid=" + email);
+        leaderTempFacebookAccount = leaderTempFacebookAccountRepository.save(leaderTempFacebookAccount);
 
-        User user = new User();
-        user.setPerson(person);
-        user.setExternalId(UUID.randomUUID().toString());
-        user = userRepository.save(user);
-
-        facebookAccount = new FacebookAccount();
-        facebookAccount.setEmail(email);
-        facebookAccount.setUser(user);
-        facebookAccount = facebookAccountRepository.save(facebookAccount);
-
-        return facebookAccount;
+        return leaderTempFacebookAccount;
     }
 
     @Override
     public List<FacebookAppPermission> getFacebookAppPermission(FacebookAccount facebookAccount) throws ApplicationException {
         return facebookAppPermissionRepository.getFacebookAppPermissionByFacebookAccount(facebookAccount);
+    }
+
+    @Override
+    public LeaderTempFacebookAccount getFacebookAccountRequestForPerson(Person person) throws ApplicationException {
+        return leaderTempFacebookAccountRepository.getLeaderTempFacebookAccountByPerson(person);
     }
 }
