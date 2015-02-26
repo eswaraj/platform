@@ -18,10 +18,8 @@ import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -111,10 +109,4 @@ public class LeaderJoinController extends BaseController {
         return mv;
     }
 
-    @ExceptionHandler
-    @ResponseBody
-    public String errorhandler(Exception ex) {
-        ex.printStackTrace();
-        return "Please contact Admin of eswaraj with this error : " + ex.getMessage();
-    }
 }
