@@ -40,6 +40,7 @@
   <logger name="com.eswaraj" level="INFO"/>
   <logger name="org.springframework.web.client.RestTemplate" level="DEBUG"/>
   <logger name="org.springframework.data.neo4j.support.query" level="DEBUG"/>
+  <logger name="org.springframework.data.neo4j" level="DEBUG"/>
   <root level="ERROR">
     <appender-ref ref="rollingFile"/>
     <appender-ref ref="stdout"/>
