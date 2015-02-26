@@ -15,4 +15,9 @@ public interface FacebookAccountRepository extends GraphRepository<FacebookAccou
     @Query("start person=node({0}) match (person)-[:ATTACHED_TO]-(user)-[:OF_USER]-(facebookAccount) where facebookAccount.__type__ = 'FacebookAccount' return facebookAccount")
     public FacebookAccount getFacebookAccountByPerson(Person person);
 
+    @Query("start facebookAccount=node:FAEmail(email={0}) where facebookAccount.__type__ = 'FacebookAccount' return facebookAccount")
+    public FacebookAccount getFacebookAccountByEmailCustom(String email);
+
+    public FacebookAccount getFacebookAccountByEmail(String email);
+
 }

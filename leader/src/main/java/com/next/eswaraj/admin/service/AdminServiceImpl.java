@@ -237,7 +237,13 @@ public class AdminServiceImpl implements AdminService {
         // Check if facebook account already exists for given Email id
         logger.info("Getting Facebook account by email : {}", emailId);
         FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("email", emailId);
-        logger.info("facebookAccount by email : {} ir {}", emailId, facebookAccount);
+        logger.info("facebookAccount by email : {} is {}", emailId, facebookAccount);
+        logger.info("getFacebookAccountByEmail : {}", emailId);
+        facebookAccount = facebookAccountRepository.getFacebookAccountByEmail(emailId);
+        logger.info("facebookAccount by email : {} is {}", emailId, facebookAccount);
+        logger.info("getFacebookAccountByEmailCustom : {}", emailId);
+        facebookAccount = facebookAccountRepository.getFacebookAccountByEmailCustom(emailId);
+        logger.info("facebookAccount by email : {} is {}", emailId, facebookAccount);
         if (facebookAccount != null) {
             throw new ApplicationException("Invalid Request, error code 104");
         }

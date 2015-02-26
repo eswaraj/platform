@@ -21,7 +21,7 @@ public class LeaderTempFacebookAccount extends BaseNode {
     @RelatedTo(type = "OF_PERSON")
     private Person person;
 
-    @Indexed(indexName = "FAEmail")
+    @Indexed(indexName = "LFAEmail")
     private String email;
 
     public String getUserName() {
