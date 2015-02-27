@@ -21,6 +21,8 @@ import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 @Controller
 public class TempController extends BaseController {
@@ -83,6 +85,16 @@ public class TempController extends BaseController {
             returnedList.add(onePerson);
         }
         return returnedList;
+    }
+
+    @RequestMapping(value = "/api/unknown/leader/mp", method = RequestMethod.POST)
+    public @ResponseBody String saveMpPersonRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String persons) throws ApplicationException {
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = jsonParser.parse(persons).getAsJsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            System.out.println(jsonArray.get(i).getAsJsonObject().get("name").getAsString());
+        }
+        return persons;
     }
 
 }
