@@ -22,7 +22,7 @@ public class PersonValidator extends BaseValidator<Person>{
 		checkLength(person.getName(), "Person name should be of length between 2 and 64", 2, 64);
 		checkAcceptedCharacters(person.getName(), "Person's name can only contain alphabets", ValidCharacters.NAME);
 		if(person.getEmail() != null && !person.getEmail().trim().equals("")){
-			checkAcceptedCharacters(person.getEmail(), "Invalid email", ValidCharacters.EMAIL);	
+            checkAcceptedCharacters(person.getEmail(), "Invalid email " + person.getEmail(), ValidCharacters.EMAIL);
 		}
 		
 	}

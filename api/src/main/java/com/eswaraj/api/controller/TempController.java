@@ -144,6 +144,7 @@ public class TempController extends BaseController {
             if (!StringUtils.isEmpty(emails)) {
                 emails = emails.replaceAll("\\[dot\\]", ".");
                 emails = emails.replaceAll("\\[at\\]", "@");
+                emails = emails.replaceAll("\\(i\\) ", "");
                 Matcher matcher = PATTERN.matcher(emails);
                 while (matcher.find()) {
                     String email = matcher.group();
