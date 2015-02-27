@@ -147,7 +147,7 @@ public class TempController extends BaseController {
                 emails = emails.replaceAll("\\(i\\) ", "");
                 Matcher matcher = PATTERN.matcher(emails);
                 while (matcher.find()) {
-                    String email = matcher.group();
+                    String email = matcher.group().replaceAll(" ", "");
                     if(email.contains("sansad")){
                         officeEmail = email;
                     }else{
@@ -169,14 +169,16 @@ public class TempController extends BaseController {
                 }
             }
             person.setBiodata(sb.toString());
-            person = personService.savePerson(person);
-            returnedList.add(person);
 
             System.out.println("********");
             System.out.println("Name : " + person.getName());
             System.out.println("Email : " + person.getEmail());
             System.out.println("Profile Photo : " + person.getProfilePhoto());
             System.out.println("Bio Data : " + person.getBiodata());
+
+            person = personService.savePerson(person);
+            returnedList.add(person);
+
         }
 
         return returnedList;
