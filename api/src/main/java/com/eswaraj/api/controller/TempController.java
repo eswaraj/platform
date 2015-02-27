@@ -3,11 +3,9 @@ package com.eswaraj.api.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,12 +120,17 @@ public class TempController extends BaseController {
                 
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = jsonParser.parse(persons).getAsJsonArray();
-        Set<String> titles = new LinkedHashSet<String>();
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             String name = jsonObject.get("name").getAsString();
-            String photoUrl = jsonObject.get("photo").getAsString();
-            String emails = jsonObject.get("email").getAsString();
+            String photoUrl = null;
+            if (jsonObject.has("photo")) {
+                jsonObject.get("photo").getAsString();
+            }
+            String emails = null;
+            if (jsonObject.has("email")) {
+                emails = jsonObject.get("email").getAsString();
+            }
 
             Person person = new Person();
             person.setName(name);
