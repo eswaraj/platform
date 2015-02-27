@@ -125,7 +125,7 @@ public class TempController extends BaseController {
             String name = jsonObject.get("name").getAsString();
             String photoUrl = null;
             if (jsonObject.has("photo")) {
-                jsonObject.get("photo").getAsString();
+                photoUrl = jsonObject.get("photo").getAsString();
             }
             String emails = null;
             if (jsonObject.has("email")) {
