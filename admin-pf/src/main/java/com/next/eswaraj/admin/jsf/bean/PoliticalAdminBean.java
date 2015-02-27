@@ -367,6 +367,7 @@ public class PoliticalAdminBean extends BaseBean {
     public void createAdmin() {
         showListPanel = false;
         selectedPoliticalBodyAdmin = new PoliticalBodyAdmin();
+        selectedLeaderTempFacebookAccount = new LeaderTempFacebookAccount();
         selectedPerson = new Person();
         updateMode = false;
     }
@@ -535,15 +536,7 @@ public class PoliticalAdminBean extends BaseBean {
             }
             selectedFacebookAccountPermissions = null;
             selectedLeaderTempFacebookAccount = null;
-            selectedFacebookAccount = adminService.getFacebookAccountByPerson(selectedPerson);
-            if (selectedFacebookAccount == null) {
-                selectedLeaderTempFacebookAccount = adminService.getFacebookAccountRequestForPerson(selectedPerson);
-                if (selectedLeaderTempFacebookAccount == null) {
-                    selectedLeaderTempFacebookAccount = new LeaderTempFacebookAccount();
-                }
-            } else {
-                selectedFacebookAccountPermissions = adminService.getFacebookAppPermission(selectedFacebookAccount);
-            }
+            refreshFacebookAccount(selectedPerson);
             logger.info("selectedFacebookAccount=" + selectedFacebookAccount);
             logger.info("selectedPerson=" + selectedPerson);
             logger.info("selectedPoliticalBodyType=" + selectedPoliticalBodyType);
@@ -552,6 +545,19 @@ public class PoliticalAdminBean extends BaseBean {
         } catch (Exception ex) {
             logger.error("Unable to select Politicla Body Admin", ex);
         }
+    }
+
+    private void refreshFacebookAccount(Person person) throws ApplicationException {
+        selectedFacebookAccount = adminService.getFacebookAccountByPerson(person);
+        if (selectedFacebookAccount == null) {
+            selectedLeaderTempFacebookAccount = adminService.getFacebookAccountRequestForPerson(person);
+            if (selectedLeaderTempFacebookAccount == null) {
+                selectedLeaderTempFacebookAccount = new LeaderTempFacebookAccount();
+            }
+        } else {
+            selectedFacebookAccountPermissions = adminService.getFacebookAppPermission(selectedFacebookAccount);
+        }
+
     }
 
     public boolean isEnableRightSidePanel() {
@@ -577,6 +583,11 @@ public class PoliticalAdminBean extends BaseBean {
     public void setSelectedPerson(Person selectedPerson) {
         logger.info("Setting selected person to {}", selectedPerson);
         this.selectedPerson = selectedPerson;
+        try {
+            refreshFacebookAccount(selectedPerson);
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Unable to Select Person", e);
+        }
     }
 
     public List<Person> getPersonSearchResults() {
