@@ -2,16 +2,20 @@ package com.eswaraj.api.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +30,6 @@ import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -98,17 +101,73 @@ public class TempController extends BaseController {
 
     @RequestMapping(value = "/api/unknown/leader/mp", method = RequestMethod.POST)
     public @ResponseBody String saveMpPersonRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String persons) throws ApplicationException {
+        Map<String, String> fields = new LinkedHashMap<String, String>();
+        fields.put("education", "Education");
+        fields.put("marital_status", "Marital Status");
+        fields.put("party", "party");
+        fields.put("permanent_address", "Permanent Address");
+        fields.put("present_address", "Present Address");
+        fields.put("father", "Father Name");
+        fields.put("mother", "Mother Name");
+        fields.put("spouse_name", "Spouse Name");
+        fields.put("num_sons", "Number of Son(s)");
+        fields.put("num_daughters", "Number of Daughter(s)");
+        fields.put("pastimes_recreation", "Pastimes/Recreation");
+        fields.put("social_cultural_activities", "Social/Cultural Activities");
+        fields.put("birth_place", "Birth Place");
+        fields.put("countries_visited", "Countries Visited");
+        fields.put("sports_clubs", "Sports Club");
+        fields.put("other_info", "Other Info");
+        
+                
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = jsonParser.parse(persons).getAsJsonArray();
         Set<String> titles = new LinkedHashSet<String>();
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-            for (Entry<String, JsonElement> oneEntry : jsonObject.entrySet()) {
-                titles.add(oneEntry.getKey());
+            String name = jsonObject.get("name").getAsString();
+            String photoUrl = jsonObject.get("photo").getAsString();
+            String emails = jsonObject.get("email").getAsString();
+
+            Person person = new Person();
+            person.setName(name);
+            person.setProfilePhoto(photoUrl);
+            person.setDateCreated(new Date());
+            person.setDateModified(new Date());
+            // Create Description
+            StringBuilder sb = new StringBuilder();
+            String officeEmail = null;;
+            if (!StringUtils.isEmpty(emails)) {
+                emails = emails.replaceAll("\\[dot\\]", ".");
+                emails = emails.replaceAll("\\[at\\]", "@");
+                Matcher matcher = PATTERN.matcher(emails);
+                while (matcher.find()) {
+                    String email = matcher.group();
+                    if(email.contains("sansad")){
+                        officeEmail = email;
+                    }else{
+                        person.setEmail(email);
+                    }
+                }
             }
-        }
-        for (String oneTitle : titles) {
-            System.out.println(oneTitle);
+            if (!StringUtils.isEmpty(officeEmail)) {
+                String htmlValue = getOneEntry("Office Email", officeEmail);
+                sb.append(htmlValue);
+            }
+            for (Entry<String, String> oneEntry : fields.entrySet()) {
+                String value = jsonObject.get(oneEntry.getKey()).getAsString();
+                if (!StringUtils.isEmpty(value)) {
+                    String htmlValue = getOneEntry(oneEntry.getValue(), value);
+                    sb.append(htmlValue);
+                }
+            }
+            person.setBiodata(sb.toString());
+
+            System.out.println("********");
+            System.out.println("Name : " + person.getName());
+            System.out.println("Email : " + person.getEmail());
+            System.out.println("Profile Photo : " + person.getProfilePhoto());
+            System.out.println("Bio Data : " + person.getBiodata());
         }
 
         return persons;
