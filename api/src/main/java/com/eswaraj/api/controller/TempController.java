@@ -155,10 +155,12 @@ public class TempController extends BaseController {
                 sb.append(htmlValue);
             }
             for (Entry<String, String> oneEntry : fields.entrySet()) {
-                String value = jsonObject.get(oneEntry.getKey()).getAsString();
-                if (!StringUtils.isEmpty(value)) {
-                    String htmlValue = getOneEntry(oneEntry.getValue(), value);
-                    sb.append(htmlValue);
+                if (jsonObject.has(oneEntry.getKey())) {
+                    String value = jsonObject.get(oneEntry.getKey()).getAsString();
+                    if (!StringUtils.isEmpty(value)) {
+                        String htmlValue = getOneEntry(oneEntry.getValue(), value);
+                        sb.append(htmlValue);
+                    }
                 }
             }
             person.setBiodata(sb.toString());
