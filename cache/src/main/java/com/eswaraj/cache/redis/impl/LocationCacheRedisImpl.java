@@ -93,7 +93,9 @@ public class LocationCacheRedisImpl extends BaseCacheRedisImpl implements Locati
         List<String> locationsFromRedis = locationStringRedisTemplate.opsForValue().multiGet(redisKeys);
 
         for (String oneLocation : locationsFromRedis) {
-            jsonArray.add(jsonParser.parse(oneLocation));
+            if (oneLocation != null) {
+                jsonArray.add(jsonParser.parse(oneLocation));
+            }
         }
         return jsonArray;
     }
