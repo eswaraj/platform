@@ -279,16 +279,20 @@ public class TempServiceImpl extends BaseService implements TempService {
         if (location != null) {
             return location;
         }
-        location = new Location();
-        location.setName(stateName);
-        location.setParentLocation(parentLocation);
-        LocationType locationType = locationTypeRepository.findByPropertyValue("name", "State");
+        LocationType locationType = locationTypeRepository.findByPropertyValue("name", locationTypename);
         if (locationType == null) {
             throw new ApplicationException("No lcoation type found of name State");
         }
-        location.setLocationType(locationType);
-        System.out.println("Creating new State " + location);
-        location = saveLocation(location);
+
+        location = locationRepository.findLocationByNameAndLocationTypeAndParent("(?i)" + stateName, locationType, parentLocation);
+        if (location == null) {
+            location = new Location();
+            location.setName(stateName);
+            location.setParentLocation(parentLocation);
+            location.setLocationType(locationType);
+            System.out.println("Creating new Location " + location);
+            location = saveLocation(location);
+        }
         if (cache) {
             existingLocationMap.put(stateName, location);
         }

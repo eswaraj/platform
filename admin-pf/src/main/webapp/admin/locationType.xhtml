@@ -72,7 +72,9 @@
 					</p:outputPanel>
 					<p:outputPanel id="formView">
 						<h:panelGrid columns="2" rendered="#{not empty locationTypeBean.selectedNode}">
-							<p:outputLabel value="Name"></p:outputLabel>
+							<p:outputLabel value="Id"></p:outputLabel>
+							<p:outputLabel value="#{locationTypeBean.selectedNode.data.locationType.id}"></p:outputLabel>
+						    <p:outputLabel value="Name"></p:outputLabel>
 							<p:inputText id="name" value="#{locationTypeBean.selectedNode.data.locationType.name}" style="width:200px" />
 
 						</h:panelGrid>
