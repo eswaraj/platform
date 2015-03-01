@@ -2,14 +2,11 @@ package com.eswaraj.api.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppService;
-import com.eswaraj.core.service.PersonService;
+import com.eswaraj.core.service.TempService;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
@@ -39,7 +36,7 @@ import com.google.gson.JsonParser;
 public class TempController extends BaseController {
 
     @Autowired
-    private PersonService personService;
+    private TempService tempService;
     @Autowired
     private AppService appService;
     @Autowired
@@ -92,7 +89,7 @@ public class TempController extends BaseController {
             onePerson.setAddress(null);
             onePerson.setDateCreated(new Date());
             System.out.println("onePerson : " + onePerson);
-            onePerson = personService.savePerson(onePerson);
+            onePerson = tempService.savePerson(onePerson);
             returnedList.add(onePerson);
         }
         return returnedList;
@@ -180,7 +177,7 @@ public class TempController extends BaseController {
             System.out.println("Profile Photo : " + person.getProfilePhoto());
             System.out.println("Bio Data : " + person.getBiodata());
 
-            person = personService.savePerson(person);
+            person = tempService.savePerson(person);
             returnedList.add(person);
 
         }
@@ -189,79 +186,9 @@ public class TempController extends BaseController {
     }
 
     @RequestMapping(value = "/api/unknown/leader/createmplocation", method = RequestMethod.POST)
-    public @ResponseBody List<String> saveMpLocationRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String persons) throws ApplicationException {
-
-        JsonParser jsonParser = new JsonParser();
-        JsonArray jsonArray = jsonParser.parse(persons).getAsJsonArray();
-        Map<String, Set<String>> states = new TreeMap<String, Set<String>>();
-        Map<String, Set<String>> utes = new TreeMap<String, Set<String>>();
-        Set<String> parties = new TreeSet<String>();
-        Set<String> uts = new HashSet<String>();
-        uts.add("Andaman and Nicobar Islands");
-        uts.add("Chandigarh");
-        uts.add("Dadra and Nagar Haveli");
-        uts.add("Daman and Diu");
-        uts.add("Lakshadweep");
-        uts.add("Puducherry");
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-            String name = jsonObject.get("name").getAsString();
-            String state = jsonObject.get("state").getAsString();
-            String party = jsonObject.get("party").getAsString();
-            parties.add(party);
-            String constituency = jsonObject.get("constituency").getAsString();
-            if (uts.contains(state)) {
-                if (utes.get(state) == null) {
-                    utes.put(state, new TreeSet<String>());
-                }
-                utes.get(state).add(constituency);
-            } else {
-                if (states.get(state) == null) {
-                    states.put(state, new TreeSet<String>());
-                }
-                states.get(state).add(constituency);
-            }
-
-            String emails = null;
-            if (jsonObject.has("email")) {
-                emails = jsonObject.get("email").getAsString();
-            }
-
-            String officeEmail = null;
-            String personEmail = null;
-            if (!StringUtils.isEmpty(emails)) {
-                emails = emails.replaceAll("\\[dot\\]", ".");
-                emails = emails.replaceAll("\\[at\\]", "@");
-                emails = emails.replaceAll("\\(i\\) ", "");
-                Matcher matcher = PATTERN.matcher(emails);
-                while (matcher.find()) {
-                    String email = matcher.group().replaceAll(" ", "");
-                    if (email.contains("sansad")) {
-                        officeEmail = email;
-                    } else {
-                        personEmail = email;
-                    }
-                }
-            }
-        }
-        List<String> allData = new ArrayList<String>();
-        System.out.println("********");
-        allData.addAll(parties);
-        printAll(parties);
-        int count = 1;
-        for (Entry<String, Set<String>> oneState : states.entrySet()) {
-            allData.add(count + ". State : " + oneState.getKey());
-            allData.addAll(oneState.getValue());
-            System.out.println(count + ". State : " + oneState.getKey());
-            printAll(oneState.getValue());
-        }
-        for (Entry<String, Set<String>> oneState : utes.entrySet()) {
-            allData.add(count + ". UT : " + oneState.getKey());
-            allData.addAll(oneState.getValue());
-            System.out.println(count + ". State : " + oneState.getKey());
-            printAll(oneState.getValue());
-        }
-        return allData;
+    public @ResponseBody String saveMpLocationRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String persons) throws ApplicationException {
+        JsonArray jsonArray = tempService.createLocationAndMpRecord(persons);
+        return jsonArray.toString();
     }
 
 
