@@ -251,7 +251,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         if (party != null) {
             return party;
         }
-        party = partyRepository.findByPropertyValue("name", partyName);
+        party = partyRepository.findPartyByName("(?i)" + partyName);
         if (party == null) {
             party = new Party();
             party.setName(partyName);

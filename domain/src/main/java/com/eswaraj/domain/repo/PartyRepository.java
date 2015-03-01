@@ -14,4 +14,7 @@ public interface PartyRepository extends GraphRepository<Party>{
     @Query("match party where party.__type__ = 'Party' return party order by party.name ASC ")
     public List<Party> getAllParties();
 
+    @Query("match party where party.__type__ = 'Party' and party.name={0} return party")
+    public Party findPartyByName(String name);
+
 }
