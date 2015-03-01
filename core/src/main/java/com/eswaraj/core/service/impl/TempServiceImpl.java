@@ -145,7 +145,10 @@ public class TempServiceImpl extends BaseService implements TempService {
         if (india == null) {
             throw new ApplicationException("India Location Not found");
         }
-        PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findByPropertyValue("name", "Member of Parliament");
+        PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findByPropertyValue("shortName", "MP");
+        if (politicalBodyType == null) {
+            politicalBodyType = politicalBodyTypeRepository.findByName("Member of Parliament");
+        }
         if (politicalBodyType == null) {
             throw new ApplicationException("Member of Parliament Political Body Type Not found");
         }

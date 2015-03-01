@@ -15,4 +15,6 @@ public interface PoliticalBodyTypeRepository extends GraphRepository<PoliticalBo
     @Query("start location=node({0}) match (location)-[:OF_TYPE]->(locationType)-[]-(politicalBodyType)  where politicalBodyType.__type__ = 'PoliticalBodyType' return politicalBodyType order by politicalBodyType.name ASC ")
     public List<PoliticalBodyType> getAllPoliticalBodyTypesOfLocation(Long locationId);
 
+    @Query("match politicalBodyType where politicalBodyType.__type__ = 'PoliticalBodyType' and politicalBodyType.name={0}  return politicalBodyType")
+    public PoliticalBodyType findByName(String name);
 }
