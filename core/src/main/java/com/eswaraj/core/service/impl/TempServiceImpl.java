@@ -252,7 +252,9 @@ public class TempServiceImpl extends BaseService implements TempService {
         politicalBodyAdmin.setElection(election);
         politicalBodyAdmin.setStartDate(startDate);
         politicalBodyAdmin.setEmail(officeEmail);
-        politicalBodyAdmin = savePoliticalBodyAdmin(politicalBodyAdmin);
+        if (person != null) {
+            politicalBodyAdmin = savePoliticalBodyAdmin(politicalBodyAdmin);
+        }
         returenJsonArray.add(gson.toJsonTree(politicalBodyAdmin));
     }
 
