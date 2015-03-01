@@ -29,4 +29,7 @@ public interface PersonRepository extends GraphRepository<Person>{
     @Query("match (person)-[:IS]-(admin) where person.__type__ = 'Person'  and admin.__type__='PoliticalBodyAdmin' return person")
     public List<Person> getAllAdminPersons();
 
+    @Query("match (person) where person.__type__ = 'Person' and person.name={0} return person")
+    public List<Person> findPersonsByName(String name);
+
 }

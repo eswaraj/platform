@@ -158,6 +158,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         }
 
         JsonArray returenJsonArray = new JsonArray();
+        JsonArray returenNotCreateJsonArray = new JsonArray();
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             String name = jsonObject.get("name").getAsString();
@@ -207,7 +208,12 @@ public class TempServiceImpl extends BaseService implements TempService {
 
             party = createParty(existingPartyMap, partyName);
             Location pc = createLocation(existingLocationMap, constituency, "Parliament Constituency", stateUt, false);
-            createPoliticalBodyAdmin(pc, politicalBodyType, party, null, election, startDate.getTime(), officeEmail, returenJsonArray);
+            List<Person> persons = personRepository.findPersonsByName(name);
+            if (persons.isEmpty() || persons.size() > 1) {
+                createPoliticalBodyAdmin(pc, politicalBodyType, party, null, election, startDate.getTime(), officeEmail, returenNotCreateJsonArray);
+            } else {
+                createPoliticalBodyAdmin(pc, politicalBodyType, party, null, election, startDate.getTime(), officeEmail, returenJsonArray);
+            }
 
         }
         List<String> allData = new ArrayList<String>();
@@ -229,6 +235,7 @@ public class TempServiceImpl extends BaseService implements TempService {
             printAll(oneState.getValue());
             count++;
         }
+        returenJsonArray.add(returenNotCreateJsonArray);
         return returenJsonArray;
     }
 
