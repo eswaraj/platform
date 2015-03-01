@@ -75,4 +75,7 @@ public interface LocationRepository extends GraphRepository<Location>{
     @Query("match location where location.__type__ = 'Location' return location order by location.id ASC " + "skip {0} limit {1}")
     public List<Location> getAllPagedLocations(long start, long pageSize);
 
+    @Query("match location where location.__type__ = 'Location' and location.name=~{0}  return location")
+    public Location findLocationByName(String name);
+
 }

@@ -156,7 +156,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         startDate.set(Calendar.YEAR, 2014);
         startDate.set(Calendar.DATE, 16);
         startDate.set(Calendar.MONTH, 4);
-        Location india = locationRepository.findByPropertyValue("name", "India");
+        Location india = locationRepository.findLocationByName("(?i)India");
         if (india == null) {
             throw new ApplicationException("India Location Not found");
         }
