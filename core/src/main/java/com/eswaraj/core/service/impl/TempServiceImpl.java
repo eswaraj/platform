@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import com.eswaraj.core.convertors.PersonConvertor;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.TempService;
+import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
@@ -46,6 +48,7 @@ import com.eswaraj.domain.repo.PoliticalBodyAdminRepository;
 import com.eswaraj.domain.repo.PoliticalBodyTypeRepository;
 import com.eswaraj.domain.repo.UserDeviceRepository;
 import com.eswaraj.domain.repo.UserRepository;
+import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -240,7 +243,7 @@ public class TempServiceImpl extends BaseService implements TempService {
     }
 
     private void createPoliticalBodyAdmin(Location location, PoliticalBodyType politicalBodyType, Party party, Person person, Election election, Date startDate, String officeEmail,
-            JsonArray returenJsonArray) {
+            JsonArray returenJsonArray) throws ApplicationException {
         PoliticalBodyAdmin politicalBodyAdmin = new PoliticalBodyAdmin();
         politicalBodyAdmin.setLocation(location);
         politicalBodyAdmin.setPoliticalBodyType(politicalBodyType);
@@ -249,7 +252,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         politicalBodyAdmin.setElection(election);
         politicalBodyAdmin.setStartDate(startDate);
         politicalBodyAdmin.setEmail(officeEmail);
-
+        politicalBodyAdmin = savePoliticalBodyAdmin(politicalBodyAdmin);
         returenJsonArray.add(gson.toJsonTree(politicalBodyAdmin));
     }
 
@@ -264,7 +267,7 @@ public class TempServiceImpl extends BaseService implements TempService {
             party.setName(partyName);
             party.setShortName(partyName);
             System.out.println("Creating new Party " + party);
-            // party = partyRepository.save(party);
+            party = partyRepository.save(party);
         }
         existingPartyMap.put(partyName, party);
         return party;
@@ -285,7 +288,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         }
         location.setLocationType(locationType);
         System.out.println("Creating new State " + location);
-        // state = adminService.saveLocation(state);
+        location = saveLocation(location);
         if (cache) {
             existingLocationMap.put(stateName, location);
         }
@@ -300,4 +303,168 @@ public class TempServiceImpl extends BaseService implements TempService {
             System.out.println(oneString);
         }
     }
+
+    public PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        politicalBodyAdmin.setActive(isActive(politicalBodyAdmin));
+        if (politicalBodyAdmin.getLocation().getUrlIdentifier().startsWith("/")) {
+            politicalBodyAdmin.setUrlIdentifier("/leader" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        } else {
+            politicalBodyAdmin.setUrlIdentifier("/leader/" + politicalBodyAdmin.getLocation().getUrlIdentifier() + "/" + politicalBodyAdmin.getPoliticalBodyType().getShortName().toLowerCase());
+        }
+        validateWithExistingData(politicalBodyAdmin);
+        return politicalBodyAdminRepository.save(politicalBodyAdmin);
+    }
+
+    private boolean isActive(PoliticalBodyAdmin politicalBodyAdmin) {
+        if (politicalBodyAdmin.getStartDate() == null) {
+            throw new ValidationException("Start date can not be null");
+        }
+        boolean active = false;
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(politicalBodyAdmin.getStartDate());
+        startDate = DateUtil.getStartOfDay(startDate);
+        Calendar today = Calendar.getInstance();
+        if (today.after(startDate) && (politicalBodyAdmin.getEndDate() == null || politicalBodyAdmin.getEndDate().after(today.getTime()))) {
+            active = true;
+        }
+        return active;
+    }
+
+    private void validateWithExistingData(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException {
+        if (politicalBodyAdmin.getLocation() != null && politicalBodyAdmin.getPoliticalBodyType() != null) {
+            Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(politicalBodyAdmin.getLocation(),
+                    politicalBodyAdmin.getPoliticalBodyType());
+            adjustActivePoliticalAdminForLocation(politicalBodyAdmin, allPoliticalBodyAdminsForLocation);
+            checkForDateOverlap(politicalBodyAdmin, allPoliticalBodyAdminsForLocation);
+        }
+    }
+
+    private void adjustActivePoliticalAdminForLocation(PoliticalBodyAdmin politicalBodyAdmin, Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation) throws ApplicationException {
+        if (!politicalBodyAdmin.isActive()) {
+            // if this is not active just go back
+            return;
+        }
+
+        for (PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation) {
+            if (!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin.getId())) {
+                if (onePoliticalBodyAdmin.isActive()) {
+                    // throw new ApplicationException("Another Active Political Admin exists [id="+onePoliticalBodyAdmin.getId()+"], please make him/her inactive first and then make this active");
+                    // instead of throwing exception we are just turning other active Admin to inactive
+                    onePoliticalBodyAdmin.setActive(false);
+                    politicalBodyAdminRepository.save(onePoliticalBodyAdmin);
+                }
+
+            }
+        }
+    }
+
+    private void checkForDateOverlap(PoliticalBodyAdmin politicalBodyAdmin, Collection<PoliticalBodyAdmin> allPoliticalBodyAdminsForLocation) throws ApplicationException {
+        for (PoliticalBodyAdmin onePoliticalBodyAdmin : allPoliticalBodyAdminsForLocation) {
+            if (!onePoliticalBodyAdmin.getId().equals(politicalBodyAdmin.getId())) {
+                // We need to check political admin being saved with other admins only
+                if (checkIfDatesAreOverlapped(onePoliticalBodyAdmin.getStartDate(), onePoliticalBodyAdmin.getEndDate(), politicalBodyAdmin.getStartDate(), politicalBodyAdmin.getEndDate())) {
+                    throw new ApplicationException("Start date and end dates of two Political admin for this location overallped [id1=" + onePoliticalBodyAdmin.getId() + ", startDate="
+                            + onePoliticalBodyAdmin.getStartDate() + ", endDate=" + onePoliticalBodyAdmin.getEndDate() + "] and [id2=" + politicalBodyAdmin.getId() + ", startDat="
+                            + politicalBodyAdmin.getStartDate() + ", endDate=" + politicalBodyAdmin.getEndDate());
+                }
+            }
+        }
+    }
+
+    private boolean checkIfDatesAreOverlapped(Date startDate1, Date endDate1, Date startDate2, Date endDate2) {
+        if (endDate1 == null && endDate2 == null) {
+            return true;
+        }
+        if (endDate2 == null && (startDate1.after(startDate2) || endDate1.after(startDate2))) {
+            return true;
+        }
+        if (endDate1 == null && (startDate2.after(startDate1) || endDate2.after(startDate1))) {
+            return true;
+        }
+        if (endDate1 != null && endDate2 != null && ((startDate1.after(startDate2) && startDate1.before(endDate2))) || (endDate1.after(startDate2) && endDate1.before(endDate2))
+                || (endDate2.after(startDate1) && endDate2.before(endDate1)) || (startDate2.after(startDate1) && startDate2.before(endDate1))) {
+            return true;
+        }
+
+        return false;
+    }
+    public Location saveLocation(Location location) throws ApplicationException {
+        location.setUrlIdentifier(getLocationUrlIdentifier(location));
+        checkParentChildRule(location);
+        return locationRepository.save(location);
+    }
+
+    private void checkParentChildRule(Location location) throws ApplicationException {
+        // LocationType parentLocationType = locationTypeRepository.findOne(location.getParentLocation().getLocationType().getId());
+        if (location.getParentLocation() == null) {
+            if (location.getLocationType().getParentLocationType() != null) {
+                throw new ApplicationException("Can not create a Location of type [" + location.getLocationType().getName() + "], without a parent Location");
+            }
+        } else {
+            Location parentLocation = locationRepository.findOne(location.getParentLocation().getId());
+            logger.info("Location : {}", location);
+            logger.info("parentLocation : {}", parentLocation);
+            LocationType locationType = locationTypeRepository.findOne(location.getLocationType().getId());
+            logger.info("locationType : {}", locationType);
+            if (!locationType.getParentLocationType().getId().equals(parentLocation.getLocationType().getId())) {
+                LocationType parentLocationType = locationTypeRepository.findOne(parentLocation.getLocationType().getId());
+                throw new ApplicationException("Can not create a Location of type [" + location.getLocationType().getName() + "], under location type [" + parentLocationType.getName() + "]");
+            }
+        }
+    }
+
+    private String getLocationUrlIdentifier(Location oneLocation) {
+
+        if (oneLocation.getParentLocation() == null) {
+            String urlIdentifier = removeExtraChars(oneLocation.getName());
+            return urlIdentifier;
+        }
+
+        Location location = oneLocation;
+        LocationType locationType;
+        String locationTypeUrlId;
+        String locationTypeNameUrl;
+        String urlIdentifier = "";
+        while (location != null) {
+            locationType = locationTypeRepository.findOne(location.getLocationType().getId());
+            locationTypeUrlId = getLocationTypeUrlIdentifier(locationType);
+            if (!locationTypeUrlId.equals("country")) {// No need to add country
+                                                       // in url
+                locationTypeNameUrl = removeExtraChars(location.getName());
+                urlIdentifier = "/" + locationTypeUrlId + "/" + locationTypeNameUrl + urlIdentifier;
+            }
+
+            if (location.getParentLocation() == null) {
+                break;
+            }
+            location = locationRepository.findOne(location.getParentLocation().getId());
+        }
+        return urlIdentifier;
+    }
+
+    private String removeExtraChars(String str) {
+        String urlIdentifier = str.toLowerCase();
+        urlIdentifier = urlIdentifier.replace(' ', '-');
+        urlIdentifier = urlIdentifier.replace("&", "");
+        return urlIdentifier;
+    }
+
+    private String getLocationTypeUrlIdentifier(LocationType oneLocationType) {
+        String urlIdentifier = oneLocationType.getName().toLowerCase();
+        urlIdentifier = urlIdentifier.replace("&", "");
+        if (urlIdentifier.contains(" ")) {
+            // names like assembly constituency
+            String parts[] = urlIdentifier.split(" ");
+            String id = "";
+            for (String onePart : parts) {
+                if (StringUtils.isEmpty(onePart)) {
+                    continue;
+                }
+                id = id + onePart.charAt(0);
+            }
+            urlIdentifier = id;
+        }
+        return urlIdentifier;
+    }
+
 }
