@@ -212,7 +212,7 @@ public class TempServiceImpl extends BaseService implements TempService {
             if (persons.isEmpty() || persons.size() > 1) {
                 createPoliticalBodyAdmin(pc, politicalBodyType, party, null, election, startDate.getTime(), officeEmail, returenNotCreateJsonArray);
             } else {
-                createPoliticalBodyAdmin(pc, politicalBodyType, party, null, election, startDate.getTime(), officeEmail, returenJsonArray);
+                createPoliticalBodyAdmin(pc, politicalBodyType, party, persons.get(0), election, startDate.getTime(), officeEmail, returenJsonArray);
             }
 
         }
