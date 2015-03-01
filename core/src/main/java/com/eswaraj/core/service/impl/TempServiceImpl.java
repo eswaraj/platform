@@ -150,7 +150,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         }
         PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findByPropertyValue("shortName", "MP");
         if (politicalBodyType == null) {
-            politicalBodyType = politicalBodyTypeRepository.findByName("Member of Parliament");
+            politicalBodyType = politicalBodyTypeRepository.findByName("(?i)Member of Parliament");
         }
         if (politicalBodyType == null) {
             throw new ApplicationException("Member of Parliament Political Body Type Not found");
@@ -279,9 +279,9 @@ public class TempServiceImpl extends BaseService implements TempService {
         if (location != null) {
             return location;
         }
-        LocationType locationType = locationTypeRepository.findByPropertyValue("name", locationTypename);
+        LocationType locationType = locationTypeRepository.findLocationTypeByName("(?i)" + locationTypename);
         if (locationType == null) {
-            throw new ApplicationException("No lcoation type found of name State");
+            throw new ApplicationException("No lcoation type found of name " + locationTypename);
         }
 
         location = locationRepository.findLocationByNameAndLocationTypeAndParent("(?i)" + stateName, locationType, parentLocation);
@@ -290,7 +290,7 @@ public class TempServiceImpl extends BaseService implements TempService {
             location.setName(stateName);
             location.setParentLocation(parentLocation);
             location.setLocationType(locationType);
-            System.out.println("Creating new Location " + location);
+            System.out.println("Creating new Location " + location + " for " + locationTypename);
             location = saveLocation(location);
         }
         if (cache) {
