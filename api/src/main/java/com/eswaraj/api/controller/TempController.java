@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,6 +184,66 @@ public class TempController extends BaseController {
         }
 
         return returnedList;
+    }
+
+    @RequestMapping(value = "/api/unknown/leader/createmplocation", method = RequestMethod.POST)
+    public @ResponseBody List<String> saveMpLocationRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String persons) throws ApplicationException {
+
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = jsonParser.parse(persons).getAsJsonArray();
+        Set<String> states = new TreeSet<String>();
+        Set<String> parties = new TreeSet<String>();
+        Set<String> constituencies = new TreeSet<String>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String name = jsonObject.get("name").getAsString();
+            String state = jsonObject.get("state").getAsString();
+            states.add(state);
+            String party = jsonObject.get("party").getAsString();
+            parties.add(party);
+            String constituency = jsonObject.get("constituency").getAsString();
+            constituencies.add(constituency);
+            String emails = null;
+            if (jsonObject.has("email")) {
+                emails = jsonObject.get("email").getAsString();
+            }
+
+            String officeEmail = null;
+            String personEmail = null;
+            if (!StringUtils.isEmpty(emails)) {
+                emails = emails.replaceAll("\\[dot\\]", ".");
+                emails = emails.replaceAll("\\[at\\]", "@");
+                emails = emails.replaceAll("\\(i\\) ", "");
+                Matcher matcher = PATTERN.matcher(emails);
+                while (matcher.find()) {
+                    String email = matcher.group().replaceAll(" ", "");
+                    if (email.contains("sansad")) {
+                        officeEmail = email;
+                    } else {
+                        personEmail = email;
+                    }
+                }
+            }
+        }
+        List<String> allData = new ArrayList<String>();
+        System.out.println("********");
+        allData.addAll(parties);
+        printAll(parties);
+        allData.addAll(constituencies);
+        printAll(constituencies);
+        allData.addAll(states);
+        printAll(states);
+
+        return allData;
+    }
+
+    private void printAll(Set<String> data) {
+        System.out.println(" ---------------- ");
+        for (String oneString : data) {
+
+            System.out.println(oneString);
+
+        }
     }
 
     private String getOneEntry(String title, String value) {
