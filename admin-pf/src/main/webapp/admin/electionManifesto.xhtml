@@ -92,7 +92,7 @@
 						<p:outputLabel value="Description" />
 						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectedElectionManifesto.description}" />
 						<p:outputLabel value="Election" />
-						<p:selectOneMenu id="election" converter="#{electionConvertor}"
+						<p:selectOneMenu id="election" converter="#{jsfElectionConvertor}"
 							value="#{electionManifestoBean.selectedElectionManifesto.election}">
 							<f:selectItem itemLabel="Select One" itemValue="" />
 							<f:selectItems value="#{electionBean.elections}" var="oneReult" itemLabel="#{oneReult.name}"
