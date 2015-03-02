@@ -182,7 +182,16 @@
                         <p:inputText value="#{electionManifestoBean.selectedElectionManifestoPromise.title}" style="width:600px" />
                         <p:outputLabel value="Description" />
                         <p:inputTextarea rows="10" cols="80" value="#{electionManifestoBean.selectedElectionManifestoPromise.description}" />
-
+                        <p:outputLabel for="status" value="Status" />
+				        <p:selectOneMenu id="status" value="#{electionManifestoBean.selectedElectionManifestoPromise.status}" style="width:125px">
+				            <f:selectItem itemLabel="Select One" itemValue="" />
+				            <f:selectItem itemLabel="Pending" itemValue="Pending" />
+				            <f:selectItem itemLabel="On Going" itemValue="On Going" />
+				            <f:selectItem itemLabel="Delivered" itemValue="Delivered" />
+				        </p:selectOneMenu>
+                        <p:outputLabel value="Delivery Time" />
+                        <p:inputText id="deliveryTime" value="#{electionManifestoBean.selectedElectionManifestoPromise.deliveryTime}" style="width:600px" />
+                        <p:watermark for="deliveryTime" value="e.g. 10 days" id="watermark" />
                     </p:panelGrid>
                     <p:outputPanel id="promiseButtonView">
                         <p:commandButton value="Cancel" process="@this:cancelPromise" update="@form"

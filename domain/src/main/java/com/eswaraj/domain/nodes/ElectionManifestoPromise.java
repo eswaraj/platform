@@ -21,6 +21,10 @@ public class ElectionManifestoPromise extends BaseNode {
 	
     private String description;
 
+    private String status;
+
+    private String deliveryTime;
+
     @RelatedTo(type = "OF_ELECTION_MANIFESTO")
     private ElectionManifesto electionManifesto;
 
@@ -47,6 +51,22 @@ public class ElectionManifestoPromise extends BaseNode {
 
     public void setElectionManifesto(ElectionManifesto electionManifesto) {
         this.electionManifesto = electionManifesto;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
     }
 
 }
