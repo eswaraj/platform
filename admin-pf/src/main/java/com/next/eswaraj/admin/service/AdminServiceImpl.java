@@ -672,8 +672,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<TimelineItem> getTimelineItems(int first, int pageSize) throws ApplicationException {
-        Pageable pageable = new PageRequest((first + 1)/pageSize, pageSize);
-        return convertToList(timelineItemRepository.findAll(pageable));
+        return timelineItemRepository.getTimelineItems(first, pageSize);
     }
 
     @Override
