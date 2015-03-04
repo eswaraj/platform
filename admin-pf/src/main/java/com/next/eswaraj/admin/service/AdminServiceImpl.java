@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -275,7 +273,9 @@ public class AdminServiceImpl implements AdminService {
     public Location saveLocation(Location location) throws ApplicationException {
         location.setUrlIdentifier(getLocationUrlIdentifier(location));
         checkParentChildRule(location);
-        return locationRepository.save(location);
+        location = locationRepository.save(location); 
+        queueService.sendLocationUpdateMessage(location.getId());
+        return location;
     }
 
     private void checkParentChildRule(Location location) throws ApplicationException {
