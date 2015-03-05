@@ -36,6 +36,8 @@ public class ElectionPromiseServiceImpl extends BaseService implements ElectionP
             oneElectionManifestoPromiseDto.setDescription(oneElectionManifestoPromise.getDescription());
             oneElectionManifestoPromiseDto.setId(oneElectionManifestoPromise.getId());
             oneElectionManifestoPromiseDto.setTitle(oneElectionManifestoPromise.getTitle());
+            oneElectionManifestoPromiseDto.setStatus(oneElectionManifestoPromise.getStatus());
+            oneElectionManifestoPromiseDto.setDeliveryTime(oneElectionManifestoPromise.getDeliveryTime());
             returnDtos.add(oneElectionManifestoPromiseDto);
         }
         return returnDtos;

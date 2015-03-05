@@ -7,6 +7,8 @@ public class ElectionManifestoPromiseDto extends BaseDto {
 
     private String title;
     private String description;
+    private String status;
+    private String deliveryTime;
 
     public String getTitle() {
         return title;
@@ -22,5 +24,21 @@ public class ElectionManifestoPromiseDto extends BaseDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
     }
 }
