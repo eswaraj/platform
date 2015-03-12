@@ -9,7 +9,7 @@ import com.eswaraj.domain.nodes.TimelineItem;
 
 public interface TimelineItemRepository extends GraphRepository<TimelineItem> {
 
-    @Query("match timelineItem where timelineItem.__type__='TimelineItem' return timelineItem order by timelineItem.updateTime skip {0} limit {1} desc")
+    @Query("match timelineItem where timelineItem.__type__='TimelineItem' return timelineItem order by timelineItem.updateTime desc skip {0} limit {1}")
     public List<TimelineItem> getTimelineItems(int first, int size);
 
 }
