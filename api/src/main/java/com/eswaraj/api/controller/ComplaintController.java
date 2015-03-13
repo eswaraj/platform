@@ -155,14 +155,41 @@ public class ComplaintController extends BaseController{
         }
 
         JsonArray pbAdminJsonArray = politicalAdminCache.getPoliticalBodyAdminByIds(allPbAdmins);
-        
+        // Hack to bring MLA on top
+        pbAdminJsonArray = hackForMLA(pbAdminJsonArray);
+
         JsonObject returnJsonObject = new JsonObject();
         returnJsonObject.add("complaint", gson.toJsonTree(savedComplaintDto));
         returnJsonObject.add("politicalbodyadmin", pbAdminJsonArray);
 
-
         return returnJsonObject.toString();
-	}
+    }
+
+    private JsonArray hackForMLA(JsonArray pbAdminJsonArray) {
+        if(pbAdminJsonArray.size() >0){
+            try {
+                JsonObject oneJsonObject;
+                List<JsonObject> jsonObjects = new ArrayList<JsonObject>(pbAdminJsonArray.size());
+                for (int i = 0; i < pbAdminJsonArray.size(); i++) {
+                    oneJsonObject = pbAdminJsonArray.get(i).getAsJsonObject();
+                    if (oneJsonObject.get("politicalAdminType").getAsJsonObject().get("shortName").getAsString().equals("MLA")) {
+                        jsonObjects.add(0, oneJsonObject);
+                    } else {
+                        jsonObjects.add(oneJsonObject);
+                    }
+                }
+                JsonArray newJsonArray = new JsonArray();
+                for (JsonObject oneObject : jsonObjects) {
+                    newJsonArray.add(oneObject);
+                }
+                return newJsonArray;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        return pbAdminJsonArray;
+    }
 
     @RequestMapping(value = "/api/v0/complaint/politicaladmin/{politicalAdminId}", method = RequestMethod.GET)
     public @ResponseBody List<PoliticalAdminComplaintDto> getComplaintsOfPoliticalAdmin(HttpServletRequest httpServletRequest, @PathVariable Long politicalAdminId) throws ApplicationException, IOException, ServletException {
