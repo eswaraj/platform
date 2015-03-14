@@ -64,7 +64,7 @@
     <property name="scopes">
         <map>
             <entry key="view">
-                <bean class="com.next.eswaraj.admin.jsf.scope"/>
+                <bean class="com.next.eswaraj.admin.jsf.scope.ViewScope"/>
             </entry>
         </map>
     </property>
