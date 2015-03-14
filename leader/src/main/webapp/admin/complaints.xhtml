@@ -39,8 +39,8 @@ body {
 							<p:column headerText="Status"   filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}" filterMatchMode="in">
 								<f:facet name="filter">
 					                <p:selectCheckboxMenu label="Status" onchange="PF('complaintTable').filter()" panelStyle="width:125px" scrollHeight="150">
-					                    <f:selectItem value="Pending" />
-					                    <f:selectItem value="Viewed" />
+					                    <f:selectItem itemLabel="Pending" itemValue="Pending"/>
+					                    <f:selectItem itemLabel="Viewed" itemValue="Viewed" />
 					                </p:selectCheckboxMenu>
 					            </f:facet>
 								<h:outputText value="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}" />
@@ -57,7 +57,7 @@ body {
 								<p:commandLink id="updateAndView" update="@form" title="View">
 									<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 										height="20" />
-									<f:setPropertyActionListener value="#{oneComplaint.complaintSearchResult}"
+									<f:setPropertyActionListener value="#{oneComplaint}"
 										target="#{complaintsBean.selectedComplaint}" />
 								</p:commandLink>
 								<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
@@ -75,20 +75,20 @@ body {
 				            <h:panelGrid columns="2">
 				            <p:panelGrid columns="2">
                                 <f:facet name="header">
-                                    <h:outputText value="#{complaintsBean.selectedComplaint.complaint.title}" />
+                                    <h:outputText value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.title}" />
                                 </f:facet>
                                 <p:outputLabel value="Category"></p:outputLabel>
-                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.rootCategory.name}" />
+                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.rootCategory.name}" />
                                 <p:outputLabel value="Sub Category"></p:outputLabel>
-                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.subCategory.name}" />
+                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.subCategory.name}" />
                                 <p:outputLabel value="Title"></p:outputLabel>
-                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaint.title}" />
+                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.title}" />
 
                                 <p:outputLabel value="Description"></p:outputLabel>
-                                <h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaint.description}" />
+                                <h:outputText id="description" value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.description}" />
 
                                 <p:outputLabel value="Date Reported"></p:outputLabel>
-                                <h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaint.dateCreated}">
+                                <h:outputText id="dateReported" value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.dateCreated}">
                                     <f:convertDateTime pattern="dd-MMM-yyyy HH:mm" />
                                 </h:outputText>
 
@@ -122,7 +122,7 @@ body {
                                         value="./images/ajax-loader.gif" />
                                 </p:blockUI>
                             </p:panelGrid>
-				            <p:dataTable var="onePerson" value="#{complaintsBean.complaintCreators}">
+				            <p:dataTable var="onePerson" value="#{complaintsBean.complaintCreators}" style="width:400px;">
 		                          <f:facet name="header">
 		                                Reported By
 		                            </f:facet>
@@ -132,6 +132,20 @@ body {
 		                            </p:column>
 		                        </p:dataTable>
 				            </h:panelGrid>
+				            <p:dataList value="#{complaintsBean.complaintComments}" var="oneComment" type="ordered">
+                            <f:facet name="header">
+                                Comments
+                            </f:facet>
+                            <table>
+                              <tr>
+                                  <td><p:graphicImage value="#{oneComment.createdBy.profilePhoto}"  /></td>
+                                  <td><h:outputText value="#{oneComment.createdBy.name}" /><br></br>
+                                      <h:outputText value="#{oneComment.text}" />  
+                                  </td>
+                                  
+                              </tr>
+                              </table>
+                        </p:dataList>
 				            
 				        </p:tab>
 				        <p:tab title="Map">
@@ -159,20 +173,7 @@ body {
 						</p:dataTable>
 						 -->
 
-                        <p:dataList value="#{complaintsBean.complaintComments}" var="oneComment" type="ordered">
-                            <f:facet name="header">
-                                Comments
-                            </f:facet>
-					        <table>
-                              <tr>
-                                  <td><p:graphicImage value="#{oneComment.createdBy.profilePhoto}"  /></td>
-                                  <td><h:outputText value="#{oneComment.createdBy.name}" /><br></br>
-                                      <h:outputText value="#{oneComment.text}" />  
-                                  </td>
-                                  
-                              </tr>
-                              </table>
-					    </p:dataList>
+                        
 					</p:outputPanel>
 				</p:panelGrid>
 		</h:form>

@@ -58,7 +58,7 @@ public class ComplaintsBean extends BaseBean {
 
     private List<ComplaintSearchResultDto> complaints;
 
-    private ComplaintSearchResult selectedComplaint;
+    private ComplaintSearchResultDto selectedComplaint;
 
     private boolean showList = true;
 
@@ -98,16 +98,15 @@ public class ComplaintsBean extends BaseBean {
 
     public void updateComplaint(){
         try{
-            selectedComplaint.getComplaintPoliticalAdmin();
 
-            ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintPoliticalAdmin();
+            ComplaintPoliticalAdmin complaintPoliticalAdmin = selectedComplaint.getComplaintSearchResult().getComplaintPoliticalAdmin();
             if (updatedStatus != null && !updatedStatus.trim().equals("") && complaintPoliticalAdmin.getStatus() != null && !complaintPoliticalAdmin.getStatus().name().equals(updatedStatus)) {
                 complaintPoliticalAdmin.setStatus(PoliticalAdminComplaintStatus.valueOf(updatedStatus));
                 complaintPoliticalAdmin = adminService.saveComplaintPoliticalAdmin(complaintPoliticalAdmin);
 
             }
 
-            Complaint complaint = selectedComplaint.getComplaint();
+            Complaint complaint = selectedComplaint.getComplaintSearchResult().getComplaint();
             PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
 
             if (comment != null && !comment.trim().equals("") && selectedPoliticalBodyAdmin != null) {
@@ -177,7 +176,7 @@ public class ComplaintsBean extends BaseBean {
         this.complaints = complaints;
     }
 
-    public ComplaintSearchResult getSelectedComplaint() {
+    public ComplaintSearchResultDto getSelectedComplaint() {
         return selectedComplaint;
     }
 
@@ -185,31 +184,31 @@ public class ComplaintsBean extends BaseBean {
         refreshComplaintList();
     }
 
-    public void setSelectedComplaint(ComplaintSearchResult complaintSearchResult) {
+    public void setSelectedComplaint(ComplaintSearchResultDto complaintSearchResult) {
         this.selectedComplaint = complaintSearchResult;
         showList = false;
         mapModel = new DefaultMapModel();
-        LatLng coord1 = new LatLng(complaintSearchResult.getComplaint().getLattitude(), complaintSearchResult.getComplaint().getLongitude());
+        LatLng coord1 = new LatLng(complaintSearchResult.getComplaintSearchResult().getComplaint().getLattitude(), complaintSearchResult.getComplaintSearchResult().getComplaint().getLongitude());
         PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
         // Basic marker
-        mapModel.addOverlay(new Marker(coord1, complaintSearchResult.getComplaint().getTitle()));
-        if (complaintSearchResult.getComplaintPoliticalAdmin().getStatus() != null) {
-            updatedStatus = complaintSearchResult.getComplaintPoliticalAdmin().getStatus().name();
+        mapModel.addOverlay(new Marker(coord1, complaintSearchResult.getComplaintSearchResult().getComplaint().getTitle()));
+        if (complaintSearchResult.getComplaintSearchResult().getComplaintPoliticalAdmin().getStatus() != null) {
+            updatedStatus = complaintSearchResult.getComplaintSearchResult().getComplaintPoliticalAdmin().getStatus().name();
         } else {
             updatedStatus = "";
         }
         try {
             images = new ArrayList<String>();
-            complaintPhotos = adminService.getComplaintPhotos(complaintSearchResult.getComplaint().getId());
-            complaintCreators = adminService.getComplaintCreators(complaintSearchResult.getComplaint().getId());
-            complaintComments = adminService.getComplaintComments(complaintSearchResult.getComplaint().getId());
+            complaintPhotos = adminService.getComplaintPhotos(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
+            complaintCreators = adminService.getComplaintCreators(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
+            complaintComments = adminService.getComplaintComments(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
             for (Photo onePhoto : complaintPhotos) {
                 images.add(onePhoto.getOrgUrl());
             }
-            if (!complaintSearchResult.getComplaintPoliticalAdmin().isViewed()) {
-                adminService.markComplaintViewed(complaintSearchResult.getComplaint().getId(), selectedPoliticalBodyAdmin.getId());
+            if (!complaintSearchResult.getComplaintSearchResult().getComplaintPoliticalAdmin().isViewed()) {
+                adminService.markComplaintViewed(complaintSearchResult.getComplaintSearchResult().getComplaint().getId(), selectedPoliticalBodyAdmin.getId());
                 ComplaintViewedByPoliticalAdminMessage complaintViewedByPoliticalAdminMessage = new ComplaintViewedByPoliticalAdminMessage();
-                complaintViewedByPoliticalAdminMessage.setComplaintId(complaintSearchResult.getComplaint().getId());
+                complaintViewedByPoliticalAdminMessage.setComplaintId(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
                 complaintViewedByPoliticalAdminMessage.setPersonId(selectedPoliticalBodyAdmin.getPerson().getId());
                 complaintViewedByPoliticalAdminMessage.setPoliticalAdminId(selectedPoliticalBodyAdmin.getId());
                 queueService.sendComplaintViewedByPoliticalLeaderMessage(complaintViewedByPoliticalAdminMessage);

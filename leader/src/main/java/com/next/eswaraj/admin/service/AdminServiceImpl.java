@@ -236,13 +236,7 @@ public class AdminServiceImpl implements AdminService {
 
         // Check if facebook account already exists for given Email id
         logger.info("Getting Facebook account by email : {}", emailId);
-        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("email", emailId);
-        logger.info("facebookAccount by email : {} is {}", emailId, facebookAccount);
-        logger.info("getFacebookAccountByEmail : {}", emailId);
-        facebookAccount = facebookAccountRepository.getFacebookAccountByEmail(emailId);
-        logger.info("facebookAccount by email : {} is {}", emailId, facebookAccount);
-        logger.info("getFacebookAccountByEmailCustom : {}", emailId);
-        facebookAccount = facebookAccountRepository.getFacebookAccountByEmailCustom(emailId);
+        FacebookAccount facebookAccount = facebookAccountRepository.getFacebookAccountByEmail(emailId);
         logger.info("facebookAccount by email : {} is {}", emailId, facebookAccount);
         if (facebookAccount != null) {
             throw new ApplicationException("Invalid Request, error code 104");
@@ -265,7 +259,7 @@ public class AdminServiceImpl implements AdminService {
         String facebookUserId = facebookUserProfile.getId();
         logger.info("Getting Facebook Account for Id : {}", facebookUserId);
 
-        FacebookAccount facebookAccount = facebookAccountRepository.findByPropertyValue("facebookUserId", facebookUserId);
+        FacebookAccount facebookAccount = facebookAccountRepository.getFacebookAccountByFacebookUserId(facebookUserId);
         if (facebookAccount != null) {
             throw new ApplicationException("Invalid Request : error code 106");
         }
