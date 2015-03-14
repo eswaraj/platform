@@ -49,7 +49,7 @@ public class SpringLoginFilter implements Filter {
             return;
         }
         if (user.getPerson().getEmail().equalsIgnoreCase("ping2ravi@yahoo.com") || user.getPerson().getEmail().equalsIgnoreCase("helloshailendra@yahoo.co.in")
-                || user.getPerson().getEmail().equalsIgnoreCase("rakesh.pratap@gmail.com")) {
+                || user.getPerson().getEmail().equalsIgnoreCase("rakesh.pratap@gmail.com") || user.getPerson().getEmail().equalsIgnoreCase("pradeep.sonkar@gmail.com")) {
             chain.doFilter(httpServletRequest, response);
             return;
         }
