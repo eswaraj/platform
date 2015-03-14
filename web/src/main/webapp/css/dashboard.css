@@ -553,6 +553,9 @@ position: absolute;
 bottom: 0px; 
 width: 100%; 
 }
-img .icon_selected{
+img.icon_selected{
     border-bottom:5px solid black;
+}
+img.list_icon{
+    float:left;
 }

@@ -192,35 +192,35 @@
 																</a>	
 															<c:if test="${viewType eq 'list'}">
 																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" class="icon_selected" src="${staticHost}/images/list.png"/>
+																	<img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/list.png"/>
 																</div></a>
 																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" src="${staticHost}/images/map.png"/>
+																    <img title="List view" class="list_icon" src="${staticHost}/images/map.png"/>
 																</div></a>
 																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view"  src="${staticHost}/images/chart.png"/>
+																	<img title="List view" class="list_icon" src="${staticHost}/images/chart.png"/>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
 																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" src="${staticHost}/images/list.png"/>
+																	<img class="list_icon" title="List view" src="${staticHost}/images/list.png"/>
 																</div></a>
 																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="icon_selected" src="${staticHost}/images/map.png"/>
+																    <img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/map.png"/>
 																</div></a>
 																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" src="${staticHost}/images/chart.png"/>
+																	<img title="List view" class="list_icon" src="${staticHost}/images/chart.png"/>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
 																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" src="${staticHost}/images/list.png"/>
+																	<img title="List view" class="list_icon" src="${staticHost}/images/list.png"/>
 																</div></a>
 																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" src="${staticHost}/images/map.png"/>
+																    <img title="List view" class="list_icon" src="${staticHost}/images/map.png"/>
 																</div></a>
 																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="icon_selected" src="${staticHost}/images/chart.png"/>
+																	<img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/chart.png"/>
 																</div></a>
 															</c:if>
 
