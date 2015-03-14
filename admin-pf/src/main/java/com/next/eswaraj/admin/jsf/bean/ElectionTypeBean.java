@@ -15,7 +15,7 @@ import com.eswaraj.domain.nodes.ElectionType;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "view")
 public class ElectionTypeBean extends BaseBean {
 
     private boolean showList;

@@ -29,7 +29,7 @@ import com.eswaraj.queue.service.aws.impl.AwsUploadUtil;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "view")
 public class CategoryBean {
 
     @Autowired
