@@ -12,4 +12,15 @@
 			<renderer-class>com.next.eswaraj.admin.jsf.renderer.MyFileUploadRenderer</renderer-class>
 		</renderer>
 	</render-kit>
+	<system-event-listener>
+		<system-event-listener-class>com.next.eswaraj.admin.jsf.scope.ViewScopeCallbackRegistrar</system-event-listener-class>
+		<system-event-class>javax.faces.event.PostConstructViewMapEvent</system-event-class>
+		<source-class>javax.faces.component.UIViewRoot</source-class>
+	</system-event-listener>
+
+	<system-event-listener>
+		<system-event-listener-class>com.next.eswaraj.admin.jsf.scope.ViewScopeCallbackRegistrar</system-event-listener-class>
+		<system-event-class>javax.faces.event.PreDestroyViewMapEvent</system-event-class>
+		<source-class>javax.faces.component.UIViewRoot</source-class>
+	</system-event-listener>
 </faces-config>
