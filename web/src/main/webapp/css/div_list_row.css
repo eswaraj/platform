@@ -188,12 +188,8 @@ font-size: 50px;
 
 .frame_glyphicon{
 float: left;
-border: 1px solid #dbdbdb;
-height: 115px;
 background-color: #E8E8E8;
 margin: 0px 10px 0px 10px;
-border-radius: 10px;
-width: 145px;
 }
 
 .frame_glyphicon:hover{
@@ -241,12 +237,10 @@ border-bottom: 0px dotted;
 }
 
 .politician_image{
-width: 200px;
-height: 200px;
-max-width: 200px;
-max-height: 200px;
-border: 1px solid #D8D8D8;
-border-radius: 15px;
+width: 100px;
+height: 100px;
+max-width: 100px;
+max-height: 100px;
 }
 
 .mla-profile{
@@ -319,8 +313,6 @@ height: 130px;
 margin-bottom: 10px;
 padding-left: 15px;
 padding-top: 5px;
-border-bottom-right-radius: 10px;
-border-bottom-left-radius: 10px;
 position: relative;
 }
 
@@ -331,9 +323,6 @@ margin-top: 25px;
 text-align: center;
 padding: 5px;
 font-size: 13px;
-font-family: Brush Script MT,cursive;
-border-top-right-radius: 10px;
-border-top-left-radius: 10px;
 }
 
 .profile-pic-padding{
@@ -352,7 +341,7 @@ margin-left: 30px;
 width: 90px;
 float: left;
 border: 1px solid #ccc;
-border-radius: 10px;
+
 margin-top: -55px;
 }
 
@@ -402,17 +391,17 @@ font-size: 25px;
 
 .location_image{
 width: 160px;
-border-radius: 10px;
 float: left;
 height: 115px;
 }
 
 .constituency_left_pane .bootstrap-tagsinput{
-border-radius: 10px;
+
 }
 
 .carousel-inner .item{
 text-align: center;
+left:50px;
 }
 
 #myCarousel{
@@ -440,7 +429,6 @@ margin-bottom: 10px;
 padding: 10px;
 padding-left: 15px;
 margin-top: 10px;
-border-radius: 10px;
 width: 200px;
 }
 
@@ -540,15 +528,13 @@ background-color: #5bc0de;
 }
 
 .list-group-item:first-child {
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
+
 margin-left: 25%;
 margin-top: 5%;
 }
 
 .list-group-item:last-child {
-border-bottom-right-radius: 10px;
-border-bottom-left-radius: 10px;
+
 }
 
 .filter_types{
@@ -558,7 +544,6 @@ margin-bottom: 10px;
 padding: 10px;
 padding-left: 15px;
 margin-top: 10px;
-border-radius: 10px;
 padding-bottom: 20px;
 }
 
@@ -571,9 +556,6 @@ border-top: 1px solid #CDCDCD;
 
 .dropdownlist{
 height: 30px;
-background-color: #FD6B37;
-color: #FFFFFF;
-border-radius: 10px;
 width: 100%;
 }
 

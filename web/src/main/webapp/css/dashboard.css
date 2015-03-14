@@ -529,7 +529,7 @@ height: auto;
 }
 #map-canvas{
         border: 1px dashed #C0C0C0;
-        width: 100%;
+        width: 90%;
         height: 100%;
 	min-height:700px;
 }
@@ -552,4 +552,7 @@ height: auto;
 position: absolute;
 bottom: 0px; 
 width: 100%; 
+}
+img .icon_selected{
+    border-bottom:5px solid black;
 }

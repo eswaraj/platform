@@ -21,13 +21,13 @@
 									width: 100%;
 									z-index: -1;
 								"-->                                
-								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
+								<!-- <img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
 									opacity: 0.4;
 									position: fixed;
 									height: 100%;
 									width: 100%;
 									z-index: -1;
-								">
+								"> -->
 								<div class="main_content_page">
                                     <jsp:include page="header.jsp" />
                                     <script>
@@ -187,23 +187,41 @@
 																<a type="button" href="#!" title="Location View">
 																<div class="cons_location_name">
 																	<span class="location_text_adjust">${location.name}</span>
-																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">
+																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image"> 
 																</div>
 																</a>	
 															<c:if test="${viewType eq 'list'}">
-																<a type="button" href="#" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
-																<a type="button" href="?type=map" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
-																<a type="button" href="?type=analytics" title="Analytics View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-signal glyphicon_margin"></span><span class="ay_view_text_margin">Analytics View</span></span></div></a>
+																<a type="button" href="?type=list" title="List View"><div>
+																	<img title="List view" class="icon_selected" src="${staticHost}/images/list.png"/>
+																</div></a>
+																<a type="button" href="?type=map" title="Map View"><div>
+																    <img title="List view" src="${staticHost}/images/map.png"/>
+																</div></a>
+																<a type="button" href="#" title="Analytics View"><div>
+																	<img title="List view"  src="${staticHost}/images/chart.png"/>
+																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
-																<a type="button" href="?type=list" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
-																<a type="button" href="#" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
-																<a type="button" href="?type=analytics" title="Analytics View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-signal glyphicon_margin"></span><span class="ay_view_text_margin">Analytics View</span></span></div></a>
+																<a type="button" href="?type=list" title="List View"><div>
+																	<img title="List view" src="${staticHost}/images/list.png"/>
+																</div></a>
+																<a type="button" href="?type=map" title="Map View"><div>
+																    <img title="List view" class="icon_selected" src="${staticHost}/images/map.png"/>
+																</div></a>
+																<a type="button" href="#" title="Analytics View"><div>
+																	<img title="List view" src="${staticHost}/images/chart.png"/>
+																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
-																<a type="button" href="?type=list" title="List View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-list glyphicon_margin"></span><span class="list_view_text_margin">List View</span></span></div></a>
-																<a type="button" href="?type=map" title="Map View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-map-marker glyphicon_margin"></span><span class="map_view_text_margin">Map View</span></span></div></a>
-																<a type="button" href="#" title="Analytics View"><div><span class="frame_glyphicon"><span class="glyphicon glyphicon-signal glyphicon_margin"></span><span class="ay_view_text_margin">Analytics View</span></span></div></a>
+																<a type="button" href="?type=list" title="List View"><div>
+																	<img title="List view" src="${staticHost}/images/list.png"/>
+																</div></a>
+																<a type="button" href="?type=map" title="Map View"><div>
+																    <img title="List view" src="${staticHost}/images/map.png"/>
+																</div></a>
+																<a type="button" href="#" title="Analytics View"><div>
+																	<img title="List view" class="icon_selected" src="${staticHost}/images/chart.png"/>
+																</div></a>
 															</c:if>
 
 														</div>
@@ -329,9 +347,9 @@
 													</c:if>
 													<c:if test="${viewType eq 'map'}">
 														<div id="panel">
-															<button onclick="createHeatmap()">Heatmap View</button>
-															<button onclick="createCluster()">Cluster View</button>
-															<button onclick="createMarker()">Marker View</button>
+															<button onclick="createHeatmap()"><img title="heatmap view" src="${staticHost}/images/heat.png" height="50px;"/></button>
+															<button onclick="createCluster()"><img title="heatmap view" src="${staticHost}/images/cluster.png" height="50px;"/></button>
+															<button onclick="createMarker()"><img title="heatmap view" src="${staticHost}/images/marker.png" height="50px;"/></button>
 														</div>
 														<div id="map-container">
 															<div id="map-canvas"></div>
