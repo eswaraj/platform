@@ -18,6 +18,8 @@ body {
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
+		    <p:chart type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
+		    
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:panelGrid columns="2">
 					<p:outputPanel id="listView" rendered="#{complaintsBean.showList}">
@@ -78,9 +80,9 @@ body {
                                     <h:outputText value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.title}" />
                                 </f:facet>
                                 <p:outputLabel value="Category"></p:outputLabel>
-                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.rootCategory.name}" />
+                                <h:outputText id="categoryName" value="#{complaintsBean.selectedComplaint.rootCategory.name}" />
                                 <p:outputLabel value="Sub Category"></p:outputLabel>
-                                <h:outputText id="name" value="#{complaintsBean.selectedComplaint.subCategory.name}" />
+                                <h:outputText id="subCategoryName" value="#{complaintsBean.selectedComplaint.subCategory.name}" />
                                 <p:outputLabel value="Title"></p:outputLabel>
                                 <h:outputText id="name" value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.title}" />
 

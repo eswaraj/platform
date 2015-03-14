@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.model.chart.PieChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.eswaraj.cache.CategoryCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
@@ -34,6 +36,8 @@ import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.UserDto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.next.eswaraj.admin.jsf.dto.ComplaintSearchResultDto;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
@@ -52,7 +56,12 @@ public class ComplaintsBean extends BaseBean {
     private QueueService queueService;
 
     @Autowired
+    private CategoryCache categoryCache;
+
+    @Autowired
     private LoginBean loginBean;
+
+    private PieChartModel categoryPieChartModel;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -143,6 +152,7 @@ public class ComplaintsBean extends BaseBean {
     private void refreshComplaintList() {
         loginBean.refreshLoginRoles();
         PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
+
         if (selectedPoliticalBodyAdmin == null) {
 
         } else {
@@ -169,6 +179,18 @@ public class ComplaintsBean extends BaseBean {
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            categoryPieChartModel = new PieChartModel();
+            JsonArray jsonArray = categoryCache.getAllCategoryStatsForLocation(selectedPoliticalBodyAdmin.getLocation().getId());
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject oneJsonObject = jsonArray.get(i).getAsJsonObject();
+                categoryPieChartModel.set(oneJsonObject.get("name").getAsString(), oneJsonObject.get("locationCount").getAsLong());
+            }
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -282,6 +304,14 @@ public class ComplaintsBean extends BaseBean {
 
     public void setUpdatedStatus(String updatedStatus) {
         this.updatedStatus = updatedStatus;
+    }
+
+    public PieChartModel getCategoryPieChartModel() {
+        return categoryPieChartModel;
+    }
+
+    public void setCategoryPieChartModel(PieChartModel categoryPieChartModel) {
+        this.categoryPieChartModel = categoryPieChartModel;
     }
 
 }
