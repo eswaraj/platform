@@ -72,7 +72,7 @@ body {
 					<p:outputPanel id="formView" rendered="#{!complaintsBean.showList}">
 					<p:accordionPanel>
 				        <p:tab title="Detail">
-				            <h:panelGrid columns="2">
+				            <h:panelGrid columns="2" styleClass="topAlignPanelColumns">
 				            <p:panelGrid columns="2">
                                 <f:facet name="header">
                                     <h:outputText value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.title}" />
