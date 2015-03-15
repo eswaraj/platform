@@ -538,6 +538,12 @@ public class TempServiceImpl extends BaseService implements TempService {
             String constituency = jsonObject.get("ac_name").getAsString();
             String wardName = jsonObject.get("ward_name").getAsString();
             String wardNumber = jsonObject.get("ward_number").getAsString();
+            String address = jsonObject.get("address").getAsString();
+            String mobile = jsonObject.get("phone").getAsString();
+            String profilePhoto = null;
+            if (jsonObject.get("photo") != null) {
+                profilePhoto = jsonObject.get("photo").getAsString();
+            }
 
             parties.add(partyName);
             wards.add(wardNumber + " - " + wardName);
@@ -546,7 +552,13 @@ public class TempServiceImpl extends BaseService implements TempService {
             Location ward = createLocation(existingLocationMap, wardNumber + " - " + wardName, "Ward", corporation, false);
             List<Person> persons = personRepository.findPersonsByName(name);
 
-            if (persons.isEmpty() || persons.size() > 1) {
+            if (persons.isEmpty()) {
+                Person person = new Person();
+                person.setName(name);
+                person.setMobileNumber1(mobile);
+                person.setProfilePhoto(profilePhoto);
+                savePerson(person);
+            } else if (persons.size() > 1) {
                 createPoliticalBodyAdmin(ward, politicalBodyType, party, null, election, startDate.getTime(), null, returenNotCreateJsonArray);
             } else {
                 createPoliticalBodyAdmin(ward, politicalBodyType, party, persons.get(0), election, startDate.getTime(), null, returenJsonArray);
