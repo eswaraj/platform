@@ -3,6 +3,7 @@ package com.next.eswaraj.admin.jsf.bean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -230,8 +231,10 @@ public class ComplaintsBean extends BaseBean {
 
             dailyLineChartModel.getAxis(AxisType.Y).setLabel("Number of Complaints");
             DateAxis dateAxis = new DateAxis("Dates");
-            dateAxis.setTickAngle(-30);
-            dateAxis.setMax("2014-02-01");
+            dateAxis.setTickAngle(-50);
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -30);
+            dateAxis.setMax(simpleDateFormat2.format(cal.getTime()));
             dateAxis.setTickFormat("%b %#d, %y");
 
             dailyLineChartModel.getAxes().put(AxisType.X, dateAxis);
