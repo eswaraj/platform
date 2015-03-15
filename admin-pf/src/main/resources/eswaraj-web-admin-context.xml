@@ -58,15 +58,15 @@
         class="org.springframework.data.redis.core.StringRedisTemplate" 
         p:connection-factory-ref="jedisConnFactory" 
         />
-    
-    <!-- JSF View Scope -->
-    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-    <property name="scopes">
-        <map>
-            <entry key="view">
-                <bean class="com.next.eswaraj.admin.jsf.scope.ViewScope"/>
-            </entry>
-        </map>
-    </property>
-</bean>
+
+	<!-- JSF View Scope -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.next.eswaraj.admin.jsf.scope.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
 </beans>
