@@ -13,4 +13,7 @@ public interface ElectionRepository extends GraphRepository<Election> {
     @Query("start politicalBodyType=node({0}) match (politicalBodyType)-[:ELECTED_VIA]-(electionType)-[:OF_ELECTION_TYPE]-(elections) return elections")
     public List<Election> findAllElectionsOfPoliticalBodyType(PoliticalBodyType politicalBodyType);
 
+    @Query("match election where election.__type__ = 'Election' and election.name=~{0}  return election")
+    public Election findByName(String name);
+
 }
