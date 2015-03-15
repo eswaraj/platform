@@ -9,6 +9,9 @@ public class ComplaintSearchResultDto {
     private Category rootCategory;
     private Category subCategory;
 
+    public ComplaintSearchResultDto() {
+    }
+
     public ComplaintSearchResultDto(ComplaintSearchResult complaintSearchResult, Category rootCategory, Category subCategory) {
         super();
         this.complaintSearchResult = complaintSearchResult;

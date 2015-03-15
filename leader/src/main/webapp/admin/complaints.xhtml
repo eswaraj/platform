@@ -36,10 +36,22 @@ body {
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 						</p:column>
 
-						<p:column headerText="Category" filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="contains">
+						<p:column headerText="Category" filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="equals">
+						<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('complaintTable').filter()" >
+			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{complaintsBean.categoryNames}" />
+			                </p:selectOneMenu>
+			            </f:facet>
 							<h:outputText value="#{oneComplaint.rootCategory.name}" />
 						</p:column>
 						<p:column headerText="Sub Category" filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="contains">
+						<f:facet name="filter">
+                            <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:125px" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{complaintsBean.subCategoryNames}" />
+                            </p:selectOneMenu>
+                        </f:facet>
 							<h:outputText value="#{oneComplaint.subCategory.name}" />
 						</p:column>
 						<p:column headerText="Status" filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"

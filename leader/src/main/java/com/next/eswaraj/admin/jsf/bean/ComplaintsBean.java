@@ -103,12 +103,22 @@ public class ComplaintsBean extends BaseBean {
 
     private String updatedStatus;
 
+    private List<String> categoryNames;
+
+    private List<String> subCategoryNames;
+
     @PostConstruct
     public void init() {
         try {
             List<Category> allCategories = adminService.getAllcategories();
+            categoryNames = new ArrayList<String>();
             for (Category oneCategory : allCategories) {
                 categoryMap.put(oneCategory.getId(), oneCategory);
+                if (oneCategory.isRoot()) {
+                    categoryNames.add(oneCategory.getName());
+                } else {
+                    subCategoryNames.add(oneCategory.getName());
+                }
             }
             refreshComplaintList();
         } catch (Exception e) {
@@ -374,6 +384,22 @@ public class ComplaintsBean extends BaseBean {
 
     public void setDailyLineChartModel(LineChartModel dailyLineChartModel) {
         this.dailyLineChartModel = dailyLineChartModel;
+    }
+
+    public List<String> getCategoryNames() {
+        return categoryNames;
+    }
+
+    public void setCategoryNames(List<String> categoryNames) {
+        this.categoryNames = categoryNames;
+    }
+
+    public List<String> getSubCategoryNames() {
+        return subCategoryNames;
+    }
+
+    public void setSubCategoryNames(List<String> subCategoryNames) {
+        this.subCategoryNames = subCategoryNames;
     }
 
 }
