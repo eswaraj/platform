@@ -25,13 +25,15 @@ public class CounterCacheRedisImpl extends BaseCacheRedisImpl implements Counter
     public JsonObject getLastNDayLocationCounters(Long locationId, Date endDate, int NumberOfDays) throws ApplicationException {
         String keyPrefix = appKeyService.getLocationCounterKey(locationId);
         List<String> redisKeyForLocationNDaysCounter = appKeyService.getHourComplaintKeysForLastNDays("", endDate, NumberOfDays);
-        logger.info("getting data from Redis for keys {}", redisKeyForLocationNDaysCounter);
-        List<String> data = complaintStringRedisTemplate.opsForValue().multiGet(redisKeyForLocationNDaysCounter);
+        logger.info("getting Hasg data from Redis for key {} hashes {}", keyPrefix, redisKeyForLocationNDaysCounter);
+        List<Object> hashKeys = new ArrayList<Object>(redisKeyForLocationNDaysCounter);
+        List<Object> data = complaintStringRedisTemplate.opsForHash().multiGet(keyPrefix, hashKeys);
         Long totalComplaints = 0L;
         int count = 0;
         JsonArray jsonArray = new JsonArray();
         JsonObject jsonObject;
-        for (String oneString : data) {
+        for (Object oneObject : data) {
+            String oneString = (String) oneObject;
             jsonObject = new JsonObject();
             if (oneString != null) {
                 jsonObject.addProperty(redisKeyForLocationNDaysCounter.get(count).replace(keyPrefix, ""), oneString);
