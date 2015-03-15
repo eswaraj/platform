@@ -1,5 +1,7 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +13,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.PieChartModel;
 import org.primefaces.model.map.DefaultMapModel;
@@ -203,6 +207,7 @@ public class ComplaintsBean extends BaseBean {
             categoryPieChartModel.setLegendPosition("w");
             categoryPieChartModel.setShadow(true);
             categoryPieChartModel.setShowDataLabels(true);
+            categoryPieChartModel.setMouseoverHighlight(true);
 
             // Linear chart
             JsonObject jsonObject = counterCache.getLast30DayLocationCounters(selectedPoliticalBodyAdmin.getLocation().getId(), new Date());
@@ -210,17 +215,32 @@ public class ComplaintsBean extends BaseBean {
             dailyLineChartModel = new LineChartModel();
             ChartSeries daily = new ChartSeries();
             daily.setLabel("Day wise");
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
             for (int i = 0; i < dailyCounterJsonArray.size(); i++) {
                 JsonObject oneJsonObject = dailyCounterJsonArray.get(i).getAsJsonObject();
                 for (Entry<String, JsonElement> oneEntry : oneJsonObject.entrySet()) {
-                    daily.set(oneEntry.getKey().replace(".", ""), oneEntry.getValue().getAsLong());
-                    System.out.println(oneEntry.getKey() + "=" + oneEntry.getValue().getAsLong());
+                    Date date = simpleDateFormat1.parse(oneEntry.getKey().replace(".", ""));
+                    daily.set(simpleDateFormat2.format(date), oneEntry.getValue().getAsLong());
+                    System.out.println(simpleDateFormat2.format(date) + "=" + oneEntry.getValue().getAsLong());
+
                     // daily.set((i + 1), oneEntry.getValue().getAsLong());
                 }
             }
 
+            dailyLineChartModel.getAxis(AxisType.Y).setLabel("Number of Complaints");
+            DateAxis dateAxis = new DateAxis("Dates");
+            dateAxis.setTickAngle(-30);
+            dateAxis.setMax("2014-02-01");
+            dateAxis.setTickFormat("%b %#d, %y");
+
+            dailyLineChartModel.getAxes().put(AxisType.X, dateAxis);
+
             dailyLineChartModel.addSeries(daily);
         } catch (ApplicationException e) {
+            sendErrorMessage("Error", e.getMessage());
+            e.printStackTrace();
+        } catch (ParseException e) {
             sendErrorMessage("Error", e.getMessage());
             e.printStackTrace();
         }
