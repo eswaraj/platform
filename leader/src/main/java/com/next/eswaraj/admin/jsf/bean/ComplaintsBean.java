@@ -212,6 +212,8 @@ public class ComplaintsBean extends BaseBean {
                 JsonObject oneJsonObject = dailyCounterJsonArray.get(i).getAsJsonObject();
                 for (Entry<String, JsonElement> oneEntry : oneJsonObject.entrySet()) {
                     daily.set(oneEntry.getKey(), oneEntry.getValue().getAsLong());
+                    System.out.println(oneEntry.getKey() + "=" + oneEntry.getValue().getAsLong());
+                    daily.set((i + 1), oneEntry.getValue().getAsLong());
                 }
             }
 
