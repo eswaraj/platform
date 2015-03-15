@@ -24,7 +24,7 @@ public class CounterCacheRedisImpl extends BaseCacheRedisImpl implements Counter
     @Override
     public JsonObject getLastNDayLocationCounters(Long locationId, Date endDate, int NumberOfDays) throws ApplicationException {
         String keyPrefix = appKeyService.getLocationCounterKey(locationId);
-        List<String> redisKeyForLocationNDaysCounter = appKeyService.getHourComplaintKeysForLastNDays(keyPrefix, endDate, NumberOfDays);
+        List<String> redisKeyForLocationNDaysCounter = appKeyService.getHourComplaintKeysForLastNDays("", endDate, NumberOfDays);
         logger.info("getting data from Redis for keys {}", redisKeyForLocationNDaysCounter);
         List<String> data = complaintStringRedisTemplate.opsForValue().multiGet(redisKeyForLocationNDaysCounter);
         Long totalComplaints = 0L;
