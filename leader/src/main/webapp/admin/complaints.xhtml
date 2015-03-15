@@ -50,7 +50,7 @@ body {
                             <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:125px" >
                                 <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{complaintsBean.subCategoryNames}" />
-                            </p:selectOneMenu>
+                            </p:selectCheckboxMenu>
                         </f:facet>
 							<h:outputText value="#{oneComplaint.subCategory.name}" />
 						</p:column>

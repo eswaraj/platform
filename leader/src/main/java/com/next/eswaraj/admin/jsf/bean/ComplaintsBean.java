@@ -112,6 +112,7 @@ public class ComplaintsBean extends BaseBean {
         try {
             List<Category> allCategories = adminService.getAllcategories();
             categoryNames = new ArrayList<String>();
+            subCategoryNames = new ArrayList<String>();
             for (Category oneCategory : allCategories) {
                 categoryMap.put(oneCategory.getId(), oneCategory);
                 if (oneCategory.isRoot()) {
