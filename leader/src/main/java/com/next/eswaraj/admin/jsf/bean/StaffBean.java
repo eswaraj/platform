@@ -21,7 +21,7 @@ import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
 @Component
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "view")
 public class StaffBean extends BaseBean {
 
     @Autowired
