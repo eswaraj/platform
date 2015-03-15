@@ -191,6 +191,12 @@ public class TempController extends BaseController {
         return jsonArray.toString();
     }
 
+    @RequestMapping(value = "/api/unknown/leader/createwardlocation", method = RequestMethod.POST)
+    public @ResponseBody String saveWardLocationRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String body) throws ApplicationException {
+        JsonArray jsonArray = tempService.createLocationAndWardRecord(body);
+        return jsonArray.toString();
+    }
+
 
     private void printAll(Set<String> data) {
         System.out.println(" ---------------- ");
