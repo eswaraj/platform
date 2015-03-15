@@ -233,7 +233,6 @@ public class ComplaintsBean extends BaseBean {
             DateAxis dateAxis = new DateAxis("Dates");
             dateAxis.setTickAngle(-50);
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -30);
             dateAxis.setMax(simpleDateFormat2.format(cal.getTime()));
             dateAxis.setTickFormat("%b %#d, %y");
 
