@@ -208,55 +208,58 @@ public class ComplaintsBean extends BaseBean {
             }
         }
 
-        try {
-            categoryPieChartModel = new PieChartModel();
-            JsonArray jsonArray = categoryCache.getAllCategoryStatsForLocation(selectedPoliticalBodyAdmin.getLocation().getId());
-            for (int i = 0; i < jsonArray.size(); i++) {
-                JsonObject oneJsonObject = jsonArray.get(i).getAsJsonObject();
-                categoryPieChartModel.set(oneJsonObject.get("name").getAsString(), oneJsonObject.get("locationCount").getAsLong());
-            }
-            categoryPieChartModel.setTitle("Category Wise");
-            categoryPieChartModel.setLegendPosition("w");
-            categoryPieChartModel.setShadow(true);
-            categoryPieChartModel.setShowDataLabels(true);
-            categoryPieChartModel.setMouseoverHighlight(true);
-
-            // Linear chart
-            JsonObject jsonObject = counterCache.getLast30DayLocationCounters(selectedPoliticalBodyAdmin.getLocation().getId(), new Date());
-            JsonArray dailyCounterJsonArray = jsonObject.get("dayWise").getAsJsonArray();
-            dailyLineChartModel = new LineChartModel();
-            ChartSeries daily = new ChartSeries();
-            daily.setLabel("Day wise");
-            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyyMMdd");
-            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-            for (int i = 0; i < dailyCounterJsonArray.size(); i++) {
-                JsonObject oneJsonObject = dailyCounterJsonArray.get(i).getAsJsonObject();
-                for (Entry<String, JsonElement> oneEntry : oneJsonObject.entrySet()) {
-                    Date date = simpleDateFormat1.parse(oneEntry.getKey().replace(".", ""));
-                    daily.set(simpleDateFormat2.format(date), oneEntry.getValue().getAsLong());
-                    System.out.println(simpleDateFormat2.format(date) + "=" + oneEntry.getValue().getAsLong());
-
-                    // daily.set((i + 1), oneEntry.getValue().getAsLong());
+        if (selectedPoliticalBodyAdmin != null) {
+            try {
+                categoryPieChartModel = new PieChartModel();
+                JsonArray jsonArray = categoryCache.getAllCategoryStatsForLocation(selectedPoliticalBodyAdmin.getLocation().getId());
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    JsonObject oneJsonObject = jsonArray.get(i).getAsJsonObject();
+                    categoryPieChartModel.set(oneJsonObject.get("name").getAsString(), oneJsonObject.get("locationCount").getAsLong());
                 }
+                categoryPieChartModel.setTitle("Category Wise");
+                categoryPieChartModel.setLegendPosition("w");
+                categoryPieChartModel.setShadow(true);
+                categoryPieChartModel.setShowDataLabels(true);
+                categoryPieChartModel.setMouseoverHighlight(true);
+
+                // Linear chart
+                JsonObject jsonObject = counterCache.getLast30DayLocationCounters(selectedPoliticalBodyAdmin.getLocation().getId(), new Date());
+                JsonArray dailyCounterJsonArray = jsonObject.get("dayWise").getAsJsonArray();
+                dailyLineChartModel = new LineChartModel();
+                ChartSeries daily = new ChartSeries();
+                daily.setLabel("Day wise");
+                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyyMMdd");
+                SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                for (int i = 0; i < dailyCounterJsonArray.size(); i++) {
+                    JsonObject oneJsonObject = dailyCounterJsonArray.get(i).getAsJsonObject();
+                    for (Entry<String, JsonElement> oneEntry : oneJsonObject.entrySet()) {
+                        Date date = simpleDateFormat1.parse(oneEntry.getKey().replace(".", ""));
+                        daily.set(simpleDateFormat2.format(date), oneEntry.getValue().getAsLong());
+                        System.out.println(simpleDateFormat2.format(date) + "=" + oneEntry.getValue().getAsLong());
+
+                        // daily.set((i + 1), oneEntry.getValue().getAsLong());
+                    }
+                }
+
+                dailyLineChartModel.getAxis(AxisType.Y).setLabel("Number of Complaints");
+                DateAxis dateAxis = new DateAxis("Dates");
+                dateAxis.setTickAngle(-50);
+                Calendar cal = Calendar.getInstance();
+                dateAxis.setMax(simpleDateFormat2.format(cal.getTime()));
+                dateAxis.setTickFormat("%#d-%b, %y");
+
+                dailyLineChartModel.getAxes().put(AxisType.X, dateAxis);
+
+                dailyLineChartModel.addSeries(daily);
+            } catch (ApplicationException e) {
+                sendErrorMessage("Error", e.getMessage());
+                e.printStackTrace();
+            } catch (ParseException e) {
+                sendErrorMessage("Error", e.getMessage());
+                e.printStackTrace();
             }
-
-            dailyLineChartModel.getAxis(AxisType.Y).setLabel("Number of Complaints");
-            DateAxis dateAxis = new DateAxis("Dates");
-            dateAxis.setTickAngle(-50);
-            Calendar cal = Calendar.getInstance();
-            dateAxis.setMax(simpleDateFormat2.format(cal.getTime()));
-            dateAxis.setTickFormat("%#d-%b, %y");
-
-            dailyLineChartModel.getAxes().put(AxisType.X, dateAxis);
-
-            dailyLineChartModel.addSeries(daily);
-        } catch (ApplicationException e) {
-            sendErrorMessage("Error", e.getMessage());
-            e.printStackTrace();
-        } catch (ParseException e) {
-            sendErrorMessage("Error", e.getMessage());
-            e.printStackTrace();
         }
+
     }
 
     public void setComplaints(List<ComplaintSearchResultDto> complaints) {
