@@ -18,4 +18,7 @@ public interface TempService {
     @Deprecated
     JsonArray createLocationAndMpRecord(String body) throws ApplicationException;
 
+    @Deprecated
+    JsonArray createLocationAndWardRecord(String body) throws ApplicationException;
+
 }
