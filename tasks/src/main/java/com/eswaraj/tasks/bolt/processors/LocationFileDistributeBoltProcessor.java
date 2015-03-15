@@ -113,10 +113,13 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
                     if (node.getAttribute("name").equals("T_POP")) {
                         location.setTotalPopulation((long) Double.parseDouble(node.getTextContent()));
                     }
-                    if (node.getAttribute("name").equals("T_MPOP")) {
+                    if (node.getAttribute("name").equals("T_POP") || node.getAttribute("name").equals("TOT_POP")) {
+                        location.setTotalPopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_MPOP") || node.getAttribute("name").equals("M_POP")) {
                         location.setTotalMalePopulation((long) Double.parseDouble(node.getTextContent()));
                     }
-                    if (node.getAttribute("name").equals("T_FPOP")) {
+                    if (node.getAttribute("name").equals("T_FPOP") || node.getAttribute("name").equals("F_POP")) {
                         location.setTotalFemalePopulation((long) Double.parseDouble(node.getTextContent()));
                     }
                     if (node.getAttribute("name").equals("T_POP_LIT")) {
@@ -125,7 +128,7 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
                     if (node.getAttribute("name").equals("T_POP_WRKR")) {
                         location.setTotalWorkingPopulation((long) Double.parseDouble(node.getTextContent()));
                     }
-                    if (node.getAttribute("name").equals("AREA")) {
+                    if (node.getAttribute("name").equals("AREA") || node.getAttribute("name").equals("Area_SqKm")) {
                         location.setArea(Double.parseDouble(node.getTextContent()));
                     }
                     if (node.getAttribute("name").equals("PERIMETER")) {

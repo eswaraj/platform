@@ -24,7 +24,7 @@ public class KmlFileDisector {
     public static void main(String[] args) throws Exception {
         List<String> files = new ArrayList<>();
         
-        files.add("/usr/local/dev/data/eswaraj/originals/Delhi_Wards.kml");
+        files.add("/usr/local/dev/data/eswaraj/originals/Bangalore_BBMP_Wards_Data.kml");
         /*
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiCityRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiDistrictRegions.kml");
@@ -95,6 +95,7 @@ public class KmlFileDisector {
     private static String getFileName(Document doc) {
         String stateName = null;
         String district0Name = null;
+        String wardNumber = null;
         String districtName = null;
         String wardName = null;
         String cityName = null;
@@ -102,11 +103,16 @@ public class KmlFileDisector {
         String name = null;
         String pcName = null;
         String acName = null;
+        String localityName = null;
+        String subLocalityName = null;
         NodeList nodeList = doc.getElementsByTagName("SimpleData");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            if (node.getAttributes().item(0).getNodeValue().equals("NAME")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("NAME")) {
                 name = node.getTextContent();
+            }
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("WARD_NO")) {
+                wardNumber = node.getTextContent();
             }
             if (node.getAttributes().item(0).getNodeValue().equals("STATE") || node.getAttributes().item(0).getNodeValue().equals("STATE_NAME")) {
                 stateName = node.getTextContent();
@@ -132,6 +138,12 @@ public class KmlFileDisector {
             }
             if (node.getAttributes().item(0).getNodeValue().equals("AC_NAME")) {
                 acName = node.getTextContent();
+            }
+            if (node.getAttributes().item(0).getNodeValue().equals("LOCALITY")) {
+                localityName = node.getTextContent();
+            }
+            if (node.getAttributes().item(0).getNodeValue().equals("SUB_LOC")) {
+                subLocalityName = node.getTextContent();
             }
 
         }
@@ -192,13 +204,20 @@ public class KmlFileDisector {
             createDirectory(directory);
             fileName = districtName + ".kml";
         }
-        if (wardName != null) {
+        if (wardName != null || wardNumber != null) {
             directory = directory + "/wards/";
             parentDirectory = directory;
             createDirectory(directory);
-            directory = directory + wardName;
-            createDirectory(directory);
-            fileName = wardName + ".kml";
+            if (wardNumber != null) {
+                directory = directory + wardNumber;
+                createDirectory(directory);
+                fileName = wardNumber + ".kml";
+            } else {
+                directory = directory + wardName;
+                createDirectory(directory);
+                fileName = wardName + ".kml";
+            }
+
         }
         if (mcdZoneName != null) {
             directory = directory + "/mcdzones/";
@@ -209,8 +228,29 @@ public class KmlFileDisector {
             System.out.println("creating Directory : " + directory);
             fileName = mcdZoneName + ".kml";
         }
+        if (localityName != null) {
+            directory = directory + "/locality/";
+            parentDirectory = directory;
+            createDirectory(directory);
+            directory = directory + localityName;
+            createDirectory(directory);
+            fileName = localityName + ".kml";
+        }
+        if (subLocalityName != null) {
+            directory = directory + "/sublocality/";
+            parentDirectory = directory;
+            createDirectory(directory);
+            directory = directory + subLocalityName;
+            createDirectory(directory);
+            fileName = subLocalityName + ".kml";
+        }
         if (name != null) {
-            fileName = name + ".kml";
+            if (wardNumber != null) {
+                fileName = wardNumber + " - " + name + ".kml";
+            } else {
+                fileName = name + ".kml";
+            }
+
         }
         return parentDirectory + "/" + fileName;
     }
