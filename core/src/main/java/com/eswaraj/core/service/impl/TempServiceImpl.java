@@ -486,7 +486,7 @@ public class TempServiceImpl extends BaseService implements TempService {
     @Override
     public JsonArray createLocationAndWardRecord(String body) throws ApplicationException {
         String stateName = "Karnataka";
-        String politicalBodyTypeName = "corporate";
+        String politicalBodyTypeName = "Corporator";
         String electionName = "BBMP Elections 2010";
         String corporationName = "Bruhat Bengaluru Mahanagara Palike";
         JsonParser jsonParser = new JsonParser();
