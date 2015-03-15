@@ -126,6 +126,14 @@ public class TempServiceImpl extends BaseService implements TempService {
     private String getPartyName(JsonObject jsonObject) {
         String partyName = jsonObject.get("party").getAsString();
         switch(partyName){
+
+        case "Congress":
+            return "INDIAN NATIONAL CONGRESS";
+        case "JD s":
+        case "JD S":
+            return "Janata Dal (Secular)";
+        case "BJP":
+            return "BHARTIYA JANTA PARTY";
         case "Bharatiya Janata Party":
             return "BHARTIYA JANTA PARTY";
         case "INDEPENDENT":
@@ -286,8 +294,8 @@ public class TempServiceImpl extends BaseService implements TempService {
     }
 
     @Deprecated
-    private Location createLocation(Map<String, Location> existingLocationMap, String stateName, String locationTypename, Location parentLocation, boolean cache) throws ApplicationException {
-        Location location = existingLocationMap.get(stateName);
+    private Location createLocation(Map<String, Location> existingLocationMap, String locationName, String locationTypename, Location parentLocation, boolean cache) throws ApplicationException {
+        Location location = existingLocationMap.get(locationName);
         if (location != null) {
             return location;
         }
@@ -296,17 +304,17 @@ public class TempServiceImpl extends BaseService implements TempService {
             throw new ApplicationException("No lcoation type found of name " + locationTypename);
         }
 
-        location = locationRepository.findLocationByNameAndLocationTypeAndParent("(?i)" + stateName, locationType, parentLocation);
+        location = locationRepository.findLocationByNameAndLocationTypeAndParent("(?i)" + locationName, locationType, parentLocation);
         if (location == null) {
             location = new Location();
-            location.setName(stateName);
+            location.setName(locationName);
             location.setParentLocation(parentLocation);
             location.setLocationType(locationType);
             System.out.println("Creating new Location " + location + " for " + locationTypename);
             location = saveLocation(location);
         }
         if (cache) {
-            existingLocationMap.put(stateName, location);
+            existingLocationMap.put(locationName, location);
         }
 
         return location;
@@ -534,16 +542,16 @@ public class TempServiceImpl extends BaseService implements TempService {
             parties.add(partyName);
             wards.add(wardNumber + " - " + wardName);
 
-            // party = createParty(existingPartyMap, partyName);
-            // Location ward = createLocation(existingLocationMap, constituency, "Parliament Constituency", corporation, false);
-            // List<Person> persons = personRepository.findPersonsByName(name);
-            /*
+            party = createParty(existingPartyMap, partyName);
+            Location ward = createLocation(existingLocationMap, wardNumber + " - " + wardName, "Ward", corporation, false);
+            List<Person> persons = personRepository.findPersonsByName(name);
+
             if (persons.isEmpty() || persons.size() > 1) {
-                createPoliticalBodyAdmin(ward, politicalBodyType, party, null, election, startDate.getTime(), officeEmail, returenNotCreateJsonArray);
+                createPoliticalBodyAdmin(ward, politicalBodyType, party, null, election, startDate.getTime(), null, returenNotCreateJsonArray);
             } else {
-                createPoliticalBodyAdmin(ward, politicalBodyType, party, persons.get(0), election, startDate.getTime(), officeEmail, returenJsonArray);
+                createPoliticalBodyAdmin(ward, politicalBodyType, party, persons.get(0), election, startDate.getTime(), null, returenJsonArray);
             }
-            */
+
 
         }
         List<String> allData = new ArrayList<String>();
@@ -552,6 +560,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         printAll(parties);
         allData.addAll(wards);
         printAll(wards);
+        returenJsonArray.add(returenNotCreateJsonArray);
         return returenJsonArray;
     }
 
