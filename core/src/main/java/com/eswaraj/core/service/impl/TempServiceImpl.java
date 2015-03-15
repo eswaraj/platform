@@ -557,7 +557,8 @@ public class TempServiceImpl extends BaseService implements TempService {
                 person.setName(name);
                 person.setMobileNumber1(mobile);
                 person.setProfilePhoto(profilePhoto);
-                savePerson(person);
+                person = savePerson(person);
+                createPoliticalBodyAdmin(ward, politicalBodyType, party, person, election, startDate.getTime(), null, returenNotCreateJsonArray);
             } else if (persons.size() > 1) {
                 createPoliticalBodyAdmin(ward, politicalBodyType, party, null, election, startDate.getTime(), null, returenNotCreateJsonArray);
             } else {
