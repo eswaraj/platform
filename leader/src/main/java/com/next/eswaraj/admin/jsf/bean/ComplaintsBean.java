@@ -201,6 +201,8 @@ public class ComplaintsBean extends BaseBean {
             }
             categoryPieChartModel.setTitle("Category Wise");
             categoryPieChartModel.setLegendPosition("w");
+            categoryPieChartModel.setShadow(true);
+            categoryPieChartModel.setShowDataLabels(true);
 
             // Linear chart
             JsonObject jsonObject = counterCache.getLast30DayLocationCounters(selectedPoliticalBodyAdmin.getLocation().getId(), new Date());
@@ -211,9 +213,9 @@ public class ComplaintsBean extends BaseBean {
             for (int i = 0; i < dailyCounterJsonArray.size(); i++) {
                 JsonObject oneJsonObject = dailyCounterJsonArray.get(i).getAsJsonObject();
                 for (Entry<String, JsonElement> oneEntry : oneJsonObject.entrySet()) {
-                    daily.set(oneEntry.getKey(), oneEntry.getValue().getAsLong());
+                    daily.set(oneEntry.getKey().replace(".", ""), oneEntry.getValue().getAsLong());
                     System.out.println(oneEntry.getKey() + "=" + oneEntry.getValue().getAsLong());
-                    daily.set((i + 1), oneEntry.getValue().getAsLong());
+                    // daily.set((i + 1), oneEntry.getValue().getAsLong());
                 }
             }
 
