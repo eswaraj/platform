@@ -19,6 +19,8 @@ body {
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
 		    <p:chart type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
+		    <p:chart type="line" model="#{complaintsBean.dailyLineChartModel}" style="height:300px;"/>
+		    
 		    
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<p:panelGrid columns="2">

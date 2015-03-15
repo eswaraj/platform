@@ -1,14 +1,18 @@
 package com.next.eswaraj.admin.jsf.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.PieChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -22,6 +26,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.cache.CategoryCache;
+import com.eswaraj.cache.CounterCache;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
@@ -37,6 +42,7 @@ import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.web.dto.UserDto;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.next.eswaraj.admin.jsf.dto.ComplaintSearchResultDto;
 import com.next.eswaraj.admin.service.AdminService;
@@ -59,9 +65,14 @@ public class ComplaintsBean extends BaseBean {
     private CategoryCache categoryCache;
 
     @Autowired
+    private CounterCache counterCache;
+
+    @Autowired
     private LoginBean loginBean;
 
     private PieChartModel categoryPieChartModel;
+
+    private LineChartModel dailyLineChartModel;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -188,6 +199,23 @@ public class ComplaintsBean extends BaseBean {
                 JsonObject oneJsonObject = jsonArray.get(i).getAsJsonObject();
                 categoryPieChartModel.set(oneJsonObject.get("name").getAsString(), oneJsonObject.get("locationCount").getAsLong());
             }
+            categoryPieChartModel.setTitle("Category Wise");
+            categoryPieChartModel.setLegendPosition("w");
+
+            // Linear chart
+            JsonObject jsonObject = counterCache.getLast30DayLocationCounters(selectedPoliticalBodyAdmin.getLocation().getId(), new Date());
+            JsonArray dailyCounterJsonArray = jsonObject.get("dayWise").getAsJsonArray();
+            dailyLineChartModel = new LineChartModel();
+            ChartSeries daily = new ChartSeries();
+            daily.setLabel("Day wise");
+            for (int i = 0; i < dailyCounterJsonArray.size(); i++) {
+                JsonObject oneJsonObject = dailyCounterJsonArray.get(i).getAsJsonObject();
+                for (Entry<String, JsonElement> oneEntry : oneJsonObject.entrySet()) {
+                    daily.set(oneEntry.getKey(), oneEntry.getValue().getAsLong());
+                }
+            }
+
+            dailyLineChartModel.addSeries(daily);
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
             e.printStackTrace();
@@ -312,6 +340,14 @@ public class ComplaintsBean extends BaseBean {
 
     public void setCategoryPieChartModel(PieChartModel categoryPieChartModel) {
         this.categoryPieChartModel = categoryPieChartModel;
+    }
+
+    public LineChartModel getDailyLineChartModel() {
+        return dailyLineChartModel;
+    }
+
+    public void setDailyLineChartModel(LineChartModel dailyLineChartModel) {
+        this.dailyLineChartModel = dailyLineChartModel;
     }
 
 }
