@@ -234,7 +234,7 @@ public class ComplaintsBean extends BaseBean {
             dateAxis.setTickAngle(-50);
             Calendar cal = Calendar.getInstance();
             dateAxis.setMax(simpleDateFormat2.format(cal.getTime()));
-            dateAxis.setTickFormat("%b %#d, %y");
+            dateAxis.setTickFormat("%#d-%b, %y");
 
             dailyLineChartModel.getAxes().put(AxisType.X, dateAxis);
 
