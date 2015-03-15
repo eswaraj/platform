@@ -505,9 +505,9 @@ public class TempServiceImpl extends BaseService implements TempService {
         Map<String, Party> existingPartyMap = new HashMap<String, Party>();
         Party party;
         Calendar startDate = Calendar.getInstance();
-        startDate.set(Calendar.YEAR, 2014);
-        startDate.set(Calendar.DATE, 16);
-        startDate.set(Calendar.MONTH, 4);
+        startDate.set(Calendar.YEAR, 2010);
+        startDate.set(Calendar.DATE, 28);
+        startDate.set(Calendar.MONTH, 2);
         Location india = locationRepository.findLocationByName("(?i)" + stateName);
         if (india == null) {
             throw new ApplicationException(stateName + " Location Not found");
