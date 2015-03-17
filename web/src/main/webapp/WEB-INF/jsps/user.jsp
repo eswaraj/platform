@@ -278,14 +278,15 @@
 				</div>
 				<div class="user_dash_right_pane analytics_data_colsm">
 
-					<div id="chart_bar_c" style="border: 0px solid #fff;">
+					<div id="chart_pie_c" style="border: 0px solid #fff;">
 						<svg>
 						</svg>
 					</div>
+					
 
 					<hr style="border-top: 1px solid #d2d2d2;">
 
-					<div id="chart_pie_c" style="border: 0px solid #fff;">
+					<div id="chart_bar_c" style="border: 0px solid #fff;">
 						<svg>
 						</svg>
 					</div>
