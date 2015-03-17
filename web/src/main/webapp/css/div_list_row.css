@@ -80,13 +80,13 @@ background-color: #F2F2F2;
     text-justify: inter-word;
 }
 .whom {
-    font-size: 15px;
+    font-size: 12px;
     line-height: 100%;
 }
 .issue-scope{
 	text-decoration: none;
-	font-size: 20px;
-    font-family: "Arimo",helvetica;
+	font-size: 12px;
+  font-family: "Arimo",helvetica;
 	margin-right: 5px;
 	padding-right: 20px;
 	color: #428bca;
@@ -129,7 +129,7 @@ height:25px;
 }
 
 .postcurrentstatus{
-    max-width: 60px;
+    max-width: 30px;
     width: auto;
     height: auto;
 	}
