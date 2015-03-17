@@ -38,13 +38,13 @@
 
 </head>
 <body>
-<img src="http://www.glowmagazine.me/wp-content/uploads/2012/04/taj-mahal-at-sunset.jpg" style="
+<!-- <img src="http://www.glowmagazine.me/wp-content/uploads/2012/04/taj-mahal-at-sunset.jpg" style="
 	opacity: 0.4;
 	position: fixed;
 	height: 100%;
 	width: 100%;
 	z-index: -1;
-">
+"> -->
 	<div class="outerwrapper main_content_page">
 		<jsp:include page="header.jsp" />
 		<div class="container-fluid">

@@ -2,8 +2,7 @@
 /*list row starts*/
 .list-row {
     padding: 0px;
-    border: 1px solid #f3f3f3;
-	border-radius: 10px;
+   
 	width: 750px;
 	margin-bottom: 15px;
 	background-color: #FFF;
@@ -27,7 +26,7 @@ background-color: #F2F2F2;
 
 .profile_info_adjust{
     padding-left: 2px;
-	border-bottom: 1px solid #D2D2D2;
+	
 }
 
 .list-row .issue-pic {
@@ -758,6 +757,7 @@ float: left;
 
 .user_dash_right_pane{
 width: 28%;
+height: 500px;
 padding-left: 0px;
 padding-right: 0px;
 margin-left: -15px;
