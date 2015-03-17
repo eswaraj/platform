@@ -159,6 +159,7 @@ padding-left: 20px;
 border-bottom: 1px solid #d2d2d2;
 padding-bottom: 10px;
 margin-bottom: 10px;
+height: 390px;
 }
 
 .list_view_text_margin, .map_view_text_margin, .ay_view_text_margin{
@@ -757,7 +758,7 @@ float: left;
 
 .user_dash_right_pane{
 width: 28%;
-height: 500px;
+
 padding-left: 0px;
 padding-right: 0px;
 margin-left: -15px;

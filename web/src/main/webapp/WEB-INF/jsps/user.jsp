@@ -283,7 +283,7 @@
 						</svg>
 					</div>
 
-					<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
+					<hr style="border-top: 1px solid #d2d2d2;">
 
 					<div id="chart_pie_c" style="border: 0px solid #fff;">
 						<svg>
