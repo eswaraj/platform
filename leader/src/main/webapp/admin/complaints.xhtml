@@ -37,7 +37,7 @@ body {
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 						</p:column>
 
-						<p:column headerText="Category" filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="equals">
+						<p:column headerText="Category" filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
 			                <p:selectCheckboxMenu label="Category" onchange="PF('complaintTable').filter()" >
 			                    <f:selectItems value="#{complaintsBean.categoryNames}" />
