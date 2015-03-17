@@ -18,9 +18,10 @@ body {
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
-			<h:panelGrid columns="2">
-				<p:chart type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
-				<p:chart type="line" model="#{complaintsBean.dailyLineChartModel}" style="width:600px;height:300px;" />
+			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
+			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}" />
+				<p:chart rendered="#{!empty complaintsBean.categoryPieChartModel}" type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
+				<p:chart rendered="#{!empty complaintsBean.dailyLineChartModel}" type="line" model="#{complaintsBean.dailyLineChartModel}" style="width:600px;height:300px;" />
 			</h:panelGrid>
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
@@ -103,6 +104,9 @@ body {
                                     <p:outputLabel value="Description"></p:outputLabel>
                                     <h:outputText id="description"
                                         value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.description}" />
+                                    <p:outputLabel value="Address"></p:outputLabel>
+                                    <h:outputText id="address"
+                                        value="#{complaintsBean.selectedComplaint.complaintSearchResult.complaint.locationAddress}" />
 
                                     <p:outputLabel value="Date Reported"></p:outputLabel>
                                     <h:outputText id="dateReported"
