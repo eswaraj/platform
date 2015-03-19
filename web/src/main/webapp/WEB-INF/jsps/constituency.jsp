@@ -117,7 +117,7 @@
 													</div>
 												</div>
 
-												<div class="list-group">
+											<!-- 	<div class="list-group">
 												
 													<div class="filter_types">
 													<p>
@@ -178,7 +178,7 @@
 													
 													</div>
 
-												</div>
+												</div> -->
 											</div>
 											<div class="constituency_mid_pane">
 												<div class="listing-wrapper">
