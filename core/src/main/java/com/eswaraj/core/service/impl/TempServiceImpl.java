@@ -596,9 +596,10 @@ public class TempServiceImpl extends BaseService implements TempService {
         JsonArray jsonArray = jsonParser.parse(body).getAsJsonArray();
         Set<String> parties = new TreeSet<String>();
         Set<String> locations = new TreeSet<String>();
+        boolean allowSave = true;
         Map<String, Location> existingLocationMap = new HashMap<String, Location>();
         Map<String, Party> existingPartyMap = new HashMap<String, Party>();
-        Party party;
+        Party party = null;
         Location parentLocation = locationRepository.findLocationByName("(?i)" + parentLocationName);
         if (parentLocation == null) {
             throw new ApplicationException(parentLocationName + " Location Not found");
@@ -644,8 +645,11 @@ public class TempServiceImpl extends BaseService implements TempService {
             parties.add(partyName);
             locations.add(constituency);
 
-            // party = createParty(existingPartyMap, partyName);
-            // Location ward = createLocation(existingLocationMap, constituency, locationTypeName, parentLocation, false);
+            Location location = null;
+            if (allowSave) {
+                party = createParty(existingPartyMap, partyName);
+                location = createLocation(existingLocationMap, constituency, locationTypeName, parentLocation, false);
+            }
             List<Person> persons = personRepository.findPersonsByName(name);
 
             if (persons.isEmpty()) {
@@ -654,15 +658,19 @@ public class TempServiceImpl extends BaseService implements TempService {
                 person.setMobileNumber1(mobile);
                 person.setProfilePhoto(profilePhoto);
                 person.setBiodata("<b>Address : </b> " + address);
-
-                person = savePerson(person);
-                // createPoliticalBodyAdmin(ward, politicalBodyType, party, person, election, election.getStartDate(), null, returenNotCreateJsonArray);
+                if (allowSave) {
+                    person = savePerson(person);
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, person, election, election.getStartDate(), null, returenNotCreateJsonArray);
+                }
             } else if (persons.size() > 1) {
-                // createPoliticalBodyAdmin(ward, politicalBodyType, party, null, election, election.getStartDate(), null, returenNotCreateJsonArray);
+                if (allowSave) {
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, null, election, election.getStartDate(), null, returenNotCreateJsonArray);
+                }
             } else {
-                // createPoliticalBodyAdmin(ward, politicalBodyType, party, persons.get(0), election, election.getStartDate(), null, returenJsonArray);
+                if (allowSave) {
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, persons.get(0), election, election.getStartDate(), null, returenJsonArray);
+                }
             }
-
         }
         List<String> allData = new ArrayList<String>();
         System.out.println("********");
