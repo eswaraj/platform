@@ -38,13 +38,13 @@
 
 </head>
 <body>
-<img src="http://www.glowmagazine.me/wp-content/uploads/2012/04/taj-mahal-at-sunset.jpg" style="
+<!-- <img src="http://www.glowmagazine.me/wp-content/uploads/2012/04/taj-mahal-at-sunset.jpg" style="
 	opacity: 0.4;
 	position: fixed;
 	height: 100%;
 	width: 100%;
 	z-index: -1;
-">
+"> -->
 	<div class="outerwrapper main_content_page">
 		<jsp:include page="header.jsp" />
 		<div class="container-fluid">
@@ -114,7 +114,7 @@
 													</div>
 												</div>
 
-												<div class="list-group">
+												<!-- <div class="list-group">
 												
 													<div class="filter_types" style="padding-left:10px;">
 													<p>
@@ -175,7 +175,7 @@
 													
 													</div>
 
-												</div>
+												</div> -->
 				</div>
 				<div class="user_dash_mid_pane" style="padding: 0px 0px 0px 5px; ">
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
@@ -278,14 +278,15 @@
 				</div>
 				<div class="user_dash_right_pane analytics_data_colsm">
 
-					<div id="chart_bar_c" style="border: 0px solid #fff;">
+					<div id="chart_pie_c">
 						<svg>
 						</svg>
 					</div>
 
-					<hr style="width: 92%; border-top: 1px solid #d2d2d2;">
 
-					<div id="chart_pie_c" style="border: 0px solid #fff;">
+					<hr style="border-top: 1px solid #d2d2d2;">
+
+					<div id="chart_bar_c">
 						<svg>
 						</svg>
 					</div>
