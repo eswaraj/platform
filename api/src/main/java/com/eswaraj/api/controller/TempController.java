@@ -199,7 +199,7 @@ public class TempController extends BaseController {
 
     @RequestMapping(value = "/api/unknown/leader/createmlalocation", method = RequestMethod.POST)
     public @ResponseBody String saveMlaLocationRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String body) throws ApplicationException {
-        JsonArray jsonArray = tempService.createLocationAndWardRecord(body);
+        JsonArray jsonArray = tempService.createLocationAndMlaRecord(body);
         return jsonArray.toString();
     }
 
