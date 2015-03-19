@@ -587,8 +587,7 @@ public class TempServiceImpl extends BaseService implements TempService {
         String politicalBodyTypeName = "MLA";
         String electionName = "Karnataka Assembly Elections 2013";
         String locationTypeNameToBeCreated = "Assembly Constituency";
-        createLocationAndLeaderRecord(body, politicalBodyTypeName, electionName, stateName, locationTypeNameToBeCreated);
-        return null;
+        return createLocationAndLeaderRecord(body, politicalBodyTypeName, electionName, stateName, locationTypeNameToBeCreated);
     }
 
     private JsonArray createLocationAndLeaderRecord(String body, String politicalBodyTypeName, String electionName, String parentLocationName, String locationTypeName) throws ApplicationException {
@@ -660,15 +659,15 @@ public class TempServiceImpl extends BaseService implements TempService {
                 person.setBiodata("<b>Address : </b> " + address);
                 if (allowSave) {
                     person = savePerson(person);
-                    createPoliticalBodyAdmin(location, politicalBodyType, party, person, election, election.getStartDate(), null, returenNotCreateJsonArray);
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, person, election, election.getStartDate(), email, returenJsonArray);
                 }
             } else if (persons.size() > 1) {
                 if (allowSave) {
-                    createPoliticalBodyAdmin(location, politicalBodyType, party, null, election, election.getStartDate(), null, returenNotCreateJsonArray);
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, null, election, election.getStartDate(), email, returenNotCreateJsonArray);
                 }
             } else {
                 if (allowSave) {
-                    createPoliticalBodyAdmin(location, politicalBodyType, party, persons.get(0), election, election.getStartDate(), null, returenJsonArray);
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, persons.get(0), election, election.getStartDate(), email, returenJsonArray);
                 }
             }
         }
