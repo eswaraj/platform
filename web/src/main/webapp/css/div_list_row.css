@@ -743,7 +743,7 @@ cursor: pointer !important;
 }
 
 .user_dash_left_pane{
-width: 21%;
+width: 22%;
 padding-left: 15px;
 padding-right: 10px;
 float: left;
@@ -751,7 +751,7 @@ margin-bottom: 40px;
 }
 
 .user_dash_mid_pane{
-width: 51%;
+width: 50%;
 padding-left: 5px;
 float: left;
 }
