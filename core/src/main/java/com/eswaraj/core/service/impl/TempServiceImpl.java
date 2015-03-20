@@ -681,4 +681,32 @@ public class TempServiceImpl extends BaseService implements TempService {
         return returenJsonArray;
     }
 
+    @Override
+    public JsonArray updateWardMemberPhotos(String body) throws ApplicationException {
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = jsonParser.parse(body).getAsJsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String name = jsonObject.get("name").getAsString();
+            int wardNumber = jsonObject.get("ward_number").getAsInt();
+            if (wardNumber >= 75) {
+                System.out.println("Not Updating :-    Name : " + name + ", ward Number : " + wardNumber);
+                continue;
+            }
+            System.out.println("Name : " + name + ", ward Number : " + wardNumber);
+            String profilePhoto = "http://bbmp.gov.in/councillors-contact-details?p_p_id=councillors_WAR_councillorsportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=getimage&p_p_cacheability=cacheLevelPage&p_p_col_id=column-2&p_p_col_count=1&_councillors_WAR_councillorsportlet_action=serveResource&_councillors_WAR_councillorsportlet_filename="+wardNumber+".jpg&_councillors_WAR_councillorsportlet_keywords=&_councillors_WAR_councillorsportlet_resetCur=false&_councillors_WAR_councillorsportlet_cur=2&_councillors_WAR_councillorsportlet_advancedSearch=false&_councillors_WAR_councillorsportlet_andOperator=true&_councillors_WAR_councillorsportlet_delta=75";
+
+            List<Person> persons = personRepository.findPersonsByName(name);
+
+            if (persons.size() == 1) {
+                Person person = persons.get(0);
+                person.setProfilePhoto(profilePhoto);
+                person = savePerson(person);
+            }
+
+        }
+        System.out.println("********");
+        return jsonArray;
+    }
+
 }

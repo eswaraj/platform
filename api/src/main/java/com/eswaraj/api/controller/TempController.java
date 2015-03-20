@@ -203,6 +203,11 @@ public class TempController extends BaseController {
         return jsonArray.toString();
     }
 
+    @RequestMapping(value = "/api/unknown/leader/updatephoto", method = RequestMethod.POST)
+    public @ResponseBody String updateBanagloreWardPhoto(HttpServletRequest httpServletRequest, @RequestBody String body) throws ApplicationException {
+        JsonArray jsonArray = tempService.updateWardMemberPhotos(body);
+        return jsonArray.toString();
+    }
 
     private void printAll(Set<String> data) {
         System.out.println(" ---------------- ");
