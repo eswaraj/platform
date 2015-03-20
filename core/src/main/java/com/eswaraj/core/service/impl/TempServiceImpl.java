@@ -689,7 +689,7 @@ public class TempServiceImpl extends BaseService implements TempService {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             String name = jsonObject.get("name").getAsString();
             int wardNumber = jsonObject.get("ward_number").getAsInt();
-            if (wardNumber >= 75) {
+            if (wardNumber < 75) {
                 System.out.println("Not Updating :-    Name : " + name + ", ward Number : " + wardNumber);
                 continue;
             }
