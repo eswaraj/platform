@@ -186,14 +186,11 @@
 											</p:outputPanel>
 											<h:panelGrid columns="1">
 												<p:fileUpload id="kmlFileUploader" fileUploadListener="#{locationBean.handleKmlFileUpload}" mode="advanced"
-													dragDropSupport="true" auto="true" update="@form:messages" sizeLimit="20000000" fileLimit="1"
+													dragDropSupport="true" auto="true" update="@form:messages,@form:tabView:kmlTable" sizeLimit="20000000" fileLimit="1"
 													allowTypes="/(\.|\/)(kml)$/" />
 												<p:blockUI block="@form" trigger="kmlFileUploader" update="@form">Uploading<br />
 													<p:graphicImage width="80" value="./images/ajax-loader.gif" />
 												</p:blockUI>
-                                                <p:blockUI block="@form" trigger="kmlTable">Refreshing<br />
-                                                    <p:graphicImage width="80" value="./images/ajax-loader.gif" />
-                                                </p:blockUI>
 
 												<p:dataTable id="kmlTable" var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}"
 													selectionMode="single" selection="#{locationBean.selectedKml}" rowKey="#{oneBoundaryFile.id}">
