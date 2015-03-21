@@ -121,13 +121,12 @@ float: left;
 
 height: 280px;
 background-color: #FFFFFF;
-margin: 0px 20px 0px 35px;
+margin: 0px 20px 0px 200px;
 
 }
 
 .frame_info_first_span:hover{
 background-color: #F2F2F2;
-
 }
 
 .frame_info_second_span{
@@ -140,7 +139,7 @@ margin: 0px 20px 0px 20px;
 
 .frame_info_second_span:hover{
 background-color: #F2F2F2;
-border: 2px solid #F2F2F2;
+
 }
 
 .close-btn {
