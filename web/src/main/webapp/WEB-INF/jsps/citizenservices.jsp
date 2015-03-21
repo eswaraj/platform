@@ -327,7 +327,7 @@ $('#LawOrder_content_div').on('click', function(){
 
 if ( $( "#citizenservices" ).has( "Electricity_col" ) ) {
 Electricity_img_src = "https://www.youtube.com/watch?v=-5ROxufRE7A"; //Waterurl
-Electricity_infograph_img_src = "{$staticHost/images/electricity.JPG}";
+Electricity_infograph_img_src = "{$staticHost}/images/electricity.JPG}";
 Electricity_content="http://www.lipsum.com/"
 var arr = Electricity_img_src.split('/');
 var url = "http://img.youtube.com/vi/" + arr[4] + "/hqdefault.jpg";
