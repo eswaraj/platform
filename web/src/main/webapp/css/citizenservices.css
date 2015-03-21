@@ -16,18 +16,18 @@ padding-top: 5px;
 }
 
 .video_img{
-width: 400px;
+
 height: 280px;
 max-width: 400px;
 max-height: 280px;
-border-radius: 30px;
+
 }
 
 .frame_header{
 color: #FFFFFF;
 padding: 15px 5px 10px 5px;
 font-size: 30px;
-background: #C2C2C2;
+background: #FFFFFF;
 font-style: bold;
 margin: 0px;
 cursor: pointer;
@@ -77,22 +77,22 @@ margin: 0px 20px 0px 20px;
 }
 
 #Water_col_innnerdiv, #Water_col .frame_header,#Water_col .frame_content,#Water_col  .img_video_box,#Water_col   .frame_info_link{
-background-color: #74BBFB;
+background-color: #FFFFFF;
 }
 #LawOrder_col_innnerdiv, #LawOrder_col .frame_header,#LawOrder_col .frame_content,#LawOrder_col  .img_video_box,#LawOrder_col   .frame_info_link{
-background-color: #FFB69E;
+background-color: #FFFFFF;
 }
 #Electricity_col_innnerdiv, #Electricity_col .frame_header,#Electricity_col .frame_content,#Electricity_col  .img_video_box,#Electricity_col   .frame_info_link{
-background-color: #5BD0AC;
+background-color: #FFFFFF;
 }
 #Roads_col_innnerdiv, #Roads_col .frame_header,#Roads_col .frame_content,#Roads_col  .img_video_box,#Roads_col   .frame_info_link{
-background-color: #DF82A0;
+background-color: #FFFFFF;
 }
 #SewerageSanitation_col_innnerdiv, #SewerageSanitation_col .frame_header,#SewerageSanitation_col .frame_content,#SewerageSanitation_col  .img_video_box,#SewerageSanitation_col   .frame_info_link{
-background-color: #CFB1FA;
+background-color: #FFFFFF;
 }
 #Transportation_col_innnerdiv, #Transportation_col .frame_header,#Transportation_col .frame_content,#Transportation_col  .img_video_box,#Transportation_col   .frame_info_link{
-background-color: #E889F0;
+background-color: #FFFFFF;
 }
 
 .play_video_image{
@@ -118,27 +118,24 @@ height: 500px;
 
 .frame_info_first_span{
 float: left;
-border: 2px solid #D2D2D2;
+
 height: 280px;
-background-color: #D2D2D2;
+background-color: #FFFFFF;
 margin: 0px 20px 0px 35px;
-border-radius: 30px;
-width: 400px;
+
 }
 
 .frame_info_first_span:hover{
 background-color: #F2F2F2;
-border: 2px solid #F2F2F2;
+
 }
 
 .frame_info_second_span{
 float: left;
-border: 2px solid #D2D2D2;
 height: 280px;
-background-color: #D2D2D2;
+background-color: #FFFFFF;
 margin: 0px 20px 0px 20px;
-border-radius: 30px;
-width: 400px;
+
 }
 
 .frame_info_second_span:hover{
