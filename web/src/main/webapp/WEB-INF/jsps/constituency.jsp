@@ -188,7 +188,7 @@
 																<a type="button" href="#!" title="Location View">
 																<div class="cons_location_name">
 																	<span class="location_text_adjust">${location.name}</span>
-																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image"> 
+																	<!-- <img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">  -->
 																</div>
 																</a>	
 															<c:if test="${viewType eq 'list'}">
