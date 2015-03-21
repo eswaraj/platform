@@ -118,8 +118,7 @@ height: 500px;
 
 .frame_info_first_span{
 float: left;
-
-height: 280px;
+width:200px;
 background-color: #FFFFFF;
 margin: 0px 20px 0px 200px;
 
