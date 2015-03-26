@@ -78,13 +78,14 @@
 
 												<div class="reporter_profile_data">
 													<div class="cons_issue_reporters_box_pic">
-														<c:if test="${!empty user.person.profilePhoto}">
+													<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image" width="226px;"> 
+														<!-- <c:if test="${!empty user.person.profilePhoto}">
 															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
 														</c:if>
 														<c:if test="${empty user.person.profilePhoto}">
 															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
-														</c:if>
-														<p class="center-align">
+														</c:if> -->
+														<!-- <p class="center-align">
 														<c:if test="${!empty user.person.profilePhoto}">
 															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
 															<c:if test="${!empty age}">
@@ -99,7 +100,7 @@
 														<c:if test="${empty user.person.profilePhoto}">
 															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
 														</c:if>
-														</p>
+														</p> -->
 														<div class="complaints_followers_counter">
 														<p class="reporter_total_complaints">
 															<span class="grey_text">Complaints</span> <br /> 
@@ -117,7 +118,7 @@
 													</div>
 												</div>
 
-												<div class="list-group">
+											<!-- 	<div class="list-group">
 												
 													<div class="filter_types">
 													<p>
@@ -178,7 +179,7 @@
 													
 													</div>
 
-												</div>
+												</div> -->
 											</div>
 											<div class="constituency_mid_pane">
 												<div class="listing-wrapper">
@@ -187,7 +188,7 @@
 																<a type="button" href="#!" title="Location View">
 																<div class="cons_location_name">
 																	<span class="location_text_adjust">${location.name}</span>
-																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image"> 
+																	<!-- <img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">  -->
 																</div>
 																</a>	
 															<c:if test="${viewType eq 'list'}">

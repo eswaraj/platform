@@ -128,9 +128,11 @@ public class TempServiceImpl extends BaseService implements TempService {
         switch(partyName){
 
         case "Congress":
+        case "INC":
             return "INDIAN NATIONAL CONGRESS";
         case "JD s":
         case "JD S":
+        case "JD(S)":
             return "Janata Dal (Secular)";
         case "BJP":
             return "BHARTIYA JANTA PARTY";
@@ -577,6 +579,134 @@ public class TempServiceImpl extends BaseService implements TempService {
         printAll(wards);
         returenJsonArray.add(returenNotCreateJsonArray);
         return returenJsonArray;
+    }
+
+    @Override
+    public JsonArray createLocationAndMlaRecord(String body) throws ApplicationException {
+        String stateName = "Karnataka";
+        String politicalBodyTypeName = "MLA";
+        String electionName = "Karnataka Assembly Elections 2013";
+        String locationTypeNameToBeCreated = "Assembly Constituency";
+        return createLocationAndLeaderRecord(body, politicalBodyTypeName, electionName, stateName, locationTypeNameToBeCreated);
+    }
+
+    private JsonArray createLocationAndLeaderRecord(String body, String politicalBodyTypeName, String electionName, String parentLocationName, String locationTypeName) throws ApplicationException {
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = jsonParser.parse(body).getAsJsonArray();
+        Set<String> parties = new TreeSet<String>();
+        Set<String> locations = new TreeSet<String>();
+        boolean allowSave = true;
+        Map<String, Location> existingLocationMap = new HashMap<String, Location>();
+        Map<String, Party> existingPartyMap = new HashMap<String, Party>();
+        Party party = null;
+        Location parentLocation = locationRepository.findLocationByName("(?i)" + parentLocationName);
+        if (parentLocation == null) {
+            throw new ApplicationException(parentLocationName + " Location Not found");
+        }
+
+        PoliticalBodyType politicalBodyType = politicalBodyTypeRepository.findByPropertyValue("shortName", politicalBodyTypeName);
+        if (politicalBodyType == null) {
+            politicalBodyType = politicalBodyTypeRepository.findByShortName("(?i)" + politicalBodyTypeName);
+        }
+        if (politicalBodyType == null) {
+            throw new ApplicationException(politicalBodyTypeName + " Political Body Type Not found");
+        }
+        Election election = electionRepository.findByName("(?i)" + electionName);
+        if (election == null) {
+            throw new ApplicationException("No Election found for name " + electionName);
+        }
+
+        JsonArray returenJsonArray = new JsonArray();
+        JsonArray returenNotCreateJsonArray = new JsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String name = jsonObject.get("name").getAsString();
+            String partyName = getPartyName(jsonObject);
+            String constituency = jsonObject.get("constituency").getAsString();
+            String address = jsonObject.get("address").getAsString();
+            String mobile = null;
+            if (jsonObject.get("phone") != null) {
+                mobile = jsonObject.get("phone").getAsString();
+            }
+
+            String email = null;
+            if (jsonObject.get("email") != null) {
+                email = jsonObject.get("email").getAsString();
+                if (email.trim().equals("")) {
+                    email = null;
+                }
+            }
+            String profilePhoto = null;
+            if (jsonObject.get("photo") != null) {
+                profilePhoto = jsonObject.get("photo").getAsString();
+            }
+
+            parties.add(partyName);
+            locations.add(constituency);
+
+            Location location = null;
+            if (allowSave) {
+                party = createParty(existingPartyMap, partyName);
+                location = createLocation(existingLocationMap, constituency, locationTypeName, parentLocation, false);
+            }
+            List<Person> persons = personRepository.findPersonsByName(name);
+
+            if (persons.isEmpty()) {
+                Person person = new Person();
+                person.setName(name);
+                person.setMobileNumber1(mobile);
+                person.setProfilePhoto(profilePhoto);
+                person.setBiodata("<b>Address : </b> " + address);
+                if (allowSave) {
+                    person = savePerson(person);
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, person, election, election.getStartDate(), email, returenJsonArray);
+                }
+            } else if (persons.size() > 1) {
+                if (allowSave) {
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, null, election, election.getStartDate(), email, returenNotCreateJsonArray);
+                }
+            } else {
+                if (allowSave) {
+                    createPoliticalBodyAdmin(location, politicalBodyType, party, persons.get(0), election, election.getStartDate(), email, returenJsonArray);
+                }
+            }
+        }
+        List<String> allData = new ArrayList<String>();
+        System.out.println("********");
+        allData.addAll(parties);
+        printAll(parties);
+        allData.addAll(locations);
+        printAll(locations);
+        returenJsonArray.add(returenNotCreateJsonArray);
+        return returenJsonArray;
+    }
+
+    @Override
+    public JsonArray updateWardMemberPhotos(String body) throws ApplicationException {
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = jsonParser.parse(body).getAsJsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String name = jsonObject.get("name").getAsString();
+            int wardNumber = jsonObject.get("ward_number").getAsInt();
+            if (wardNumber < 75) {
+                System.out.println("Not Updating :-    Name : " + name + ", ward Number : " + wardNumber);
+                continue;
+            }
+            System.out.println("Name : " + name + ", ward Number : " + wardNumber);
+            String profilePhoto = "http://bbmp.gov.in/councillors-contact-details?p_p_id=councillors_WAR_councillorsportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=getimage&p_p_cacheability=cacheLevelPage&p_p_col_id=column-2&p_p_col_count=1&_councillors_WAR_councillorsportlet_action=serveResource&_councillors_WAR_councillorsportlet_filename="+wardNumber+".jpg&_councillors_WAR_councillorsportlet_keywords=&_councillors_WAR_councillorsportlet_resetCur=false&_councillors_WAR_councillorsportlet_cur=2&_councillors_WAR_councillorsportlet_advancedSearch=false&_councillors_WAR_councillorsportlet_andOperator=true&_councillors_WAR_councillorsportlet_delta=75";
+
+            List<Person> persons = personRepository.findPersonsByName(name);
+
+            if (persons.size() == 1) {
+                Person person = persons.get(0);
+                person.setProfilePhoto(profilePhoto);
+                person = savePerson(person);
+            }
+
+        }
+        System.out.println("********");
+        return jsonArray;
     }
 
 }

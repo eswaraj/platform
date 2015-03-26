@@ -197,6 +197,17 @@ public class TempController extends BaseController {
         return jsonArray.toString();
     }
 
+    @RequestMapping(value = "/api/unknown/leader/createmlalocation", method = RequestMethod.POST)
+    public @ResponseBody String saveMlaLocationRecordForLeaders(HttpServletRequest httpServletRequest, @RequestBody String body) throws ApplicationException {
+        JsonArray jsonArray = tempService.createLocationAndMlaRecord(body);
+        return jsonArray.toString();
+    }
+
+    @RequestMapping(value = "/api/unknown/leader/updatephoto", method = RequestMethod.POST)
+    public @ResponseBody String updateBanagloreWardPhoto(HttpServletRequest httpServletRequest, @RequestBody String body) throws ApplicationException {
+        JsonArray jsonArray = tempService.updateWardMemberPhotos(body);
+        return jsonArray.toString();
+    }
 
     private void printAll(Set<String> data) {
         System.out.println(" ---------------- ");

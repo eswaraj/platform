@@ -17,4 +17,8 @@ public interface PoliticalBodyTypeRepository extends GraphRepository<PoliticalBo
 
     @Query("match politicalBodyType where politicalBodyType.__type__ = 'PoliticalBodyType' and politicalBodyType.name=~{0}  return politicalBodyType")
     public PoliticalBodyType findByName(String name);
+
+    @Query("match politicalBodyType where politicalBodyType.__type__ = 'PoliticalBodyType' and politicalBodyType.shortName=~{0}  return politicalBodyType")
+    public PoliticalBodyType findByShortName(String name);
+
 }

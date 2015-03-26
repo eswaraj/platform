@@ -2,8 +2,7 @@
 /*list row starts*/
 .list-row {
     padding: 0px;
-    border: 1px solid #f3f3f3;
-	border-radius: 10px;
+   
 	width: 750px;
 	margin-bottom: 15px;
 	background-color: #FFF;
@@ -27,7 +26,7 @@ background-color: #F2F2F2;
 
 .profile_info_adjust{
     padding-left: 2px;
-	border-bottom: 1px solid #D2D2D2;
+	
 }
 
 .list-row .issue-pic {
@@ -81,13 +80,13 @@ background-color: #F2F2F2;
     text-justify: inter-word;
 }
 .whom {
-    font-size: 15px;
+    font-size: 12px;
     line-height: 100%;
 }
 .issue-scope{
 	text-decoration: none;
-	font-size: 20px;
-    font-family: "Arimo",helvetica;
+	font-size: 12px;
+  font-family: "Arimo",helvetica;
 	margin-right: 5px;
 	padding-right: 20px;
 	color: #428bca;
@@ -130,7 +129,7 @@ height:25px;
 }
 
 .postcurrentstatus{
-    max-width: 60px;
+    max-width: 30px;
     width: auto;
     height: auto;
 	}
@@ -160,6 +159,7 @@ padding-left: 20px;
 border-bottom: 1px solid #d2d2d2;
 padding-bottom: 10px;
 margin-bottom: 10px;
+height: 390px;
 }
 
 .list_view_text_margin, .map_view_text_margin, .ay_view_text_margin{
@@ -309,7 +309,7 @@ float: left;
 
 .cons_issue_reporters_box_pic{
 background-color: #ECE9E8;
-height: 130px;
+height: 230px;
 margin-bottom: 10px;
 padding-left: 15px;
 padding-top: 5px;
@@ -382,17 +382,17 @@ margin: 0px 10px 0px 10px;
 }
 
 .location_text_adjust{	
-position: absolute;
+
 padding: 2px 2px 2px 10px;
-color: #FFF;
+color: #000;
 font-weight: 700;
 font-size: 25px;
 }																
 
 .location_image{
-width: 160px;
+width: 227px;
 float: left;
-height: 115px;
+height: 150px;
 }
 
 .constituency_left_pane .bootstrap-tagsinput{
@@ -400,7 +400,7 @@ height: 115px;
 }
 
 .carousel-inner .item{
-text-align: center;
+
 left:50px;
 }
 
@@ -743,7 +743,7 @@ cursor: pointer !important;
 }
 
 .user_dash_left_pane{
-width: 21%;
+width: 22%;
 padding-left: 15px;
 padding-right: 10px;
 float: left;
@@ -751,13 +751,14 @@ margin-bottom: 40px;
 }
 
 .user_dash_mid_pane{
-width: 51%;
+width: 50%;
 padding-left: 5px;
 float: left;
 }
 
 .user_dash_right_pane{
 width: 28%;
+
 padding-left: 0px;
 padding-right: 0px;
 margin-left: -15px;
