@@ -107,7 +107,7 @@
 							</div>
 						</div>
 
-						<div class="list-group">
+					<!-- 	<div class="list-group">
 						
 							<div class="filter_types">
 							<p>
@@ -168,7 +168,7 @@
 							
 							</div>
 
-						</div>
+						</div> -->
 					</div>
 					<div class="platform_constituency_counter">
 						<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Location</span></p>
@@ -220,10 +220,10 @@
 						</table>
 					</div>
 
-					<h3 class="text-footer red_orng_clr_text">Select Position</h3>
+				<!-- 	<h3 class="text-footer red_orng_clr_text">Select Position</h3>
 					<select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
 					</select>
-					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
+					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a> -->
 				</div>
 				<div class="col-sm-6">
 					
