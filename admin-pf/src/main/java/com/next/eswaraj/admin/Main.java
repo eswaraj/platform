@@ -83,6 +83,7 @@ public class Main extends SpringBootServletInitializer {
 
         registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
 
+
         return registration;
     }
 

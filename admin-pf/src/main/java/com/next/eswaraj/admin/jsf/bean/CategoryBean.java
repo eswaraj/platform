@@ -45,13 +45,15 @@ public class CategoryBean {
 
     private TreeNode selectedNode;
 
+    private List<Category> rootCategories;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
     public void init() {
         try {
             logger.info("Getting Location From DB");
-            List<Category> rootCategories = adminService.getAllRootCategories();
+            rootCategories = adminService.getAllRootCategories();
             logger.info("Got  Categories From DB : " + rootCategories);
             root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
             for(Category oneCategory : rootCategories){
@@ -248,5 +250,13 @@ public class CategoryBean {
 
     public void setSelectedNode(TreeNode selectedNode) {
         this.selectedNode = selectedNode;
+    }
+
+    public List<Category> getRootCategories() {
+        return rootCategories;
+    }
+
+    public void setRootCategories(List<Category> rootCategories) {
+        this.rootCategories = rootCategories;
     }
 }
