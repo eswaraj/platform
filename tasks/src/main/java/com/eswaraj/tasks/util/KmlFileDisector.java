@@ -24,7 +24,7 @@ public class KmlFileDisector {
     public static void main(String[] args) throws Exception {
         List<String> files = new ArrayList<>();
         
-        files.add("/usr/local/dev/data/eswaraj/originals/Bangalore_BBMP_Wards_Data.kml");
+        files.add("/usr/local/dev/data/eswaraj/originals/Bangalore_assembly map Urban.kml");
         /*
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiCityRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiDistrictRegions.kml");
@@ -114,40 +114,40 @@ public class KmlFileDisector {
             if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("WARD_NO")) {
                 wardNumber = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("STATE") || node.getAttributes().item(0).getNodeValue().equals("STATE_NAME")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("STATE") || node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("STATE_NAME")) {
                 stateName = node.getTextContent();
             }
 
-            if (node.getAttributes().item(0).getNodeValue().equals("DISTRICT0") || node.getAttributes().item(0).getNodeValue().equals("DIST_NAME")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("DISTRICT0") || node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("DIST_NAME")) {
                 district0Name = node.getTextContent();
             }
-            if(node.getAttributes().item(0).getNodeValue().equals("DISTRICT")){
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("DISTRICT")) {
                 districtName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("WARD_NAME")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("WARD_NAME")) {
                 wardName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("CITY")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("CITY")) {
                 cityName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("MCD_ZONE")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("MCD_ZONE")) {
                 mcdZoneName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("PC_NAME")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("PC_NAME")) {
                 pcName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("AC_NAME")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("AC_NAME")) {
                 acName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("LOCALITY")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("LOCALITY")) {
                 localityName = node.getTextContent();
             }
-            if (node.getAttributes().item(0).getNodeValue().equals("SUB_LOC")) {
+            if (node.getAttributes().item(0).getNodeValue().equalsIgnoreCase("SUB_LOC")) {
                 subLocalityName = node.getTextContent();
             }
 
         }
-        if(stateName != null && stateName.equals("Delhi")){
+        if (stateName != null && stateName.equalsIgnoreCase("Delhi")) {
             stateName = "NCT of Delhi";
             
         }
