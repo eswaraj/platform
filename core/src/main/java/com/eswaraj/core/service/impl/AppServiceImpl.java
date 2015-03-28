@@ -402,7 +402,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 	@Override
 	public List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException {
 		Category category = getObjectIfExistsElseThrowExcetpion(categoryId, "Category", categoryRepository);
-		Collection<Department> departments = departmentRepository.getAllDepartmentsOfCategory(category);
+        List<Department> departments = departmentRepository.getAllRootDepartmentsOfCategory(category);
 		return departmentConvertor.convertBeanList(departments);
 	}
 
