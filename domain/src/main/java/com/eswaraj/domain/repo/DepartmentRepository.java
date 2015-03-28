@@ -1,6 +1,6 @@
 package com.eswaraj.domain.repo;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -10,7 +10,13 @@ import com.eswaraj.domain.nodes.Department;
 
 public interface DepartmentRepository extends GraphRepository<Department>{
 
-	@Query("start category=node({0}) match (category)<-[:UNDER]-(departments) return departments")
-	public Collection<Department> getAllDepartmentsOfCategory(Category category);
+    @Query("start category=node({0}) match (category)<-[:BELONGS]-(departments) where departments.root = true return departments")
+    public List<Department> getAllRootDepartmentsOfCategory(Category category);
+
+    @Query("start department=node({0}) match (department)<-[:UNDER]-(childDepartments) return childDepartments")
+    public List<Department> getAllChildDepartments(Department department);
+
+    @Query("start department=node({0}) match (department)<-[:UNDER]-(childDepartments) return childDepartments")
+    public List<Department> getAllChildDepartments(Long departmentId);
 
 }
