@@ -35,7 +35,6 @@ import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.SettingService;
 import com.eswaraj.core.service.StormCacheAppServices;
-import com.eswaraj.core.service.UrlShortenService;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
 import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
@@ -90,9 +89,6 @@ public class ComplaintController extends BaseController{
 
     @Autowired
     private PoliticalAdminCache politicalAdminCache;
-
-    @Autowired
-    private UrlShortenService urlShortenService;
 
     private JsonParser jsonParser = new JsonParser();
 
