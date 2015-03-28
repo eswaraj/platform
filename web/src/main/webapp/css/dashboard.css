@@ -33,7 +33,7 @@ img{
     border-radius: 50%;
     display: inline-block;
     margin: 0 0 10px 0;
-    border: 3px solid #C9C7C7;
+  
 }
 .profile .read span {
     color: #727272;
@@ -66,7 +66,7 @@ a.edit-fields {
 }
 footer {
     padding: 7px 10px;
-    background: #ee592a;
+    background: #0099cc;
     text-align: center;
     font-size: 12px;
     position: relative;
@@ -201,7 +201,7 @@ footer .sep {
     line-height: 9px;
 }
 .issue-id {
-    color: #ee592a;
+    color: #0099cc;
 }
 .username {
     color: #5E5B5B;

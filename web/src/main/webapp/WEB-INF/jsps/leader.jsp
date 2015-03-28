@@ -26,13 +26,13 @@
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1505507139725051&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-								<img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
+								<!-- <img src="http://www.thelovelyplanet.net/wp-content/uploads/2012/06/tajmahal_india_in_sunset.jpg" style="
 									opacity: 0.4;
 									position: fixed;
 									height: 100%;
 									width: 100%;
 									z-index: -1;
-								">
+								"> -->
 
 <div class="outerwrapper main_content_page">
 		<jsp:include page="header.jsp" />
@@ -107,7 +107,7 @@
 							</div>
 						</div>
 
-						<div class="list-group">
+					<!-- 	<div class="list-group">
 						
 							<div class="filter_types">
 							<p>
@@ -168,7 +168,7 @@
 							
 							</div>
 
-						</div>
+						</div> -->
 					</div>
 					<div class="platform_constituency_counter">
 						<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Location</span></p>
@@ -220,10 +220,10 @@
 						</table>
 					</div>
 
-					<h3 class="text-footer red_orng_clr_text">Select Position</h3>
+				<!-- 	<h3 class="text-footer red_orng_clr_text">Select Position</h3>
 					<select class="select dropdownlist dlist_width" ng-options="position as label(position.politicalBodyType, position.locationName) for position in positions" ng-model="selectedPosition" ng-change="onPositionSelected()">
 					</select>
-					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a>
+					<a href="#" class="list-group-item active refresh_button" ng-click="onRefresh()">Refresh</a> -->
 				</div>
 				<div class="col-sm-6">
 					

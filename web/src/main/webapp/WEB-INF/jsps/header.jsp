@@ -15,7 +15,7 @@
 					</button>
 					<a class="navbar-brand" href="/index.html">
 						<img src="${staticHost}/images/eswaraj-dashboard-logo.png" class="pull-left" alt="">
-						<span pull-left="">e-Swaraj</span>
+						<!-- <span pull-left="">e-Swaraj</span> -->
 					</a>
 				</div>
 				<div class="collapse navbar-collapse">
