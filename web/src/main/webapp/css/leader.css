@@ -25,7 +25,7 @@ color: #428bca;
 }
 
 .red_orng_clr_text{
-color: #FC7A4B;
+color: #266dd3;
 font-weight: 700;
 }
 
@@ -36,8 +36,7 @@ color: #777;
 .leader-profile-pic{
 width: 90px;
 float: left;
-border: 1px solid #ccc;
-border-radius: 10px;
+
 }
 
 .leader_profile_edu{
@@ -55,8 +54,7 @@ min-height: 100px;
 margin-bottom: 10px;
 padding-left: 15px;
 padding-top: 5px;
-border-bottom-right-radius: 10px;
-border-bottom-left-radius: 10px;
+
 position: relative;
 }
 
@@ -81,8 +79,7 @@ text-align: center;
 padding: 15px;
 padding-right: 2px;
 font-size: 13px;
-border-top-right-radius: 10px;
-border-top-left-radius: 10px;
+
 }
 
 .name-top-adjust{
@@ -723,8 +720,7 @@ width: 100%;
 padding: 5px 0px 15px 15px;
 margin-top: 0px;
 background-color: #FFF;
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
+
 }
 
 .listing{
@@ -750,7 +746,7 @@ text-align: center;
 padding-top: 10px;
 margin: 0px;
 padding-bottom: 10px;
-background-color: #5bc0de;
+background-color: #a9e4f9;
 }
 
 .about-mla.hidden-xs .desc-wrapper{
@@ -762,10 +758,9 @@ text-align: center;
 padding-top: 10px;
 margin: 0px;
 padding-bottom: 10px;
-background-color: #5bc0de;
+background-color: #a9e4f9;
 margin-top: 10px;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
+
 }
 
 .mla_calendar_head{
@@ -773,10 +768,9 @@ text-align: center;
 padding-top: 10px;
 margin: 0px;
 padding-bottom: 10px;
-background-color: #5bc0de;
+background-color: #a9e4f9;
 margin-top: 25px;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
+
 }
 
 .btn-info {
