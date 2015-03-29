@@ -11,13 +11,14 @@ import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -106,8 +107,12 @@ public class DepartmentBean extends BaseBean {
 
     }
 
-    public void handleCategoryChange(ValueChangeEvent event) {
-        System.out.println("handleCategoryChange here " + event.getNewValue());
+    public void handleCategoryChange(AjaxBehaviorEvent event) {
+        System.out.println("handleCategoryChange here " + event.getClass());
+        if (event instanceof ItemSelectEvent) {
+            System.out.println("handleCategoryChange getItemIndex " + ((ItemSelectEvent) event).getItemIndex());
+            System.out.println("handleCategoryChange getSeriesIndex " + ((ItemSelectEvent) event).getSeriesIndex());
+        }
     }
 
     public void onNodeExpand(NodeExpandEvent event) {
