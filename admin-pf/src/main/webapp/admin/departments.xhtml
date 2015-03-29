@@ -61,7 +61,7 @@
 								<p:ajax event="expand" update=":department_form:messages" listener="#{departmentBean.onNodeExpand}" />
 								<p:ajax event="collapse" update=":department_form:messages" listener="#{departmentBean.onNodeCollapse}" />
 								<p:ajax event="select"
-									update=":department_form:formView,:department_form:tabView:mapPanel,:department_form:contextMenu,:department_form:buttonPanel"
+									update=":department_form:formView,:department_form:tabView:mapPanel"
 									listener="#{departmentBean.onNodeSelect}" />
 								<p:ajax event="unselect" update=":department_form:formView" listener="#{departmentBean.onNodeUnselect}" />
 
@@ -114,13 +114,13 @@
                                                 value="#{departmentBean.selectedDepartmentNode.data.department.website}" style="width:200px" />
                                                 
                                                <p:outputLabel value="LandLine 1 : " />
-	                                           <p:outputText value="#{departmentBean.selectedDepartmentNode.data.department.landLine1}" />
+	                                           <p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.landLine1}" />
 	                                           <p:outputLabel value="LandLine 2 : " />
-                                               <p:outputText value="#{departmentBean.selectedDepartmentNode.data.department.landLine2}" />
+                                               <p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.landLine2}" />
 	                                           <p:outputLabel value="Mobile 1 : " />
-	                                           <p:outputText value="#{departmentBean.selectedDepartmentNode.data.department.mobile1}" />
+	                                           <p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.mobile1}" />
 	                                           <p:outputLabel value="Mobile 2 : " />
-	                                           <p:outputText value="#{departmentBean.selectedDepartmentNode.data.department.mobile2}" />
+	                                           <p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.mobile2}" />
 	                                           
 
 
@@ -133,11 +133,11 @@
                                                 value="#{departmentBean.selectedDepartmentNode.data.department.address.line1}" style="width:200px" />
 
                                             <p:outputLabel value="Address Line 2"></p:outputLabel>
-                                            <p:inputText id="line1"
+                                            <p:inputText id="line2"
                                                 value="#{departmentBean.selectedDepartmentNode.data.department.address.line2}" style="width:200px" />
 
                                             <p:outputLabel value="Address Line 3"></p:outputLabel>
-                                            <p:inputText id="line1"
+                                            <p:inputText id="line3"
                                                 value="#{departmentBean.selectedDepartmentNode.data.department.address.line3}" style="width:200px" />
 
                                             <p:outputLabel value="Postal Code"></p:outputLabel>

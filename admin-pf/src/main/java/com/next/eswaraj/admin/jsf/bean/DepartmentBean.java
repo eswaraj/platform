@@ -547,14 +547,6 @@ public class DepartmentBean extends BaseBean {
         this.locationBoundaryFiles = locationBoundaryFiles;
     }
 
-    public TreeNode getSelectedLocationNode() {
-        return selectedDepartmentNode;
-    }
-
-    public void setSelectedLocationNode(TreeNode selectedLocationNode) {
-        this.selectedDepartmentNode = selectedLocationNode;
-    }
-
     public LocationBoundaryFile getSelectedKml() {
         return selectedKml;
     }
@@ -580,5 +572,13 @@ public class DepartmentBean extends BaseBean {
 
     public void setSelectedCategory(Category selectedCategory) {
         this.selectedCategory = selectedCategory;
+    }
+
+    public TreeNode getSelectedDepartmentNode() {
+        return selectedDepartmentNode;
+    }
+
+    public void setSelectedDepartmentNode(TreeNode selectedDepartmentNode) {
+        this.selectedDepartmentNode = selectedDepartmentNode;
     }
 }
