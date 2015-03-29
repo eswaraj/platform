@@ -155,15 +155,25 @@
 
                                         </h:panelGrid>
                                         <h:panelGrid columns="2">
+                                            <p:outputPanel id="locationPanel">
+                                            <p:tree value="#{departmentBean.locationRoot}" var="oneLocation" id="checkboxTree"  
+										            selectionMode="checkbox"  
+										            selection="#{departmentBean.selectedDepartmentNodes}">  
+										  
+										        <p:treeNode>  
+										            <h:outputText value="#{oneLocation.name}" />  
+										        </p:treeNode>  
+										    </p:tree>
+                                            </p:outputPanel>
                                             <p:outputPanel id="mapPanel">
                                                 <p:gmap id="gmap" center="#{departmentBean.lat}, #{departmentBean.lng}"
                                                     zoom="10" type="HYBRID"
                                                     rendered="#{not empty departmentBean.selectedDepartmentNode}" model="#{departmentBean.draggableModel}"
-                                                    style="width:500px;height:500px">
+                                                    style="width:700px;height:500px">
                                                     <p:ajax event="markerDrag" listener="#{departmentBean.onMarkerDrag}"
                                                         update="@form:tabView:longitude,@form:tabView:latitude" />
                                                     <p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
-                                                    <p:ajax event="stateChange" listener="#{departmentBean.onStateChange}" update="@form:tabView" />
+                                                    <p:ajax event="stateChange" listener="#{departmentBean.onStateChange}"/>
 
                                                 </p:gmap>
 

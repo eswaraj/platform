@@ -880,4 +880,9 @@ public class AdminServiceImpl implements AdminService {
         department.setDateModified(new Date());
         return departmentRepository.save(department);
     }
+
+    @Override
+    public List<Location> getAllLocations() throws ApplicationException {
+        return convertToList(locationRepository.findAll());
+    }
 }

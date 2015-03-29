@@ -1,6 +1,10 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
@@ -69,10 +73,12 @@ public class DepartmentBean extends BaseBean {
     private FileService fileService;
 
     private TreeNode root;
+    private TreeNode locationRoot;
 
     private TreeNode selectedNode;
 
     private TreeNode selectedDepartmentNode;
+    private TreeNode[] selectedDepartmentNodes;
 
     private MapModel draggableModel;
 
@@ -96,12 +102,48 @@ public class DepartmentBean extends BaseBean {
             draggableModel = new DefaultMapModel();
             defaultLatLong();
             createMarker();
+            loadLocations();
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void loadLocations() throws ApplicationException {
+        locationRoot = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
+        List<Location> allLocations = adminService.getAllLocations();
+        Map<String, Object> locationMap = new HashMap<String, Object>();
+        Location rootLocation = null;
+        for (Location oneLocation : allLocations) {
+            locationMap.put(oneLocation.getId().toString(), oneLocation);
+            if(oneLocation.getParentLocation() == null){
+                rootLocation = oneLocation;
+            }else{
+                String locationChildKey = oneLocation.getParentLocation().getId()+"_Children";
+                Set<Location> childLocations = (Set<Location>) locationMap.get(locationChildKey);
+                if (childLocations == null) {
+                    childLocations = new TreeSet<Location>();
+                    locationMap.put(locationChildKey, childLocations);
+                }
+                childLocations.add(oneLocation);
+            }
+        }
+        TreeNode indiaRootNode = new CustomTreeNode(new Document(rootLocation.getName(), "-", "Folder", rootLocation), root);
+        addChildLocations(rootLocation, locationMap, indiaRootNode);
+    }
+
+    private void addChildLocations(Location currentLocation, Map<String, Object> locationMap, TreeNode parentTreeNode) {
+        String locationChildKey = currentLocation.getId() + "_Children";
+        Set<Location> childLocations = (Set<Location>) locationMap.get(locationChildKey);
+        if (childLocations == null) {
+            return;
+        }
+        for (Location oneLocation : childLocations) {
+            TreeNode newNode = new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), parentTreeNode);
+            addChildLocations(oneLocation, locationMap, newNode);
+        }
     }
 
     public void handleCategoryChange(AjaxBehaviorEvent event) {
@@ -204,7 +246,11 @@ public class DepartmentBean extends BaseBean {
         draggableModel.getMarkers().clear();
         draggableModel.getPolygons().clear();
         // Draggable
-        draggableModel.addOverlay(new Marker(coord1, "Department Location"));
+        Marker marker = new Marker(coord1, "Department Location");
+        draggableModel.addOverlay(marker);
+        for (Marker premarker : draggableModel.getMarkers()) {
+            premarker.setDraggable(true);
+        }
     }
 
     private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
@@ -587,5 +633,21 @@ public class DepartmentBean extends BaseBean {
 
     public void setSelectedDepartmentNode(TreeNode selectedDepartmentNode) {
         this.selectedDepartmentNode = selectedDepartmentNode;
+    }
+
+    public TreeNode getLocationRoot() {
+        return locationRoot;
+    }
+
+    public void setLocationRoot(TreeNode locationRoot) {
+        this.locationRoot = locationRoot;
+    }
+
+    public TreeNode[] getSelectedDepartmentNodes() {
+        return selectedDepartmentNodes;
+    }
+
+    public void setSelectedDepartmentNodes(TreeNode[] selectedDepartmentNodes) {
+        this.selectedDepartmentNodes = selectedDepartmentNodes;
     }
 }

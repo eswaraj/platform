@@ -47,6 +47,8 @@ public interface AdminService {
 
     List<Location> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
 
+    List<Location> getAllLocations() throws ApplicationException;
+
     List<LocationBoundaryFile> getLocationBoundaryFiles(Long locationId) throws ApplicationException;
 
     List<Location> findLocationByParentLocationAndLocationType(Long parentLocationId, Long locationTypeId) throws ApplicationException;
