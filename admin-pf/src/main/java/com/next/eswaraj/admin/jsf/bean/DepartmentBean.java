@@ -57,6 +57,8 @@ import com.next.eswaraj.admin.service.AdminService;
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "view")
 public class DepartmentBean extends BaseBean {
 
+    private static final long serialVersionUID = 1L;
+
     @Autowired
     private AdminService adminService;
 
@@ -172,17 +174,8 @@ public class DepartmentBean extends BaseBean {
 
     public void onNodeSelect(NodeSelectEvent event) {
         TreeNode nodeSelected = event.getTreeNode();
-        Object data = nodeSelected.getData();
-        if (data instanceof DepartmentDocument) {
-            selectedDepartmentNode = nodeSelected;
-            draggableModel.getMarkers().clear();
-            draggableModel.getPolygons().clear();
-            DepartmentDocument document = (DepartmentDocument) data;
-
-
-            Department location = document.getDepartment();
-            // refreshKmls(location);
-        }
+        selectedDepartmentNode = nodeSelected;
+        System.out.println("selectedDepartmentNode= " + selectedDepartmentNode);
     }
 
     private void refreshKmls(Location location) throws ApplicationException {

@@ -60,8 +60,7 @@
 								selection="#{departmentBean.selectedNode}">
 								<p:ajax event="expand" update=":department_form:messages" listener="#{departmentBean.onNodeExpand}" />
 								<p:ajax event="collapse" update=":department_form:messages" listener="#{departmentBean.onNodeCollapse}" />
-								<p:ajax event="select"
-									update=":department_form:formView,:department_form:tabView:mapPanel"
+								<p:ajax event="select" update=":department_form:formView,:department_form:tabView:mapPanel"
 									listener="#{departmentBean.onNodeSelect}" />
 								<p:ajax event="unselect" update=":department_form:formView" listener="#{departmentBean.onNodeUnselect}" />
 
@@ -147,15 +146,12 @@
                                         <h:panelGrid columns="6">
                                             <p:outputLabel value="Latitude"></p:outputLabel>
                                             <p:inputText disabled="true" id="latitude"
-                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.latitude}" style="width:200px" />
+                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.lattitude}" style="width:200px" />
 
                                             <p:outputLabel value="Longitude"></p:outputLabel>
                                             <p:inputText disabled="true" id="longitude"
                                                 value="#{departmentBean.selectedDepartmentNode.data.department.address.longitude}" style="width:200px" />
 
-                                            <p:outputLabel value="Depth"></p:outputLabel>
-                                            <p:inputText disabled="true" id="depth" value="#{departmentBean.selectedDepartmentNode.data.department.address.depth}"
-                                                style="width:200px" />
                                         </h:panelGrid>
                                         <h:panelGrid columns="2">
                                             <p:outputPanel id="mapPanel">
