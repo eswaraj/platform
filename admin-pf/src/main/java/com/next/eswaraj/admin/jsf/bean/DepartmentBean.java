@@ -94,7 +94,7 @@ public class DepartmentBean extends BaseBean {
         Location location;
         try {
             categoryConvertor.setCategories(adminService.getAllRootCategories());
-            
+            defaultLatLong();
 
             draggableModel = new DefaultMapModel();
         } catch (Exception e) {
@@ -115,6 +115,7 @@ public class DepartmentBean extends BaseBean {
 
     private void loadCategoryData(Category category) throws ApplicationException {
         List<Department> categoryDeaprtments = adminService.getAllRootDepartmentsOfcategory(category);
+        System.out.println();
         root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
         for (Department oneDepartment : categoryDeaprtments) {
             new CustomTreeNode(new DepartmentDocument(oneDepartment.getName(), "-", "Folder", oneDepartment), root);
@@ -183,21 +184,22 @@ public class DepartmentBean extends BaseBean {
         createMarkerAndKmlBoundary(location, selectedKml);
     }
 
-    private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+    private void defaultLatLong() {
         logger.info("lat={}", lat);
         logger.info("lng={}", lng);
         if (lat == null || lat == 0.0) {
             lat = 28.871187;
-            location.setLatitude(lat);
         }
         if (lng == null || lng == 0.0) {
             lng = 77.095337;
-            location.setLongitude(lng);
         }
         logger.info("lat={}", lat);
         logger.info("lng={}", lng);
+    }
+
+    private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
+        lat = location.getLatitude();
+        lng = location.getLongitude();
 
         LatLng coord1 = new LatLng(lat, lng);
 

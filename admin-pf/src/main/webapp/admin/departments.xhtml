@@ -46,7 +46,7 @@
 					<f:selectItem itemLabel="Select One" itemValue="" />
 					<f:selectItems value="#{jsfCategoryConvertor.categories}" var="oneReult" itemLabel="#{oneReult.name}"
 						itemValue="#{oneReult}" />
-					<p:ajax listener="#{departmentBean.handleCategoryChange}" />
+					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form:treeView" />
 				</p:selectOneMenu>
 
 				<p:commandButton id="createDepartment" value="Create Department" update="@form" actionListener="#{departmentBean.createDepartment}"
