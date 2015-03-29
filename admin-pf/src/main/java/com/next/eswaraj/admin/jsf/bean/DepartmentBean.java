@@ -1,5 +1,6 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +125,12 @@ public class DepartmentBean extends BaseBean {
                 String locationChildKey = oneLocation.getParentLocation().getId()+"_Children";
                 Set<Location> childLocations = (Set<Location>) locationMap.get(locationChildKey);
                 if (childLocations == null) {
-                    childLocations = new TreeSet<Location>();
+                    childLocations = new TreeSet<Location>(new Comparator<Location>() {
+                        @Override
+                        public int compare(Location o1, Location o2) {
+                            return o1.getName().compareTo(o2.getName());
+                        }
+                    });
                     locationMap.put(locationChildKey, childLocations);
                 }
                 childLocations.add(oneLocation);
