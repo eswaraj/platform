@@ -1,6 +1,7 @@
 package com.eswaraj.domain.nodes;
 
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -25,6 +26,7 @@ public class Department extends BaseNode {
     @RelatedTo(type = "UNDER")
     private Department parentDepartment;
     @RelatedTo(type = "DEPT_ADDRESS")
+    @Fetch
     private Address address;
     private boolean root;
 
@@ -147,7 +149,9 @@ public class Department extends BaseNode {
         this.parentDepartment = parentDepartment;
     }
     @Override
-	public String toString() {
-		return "Department [Name=" + name + ", description=" + description + "]";
-	}
+    public String toString() {
+        return "Department [name=" + name + ", description=" + description + ", category=" + category + ", parentDepartment=" + parentDepartment + ", address=" + address + ", root=" + root
+                + ", email=" + email + ", fbPage=" + fbPage + ", twitterHandle=" + twitterHandle + ", website=" + website + ", landLine1=" + landLine1 + ", landLine2=" + landLine2 + ", mobile1="
+                + mobile1 + ", mobile2=" + mobile2 + "]";
+    }
 }

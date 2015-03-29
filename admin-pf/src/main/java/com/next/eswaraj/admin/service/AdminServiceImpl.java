@@ -871,4 +871,13 @@ public class AdminServiceImpl implements AdminService {
     public List<Department> getAllChildDepartments(Long departmentId) throws ApplicationException {
         return departmentRepository.getAllChildDepartments(departmentId);
     }
+
+    @Override
+    public Department saveDepartment(Department department) throws ApplicationException {
+        if (department.getDateCreated() == null) {
+            department.setDateCreated(new Date());
+        }
+        department.setDateModified(new Date());
+        return departmentRepository.save(department);
+    }
 }

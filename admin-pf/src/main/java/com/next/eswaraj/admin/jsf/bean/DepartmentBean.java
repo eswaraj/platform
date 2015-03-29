@@ -1,6 +1,5 @@
 package com.next.eswaraj.admin.jsf.bean;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -44,6 +43,7 @@ import org.w3c.dom.NodeList;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
+import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Location;
@@ -290,14 +290,15 @@ public class DepartmentBean extends BaseBean {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    public void saveLocation() {
-        System.out.println("saving Location " + selectedNode.getData());
-        Document document = (Document) selectedNode.getData();
-        document.setName(document.getLocation().getName());
+    public void saveDepartment() {
+        System.out.println("saving Department " + selectedNode.getData());
+        DepartmentDocument document = (DepartmentDocument) selectedNode.getData();
+        document.setName(document.getDepartment().getName());
         try {
-            System.out.println("LocationType " + document.getLocation().getLocationType());
-            Location location = adminService.saveLocation(document.getLocation());
-            document.setLocation(location);
+            Department department = document.getDepartment();
+            System.out.println("Department " + department);
+            department = adminService.saveDepartment(document.getDepartment());
+            document.setDepartment(department);
         } catch (Exception e) {
             sendErrorMessage("Error", e.getMessage(), e);
             e.printStackTrace();
@@ -456,8 +457,7 @@ public class DepartmentBean extends BaseBean {
         department.setName("New");
         department.setRoot(isRoot);
         department.setCategory(selectedCategory);
-        department.setDateCreated(new Date());
-        department.setDateModified(new Date());
+        department.setAddress(new Address());
         if (!isRoot) {
             department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
         }
