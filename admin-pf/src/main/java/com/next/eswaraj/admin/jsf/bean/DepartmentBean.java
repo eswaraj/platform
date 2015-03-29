@@ -272,19 +272,19 @@ public class DepartmentBean extends BaseBean {
     public void onStateChange(StateChangeEvent event) {
         LatLngBounds bounds = event.getBounds();
         int zoomLevel = event.getZoomLevel();
-        ((Document) selectedDepartmentNode.getData()).getLocation().setDepth(zoomLevel);
+        // ((DepartmentDocument) selectedDepartmentNode.getData()).getLocation().setDepth(zoomLevel);
     }
 
     public void onMarkerDrag(MarkerDragEvent event) {
         Marker marker = event.getMarker();
         logger.info("onMarkerDrag");
-        if (selectedNode.getData() instanceof Document) {
+        if (selectedNode.getData() instanceof DepartmentDocument) {
             logger.info("Updating Lat Long {} {} ", marker.getLatlng().getLat(), marker.getLatlng().getLng());
             lat = marker.getLatlng().getLat();
             lng = marker.getLatlng().getLng();
-            Document document = (Document) selectedNode.getData();
-            document.getLocation().setLatitude(marker.getLatlng().getLat());
-            document.getLocation().setLongitude(marker.getLatlng().getLng());
+            DepartmentDocument document = (DepartmentDocument) selectedNode.getData();
+            document.getDepartment().getAddress().setLattitude(marker.getLatlng().getLat());
+            document.getDepartment().getAddress().setLongitude(marker.getLatlng().getLng());
         }
 
     }
