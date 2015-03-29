@@ -164,6 +164,7 @@ public class DepartmentBean extends BaseBean {
         System.out.println("selected Category " + selectedCategory);
         try {
             loadCategoryData(selectedCategory);
+            selectedDepartmentNode = null;
         } catch (ApplicationException e) {
             sendErrorMessage("Error Loading Catgeory", e.getMessage(), e);
         }
@@ -242,7 +243,9 @@ public class DepartmentBean extends BaseBean {
                 locationIds.add(oneLocation.getId());
             }
             System.out.println("Lets Select Unselect TreeNode");
-            selectUnSelectNode(locationRoot, locationIds);
+            for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
+                selectUnSelectNode(oneChildTreeNode, locationIds);
+            }
 
         } catch (Exception ex) {
             sendErrorMessage("Error", "Unable to Select Locations", ex);
