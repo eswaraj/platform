@@ -93,10 +93,11 @@ public class DepartmentBean extends BaseBean {
     public void init() {
         try {
             categoryConvertor.setCategories(adminService.getAllRootCategories());
+            draggableModel = new DefaultMapModel();
             defaultLatLong();
             createMarker();
 
-            draggableModel = new DefaultMapModel();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
