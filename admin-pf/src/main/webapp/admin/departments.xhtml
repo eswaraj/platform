@@ -158,13 +158,13 @@
 
 
                                                 <p:gmap id="gmap" center="#{departmentBean.lat}, #{departmentBean.lng}"
-                                                    zoom="#{departmentBean.selectedDepartmentNode.data.department.depth}" type="HYBRID"
+                                                    zoom="10" type="HYBRID"
                                                     rendered="#{not empty departmentBean.selectedNode}" model="#{departmentBean.draggableModel}"
                                                     style="width:500px;height:500px">
                                                     <p:ajax event="markerDrag" listener="#{departmentBean.onMarkerDrag}"
                                                         update="@form:tabView:longitude,@form:tabView:latitude" />
                                                     <p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
-                                                    <p:ajax event="stateChange" listener="#{departmentBean.onStateChange}" update="@form:tabView:depth" />
+                                                    <p:ajax event="stateChange" listener="#{departmentBean.onStateChange}" update="@form:tabView" />
 
                                                 </p:gmap>
 
