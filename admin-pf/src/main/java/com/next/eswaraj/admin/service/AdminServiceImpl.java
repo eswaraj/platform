@@ -882,8 +882,11 @@ public class AdminServiceImpl implements AdminService {
             department.setDateCreated(new Date());
         }
         department.setDateModified(new Date());
-        department = departmentRepository.save(department);
+        logger.info("Saving Address : {}", department.getAddress());
         department.setAddress(addressRepository.save(department.getAddress()));
+        logger.info("Saving Department : {}", department);
+        department = departmentRepository.save(department);
+
         return department;
     }
 

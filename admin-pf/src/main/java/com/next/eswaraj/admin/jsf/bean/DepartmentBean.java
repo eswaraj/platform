@@ -415,7 +415,7 @@ public class DepartmentBean extends BaseBean {
         try {
             Department department = document.getDepartment();
             System.out.println("Department " + department);
-            department = adminService.saveDepartment(document.getDepartment());
+            department = adminService.saveDepartment(department);
             document.setDepartment(department);
         } catch (Exception e) {
             sendErrorMessage("Error", e.getMessage(), e);

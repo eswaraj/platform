@@ -46,7 +46,7 @@
 					<f:selectItem itemLabel="Select One" itemValue="" />
 					<f:selectItems value="#{jsfCategoryConvertor.categories}" var="oneReult" itemLabel="#{oneReult.name}"
 						itemValue="#{oneReult}" />
-					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form:mainPanel" />
+					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form" />
 				</p:selectOneMenu>
 				<p:blockUI block="@form" trigger="category">LOADING<br />
                             <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
