@@ -46,10 +46,10 @@
 					<f:selectItem itemLabel="Select One" itemValue="" />
 					<f:selectItems value="#{jsfCategoryConvertor.categories}" var="oneReult" itemLabel="#{oneReult.name}"
 						itemValue="#{oneReult}" />
-					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form:treeView" />
+					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form:mainPanel" />
 				</p:selectOneMenu>
 
-				<p:commandButton id="createDepartment" value="Create Department" update="@form" actionListener="#{departmentBean.createDepartment}"
+				<p:commandButton id="createDepartment" rendered="#{!empty departmentBean.selectedCategory}" value="Create Department" update="@form" actionListener="#{departmentBean.createDepartment}"
 					styleClass="ui-priority-primary">
 				</p:commandButton>
 
@@ -83,7 +83,8 @@
 						</p:blockUI>
 					</p:outputPanel>
 					<p:outputPanel id="formView">
-                            <p:outputPanel rendered="#{not empty departmentBean.selectedNode}">
+					
+                            <p:outputPanel rendered="#{not empty departmentBean.selectedDepartmentNode}">
                                 <p:tabView id="tabView">
                                     <p:tab title="Main">
                                         <h:panelGrid columns="4">
@@ -129,15 +130,15 @@
                                     <h:panelGrid columns="2">
                                             <p:outputLabel value="Address Line 1"></p:outputLabel>
                                             <p:inputText id="line1"
-                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.line1}" style="width:200px" />
+                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.line1}" style="width:400px" />
 
                                             <p:outputLabel value="Address Line 2"></p:outputLabel>
                                             <p:inputText id="line2"
-                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.line2}" style="width:200px" />
+                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.line2}" style="width:400px" />
 
                                             <p:outputLabel value="Address Line 3"></p:outputLabel>
                                             <p:inputText id="line3"
-                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.line3}" style="width:200px" />
+                                                value="#{departmentBean.selectedDepartmentNode.data.department.address.line3}" style="width:400px" />
 
                                             <p:outputLabel value="Postal Code"></p:outputLabel>
                                             <p:inputText id="postalCode"
@@ -155,11 +156,9 @@
                                         </h:panelGrid>
                                         <h:panelGrid columns="2">
                                             <p:outputPanel id="mapPanel">
-
-
                                                 <p:gmap id="gmap" center="#{departmentBean.lat}, #{departmentBean.lng}"
                                                     zoom="10" type="HYBRID"
-                                                    rendered="#{not empty departmentBean.selectedNode}" model="#{departmentBean.draggableModel}"
+                                                    rendered="#{not empty departmentBean.selectedDepartmentNode}" model="#{departmentBean.draggableModel}"
                                                     style="width:500px;height:500px">
                                                     <p:ajax event="markerDrag" listener="#{departmentBean.onMarkerDrag}"
                                                         update="@form:tabView:longitude,@form:tabView:latitude" />

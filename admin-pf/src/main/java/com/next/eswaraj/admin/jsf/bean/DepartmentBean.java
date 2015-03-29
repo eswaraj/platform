@@ -91,10 +91,10 @@ public class DepartmentBean extends BaseBean {
 
     @PostConstruct
     public void init() {
-        Location location;
         try {
             categoryConvertor.setCategories(adminService.getAllRootCategories());
             defaultLatLong();
+            createMarker();
 
             draggableModel = new DefaultMapModel();
         } catch (Exception e) {
@@ -195,6 +195,15 @@ public class DepartmentBean extends BaseBean {
         }
         logger.info("lat={}", lat);
         logger.info("lng={}", lng);
+    }
+
+    private void createMarker() {
+        LatLng coord1 = new LatLng(lat, lng);
+
+        draggableModel.getMarkers().clear();
+        draggableModel.getPolygons().clear();
+        // Draggable
+        draggableModel.addOverlay(new Marker(coord1, "Department Location"));
     }
 
     private void createMarkerAndKmlBoundary(Location location, LocationBoundaryFile locationBoundaryFile) {
@@ -456,7 +465,9 @@ public class DepartmentBean extends BaseBean {
         if (!isRoot) {
             department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
         }
-        new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
+        TreeNode newNode = new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
+        selectedDepartmentNode.setExpanded(true);
+        newNode.setSelected(true);
 
     }
 
