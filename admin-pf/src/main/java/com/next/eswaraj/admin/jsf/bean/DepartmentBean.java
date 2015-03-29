@@ -3,6 +3,7 @@ package com.next.eswaraj.admin.jsf.bean;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,9 +230,34 @@ public class DepartmentBean extends BaseBean {
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
-        TreeNode nodeSelected = event.getTreeNode();
-        selectedDepartmentNode = nodeSelected;
-        System.out.println("selectedDepartmentNode= " + selectedDepartmentNode);
+        try {
+            TreeNode nodeSelected = event.getTreeNode();
+            selectedDepartmentNode = nodeSelected;
+            System.out.println("selectedDepartmentNode= " + selectedDepartmentNode);
+            Department department = ((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment();
+            List<Location> locations = adminService.getAllLocationsOfDepartment(department);
+            // Select Locations in the tree
+            Set<Long> locationIds = new HashSet<Long>();
+            for (Location oneLocation : locations) {
+                locationIds.add(oneLocation.getId());
+            }
+            selectUnSelectNode(locationRoot, locationIds);
+
+        } catch (Exception ex) {
+
+        }
+    }
+
+    private void selectUnSelectNode(TreeNode treeNode, Set<Long> locationIds) {
+        Location location = ((Document) treeNode.getData()).getLocation();
+        if (locationIds.contains(location.getId())) {
+            treeNode.setSelected(true);
+        } else {
+            treeNode.setSelected(false);
+        }
+        for (TreeNode oneChildTreeNode : treeNode.getChildren()) {
+            selectUnSelectNode(oneChildTreeNode, locationIds);
+        }
     }
 
     public void onLocationNodeSelect(NodeSelectEvent event) {

@@ -1,6 +1,7 @@
 package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
@@ -14,6 +15,7 @@ public class DepartmentLocation extends BaseRelationship {
     @StartNode
     private Department department;
     @EndNode
+    @Fetch
     private Location location;
 
     public Department getDepartment() {

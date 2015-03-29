@@ -930,4 +930,9 @@ public class AdminServiceImpl implements AdminService {
     public List<Location> getAllLocations() throws ApplicationException {
         return locationRepository.getAllLocations();
     }
+
+    @Override
+    public List<Location> getAllLocationsOfDepartment(Department department) throws ApplicationException {
+        return departmentLocationRepository.getAllLocationOfDepartment(department);
+    }
 }
