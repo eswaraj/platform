@@ -31,6 +31,7 @@ public class Department extends BaseNode {
     private boolean root;
 
     private String email;
+    private Integer level;
 
     private String fbPage;
     private String twitterHandle;
@@ -147,6 +148,14 @@ public class Department extends BaseNode {
 
     public void setParentDepartment(Department parentDepartment) {
         this.parentDepartment = parentDepartment;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
     @Override
     public String toString() {

@@ -33,6 +33,7 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Complaint.Status;
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
@@ -45,6 +46,7 @@ import com.eswaraj.domain.nodes.relationships.ComplaintComment;
 import com.eswaraj.domain.nodes.relationships.ComplaintLoggedByPerson;
 import com.eswaraj.domain.nodes.relationships.ComplaintPhoto;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
+import com.eswaraj.domain.nodes.relationships.DepartmentComplaint;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintCommentRepository;
@@ -52,6 +54,8 @@ import com.eswaraj.domain.repo.ComplaintLoggedByPersonRepository;
 import com.eswaraj.domain.repo.ComplaintPhotoRepository;
 import com.eswaraj.domain.repo.ComplaintPoliticalAdminRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
+import com.eswaraj.domain.repo.DepartmentComplaintRepository;
+import com.eswaraj.domain.repo.DepartmentLocationRepository;
 import com.eswaraj.domain.repo.DeviceRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PersonRepository;
@@ -128,6 +132,10 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
     private CommentRepository commentRepository;
     @Autowired
     private ComplaintCommentRepository complaintCommentRepository;
+    @Autowired
+    private DepartmentComplaintRepository departmentComplaintRepository;
+    @Autowired
+    private DepartmentLocationRepository departmentLocationRepository;
 
     @Autowired
     private UrlShortenService urlShortenService;
@@ -372,6 +380,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                 addAllParentLocationsToComplaint(locations, oneLocation, complaintLocations);
 
             }
+            Category rootCategoryForComplaint = getRootCategoryOfComplaint(complaint);
+            List<Department> departments = new ArrayList<Department>();
             for (Location oneLocation : locations) {
                 logger.info("Searching Active Political Admin For : " + oneLocation.getId() + ", " + oneLocation.getName());
                 oneLocationPoliticalBodyAdmins = politicalBodyAdminRepository.getCurrentPoliticalAdminByLocation(oneLocation);
@@ -379,16 +389,48 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                     politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
                 }
 
+                if (rootCategoryForComplaint != null) {
+                    List<Department> locationDpartments = departmentLocationRepository.getAllDepartmentOfLocationAndCategory(oneLocation, rootCategoryForComplaint);
+                    if (locationDpartments != null && !locationDpartments.isEmpty()) {
+                        departments.addAll(locationDpartments);
+                    }
+                }
+
             }
             complaint.setLocations(locations);
+            
+            // find Executive Admin based on Location and Category and attach it to complaint
+            addDeparmentToComplaint(departments, complaint);
 
-            // TODO find Executive Admin based on Location and Category and
-            // attach it to complaint
         }
         complaint.setNearByKey(appKeyService.buildLocationKeyForNearByComplaints(complaint.getLattitude(), complaint.getLongitude()));
         complaint = complaintRepository.save(complaint);
         addPoliticalAdmins(complaint, politicalBodyAdmins);
         return buildComplaintMessage(complaint);
+    }
+
+    private Category getRootCategoryOfComplaint(Complaint complaint) {
+        for (Category oneCategory : complaint.getCategories()) {
+            if (oneCategory.isRoot()) {
+                return oneCategory;
+            }
+        }
+        return null;
+    }
+
+    private void addDeparmentToComplaint(List<Department> departments, Complaint complaint) {
+        Department lowestLevelDepartment = null;
+        int lowest = 0;
+        for (Department oneDepartment : departments) {
+            if (oneDepartment.getLevel() > lowest) {
+                lowest = oneDepartment.getLevel();
+                lowestLevelDepartment = oneDepartment;
+            }
+        }
+        if (lowestLevelDepartment != null) {
+            DepartmentComplaint departmentComplaint = new DepartmentComplaint(lowestLevelDepartment, complaint);
+            departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
+        }
     }
 
     private void addPoliticalAdmins(Complaint complaint, Set<PoliticalBodyAdmin> politicalBodyAdmins) {
