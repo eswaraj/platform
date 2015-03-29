@@ -1,5 +1,6 @@
 package com.next.eswaraj.admin.jsf.bean;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -415,7 +416,11 @@ public class DepartmentBean extends BaseBean {
         try {
             Department department = document.getDepartment();
             System.out.println("Department " + department);
-            department = adminService.saveDepartment(department);
+            List<Location> locations = new ArrayList<Location>();
+            for (TreeNode oneLocationTreeNode : selectedLocationNodes) {
+                locations.add(((Document) oneLocationTreeNode.getData()).getLocation());
+            }
+            department = adminService.saveDepartment(department, locations);
             document.setDepartment(department);
         } catch (Exception e) {
             sendErrorMessage("Error", e.getMessage(), e);

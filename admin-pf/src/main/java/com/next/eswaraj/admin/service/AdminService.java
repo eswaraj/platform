@@ -154,6 +154,6 @@ public interface AdminService {
 
     List<Department> getAllChildDepartments(Long departmentId) throws ApplicationException;
 
-    Department saveDepartment(Department department) throws ApplicationException;
+    Department saveDepartment(Department department, List<Location> locations) throws ApplicationException;
 
 }

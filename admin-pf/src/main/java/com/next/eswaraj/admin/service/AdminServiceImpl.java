@@ -47,6 +47,7 @@ import com.eswaraj.domain.nodes.TimelineItem;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
+import com.eswaraj.domain.nodes.relationships.DepartmentLocation;
 import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
 import com.eswaraj.domain.nodes.relationships.PoliticalAdminTimelineItem;
@@ -54,6 +55,7 @@ import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.DepartmentLocationRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
 import com.eswaraj.domain.repo.ElectionManifestoRepository;
@@ -98,6 +100,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private DepartmentLocationRepository departmentLocationRepository;
 
     @Autowired
     private DateTimeUtil dateTimeUtil;
@@ -877,7 +882,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Department saveDepartment(Department department) throws ApplicationException {
+    public Department saveDepartment(Department department, List<Location> locations) throws ApplicationException {
         if (department.getDateCreated() == null) {
             department.setDateCreated(new Date());
         }
@@ -886,6 +891,37 @@ public class AdminServiceImpl implements AdminService {
         department.setAddress(addressRepository.save(department.getAddress()));
         logger.info("Saving Department : {}", department);
         department = departmentRepository.save(department);
+
+        // Now Save Department Locations
+        List<DepartmentLocation> departmentLocations = departmentLocationRepository.getAllDepartmentLocationRelationOfDepartment(department);
+
+        // first Delete Department Locations
+        boolean locationFound;
+        for (DepartmentLocation oneDepartmentLocation : departmentLocations) {
+            locationFound = false;
+            for (Location oneLocation : locations) {
+                if (oneLocation.getId().equals(oneDepartmentLocation.getLocation().getId())) {
+                    locationFound = true;
+                }
+            }
+            if (!locationFound) {
+                departmentLocationRepository.delete(oneDepartmentLocation);
+            }
+        }
+        // Now create new one
+        for (Location oneLocation : locations) {
+            locationFound = false;
+            for (DepartmentLocation oneDepartmentLocation : departmentLocations) {
+                if (oneLocation.getId().equals(oneDepartmentLocation.getLocation().getId())) {
+                    locationFound = true;
+                }
+            }
+
+            if (!locationFound) {
+                DepartmentLocation oneDepartmentLocation = new DepartmentLocation(department, oneLocation);
+                oneDepartmentLocation = departmentLocationRepository.save(oneDepartmentLocation);
+            }
+        }
 
         return department;
     }
