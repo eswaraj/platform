@@ -28,6 +28,7 @@ import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
@@ -52,6 +53,7 @@ import com.eswaraj.domain.nodes.relationships.PoliticalAdminTimelineItem;
 import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
 import com.eswaraj.domain.repo.ElectionManifestoRepository;
 import com.eswaraj.domain.repo.ElectionRepository;
@@ -89,6 +91,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Autowired
     private DateTimeUtil dateTimeUtil;
@@ -845,5 +850,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public LeaderTempFacebookAccount getFacebookAccountRequestForPerson(Person person) throws ApplicationException {
         return leaderTempFacebookAccountRepository.getLeaderTempFacebookAccountByPerson(person);
+    }
+
+    @Override
+    public List<Department> getAllRootDepartmentsOfcategory(Category category) throws ApplicationException {
+        return departmentRepository.getAllRootDepartmentsOfCategory(category);
+    }
+
+    @Override
+    public List<Department> getAllRootDepartmentsOfcategory(Long categoryId) throws ApplicationException {
+        return departmentRepository.getAllRootDepartmentsOfCategory(categoryId);
     }
 }

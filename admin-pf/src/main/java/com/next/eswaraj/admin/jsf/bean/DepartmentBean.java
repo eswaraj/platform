@@ -46,6 +46,7 @@ import org.w3c.dom.NodeList;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.LocationType;
@@ -93,14 +94,8 @@ public class DepartmentBean extends BaseBean {
         try {
             categoryConvertor.setCategories(adminService.getAllRootCategories());
             
+
             draggableModel = new DefaultMapModel();
-            logger.info("Getting Location From DB");
-            location = adminService.getRootLocationForSwarajIndia();
-            logger.info("Got  Location From DB : " + location);
-            root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
-            TreeNode topLocation = new CustomTreeNode(new Document(location.getName(), "-", "Folder", location), root);
-            topLocation.setSelected(true);
-            selectedLocationNode = topLocation;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,9 +104,18 @@ public class DepartmentBean extends BaseBean {
 
     public void handleCategoryChange(AjaxBehaviorEvent event) {
         System.out.println("handleCategoryChange here " + event.getClass());
+        System.out.println("selected Category " + selectedCategory);
         if (event instanceof ItemSelectEvent) {
             System.out.println("handleCategoryChange getItemIndex " + ((ItemSelectEvent) event).getItemIndex());
             System.out.println("handleCategoryChange getSeriesIndex " + ((ItemSelectEvent) event).getSeriesIndex());
+        }
+    }
+
+    private void loadCategoryData(Category category) throws ApplicationException {
+        List<Department> categoryDeaprtments = adminService.getAllRootDepartmentsOfcategory(category);
+        root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
+        for (Department oneDepartment : categoryDeaprtments) {
+            TreeNode topLocation = new CustomTreeNode(new DepartmentDocument(oneDepartment.getName(), "-", "Folder", oneDepartment), root);
         }
     }
 

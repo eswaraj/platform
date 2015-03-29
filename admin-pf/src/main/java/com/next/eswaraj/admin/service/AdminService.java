@@ -8,6 +8,7 @@ import java.util.Set;
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
@@ -142,4 +143,8 @@ public interface AdminService {
     LeaderTempFacebookAccount getFacebookAccountRequestForPerson(Person person) throws ApplicationException;
 
     List<FacebookAppPermission> getFacebookAppPermission(FacebookAccount facebookAccount) throws ApplicationException;
+
+    List<Department> getAllRootDepartmentsOfcategory(Category category) throws ApplicationException;
+
+    List<Department> getAllRootDepartmentsOfcategory(Long categoryId) throws ApplicationException;
 }

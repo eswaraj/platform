@@ -13,6 +13,9 @@ public interface DepartmentRepository extends GraphRepository<Department>{
     @Query("start category=node({0}) match (category)<-[:BELONGS]-(departments) where departments.root = true return departments")
     public List<Department> getAllRootDepartmentsOfCategory(Category category);
 
+    @Query("start category=node({0}) match (category)<-[:BELONGS]-(departments) where departments.root = true return departments")
+    public List<Department> getAllRootDepartmentsOfCategory(Long categoryId);
+
     @Query("start department=node({0}) match (department)<-[:UNDER]-(childDepartments) return childDepartments")
     public List<Department> getAllChildDepartments(Department department);
 
