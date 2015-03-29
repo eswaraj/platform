@@ -79,7 +79,7 @@ public class DepartmentBean extends BaseBean {
     private TreeNode selectedNode;
 
     private TreeNode selectedDepartmentNode;
-    private TreeNode[] selectedDepartmentNodes;
+    private TreeNode[] selectedLocationNodes;
 
     private MapModel draggableModel;
 
@@ -233,9 +233,65 @@ public class DepartmentBean extends BaseBean {
         System.out.println("selectedDepartmentNode= " + selectedDepartmentNode);
     }
 
+    public void onLocationNodeSelect(NodeSelectEvent event) {
+        TreeNode nodeSelected = event.getTreeNode();
+        System.out.println("selectedLocationNodes= " + selectedLocationNodes);
+        try {
+            createKmlBoundary(((Document) nodeSelected.getData()).getLocation());
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", "unable to create Boundary", e);
+        }
+    }
+
     private void refreshKmls(Location location) throws ApplicationException {
         selectedKml = getActiveLocationBoundaryFile(location);
         createMarkerAndKmlBoundary(location, selectedKml);
+    }
+
+    private void createKmlBoundary(Location location) throws ApplicationException {
+        LocationBoundaryFile locationBoundaryFile = getActiveLocationBoundaryFile(location);
+        if (locationBoundaryFile != null) {
+            try {
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                org.w3c.dom.Document doc = dBuilder.parse(locationBoundaryFile.getFileNameAndPath());
+                // org.w3c.dom.Document doc =
+                // dBuilder.parse("https://s3-us-west-2.amazonaws.com/eswaraj-dev/locations/72848/41b8ccc9-9b3b-435d-9d20-a1217703539b_201409111918.kml");
+                NodeList coordinates = doc.getElementsByTagName("coordinates");
+                for (int temp = 0; temp < coordinates.getLength(); temp++) {
+
+                    Node nNode = coordinates.item(temp);
+
+                    System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                        Element eElement = (Element) nNode;
+
+                        String coordinatesStr = eElement.getTextContent();
+                        System.out.println("Cooridinates : " + coordinatesStr);
+                        Polygon polygon = new Polygon();
+                        String[] latLngs = coordinatesStr.split(" ");
+                        for (String oneLatLng : latLngs) {
+
+                            String[] ll = oneLatLng.split(",");
+                            polygon.getPaths().add(new LatLng(Double.parseDouble(ll[1]), Double.parseDouble(ll[0])));
+                        }
+
+                        polygon.setStrokeColor("#FF9900");
+                        polygon.setFillColor("#FF9900");
+                        polygon.setStrokeOpacity(0.7);
+                        polygon.setFillOpacity(0.7);
+
+                        draggableModel.addOverlay(polygon);
+
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void defaultLatLong() {
@@ -654,11 +710,11 @@ public class DepartmentBean extends BaseBean {
         this.locationRoot = locationRoot;
     }
 
-    public TreeNode[] getSelectedDepartmentNodes() {
-        return selectedDepartmentNodes;
+    public TreeNode[] getSelectedLocationNodes() {
+        return selectedLocationNodes;
     }
 
-    public void setSelectedDepartmentNodes(TreeNode[] selectedDepartmentNodes) {
-        this.selectedDepartmentNodes = selectedDepartmentNodes;
+    public void setSelectedLocationNodes(TreeNode[] selectedLocationNodes) {
+        this.selectedLocationNodes = selectedLocationNodes;
     }
 }

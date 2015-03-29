@@ -96,7 +96,7 @@
                                             <p:inputText id="name" value="#{departmentBean.selectedDepartmentNode.data.department.name}" style="width:200px" />
 
                                             <p:outputLabel value="Description"></p:outputLabel>
-                                            <p:inputTextarea rows="3" cols="50" value="#{departmentBean.selectedDepartmentNode.data.department.description}" />
+                                            <p:inputTextarea rows="3" cols="30" value="#{departmentBean.selectedDepartmentNode.data.department.description}" />
 
                                             <p:outputLabel value="Email"></p:outputLabel>
                                             <p:inputText id="email" value="#{departmentBean.selectedDepartmentNode.data.department.email}" style="width:200px" />
@@ -158,10 +158,10 @@
                                             <p:outputPanel id="locationPanel">
                                             <p:tree value="#{departmentBean.locationRoot}" var="oneLocation" id="checkboxTree"  
 										            selectionMode="checkbox"  
-										            selection="#{departmentBean.selectedDepartmentNodes}">  
+										            selection="#{departmentBean.selectedLocationNodes}">  
 										  
 										        <p:treeNode>  
-										            <h:outputText value="#{oneLocation.name}" />  
+										            <h:outputText value="#{oneLocation.name}-#{oneLocation.location.locationType.name}" />  
 										        </p:treeNode>  
 										    </p:tree>
                                             </p:outputPanel>
