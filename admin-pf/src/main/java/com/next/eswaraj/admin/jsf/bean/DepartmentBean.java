@@ -140,7 +140,7 @@ public class DepartmentBean extends BaseBean {
         if (rootLocation == null) {
             System.out.println("No Root Location Found");
         } else {
-            TreeNode indiaRootNode = new CustomTreeNode(new Document(rootLocation.getName(), "-", "Folder", rootLocation), root);
+            TreeNode indiaRootNode = new CustomTreeNode(new Document(rootLocation.getName(), "-", "Folder", rootLocation), locationRoot);
             addChildLocations(rootLocation, locationMap, indiaRootNode);
         }
     }
