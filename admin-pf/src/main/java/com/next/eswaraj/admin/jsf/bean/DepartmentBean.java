@@ -241,16 +241,18 @@ public class DepartmentBean extends BaseBean {
             for (Location oneLocation : locations) {
                 locationIds.add(oneLocation.getId());
             }
+            System.out.println("Lets Select Unselect TreeNode");
             selectUnSelectNode(locationRoot, locationIds);
 
         } catch (Exception ex) {
-
+            sendErrorMessage("Error", "Unable to Select Locations", ex);
         }
     }
 
     private void selectUnSelectNode(TreeNode treeNode, Set<Long> locationIds) {
         Location location = ((Document) treeNode.getData()).getLocation();
         if (locationIds.contains(location.getId())) {
+            System.out.println("treeNode= " + treeNode);
             treeNode.setSelected(true);
         } else {
             treeNode.setSelected(false);
