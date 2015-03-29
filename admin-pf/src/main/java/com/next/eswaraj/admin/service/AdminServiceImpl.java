@@ -861,4 +861,14 @@ public class AdminServiceImpl implements AdminService {
     public List<Department> getAllRootDepartmentsOfcategory(Long categoryId) throws ApplicationException {
         return departmentRepository.getAllRootDepartmentsOfCategory(categoryId);
     }
+
+    @Override
+    public List<Department> getAllChildDepartments(Department department) throws ApplicationException {
+        return departmentRepository.getAllChildDepartments(department);
+    }
+
+    @Override
+    public List<Department> getAllChildDepartments(Long departmentId) throws ApplicationException {
+        return departmentRepository.getAllChildDepartments(departmentId);
+    }
 }

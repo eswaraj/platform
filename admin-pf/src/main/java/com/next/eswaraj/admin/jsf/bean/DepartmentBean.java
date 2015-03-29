@@ -1,6 +1,6 @@
 package com.next.eswaraj.admin.jsf.bean;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +18,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -71,7 +70,7 @@ public class DepartmentBean extends BaseBean {
 
     private TreeNode selectedNode;
 
-    private TreeNode selectedLocationNode;
+    private TreeNode selectedDepartmentNode;
 
     private MapModel draggableModel;
 
@@ -105,9 +104,10 @@ public class DepartmentBean extends BaseBean {
     public void handleCategoryChange(AjaxBehaviorEvent event) {
         System.out.println("handleCategoryChange here " + event.getClass());
         System.out.println("selected Category " + selectedCategory);
-        if (event instanceof ItemSelectEvent) {
-            System.out.println("handleCategoryChange getItemIndex " + ((ItemSelectEvent) event).getItemIndex());
-            System.out.println("handleCategoryChange getSeriesIndex " + ((ItemSelectEvent) event).getSeriesIndex());
+        try {
+            loadCategoryData(selectedCategory);
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error Loading Catgeory", e.getMessage(), e);
         }
     }
 
@@ -115,7 +115,7 @@ public class DepartmentBean extends BaseBean {
         List<Department> categoryDeaprtments = adminService.getAllRootDepartmentsOfcategory(category);
         root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
         for (Department oneDepartment : categoryDeaprtments) {
-            TreeNode topLocation = new CustomTreeNode(new DepartmentDocument(oneDepartment.getName(), "-", "Folder", oneDepartment), root);
+            new CustomTreeNode(new DepartmentDocument(oneDepartment.getName(), "-", "Folder", oneDepartment), root);
         }
     }
 
@@ -129,34 +129,15 @@ public class DepartmentBean extends BaseBean {
 
             try {
                 Object data = nodeSelected.getData();
-                if (data instanceof Document) {
-                    Document document = ((Document) data);
-                    Location selectedLocation = document.getLocation();
-                    List<LocationType> childLocationTypes = adminService.getChildLocationsTypeOfParent(selectedLocation.getLocationType().getId());
-                    if (childLocationTypes.isEmpty() || childLocationTypes.size() == 1) {
-                        List<Location> childLocations = adminService.getChildLocationsOfParent(((Document) nodeSelected.getData()).getLocation().getId());
-                        for (Location oneLocation : childLocations) {
-                            new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), nodeSelected);
-                        }
-                    } else {
-                        for (LocationType oneLocationType : childLocationTypes) {
-                            new CustomTreeNode(new LocationTypeDocument(oneLocationType.getName() + "(s)", "-", "mp3", oneLocationType), nodeSelected);
-                        }
-                    }
-
-                }
-                if (data instanceof LocationTypeDocument) {
-                    LocationTypeDocument locationTypeDocument = ((LocationTypeDocument) nodeSelected.getData());
-                    LocationType selectedLocationType = locationTypeDocument.getLocationType();
-                    TreeNode parentNode = nodeSelected.getParent();
-                    Document document = ((Document) parentNode.getData());
-
-                    Location selectedParentLocation = document.getLocation();
-                    List<Location> childLocations = adminService.findLocationByParentLocationAndLocationType(selectedParentLocation.getId(), selectedLocationType.getId());
-                    for (Location oneLocation : childLocations) {
-                        new CustomTreeNode(new Document(oneLocation.getName(), "-", "Folder", oneLocation), nodeSelected);
+                if (data instanceof DepartmentDocument) {
+                    DepartmentDocument document = ((DepartmentDocument) data);
+                    Department selectedDepartment = document.getDepartment();
+                    List<Department> childDepartments = adminService.getAllChildDepartments(selectedDepartment);
+                    for (Department oneDepartment : childDepartments) {
+                        new CustomTreeNode(new DepartmentDocument(oneDepartment.getName(), "-", "Folder", oneDepartment), nodeSelected);
                     }
                 }
+
 
             } catch (ApplicationException e) {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", e.getMessage());
@@ -192,33 +173,15 @@ public class DepartmentBean extends BaseBean {
     public void onNodeSelect(NodeSelectEvent event) {
         TreeNode nodeSelected = event.getTreeNode();
         Object data = nodeSelected.getData();
-        if (data instanceof Document) {
-            selectedLocationNode = nodeSelected;
+        if (data instanceof DepartmentDocument) {
+            selectedDepartmentNode = nodeSelected;
             draggableModel.getMarkers().clear();
             draggableModel.getPolygons().clear();
-            Document document = (Document) data;
+            DepartmentDocument document = (DepartmentDocument) data;
 
 
-            try {
-                Location location = document.getLocation();
-                refreshKmls(location);
-                List<LocationType> locationTypes = adminService.getChildLocationsTypeOfParent(((Document) nodeSelected.getData()).getLocation().getLocationType().getId());
-                createButtonsAndMenus(locationTypes, document.getLocation());
-            } catch (ApplicationException e) {
-                e.printStackTrace();
-            } finally {
-                disableSaveCancelButtons(false);
-            }
-        } else {
-            selectedLocationNode = nodeSelected.getParent();
-            System.out.println("selectedLocationNode = " + selectedLocationNode);
-            LocationType selectedLocationType = ((LocationTypeDocument) nodeSelected.getData()).getLocationType();
-            List<LocationType> locationTypes = new ArrayList<>(1);
-            locationTypes.add(selectedLocationType);
-            System.out.println("createButtonsAndMenus for = " + selectedLocationType);
-            createButtonsAndMenus(locationTypes, ((Document) selectedLocationNode.getData()).getLocation());
-            disableSaveCancelButtons(true);
-            System.out.println("Done");
+            Department location = document.getDepartment();
+            // refreshKmls(location);
         }
     }
 
@@ -305,7 +268,7 @@ public class DepartmentBean extends BaseBean {
     public void onStateChange(StateChangeEvent event) {
         LatLngBounds bounds = event.getBounds();
         int zoomLevel = event.getZoomLevel();
-        ((Document) selectedLocationNode.getData()).getLocation().setDepth(zoomLevel);
+        ((Document) selectedDepartmentNode.getData()).getLocation().setDepth(zoomLevel);
     }
 
     public void onMarkerDrag(MarkerDragEvent event) {
@@ -464,53 +427,42 @@ public class DepartmentBean extends BaseBean {
 
     }
     public void cancel() {
-        if (selectedLocationNode != null) {
-            if (((Document) selectedLocationNode.getData()).getLocation().getId() == null) {
-                TreeNode parentNode = selectedLocationNode.getParent();
-                selectedLocationNode.getChildren().clear();
-                selectedLocationNode.getParent().getChildren().remove(selectedLocationNode);
-                selectedLocationNode.setParent(null);
-                selectedLocationNode = null;
+        if (selectedDepartmentNode != null) {
+            if (((Document) selectedDepartmentNode.getData()).getLocation().getId() == null) {
+                TreeNode parentNode = selectedDepartmentNode.getParent();
+                selectedDepartmentNode.getChildren().clear();
+                selectedDepartmentNode.getParent().getChildren().remove(selectedDepartmentNode);
+                selectedDepartmentNode.setParent(null);
+                selectedDepartmentNode = null;
                 if (parentNode.getData() instanceof LocationTypeDocument) {
-                    selectedLocationNode = parentNode.getParent();
+                    selectedDepartmentNode = parentNode.getParent();
                 } else {
-                    selectedLocationNode = parentNode;
+                    selectedDepartmentNode = parentNode;
                 }
-                selectedLocationNode.setSelected(true);
+                selectedDepartmentNode.setSelected(true);
             }
         }
     }
-    public void createChildLocation(Long locationTypeId, Long locationId) {
-        System.out.println("Creating SOmething : " + locationTypeId + ", " + locationId);
-        if (selectedLocationNode != null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Creating under ", selectedNode.getData().toString());
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            loadNodeChild(selectedLocationNode);
-            TreeNode parentNode = getParentNodeForNewChild(selectedLocationNode, locationTypeId);
-            parentNode.setExpanded(true);
-            Location location = new Location();
-            LocationType locationType;
-            try {
-                System.out.println("Getting LocationType " + locationTypeId);
-                Location parentLocation = adminService.getLocationById(locationId);
-                locationType = adminService.getLocationTypeById(locationTypeId);
-                location.setLocationType(locationType);
-                location.setParentLocation(parentLocation);
-                System.out.println("locationType = " + locationType);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
 
-            location.setName("New");
-            location.setUrlIdentifier("");
-            selectedNode.setExpanded(true);
-            selectedNode.setSelected(false);
-            selectedNode = new CustomTreeNode(new Document("NEW", "-", "Folder", location), parentNode);
-            selectedNode.setSelected(true);
-            selectedLocationNode = selectedNode;
-            disableSaveCancelButtons(false);
+    public void createDepartment() {
+        System.out.println("Creating Department : " + selectedDepartmentNode);
+        boolean isRoot = false;
+        TreeNode parentNode = selectedDepartmentNode;
+        if (selectedDepartmentNode == null) {
+            parentNode = root;
+            isRoot = true;
         }
+        Department department = new Department();
+        department.setName("New");
+        department.setRoot(isRoot);
+        department.setCategory(selectedCategory);
+        department.setDateCreated(new Date());
+        department.setDateModified(new Date());
+        if (!isRoot) {
+            department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
+        }
+        new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
+
     }
 
     private TreeNode getParentNodeForNewChild(TreeNode selectedLocationNode, Long locationTypeId) {
@@ -596,11 +548,11 @@ public class DepartmentBean extends BaseBean {
     }
 
     public TreeNode getSelectedLocationNode() {
-        return selectedLocationNode;
+        return selectedDepartmentNode;
     }
 
     public void setSelectedLocationNode(TreeNode selectedLocationNode) {
-        this.selectedLocationNode = selectedLocationNode;
+        this.selectedDepartmentNode = selectedLocationNode;
     }
 
     public LocationBoundaryFile getSelectedKml() {

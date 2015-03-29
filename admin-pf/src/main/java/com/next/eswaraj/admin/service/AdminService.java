@@ -147,4 +147,9 @@ public interface AdminService {
     List<Department> getAllRootDepartmentsOfcategory(Category category) throws ApplicationException;
 
     List<Department> getAllRootDepartmentsOfcategory(Long categoryId) throws ApplicationException;
+
+    List<Department> getAllChildDepartments(Department department) throws ApplicationException;
+
+    List<Department> getAllChildDepartments(Long departmentId) throws ApplicationException;
+
 }

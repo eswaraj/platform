@@ -23,7 +23,7 @@ public class Department extends BaseNode {
     @RelatedTo(type = "BELONGS")
     private Category category;
     @RelatedTo(type = "UNDER")
-    private Department department;
+    private Department parentDepartment;
     @RelatedTo(type = "DEPT_ADDRESS")
     private Address address;
     private boolean root;
@@ -139,6 +139,13 @@ public class Department extends BaseNode {
         this.mobile2 = mobile2;
     }
 
+    public Department getParentDepartment() {
+        return parentDepartment;
+    }
+
+    public void setParentDepartment(Department parentDepartment) {
+        this.parentDepartment = parentDepartment;
+    }
     @Override
 	public String toString() {
 		return "Department [Name=" + name + ", description=" + description + "]";
