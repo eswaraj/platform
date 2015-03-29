@@ -243,6 +243,7 @@ public class DepartmentBean extends BaseBean {
                 locationIds.add(oneLocation.getId());
             }
             System.out.println("Lets Select Unselect TreeNode");
+            draggableModel.getPolygons().clear();
             for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
                 selectUnSelectNode(oneChildTreeNode, locationIds);
             }
@@ -252,17 +253,31 @@ public class DepartmentBean extends BaseBean {
         }
     }
 
-    private void selectUnSelectNode(TreeNode treeNode, Set<Long> locationIds) {
+    private void selectUnSelectNode(TreeNode treeNode, Set<Long> locationIds) throws ApplicationException {
         Location location = ((Document) treeNode.getData()).getLocation();
         if (locationIds.contains(location.getId())) {
             System.out.println("treeNode= " + treeNode);
             treeNode.setSelected(true);
+            openAllParents(treeNode);
+            createKmlBoundary(location);
+
         } else {
             treeNode.setSelected(false);
         }
         for (TreeNode oneChildTreeNode : treeNode.getChildren()) {
             selectUnSelectNode(oneChildTreeNode, locationIds);
         }
+    }
+
+    private void openAllParents(TreeNode treeNode) {
+        if (!(treeNode.getParent().getData() instanceof Document)) {
+            return;
+        }
+        if (treeNode.getParent() == null) {
+            return;
+        }
+        treeNode.getParent().setExpanded(true);
+        openAllParents(treeNode.getParent());
     }
 
     public void onLocationNodeSelect(NodeSelectEvent event) {
