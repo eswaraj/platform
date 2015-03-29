@@ -270,10 +270,10 @@ public class DepartmentBean extends BaseBean {
     }
 
     private void openAllParents(TreeNode treeNode) {
-        if (!(treeNode.getParent().getData() instanceof Document)) {
+        if (treeNode.getParent() == null) {
             return;
         }
-        if (treeNode.getParent() == null) {
+        if (!(treeNode.getParent().getData() instanceof Document)) {
             return;
         }
         treeNode.getParent().setExpanded(true);
