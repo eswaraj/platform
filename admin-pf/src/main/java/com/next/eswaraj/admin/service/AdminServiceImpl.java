@@ -51,6 +51,7 @@ import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
 import com.eswaraj.domain.nodes.relationships.PoliticalAdminTimelineItem;
 import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
+import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
@@ -94,6 +95,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Autowired
     private DateTimeUtil dateTimeUtil;
@@ -878,7 +882,9 @@ public class AdminServiceImpl implements AdminService {
             department.setDateCreated(new Date());
         }
         department.setDateModified(new Date());
-        return departmentRepository.save(department);
+        department = departmentRepository.save(department);
+        department.setAddress(addressRepository.save(department.getAddress()));
+        return department;
     }
 
     @Override

@@ -48,6 +48,9 @@
 						itemValue="#{oneReult}" />
 					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form:mainPanel" />
 				</p:selectOneMenu>
+				<p:blockUI block="@form" trigger="category">LOADING<br />
+                            <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                </p:blockUI>
 
 				<p:commandButton id="createDepartment" rendered="#{!empty departmentBean.selectedCategory}" value="Create Department" update="@form" actionListener="#{departmentBean.createDepartment}"
 					styleClass="ui-priority-primary">
@@ -159,7 +162,8 @@
                                             <p:tree value="#{departmentBean.locationRoot}" var="oneLocation" id="checkboxTree"  
 										            selectionMode="checkbox"  
 										            selection="#{departmentBean.selectedLocationNodes}">  
-										  
+												  <p:ajax event="select" update=":department_form:tabView:mapPanel"
+		                                        listener="#{departmentBean.onLocationNodeSelect}" />
 										        <p:treeNode>  
 										            <h:outputText value="#{oneLocation.name}-#{oneLocation.location.locationType.name}" />  
 										        </p:treeNode>  
