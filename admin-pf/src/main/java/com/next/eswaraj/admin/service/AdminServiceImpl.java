@@ -883,6 +883,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Location> getAllLocations() throws ApplicationException {
-        return convertToList(locationRepository.findAll());
+        return locationRepository.getAllLocations();
     }
 }

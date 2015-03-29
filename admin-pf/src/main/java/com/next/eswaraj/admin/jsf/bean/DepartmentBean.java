@@ -115,6 +115,7 @@ public class DepartmentBean extends BaseBean {
     private void loadLocations() throws ApplicationException {
         locationRoot = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
         List<Location> allLocations = adminService.getAllLocations();
+        System.out.println("Found " + allLocations.size() + " locations");
         Map<String, Object> locationMap = new HashMap<String, Object>();
         Location rootLocation = null;
         for (Location oneLocation : allLocations) {
@@ -136,8 +137,12 @@ public class DepartmentBean extends BaseBean {
                 childLocations.add(oneLocation);
             }
         }
-        TreeNode indiaRootNode = new CustomTreeNode(new Document(rootLocation.getName(), "-", "Folder", rootLocation), root);
-        addChildLocations(rootLocation, locationMap, indiaRootNode);
+        if (rootLocation == null) {
+            System.out.println("No Root Location Found");
+        } else {
+            TreeNode indiaRootNode = new CustomTreeNode(new Document(rootLocation.getName(), "-", "Folder", rootLocation), root);
+            addChildLocations(rootLocation, locationMap, indiaRootNode);
+        }
     }
 
     private void addChildLocations(Location currentLocation, Map<String, Object> locationMap, TreeNode parentTreeNode) {
