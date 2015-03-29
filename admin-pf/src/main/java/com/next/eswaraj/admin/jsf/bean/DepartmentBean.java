@@ -236,17 +236,21 @@ public class DepartmentBean extends BaseBean {
             selectedDepartmentNode = nodeSelected;
             System.out.println("selectedDepartmentNode= " + selectedDepartmentNode);
             Department department = ((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment();
-            List<Location> locations = adminService.getAllLocationsOfDepartment(department);
-            // Select Locations in the tree
-            Set<Long> locationIds = new HashSet<Long>();
-            for (Location oneLocation : locations) {
-                locationIds.add(oneLocation.getId());
-            }
-            System.out.println("Lets Select Unselect TreeNode");
             draggableModel.getPolygons().clear();
-            for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
-                selectUnSelectNode(oneChildTreeNode, locationIds);
+            if (department.getId() != null) {
+                // Do this only if Department has been saved
+                List<Location> locations = adminService.getAllLocationsOfDepartment(department);
+                // Select Locations in the tree
+                Set<Long> locationIds = new HashSet<Long>();
+                for (Location oneLocation : locations) {
+                    locationIds.add(oneLocation.getId());
+                }
+                System.out.println("Lets Select Unselect TreeNode");
+                for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
+                    selectUnSelectNode(oneChildTreeNode, locationIds);
+                }
             }
+
 
         } catch (Exception ex) {
             sendErrorMessage("Error", "Unable to Select Locations", ex);
@@ -633,6 +637,7 @@ public class DepartmentBean extends BaseBean {
         TreeNode newNode = new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
         selectedDepartmentNode.setExpanded(true);
         newNode.setSelected(true);
+        selectedDepartmentNode.setSelected(false);
 
     }
 
