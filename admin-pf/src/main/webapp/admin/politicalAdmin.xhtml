@@ -97,7 +97,7 @@
 							</p:tabView>
 
 							<p:blockUI block="@form" trigger="@form:leftTabPanel:doc">LOADING<br />
-								<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 							</p:blockUI>
 						</p:outputPanel>
 						<p:outputPanel id="formView">
@@ -113,7 +113,7 @@
 
 									</p:selectOneMenu>
 									<p:blockUI block="@form" trigger="adminType">Loading...<br />
-										<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+										<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 									</p:blockUI>
 									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form"
 										ajax="true" disabled="#{politicalAdminBean.disableCreateAdminButton}"
@@ -156,7 +156,7 @@
 													target="#{politicalAdminBean.selectedPoliticalBodyAdmin}" update="@form" />
 											</p:commandLink>
 											<p:blockUI block="@form" trigger="updateAdmin">Loading Admin<br />
-												<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+												<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 											</p:blockUI>
 										</p:column>
 									</p:dataTable>
@@ -341,7 +341,7 @@
 											process="@this:cancelAdmin">
 										</p:commandButton>
 										<p:blockUI block="@form" trigger="savePoliticalAdmin">Saving Admin<br />
-											<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+											<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 										</p:blockUI>
 
 									</h:panelGrid>
@@ -419,7 +419,7 @@
 							ajax="true" styleClass="ui-priority-primary" process="@this:cancel">
 						</p:commandButton>
 						<p:blockUI block="@form" trigger="savePerson">Saving<br />
-							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 						</p:blockUI>
 
 					</h:panelGrid>

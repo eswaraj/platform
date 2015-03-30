@@ -61,7 +61,7 @@
 								<f:setPropertyActionListener value="#{oneTimelineItem}" target="#{timelineItemBean.selectedTimelineItem}" />
 							</p:commandLink>
 							<p:blockUI block="@form" trigger="update">Saving<br />
-                            <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                            <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
                         </p:blockUI>
 						</p:column>
 
@@ -172,10 +172,10 @@
 							actionListener="#{timelineItemBean.saveTimelineItem}" styleClass="ui-priority-primary">
 						</p:commandButton>
 						<p:blockUI block="@form" trigger="saveTimelineItem">Saving<br />
-							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 						</p:blockUI>
 						<p:blockUI block="@form" trigger="cancel">Loading<br />
-							<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 						</p:blockUI>
 
 					</p:outputPanel>
