@@ -75,5 +75,20 @@ public class PersonBean extends BaseBean {
         showSearchPanel = false;
     }
 
+    public boolean isShowSearchPanel() {
+        return showSearchPanel;
+    }
+
+    public void setShowSearchPanel(boolean showSearchPanel) {
+        this.showSearchPanel = showSearchPanel;
+    }
+
+    public Person getSelectedPerson() {
+        return selectedPerson;
+    }
+
+    public void setSelectedPerson(Person selectedPerson) {
+        this.selectedPerson = selectedPerson;
+    }
     
 }
