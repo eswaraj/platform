@@ -635,9 +635,9 @@ public class DepartmentBean extends BaseBean {
             department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
         }
         TreeNode newNode = new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
-        selectedDepartmentNode.setExpanded(true);
+        parentNode.setExpanded(true);
         newNode.setSelected(true);
-        selectedDepartmentNode.setSelected(false);
+        parentNode.setSelected(false);
 
     }
 
