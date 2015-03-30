@@ -47,7 +47,7 @@
 					<p:autoComplete id="searchPerson" value="#{personBean.selectedPerson}" minQueryLength="3"
 						completeMethod="#{personBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
 						converter="#{jsfPersonConvertor}" forceSelection="true">
-						<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{personBean.updateMode}" />
+						<p:ajax event="itemSelect" update="@form:formPanel" disabled="#{personBean.updateMode}" />
 						<p:column>
 							<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
 						</p:column>
@@ -58,7 +58,7 @@
 					</p:autoComplete>
 					<p:commandButton actionListener="#{personBean.createPerson}" value="Create Person" id="createPerson"
 						process="@this:createPerson"  update="@this:mainPanel" disabled="#{personBean.updateMode}" ajax="true" />
-					<h:panelGrid columns="2" cellpadding="5">
+					<h:panelGrid columns="2" cellpadding="5" id="formPanel">
 						<h:panelGrid columns="4" cellpadding="5">
 							<p:outputLabel value="Name : " />
 							<h:outputText value="#{personBean.selectedPerson.name}" />
@@ -96,7 +96,7 @@
 						<h:outputText value="#{personBean.selectedPerson.biodata}" escape="false" />
 					</p:panelGrid>
 
-					<p:commandButton value="Edit Person" id="editPerson" disabled="#{!empty personBean.selectedPerson}" ajax="true"
+					<p:commandButton value="Edit Person" actionListener="#{personBean.editPerson}" id="editPerson" disabled="#{!empty personBean.selectedPerson}" ajax="true"
 						process="@this:editPerson" update="@form:mainPanel" />
 
 				</p:outputPanel>

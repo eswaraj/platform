@@ -32,6 +32,8 @@ public class PersonBean extends BaseBean {
 
     private List<Person> personSearchResults;
 
+    private boolean updateMode;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
@@ -71,8 +73,12 @@ public class PersonBean extends BaseBean {
         }
     }
 
-    public void cancel() {
+    public void editPerson() {
         showSearchPanel = false;
+    }
+
+    public void cancel() {
+        showSearchPanel = true;
     }
 
     public boolean isShowSearchPanel() {
@@ -89,6 +95,14 @@ public class PersonBean extends BaseBean {
 
     public void setSelectedPerson(Person selectedPerson) {
         this.selectedPerson = selectedPerson;
+    }
+
+    public boolean isUpdateMode() {
+        return updateMode;
+    }
+
+    public void setUpdateMode(boolean updateMode) {
+        this.updateMode = updateMode;
     }
     
 }
