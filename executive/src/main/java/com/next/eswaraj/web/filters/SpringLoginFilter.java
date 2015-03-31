@@ -40,7 +40,7 @@ public class SpringLoginFilter implements Filter {
         logger.info("Requested URL " + httpServletRequest.getRequestURL().toString());
         if (sessionUtil.getLoggedInUserFromSession(httpServletRequest) == null) {
             // No user logegd In
-            String redirectUrl = "/web/login/facebook?redirect_url=" + httpServletRequest.getRequestURI();
+            String redirectUrl = "/admin/login.xhtml?redirect_url=" + httpServletRequest.getRequestURI();
             logger.info("User Not logged In Redirecting to {}", redirectUrl);
             ((HttpServletResponse) response).sendRedirect(redirectUrl);
             return;
