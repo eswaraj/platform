@@ -170,13 +170,13 @@ public class ComplaintsBean extends BaseBean {
 
     private void refreshComplaintList() {
         loginBean.refreshLoginRoles();
-        Department selectedPoliticalBodyAdmin = loginBean.getSelectedDepartment();
+        Department selectedDepartment = loginBean.getSelectedDepartment();
 
-        if (selectedPoliticalBodyAdmin == null) {
+        if (selectedDepartment == null) {
 
         } else {
             try {
-                List<ComplaintDepartmentSearchResult> complaints = adminService.getDepartmentComplaintsAll(selectedPoliticalBodyAdmin.getId());
+                List<ComplaintDepartmentSearchResult> complaints = adminService.getDepartmentComplaintsAll(selectedDepartment.getId());
                 this.complaints = new ArrayList<ComplaintSearchResultDto>();
                 for (ComplaintDepartmentSearchResult oneComplaintSearchResult : complaints) {
                     Category rootCategory = null;
@@ -200,7 +200,7 @@ public class ComplaintsBean extends BaseBean {
             }
         }
 
-        if (selectedPoliticalBodyAdmin != null) {
+        if (selectedDepartment != null) {
             try {
                 categoryPieChartModel = new PieChartModel();
                 /*
@@ -221,10 +221,10 @@ public class ComplaintsBean extends BaseBean {
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
                 ChartSeries daily = new ChartSeries();
                 daily.setLabel("Day wise");
+                dailyLineChartModel = new LineChartModel();
                 /*
                 JsonObject jsonObject = counterCache.getLast30DayLocationCounters(selectedPoliticalBodyAdmin.getLocation().getId(), new Date());
                 JsonArray dailyCounterJsonArray = jsonObject.get("dayWise").getAsJsonArray();
-                dailyLineChartModel = new LineChartModel();
                 
                 
                 for (int i = 0; i < dailyCounterJsonArray.size(); i++) {
