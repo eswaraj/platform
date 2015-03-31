@@ -471,7 +471,23 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Person> searchPersonByName(String name) throws ApplicationException {
-        name = name.replace(" ", "\\\\ ");
+        
+        if(name.contains(" ")){
+            String[] names = name.split(" ");
+            StringBuffer sb = new StringBuffer();
+            sb.append("(");
+            int count = 0;
+            for(String oneName : names){
+                if(count > 0){
+                    sb.append(" AND ");
+                }
+                sb.append(oneName);
+                sb.append("*");
+            }
+            sb.append(")");
+            name = sb.toString();
+        }
+        
         return personRepository.searchPersonByName("name:*" + name + "*");
     }
 
