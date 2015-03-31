@@ -169,23 +169,11 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		executiveBodyDto.setRoot(isRoot);
 		return executiveBodyDto;
 	}
-	protected ExecutiveBodyDto createAndSaveExecutiveBody(AppService appService, String name, AddressDto addressDto, Long boundaryId, 
-			DepartmentDto departmentDto,  boolean isRoot, ExecutiveBodyDto parentExecutiveBody) throws ApplicationException{
-		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, departmentDto, isRoot, parentExecutiveBody);
-		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
-		return executiveBodyDto;
-	}
 	protected ExecutiveBodyDto createRandomExecutiveBody(DepartmentDto departmentDto, boolean isRoot, ExecutiveBodyDto parentExecutiveBody){
 		String name = randomAlphaString(16);
 		AddressDto addressDto = createRandomAddress();
 		Long boundaryId = null;
 		ExecutiveBodyDto executiveBodyDto = createExecutiveBody(name, addressDto, boundaryId, departmentDto, isRoot, parentExecutiveBody);
-		return executiveBodyDto;
-	}
-	protected ExecutiveBodyDto createAndSaveRandomExecutiveBody(AppService appService,DepartmentDto departmentDto,  boolean isRoot, 
-			ExecutiveBodyDto parentExecutiveBody) throws ApplicationException{
-		ExecutiveBodyDto executiveBodyDto = createRandomExecutiveBody(departmentDto, isRoot, parentExecutiveBody);
-		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		return executiveBodyDto;
 	}
 	protected void assertEqualExecutiveBodies(ExecutiveBodyDto expectedExecutiveBody, ExecutiveBodyDto actualExecutiveBodyDto, boolean checkId){

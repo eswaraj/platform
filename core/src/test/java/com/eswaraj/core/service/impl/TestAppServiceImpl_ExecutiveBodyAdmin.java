@@ -44,7 +44,7 @@ public class TestAppServiceImpl_ExecutiveBodyAdmin extends BaseNeo4jEswarajTest{
 		final CategoryDto category = createAndSaveRandomCateory(appService, true, null);
 		final AddressDto address = createRandomAddress();
 		final DepartmentDto department = createAndSaveRandomDepartment(appService, category.getId());
-		final ExecutiveBodyDto executiveBody = createAndSaveExecutiveBody(appService, randomAlphaString(16), address, null, department , true, null);
+        final ExecutiveBodyDto executiveBody = null;// createAndSaveExecutiveBody(appService, randomAlphaString(16), address, null, department , true, null);
 		final PersonDto person = createAndSaveRandomPerson(personService);
 		final ExecutiveBodyAdminDto manager = null;
 		final Date startDate = randomDateInPast();
@@ -91,7 +91,7 @@ public class TestAppServiceImpl_ExecutiveBodyAdmin extends BaseNeo4jEswarajTest{
 		final CategoryDto category = createAndSaveRandomCateory(appService, true, null);
 		final AddressDto address = createRandomAddress();
 		final DepartmentDto department = createRandomDepartment(category.getId());
-		final ExecutiveBodyDto executiveBody = createAndSaveExecutiveBody(appService, randomAlphaString(16), address, null, department , true, null);
+        final ExecutiveBodyDto executiveBody = null;// createAndSaveExecutiveBody(appService, randomAlphaString(16), address, null, department , true, null);
 		final PersonDto person = null;
 		final ExecutiveBodyAdminDto manager = null;
 		final Date startDate = randomDateInPast();
@@ -115,7 +115,7 @@ public class TestAppServiceImpl_ExecutiveBodyAdmin extends BaseNeo4jEswarajTest{
 		DepartmentDto departmentDto = createAndSaveRandomDepartment(appService, categoryDto.getId());
 		
 		for(int i=0;i<totalExecutiveBody;i++){
-			ExecutiveBodyDto executiveBodyDto = createAndSaveRandomExecutiveBody(appService, departmentDto, true, null);
+            ExecutiveBodyDto executiveBodyDto = null;// createAndSaveRandomExecutiveBody(appService, departmentDto, true, null);
 			ExecutivePostDto executivePost = createAndSaveRandomExecutivePost(appService, departmentDto);
 			PersonDto person = createAndSaveRandomPerson(personService);
 			int totalExecutiveBodyAdminUnderExecutiveBody = randomInteger(15);
