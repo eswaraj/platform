@@ -7,6 +7,7 @@ public class CommentSavedMessage implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long complaintId;
     private Long politicalAdminId;
+    private Long departmentId;
     private Long personId;
     private Long commentId;
 
@@ -24,6 +25,14 @@ public class CommentSavedMessage implements Serializable {
 
     public void setPoliticalAdminId(Long politicalAdminId) {
         this.politicalAdminId = politicalAdminId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Long getPersonId() {

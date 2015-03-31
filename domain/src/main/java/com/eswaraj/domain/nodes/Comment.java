@@ -23,6 +23,7 @@ public class Comment extends BaseNode {
     @Fetch
     private Person createdBy;
     private PoliticalBodyAdmin politicalBodyAdmin;
+    private Department department;
     private Date creationTime;
 
     public String getText() {
@@ -55,6 +56,14 @@ public class Comment extends BaseNode {
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 	
 }

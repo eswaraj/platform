@@ -22,4 +22,7 @@ public interface DepartmentRepository extends GraphRepository<Department>{
     @Query("start department=node({0}) match (department)<-[:UNDER]-(childDepartments) return childDepartments")
     public List<Department> getAllChildDepartments(Long departmentId);
 
+    @Query("start user=node({0}) match (user)-[:ATTACHED_TO]-(person)-[:IS]--(departmentAdmin)-[:WORKS_FOR]-(department) where person.__type__ = 'Person'  and departmentAdmin.__type__='DepartmentAdmin' return department")
+    public List<Department> getUserDepartments(Long userId);
+
 }

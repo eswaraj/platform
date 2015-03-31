@@ -9,6 +9,7 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.extended.ComplaintDepartmentSearchResult;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 
 /**
@@ -69,5 +70,8 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
             + " skip {1} limit {2}")
     public List<ComplaintSearchResult> getAllPagedComplaintsOfPoliticalAdmin(long politicalAdminId, long start, long end);
 
+    @Query("start department=node({0}) match department-[complaintPoliticalAdmin:DEPT_COMPLAINT_REL]-(complaint)  where complaint.__type__ = 'Complaint' return complaint order by complaint.dateCreated DESC"
+            + " skip {1} limit {2}")
+    public List<ComplaintDepartmentSearchResult> searchAllPagedComplaintsOfDepartment(long departmentId, long start, long end);
 
 }
