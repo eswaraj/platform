@@ -20,6 +20,8 @@ import com.next.eswaraj.admin.service.AdminService;
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "view")
 public class PersonBean extends BaseBean {
 
+    private static final long serialVersionUID = 1L;
+
     @Autowired
     private AdminService adminService;
 
@@ -74,10 +76,12 @@ public class PersonBean extends BaseBean {
     }
 
     public void editPerson() {
+        System.out.println("Edit Person : " + selectedPerson);
         showSearchPanel = false;
     }
 
     public void cancel() {
+        System.out.println("Cancel Person : " + selectedPerson);
         showSearchPanel = true;
     }
 
@@ -94,6 +98,7 @@ public class PersonBean extends BaseBean {
     }
 
     public void setSelectedPerson(Person selectedPerson) {
+        System.out.println("Set Person : " + selectedPerson);
         this.selectedPerson = selectedPerson;
     }
 
