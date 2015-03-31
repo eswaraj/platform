@@ -158,7 +158,7 @@ public class Main extends SpringBootServletInitializer implements SocialConfigur
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         SpringLoginFilter securityFilter = new SpringLoginFilter();
         List<String> urlPatterns = new ArrayList<String>();
-        urlPatterns.add("complaints.xhtml");
+        urlPatterns.add("*.xhtml");
         registrationBean.setUrlPatterns(urlPatterns);
         registrationBean.setFilter(securityFilter);
         return registrationBean;
