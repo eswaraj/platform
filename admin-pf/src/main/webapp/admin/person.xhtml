@@ -47,7 +47,7 @@
 					<p:autoComplete id="searchPerson" value="#{personBean.selectedPerson}" minQueryLength="3"
 						completeMethod="#{personBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
 						converter="#{jsfPersonConvertor}" forceSelection="true">
-						<p:ajax event="itemSelect" update="@form:formPanel" disabled="#{personBean.updateMode}" />
+						<p:ajax event="itemSelect" update="@form:searchPanel" disabled="#{personBean.updateMode}" />
 						<p:column>
 							<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
 						</p:column>
@@ -96,8 +96,8 @@
 						<h:outputText value="#{personBean.selectedPerson.biodata}" escape="false" />
 					</p:panelGrid>
 
-					<p:commandButton value="Edit Person" actionListener="#{personBean.editPerson}" id="editPerson" disabled="#{!empty personBean.selectedPerson}" ajax="true"
-						process="@this:editPerson" update=":person_form" styleClass="ui-priority-primary" />
+                    <p:commandButton actionListener="#{personBean.editPerson}" value="Edit Person" id="editPerson"
+                        process="@this:editPerson"  update=":person_form" disabled="#{empty personBean.selectedPerson}" ajax="true" />
 
 				</p:outputPanel>
 				<p:outputPanel id="editPanel" rendered="#{!personBean.showSearchPanel}">
