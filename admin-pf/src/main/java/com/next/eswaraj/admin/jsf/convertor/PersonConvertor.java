@@ -23,6 +23,8 @@ public class PersonConvertor implements Converter {
     @Autowired
     private PoliticalAdminBean politicalAdminBean;
 
+    private List<Person> persons;
+
     public PersonConvertor() {
         logger.info("Creating jsf person convertor");
     }
@@ -34,6 +36,10 @@ public class PersonConvertor implements Converter {
             try {
                 logger.info("value : " + value);
                 List<Person> persons = politicalAdminBean.getPersonSearchResults();
+                if (persons == null || persons.isEmpty()) {
+                    logger.info("Using persons which are set manually");
+                    persons = this.persons;
+                }
                 if (persons == null || persons.isEmpty()) {
                     logger.info("No Seach Result so returning : {}", politicalAdminBean.getSelectedPerson());
                     return politicalAdminBean.getSelectedPerson();
@@ -64,5 +70,13 @@ public class PersonConvertor implements Converter {
         } else {
             return null;
         }
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 }

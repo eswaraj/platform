@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.queue.service.QueueService;
+import com.next.eswaraj.admin.jsf.convertor.PersonConvertor;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -27,6 +28,9 @@ public class PersonBean extends BaseBean {
 
     @Autowired
     private QueueService queueService;
+    
+    @Autowired
+    private PersonConvertor personConvertor;
 
     private boolean showSearchPanel;
 
@@ -52,7 +56,8 @@ public class PersonBean extends BaseBean {
         try {
             logger.info("Searching Person for {}", query);
             personSearchResults = adminService.searchPersonByName(query);
-            logger.info("personSearchResults {}", personSearchResults);
+            logger.info("personSearchResults {}", personSearchResults.size());
+            personConvertor.setPersons(personSearchResults);
             return personSearchResults;
         } catch (Exception e) {
             sendErrorMessage("Error", "Unable to search person", e);
