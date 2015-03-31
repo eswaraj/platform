@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.util.PasswordUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.EswarajAccount;
 import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.ComplaintDepartmentSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
 import com.eswaraj.domain.repo.CategoryRepository;
@@ -19,6 +22,7 @@ import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintCommentRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
+import com.eswaraj.domain.repo.EswarajAccountRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 
 @Service
@@ -41,6 +45,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private ComplaintRepository complaintRepository;
+
+    @Autowired
+    private EswarajAccountRepository eswarajAccountRepository;
+
+    @Autowired
+    private PasswordUtil passwordUtil;
 
     @Override
     public List<Department> getUserDepartments(Long userId) throws ApplicationException {
@@ -75,6 +85,22 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ComplaintDepartmentSearchResult> getDepartmentComplaintsAll(Long departmentId) throws ApplicationException {
         return complaintRepository.searchAllPagedComplaintsOfDepartment(departmentId, 0, 1000);
+    }
+
+    @Override
+    public User login(String userName, String password) throws ApplicationException {
+        EswarajAccount eswarajAccount = eswarajAccountRepository.findByPropertyValue("userName", userName);
+        if (eswarajAccount == null) {
+            throw new ApplicationException("No Such User Exists");
+        }
+        boolean passwordOk = passwordUtil.checkPassword(password, eswarajAccount.getPassword());
+        if (!passwordOk) {
+            throw new ApplicationException("Invalid User credentials");
+        }
+        User user = eswarajAccount.getUser();
+        Person person = personRepository.getPersonByUser(user);
+        user.setPerson(person);
+        return user;
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -13,9 +14,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Department;
-import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.domain.nodes.User;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -26,14 +29,13 @@ public class LoginBean extends BaseBean {
     @Autowired
     private AdminService adminService;
 
+    private User user;
     @Autowired
     private SessionUtil sessionUtil;
 
     private List<Department> userDepartments;
 
     private Department selectedDepartment;
-
-    private UserDto user;
 
     private String userName;
     private String password;
@@ -46,16 +48,33 @@ public class LoginBean extends BaseBean {
 
     @PostConstruct
     public void init() {
-        refreshLoginRoles();
+
     }
 
     public void login() {
+        System.out.println("Login with " + userName);
+        try {
+            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            user = adminService.login(userName, password);
+            if (user != null) {
+
+                sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
+            }
+            refreshLoginRoles();
+            // Move to Redirect page
+            String redirectUrl = httpServletRequest.getParameter("redirect_url");
+            if (StringUtils.isEmpty(redirectUrl)) {
+                redirectUrl = "/admin/complaints.xhtml";
+            }
+            redirect(redirectUrl);
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", e.getMessage());
+        }
 
     }
 
     public void refreshLoginRoles() {
         try {
-            user = sessionUtil.getLoggedInUserFromSession();
             userDepartments = adminService.getUserDepartments(user.getId());
 
             if (userDepartments.size() == 1) {
@@ -75,14 +94,6 @@ public class LoginBean extends BaseBean {
         request.getSession().removeAttribute("scopedTarget.staffBean");
         request.getSession().removeAttribute("scopedTarget.complaintsBean");
         refreshPage();
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
     }
 
     public List<Department> getUserDepartments() {
@@ -115,6 +126,10 @@ public class LoginBean extends BaseBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

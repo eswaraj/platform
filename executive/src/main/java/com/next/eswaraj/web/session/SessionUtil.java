@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.domain.nodes.User;
 import com.google.gdata.util.common.base.StringUtil;
 
 @Component
@@ -47,15 +47,15 @@ public class SessionUtil {
         return redirectUrl;
     }
 
-    public void setLoggedInUserinSession(HttpServletRequest httpServletRequest, UserDto user) {
+    public void setLoggedInUserinSession(HttpServletRequest httpServletRequest, User user) {
         httpServletRequest.getSession(true).setAttribute(LOGGED_IN_USER_SESSION_PARAM, user);
     }
 
-    public UserDto getLoggedInUserFromSession(HttpServletRequest httpServletRequest) {
-        return (UserDto) httpServletRequest.getSession().getAttribute(LOGGED_IN_USER_SESSION_PARAM);
+    public User getLoggedInUserFromSession(HttpServletRequest httpServletRequest) {
+        return (User) httpServletRequest.getSession().getAttribute(LOGGED_IN_USER_SESSION_PARAM);
     }
 
-    public UserDto getLoggedInUserFromSession() {
+    public User getLoggedInUserFromSession() {
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         return getLoggedInUserFromSession(httpServletRequest);
     }

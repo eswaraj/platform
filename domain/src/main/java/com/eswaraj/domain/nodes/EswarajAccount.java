@@ -1,6 +1,7 @@
 package com.eswaraj.domain.nodes;
 
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -17,6 +18,7 @@ public class EswarajAccount extends BaseNode {
     private String password;
     
     @RelatedTo(type = "OF_USER")
+    @Fetch
     private User user;
 
     public String getUserName() {

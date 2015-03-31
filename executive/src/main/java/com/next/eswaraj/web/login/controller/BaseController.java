@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.eswaraj.web.dto.ErrorMessageDto;
-import com.eswaraj.web.dto.UserDto;
 import com.next.eswaraj.web.session.SessionUtil;
 
 public class BaseController {
@@ -60,7 +60,7 @@ public class BaseController {
 
     protected void addGenericValues(ModelAndView mv, HttpServletRequest httpServletRequest) {
         mv.getModel().put("staticHost", staticContentHost);
-        UserDto loggeInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+        User loggeInUser = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
         mv.getModel().put("user", loggeInUser);
         if (loggeInUser == null) {
             mv.getModel().put("loggedIn", false);

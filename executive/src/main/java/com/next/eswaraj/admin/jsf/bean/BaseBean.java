@@ -66,4 +66,13 @@ public class BaseBean {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 
+    public void redirect(String url) {
+        try {
+            System.out.println("Redirecting to " + url);
+            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

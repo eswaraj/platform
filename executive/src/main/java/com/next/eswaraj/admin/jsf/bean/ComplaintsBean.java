@@ -36,12 +36,10 @@ import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
-import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
+import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.ComplaintDepartmentSearchResult;
 import com.eswaraj.messaging.dto.CommentSavedMessage;
-import com.eswaraj.messaging.dto.ComplaintViewedByPoliticalAdminMessage;
 import com.eswaraj.queue.service.QueueService;
-import com.eswaraj.web.dto.UserDto;
 import com.next.eswaraj.admin.jsf.dto.ComplaintSearchResultDto;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
@@ -141,13 +139,13 @@ public class ComplaintsBean extends BaseBean {
 
             if (comment != null && !comment.trim().equals("") && selectedDepartment != null) {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-                UserDto userDto = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
-                Comment savedComment = adminService.saveComplaintComment(complaint, selectedDepartment, userDto.getPerson().getId(), comment);
+                User user = sessionUtil.getLoggedInUserFromSession(httpServletRequest);
+                Comment savedComment = adminService.saveComplaintComment(complaint, selectedDepartment, user.getPerson().getId(), comment);
                 // Send Complaint Comment Message
                 CommentSavedMessage commentSavedMessage = new CommentSavedMessage();
                 commentSavedMessage.setCommentId(savedComment.getId());
                 commentSavedMessage.setComplaintId(complaint.getId());
-                commentSavedMessage.setPersonId(userDto.getPerson().getId());
+                commentSavedMessage.setPersonId(user.getPerson().getId());
                 commentSavedMessage.setDepartmentId(selectedDepartment.getId());
                 queueService.sendCommentSavedMessage(commentSavedMessage);
 
