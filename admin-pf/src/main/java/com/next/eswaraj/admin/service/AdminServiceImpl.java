@@ -487,9 +487,11 @@ public class AdminServiceImpl implements AdminService {
             }
             sb.append(")");
             name = sb.toString();
+        }else{
+            name = "*" + name + "*";
         }
         
-        return personRepository.searchPersonByName("name:*" + name + "*");
+        return personRepository.searchPersonByName("name:" + name);
     }
 
     @Override
