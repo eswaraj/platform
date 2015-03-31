@@ -85,13 +85,12 @@ public class LoginBean extends BaseBean {
             e.printStackTrace();
         }
     }
-    public void onSelectPoliticalBodyAdmin() {
+    public void onSelectDepartment() {
         HttpServletRequest request = getHttpServletRequest();
         Enumeration<String> paramNames = request.getSession().getAttributeNames();
         while (paramNames.hasMoreElements()) {
             logger.info("param : " + paramNames.nextElement());
         }
-        request.getSession().removeAttribute("scopedTarget.staffBean");
         request.getSession().removeAttribute("scopedTarget.complaintsBean");
         refreshPage();
     }

@@ -61,25 +61,26 @@ body {
 	<h:form>
 		<p:menubar>
 			<p:submenu label="Setup" icon="ui-icon-document">
+			 <!-- 
 				<p:submenu label="New" icon="ui-icon-contact">
 					<p:menuitem value="Project" url="./terms.xhtml" />
 					<p:menuitem value="Other" url="#" />
 				</p:submenu>
-				<p:menuitem value="Staff" url="./staff.xhtml" />
+				 -->
 				<p:menuitem value="Complaints" url="./complaints.xhtml" />
 				<p:separator />
 				<p:menuitem value="Quit" url="#" />
 			</p:submenu>
 			<f:facet name="options">
-				<p:selectOneMenu id="politicalBodyAdminMenu" converter="#{politicalBodyAdminJsfConvertor}"
+				<p:selectOneMenu id="departmentMenu" converter="#{politicalBodyAdminJsfConvertor}"
 					value="#{loginBean.selectedPoliticalBodyAdmin}">
-					<f:selectItems value="#{loginBean.userPoliticalBodyAdmins}" var="oneReult"
-						itemLabel="#{oneReult.politicalBodyType.name}" itemValue="#{oneReult}" />
-					<p:ajax event="valueChange" listener="#{loginBean.onSelectPoliticalBodyAdmin}" update="@form" />
+					<f:selectItems value="#{loginBean.userDepartments}" var="oneReult"
+						itemLabel="#{oneReult.name}" itemValue="#{oneReult}" />
+					<p:ajax event="valueChange" listener="#{loginBean.onSelectDepartment}" update="@form" />
 
 				</p:selectOneMenu>
-				<p:blockUI block="@form" trigger="politicalBodyAdminMenu">Loading...<br />
-					<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+				<p:blockUI block="@form" trigger="departmentMenu">Loading...<br />
+					<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 				</p:blockUI>
 			</f:facet>
 
