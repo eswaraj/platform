@@ -83,15 +83,20 @@ public class DepartmentBean extends BaseBean {
     //
     @Autowired
     private CategoryConvertor categoryConvertor;
+    @Autowired
+    private ApplicationCacheBean applicationCacheBean;
     private Category selectedCategory;
 
     @PostConstruct
     public void init() {
         try {
+            // Refresh all locations in cache
+            // applicationCacheBean.refreshLocations();
             categoryConvertor.setCategories(adminService.getAllRootCategories());
             draggableModel = new DefaultMapModel();
             defaultLatLong();
             createMarker();
+
             loadLocations();
 
 
@@ -103,7 +108,7 @@ public class DepartmentBean extends BaseBean {
 
     private void loadLocations() throws ApplicationException {
         locationRoot = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
-        List<Location> allLocations = adminService.getAllLocations();
+        List<Location> allLocations = applicationCacheBean.getAllLocations();
         System.out.println("Found " + allLocations.size() + " locations");
         Map<String, Object> locationMap = new HashMap<String, Object>();
         Location rootLocation = null;

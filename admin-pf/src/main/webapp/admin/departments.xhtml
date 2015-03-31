@@ -61,7 +61,7 @@
 					<p:outputPanel id="treeView">
 						<p:scrollPanel mode="native" style="width:300px;height:600px;">
 							<p:tree value="#{departmentBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
-								selection="#{departmentBean.selectedNode}">
+								selection="#{departmentBean.selectedDepartmentNode}">
 								<p:ajax event="expand" update=":department_form:messages" listener="#{departmentBean.onNodeExpand}" />
 								<p:ajax event="collapse" update=":department_form:messages" listener="#{departmentBean.onNodeCollapse}" />
 								<p:ajax event="select" update=":department_form:formView,:department_form:tabView:mapPanel"
@@ -187,13 +187,13 @@
 									</h:panelGrid>
 
 								</p:tab>
-								<p:tab title="Staff">
+								<p:tab title="Staff" rendered="#{!empty departmentBean.selectedDepartmentNode.data.department.id}">
 								<p:outputPanel id="searchPanel" >
 				                    <p:outputLabel value="Search Person" />
 				                    <p:autoComplete id="searchPerson" value="#{departmentBean.selectedStaffMember}" minQueryLength="3"
 				                        completeMethod="#{departmentBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
 				                        converter="#{jsfPersonConvertor}" forceSelection="true">
-				                        <p:ajax event="itemSelect" update="@form:searchPanel" disabled="#{departmentBean.updateMode}" />
+				                        <p:ajax event="itemSelect" update="@form:tabView:searchPanel" />
 				                        <p:column>
 				                            <p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
 				                        </p:column>
@@ -300,7 +300,7 @@
 						<p:outputPanel id="treeView">
 							<p:scrollPanel mode="native" style="width:300px;height:600px;">
 								<p:tree value="#{departmentBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
-									selection="#{departmentBean.selectedNode}">
+									selection="#{departmentBean.selectedDepartmentNode}">
 									<p:ajax event="expand" update=":department_form:messages" listener="#{departmentBean.onNodeExpand}" />
 									<p:ajax event="collapse" update=":department_form:messages" listener="#{departmentBean.onNodeCollapse}" />
 									<p:ajax event="select"
@@ -332,7 +332,7 @@
 							</p:blockUI>
 						</p:outputPanel>
 						<p:outputPanel id="formView">
-							<p:outputPanel rendered="#{not empty departmentBean.selectedNode}">
+							<p:outputPanel rendered="#{not empty departmentBean.selectedDepartmentNode}">
 								<p:tabView id="tabView">
 									<p:tab title="Main">
 										<h:panelGrid columns="4">
@@ -425,7 +425,7 @@
 
 												<p:gmap id="gmap" center="#{departmentBean.lat}, #{departmentBean.lng}"
 													zoom="#{departmentBean.selectedDepartmentNode.data.department.depth}" type="HYBRID"
-													rendered="#{not empty departmentBean.selectedNode}" model="#{departmentBean.draggableModel}"
+													rendered="#{not empty departmentBean.selectedDepartmentNode}" model="#{departmentBean.draggableModel}"
 													style="width:500px;height:500px">
 													<p:ajax event="markerDrag" listener="#{departmentBean.onMarkerDrag}"
 														update="@form:tabView:longitude,@form:tabView:latitude" />
