@@ -30,6 +30,7 @@ public class LoginBean extends BaseBean {
     private AdminService adminService;
 
     private User user;
+
     @Autowired
     private SessionUtil sessionUtil;
 
@@ -129,6 +130,10 @@ public class LoginBean extends BaseBean {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
 }

@@ -73,7 +73,7 @@ body {
 			</p:submenu>
 			<f:facet name="options">
 				<p:selectOneMenu id="departmentMenu" converter="#{politicalBodyAdminJsfConvertor}"
-					value="#{loginBean.selectedPoliticalBodyAdmin}">
+					value="#{loginBean.selectedDepartment}">
 					<f:selectItems value="#{loginBean.userDepartments}" var="oneReult"
 						itemLabel="#{oneReult.name}" itemValue="#{oneReult}" />
 					<p:ajax event="valueChange" listener="#{loginBean.onSelectDepartment}" update="@form" />
