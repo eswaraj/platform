@@ -483,6 +483,7 @@ public class AdminServiceImpl implements AdminService {
                 }
                 sb.append(oneName);
                 sb.append("*");
+                count++;
             }
             sb.append(")");
             name = sb.toString();
