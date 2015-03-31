@@ -516,8 +516,27 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     }
 
     @Override
-    public List<PoliticalBodyAdminSearchResult> searchPoliticalBodyAdminByName(String text) throws ApplicationException {
-        System.out.println("Searching for Name : " + "name:*" + text + "*");
-        return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName("name:*" + text + "*"));
+    public List<PoliticalBodyAdminSearchResult> searchPoliticalBodyAdminByName(String name) throws ApplicationException {
+        if (name.contains(" ")) {
+            String[] names = name.split(" ");
+            StringBuffer sb = new StringBuffer();
+            sb.append("(");
+            int count = 0;
+            for (String oneName : names) {
+                if (count > 0) {
+                    sb.append(" AND ");
+                }
+                sb.append(oneName);
+                sb.append("*");
+                count++;
+            }
+            sb.append(")");
+            name = sb.toString();
+        } else {
+            name = "*" + name + "*";
+        }
+
+        System.out.println("Searching for Name : " + "name:" + name);
+        return convertToList(politicalBodyAdminRepository.searchPoliticalAdminByName("name:" + name));
     }
 }
