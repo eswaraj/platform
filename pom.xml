@@ -25,6 +25,6 @@
             <module>cache</module>
             <module>tasks</module>
             <module>leader</module>
-
+            <module>executive</module>
 	</modules>
 </project>
