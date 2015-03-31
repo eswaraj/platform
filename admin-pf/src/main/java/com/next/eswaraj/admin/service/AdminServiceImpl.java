@@ -25,6 +25,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.util.DateTimeUtil;
 import com.eswaraj.core.util.DateUtil;
+import com.eswaraj.core.util.PasswordUtil;
 import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
@@ -33,6 +34,7 @@ import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
+import com.eswaraj.domain.nodes.EswarajAccount;
 import com.eswaraj.domain.nodes.FacebookAccount;
 import com.eswaraj.domain.nodes.LeaderTempFacebookAccount;
 import com.eswaraj.domain.nodes.Location;
@@ -44,6 +46,7 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.nodes.SystemCategory;
 import com.eswaraj.domain.nodes.TimelineItem;
+import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
@@ -61,6 +64,7 @@ import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
 import com.eswaraj.domain.repo.ElectionManifestoRepository;
 import com.eswaraj.domain.repo.ElectionRepository;
 import com.eswaraj.domain.repo.ElectionTypeRepository;
+import com.eswaraj.domain.repo.EswarajAccountRepository;
 import com.eswaraj.domain.repo.FacebookAccountRepository;
 import com.eswaraj.domain.repo.FacebookAppPermissionRepository;
 import com.eswaraj.domain.repo.LeaderTempFacebookAccountRepository;
@@ -103,6 +107,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private DepartmentLocationRepository departmentLocationRepository;
+
+    @Autowired
+    private EswarajAccountRepository eswarajAccountRepository;
+
+    @Autowired
+    private PasswordUtil passwordUtil;
 
     @Autowired
     private DateTimeUtil dateTimeUtil;
@@ -960,4 +970,31 @@ public class AdminServiceImpl implements AdminService {
     public List<Location> getAllLocationsOfDepartment(Department department) throws ApplicationException {
         return departmentLocationRepository.getAllLocationOfDepartment(department);
     }
+
+    @Override
+    public EswarajAccount savePersonLoginDetail(Person person, String userName, String password) throws ApplicationException {
+        if (StringUtils.isEmpty(userName)) {
+            return null;
+        }
+        if (StringUtils.isEmpty(password)) {
+            logger.info("No Password Provided so no update");
+        }
+        User user = userRepository.getUserByPerson(person);
+        if (user == null) {
+            user = new User();
+            user.setPerson(person);
+            user.setDateCreated(new Date());
+            user = userRepository.save(user);
+        }
+        EswarajAccount eswarajAccount = eswarajAccountRepository.getEswarajAccountByUser(user);
+        if (eswarajAccount == null) {
+            eswarajAccount = new EswarajAccount();
+            eswarajAccount.setUserName(userName);
+            eswarajAccount.setUser(user);
+        }
+        eswarajAccount.setPassword(passwordUtil.encryptPassword(password));
+        eswarajAccount = eswarajAccountRepository.save(eswarajAccount);
+        return eswarajAccount;
+    }
+
 }

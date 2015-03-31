@@ -134,6 +134,7 @@
 								style="width:200px" />
 
 						</h:panelGrid>
+						
 						<h:panelGrid columns="1">
 							<p:graphicImage style="width:200px;" id="profilePic" value="#{personBean.selectedPerson.profilePhoto}" />
 							<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
@@ -141,7 +142,14 @@
 						</h:panelGrid>
 
 					</h:panelGrid>
-
+                    <p:fieldset legend="Login Details" style="margin-bottom:20px">
+				        <h:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel value="User Name" />
+                            <p:inputText id="userName" value="#{personBean.userName}" style="width:200px" />
+                            <p:outputLabel value="Password" />
+                            <p:inputText id="password" value="#{personBean.password}" style="width:200px" />
+				        </h:panelGrid>
+				    </p:fieldset>
 					<p:panelGrid columns="1">
 						<f:facet name="header">
 							<p:outputLabel value="Bio Data" />

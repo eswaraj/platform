@@ -40,6 +40,9 @@ public class PersonBean extends BaseBean {
 
     private boolean updateMode;
 
+    private String userName;
+    private String password;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
@@ -71,6 +74,7 @@ public class PersonBean extends BaseBean {
 
         try {
             selectedPerson = adminService.savePerson(selectedPerson);
+            adminService.savePersonLoginDetail(selectedPerson, userName, password);
             logger.info("Saved Person " + selectedPerson);
             queueService.sendRefreshPerson(selectedPerson.getId(), "web");
         } catch (Exception e) {
@@ -118,6 +122,22 @@ public class PersonBean extends BaseBean {
 
     public void setUpdateMode(boolean updateMode) {
         this.updateMode = updateMode;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

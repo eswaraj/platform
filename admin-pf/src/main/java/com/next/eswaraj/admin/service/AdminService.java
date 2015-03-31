@@ -13,6 +13,7 @@ import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
 import com.eswaraj.domain.nodes.ElectionType;
+import com.eswaraj.domain.nodes.EswarajAccount;
 import com.eswaraj.domain.nodes.FacebookAccount;
 import com.eswaraj.domain.nodes.LeaderTempFacebookAccount;
 import com.eswaraj.domain.nodes.Location;
@@ -88,6 +89,8 @@ public interface AdminService {
     List<Person> searchPersonByName(String name) throws ApplicationException;
 
     Person savePerson(Person person) throws ApplicationException;
+
+    EswarajAccount savePersonLoginDetail(Person person, String userName, String password) throws ApplicationException;
 
     Person getPersonById(Long personId) throws ApplicationException;
     
