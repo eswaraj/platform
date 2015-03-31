@@ -230,7 +230,7 @@
         </repository>
     </repositories>
     <build>
-        <finalName>eswaraj-leader</finalName>
+        <finalName>eswaraj-department</finalName>
         <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
         <plugins>
             <plugin>
