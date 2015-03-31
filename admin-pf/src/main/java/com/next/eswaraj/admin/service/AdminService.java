@@ -9,6 +9,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.DepartmentAdmin;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
@@ -91,6 +92,14 @@ public interface AdminService {
     Person savePerson(Person person) throws ApplicationException;
 
     EswarajAccount savePersonLoginDetail(Person person, String userName, String password) throws ApplicationException;
+
+    EswarajAccount getPersonEswarajAccount(Person person) throws ApplicationException;
+
+    List<Person> getDepartmentStaffMembers(Department department) throws ApplicationException;
+
+    DepartmentAdmin addDepartmentStaff(Department department, Person person) throws ApplicationException;
+
+    DepartmentAdmin deleteDepartmentStaff(Department department, Person person) throws ApplicationException;
 
     Person getPersonById(Long personId) throws ApplicationException;
     

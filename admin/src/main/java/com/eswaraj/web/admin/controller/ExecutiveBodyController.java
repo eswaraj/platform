@@ -16,6 +16,7 @@ import com.eswaraj.web.dto.ExecutiveBodyDto;
 @Controller
 public class ExecutiveBodyController extends BaseController {
 
+    /*
 	@RequestMapping(value = "/ajax/eb/getroot/{departmentId}", method = RequestMethod.GET)
 	public @ResponseBody List<ExecutiveBodyDto> getExecutiveBody(ModelAndView mv, @PathVariable Long departmentId) throws ApplicationException {
 		List<ExecutiveBodyDto> executiveBodyDtos = appService.getAllRootExecutiveBodyOfDepartment(departmentId);
@@ -33,4 +34,5 @@ public class ExecutiveBodyController extends BaseController {
 		executiveBodyDto = appService.saveExecutiveBody(executiveBodyDto);
 		return executiveBodyDto;
 	}
+	*/
 }

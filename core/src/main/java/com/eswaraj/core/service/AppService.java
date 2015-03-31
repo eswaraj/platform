@@ -68,6 +68,7 @@ public interface AppService {
     List<PoliticalPositionDto> getAllPoliticalPositionsOfPerson(Long personId, boolean activeOnly) throws ApplicationException;
 
 	//Executive Body APIs
+    /*
 	ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException;
 	
 	ExecutiveBodyDto getExecutiveBodyById(Long executiveBodyId) throws ApplicationException;
@@ -75,7 +76,7 @@ public interface AppService {
 	List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException;
 	
 	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long departmentId) throws ApplicationException;
-	
+	*/
 	
 	//Executive Post Admin APIs
 	

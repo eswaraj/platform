@@ -2,13 +2,11 @@ package com.eswaraj.domain.repo;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
@@ -20,10 +18,6 @@ import com.eswaraj.domain.nodes.extended.LocationSearchResult;
  */
 public interface LocationRepository extends GraphRepository<Location>{
 	
-	@Query("start location=node({0})" +
-			"match (location)<-[:SERVED_BY]-(executiveBody) return executiveBody")
-	public Set<ExecutiveBody> findExecutiveBodies(Location location);
-
     @Query("start n=node:LocationNameFt({0}) return n")
     Collection<Location> searchLocationByName(String name);
 

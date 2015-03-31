@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Complaint;
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.User;
 
@@ -31,5 +32,8 @@ public interface PersonRepository extends GraphRepository<Person>{
 
     @Query("match (person) where person.__type__ = 'Person' and person.name={0} return person")
     public List<Person> findPersonsByName(String name);
+
+    @Query("start department=node({0}) match (department)-[:WORKS_FOR]-(departmentAdmin)-[:IS]-(person) where person.__type__ = 'Person'  and departmentAdmin.__type__='DepartmentAdmin' return person")
+    public List<Person> getDepartmentStaffMembers(Department department);
 
 }

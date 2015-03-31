@@ -15,45 +15,48 @@ import com.eswaraj.domain.base.BaseNode;
  */
 
 @NodeEntity
-@TypeAlias("ExecutiveBodyAdmin")
-public class ExecutiveBodyAdmin extends BaseNode {
+@TypeAlias("DepartmentAdmin")
+public class DepartmentAdmin extends BaseNode {
 
 	@RelatedTo(type="REPORTS_TO")
-	private ExecutiveBodyAdmin manager;
+	private DepartmentAdmin manager;
 	
 	@RelatedTo(type="WORKS_FOR")
-	private ExecutiveBody executiveBody;
+    private Department department;
 
 	@RelatedTo(type="IS")
 	private Person person;
 
 	@RelatedTo(type="HAS")
-	private ExecutivePost post;
+	private DepartmentPost post;
 	
 	private Date startDate;
 	private Date endDate;
-	public ExecutiveBodyAdmin getManager() {
+	public DepartmentAdmin getManager() {
 		return manager;
 	}
-	public void setManager(ExecutiveBodyAdmin manager) {
+	public void setManager(DepartmentAdmin manager) {
 		this.manager = manager;
 	}
-	public ExecutiveBody getExecutiveBody() {
-		return executiveBody;
-	}
-	public void setExecutiveBody(ExecutiveBody executiveBody) {
-		this.executiveBody = executiveBody;
-	}
-	public Person getPerson() {
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Person getPerson() {
 		return person;
 	}
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public ExecutivePost getPost() {
+	public DepartmentPost getPost() {
 		return post;
 	}
-	public void setPost(ExecutivePost post) {
+	public void setPost(DepartmentPost post) {
 		this.post = post;
 	}
 	public Date getStartDate() {

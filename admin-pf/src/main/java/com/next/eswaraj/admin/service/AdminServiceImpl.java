@@ -30,6 +30,7 @@ import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.DataClient;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.DepartmentAdmin;
 import com.eswaraj.domain.nodes.Election;
 import com.eswaraj.domain.nodes.ElectionManifesto;
 import com.eswaraj.domain.nodes.ElectionManifestoPromise;
@@ -58,6 +59,7 @@ import com.eswaraj.domain.nodes.relationships.PromiseTimelineItem;
 import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
+import com.eswaraj.domain.repo.DepartmentAdminRepository;
 import com.eswaraj.domain.repo.DepartmentLocationRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
@@ -179,6 +181,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DepartmentAdminRepository departmentAdminRepository;
 
     @Autowired
     private LeaderTempFacebookAccountRepository leaderTempFacebookAccountRepository;
@@ -995,6 +1000,44 @@ public class AdminServiceImpl implements AdminService {
         eswarajAccount.setPassword(passwordUtil.encryptPassword(password));
         eswarajAccount = eswarajAccountRepository.save(eswarajAccount);
         return eswarajAccount;
+    }
+
+    @Override
+    public EswarajAccount getPersonEswarajAccount(Person person) throws ApplicationException {
+        User user = userRepository.getUserByPerson(person);
+        if (user == null) {
+            return null;
+        }
+        EswarajAccount eswarajAccount = eswarajAccountRepository.getEswarajAccountByUser(user);
+        return eswarajAccount;
+    }
+
+    @Override
+    public List<Person> getDepartmentStaffMembers(Department department) throws ApplicationException {
+        return personRepository.getDepartmentStaffMembers(department);
+    }
+
+    @Override
+    public DepartmentAdmin addDepartmentStaff(Department department, Person person) throws ApplicationException {
+        DepartmentAdmin departmentAdmin = departmentAdminRepository.getDepartmentAdminByDepartmentAndPerson(department, person);
+        if (departmentAdmin == null) {
+            departmentAdmin = new DepartmentAdmin();
+            departmentAdmin.setDepartment(department);
+            departmentAdmin.setPerson(person);
+            departmentAdmin.setDateCreated(new Date());
+        }
+        departmentAdmin.setDateModified(new Date());
+        departmentAdmin = departmentAdminRepository.save(departmentAdmin);
+        return departmentAdmin;
+    }
+
+    @Override
+    public DepartmentAdmin deleteDepartmentStaff(Department department, Person person) throws ApplicationException {
+        DepartmentAdmin departmentAdmin = departmentAdminRepository.getDepartmentAdminByDepartmentAndPerson(department, person);
+        if (departmentAdmin != null) {
+            departmentAdminRepository.delete(departmentAdmin);
+        }
+        return departmentAdmin;
     }
 
 }

@@ -15,7 +15,7 @@ import com.eswaraj.domain.base.BaseNode;
  */
 @NodeEntity
 @TypeAlias("ExecutivePost")
-public class ExecutivePost extends BaseNode{
+public class DepartmentPost extends BaseNode{
 
 	private String shortTitle;
 	private String title;

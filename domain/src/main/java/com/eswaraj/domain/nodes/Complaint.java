@@ -29,7 +29,7 @@ public class Complaint extends BaseNode {
     @Fetch
     private Set<Category> categories;
     @RelatedTo(type = "SERVED_BY")
-    private ExecutiveBodyAdmin administrator;
+    private DepartmentAdmin administrator;
     private Status status;
     @RelatedTo(type = "AT")
     private Set<Location> locations;
@@ -65,11 +65,11 @@ public class Complaint extends BaseNode {
         this.description = description;
     }
 
-    public ExecutiveBodyAdmin getAdministrator() {
+    public DepartmentAdmin getAdministrator() {
         return administrator;
     }
 
-    public void setAdministrator(ExecutiveBodyAdmin administrator) {
+    public void setAdministrator(DepartmentAdmin administrator) {
         this.administrator = administrator;
     }
 

@@ -47,7 +47,9 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
+import com.eswaraj.domain.nodes.Person;
 import com.next.eswaraj.admin.jsf.convertor.CategoryConvertor;
+import com.next.eswaraj.admin.jsf.convertor.PersonConvertor;
 import com.next.eswaraj.admin.service.AdminService;
 
 @Component
@@ -58,6 +60,9 @@ public class DepartmentBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private PersonConvertor personConvertor;
 
     private TreeNode root;
     private TreeNode locationRoot;
@@ -71,6 +76,10 @@ public class DepartmentBean extends BaseBean {
 
     private Double lat;
     private Double lng;
+
+    private List<Person> staffMembers;
+    private Person selectedStaffMember;
+    private List<Person> personSearchResults;
     //
     @Autowired
     private CategoryConvertor categoryConvertor;
@@ -215,6 +224,7 @@ public class DepartmentBean extends BaseBean {
             System.out.println("selectedDepartmentNode= " + selectedDepartmentNode);
             Department department = ((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment();
             draggableModel.getPolygons().clear();
+            staffMembers = null;
             if (department.getId() != null) {
                 // Do this only if Department has been saved
                 List<Location> locations = adminService.getAllLocationsOfDepartment(department);
@@ -227,11 +237,23 @@ public class DepartmentBean extends BaseBean {
                 for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
                     selectUnSelectNode(oneChildTreeNode, locationIds);
                 }
+                staffMembers = adminService.getDepartmentStaffMembers(department);
             }
 
 
         } catch (Exception ex) {
             sendErrorMessage("Error", "Unable to Select Locations", ex);
+        }
+    }
+
+    public void deleteStaffMember(Person person) {
+        System.out.println("Remove Person as Staff " + person);
+        DepartmentDocument document = (DepartmentDocument) selectedDepartmentNode.getData();
+        try {
+            adminService.deleteDepartmentStaff(document.getDepartment(), selectedStaffMember);
+            sendInfoMessage("Success", "Staff Member " + selectedStaffMember.getName() + " removed successfully");
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", "Unable to add a Staff Member", e);
         }
     }
 
@@ -341,6 +363,31 @@ public class DepartmentBean extends BaseBean {
         draggableModel.addOverlay(marker);
         for (Marker premarker : draggableModel.getMarkers()) {
             premarker.setDraggable(true);
+        }
+    }
+
+    public List<Person> searchPerson(String query) {
+        try {
+            logger.info("Searching Person for {}", query);
+            personSearchResults = adminService.searchPersonByName(query);
+            logger.info("personSearchResults {}", personSearchResults.size());
+            personConvertor.setPersons(personSearchResults);
+            return personSearchResults;
+        } catch (Exception e) {
+            sendErrorMessage("Error", "Unable to search person", e);
+        }
+        return null;
+
+    }
+
+    public void addStaffMember() {
+        DepartmentDocument document = (DepartmentDocument) selectedDepartmentNode.getData();
+        try {
+            adminService.addDepartmentStaff(document.getDepartment(), selectedStaffMember);
+            sendInfoMessage("Success", "Staff Member " + selectedStaffMember.getName() + " added successfully");
+            staffMembers = adminService.getDepartmentStaffMembers(document.getDepartment());
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", "Unable to add a Staff Member", e);
         }
     }
 
@@ -621,5 +668,21 @@ public class DepartmentBean extends BaseBean {
 
     public void setSelectedLocationNodes(TreeNode[] selectedLocationNodes) {
         this.selectedLocationNodes = selectedLocationNodes;
+    }
+
+    public List<Person> getStaffMembers() {
+        return staffMembers;
+    }
+
+    public void setStaffMembers(List<Person> staffMembers) {
+        this.staffMembers = staffMembers;
+    }
+
+    public Person getSelectedStaffMember() {
+        return selectedStaffMember;
+    }
+
+    public void setSelectedStaffMember(Person selectedStaffMember) {
+        this.selectedStaffMember = selectedStaffMember;
     }
 }

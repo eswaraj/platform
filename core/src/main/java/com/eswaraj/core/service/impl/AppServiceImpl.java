@@ -20,7 +20,6 @@ import com.eswaraj.core.convertors.CategoryConvertor;
 import com.eswaraj.core.convertors.DepartmentConvertor;
 import com.eswaraj.core.convertors.DeviceConvertor;
 import com.eswaraj.core.convertors.ExecutiveBodyAdminConvertor;
-import com.eswaraj.core.convertors.ExecutiveBodyConvertor;
 import com.eswaraj.core.convertors.ExecutivePostConvertor;
 import com.eswaraj.core.convertors.PartyConvertor;
 import com.eswaraj.core.convertors.PoliticalBodyAdminConvertor;
@@ -32,10 +31,9 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.core.util.DateUtil;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.DepartmentAdmin;
+import com.eswaraj.domain.nodes.DepartmentPost;
 import com.eswaraj.domain.nodes.Device;
-import com.eswaraj.domain.nodes.ExecutiveBody;
-import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
-import com.eswaraj.domain.nodes.ExecutivePost;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Party;
 import com.eswaraj.domain.nodes.Person;
@@ -43,11 +41,10 @@ import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
 import com.eswaraj.domain.nodes.PoliticalBodyType;
 import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.DepartmentAdminRepository;
+import com.eswaraj.domain.repo.DepartmentPostRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.DeviceRepository;
-import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
-import com.eswaraj.domain.repo.ExecutiveBodyRepository;
-import com.eswaraj.domain.repo.ExecutivePostRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
@@ -61,7 +58,6 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
 import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
-import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.PartyDto;
@@ -101,15 +97,11 @@ public class AppServiceImpl extends BaseService implements AppService {
 	@Autowired
 	private LocationRepository locationRepository;
 	@Autowired
-	private ExecutiveBodyRepository executiveBodyRepository;
-	@Autowired
-	private ExecutiveBodyConvertor executiveBodyConvertor;
-	@Autowired
-	private ExecutiveBodyAdminRepository executiveBodyAdminRepository;
+    private DepartmentAdminRepository departmentAdminRepository;
 	@Autowired
 	private ExecutiveBodyAdminConvertor executiveBodyAdminConvertor;
 	@Autowired
-	private ExecutivePostRepository executivePostRepository;
+	private DepartmentPostRepository executivePostRepository;
 	@Autowired
 	private ExecutivePostConvertor executivePostConvertor;
 	@Autowired
@@ -325,7 +317,7 @@ public class AppServiceImpl extends BaseService implements AppService {
 		Collection<PoliticalBodyAdmin> politicalBodyAdmins = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(location, politicalBodyType);
 		return politicalBodyAdminConvertor.convertBeanList(politicalBodyAdmins);
 	}
-
+	/*
 	@Override
 	public ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException {
 		ExecutiveBody executiveBody = executiveBodyConvertor.convert(executiveBodyDto);
@@ -352,37 +344,38 @@ public class AppServiceImpl extends BaseService implements AppService {
 		Collection<ExecutiveBody> allChildExecutiveBodies = executiveBodyRepository.getAllRootExecutiveBodyOfDepartment(department);
 		return executiveBodyConvertor.convertBeanList(allChildExecutiveBodies);
 	}
+	*/
 
 	@Override
 	public ExecutiveBodyAdminDto saveExecutiveBodyAdmin(ExecutiveBodyAdminDto executiveBodyAdminDto) throws ApplicationException {
-		ExecutiveBodyAdmin executiveBodyAdmin = executiveBodyAdminConvertor.convert(executiveBodyAdminDto);
-		executiveBodyAdmin = executiveBodyAdminRepository.save(executiveBodyAdmin);
+		DepartmentAdmin executiveBodyAdmin = executiveBodyAdminConvertor.convert(executiveBodyAdminDto);
+        executiveBodyAdmin = departmentAdminRepository.save(executiveBodyAdmin);
 		return executiveBodyAdminConvertor.convertBean(executiveBodyAdmin);
 	}
 
 	@Override
 	public ExecutiveBodyAdminDto getExecutiveBodyAdminById(Long executiveBodyAdminId) throws ApplicationException {
-		ExecutiveBodyAdmin executiveBodyAdmin = executiveBodyAdminRepository.findOne(executiveBodyAdminId);
+        DepartmentAdmin executiveBodyAdmin = departmentAdminRepository.findOne(executiveBodyAdminId);
 		return executiveBodyAdminConvertor.convertBean(executiveBodyAdmin);
 	}
 
 	@Override
 	public List<ExecutiveBodyAdminDto> getAllExecutiveBodyAdminOfExecutiveBody(Long executiveBodyId) throws ApplicationException {
-		ExecutiveBody executiveBody = getObjectIfExistsElseThrowExcetpion(executiveBodyId, "ExecutiveBody", executiveBodyRepository);
-		Collection<ExecutiveBodyAdmin> executiveBodyAdmins = executiveBodyAdminRepository.getAllAdminsOfExecutiveBody(executiveBody);
+        Department executiveBody = getObjectIfExistsElseThrowExcetpion(executiveBodyId, "Department", departmentRepository);
+        Collection<DepartmentAdmin> executiveBodyAdmins = departmentAdminRepository.getAllAdminsOfDepartment(executiveBody);
 		return executiveBodyAdminConvertor.convertBeanList(executiveBodyAdmins);
 	}
 	
 	@Override
 	public ExecutivePostDto saveExecutivePost(ExecutivePostDto executivePostDto) throws ApplicationException {
-		ExecutivePost executivePost = executivePostConvertor.convert(executivePostDto);
+		DepartmentPost executivePost = executivePostConvertor.convert(executivePostDto);
 		executivePost = executivePostRepository.save(executivePost);
 		return executivePostConvertor.convertBean(executivePost);
 	}
 
 	@Override
 	public ExecutivePostDto getExecutivePostById(Long executivePostId) throws ApplicationException {
-		ExecutivePost executivePost = executivePostRepository.findOne(executivePostId);
+		DepartmentPost executivePost = executivePostRepository.findOne(executivePostId);
 		return executivePostConvertor.convertBean(executivePost);
 	}
 

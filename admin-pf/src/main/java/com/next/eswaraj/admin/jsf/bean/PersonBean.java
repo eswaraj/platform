@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.EswarajAccount;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.queue.service.QueueService;
 import com.next.eswaraj.admin.jsf.convertor.PersonConvertor;
@@ -76,6 +78,7 @@ public class PersonBean extends BaseBean {
             selectedPerson = adminService.savePerson(selectedPerson);
             adminService.savePersonLoginDetail(selectedPerson, userName, password);
             logger.info("Saved Person " + selectedPerson);
+            password = "";
             queueService.sendRefreshPerson(selectedPerson.getId(), "web");
         } catch (Exception e) {
             sendErrorMessage("Error", e.getMessage());
@@ -114,6 +117,14 @@ public class PersonBean extends BaseBean {
     public void setSelectedPerson(Person selectedPerson) {
         System.out.println("Set Person : " + selectedPerson);
         this.selectedPerson = selectedPerson;
+        if (selectedPerson != null) {
+            try {
+                EswarajAccount eswarajAccount = adminService.getPersonEswarajAccount(selectedPerson);
+                userName = eswarajAccount.getUserName();
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean isUpdateMode() {

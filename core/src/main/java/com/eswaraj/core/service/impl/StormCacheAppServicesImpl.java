@@ -20,8 +20,8 @@ import com.eswaraj.domain.nodes.Address;
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
-import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
-import com.eswaraj.domain.nodes.ExecutivePost;
+import com.eswaraj.domain.nodes.DepartmentAdmin;
+import com.eswaraj.domain.nodes.DepartmentPost;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.Party;
@@ -35,8 +35,8 @@ import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.CommentRepository;
 import com.eswaraj.domain.repo.ComplaintLoggedByPersonRepository;
 import com.eswaraj.domain.repo.ComplaintRepository;
-import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
-import com.eswaraj.domain.repo.ExecutivePostRepository;
+import com.eswaraj.domain.repo.DepartmentAdminRepository;
+import com.eswaraj.domain.repo.DepartmentPostRepository;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.domain.repo.LocationTypeRepository;
 import com.eswaraj.domain.repo.PartyRepository;
@@ -65,9 +65,9 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
     @Autowired
     private ComplaintRepository complaintRepository;
     @Autowired
-    private ExecutiveBodyAdminRepository executiveBodyAdminRepository;
+    private DepartmentAdminRepository executiveBodyAdminRepository;
     @Autowired
-    private ExecutivePostRepository executivePostRepository;
+    private DepartmentPostRepository executivePostRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -390,9 +390,9 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
 
     @Override
     public JsonObject getExecutiveBodyAdmin(Long executiveBodyAdminId) throws ApplicationException {
-        ExecutiveBodyAdmin eba = executiveBodyAdminRepository.findOne(executiveBodyAdminId);
+        DepartmentAdmin eba = executiveBodyAdminRepository.findOne(executiveBodyAdminId);
         Person ebaPerson = personRepository.findOne(eba.getPerson().getId());
-        ExecutivePost ebaExecutivePost = executivePostRepository.findOne(eba.getPost().getId());
+        DepartmentPost ebaExecutivePost = executivePostRepository.findOne(eba.getPost().getId());
         JsonObject ebaJsonObject = new JsonObject();
         ebaJsonObject.addProperty("name", ebaPerson.getName());
         ebaJsonObject.addProperty("profilePhoto", ebaPerson.getProfilePhoto());
