@@ -80,6 +80,11 @@ public class PersonBean extends BaseBean {
         }
     }
 
+    public void createPerson() {
+        System.out.println("Create Person : " + selectedPerson);
+        showSearchPanel = false;
+        selectedPerson = new Person();
+    }
     public void editPerson() {
         System.out.println("Edit Person : " + selectedPerson);
         showSearchPanel = false;

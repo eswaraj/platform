@@ -39,7 +39,7 @@
 	</h:head>
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
-		<h:form id="political_admin_form" enctype="multipart/form-data">
+		<h:form id="person_form" enctype="multipart/form-data">
 			<p:panel id="mainPanel" header="Person">
 				<p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
 				<p:outputPanel id="searchPanel" rendered="#{personBean.showSearchPanel}">
@@ -57,7 +57,7 @@
 						</p:column>
 					</p:autoComplete>
 					<p:commandButton actionListener="#{personBean.createPerson}" value="Create Person" id="createPerson"
-						process="@this:createPerson"  update="@this:mainPanel" disabled="#{personBean.updateMode}" ajax="true" />
+						process="@this:createPerson"  update=":person_form" disabled="#{personBean.updateMode}" ajax="true" />
 					<h:panelGrid columns="2" cellpadding="5" id="formPanel">
 						<h:panelGrid columns="4" cellpadding="5">
 							<p:outputLabel value="Name : " />
@@ -97,7 +97,7 @@
 					</p:panelGrid>
 
 					<p:commandButton value="Edit Person" actionListener="#{personBean.editPerson}" id="editPerson" disabled="#{!empty personBean.selectedPerson}" ajax="true"
-						process="@this:editPerson" update="@form:mainPanel" />
+						process="@this:editPerson" update=":person_form" styleClass="ui-priority-primary" />
 
 				</p:outputPanel>
 				<p:outputPanel id="editPanel" rendered="#{!personBean.showSearchPanel}">
