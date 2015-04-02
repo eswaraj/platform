@@ -106,21 +106,21 @@
 															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p> -->
+													</div>
 														<div class="complaints_followers_counter">
-														<p class="reporter_total_complaints">
+														<p class="col-sm-4 col-md-4 reporter_total_complaints">
 															<span class="grey_text">Complaints</span> <br /> 
 															<strong class="blue_color_text">200</strong>
 														</p>
-														<p class="reporter_complaint_followers">
+														<p class="col-sm-4 col-md-4 reporter_complaint_followers">
 															<span class="grey_text">Followers</span> <br /> 
 															<strong class="blue_color_text">5000</strong>
 														</p>
-														<p class="reporter_complaint_visited">
+														<p class="col-sm-4 col-md-4 reporter_complaint_visited">
 															<span class="grey_text">Following</span> <br /> 
 															<strong class="blue_color_text">50</strong>
 														</p>
 														</div>
-													</div>
 												</div>
 
 											<!-- 	<div class="list-group">
@@ -191,43 +191,43 @@
 													<div class="secondary-wrapper">
 														<div class="views_div">
 															<c:if test="${viewType eq 'list'}">
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon" class="icon_selected">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div>
+																<a class="col-sm-4 col-md-4" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon" class="icon_selected">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon" class="icon_selected">Analytics View</span>
 																</div></a>

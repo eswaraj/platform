@@ -204,7 +204,7 @@ border: 2px solid #BABABA;
 }
 
 .views_div{
-padding: 0px 30px 0px 50px;
+padding: 0px;
 }
 
 .clearfix{
@@ -238,7 +238,7 @@ border-bottom: 0px dotted;
 }
 
 .politician_image{
-width: 100px;
+width: auto;
 height: 100px;
 max-width: 100px;
 max-height: 100px;
@@ -312,7 +312,7 @@ float: left;
 
 .cons_issue_reporters_box_pic{
 background-color: #ECE9E8;
-height: 230px;
+height: 150px;
 margin-bottom: 10px;
 padding: 0px;
 position: relative;
@@ -390,9 +390,9 @@ margin: 0px;
 position: absolute;
 color: #FFFFFF;
 padding: 2px 2px 2px 10px;
-color: #000;
-font-weight: 700;
+font-weight: bold;
 font-size: 25px;
+left: 10px;
 }																
 
 .location_image{
@@ -406,26 +406,19 @@ height: 150px;
 }
 
 .carousel-inner .item{
-
-left:50px;
+  text-align: center;
+  font-size: 12px;
 }
 
 #myCarousel{
 width: auto;
 }
 
-.reporter_total_complaints{
-clear: both;
-float:left;
+.reporter_total_complaints, .reporter_complaint_followers, .reporter_complaint_visited {
+padding: 0px;
+margin: 0px;
+text-align: center;
 font-size: 12px;
-margin-right: 20px;
-margin-left: 10px;
-}
-
-.reporter_complaint_followers, .reporter_complaint_visited{
-float: left;
-font-size: 12px;
-margin-right: 20px;
 }
 
 .platform_constituency_counter{
@@ -447,9 +440,14 @@ font-size: 12px;
 
 .complaints_followers_counter{
 text-align: center;
-height: 50px;
-position: absolute;
-bottom: 10px;
+height: auto;
+width: 100%;
+float:left;
+padding:10px;
+	background-color: #FFF;
+	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 }
 
 .constituency_left_pane .left_filter {
@@ -844,10 +842,20 @@ text-decoration: none;
 
 .header_views_div_adjust:hover, .header_views_div_adjust:active, .header_views_div_adjust:focus{
 background: #F5F5F5;
+text-decoration: none;
+	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 }
 
 .map_panel_buttons_adjust{
 margin: 0px;
   padding: 0px;
   font-size: 13px;
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  height: 150px;
+  max-height: 150px;
+  width: 100%;
 }
