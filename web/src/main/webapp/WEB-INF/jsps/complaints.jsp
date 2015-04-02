@@ -224,7 +224,7 @@
 																									</span>
 																							 </div>
 																							<!-- Carousel nav -->
-																									<span ng-show="complaint.loggedBy > 1">
+																									<span ng-show="complaint.createdBy > 1">
 																											<a class="left carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 																											<a class="right carousel-control" href="#myCarousel{{$index + 1}}" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 																									</span>

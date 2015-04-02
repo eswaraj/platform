@@ -77,16 +77,16 @@
                                             <div class="issue_reporters_box">
 
                                                 <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.loggedBy)}</a>
+                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.createdBy)}</a>
                                                 </p>
 
                                                 <div class="profile-pic profile-pic-padding">
-													<c:if test="${!empty complaint.loggedBy[0].photo}">
-														<c:forEach items="${complaint.loggedBy}" var="oneUser">
-															<a href="#!" ><img class="reporters_profile_pic" src="${oneUser.photo}" alt=""></a>
+													<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+														<c:forEach items="${complaint.createdBy}" var="oneUser">
+															<a href="#!" ><img class="reporters_profile_pic" src="${oneUser.profilePhoto}" alt=""></a>
 														</c:forEach>
 													</c:if>
-													<c:if test="${empty complaint.loggedBy[0].photo}">
+													<c:if test="${empty complaint.createdBy[0].profilePhoto}">
 															<a href="#!" ><img class="reporters_profile_pic" src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="border: 1px solid #ccc;" ></a>
 													</c:if>
                                                </div>
@@ -130,7 +130,7 @@
                                                 </p>
 
                                                 <p class="whom">
-                                                    <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.loggedBy)}</strong>
+                                                    <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.createdBy)}</strong>
                                                         <!-- social media share buttons -->								
                                                         <a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
                                                         <a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
@@ -171,7 +171,7 @@
 														</c:if>
 													</div>
 													
-													<c:if test="${fn:length(complaint.loggedBy) > 1}">
+													<c:if test="${fn:length(complaint.createdBy) > 1}">
 														<!-- Carousel nav -->
 														<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 														<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -189,17 +189,17 @@
 																			<span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
                                                                         </c:if>																	
                                                                         <c:if test="${empty complaint.description}">
-																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by '${complaint.loggedBy[0].name}'</p>
+																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by '${complaint.createdBy[0].name}'</p>
                                                                         </c:if>																	
                                                                     <div class="description_author">
-																	<c:if test="${!empty complaint.loggedBy[0].photo}">
-                                                                        <img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
+																	<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+                                                                        <img src="${complaint.createdBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
 																	</c:if>
-																	<c:if test="${empty complaint.loggedBy[0].photo}">
+																	<c:if test="${empty complaint.createdBy[0].profilePhoto}">
 																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
 																	</c:if>
                                                                         <ul class="description_author_info">
-                                                                            <li class="description_author_name">${complaint.loggedBy[0].name}</li>
+                                                                            <li class="description_author_name">${complaint.createdBy[0].name}</li>
                                                                             <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
                                                                         </ul>
                                                                     </div>
@@ -207,7 +207,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-													<c:if test="${fn:length(complaint.loggedBy) > 1}">
+													<c:if test="${fn:length(complaint.createdBy) > 1}">
                                                     <!-- Carousel nav -->
                                                     <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                                                     <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -225,18 +225,18 @@
 																	<p>${complaint.description}</p>
 																</c:if>																	
 																<c:if test="${empty complaint.description}">
-																	<p>No Description added by '${complaint.loggedBy[0].name}'</p>
+																	<p>No Description added by '${complaint.createdBy[0].name}'</p>
 																</c:if>																	
 
                                                                 <div class="cd-author">
-																	<c:if test="${!empty complaint.loggedBy[0].photo}">
-																		<img src="${complaint.loggedBy[0].photo}" class="reported_description_pic" alt="Author image">
+																	<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+																		<img src="${complaint.createdBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
 																	</c:if>
-																	<c:if test="${empty complaint.loggedBy[0].photo}">
+																	<c:if test="${empty complaint.createdBy[0].profilePhoto}">
 																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
 																	</c:if>
                                                                     <ul class="cd-author-info">
-                                                                        <li>${complaint.loggedBy[0].name}</li>
+                                                                        <li>${complaint.createdBy[0].name}</li>
                                                                         <li>Cessna Business Park</li>
                                                                     </ul>
                                                                 </div> <!-- cd-author -->
@@ -252,7 +252,7 @@
                                                 <div class="cd-testimonials-pics-all">
                                                     <div class="cd-testimonials-pics-all-wrapper">
                                                         <ul>
-                                                            <c:forEach items="${complaint.loggedBy}" var="oneUser">
+                                                            <c:forEach items="${complaint.createdBy}" var="oneUser">
                                                                 <li class="cd-testimonials-pics-item">
                                                                     <div class="cd-author">
 																	<c:if test="${!empty oneUser.photo}">
