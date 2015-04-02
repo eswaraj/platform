@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.controller.beans.CategoryBean;
@@ -35,6 +36,8 @@ public class LocationController extends BaseController {
     private AppService appService;
     @Autowired
     private ApiUtil apiUtil;
+    @Autowired
+    private AppKeyService appKeyService;
     Gson gson = new Gson();
 
     @RequestMapping(value = "/india.html", method = RequestMethod.GET)
@@ -45,6 +48,7 @@ public class LocationController extends BaseController {
     public ModelAndView showLocationPage(ModelAndView mv, HttpServletRequest httpServletRequest) throws ApplicationException {
         System.out.println("Request URI : " + httpServletRequest.getRequestURI());
         String urlkey = httpServletRequest.getRequestURI().replace(".html", "");
+        urlkey = appKeyService.getLocationUrlKey(urlkey);
         String categoryId = null;
         if (urlkey.contains("category")) {
             categoryId = urlkey.substring(urlkey.indexOf("category") + 9);
