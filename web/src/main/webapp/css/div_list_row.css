@@ -27,11 +27,6 @@ background-color: #F8F8F8;
     margin-right: 0px;
 }
 
-.profile_info_adjust{
-    padding-left: 2px;
-	
-}
-
 .list-row .issue-pic {
     position: relative;
 	margin-bottom:20px;
@@ -92,7 +87,7 @@ background-color: #F8F8F8;
   font-family: "Arimo",helvetica;
 	margin-right: 5px;
 	padding-right: 20px;
-	color: #428bca;
+	color: #505050;
 }
 
 .issue-scope-type{
@@ -116,7 +111,7 @@ background-color: #F8F8F8;
 }
 
 .username{
-	color: #5E5B5B;
+	color: #505050;
 	font-weight: bold;
 	margin-right: 0px;
 	padding-right: 5px;
@@ -227,7 +222,7 @@ height: auto;
 }
 
 .listing-wrapper{
-margin-left: 22.5px;
+margin-left: 0px;
 width: auto;
 }
 
@@ -282,10 +277,15 @@ margin-top: 10px;
 	
 .name_adjust{
 	max-width: 32%;
+	padding: 0px;
+  margin: 0px;
 }
 
 .type_adjust{
 	max-width: 45%;
+	text-align: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 .innerdiv-sharebtn {
@@ -352,8 +352,8 @@ text-align: center;
 }
 
 .constituency_left_pane{
-padding-left: 25px;
-padding-right: 25px;
+padding-left: 35px;
+padding-right: 35px;
 float: left;
 margin-bottom: 40px;
 }
@@ -772,4 +772,43 @@ width: auto;
 
 .main_content_page{
 background: #eeeeee;
+}
+
+.profile_info_adjust{
+    padding-left: 8px;
+    padding-right: 8px;	
+}
+
+
+.time_info_adjust{
+padding: 0px;
+  margin: 0px;
+  text-align: right;
+  }
+  
+  a {
+  color: #9D9D9D;
+  }
+  
+  a:hover, a:focus {
+  color: #6D6D6D;
+  text-decoration: underline;
+}
+
+.address_adjust, .comments_adjust, .status_adjust{
+font-size: 10px;
+padding:0px;
+margin: 0px;
+}
+
+.comments_adjust{
+text-align: center;
+}
+
+.status_adjust{
+text-align: right;
+}
+
+.username_color{
+color: #333;
 }

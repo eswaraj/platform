@@ -259,7 +259,7 @@
 																			<p class="whom col-sm-12 col-md-12">
 																				<span class="username text-limit name_adjust col-sm-4 col-md-4">
 																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
-																						<a href="#!" class="anchorlink" >${onePerson.name}</a>
+																						<a href="#!" class="anchorlink username_color" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
 
@@ -267,8 +267,8 @@
 																					<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 																				</span>
 																				
-																				<span class="col-sm-4 col-md-4">
-																					<img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
+																				<span class="time_info_adjust col-sm-4 col-md-4">
+																				<i class="glyphicon glyphicon-time"></i>
 																					<a href="#!" class="anchorlink" >
 																					<span class="location">
 																						<abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr>
@@ -302,21 +302,25 @@
 																				</div>
 																			</c:if>
 
-																			<span>
+																			<p>
+
+																			<span class="col-sm-4 col-md-4 address_adjust">
 																				<i class="glyphicon glyphicon-map-marker"></i>
 																				<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
 																			</span>
 
-																			<span>
+																			<span class="col-sm-4 col-md-4 comments_adjust">
 																				<i class="glyphicon glyphicon-comment"></i>
 																				<a href="#!" class="anchorlink" ><span class="comments">Comments</span></a>
 																			</span>
 
-																			<span>
+																			<span class="col-sm-4 col-md-4 status_adjust">
 																			<i class="glyphicon glyphicon-eye-open"></i>
 																				<a href="#!" class="anchorlink" ><span class="issue_status">Pending</span></a>
 																			</span>
-
+																			
+																			</p>
+																			
 																		</div>
 																	</div>
 																</div>

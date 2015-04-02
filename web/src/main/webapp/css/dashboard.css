@@ -150,9 +150,10 @@ footer .sep {
 .list-row .innerblock .profile-info p {
     float: left;
     width: 100%;
-    padding-left: 50px;
-	padding-top: 5px;
-    margin: 0 0 0 -45px;
+    padding-left: 0px;
+	padding-top: 10px;
+	padding-right: 0px;
+    margin: 0px;
 }
 .connector {
     color: #aaa;
@@ -203,7 +204,7 @@ footer .sep {
     line-height: 9px;
 }
 .issue-id {
-    color: #0099cc;
+    color: #9D9D9D;
 }
 .username {
     color: #5E5B5B;
