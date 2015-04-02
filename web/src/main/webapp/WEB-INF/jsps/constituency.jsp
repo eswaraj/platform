@@ -64,7 +64,6 @@
                                         <link rel="stylesheet" href="${staticHost}/css/analytics.css">
                                         <script type="text/javascript">
                                             var analyticsData = <c:out value="${locationCounters}" escapeXml="false" /> ;
-
                                         </script>
                                     </c:if>
                                     <div class="container-fluid">
@@ -130,20 +129,17 @@
 														<strong class="filter_citzn_serv">Filter by Citizen Services</strong>
 														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
 													</p>
-
 													<div class="cat-search example example_objects_as_tags">
 													  <div class="bs-example">
 														<input id="citizen_services_input" type="text" />
 													  </div>
 												   </div>
-
 													<hr />
 														<div class="left_filter">
 															<p>
 																<strong class="filter_sys_lvl">Filter by SubCategory</strong>
 																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
 															</p>
-
 															<div class="subcat-search example example_objects_as_tags_subcat">
 															  <div class="bs-example">
 																<input id="subcategory_input" type="text" />
@@ -155,7 +151,6 @@
 															<p>
 																<strong class="filter_temporal">Filter by Time</strong>
 															</p>
-
 															<select class="select dropdownlist">
 																<option selected>Select</option>
 																<option>Today</option>
@@ -183,7 +178,6 @@
 														</div>
 													
 													</div>
-
 												</div> -->
 											</div>
 											<div class="constituency_mid_pane col-sm-6 col-md-6">
@@ -365,12 +359,21 @@
 														</div>
 													</c:if>
 													<c:if test="${viewType eq 'map'}">
-														<div id="panel">
-															<button onclick="createHeatmap()"><img title="heatmap view" src="${staticHost}/images/heat.png" height="50px;"/></button>
-															<button onclick="createCluster()"><img title="heatmap view" src="${staticHost}/images/cluster.png" height="50px;"/></button>
-															<button onclick="createMarker()"><img title="heatmap view" src="${staticHost}/images/marker.png" height="50px;"/></button>
-														</div>
 														<div id="map-container">
+														<div id="panel">
+															<button onclick="createHeatmap()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
+																<i class="glyphicon glyphicon-fire"></i>
+																<span class="list_icon">HeatMap View</span>
+															</button>
+															<button onclick="createCluster()" class="col-sm-4 col-md-4">
+																<i class="glyphicon glyphicon-sound-5-1"></i>
+																<span class="list_icon">Cluster View</span>
+															</button>
+															<button onclick="createMarker()" class="col-sm-4 col-md-4">
+																<i class="glyphicon glyphicon-pushpin"></i>
+																<span class="list_icon">Marker View</span>
+															</button>
+														</div>
 															<div id="map-canvas"></div>
 														</div>
 													</c:if>
@@ -539,7 +542,6 @@
 								</div>
 								
                             <jsp:include page="footer.jsp" />
-
     <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
 	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
 	<script src="${staticHost}/js/filter_settings.js"></script>
