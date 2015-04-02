@@ -234,17 +234,6 @@
 															<!-- new_div starts -->
 															<c:forEach items="${complaintList}" var="oneComplaint">
 																<div class="list-row" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
-																	<p class="innerdiv-sharebtn">
-																		<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
-																		<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
-																		<!-- social media share buttons -->								
-																		<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
-																		<br />																		
-																		<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-																		<br />
-																		<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-																	</p>
-																	<div class="innerblock">
 																		<div class="col-sm-1 profile-info profile_pic_adjust">
 																			<div class="profile-pic">
 																				<c:if test="${!empty oneComplaint.createdBy[0].profilePhoto}">
@@ -256,10 +245,10 @@
 																			</div>
 																		</div>
 																		<div class="col-sm-10 profile-info profile_info_adjust">
-																			<p class="whom col-sm-12 col-md-12">
+																			<p class="col-sm-12 col-md-12 whom">
 																				<span class="username text-limit name_adjust col-sm-4 col-md-4">
 																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
-																						<a href="#!" class="anchorlink username_color" >${onePerson.name}</a>
+																						<a href="#!" class="anchorlink" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
 
@@ -283,8 +272,9 @@
 																				<strong class="issue-id">#${oneComplaint.id}</strong>
 																			
 																			</p>
-																		</div>
-																		<div class="issue-info" >
+
+																			<p>
+																			<div class="issue-info" >
 
 																			<p>
 																				<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
@@ -302,7 +292,7 @@
 																				</div>
 																			</c:if>
 
-																			<p>
+																			<p class="list_row_footer_adjust">
 
 																			<span class="col-sm-4 col-md-4 address_adjust">
 																				<i class="glyphicon glyphicon-map-marker"></i>
@@ -322,8 +312,21 @@
 																			</p>
 																			
 																		</div>
+																			</p>
 																	</div>
-																</div>
+																		<div class="col-sm-1 share_buttons_adjust">
+																		<p class="innerdiv-sharebtn">
+																		<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+																		<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
+																		<!-- social media share buttons -->								
+																		<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
+																		<br />																		
+																		<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																		<br />
+																		<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+																	</p>
+																		</div>
+																	</div>
 															</c:forEach>
 															<!-- new_div ends  -->
 															<div class="pagination-wrapper">

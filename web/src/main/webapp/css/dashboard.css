@@ -212,6 +212,7 @@ footer .sep {
 }
 .whom {
     font-size: 15px;
+	padding: 0px;
 }
 .whenwhere {
     font-size: 85%;
