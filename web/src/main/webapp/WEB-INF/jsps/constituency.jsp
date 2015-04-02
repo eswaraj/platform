@@ -78,8 +78,13 @@
 
 												<div class="reporter_profile_data">
 													<div class="cons_issue_reporters_box_pic">
-													<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image" width="226px;"> 
-														<!-- <c:if test="${!empty user.person.profilePhoto}">
+																<a type="button" href="#!" title="Location View">
+																<div class="cons_location_name">
+																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">
+																	<span class="location_text_adjust">${location.name}</span>
+																</div>
+																</a>
+																<!-- <c:if test="${!empty user.person.profilePhoto}">
 															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
 														</c:if>
 														<c:if test="${empty user.person.profilePhoto}">
@@ -185,43 +190,46 @@
 												<div class="listing-wrapper">
 													<div class="secondary-wrapper">
 														<div class="views_div">
-																<a type="button" href="#!" title="Location View">
-																<div class="cons_location_name">
-																	<span class="location_text_adjust">${location.name}</span>
-																	<!-- <img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">  -->
-																</div>
-																</a>	
 															<c:if test="${viewType eq 'list'}">
-																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/list.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div>
+																	<i class="glyphicon glyphicon-list"></i>
+																	<span class="list_icon" class="icon_selected">List View</span>
 																</div></a>
-																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="list_icon" src="${staticHost}/images/map.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div>
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="list_icon" src="${staticHost}/images/chart.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div>
+																	<i class="glyphicon glyphicon-stats"></i>
+																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
-																<a type="button" href="?type=list" title="List View"><div>
-																	<img class="list_icon" title="List view" src="${staticHost}/images/list.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div>
+																	<i class="glyphicon glyphicon-list"></i>
+																	<span class="list_icon">List View</span>
 																</div></a>
-																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/map.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div>
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<span class="list_icon" class="icon_selected">Map View</span>
 																</div></a>
-																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="list_icon" src="${staticHost}/images/chart.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div>
+																	<i class="glyphicon glyphicon-stats"></i>
+																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
-																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" class="list_icon" src="${staticHost}/images/list.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div>
+																	<i class="glyphicon glyphicon-list"></i>
+																	<span class="list_icon">List View</span>
 																</div></a>
-																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="list_icon" src="${staticHost}/images/map.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div>
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/chart.png"/>
+																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div>
+																	<i class="glyphicon glyphicon-stats"></i>
+																	<span class="list_icon" class="icon_selected">Analytics View</span>
 																</div></a>
 															</c:if>
 
@@ -248,7 +256,7 @@
 																			<p class="col-sm-12 col-md-12 whom">
 																				<span class="username text-limit name_adjust col-sm-4 col-md-4">
 																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
-																						<a href="#!" class="anchorlink" >${onePerson.name}</a>
+																						<a href="#!" class="anchorlink username_adjust" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
 
@@ -273,15 +281,14 @@
 																			
 																			</p>
 
-																			<p>
 																			<div class="issue-info" >
 
-																			<p>
+																			<p class="category_title_adjust">
 																				<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
 																			</p>
 
 																			<c:if test="${!empty oneComplaint.description}">
-																				<p class="desc elipsis">
+																				<p class="desc elipsis description_adjust">
 																					${oneComplaint.description}
 																				</p>
 																			</c:if>
@@ -312,7 +319,6 @@
 																			</p>
 																			
 																		</div>
-																			</p>
 																	</div>
 																		<div class="col-sm-1 share_buttons_adjust">
 																		<p class="innerdiv-sharebtn">
@@ -359,12 +365,21 @@
 														</div>
 													</c:if>
 													<c:if test="${viewType eq 'map'}">
-														<div id="panel">
-															<button onclick="createHeatmap()"><img title="heatmap view" src="${staticHost}/images/heat.png" height="50px;"/></button>
-															<button onclick="createCluster()"><img title="heatmap view" src="${staticHost}/images/cluster.png" height="50px;"/></button>
-															<button onclick="createMarker()"><img title="heatmap view" src="${staticHost}/images/marker.png" height="50px;"/></button>
-														</div>
 														<div id="map-container">
+														<div id="panel">
+															<button onclick="createHeatmap()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
+																<i class="glyphicon glyphicon-fire"></i>
+																<span class="list_icon">HeatMap View</span>
+															</button>
+															<button onclick="createCluster()" class="col-sm-4 col-md-4">
+																<i class="glyphicon glyphicon-sound-5-1"></i>
+																<span class="list_icon">Cluster View</span>
+															</button>
+															<button onclick="createMarker()" class="col-sm-4 col-md-4">
+																<i class="glyphicon glyphicon-pushpin"></i>
+																<span class="list_icon">Marker View</span>
+															</button>
+														</div>
 															<div id="map-canvas"></div>
 														</div>
 													</c:if>
@@ -405,7 +420,7 @@
 											</div>
 											<div class="constituency_right_pane col-sm-2 col-md-2">
 												<div class="right_profile">
-													<div id="myCarousel" class="carousel slide" data-ride="carousel">
+													<div id="myCarousel" class="carousel slide">
 														<!-- Carousel items -->
 														<div class="carousel-inner">
 

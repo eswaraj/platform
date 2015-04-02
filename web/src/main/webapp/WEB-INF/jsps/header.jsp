@@ -104,12 +104,12 @@
 										<img src="${staticHost}/images/android-icon.png"  alt=""></span>
 								</a>
 							</li>
-							<li class="download">
+							<!--li class="download">
 								<a href="https://itunes.apple.com/in/app/eswaraj/id689751495?mt=8" target="_blank">
 									<span>
 										<img src="${staticHost}/images/apple-icon.png" alt=""></span>
 								</a>
-							</li>		
+							</li-->		
 						<li>
 							<div onclick="location.href='/web/login/facebook?redirect_url=${currentUrl}';" class="btn-group">
 								<button class="btn btn-fb btn-sm" type="button">
