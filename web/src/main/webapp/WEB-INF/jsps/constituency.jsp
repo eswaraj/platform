@@ -69,7 +69,7 @@
                                     </c:if>
                                     <div class="container-fluid">
                                         <div class="row">
-											<div class="constituency_left_pane">
+											<div class="constituency_left_pane col-sm-3 col-md-3">
 												<div class="reporter_cover_profile_quote">
 													<div class="cons_issue_reporters_box_cover_quote">
 														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
@@ -181,7 +181,7 @@
 
 												</div> -->
 											</div>
-											<div class="constituency_mid_pane">
+											<div class="constituency_mid_pane col-sm-6 col-md-6">
 												<div class="listing-wrapper">
 													<div class="secondary-wrapper">
 														<div class="views_div">
@@ -256,27 +256,23 @@
 																			</div>
 																		</div>
 																		<div class="col-sm-10 profile-info profile_info_adjust">
-																			<p class="whom">
-																				<strong class="issue-id">Issue #${oneComplaint.id}</strong>
-																				<span class="connector">raised by</span>
-
-																				<span class="username text-limit name_adjust">
+																			<p class="whom col-sm-12 col-md-12">
+																				<span class="username text-limit name_adjust col-sm-4 col-md-4">
 																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
 																						<a href="#!" class="anchorlink" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
-																				<span class="issue-scope-type text-limit type_adjust">
+
+																				<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
 																					<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-																					<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+																					<!--c:forEach items="${oneComplaint.categories}" var="oneCategory">
 																						<c:if test="${oneCategory.root}">
 																							<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
 																						</c:if>
-																					</c:forEach>
+																					</c:forEach-->
 																				</span>
-																			</p>
-
-																			<p class="whenwhere">
-																				<span>
+																				
+																				<span class="col-sm-4 col-md-4">
 																					<img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
 																					<a href="#!" class="anchorlink" >
 																					<span class="location">
@@ -284,14 +280,13 @@
 																					</span>
 																					</a>
 																				</span>
-																				<span class="connector">at</span>
-																				<span>
-																					<i class="glyphicon glyphicon-map-marker"></i>
-																					<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
-																				</span>
-																				<span>
-																					<a href="#!" class="anchorlink" ><img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>
-																				</span>
+																				
+																			</p>
+
+																			<p class="whenwhere">
+
+																				<strong class="issue-id">#${oneComplaint.id}</strong>
+																			
 																			</p>
 																		</div>
 																		<div class="issue-info" >
@@ -311,6 +306,21 @@
 																					<img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle">
 																				</div>
 																			</c:if>
+
+																			<span>
+																				<i class="glyphicon glyphicon-map-marker"></i>
+																				<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
+																			</span>
+
+																			<span>
+																				<i class="glyphicon glyphicon-comment"></i>
+																				<a href="#!" class="anchorlink" ><span class="comments">Comments</span></a>
+																			</span>
+
+																			<span>
+																			<i class="glyphicon glyphicon-eye-open"></i>
+																				<a href="#!" class="anchorlink" ><span class="issue_status">Pending</span></a>
+																			</span>
 
 																		</div>
 																	</div>
@@ -391,7 +401,7 @@
 													</c:if>
 												</div>
 											</div>
-											<div class="constituency_right_pane">
+											<div class="constituency_right_pane col-sm-2 col-md-2">
 												<div class="right_profile">
 													<div id="myCarousel" class="carousel slide" data-ride="carousel">
 														<!-- Carousel items -->

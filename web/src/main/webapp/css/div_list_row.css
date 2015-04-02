@@ -3,18 +3,21 @@
 .list-row {
     padding: 0px;
    
-	width: 750px;
+	width: auto;
 	margin-bottom: 15px;
 	background-color: #FFF;
 	opacity: 0.85;
+	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 }
 
 .list-row:hover {
-background-color: #F2F2F2;
+background-color: #F8F8F8;
 }
 
 .list-row .innerblock {
-    padding: 0px 16px 5px 16px;
+    padding: 0px 10px 10px 10px;
 	margin-top: 10px;
 }
 
@@ -50,7 +53,7 @@ background-color: #F2F2F2;
     max-width: 55px;
     width: auto;
     height: auto;
-    border-radius: 50%;
+    border-radius: 0%;
     border: 0px solid #ccc;
 }
 
@@ -225,7 +228,7 @@ height: auto;
 
 .listing-wrapper{
 margin-left: 22.5px;
-width: 750px;
+width: auto;
 }
 
 abbr[title], abbr[data-original-title] {
@@ -311,18 +314,17 @@ float: left;
 background-color: #ECE9E8;
 height: 230px;
 margin-bottom: 10px;
-padding-left: 15px;
-padding-top: 5px;
+padding: 0px;
 position: relative;
 }
 
 .cons_issue_reporters_box_cover_quote{
-background-color: #5bc0de;
-height: 130px;
+height: 115px;
 margin-top: 25px;
 text-align: center;
 padding: 5px;
 font-size: 13px;
+font-family: cursive;
 }
 
 .profile-pic-padding{
@@ -350,23 +352,19 @@ text-align: center;
 }
 
 .constituency_left_pane{
-width: 22%;
 padding-left: 25px;
+padding-right: 25px;
 float: left;
 margin-bottom: 40px;
 }
 
 .constituency_mid_pane{
-width: 58%;
-padding-left: 10px;
-padding-right: 10px;
 float: left;
 }
 
 .constituency_right_pane{
-width: 20%;
-padding-left: 10px;
-padding-right: 10px;
+margin-left: 10px;
+margin-right: 10px;
 float: left;
 }
 
@@ -390,7 +388,7 @@ font-size: 25px;
 }																
 
 .location_image{
-width: 227px;
+width: 100%;
 float: left;
 height: 150px;
 }
@@ -423,7 +421,10 @@ margin-right: 20px;
 }
 
 .platform_constituency_counter{
-background-color: #ECE9E8;
+background-color: #FFFFFF;
+	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 height: auto;
 margin-bottom: 10px;
 padding: 10px;
@@ -767,4 +768,8 @@ float: left;
 
 .user-dashboard-settings{
 width: auto;
+}
+
+.main_content_page{
+background: #eeeeee;
 }

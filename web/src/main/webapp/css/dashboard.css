@@ -145,11 +145,13 @@ footer .sep {
 .list-row .innerblock .profile-pic {
     margin-right: 5px;
     float: left;
+	margin-top: 10px;
 }
 .list-row .innerblock .profile-info p {
     float: left;
     width: 100%;
     padding-left: 50px;
+	padding-top: 5px;
     margin: 0 0 0 -45px;
 }
 .connector {
