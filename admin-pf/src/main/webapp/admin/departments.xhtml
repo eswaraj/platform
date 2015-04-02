@@ -48,7 +48,7 @@
 						itemValue="#{oneReult}" />
 					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form" />
 				</p:selectOneMenu>
-				<p:blockUI block="@form" trigger="category">LOADING<br />
+				<p:blockUI block="@form" trigger="category,createDepartment">LOADING<br />
 					<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 				</p:blockUI>
 

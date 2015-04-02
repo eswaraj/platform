@@ -538,7 +538,7 @@ public class DepartmentBean extends BaseBean {
 
     public void cancel() {
         if (selectedDepartmentNode != null) {
-            if (((Document) selectedDepartmentNode.getData()).getLocation().getId() == null) {
+            if (((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment().getId() == null) {
                 TreeNode parentNode = selectedDepartmentNode.getParent();
                 selectedDepartmentNode.getChildren().clear();
                 selectedDepartmentNode.getParent().getChildren().remove(selectedDepartmentNode);
@@ -556,24 +556,41 @@ public class DepartmentBean extends BaseBean {
 
     public void createDepartment() {
         System.out.println("Creating Department : " + selectedDepartmentNode);
-        boolean isRoot = false;
-        TreeNode parentNode = selectedDepartmentNode;
-        if (selectedDepartmentNode == null) {
-            parentNode = root;
-            isRoot = true;
+        try {
+            boolean isRoot = false;
+            TreeNode parentNode = selectedDepartmentNode;
+            if (selectedDepartmentNode == null) {
+                parentNode = root;
+                isRoot = true;
+            }
+            Department department = new Department();
+            department.setName("New");
+            department.setRoot(isRoot);
+            department.setCategory(selectedCategory);
+            department.setAddress(new Address());
+            if (!isRoot) {
+                department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
+            }
+            TreeNode newNode = new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
+            parentNode.setExpanded(true);
+            newNode.setSelected(true);
+            parentNode.setSelected(false);
+            selectedDepartmentNode = newNode;
+            // Clear all Location Selection
+            clearAllLocationSelection();
+            staffMembers = null;
+        } catch (Exception ex) {
+            sendErrorMessage("Error", "Unable to create new Department", ex);
         }
-        Department department = new Department();
-        department.setName("New");
-        department.setRoot(isRoot);
-        department.setCategory(selectedCategory);
-        department.setAddress(new Address());
-        if (!isRoot) {
-            department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
+
+
+    }
+
+    private void clearAllLocationSelection() throws ApplicationException {
+        Set<Long> locationIds = new HashSet<Long>();
+        for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
+            selectUnSelectNode(oneChildTreeNode, locationIds);
         }
-        TreeNode newNode = new CustomTreeNode(new DepartmentDocument(department.getName(), "-", "Folder", department), parentNode);
-        parentNode.setExpanded(true);
-        newNode.setSelected(true);
-        parentNode.setSelected(false);
 
     }
 
@@ -672,6 +689,7 @@ public class DepartmentBean extends BaseBean {
     }
 
     public void setSelectedLocationNodes(TreeNode[] selectedLocationNodes) {
+        System.out.println("setSelectedLocationNodes= " + selectedLocationNodes);
         this.selectedLocationNodes = selectedLocationNodes;
     }
 
