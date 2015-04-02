@@ -287,7 +287,7 @@
 																				<span class="connector">at</span>
 																				<span>
 																					<i class="glyphicon glyphicon-map-marker"></i>
-																					<a href="#!" class="anchorlink" ><span class="location">Cessna Business Park main road,Keverappa Layout</span></a>
+																					<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
 																				</span>
 																				<span>
 																					<a href="#!" class="anchorlink" ><img src = "${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>

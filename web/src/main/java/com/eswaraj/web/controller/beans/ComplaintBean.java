@@ -19,6 +19,7 @@ public class ComplaintBean extends BaseBean {
     private PhotoBean[] photos;
     private List<PersonBean> createdBy;
     private Long totalComments;
+    private String locationAddress;
     
     public Long getComplaintTime() {
         return complaintTime;
@@ -148,6 +149,14 @@ public class ComplaintBean extends BaseBean {
 
     public void setTotalComments(Long totalComments) {
         this.totalComments = totalComments;
+    }
+
+    public String getLocationAddress() {
+        return locationAddress;
+    }
+
+    public void setLocationAddress(String locationAddress) {
+        this.locationAddress = locationAddress;
     }
 
 }
