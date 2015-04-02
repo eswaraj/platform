@@ -313,7 +313,7 @@ float: left;
 .cons_issue_reporters_box_pic{
 background-color: #ECE9E8;
 height: 150px;
-margin-bottom: 10px;
+margin-bottom: 0px;
 padding: 0px;
 position: relative;
 -webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
