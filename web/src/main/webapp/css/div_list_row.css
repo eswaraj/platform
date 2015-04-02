@@ -78,6 +78,7 @@ background-color: #F8F8F8;
 .whom {
     font-size: 12px;
     line-height: 100%;
+	margin: 0px;
 }
 .issue-scope{
 	text-decoration: none;
@@ -434,7 +435,7 @@ margin-top: 10px;
 width: auto;
 }
 
-.total_cons_population,.total_cons_area,.total_voters,.total_const_count,.total_eswaraj_reg_voters,.total_eswaraj_const_coverage{
+.total_cons_population,.total_cons_area,.total_voters,.total_const_count,.total_eswaraj_reg_voters,.total_eswaraj_const_coverage, .total_houses, .total_male_pop, .total_female_pop, .total_literate_pop, .total_working_pop{
 font-size: 12px;
 }
 
@@ -803,7 +804,7 @@ padding: 0px;
 }
 
 .address_adjust, .comments_adjust, .status_adjust{
-font-size: 10px;
+font-size: 11px;
 padding:0px;
 margin: 0px;
 }
@@ -842,7 +843,6 @@ text-decoration: none;
 
 .header_views_div_adjust:hover, .header_views_div_adjust:active, .header_views_div_adjust:focus{
 background: #F5F5F5;
-text-decoration: none;
 	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
@@ -863,4 +863,15 @@ text-decoration: none;
   height: 200px;
   max-height: 200px;
   width: 100%;
+}
+
+.views_adjust:hover, .views_adjust:active, .views_adjust:focus{
+text-decoration: none;
+}
+
+.views_adjust{
+padding: 0px;
+margin: 0px;
+text-align: center;
+text-decoration: none;
 }

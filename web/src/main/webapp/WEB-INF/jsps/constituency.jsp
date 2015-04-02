@@ -112,14 +112,17 @@
 															<span class="grey_text">Complaints</span> <br /> 
 															<strong class="blue_color_text">200</strong>
 														</p>
-														<p class="col-sm-4 col-md-4 reporter_complaint_followers">
-															<span class="grey_text">Followers</span> <br /> 
-															<strong class="blue_color_text">5000</strong>
+														
+														<p class="col-sm-4 col-md-4 total_cons_population">
+															<span class="grey_text">Population</span> <br /> 
+															<strong class="blue_color_text">9.879 million</strong>
 														</p>
-														<p class="col-sm-4 col-md-4 reporter_complaint_visited">
-															<span class="grey_text">Following</span> <br /> 
-															<strong class="blue_color_text">50</strong>
+														
+														<p class="col-sm-4 col-md-4 total_cons_area">
+															<span class="grey_text">Area</span> <br /> 
+															<strong class="blue_color_text">1,484 km²</strong>
 														</p>
+
 														</div>
 												</div>
 
@@ -191,43 +194,43 @@
 													<div class="secondary-wrapper">
 														<div class="views_div">
 															<c:if test="${viewType eq 'list'}">
-																<a class="col-sm-4 col-md-4" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon" class="icon_selected">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
-																<a class="col-sm-4 col-md-4" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon" class="icon_selected">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
-																<a class="col-sm-4 col-md-4" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon" class="icon_selected">Analytics View</span>
 																</div></a>
@@ -308,7 +311,7 @@
 
 																			<span class="col-sm-4 col-md-4 comments_adjust">
 																				<i class="glyphicon glyphicon-comment"></i>
-																				<a href="#!" class="anchorlink" ><span class="comments">Comments</span></a>
+																				<a href="#!" class="anchorlink" ><span class="comments">Comments(${oneComplaint.totalComments})</span></a>
 																			</span>
 
 																			<span class="col-sm-4 col-md-4 status_adjust">
@@ -456,29 +459,29 @@
 
 													<div class="platform_constituency_counter">
 													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Constituency</span></p>
-													<p class="total_cons_population">
-														<span class="grey_text">Total Population</span> <br /> 
-														<strong class="blue_color_text">9.879 million</strong>
-													</p>
-													<p class="total_cons_area">
-														<span class="grey_text">Total Area</span> <br /> 
-														<strong class="blue_color_text">1,484 km²</strong>
-													</p>
 													<p class="total_const_count">
 														<span class="grey_text">Total Constituencies</span> <br /> 
 														<strong class="blue_color_text">70</strong>
 													</p>
-													<p class="total_voters">
-														<span class="grey_text">Total Voters</span> <br /> 
-														<strong class="blue_color_text">56458975</strong>
+													<p class="total_houses">
+														<span class="grey_text">Total Houses</span> <br /> 
+														<strong class="blue_color_text">3435999</strong>
 													</p>
-													<p class="total_eswaraj_reg_voters">
-														<span class="grey_text">Voters with eSwaraj</span> <br /> 
-														<strong class="blue_color_text">42453975</strong>
+													<p class="total_male_pop">
+														<span class="grey_text">Total Male Population</span> <br /> 
+														<strong class="blue_color_text">8987326</strong>
 													</p>
-													<p class="total_eswaraj_const_coverage">
-														<span class="grey_text">eSwaraj Coverage</span> <br /> 
-														<strong class="blue_color_text">90%</strong>
+													<p class="total_female_pop">
+														<span class="grey_text">Total Female Population</span> <br /> 
+														<strong class="blue_color_text">7800615</strong>
+													</p>
+													<p class="total_literate_pop">
+														<span class="grey_text">Total Literate Population</span> <br /> 
+														<strong class="blue_color_text">12737767</strong>
+													</p>
+													<p class="total_working_pop">
+														<span class="grey_text">Total Working Population</span> <br /> 
+														<strong class="blue_color_text">5587049</strong>
 													</p>
 													</div>
 
