@@ -265,11 +265,13 @@
 
 																				<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
 																					<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-																					<!--c:forEach items="${oneComplaint.categories}" var="oneCategory">
+																					<!-- 
+																					<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 																						<c:if test="${oneCategory.root}">
 																							<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
 																						</c:if>
-																					</c:forEach-->
+																					</c:forEach>
+																					-->
 																				</span>
 																				
 																				<span class="col-sm-4 col-md-4">
