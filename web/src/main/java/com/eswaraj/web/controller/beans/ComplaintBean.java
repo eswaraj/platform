@@ -17,7 +17,7 @@ public class ComplaintBean extends BaseBean {
     private CategoryBean[] categories;
     private LocationBean[] locations;
     private PhotoBean[] photos;
-    private List<PersonBean> loggedBy;
+    private List<PersonBean> createdBy;
     private Long totalComments;
     
     public Long getComplaintTime() {
@@ -108,12 +108,12 @@ public class ComplaintBean extends BaseBean {
         this.photos = photos;
     }
 
-    public List<PersonBean> getLoggedBy() {
-        return loggedBy;
+    public List<PersonBean> getCreatedBy() {
+        return createdBy;
     }
 
-    public void setLoggedBy(List<PersonBean> loggedBy) {
-        this.loggedBy = loggedBy;
+    public void setCreatedBy(List<PersonBean> createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Long getSubCategoryId() {

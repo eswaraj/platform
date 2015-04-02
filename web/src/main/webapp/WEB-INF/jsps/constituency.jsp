@@ -49,7 +49,7 @@
                                                 out.println(",");
                                                 i++;
                                                 %>
-                                                {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.loggedBy[0].id}", userName: "TODO", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
+                                                {lat:${oneComplaint.lattitude},lng:${oneComplaint.longitude},data:{id:${oneComplaint.id},category:"${oneComplaint.categoryTitle}",address:"Coming Soon",date: "${oneComplaint.complaintTimeIso}", userId: "${oneComplaint.createdBy[0].id}", userName: "TODO", userImgUrl : "http://www.panoramio.com/user/4483", complaintImgUrl: "http://www.panoramio.com/user/4483"}}
                                             </c:forEach>
                                             ];
                                         </script>
@@ -247,10 +247,10 @@
 																	<div class="innerblock">
 																		<div class="col-sm-1 profile-info profile_pic_adjust">
 																			<div class="profile-pic">
-																				<c:if test="${!empty oneComplaint.loggedBy[0].photo}">
-																					<a href="#!" class="anchorlink" ><img src="${oneComplaint.loggedBy[0].photo}" alt=""></a>
+																				<c:if test="${!empty oneComplaint.createdBy[0].profilePhoto}">
+																					<a href="#!" class="anchorlink" ><img src="${oneComplaint.createdBy[0].profilePhoto}" alt=""></a>
 																				</c:if>
-																				<c:if test="${empty oneComplaint.loggedBy[0].photo}">
+																				<c:if test="${empty oneComplaint.createdBy[0].profilePhoto}">
 																					<a href="#!" class="anchorlink" ><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 50px; max-width: 50px; border: 1px solid #ccc;" ></a>
 																				</c:if>
 																			</div>
@@ -261,7 +261,7 @@
 																				<span class="connector">raised by</span>
 
 																				<span class="username text-limit name_adjust">
-																					<c:forEach items="${oneComplaint.loggedBy}" var="onePerson">
+																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
 																						<a href="#!" class="anchorlink" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
