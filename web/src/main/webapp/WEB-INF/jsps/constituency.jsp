@@ -371,11 +371,11 @@
 																<i class="glyphicon glyphicon-fire"></i>
 																<span class="list_icon">HeatMap View</span>
 															</button>
-															<button onclick="createCluster()" class="col-sm-4 col-md-4">
+															<button onclick="createCluster()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
 																<i class="glyphicon glyphicon-sound-5-1"></i>
 																<span class="list_icon">Cluster View</span>
 															</button>
-															<button onclick="createMarker()" class="col-sm-4 col-md-4">
+															<button onclick="createMarker()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
 																<i class="glyphicon glyphicon-pushpin"></i>
 																<span class="list_icon">Marker View</span>
 															</button>

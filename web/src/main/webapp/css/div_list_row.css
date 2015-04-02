@@ -849,13 +849,18 @@ text-decoration: none;
 }
 
 .map_panel_buttons_adjust{
-margin: 0px;
-  padding: 0px;
-  font-size: 13px;
-}
+	margin: 0px;
+  font-size: 15px;
+	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
+	background: #FFFFFF;
+	padding: 10px;
+  color: #9D9D9D;
+  }
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-  height: 150px;
-  max-height: 150px;
+  height: 200px;
+  max-height: 200px;
   width: 100%;
 }
