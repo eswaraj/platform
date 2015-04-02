@@ -255,10 +255,10 @@
                                                             <c:forEach items="${complaint.createdBy}" var="oneUser">
                                                                 <li class="cd-testimonials-pics-item">
                                                                     <div class="cd-author">
-																	<c:if test="${!empty oneUser.photo}">
-                                                                        <img src="${oneUser.photo}" class="reported_description_pic" alt="Author image">
+																	<c:if test="${!empty oneUser.profilePhoto}">
+                                                                        <img src="${oneUser.profilePhoto}" class="reported_description_pic" alt="Author image">
 																	</c:if>
-																	<c:if test="${empty oneUser.photo}">
+																	<c:if test="${empty oneUser.profilePhoto}">
 																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
 																	</c:if>
                                                                         <ul class="cd-author-info">
