@@ -191,7 +191,7 @@
 													<div class="secondary-wrapper">
 														<div class="views_div">
 															<c:if test="${viewType eq 'list'}">
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon" class="icon_selected">List View</span>
 																</div></a>
@@ -199,35 +199,35 @@
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon" class="icon_selected">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-list"></i>
 																	<span class="list_icon">List View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-map-marker"></i>
 																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a class="col-sm-4 col-md-4 header_views_div_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																<a class="col-sm-4 col-md-4" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
 																	<i class="glyphicon glyphicon-stats"></i>
 																	<span class="list_icon" class="icon_selected">Analytics View</span>
 																</div></a>
@@ -420,7 +420,7 @@
 											</div>
 											<div class="constituency_right_pane col-sm-2 col-md-2">
 												<div class="right_profile">
-													<div id="myCarousel" class="carousel slide">
+													<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 														<!-- Carousel items -->
 														<div class="carousel-inner">
 
