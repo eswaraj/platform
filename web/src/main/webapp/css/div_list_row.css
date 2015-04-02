@@ -312,7 +312,7 @@ float: left;
 }
 
 .cons_issue_reporters_box_pic{
-background-color: #ECE9E8;
+background-color: #FFFFFF;
 height: 150px;
 margin-bottom: 0px;
 padding: 0px;
@@ -351,8 +351,8 @@ margin-left: 30px;
 width: 90px;
 float: left;
 border: 1px solid #ccc;
-
-margin-top: -55px;
+margin-top: 10px;
+margin-left: 10px;
 }
 
 .center-align{
@@ -360,8 +360,8 @@ text-align: center;
 }
 
 .constituency_left_pane{
-padding-left: 35px;
-padding-right: 35px;
+padding-left: 25px;
+padding-right: 25px;
 float: left;
 margin-bottom: 40px;
 }
@@ -751,25 +751,19 @@ cursor: pointer !important;
 }
 
 .user_dash_left_pane{
-width: 22%;
-padding-left: 15px;
-padding-right: 10px;
+padding-left: 25px;
+padding-right: 25px;
 float: left;
 margin-bottom: 40px;
 }
 
 .user_dash_mid_pane{
-width: 50%;
-padding-left: 5px;
 float: left;
 }
 
 .user_dash_right_pane{
-width: 28%;
-
-padding-left: 0px;
-padding-right: 0px;
-margin-left: -15px;
+margin-left: 10px;
+margin-right: 10px;
 float: left;
 }
 
@@ -875,3 +869,14 @@ margin: 0px;
 text-align: center;
 text-decoration: none;
 }
+
+.total_cons_population,.total_cons_area {
+padding: 0px;
+}
+
+.reporters_info{
+padding-top: 35px;
+  padding-bottom: 35px;
+  margin: 0px;
+}
+
