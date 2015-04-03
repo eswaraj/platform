@@ -264,7 +264,12 @@
 																				</span>
 
 																				<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
-																					<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+																				    <c:forEach items="${oneComplaint.categories}" var="oneCategory">
+																				    <c:if test="${oneCategory.root}">
+		                                                                                <img src = "${oneCategory.imageUrl}" class="issue_type_pic" alt="">
+		                                                                            </c:if>
+                                                                                    </c:forEach>
+																					
 																				</span>
 																				
 																				<span class="time_info_adjust col-sm-4 col-md-4">
