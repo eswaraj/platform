@@ -162,6 +162,8 @@ public interface AdminService {
 
     List<Department> getAllRootDepartmentsOfcategory(Category category) throws ApplicationException;
 
+    List<Department> getAllRootDepartments() throws ApplicationException;
+
     List<Department> getAllRootDepartmentsOfcategory(Long categoryId) throws ApplicationException;
 
     List<Department> getAllChildDepartments(Department department) throws ApplicationException;
@@ -171,5 +173,7 @@ public interface AdminService {
     Department saveDepartment(Department department, List<Location> locations) throws ApplicationException;
 
     List<Location> getAllLocationsOfDepartment(Department department) throws ApplicationException;
+
+    List<Category> getAllCategoriesOfDepartment(Department department) throws ApplicationException;
 
 }

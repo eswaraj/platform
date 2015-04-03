@@ -21,8 +21,6 @@ public class Department extends BaseNode {
 	
 	private String name;
 	private String description;
-    @RelatedTo(type = "BELONGS")
-    private Category category;
     @RelatedTo(type = "UNDER")
     private Department parentDepartment;
     @RelatedTo(type = "DEPT_ADDRESS")
@@ -53,13 +51,6 @@ public class Department extends BaseNode {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
     public Address getAddress() {
@@ -159,7 +150,7 @@ public class Department extends BaseNode {
     }
     @Override
     public String toString() {
-        return "Department [name=" + name + ", description=" + description + ", category=" + category + ", parentDepartment=" + parentDepartment + ", address=" + address + ", root=" + root
+        return "Department [name=" + name + ", description=" + description + ", parentDepartment=" + parentDepartment + ", address=" + address + ", root=" + root
                 + ", email=" + email + ", fbPage=" + fbPage + ", twitterHandle=" + twitterHandle + ", website=" + website + ", landLine1=" + landLine1 + ", landLine2=" + landLine2 + ", mobile1="
                 + mobile1 + ", mobile2=" + mobile2 + "]";
     }

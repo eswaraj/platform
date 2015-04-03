@@ -12,7 +12,6 @@ import java.util.TreeSet;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -48,7 +47,6 @@ import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.Person;
-import com.next.eswaraj.admin.jsf.convertor.CategoryConvertor;
 import com.next.eswaraj.admin.jsf.convertor.PersonConvertor;
 import com.next.eswaraj.admin.service.AdminService;
 
@@ -84,23 +82,20 @@ public class DepartmentBean extends BaseBean {
     private List<Person> personSearchResults;
     //
     @Autowired
-    private CategoryConvertor categoryConvertor;
-    @Autowired
     private ApplicationCacheBean applicationCacheBean;
-    private Category selectedCategory;
 
     @PostConstruct
     public void init() {
         try {
             // Refresh all locations in cache
             // applicationCacheBean.refreshLocations();
-            categoryConvertor.setCategories(adminService.getAllRootCategories());
             draggableModel = new DefaultMapModel();
             defaultLatLong();
             createMarker();
 
             loadLocations();
             loadCategories();
+            loadDepartments();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,19 +196,8 @@ public class DepartmentBean extends BaseBean {
         }
     }
 
-    public void handleCategoryChange(AjaxBehaviorEvent event) {
-        System.out.println("handleCategoryChange here " + event.getClass());
-        System.out.println("selected Category " + selectedCategory);
-        try {
-            loadCategoryData(selectedCategory);
-            selectedDepartmentNode = null;
-        } catch (ApplicationException e) {
-            sendErrorMessage("Error Loading Catgeory", e.getMessage(), e);
-        }
-    }
-
-    private void loadCategoryData(Category category) throws ApplicationException {
-        List<Department> categoryDeaprtments = adminService.getAllRootDepartmentsOfcategory(category);
+    private void loadDepartments() throws ApplicationException {
+        List<Department> categoryDeaprtments = adminService.getAllRootDepartments();
         System.out.println();
         root = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
         for (Department oneDepartment : categoryDeaprtments) {
@@ -290,7 +274,18 @@ public class DepartmentBean extends BaseBean {
                 }
                 System.out.println("Lets Select Unselect TreeNode");
                 for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
-                    selectUnSelectNode(oneChildTreeNode, locationIds);
+                    selectUnSelectLocationNode(oneChildTreeNode, locationIds);
+                }
+
+                List<Category> categories = adminService.getAllCategoriesOfDepartment(department);
+                // Select Categories in the tree
+                Set<Long> categoryIds = new HashSet<Long>();
+                for (Category oneCategory : categories) {
+                    categoryIds.add(oneCategory.getId());
+                }
+                System.out.println("Lets Select Unselect Category TreeNode");
+                for (TreeNode oneChildTreeNode : categoryRoot.getChildren()) {
+                    selectUnSelectCategoryNode(oneChildTreeNode, categoryIds);
                 }
                 staffMembers = adminService.getDepartmentStaffMembers(department);
             }
@@ -312,7 +307,7 @@ public class DepartmentBean extends BaseBean {
         }
     }
 
-    private void selectUnSelectNode(TreeNode treeNode, Set<Long> locationIds) throws ApplicationException {
+    private void selectUnSelectLocationNode(TreeNode treeNode, Set<Long> locationIds) throws ApplicationException {
         Location location = ((Document) treeNode.getData()).getLocation();
         if (locationIds.contains(location.getId())) {
             System.out.println("treeNode= " + treeNode);
@@ -324,7 +319,21 @@ public class DepartmentBean extends BaseBean {
             treeNode.setSelected(false);
         }
         for (TreeNode oneChildTreeNode : treeNode.getChildren()) {
-            selectUnSelectNode(oneChildTreeNode, locationIds);
+            selectUnSelectLocationNode(oneChildTreeNode, locationIds);
+        }
+    }
+
+    private void selectUnSelectCategoryNode(TreeNode treeNode, Set<Long> categoryIds) throws ApplicationException {
+        Category category = ((CategoryDocument) treeNode.getData()).getCategory();
+        if (categoryIds.contains(category.getId())) {
+            System.out.println("treeNode= " + treeNode);
+            treeNode.setSelected(true);
+            openAllParents(treeNode);
+        } else {
+            treeNode.setSelected(false);
+        }
+        for (TreeNode oneChildTreeNode : treeNode.getChildren()) {
+            selectUnSelectCategoryNode(oneChildTreeNode, categoryIds);
         }
     }
 
@@ -616,7 +625,6 @@ public class DepartmentBean extends BaseBean {
             Department department = new Department();
             department.setName("New");
             department.setRoot(isRoot);
-            department.setCategory(selectedCategory);
             department.setAddress(new Address());
             if (!isRoot) {
                 department.setParentDepartment(((DepartmentDocument) selectedDepartmentNode.getData()).getDepartment());
@@ -628,6 +636,7 @@ public class DepartmentBean extends BaseBean {
             selectedDepartmentNode = newNode;
             // Clear all Location Selection
             clearAllLocationSelection();
+            clearAllCategorySelection();
             staffMembers = null;
         } catch (Exception ex) {
             sendErrorMessage("Error", "Unable to create new Department", ex);
@@ -639,10 +648,16 @@ public class DepartmentBean extends BaseBean {
     private void clearAllLocationSelection() throws ApplicationException {
         Set<Long> locationIds = new HashSet<Long>();
         for (TreeNode oneChildTreeNode : locationRoot.getChildren()) {
-            selectUnSelectNode(oneChildTreeNode, locationIds);
+            selectUnSelectLocationNode(oneChildTreeNode, locationIds);
         }
-
     }
+    private void clearAllCategorySelection() throws ApplicationException {
+        Set<Long> locationIds = new HashSet<Long>();
+        for (TreeNode oneChildTreeNode : categoryRoot.getChildren()) {
+            selectUnSelectCategoryNode(oneChildTreeNode, locationIds);
+        }
+    }
+
 
     private TreeNode getParentNodeForNewChild(TreeNode selectedLocationNode, Long locationTypeId) {
         List<TreeNode> childrenNodes = selectedLocationNode.getChildren();
@@ -708,14 +723,6 @@ public class DepartmentBean extends BaseBean {
 
     public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    public Category getSelectedCategory() {
-        return selectedCategory;
-    }
-
-    public void setSelectedCategory(Category selectedCategory) {
-        this.selectedCategory = selectedCategory;
     }
 
     public TreeNode getSelectedDepartmentNode() {

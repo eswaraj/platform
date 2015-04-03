@@ -42,17 +42,11 @@
 		<h:form id="department_form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:panel id="mainPanel" header="Department">
-				<p:selectOneMenu id="category" converter="#{jsfCategoryConvertor}" value="#{departmentBean.selectedCategory}">
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{jsfCategoryConvertor.categories}" var="oneReult" itemLabel="#{oneReult.name}"
-						itemValue="#{oneReult}" />
-					<p:ajax listener="#{departmentBean.handleCategoryChange}" update=":department_form" />
-				</p:selectOneMenu>
-				<p:blockUI block="@form" trigger="category,createDepartment">LOADING<br />
+				<p:blockUI block="@form" trigger="createDepartment">LOADING<br />
 					<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 				</p:blockUI>
 
-				<p:commandButton id="createDepartment" rendered="#{!empty departmentBean.selectedCategory}"
+				<p:commandButton id="createDepartment" 
 					value="Create Department" update="@form" actionListener="#{departmentBean.createDepartment}"
 					styleClass="ui-priority-primary">
 				</p:commandButton>
@@ -133,7 +127,7 @@
 
 									</h:panelGrid>
 									<p:outputPanel id="categoryPanel">
-                                            <p:tree value="#{departmentBean.categoryRoot}" var="oneCategory" id="checkboxTree" selectionMode="checkbox"
+                                            <p:tree value="#{departmentBean.categoryRoot}" var="oneCategory" id="categoryTree" selectionMode="checkbox"
                                                 selection="#{departmentBean.selectedCategoryNodes}">
                                                 <!-- 
                                                 <p:aj;ax event="select" update=":department_form:tabView:mapPanel"

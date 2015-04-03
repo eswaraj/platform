@@ -25,4 +25,7 @@ public interface DepartmentRepository extends GraphRepository<Department>{
     @Query("start user=node({0}) match (user)-[:ATTACHED_TO]-(person)-[:IS]-(departmentAdmin)-[:WORKS_FOR]-(department) where person.__type__ = 'Person'  and departmentAdmin.__type__='DepartmentAdmin' return department")
     public List<Department> getUserDepartments(Long userId);
 
+    @Query("match departments where departments.__type__='Department' and departments.root = true return departments")
+    public List<Department> getAllRootDepartments();
+
 }

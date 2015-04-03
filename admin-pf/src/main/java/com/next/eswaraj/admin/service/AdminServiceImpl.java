@@ -60,6 +60,7 @@ import com.eswaraj.domain.repo.AddressRepository;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DataClientRepository;
 import com.eswaraj.domain.repo.DepartmentAdminRepository;
+import com.eswaraj.domain.repo.DepartmentCategoryRepository;
 import com.eswaraj.domain.repo.DepartmentLocationRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.ElectionManifestoPromiseRepository;
@@ -109,6 +110,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private DepartmentLocationRepository departmentLocationRepository;
+
+    @Autowired
+    private DepartmentCategoryRepository departmentCategoryRepository;
 
     @Autowired
     private EswarajAccountRepository eswarajAccountRepository;
@@ -1044,6 +1048,16 @@ public class AdminServiceImpl implements AdminService {
             departmentAdminRepository.delete(departmentAdmin);
         }
         return departmentAdmin;
+    }
+
+    @Override
+    public List<Department> getAllRootDepartments() throws ApplicationException {
+        return departmentRepository.getAllRootDepartments();
+    }
+
+    @Override
+    public List<Category> getAllCategoriesOfDepartment(Department department) throws ApplicationException {
+        return departmentCategoryRepository.getAllCategoryOfDepartment(department);
     }
 
 }
