@@ -51,6 +51,7 @@ import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminExtended;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
+import com.eswaraj.domain.nodes.relationships.DepartmentCategory;
 import com.eswaraj.domain.nodes.relationships.DepartmentLocation;
 import com.eswaraj.domain.nodes.relationships.FacebookAppPermission;
 import com.eswaraj.domain.nodes.relationships.LocationTimelineItem;
@@ -927,7 +928,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Department saveDepartment(Department department, List<Location> locations) throws ApplicationException {
+    public Department saveDepartment(Department department, List<Location> locations, List<Category> categories) throws ApplicationException {
         if (department.getDateCreated() == null) {
             department.setDateCreated(new Date());
         }
@@ -942,7 +943,48 @@ public class AdminServiceImpl implements AdminService {
         logger.info("Saving Department : {}", department);
         department = departmentRepository.save(department);
 
-        // Now Save Department Locations
+        saveDepartmentLocations(department, locations);
+        saveDepartmentCategories(department, categories);
+
+        return department;
+    }
+
+    private void saveDepartmentCategories(Department department, List<Category> categories) {
+        List<DepartmentCategory> departmentCategories = departmentCategoryRepository.getAllDepartmentCategoryRelationOfDepartment(department);
+
+        // first Delete Department Categories
+        boolean categoryFound;
+        for (DepartmentCategory oneDepartmentCategory : departmentCategories) {
+            categoryFound = false;
+            for (Category oneCategory : categories) {
+                if (oneCategory.getId().equals(oneDepartmentCategory.getCategory().getId())) {
+                    categoryFound = true;
+                }
+            }
+            if (!categoryFound) {
+                departmentCategoryRepository.delete(oneDepartmentCategory);
+            }
+        }
+        // Now create new one
+        for (Category oneCategory : categories) {
+            categoryFound = false;
+            for (DepartmentCategory oneDepartmentCategory : departmentCategories) {
+                if (oneCategory.getId().equals(oneDepartmentCategory.getCategory().getId())) {
+                    categoryFound = true;
+                }
+            }
+
+            if (!categoryFound) {
+                if (!oneCategory.isRoot()) {// save only for non root categories
+                    DepartmentCategory oneDepartmentCategory = new DepartmentCategory(department, oneCategory);
+                    oneDepartmentCategory = departmentCategoryRepository.save(oneDepartmentCategory);
+                }
+            }
+        }
+
+    }
+
+    private void saveDepartmentLocations(Department department, List<Location> locations) {
         List<DepartmentLocation> departmentLocations = departmentLocationRepository.getAllDepartmentLocationRelationOfDepartment(department);
 
         // first Delete Department Locations
@@ -973,7 +1015,6 @@ public class AdminServiceImpl implements AdminService {
             }
         }
 
-        return department;
     }
 
     @Override

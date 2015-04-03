@@ -170,7 +170,7 @@ public interface AdminService {
 
     List<Department> getAllChildDepartments(Long departmentId) throws ApplicationException;
 
-    Department saveDepartment(Department department, List<Location> locations) throws ApplicationException;
+    Department saveDepartment(Department department, List<Location> locations, List<Category> categories) throws ApplicationException;
 
     List<Location> getAllLocationsOfDepartment(Department department) throws ApplicationException;
 

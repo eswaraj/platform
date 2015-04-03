@@ -554,7 +554,12 @@ public class DepartmentBean extends BaseBean {
             for (TreeNode oneLocationTreeNode : selectedLocationNodes) {
                 locations.add(((Document) oneLocationTreeNode.getData()).getLocation());
             }
-            department = adminService.saveDepartment(department, locations);
+
+            List<Category> categories = new ArrayList<Category>();
+            for (TreeNode oneLocationTreeNode : selectedCategoryNodes) {
+                categories.add(((CategoryDocument) oneLocationTreeNode.getData()).getCategory());
+            }
+            department = adminService.saveDepartment(department, locations, categories);
             document.setDepartment(department);
         } catch (Exception e) {
             sendErrorMessage("Error", e.getMessage(), e);
@@ -622,6 +627,9 @@ public class DepartmentBean extends BaseBean {
                 parentNode = root;
                 isRoot = true;
             }
+            // NOTE : currently we are not allowing to create any Department Hierarchy
+            // So will always create Department as Root Department
+            parentNode = root;
             Department department = new Department();
             department.setName("New");
             department.setRoot(isRoot);
