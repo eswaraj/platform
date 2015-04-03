@@ -87,6 +87,10 @@ public interface AdminService {
 
     List<PoliticalBodyAdminSearchResult> getAllActivePoliticalAdmin() throws ApplicationException;
 
+    List<LocationBoundaryFile> getAllActiveLocationBoundaryFiles() throws ApplicationException;
+
+    List<LocationBoundaryFile> getAllActiveFailedLocationBoundaryFiles() throws ApplicationException;
+
     PoliticalBodyAdmin savePoliticalBodyAdmin(PoliticalBodyAdmin politicalBodyAdmin) throws ApplicationException;
 
     List<Person> searchPersonByName(String name) throws ApplicationException;

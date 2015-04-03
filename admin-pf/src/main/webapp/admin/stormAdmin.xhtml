@@ -72,6 +72,14 @@
                         actionListener="#{stormAdminBean.reprocessAllPoliticalAdmins}" styleClass="ui-priority-primary"
                         process="@this:reprocessAllPoliticalAdmins">
                     </p:commandButton>
+                    <p:commandButton id="reprocessAllActiveLocationBoundaryFiles" value="Reprocess All Location Boundary Files" update="@form"
+                        actionListener="#{stormAdminBean.reprocessAllLocationFiles}" styleClass="ui-priority-primary"
+                        process="@this:reprocessAllActiveLocationBoundaryFiles">
+                    </p:commandButton>
+                    <p:commandButton id="reprocessAllActiveFailedLocationBoundaryFiles" value="Reprocess All Failed Location Boundary Files" update="@form"
+                        actionListener="#{stormAdminBean.reprocessAllFailedLocationFiles}" styleClass="ui-priority-primary"
+                        process="@this:reprocessAllActiveFailedLocationBoundaryFiles">
+                    </p:commandButton>
 
 				</h:panelGrid>
 				<p:blockUI block="@form" trigger="@form:reprocessAllComplaints,@form:reprocessAllLocations,@form:reprocessAllPersons,@form:reprocessAllComments,@form:reprocessAllCategories,@form:reprocessAllPoliticalAdmins">LOADING<br />

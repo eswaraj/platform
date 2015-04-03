@@ -1101,4 +1101,14 @@ public class AdminServiceImpl implements AdminService {
         return departmentCategoryRepository.getAllCategoryOfDepartment(department);
     }
 
+    @Override
+    public List<LocationBoundaryFile> getAllActiveLocationBoundaryFiles() throws ApplicationException {
+        return locationBoundaryFileRepository.getAllActiveLocationBoundaryFiles();
+    }
+
+    @Override
+    public List<LocationBoundaryFile> getAllActiveFailedLocationBoundaryFiles() throws ApplicationException {
+        return locationBoundaryFileRepository.getAllActiveFailedLocationBoundaryFiles();
+    }
+
 }

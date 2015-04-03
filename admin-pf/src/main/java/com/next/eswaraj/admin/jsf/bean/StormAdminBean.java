@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.LocationBoundaryFile;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminSearchResult;
 import com.eswaraj.queue.service.QueueService;
 import com.next.eswaraj.admin.service.AdminService;
@@ -25,6 +26,8 @@ public class StormAdminBean extends BaseBean {
 
     @Autowired
     private AdminService adminService;
+
+    Runnable runnable = null;
 
     
 
@@ -74,6 +77,60 @@ public class StormAdminBean extends BaseBean {
             e.printStackTrace();
             sendErrorMessage("Error", "Unable to reproces all Comment");
         }
+    }
+
+    public void reprocessAllLocationFiles() {
+        if (runnable != null) {
+            sendErrorMessage("Error", "Another thread already running");
+        }
+        runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    List<LocationBoundaryFile> admins = adminService.getAllActiveLocationBoundaryFiles();
+                    for (LocationBoundaryFile oneLocationBoundaryFile : admins) {
+                        Thread.sleep(40000);
+                        queueService.sendLocationFileUploadMessage(null, oneLocationBoundaryFile.getId(), oneLocationBoundaryFile.getLocation().getId());
+                        logger.info("Sleeping for 40 seconds before sending another Location Boundary File");
+                    }
+                    //
+                    sendInfoMessage("Success", "Admin reporcess started, it may take few minutes to complete");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    sendErrorMessage("Error", "Unable to reproces all Comment");
+                }
+            }
+        };
+        Thread runnigThread = new Thread(runnable);
+        runnigThread.start();
+    }
+
+    public void reprocessAllFailedLocationFiles() {
+        if (runnable != null) {
+            sendErrorMessage("Error", "Another thread already running");
+        }
+        runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    List<LocationBoundaryFile> admins = adminService.getAllActiveFailedLocationBoundaryFiles();
+                    for (LocationBoundaryFile oneLocationBoundaryFile : admins) {
+                        Thread.sleep(40000);
+                        queueService.sendLocationFileUploadMessage(null, oneLocationBoundaryFile.getId(), oneLocationBoundaryFile.getLocation().getId());
+                        logger.info("Sleeping for 40 seconds before sending another Location Boundary File");
+                    }
+                    //
+                    sendInfoMessage("Success", "Admin reporcess started, it may take few minutes to complete");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    sendErrorMessage("Error", "Unable to reproces all Comment");
+                }
+            }
+        };
+        Thread runnigThread = new Thread(runnable);
+        runnigThread.start();
     }
 
     public void reprocessAllCategories() {
