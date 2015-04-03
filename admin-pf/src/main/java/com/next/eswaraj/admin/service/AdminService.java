@@ -59,6 +59,8 @@ public interface AdminService {
 
     List<Category> getAllRootCategories() throws ApplicationException;
 
+    List<Category> getAllCategories() throws ApplicationException;
+
     List<Category> getChildCategories(Long parentCategoryId) throws ApplicationException;
 
     Category saveCategory(Category category) throws ApplicationException;

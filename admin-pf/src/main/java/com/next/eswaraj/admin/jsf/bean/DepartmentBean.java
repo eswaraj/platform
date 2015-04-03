@@ -66,9 +66,11 @@ public class DepartmentBean extends BaseBean {
 
     private TreeNode root;
     private TreeNode locationRoot;
+    private TreeNode categoryRoot;
 
     private TreeNode selectedDepartmentNode;
     private TreeNode[] selectedLocationNodes;
+    private TreeNode[] selectedCategoryNodes;
 
     private MapModel draggableModel;
 
@@ -106,6 +108,41 @@ public class DepartmentBean extends BaseBean {
 
     }
 
+    private void loadCategories() throws ApplicationException {
+        categoryRoot = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
+        List<Category> allCategories = adminService.getAllCategories();
+        System.out.println("Found " + allCategories.size() + " locations");
+        Map<String, Object> locationMap = new HashMap<String, Object>();
+        List<Category> rootCategories = new ArrayList<Category>();
+        for (Category oneCategory : allCategories) {
+            locationMap.put(oneCategory.getId().toString(), oneCategory);
+            if (oneCategory.isRoot()) {
+                rootCategories.add(oneCategory);
+            } else {
+                String categoryChildKey = oneCategory.getParentCategory().getId() + "_Children";
+                Set<Category> childCategories = (Set<Category>) locationMap.get(categoryChildKey);
+                if (childCategories == null) {
+                    childCategories = new TreeSet<Category>(new Comparator<Category>() {
+                        @Override
+                        public int compare(Category o1, Category o2) {
+                            return o1.getName().compareTo(o2.getName());
+                        }
+                    });
+                    locationMap.put(categoryChildKey, childCategories);
+                }
+                childCategories.add(oneCategory);
+            }
+        }
+        if (rootCategories.isEmpty()) {
+            System.out.println("No Root Categories Found");
+        } else {
+            for (Category oneRootCategory : rootCategories) {
+                TreeNode indiaRootNode = new CustomTreeNode(new CategoryDocument(oneRootCategory.getName(), "-", "Folder", oneRootCategory), categoryRoot);
+                addChildCategories(oneRootCategory, locationMap, indiaRootNode);
+            }
+
+        }
+    }
     private void loadLocations() throws ApplicationException {
         locationRoot = new CustomTreeNode(new Document("Files", "-", "Folder", null), null);
         List<Location> allLocations = applicationCacheBean.getAllLocations();
@@ -136,6 +173,19 @@ public class DepartmentBean extends BaseBean {
         } else {
             TreeNode indiaRootNode = new CustomTreeNode(new Document(rootLocation.getName(), "-", "Folder", rootLocation), locationRoot);
             addChildLocations(rootLocation, locationMap, indiaRootNode);
+        }
+    }
+
+    private void addChildCategories(Category currentCategory, Map<String, Object> locationMap, TreeNode parentTreeNode) {
+        String categoryChildKey = currentCategory.getId() + "_Children";
+        Set<Category> childCategories = (Set<Category>) locationMap.get(categoryChildKey);
+        if (childCategories == null) {
+            return;
+        }
+        for (Category oneCategory : childCategories) {
+            TreeNode newNode = new CustomTreeNode(new CategoryDocument(oneCategory.getName(), "-", "Folder", oneCategory), parentTreeNode);
+            newNode.setSelectable(!oneCategory.isRoot());// Root Categories can not be selected
+            addChildCategories(oneCategory, locationMap, newNode);
         }
     }
 
@@ -707,5 +757,21 @@ public class DepartmentBean extends BaseBean {
 
     public void setSelectedStaffMember(Person selectedStaffMember) {
         this.selectedStaffMember = selectedStaffMember;
+    }
+
+    public TreeNode getCategoryRoot() {
+        return categoryRoot;
+    }
+
+    public void setCategoryRoot(TreeNode categoryRoot) {
+        this.categoryRoot = categoryRoot;
+    }
+
+    public TreeNode[] getSelectedCategoryNodes() {
+        return selectedCategoryNodes;
+    }
+
+    public void setSelectedCategoryNodes(TreeNode[] selectedCategoryNodes) {
+        this.selectedCategoryNodes = selectedCategoryNodes;
     }
 }

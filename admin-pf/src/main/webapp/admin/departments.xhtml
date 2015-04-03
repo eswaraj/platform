@@ -132,6 +132,18 @@
 
 
 									</h:panelGrid>
+									<p:outputPanel id="categoryPanel">
+                                            <p:tree value="#{departmentBean.categoryRoot}" var="oneCategory" id="checkboxTree" selectionMode="checkbox"
+                                                selection="#{departmentBean.selectedCategoryNodes}">
+                                                <!-- 
+                                                <p:aj;ax event="select" update=":department_form:tabView:mapPanel"
+                                                    listener="#{departmentBean.onLocationNodeSelect}" />
+                                                     -->
+                                                <p:treeNode>
+                                                    <h:outputText value="#{oneCategory.name}" />
+                                                </p:treeNode>
+                                            </p:tree>
+                                        </p:outputPanel>
 								</p:tab>
 								<p:tab title="Locations">
 									<h:panelGrid columns="2">

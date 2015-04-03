@@ -392,6 +392,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<Category> getAllCategories() throws ApplicationException {
+        List<Category> rootCategories = categoryRepository.getAllCategories();
+        return rootCategories;
+    }
+
+    @Override
     public List<Category> getChildCategories(Long parentCategoryId) throws ApplicationException {
         List<Category> childCategories = categoryRepository.findAllChildCategoryOfParentCategory(parentCategoryId);
         return childCategories;
