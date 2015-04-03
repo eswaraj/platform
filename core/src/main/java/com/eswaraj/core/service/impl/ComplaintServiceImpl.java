@@ -380,7 +380,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                 addAllParentLocationsToComplaint(locations, oneLocation, complaintLocations);
 
             }
-            Category rootCategoryForComplaint = getRootCategoryOfComplaint(complaint);
+            Category subCategoryForComplaint = getSubCategoryOfComplaint(complaint);
             List<Department> departments = new ArrayList<Department>();
             for (Location oneLocation : locations) {
                 logger.info("Searching Active Political Admin For : " + oneLocation.getId() + ", " + oneLocation.getName());
@@ -389,8 +389,8 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                     politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
                 }
 
-                if (rootCategoryForComplaint != null) {
-                    List<Department> locationDpartments = departmentLocationRepository.getAllDepartmentOfLocationAndCategory(oneLocation, rootCategoryForComplaint);
+                if (subCategoryForComplaint != null) {
+                    List<Department> locationDpartments = departmentLocationRepository.getAllDepartmentOfLocationAndCategory(oneLocation, subCategoryForComplaint);
                     if (locationDpartments != null && !locationDpartments.isEmpty()) {
                         departments.addAll(locationDpartments);
                     }
@@ -409,9 +409,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         return buildComplaintMessage(complaint);
     }
 
-    private Category getRootCategoryOfComplaint(Complaint complaint) {
+    private Category getSubCategoryOfComplaint(Complaint complaint) {
         for (Category oneCategory : complaint.getCategories()) {
-            if (oneCategory.isRoot()) {
+            if (!oneCategory.isRoot()) {
                 return oneCategory;
             }
         }
