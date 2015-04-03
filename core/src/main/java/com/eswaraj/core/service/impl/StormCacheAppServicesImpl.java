@@ -171,6 +171,7 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
         complaintJsonObject.addProperty("locationAddress", complaint.getLocationAddress());
         complaintJsonObject.addProperty("shortUrl", complaint.getShortUrl());
 
+
         if (complaint.getAdministrator() != null) {
             JsonArray ebaIds = new JsonArray();
             JsonObject oneAdmin = new JsonObject();
@@ -211,6 +212,9 @@ public class StormCacheAppServicesImpl implements StormCacheAppServices {
                 jsonArray.add(categoryJsonObject);
             }
             complaintJsonObject.add("categories", jsonArray);
+
+            // add total Complaints
+            complaintJsonObject.addProperty("totalComments", commentRepository.findTotalCommentsByComplaint(complaint));
         }
 
         if (!CollectionUtils.isEmpty(complaint.getLocations())) {
