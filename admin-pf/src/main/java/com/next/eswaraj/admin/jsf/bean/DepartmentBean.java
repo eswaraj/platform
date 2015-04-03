@@ -100,7 +100,7 @@ public class DepartmentBean extends BaseBean {
             createMarker();
 
             loadLocations();
-
+            loadCategories();
 
         } catch (Exception e) {
             e.printStackTrace();
