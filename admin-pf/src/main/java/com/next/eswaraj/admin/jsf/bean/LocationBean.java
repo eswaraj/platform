@@ -53,6 +53,8 @@ import com.next.eswaraj.admin.service.AdminService;
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "view")
 public class LocationBean extends BaseBean {
 
+    private static final long serialVersionUID = 1L;
+
     @Autowired
     private AdminService adminService;
 

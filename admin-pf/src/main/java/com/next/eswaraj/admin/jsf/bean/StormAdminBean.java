@@ -88,22 +88,23 @@ public class StormAdminBean extends BaseBean {
             @Override
             public void run() {
                 try {
-                    List<LocationBoundaryFile> admins = adminService.getAllActiveLocationBoundaryFiles();
-                    for (LocationBoundaryFile oneLocationBoundaryFile : admins) {
+                    List<LocationBoundaryFile> files = adminService.getAllActiveLocationBoundaryFiles();
+                    logger.info("Total Files found = " + files);
+                    for (LocationBoundaryFile oneLocationBoundaryFile : files) {
                         Thread.sleep(40000);
                         queueService.sendLocationFileUploadMessage(null, oneLocationBoundaryFile.getId(), oneLocationBoundaryFile.getLocation().getId());
                         logger.info("Sleeping for 40 seconds before sending another Location Boundary File");
                     }
                     //
-                    sendInfoMessage("Success", "Admin reporcess started, it may take few minutes to complete");
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                    sendErrorMessage("Error", "Unable to reproces all Comment");
                 }
             }
         };
         Thread runnigThread = new Thread(runnable);
         runnigThread.start();
+        sendInfoMessage("Success", "Admin reporcess started in background thread, it may take few minutes to complete");
     }
 
     public void reprocessAllFailedLocationFiles() {
