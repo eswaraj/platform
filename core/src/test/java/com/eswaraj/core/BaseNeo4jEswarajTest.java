@@ -472,7 +472,6 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		DepartmentDto departmentDto = new DepartmentDto();
 		departmentDto.setName(categoryName);
 		departmentDto.setDescription(description);
-		departmentDto.setCategoryId(categoryId);
 		return departmentDto;
 	}
 	protected DepartmentDto createDepartment(String categoryName, String description, CategoryDto category){
@@ -497,7 +496,6 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		}
 		assertEquals(expectedDepartment.getDescription(), actualDepartment.getDescription());
 		assertEquals(expectedDepartment.getName(), actualDepartment.getName());
-		assertEquals(expectedDepartment.getCategoryId(), actualDepartment.getCategoryId());
 	}
 
 }

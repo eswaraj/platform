@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.repo.CategoryRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
@@ -27,13 +26,6 @@ public class DepartmentConvertor extends BaseConvertor<Department, DepartmentDto
 			department = new Department();
 		}
 		BeanUtils.copyProperties(departmentDto, department);
-		if(departmentDto.getCategoryId() != null){
-			Category category = categoryRepository.findOne(departmentDto.getCategoryId());
-			if(category == null){
-				throw new ApplicationException("No such Category exists[id="+departmentDto.getCategoryId()+"]");
-			}
-			department.setCategory(category);
-		}
 		return department;
 	}
 
@@ -41,9 +33,6 @@ public class DepartmentConvertor extends BaseConvertor<Department, DepartmentDto
 	protected DepartmentDto convertBeanInternal(Department dbDto) throws ApplicationException {
 		DepartmentDto departmentDto = new DepartmentDto();
 		BeanUtils.copyProperties(dbDto, departmentDto);
-		if(dbDto.getCategory() != null){
-			departmentDto.setCategoryId(dbDto.getCategory().getId());	
-		}
 		return departmentDto;
 	}
 
