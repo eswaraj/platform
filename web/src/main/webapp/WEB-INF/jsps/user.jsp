@@ -81,7 +81,7 @@
 														<c:if test="${empty user.person.profilePhoto}">
 															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
 														</c:if>
-														<p class="center-align">
+														<p class="center-align reporters_info">
 														<c:if test="${!empty user.person.profilePhoto}">
 															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
 															<c:if test="${!empty age}">
@@ -98,18 +98,21 @@
 														</c:if>
 														</p>
 														<div class="complaints_followers_counter">
-														<p class="reporter_total_complaints">
+														<p class="col-sm-4 col-md-4 reporter_total_complaints">
 															<span class="grey_text">Complaints</span> <br /> 
 															<strong class="blue_color_text">200</strong>
 														</p>
-														<p class="reporter_complaint_followers">
-															<span class="grey_text">Followers</span> <br /> 
-															<strong class="blue_color_text">5000</strong>
+														
+														<p class="col-sm-4 col-md-4 total_cons_population">
+															<span class="grey_text">Population</span> <br /> 
+															<strong class="blue_color_text">9.879 million</strong>
 														</p>
-														<p class="reporter_complaint_visited">
-															<span class="grey_text">Following</span> <br /> 
-															<strong class="blue_color_text">50</strong>
+														
+														<p class="col-sm-4 col-md-4 total_cons_area">
+															<span class="grey_text">Area</span> <br /> 
+															<strong class="blue_color_text">1,484 km²</strong>
 														</p>
+
 														</div>
 													</div>
 												</div>
@@ -192,62 +195,43 @@
 									<div class="list-row user-dashboard-settings" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
 										<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"-->
 										<!-- not working as expected -->
-											<p class="innerdiv-sharebtn">
-											<!-- social media share buttons -->								
-											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>
-											<br />											
-											<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;" class="anchorlink"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-											<br />
-											<a href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;" class="anchorlink"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-											</p>
-										<div class="innerblock">
 											<div class="col-sm-1 profile-info profile_pic_adjust">
 												<div class="profile-pic">
-														<a href="#"><img src="${user.person.profilePhoto}" alt=""></a>
+														<a href="#"><img src="${user.person.profilePhoto}" style="width: 50px; max-width: 50px; border: 1px solid #ccc;" alt=""></a>
 												</div>
 											</div>
 											<div class="col-sm-10 profile-info profile_info_adjust">
-												<p class="whom" style="margin-bottom: 0px; line-height:100%;">
-													<strong class="issue-id">Issue #${oneComplaint.id}</strong>
-													<span class="connector">raised by</span>
-
-													<span class="username text-limit name_adjust">
+												<p class="col-sm-12 col-md-12 whom">
+													<span class="username text-limit name_adjust col-sm-4 col-md-4">
 														<a href="#!" class="anchorlink" >${user.person.name}</a>
 													</span>
-                                                    <span class="issue-scope-type text-limit type_adjust">
+													
+                                                    <span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
 														<img src="${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-															<c:if test="${oneCategory.root}">
-																<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
-															</c:if>
-														</c:forEach>
 													</span>
-												</p>
 
-												<p class="whenwhere">
-													<span> <img src="${staticHost}/images/time.png" class="posttimestatus" alt=""> 
+													<span class="time_info_adjust col-sm-4 col-md-4">
+														<i class="glyphicon glyphicon-time"></i>
 														<a href="#!" class="anchorlink" >
 															<span class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></span>
 														</a>
-													</span> 
-													<span class="connector">at</span> 
-													<span> 
-														<i class="glyphicon glyphicon-map-marker"></i> 
-														<a href="#!" class="anchorlink" ><span class="location">Cessna Business Park main road,Keverappa Layout</span></a>
-													</span> 
-													<span> 
-														<a href="#!" class="anchorlink" ><img src="${staticHost}/images/underreview.png" class="postcurrentstatus" alt=""></a>
 													</span>
+
 												</p>
-											</div>
+
+												<p class="whenwhere">
+													<strong class="issue-id">#${oneComplaint.id}</strong>
+
+												</p>
+
 											<div class="issue-info">
 
-												<p>
+												<p class="category_title_adjust">
 													<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
 												</p>
 
 												<c:if test="${!empty oneComplaint.description}">
-													<p class="desc elipsis">${oneComplaint.description}</p>
+													<p class="desc elipsis description_adjust">${oneComplaint.description}</p>
 												</c:if>
 
 												<c:if test="${!empty oneComplaint.photos}">
@@ -255,10 +239,44 @@
 														<a href="#"><img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle"></a>
 													</div>
 												</c:if>
+													
+												<p class="list_row_footer_adjust">
+
+													<span class="col-sm-4 col-md-4 address_adjust">
+														<i class="glyphicon glyphicon-map-marker"></i>
+														<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
+													</span>
+
+													<span class="col-sm-4 col-md-4 comments_adjust">
+														<i class="glyphicon glyphicon-comment"></i>
+														<a href="#!" class="anchorlink" ><span class="comments">Comments(${oneComplaint.totalComments})</span></a>
+													</span>
+
+													<span class="col-sm-4 col-md-4 status_adjust">
+													<i class="glyphicon glyphicon-eye-open"></i>
+														<a href="#!" class="anchorlink" ><span class="issue_status">Pending</span></a>
+													</span>
+													
+												</p>
+												
+											</div>
 
 											</div>
-										</div>
-									</div>
+
+											<div class="col-sm-1 share_buttons_adjust">
+											<p class="innerdiv-sharebtn">
+											<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+											<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
+											<!-- social media share buttons -->								
+											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
+											<br />																		
+											<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+											<br />
+											<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+											</p>
+											</div>
+
+											</div>
 								</c:forEach>
 
 								<div class="pagination-wrapper" style="margin-left: 31.5%; margin-right: 31.5%; margin-bottom: 7%;">

@@ -78,8 +78,13 @@
 
 												<div class="reporter_profile_data">
 													<div class="cons_issue_reporters_box_pic">
-													<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image" width="226px;"> 
-														<!-- <c:if test="${!empty user.person.profilePhoto}">
+																<a type="button" href="#!" title="Location View">
+																<div class="cons_location_name">
+																	<img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">
+																	<span class="location_text_adjust">${location.name}</span>
+																</div>
+																</a>
+																<!-- <c:if test="${!empty user.person.profilePhoto}">
 															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
 														</c:if>
 														<c:if test="${empty user.person.profilePhoto}">
@@ -101,21 +106,24 @@
 															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
 														</c:if>
 														</p> -->
+													</div>
 														<div class="complaints_followers_counter">
-														<p class="reporter_total_complaints">
+														<p class="col-sm-4 col-md-4 reporter_total_complaints">
 															<span class="grey_text">Complaints</span> <br /> 
 															<strong class="blue_color_text">200</strong>
 														</p>
-														<p class="reporter_complaint_followers">
-															<span class="grey_text">Followers</span> <br /> 
-															<strong class="blue_color_text">5000</strong>
+														
+														<p class="col-sm-4 col-md-4 total_cons_population">
+															<span class="grey_text">Population</span> <br /> 
+															<strong class="blue_color_text">9.879 million</strong>
 														</p>
-														<p class="reporter_complaint_visited">
-															<span class="grey_text">Following</span> <br /> 
-															<strong class="blue_color_text">50</strong>
+														
+														<p class="col-sm-4 col-md-4 total_cons_area">
+															<span class="grey_text">Area</span> <br /> 
+															<strong class="blue_color_text">1,484 km²</strong>
 														</p>
+
 														</div>
-													</div>
 												</div>
 
 											<!-- 	<div class="list-group">
@@ -185,43 +193,46 @@
 												<div class="listing-wrapper">
 													<div class="secondary-wrapper">
 														<div class="views_div">
-																<a type="button" href="#!" title="Location View">
-																<div class="cons_location_name">
-																	<span class="location_text_adjust">${location.name}</span>
-																	<!-- <img src=" http://www.naturalhighsafaris.com/cdn/cache/made/cdn/uploads/country_images/India/North/Delhi/India-Gate--Delhi-Photos2_940_529_80_s_c1.jpg" class="location_image">  -->
-																</div>
-																</a>	
 															<c:if test="${viewType eq 'list'}">
-																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/list.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-list"></i>
+																	<span class="list_icon" class="icon_selected">List View</span>
 																</div></a>
-																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="list_icon" src="${staticHost}/images/map.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="list_icon" src="${staticHost}/images/chart.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-stats"></i>
+																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'map'}">
-																<a type="button" href="?type=list" title="List View"><div>
-																	<img class="list_icon" title="List view" src="${staticHost}/images/list.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-list"></i>
+																	<span class="list_icon">List View</span>
 																</div></a>
-																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/map.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<span class="list_icon" class="icon_selected">Map View</span>
 																</div></a>
-																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="list_icon" src="${staticHost}/images/chart.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-stats"></i>
+																	<span class="list_icon">Analytics View</span>
 																</div></a>
 															</c:if>
 															<c:if test="${viewType eq 'analytics'}">
-																<a type="button" href="?type=list" title="List View"><div>
-																	<img title="List view" class="list_icon" src="${staticHost}/images/list.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=list" title="List View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-list"></i>
+																	<span class="list_icon">List View</span>
 																</div></a>
-																<a type="button" href="?type=map" title="Map View"><div>
-																    <img title="List view" class="list_icon" src="${staticHost}/images/map.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="?type=map" title="Map View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<span class="list_icon">Map View</span>
 																</div></a>
-																<a type="button" href="#" title="Analytics View"><div>
-																	<img title="List view" class="list_icon" class="icon_selected" src="${staticHost}/images/chart.png"/>
+																<a class="col-sm-4 col-md-4 views_adjust" type="button" href="#" title="Analytics View"><div class="header_views_div_adjust">
+																	<i class="glyphicon glyphicon-stats"></i>
+																	<span class="list_icon" class="icon_selected">Analytics View</span>
 																</div></a>
 															</c:if>
 
@@ -234,17 +245,6 @@
 															<!-- new_div starts -->
 															<c:forEach items="${complaintList}" var="oneComplaint">
 																<div class="list-row" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
-																	<p class="innerdiv-sharebtn">
-																		<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
-																		<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
-																		<!-- social media share buttons -->								
-																		<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
-																		<br />																		
-																		<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-																		<br />
-																		<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-																	</p>
-																	<div class="innerblock">
 																		<div class="col-sm-1 profile-info profile_pic_adjust">
 																			<div class="profile-pic">
 																				<c:if test="${!empty oneComplaint.createdBy[0].profilePhoto}">
@@ -256,26 +256,19 @@
 																			</div>
 																		</div>
 																		<div class="col-sm-10 profile-info profile_info_adjust">
-																			<p class="whom col-sm-12 col-md-12">
+																			<p class="col-sm-12 col-md-12 whom">
 																				<span class="username text-limit name_adjust col-sm-4 col-md-4">
 																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
-																						<a href="#!" class="anchorlink" >${onePerson.name}</a>
+																						<a href="#!" class="anchorlink username_adjust" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
 
 																				<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
 																					<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-																					<!-- 
-																					<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-																						<c:if test="${oneCategory.root}">
-																							<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="anchorlink" >Type - ${oneCategory.name}</a>
-																						</c:if>
-																					</c:forEach>
-																					-->
 																				</span>
 																				
-																				<span class="col-sm-4 col-md-4">
-																					<img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
+																				<span class="time_info_adjust col-sm-4 col-md-4">
+																				<i class="glyphicon glyphicon-time"></i>
 																					<a href="#!" class="anchorlink" >
 																					<span class="location">
 																						<abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr>
@@ -290,15 +283,15 @@
 																				<strong class="issue-id">#${oneComplaint.id}</strong>
 																			
 																			</p>
-																		</div>
-																		<div class="issue-info" >
 
-																			<p>
+																			<div class="issue-info" >
+
+																			<p class="category_title_adjust">
 																				<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
 																			</p>
 
 																			<c:if test="${!empty oneComplaint.description}">
-																				<p class="desc elipsis">
+																				<p class="desc elipsis description_adjust">
 																					${oneComplaint.description}
 																				</p>
 																			</c:if>
@@ -309,24 +302,40 @@
 																				</div>
 																			</c:if>
 
-																			<span>
+																			<p class="list_row_footer_adjust">
+
+																			<span class="col-sm-4 col-md-4 address_adjust">
 																				<i class="glyphicon glyphicon-map-marker"></i>
 																				<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
 																			</span>
 
-																			<span>
+																			<span class="col-sm-4 col-md-4 comments_adjust">
 																				<i class="glyphicon glyphicon-comment"></i>
-																				<a href="#!" class="anchorlink" ><span class="comments">Comments</span></a>
+																				<a href="#!" class="anchorlink" ><span class="comments">Comments(${oneComplaint.totalComments})</span></a>
 																			</span>
 
-																			<span>
+																			<span class="col-sm-4 col-md-4 status_adjust">
 																			<i class="glyphicon glyphicon-eye-open"></i>
 																				<a href="#!" class="anchorlink" ><span class="issue_status">Pending</span></a>
 																			</span>
-
+																			
+																			</p>
+																			
 																		</div>
 																	</div>
-																</div>
+																		<div class="col-sm-1 share_buttons_adjust">
+																		<p class="innerdiv-sharebtn">
+																		<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+																		<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
+																		<!-- social media share buttons -->								
+																		<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
+																		<br />																		
+																		<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																		<br />
+																		<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+																	</p>
+																		</div>
+																	</div>
 															</c:forEach>
 															<!-- new_div ends  -->
 															<div class="pagination-wrapper">
@@ -359,12 +368,21 @@
 														</div>
 													</c:if>
 													<c:if test="${viewType eq 'map'}">
-														<div id="panel">
-															<button onclick="createHeatmap()"><img title="heatmap view" src="${staticHost}/images/heat.png" height="50px;"/></button>
-															<button onclick="createCluster()"><img title="heatmap view" src="${staticHost}/images/cluster.png" height="50px;"/></button>
-															<button onclick="createMarker()"><img title="heatmap view" src="${staticHost}/images/marker.png" height="50px;"/></button>
-														</div>
 														<div id="map-container">
+														<div id="panel">
+															<button onclick="createHeatmap()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
+																<i class="glyphicon glyphicon-fire"></i>
+																<span class="list_icon">HeatMap View</span>
+															</button>
+															<button onclick="createCluster()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
+																<i class="glyphicon glyphicon-sound-5-1"></i>
+																<span class="list_icon">Cluster View</span>
+															</button>
+															<button onclick="createMarker()" class="col-sm-4 col-md-4 map_panel_buttons_adjust">
+																<i class="glyphicon glyphicon-pushpin"></i>
+																<span class="list_icon">Marker View</span>
+															</button>
+														</div>
 															<div id="map-canvas"></div>
 														</div>
 													</c:if>
@@ -405,7 +423,7 @@
 											</div>
 											<div class="constituency_right_pane col-sm-2 col-md-2">
 												<div class="right_profile">
-													<div id="myCarousel" class="carousel slide" data-ride="carousel">
+													<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 														<!-- Carousel items -->
 														<div class="carousel-inner">
 
@@ -441,29 +459,29 @@
 
 													<div class="platform_constituency_counter">
 													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Constituency</span></p>
-													<p class="total_cons_population">
-														<span class="grey_text">Total Population</span> <br /> 
-														<strong class="blue_color_text">9.879 million</strong>
-													</p>
-													<p class="total_cons_area">
-														<span class="grey_text">Total Area</span> <br /> 
-														<strong class="blue_color_text">1,484 km²</strong>
-													</p>
 													<p class="total_const_count">
 														<span class="grey_text">Total Constituencies</span> <br /> 
 														<strong class="blue_color_text">70</strong>
 													</p>
-													<p class="total_voters">
-														<span class="grey_text">Total Voters</span> <br /> 
-														<strong class="blue_color_text">56458975</strong>
+													<p class="total_houses">
+														<span class="grey_text">Total Houses</span> <br /> 
+														<strong class="blue_color_text">3435999</strong>
 													</p>
-													<p class="total_eswaraj_reg_voters">
-														<span class="grey_text">Voters with eSwaraj</span> <br /> 
-														<strong class="blue_color_text">42453975</strong>
+													<p class="total_male_pop">
+														<span class="grey_text">Total Male Population</span> <br /> 
+														<strong class="blue_color_text">8987326</strong>
 													</p>
-													<p class="total_eswaraj_const_coverage">
-														<span class="grey_text">eSwaraj Coverage</span> <br /> 
-														<strong class="blue_color_text">90%</strong>
+													<p class="total_female_pop">
+														<span class="grey_text">Total Female Population</span> <br /> 
+														<strong class="blue_color_text">7800615</strong>
+													</p>
+													<p class="total_literate_pop">
+														<span class="grey_text">Total Literate Population</span> <br /> 
+														<strong class="blue_color_text">12737767</strong>
+													</p>
+													<p class="total_working_pop">
+														<span class="grey_text">Total Working Population</span> <br /> 
+														<strong class="blue_color_text">5587049</strong>
 													</p>
 													</div>
 
