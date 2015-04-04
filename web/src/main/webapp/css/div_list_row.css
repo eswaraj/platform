@@ -758,11 +758,12 @@ margin-bottom: 40px;
 
 .user_dash_mid_pane{
 float: left;
+width:45%;
 }
 
 .user_dash_right_pane{
-margin-left: 10px;
-margin-right: 10px;
+margin:0px;
+padding:0px;
 float: left;
 }
 

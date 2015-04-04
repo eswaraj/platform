@@ -65,7 +65,7 @@
 				</div>
 			</div>
 			 -->
-			<div class="row" style="margin-top:1.25%;">
+			<div class="row">
 				<div class="user_dash_left_pane col-sm-3 col-md-3">
 												<div class="reporter_cover_profile_quote">
 													<div class="cons_issue_reporters_box_cover_quote">
@@ -180,11 +180,11 @@
 
 												</div> -->
 				</div>
-				<div class="user_dash_mid_pane col-sm-6 col-md-6 mid_pane_adjust">
+				<div class="col-sm-6 col-md-6 user_dash_mid_pane">
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
-								<strong>My Activity Feed</strong>
+								<!--strong>My Activity Feed</strong-->
 							</div>
 							<div class="clearfix" style="margin-bottom: 1%; margin-top: 0px;"></div>
 						</div>
@@ -197,35 +197,30 @@
 										<!-- not working as expected -->
 											<div class="col-sm-1 profile-info profile_pic_adjust">
 												<div class="profile-pic">
-														<a href="#"><img src="${user.person.profilePhoto}" style="width: 50px; max-width: 50px; border: 1px solid #ccc;" alt=""></a>
+														<a href="#">
+													<span>
+														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+														<c:if test="${oneCategory.root}">
+															<img src = "${oneCategory.imageUrl}" style="width: 50px; max-width: 50px; border: 0px solid  #ccc;" alt="">
+														</c:if>
+														</c:forEach>
+													</span>
+
+														</a>
 												</div>
 											</div>
 											<div class="col-sm-10 profile-info profile_info_adjust">
 												<p class="col-sm-12 col-md-12 whom">
-													<span class="username text-limit name_adjust col-sm-4 col-md-4">
-														<a href="#!" class="anchorlink" >${user.person.name}</a>
+													<span class="username text-limit name_adjust col-sm-6 col-md-6">
+														<strong class="issue-id">#${oneComplaint.id}</strong>
 													</span>
 													
-													<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
-														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-														<c:if test="${oneCategory.root}">
-															<img src = "${oneCategory.imageUrl}" class="issue_type_pic" alt="">
-														</c:if>
-														</c:forEach>
-														
-													</span>
-
-													<span class="time_info_adjust col-sm-4 col-md-4">
+													<span class="time_info_adjust col-sm-6 col-md-6">
 														<i class="glyphicon glyphicon-time"></i>
 														<a href="#!" class="anchorlink" >
 															<span class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></span>
 														</a>
 													</span>
-
-												</p>
-
-												<p class="whenwhere">
-													<strong class="issue-id">#${oneComplaint.id}</strong>
 
 												</p>
 
@@ -284,7 +279,7 @@
 											</div>
 								</c:forEach>
 
-								<div class="pagination-wrapper" style="margin-left: 31.5%; margin-right: 31.5%; margin-bottom: 7%;">
+								<div class="pagination-wrapper" style="margin-bottom: 7%;">
 									<ul class="pagination">
 										<li class="disabled"><a href="#">&laquo;</a></li>
 										<li class="active"><a href="#">1</a></li>
@@ -299,7 +294,7 @@
 						</div>
 				</div>
 				</div>
-				<div class="user_dash_right_pane col-sm-3 col-md-3 analytics_data_colsm">
+				<div class="col-sm-3 col-md-3 user_dash_right_pane analytics_data_colsm">
 
 					<div id="chart_pie_c">
 						<svg>
