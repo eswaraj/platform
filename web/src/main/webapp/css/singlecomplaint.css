@@ -25,7 +25,7 @@
 .issue-scope{
 	color: #9D9D9D !important;
 	text-decoration: none !important;
-	font-size: 25px !important;
+	font-size: 20px !important;
 }
 
 .issue-scope-type{
@@ -53,7 +53,8 @@ height:25px;
 }
 
 .username{
-margin-right: 10px;
+padding: 0px;
+margin: 0px;
 }
 
 .postcurrentstatus{
@@ -69,7 +70,6 @@ margin-right: 10px;
 }
 
 .whenwhere{
-overflow: hidden;
 font-size: 90%;
 }
 
@@ -307,6 +307,7 @@ margin-top: 0px;
 .profile-pic-padding{
 margin: 30px;
 padding:0px;
+text-align: center;
 }
 
 .text_reporters_anchor, .text_reporters_anchor_pic{
@@ -349,11 +350,6 @@ padding: 0px 20px 10px 20px;
 	-webkit-box-shadow: 1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 	-moz-box-shadow:    1px 1px 10px 1px rgba(50, 50, 50, 0.2);
 	box-shadow:         1px 1px 10px 1px rgba(50, 50, 50, 0.2);
-}
-
-.issue-info  {
-    margin-left: 5px;
-    margin-right: 10px;
 }
 
 #load_comments_box{
@@ -812,11 +808,6 @@ body{
 padding-bottom: 0px;
 }
 
-a:hover, a:focus {
-color: #428bca !important;
-text-decoration: none !important;
-}
-
 .innerwrapper{
   margin-top: 30px;
 }
@@ -829,4 +820,22 @@ background: #eeeeee;
 .md3_pad {
   padding-left: 35px;
   padding-right: 35px;
+}
+
+.issue-info  {
+padding: 0px;
+  margin: 0px;
+  float: left;
+  width: 100%
+  }
+
+.status_nd_socialmedia{
+text-align: right;
+  padding: 0px;
+  margin: 0px;
+}
+
+.issue-id{
+  padding: 0px;
+  margin: 0px;
 }

@@ -88,7 +88,7 @@
 
                                         </div>
 
-                                        <div class="col-md-6 col-sm-6">
+                                        <div class="col-md-7 col-sm-7">
 
 											<div class="list-row">
 													<div class="col-sm-1 col-md-1 profile-info profile_pic_adjust">
@@ -130,21 +130,30 @@
 
 														<p class="whenwhere">
 
-															<strong class="issue-id">#${complaint.id}</strong>
+															<strong class="col-sm-3 col-md-3 issue-id">#${complaint.id}</strong>
+															<p class="col-sm-9 col-md-9 status_nd_socialmedia">
+																	<!-- social media share buttons -->								
+																	<a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																	<a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+																	<span>
+																		<a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
+																		<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
+																		<a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
+																	</span>
+															</p>
 														
 														</p>
 
 														<div class="issue-info" >
 
-														<p class="category_title_adjust">
-															<c:forEach var="cat" items="${complaint.categories}">
-																<c:if test="${not cat.root}">
-																	<p>
-																		<a class="anchorlink"><span class="issue-scope">${cat.name}</span></a>
-																	</p> 
-																</c:if>
-															</c:forEach>
-														</p>
+														<c:forEach var="cat" items="${complaint.categories}">
+															<c:if test="${not cat.root}">
+																<p class="category_title_adjust">
+																	<a class="anchorlink"><span class="issue-scope">${cat.name}</span></a>
+																</p> 
+															</c:if>
+														</c:forEach>
 
 														<c:if test="${!empty complaint.description}">
 															<p class="desc elipsis description_adjust">
@@ -167,7 +176,7 @@
 
 														<span class="col-sm-4 col-md-4 comments_adjust">
 															<i class="glyphicon glyphicon-comment"></i>
-															<a href="#!" class="anchorlink" ><span class="comments">Comments({{totalComments}})</span></a>
+															<a href="#!" class="anchorlink" ><span class="comments">Comments(${complaint.totalComments})</span></a>
 														</span>
 
 														<span class="col-sm-4 col-md-4 status_adjust">
@@ -182,18 +191,6 @@
 											
 													<div class="col-sm-1 col-md-1">
 																										
-															<p class="whom">
-																	<!-- social media share buttons -->								
-																	<a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-																	<a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-																	<span>
-																		<a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
-																		<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
-																		<a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
-																	</span>
-															</p>
-
 													</div>
 											</div>
 										
@@ -201,7 +198,7 @@
 										<div class="issue-info" >
                                                 <!-- Comments Box -->
 
-                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( {{totalComments}} )</a>
+                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( ${complaint.totalComments} )</a>
 
                                                     <div id="comments_box" class="div_comments_box">
 
