@@ -1,360 +1,336 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>eSwaraj</title>
-<jsp:include page="include.jsp" />
-<link rel="stylesheet" href="${staticHost}/css/dashboard.css">
-<link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
-<link rel="stylesheet" href="${staticHost}/css/nv.d3.css"
-	type="text/css"></link>
-<script src="${staticHost}/js/d3.min.js"></script>
-<script src="${staticHost}/js/nv.d3.min.js"></script>
-<script src="${staticHost}/js/user_analytics.js"></script>
-<script src="${staticHost}/js/user_map.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+        <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+            <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+                <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+                    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
-<script>
-                                function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}
-                            </script>
-<script>
-                                var analyticsData = {
-                                    "cat":[{"name":"No water","count":942,"color":"#98abc5"},{"name":"Dirty Water","count":542,"color":"#8a89a6"},{"name":"Too expensive","count":342,"color":"#7b6888"},{"name":"No connection","count":242,"color":"#6b486b"},{"name":"Intermittent supply","count":142,"color":"#a05d56"},{"name":"Leaking pipes","count":442,"color":"#ff8c00"},{"name":"No fixed time","count":350,"color":"#ff0000"}]
-                                };
-                            </script>
-							<script>
-								jQuery(document).ready(function() {
-									jQuery("abbr.timeago").timeago();
-									});
-							</script>
+                        <!DOCTYPE html>
+                        <html lang="en" ng-app="complaintsApp">
+                            <head>
+                                <title>e-Swaraj - Complaint ${complaint.id}</title>
+                                <jsp:include page="include.jsp" />
+                                <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
+                                <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
+                                <link rel="stylesheet" href="${staticHost}/css/singlecomplaint.css" />
 
-</head>
-<body>
-<!-- <img src="http://www.glowmagazine.me/wp-content/uploads/2012/04/taj-mahal-at-sunset.jpg" style="
-	opacity: 0.4;
-	position: fixed;
-	height: 100%;
-	width: 100%;
-	z-index: -1;
-"> -->
-	<div class="outerwrapper main_content_page">
-		<jsp:include page="header.jsp" />
-		<div class="container-fluid">
-			<!-- 
-			<div class="banner">
-				<div class="locate-on-map">
-					<script type="text/javascript"
-						src="http://maps.google.com/maps/api/js?sensor=false"></script>
-					<div style="overflow: hidden; height: 100%; width: 100%;">
-						<div id="gmap_canvas" style="height: 100%; width: 100%;"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-8"></div>
-					<div class="col-sm-4">
-						<div class="banner-widget"></div>
-					</div>
-				</div>
-			</div>
-			 -->
-			<div class="row">
-				<div class="user_dash_left_pane col-sm-3 col-md-3">
-												<div class="reporter_cover_profile_quote">
-													<div class="cons_issue_reporters_box_cover_quote">
-														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
-													</div>
-												</div>
+                                <script src="${staticHost}/js/masonry.pkgd.min.js"></script>
+                                <script src="${staticHost}/js/jquery.flexslider-min.js"></script>
+                                <script src="${staticHost}/js/jmpress.min.js"></script>
+                                <script src="${staticHost}/js/carousel_image_slider.js"></script><!-- Script -->
+                                <script src="${staticHost}/js/user_interaction.js"></script><!-- Script -->
+                                <script src="${staticHost}/js/angular.min.js"></script>
+                                <script src="${staticHost}/js/singlecomplaint.js"></script>
+                                <script>
+                                    var complaintId = ${complaint.id};
+                                    var loggedIn = ${loggedIn};
+                                    var totalComments = ${complaint.totalComments};
+                                </script>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#dasky').Dasky()
+                                    });
+                                    jQuery(document).ready(function() {
+                                        jQuery("abbr.timeago").timeago();
+                                    });
+                                </script>
 
-												<div class="reporter_profile_data">
-													<div class="cons_issue_reporters_box_pic">
-														<c:if test="${!empty user.person.profilePhoto}">
-															<img src="${user.person.profilePhoto}?type=square&width=100&height=100" alt="profile-pic" class= "reporter-profile-pic" style="width: 100px;">
-														</c:if>
-														<c:if test="${empty user.person.profilePhoto}">
-															<img src="http://www.browserstack.com/images/dummy_avatar.png?type=square&width=80&height=80" alt="profile-pic" class="reporter-profile-pic">
-														</c:if>
-														<p class="center-align reporters_info">
-														<c:if test="${!empty user.person.profilePhoto}">
-															<strong class="red_orng_clr_text">${user.person.name}</strong> <br /> 
-															<c:if test="${!empty age}">
-																<span class="grey_text">
-																${age} Yrs,
-																</span>
-															</c:if>
-															<span class="grey_text"> 
-															${user.person.gender}
-															</span>
-														</c:if>
-														<c:if test="${empty user.person.profilePhoto}">
-															<strong class="red_orng_clr_text">Aam Aadmi</strong> <br /> 
-														</c:if>
-														</p>
-														<div class="complaints_followers_counter">
-														<p class="col-sm-4 col-md-4 reporter_total_complaints">
-															<span class="grey_text">Complaints</span> <br /> 
-															<strong class="blue_color_text">200</strong>
-														</p>
-														
-														<p class="col-sm-4 col-md-4 total_cons_population">
-															<span class="grey_text">Population</span> <br /> 
-															<strong class="blue_color_text">9.879 million</strong>
-														</p>
-														
-														<p class="col-sm-4 col-md-4 total_cons_area">
-															<span class="grey_text">Area</span> <br /> 
-															<strong class="blue_color_text">1,484 km²</strong>
-														</p>
+                                <!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
+                                <script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
 
-														</div>
-													</div>
-												</div>
 
-												<!-- <div class="list-group">
-												
-													<div class="filter_types" style="padding-left:10px;">
-													<p>
-														<strong class="filter_citzn_serv">Filter by Citizen Services</strong>
-														<span class="glyphicon glyphicon-filter advanced-filter-citzn-serv"></span>
-													</p>
 
-													<div class="cat-search example example_objects_as_tags">
-													  <div class="bs-example">
-														<input id="citizen_services_input" type="text" />
-													  </div>
-												   </div>
+                            </head>
+                            <body ng-controller="complaintsController">
+                                <div class="outerwrapper">
+                                    <jsp:include page="header.jsp" />
 
-													<hr />
-														<div class="left_filter">
-															<p>
-																<strong class="filter_sys_lvl">Filter by SubCategory</strong>
-																<span class="glyphicon glyphicon-filter advanced-filter-subcategory"></span>
-															</p>
+                                    <!-- Reference : http://codecanyon.net/item/dasky-timeline-slider/full_screen_preview/5071233 -->
+                                    <div id="issue_timeline" class="issue_timeline_data">
+                                        <iframe style="width: 100%; zoom: 4; height: 100px; border: none; margin: 0; padding:0; scrolling: no;" src="http://eswaraj.github.io/timebar/issue_timeline.html"></iframe>
+                                    </div>
 
-															<div class="subcat-search example example_objects_as_tags_subcat">
-															  <div class="bs-example">
-																<input id="subcategory_input" type="text" />
-															  </div>
-														   </div>
-														</div>
-													<hr />
-														<div class="left_filter">
-															<p>
-																<strong class="filter_temporal">Filter by Time</strong>
-															</p>
+                                    <div class="innerwrapper">
 
-															<select class="select dropdownlist">
-																<option selected>Select</option>
-																<option>Today</option>
-																<option>Yesterday</option>
-																<option>Last 72 Hrs</option>
-																<option>Last 1 Week</option>
-																<option>Last 2 Weeks</option>
-																<option>Last 1 Month</option>
-																<option>Last 3 Months</option>
-															</select>
-														</div>
-													<hr />
-														<div class="left_filter">
-															<p>
-																<strong class="filter_spatial">Filter by Location</strong>
-															</p>
-															<select class="select dropdownlist">
-																<option selected>Select</option>
-																<option>Cessna Business Park main road</option>
-																<option>Mahadevapura, More Mall</option>
-																<option>Chandni Chowk</option>
-																<option>South Delhi</option>
-																<option>Gurgaon</option>
-															</select>
-														</div>
-													
-													</div>
+                                        <div class="col-md-3 md3_pad">
 
-												</div> -->
-				</div>
-				<div class="col-sm-6 col-md-6 user_dash_mid_pane">
-					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
-						<div class="secondary-wrapper">
-							<div class="pull-left">
-								<strong></strong>
-							</div>
-							<div class="clearfix" style="margin-bottom: 1%; margin-top: 0px;"></div>
-						</div>
-						<div class="user_feed_colsm">
-							<div class="listing">
-								<!-- .list-row  -->
-								<c:forEach items="${userComplaints}" var="oneComplaint">
-									<div class="list-row user-dashboard-settings" onclick="window.location='http://dev.eswaraj.com/complaint/${oneComplaint.id}.html'; return false;" style="cursor:pointer;">
-										<!--div class="innerblock"  onclick="window.location='http://www.eswaraj.com/'; return false;"-->
-										<!-- not working as expected -->
-											<div class="col-sm-1 profile-info profile_pic_adjust">
-												<div class="profile-pic">
-														<a href="#">
-													<span>
-														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
-														<c:if test="${oneCategory.root}">
-															<img src = "${oneCategory.imageUrl}" style="width: 40px; max-width: 40px; border: 0px solid  #ccc;" alt="">
-														</c:if>
+                                            <div class="issue_reporters_box_pic">
+
+                                                <p class="text_reporters_p">
+                                                    <a href="#!" class="text_reporters_anchor_pic">
+                                                        <c:forEach var="cat" items="${complaint.categories}">
+                                                            <c:if test="${not cat.root}">
+                                                                ${cat.name} Complaints 
+                                                            </c:if>
+                                                        </c:forEach>
+
+                                                    </a>
+                                                </p>
+
+                                                <div class="profile-pic profile-pic-padding">
+                                                    <a href="#!" ><img src="${staticHost}/images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="issue_reporters_box">
+
+                                                <p class="text_reporters_p">
+                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.createdBy)}</a>
+                                                </p>
+
+                                                <div class="profile-pic profile-pic-padding">
+													<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+														<c:forEach items="${complaint.createdBy}" var="oneUser">
+															<a href="#!" ><img class="reporters_profile_pic" src="${oneUser.profilePhoto}" alt=""></a>
 														</c:forEach>
-													</span>
+													</c:if>
+													<c:if test="${empty complaint.createdBy[0].profilePhoto}">
+															<a href="#!" ><img class="reporters_profile_pic" src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="border: 1px solid #ccc;" ></a>
+													</c:if>
+                                               </div>
 
-														</a>
-												</div>
-											</div>
-											<div class="col-sm-10 profile-info profile_info_adjust">
-												<p class="col-sm-12 col-md-12 whom">
-													<span class="username text-limit name_adjust col-sm-6 col-md-6">
-														<strong class="issue-id">#${oneComplaint.id}</strong>
-													</span>
-													
-													<span class="time_info_adjust col-sm-6 col-md-6">
-														<i class="glyphicon glyphicon-time"></i>
-														<a href="#!" class="anchorlink" >
-															<span class="location"><abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr></span>
-														</a>
-													</span>
+                                            </div>
 
-												</p>
+                                        </div>
 
-											<div class="issue-info">
+                                        <div class="col-md-9 md9_pad">
+                                            <div class="issue-info" >
+                                                <c:forEach var="cat" items="${complaint.categories}">
+                                                    <c:if test="${not cat.root}">
+                                                        <p>
+                                                            <a href="#" class="issue-scope">${cat.name}</a>
+                                                        </p> 
+                                                    </c:if>
+                                                </c:forEach>
+                                                <p class="whenwhere">
+                                                    <span>
+                                                        <a href="#" class="issue-scope-type">
+                                                            <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+                                                            <c:forEach var="cat" items="${complaint.categories}">
+                                                                <c:if test="${cat.root}">
+                                                                    Type - ${cat.name}
+                                                                </c:if>
+                                                            </c:forEach>
 
-												<p class="category_title_adjust">
-													<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
-												</p>
+                                                        </a>
+                                                    </span>
+                                                    <span>
+                                                        <i class="glyphicon glyphicon-map-marker"></i>
+                                                        <a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
+                                                    </span>
+                                                    <span>
+                                                        <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
+                                                        <a href="#" class="location">
+                                                            <abbr class="timeago"  title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</abbr>
+															<!--fmt:formatDate type="both" value="${complaint.complaintTime}" /-->
+                                                        </a>
+                                                    </span>
+                                                </p>
 
-												<c:if test="${!empty oneComplaint.description}">
-													<p class="desc elipsis description_adjust">${oneComplaint.description}</p>
-												</c:if>
+                                                <p class="whom">
+                                                    <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.createdBy)}</strong>
+                                                        <!-- social media share buttons -->								
+                                                        <a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+                                                        <a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+                                                        <a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+                                                        <span>
+                                                            <a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
+                                                            <a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
+                                                            <a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
+                                                        </span>
+                                                        </p>
 
-												<c:if test="${!empty oneComplaint.photos}">
-													<div class="issue-pic">
-														<a href="#"><img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle"></a>
+                                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                                    <!-- Carousel items -->
+                                                    <div class="carousel-inner">
+
+														<c:if test="${empty complaint.photos}">
+															<div class="active item">
+																<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
+															</div>
+														</c:if>
+
+														<c:if test="${!empty complaint.photos}">
+															<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+																<c:choose>
+																	<c:when test="${counter.count == '1'}">
+																		<div class="active item">
+																			<img src="${onePhoto.orgUrl}" />
+																		</div>
+																	</c:when>
+
+																	<c:otherwise>
+																		<div class="item">
+																			<img src="${onePhoto.orgUrl}" />
+																		</div>
+																	</c:otherwise>
+																</c:choose>
+															</c:forEach>
+														</c:if>
 													</div>
-												</c:if>
 													
-												<p class="list_row_footer_adjust">
+													<c:if test="${fn:length(complaint.createdBy) > 1}">
+														<!-- Carousel nav -->
+														<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+														<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													</c:if>
+                                                </div>
 
-													<span class="col-sm-4 col-md-4 address_adjust">
-														<i class="glyphicon glyphicon-map-marker"></i>
-														<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
-													</span>
+                                                <div id="myCarousel2" class="carousel slide" data-ride="carousel">
+                                                    <!-- Carousel items -->
+                                                    <div class="carousel-inner">
+                                                        <div class="active item">
+                                                            <ul class="issue_description">
+                                                                <li>
+                                                                    <p class="description_text">
+                                                                        <c:if test="${!empty complaint.description}">
+																			<span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
+                                                                        </c:if>																	
+                                                                        <c:if test="${empty complaint.description}">
+																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by '${complaint.createdBy[0].name}'</p>
+                                                                        </c:if>																	
+                                                                    <div class="description_author">
+																	<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+                                                                        <img src="${complaint.createdBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty complaint.createdBy[0].profilePhoto}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
+                                                                        <ul class="description_author_info">
+                                                                            <li class="description_author_name">${complaint.createdBy[0].name}</li>
+                                                                            <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+													<c:if test="${fn:length(complaint.createdBy) > 1}">
+                                                    <!-- Carousel nav -->
+                                                    <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                                                    <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+													</c:if>
+                                                    <a href="#0" style="text-decoration:none;" class="cd-see-all">See all</a>
+                                                </div>								
 
-													<span class="col-sm-4 col-md-4 comments_adjust">
-														<i class="glyphicon glyphicon-comment"></i>
-														<a href="#!" class="anchorlink" ><span class="comments">Comments(${oneComplaint.totalComments})</span></a>
-													</span>
 
-													<span class="col-sm-4 col-md-4 status_adjust">
-													<i class="glyphicon glyphicon-eye-open"></i>
-														<a href="#!" class="anchorlink" ><span class="issue_status">Pending</span></a>
-													</span>
-													
-												</p>
-												
-											</div>
 
-											</div>
+                                                <div class="cd-testimonials-all">
+                                                    <div class="cd-testimonials-all-wrapper">
+                                                        <ul>
+                                                            <li class="cd-testimonials-item">
+																<c:if test="${!empty complaint.description}">
+																	<p>${complaint.description}</p>
+																</c:if>																	
+																<c:if test="${empty complaint.description}">
+																	<p>No Description added by '${complaint.createdBy[0].name}'</p>
+																</c:if>																	
 
-											<div class="col-sm-1 share_buttons_adjust">
-											<p class="innerdiv-sharebtn">
-											<!-- Social Media Share button js script for fb, to be moved to existing js file if needed -->
-											<script>function fbShare(url, title, descr, image, winWidth, winHeight) {var winTop = (screen.height / 2) - (winHeight / 2);var winLeft = (screen.width / 2) - (winWidth / 2);window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);}</script>
-											<!-- social media share buttons -->								
-											<a href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)" class="anchorlink" ><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>	
-											<br />																		
-											<a href="https://plus.google.com/share?url=http://www.eswaraj.com/" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-											<br />
-											<a href="https://twitter.com/share" class="anchorlink" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-											</p>
-											</div>
+                                                                <div class="cd-author">
+																	<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+																		<img src="${complaint.createdBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty complaint.createdBy[0].profilePhoto}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
+                                                                    <ul class="cd-author-info">
+                                                                        <li>${complaint.createdBy[0].name}</li>
+                                                                        <li>Cessna Business Park</li>
+                                                                    </ul>
+                                                                </div> <!-- cd-author -->
+                                                            </li>
+                                                        </ul>
+                                                    </div>	<!-- cd-testimonials-all-wrapper -->
 
-											</div>
-								</c:forEach>
+                                                    <a href="#0" class="close-btn">Close</a>
+                                                </div> <!-- cd-testimonials-all -->
 
-								<div class="pagination-wrapper" style="margin-bottom: 7%;">
-									<ul class="pagination">
-										<li class="disabled"><a href="#">&laquo;</a></li>
-										<li class="active"><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#">4</a></li>
-										<li><a href="#">5</a></li>
-										<li><a href="#">&raquo;</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-				</div>
-				</div>
-				<div class="col-sm-3 col-md-3 user_dash_right_pane">
 
-					<div id="chart_pie_c">
-						<svg>
-						</svg>
-					</div>
+                                                <!-- cd-testimonials-pics-all -->
+                                                <div class="cd-testimonials-pics-all">
+                                                    <div class="cd-testimonials-pics-all-wrapper">
+                                                        <ul>
+                                                            <c:forEach items="${complaint.createdBy}" var="oneUser">
+                                                                <li class="cd-testimonials-pics-item">
+                                                                    <div class="cd-author">
+																	<c:if test="${!empty oneUser.profilePhoto}">
+                                                                        <img src="${oneUser.profilePhoto}" class="reported_description_pic" alt="Author image">
+																	</c:if>
+																	<c:if test="${empty oneUser.profilePhoto}">
+																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
+																	</c:if>
+                                                                        <ul class="cd-author-info">
+                                                                            <li>${oneUser.name}</li>
+                                                                            <li>Cessna Business Park</li>
+                                                                        </ul>
+                                                                    </div> <!-- cd-author -->
+                                                                </li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>	<!-- cd-testimonials-pics-all-wrapper -->
 
-					<div id="chart_bar_c">
-						<svg>
-						</svg>
-					</div>
+                                                    <a href="#0" class="close-btn">Close</a>
+                                                </div> <!-- cd-pics-all -->
 
-				</div>
-			</div>
-		</div>
-	</div>
-								<div id="modal-background-subcategory">
-								<div id="modal-background-subcategory-innerdiv">
-								<h2 class="blue_color_text">Select SubCategories</h2><hr />
-										<a href="${location.url}.html?type=${viewType}" class="list-group-item active">Show All</a>
-										<hr />
-										<c:forEach items="${rootCategories}" var="oneCategory">
-										<span class="red_orng_clr_text">${oneCategory.name}</span> <br />
-										<c:forEach items="${oneCategory.childCategories}" var="subCategory">
-											<a href="${location.url}/category/${subCategory.id}.html?type=${viewType}" " class="list-group-item">${subCategory.name}</a>
-										</c:forEach>
-										<hr />
-									</c:forEach>
-								<a href="#0" class="close-btn">Close</a>
-								</div>
-								</div>
-								
-								<div id="md-bg-services-plus-sys-level">
-								<div id="md-bg-services-plus-sys-level-innerdiv">
-								<h2 class="red_orng_clr_text">Select Citizen Services</h2><hr />
-									<c:if test="${empty selectedCategory}">
-										<a href="#" class="list-group-item active">Show All
-											(${total})</a>
-									</c:if>
-									<c:if test="${!empty selectedCategory}">
-										<a href="${location.url}.html?type=${viewType}"
-										   class="list-group-item">Show All (${total})</a>
-									</c:if>
-									<hr />
-									<c:forEach items="${rootCategories}" var="oneCategory">
-										<c:if test="${selectedCategory eq oneCategory.id}">
-											<a href="#" class="list-group-item active">${oneCategory.name}
-												(${oneCategory.locationCount})</a><br />
-										</c:if>
-										<c:if test="${ selectedCategory ne oneCategory.id}">
-											<a href="${location.url}/category/${oneCategory.id}.html?type=${viewType}" class="list-group-item">
-											${oneCategory.name} (${oneCategory.locationCount}) </a><br />
-										</c:if>
-									</c:forEach>
-								<a href="#0" class="close-btn">Close</a>
-								</div>
-								</div>
-								
-	<jsp:include page="footer.jsp" />
-    <script src="${staticHost}/js/bootstrap-tagsinput-bloodhound.js"></script>
-	<script type="text/javascript" src="${staticHost}/js/typeahead.bundle.js"></script>    
-	<script src="${staticHost}/js/filter_settings.js"></script>
-</body>
-</html>
+                                                <!-- Comments Box -->
+
+                                                <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( {{totalComments}} )</a>
+
+                                                    <div id="comments_box" class="div_comments_box">
+
+                                                        <div id="add_comment"> 
+                                                            <div ng-show="!loggedIn">
+                                                                Please log in to add comment.
+                                                            </div>
+
+                                                            <form id="comment_form">
+
+                                                                <a href="#" class="profile-pic-comments"><img src="${user.person.profilePhoto}" alt=""></a>
+                                                                <input id="user_input" type="text" class="user_input_text" title="Please add your comment here..." ng-model="commentText" ng-disabled="!loggedIn"/>
+                                                                <input id="user_input_button" type="button" value="Add Comment" class="comments_controller" ng-click="saveComment()"/>
+
+                                                            </form>
+                                                        </div>	
+
+                                                        <!-- Old Comments -->
+
+                                                        <div ng-repeat="comment in comments">
+                                                            <div id="old_comments_block">
+
+                                                                <a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+
+                                                                <p class="comments_whom">
+                                                                    <a href="#" class="username">{{comment.postedBy.name}}</a>
+                                                                    <!-- social media share buttons -->								
+                                                                    <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
+                                                                    <a href="#" class="location">{{comment.creationTime | dateFormatter}}</a>
+                                                                    <img src = "${staticHost}/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"  ng-show="comment.adminComment">
+                                                                </p>
+
+                                                                <div class="comments-info" >
+
+                                                                    <p class="desc elipsis">
+                                                                        {{comment.text}}
+                                                                    </p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="collap_show_btn">
+                                                            <a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a>
+                                                            <a href="#!" id="collapse_comments_box" class="comments_controller">Collapse</a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>.</div>
+                                <jsp:include page="footer.jsp" />
+                            </body>
+                        </html>
