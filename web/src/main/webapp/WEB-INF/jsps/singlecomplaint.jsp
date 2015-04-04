@@ -121,7 +121,7 @@
 															<i class="glyphicon glyphicon-time"></i>
 																<a href="#!" class="anchorlink" >
 																<span class="location">
-																	<abbr class="timeago" title="${complaint.complaintTime}">${complaint.complaintTimeISO}</abbr>
+																	<abbr class="timeago" title="${complaint.complaintTime}">${complaint.complaintTimeIso}</abbr>
 																</span>
 																</a>
 															</span>
