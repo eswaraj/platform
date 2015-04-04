@@ -152,11 +152,6 @@ padding-right: 0px;
 padding-left: 0px;
 }
 
-.analytics_data_colsm{
-padding-right: 0px;
-padding-left: 20px;
-}
-
 #chart_bar_c, #chart_ts, #chart_pie_c{
 border-bottom: 1px solid #d2d2d2;
 padding-bottom: 10px;
@@ -759,12 +754,14 @@ margin-bottom: 40px;
 .user_dash_mid_pane{
 float: left;
 width:45%;
+margin-top:20px;
 }
 
 .user_dash_right_pane{
 margin:0px;
 padding:0px;
 float: left;
+margin-top:20px;
 }
 
 .user-dashboard-settings{
@@ -890,4 +887,8 @@ width: 45%;
   width: 165px;
   height: 58px;
   text-indent: -9999px;
+}
+
+.anchorlink{
+text-decoration: none;
 }

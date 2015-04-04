@@ -184,7 +184,7 @@
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
-								<!--strong>My Activity Feed</strong-->
+								<strong></strong>
 							</div>
 							<div class="clearfix" style="margin-bottom: 1%; margin-top: 0px;"></div>
 						</div>
@@ -201,7 +201,7 @@
 													<span>
 														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
 														<c:if test="${oneCategory.root}">
-															<img src = "${oneCategory.imageUrl}" style="width: 50px; max-width: 50px; border: 0px solid  #ccc;" alt="">
+															<img src = "${oneCategory.imageUrl}" style="width: 40px; max-width: 40px; border: 0px solid  #ccc;" alt="">
 														</c:if>
 														</c:forEach>
 													</span>
@@ -294,7 +294,7 @@
 						</div>
 				</div>
 				</div>
-				<div class="col-sm-3 col-md-3 user_dash_right_pane analytics_data_colsm">
+				<div class="col-sm-3 col-md-3 user_dash_right_pane">
 
 					<div id="chart_pie_c">
 						<svg>
