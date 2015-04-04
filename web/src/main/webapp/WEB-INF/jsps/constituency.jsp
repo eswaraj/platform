@@ -463,7 +463,7 @@
 													</div>
 
 													<div class="platform_constituency_counter">
-													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name} Constituency</span></p>
+													<p class="p_c_counter_loc red_orng_clr_text"><span>${location.name}</span></p>
 													<p class="total_const_count">
 														<span class="grey_text">Total Constituencies</span> <br /> 
 														<strong class="blue_color_text">70</strong>
@@ -492,6 +492,14 @@
 
 													<div class="social_media_sharing_buttons">
 
+													<p class="follow_eswaraj_box red_orng_clr_text">
+													<span>Get the App:</span>
+													<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&amp;hl=en" target="blank">
+														<div class="gplay">
+														</div>
+													</a>
+													</p>
+													
 													<p class="follow_eswaraj_box red_orng_clr_text"><span>Follow Us: </span></p>
 														<div id="fb-root"></div>
 														<script>(function(d, s, id) {

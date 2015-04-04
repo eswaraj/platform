@@ -66,7 +66,7 @@
 			</div>
 			 -->
 			<div class="row" style="margin-top:1.25%;">
-				<div class="user_dash_left_pane">
+				<div class="user_dash_left_pane col-sm-3 col-md-3">
 												<div class="reporter_cover_profile_quote">
 													<div class="cons_issue_reporters_box_cover_quote">
 														<p>“It is Swaraj when we learn to rule ourselves. It is, therefore, in the palm of our hands. But such Swaraj has to be experienced, by each one for himself.”</p> 
@@ -180,7 +180,7 @@
 
 												</div> -->
 				</div>
-				<div class="user_dash_mid_pane" style="padding: 0px 0px 0px 5px; ">
+				<div class="user_dash_mid_pane col-sm-6 col-md-6 mid_pane_adjust">
 					<div class="listing-wrapper" style="width: 100%; margin-left: 0px;">
 						<div class="secondary-wrapper">
 							<div class="pull-left">
@@ -206,8 +206,13 @@
 														<a href="#!" class="anchorlink" >${user.person.name}</a>
 													</span>
 													
-                                                    <span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
-														<img src="${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+													<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
+														<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+														<c:if test="${oneCategory.root}">
+															<img src = "${oneCategory.imageUrl}" class="issue_type_pic" alt="">
+														</c:if>
+														</c:forEach>
+														
 													</span>
 
 													<span class="time_info_adjust col-sm-4 col-md-4">
@@ -294,7 +299,7 @@
 						</div>
 				</div>
 				</div>
-				<div class="user_dash_right_pane analytics_data_colsm">
+				<div class="user_dash_right_pane col-sm-3 col-md-3 analytics_data_colsm">
 
 					<div id="chart_pie_c">
 						<svg>

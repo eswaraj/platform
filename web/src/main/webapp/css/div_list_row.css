@@ -351,8 +351,7 @@ margin-left: 30px;
 width: 90px;
 float: left;
 border: 1px solid #ccc;
-margin-top: 10px;
-margin-left: 10px;
+margin: 10px;
 }
 
 .center-align{
@@ -880,3 +879,14 @@ padding-top: 35px;
   margin: 0px;
 }
 
+.mid_pane_adjust{
+width: 45%;
+}
+
+.gplay {
+  background: url(../images/gplaysprite.png);
+  background-position: 0 0;
+  width: 165px;
+  height: 58px;
+  text-indent: -9999px;
+}
