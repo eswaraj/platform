@@ -29,7 +29,7 @@ background-color: #F8F8F8;
 .list-row .issue-pic {
     position: relative;
 	margin-bottom:20px;
-    width: 564px;
+    width: auto;
 }
 
 .list-row .issue-pic img {

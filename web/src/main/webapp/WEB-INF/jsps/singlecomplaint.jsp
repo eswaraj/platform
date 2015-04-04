@@ -42,7 +42,7 @@
 
 
                             </head>
-                            <body ng-controller="complaintsController">
+                            <body ng-controller="complaintsController" class="body_style_nd_adjust_footer">
                                 <div class="outerwrapper">
                                     <jsp:include page="header.jsp" />
 
@@ -73,7 +73,6 @@
 
 														<span>
 																<a href="#" class="issue-scope-type">
-																	<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
 																	<c:forEach var="cat" items="${complaint.categories}">
 																		<c:if test="${cat.root}">
 																			Type - ${cat.name}
@@ -92,38 +91,37 @@
                                         <div class="col-md-6 col-sm-6">
 
 											<div class="list-row">
-													<div class="col-sm-1 profile-info profile_pic_adjust">
+													<div class="col-sm-1 col-md-1 profile-info profile_pic_adjust">
 														<div class="profile-pic">
-															<c:if test="${!empty oneComplaint.createdBy[0].profilePhoto}">
-																<a href="#!" class="anchorlink" ><img src="${oneComplaint.createdBy[0].profilePhoto}" alt=""></a>
+															<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
+																<a href="#!" class="anchorlink" ><img src="${complaint.createdBy[0].profilePhoto}" alt=""></a>
 															</c:if>
-															<c:if test="${empty oneComplaint.createdBy[0].profilePhoto}">
+															<c:if test="${empty complaint.createdBy[0].profilePhoto}">
 																<a href="#!" class="anchorlink" ><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 50px; max-width: 50px; border: 1px solid #ccc;" ></a>
 															</c:if>
 														</div>
 													</div>
-													<div class="col-sm-11 profile-info profile_info_adjust">
+													<div class="col-sm-10 col-md-10 profile-info profile_info_adjust">
 														<p class="col-sm-12 col-md-12 whom">
 															<span class="username text-limit name_adjust col-sm-4 col-md-4">
-																<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
+																<c:forEach items="${complaint.createdBy}" var="onePerson">
 																	<a href="#!" class="anchorlink username_adjust" >${onePerson.name}</a>
 																</c:forEach>
 															</span>
 
 															<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
-																<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+																<c:forEach items="${complaint.categories}" var="oneCategory">
 																<c:if test="${oneCategory.root}">
 																	<img src = "${oneCategory.imageUrl}" class="issue_type_pic" alt="">
 																</c:if>
-																</c:forEach>
-																
+																</c:forEach>																
 															</span>
 															
 															<span class="time_info_adjust col-sm-4 col-md-4">
 															<i class="glyphicon glyphicon-time"></i>
 																<a href="#!" class="anchorlink" >
 																<span class="location">
-																	<abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr>
+																	<abbr class="timeago" title="${complaint.complaintTime}">${complaint.complaintTimeISO}</abbr>
 																</span>
 																</a>
 															</span>
@@ -132,38 +130,48 @@
 
 														<p class="whenwhere">
 
-															<strong class="issue-id">#${oneComplaint.id}</strong>
+															<strong class="issue-id">#${complaint.id}</strong>
 														
 														</p>
 
 														<div class="issue-info" >
 
 														<p class="category_title_adjust">
-															<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
+															<c:forEach var="cat" items="${complaint.categories}">
+																<c:if test="${not cat.root}">
+																	<p>
+																		<a class="anchorlink"><span class="issue-scope">${cat.name}</span></a>
+																	</p> 
+																</c:if>
+															</c:forEach>
 														</p>
 
-														<c:if test="${!empty oneComplaint.description}">
+														<c:if test="${!empty complaint.description}">
 															<p class="desc elipsis description_adjust">
-																${oneComplaint.description}
+																${complaint.description}
 															</p>
 														</c:if>
-
-														<c:if test="${!empty oneComplaint.photos}">
-															<div class="issue-pic">
-																<img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle">
-															</div>
+														
+														<c:if test="${!empty complaint.photos}">
+															<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
+																<c:choose>
+																<div class="issue-pic">
+																	<img src="${complaint.photos[0].orgUrl}" alt="" align="middle">
+																</div>
+																</c:choose>
+															</c:forEach>
 														</c:if>
 
 														<p class="list_row_footer_adjust">
 
 														<span class="col-sm-4 col-md-4 address_adjust">
 															<i class="glyphicon glyphicon-map-marker"></i>
-															<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
+															<a href="#!" class="anchorlink" ><span class="location">${complaint.locationAddress}</span></a>
 														</span>
 
 														<span class="col-sm-4 col-md-4 comments_adjust">
 															<i class="glyphicon glyphicon-comment"></i>
-															<a href="#!" class="anchorlink" ><span class="comments">Comments(${oneComplaint.totalComments})</span></a>
+															<a href="#!" class="anchorlink" ><span class="comments">Comments({{totalComments}})</span></a>
 														</span>
 
 														<span class="col-sm-4 col-md-4 status_adjust">
@@ -175,81 +183,26 @@
 														
 													</div>
 												</div>
+											
+													<div class="col-sm-1 col-md-1">
+																										
+															<p class="whom">
+																	<!-- social media share buttons -->								
+																	<a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																	<a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+																	<span>
+																		<a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
+																		<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
+																		<a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
+																	</span>
+															</p>
+
+													</div>
 											</div>
 										
 
 										<div class="issue-info" >
-                                                <c:forEach var="cat" items="${complaint.categories}">
-                                                    <c:if test="${not cat.root}">
-                                                        <p>
-                                                            <a href="#" class="issue-scope">${cat.name}</a>
-                                                        </p> 
-                                                    </c:if>
-                                                </c:forEach>
-                                                <p class="whenwhere">
-                                                    
-                                                    <span>
-                                                        <i class="glyphicon glyphicon-map-marker"></i>
-                                                        <a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
-                                                    </span>
-                                                    <span>
-                                                        <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                        <a href="#" class="location">
-                                                            <abbr class="timeago"  title="${complaint.complaintTime}">Latest Update : ${complaint.complaintTime}</abbr>
-															<!--fmt:formatDate type="both" value="${complaint.complaintTime}" /-->
-                                                        </a>
-                                                    </span>
-                                                </p>
-
-                                                <p class="whom">
-                                                    <a href="#" ><strong class="issue-id rightshift">Total Issues Raised : ${fn:length(complaint.createdBy)}</strong>
-                                                        <!-- social media share buttons -->								
-                                                        <a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-                                                        <a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-                                                        <a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
-                                                        <span>
-                                                            <a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
-                                                            <a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
-                                                            <a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""></a>
-                                                        </span>
-                                                        </p>
-
-                                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                                    <!-- Carousel items -->
-                                                    <div class="carousel-inner">
-
-														<c:if test="${empty complaint.photos}">
-															<div class="active item">
-																<img src="http://www.findtransfers.com/Photos/no_image.jpg" />
-															</div>
-														</c:if>
-
-														<c:if test="${!empty complaint.photos}">
-															<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-																<c:choose>
-																	<c:when test="${counter.count == '1'}">
-																		<div class="active item">
-																			<img src="${onePhoto.orgUrl}" />
-																		</div>
-																	</c:when>
-
-																	<c:otherwise>
-																		<div class="item">
-																			<img src="${onePhoto.orgUrl}" />
-																		</div>
-																	</c:otherwise>
-																</c:choose>
-															</c:forEach>
-														</c:if>
-													</div>
-													
-													<c:if test="${fn:length(complaint.createdBy) > 1}">
-														<!-- Carousel nav -->
-														<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-														<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-													</c:if>
-                                                </div>
-
                                                 <!-- Comments Box -->
 
                                                 <div id="load_comments_box" style="clear: both;"><a href="#!" id="comments_status" class="comments_controller">Comments from Users ( {{totalComments}} )</a>
@@ -306,7 +259,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>.</div>
                                 <jsp:include page="footer.jsp" />
                             </body>
                         </html>
