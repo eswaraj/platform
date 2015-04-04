@@ -79,6 +79,7 @@ background-color: #F8F8F8;
     font-size: 12px;
     line-height: 100%;
 	margin: 0px;
+	padding-bottom: 5px;
 }
 .issue-scope{
 	text-decoration: none;
@@ -92,7 +93,6 @@ background-color: #F8F8F8;
 	text-decoration: none;
 	font-size: 15px;
 	font-family: "Arimo",helvetica;
-	vertical-align: -5px; 
 	margin-right: 2px;
 	padding-right: 0px;
 	margin-bottom: 0px;
@@ -281,7 +281,7 @@ margin-top: 10px;
 	max-width: 45%;
 	text-align: center;
   padding: 0px;
-  margin: 0px;
+  margin: -7px 0px 0px 0px;
 }
 
 .innerdiv-sharebtn {
@@ -791,7 +791,6 @@ padding: 0px;
   
   a:hover, a:focus {
   color: #6D6D6D;
-  text-decoration: underline;
 }
 
 .address_adjust, .comments_adjust, .status_adjust{
@@ -816,8 +815,13 @@ color: #333;
 padding: 0px;
 }
 
-.category_title_adjust, .descriptio_adjust, .list_row_footer_adjust{
-	padding-top: 5px;
+ .descriptio_adjust, .list_row_footer_adjust{
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.category_title_adjust{
+	padding-top: 10px;
 	padding-bottom: 5px;
 }
 
@@ -887,8 +891,4 @@ width: 45%;
   width: 165px;
   height: 58px;
   text-indent: -9999px;
-}
-
-.anchorlink{
-text-decoration: none;
 }
