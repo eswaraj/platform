@@ -136,7 +136,7 @@ font-size: 90%;
 }
 
 #comments_box{
-margin-top: 20px;
+margin-top: 40px;
 margin-bottom: 20px;
 display:none;
 }
@@ -263,6 +263,7 @@ padding: 0px;
 .outerwrapper{
 margin-top: 0px;
 margin-left: 0px;
+min-height: initial;
 }
 
 .location{
@@ -838,4 +839,8 @@ text-align: right;
 .issue-id{
   padding: 0px;
   margin: 0px;
+}
+
+.issue-type-name-adjust{
+text-align: center;
 }

@@ -68,24 +68,32 @@
                                                     </a>
                                                 </p>
 
-                                                <div class="profile-pic profile-pic-padding">
-                                                    <a href="#!" ><img src="${staticHost}/images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
-
-														<span>
-																<a href="#" class="issue-scope-type">
-																	<c:forEach var="cat" items="${complaint.categories}">
-																		<c:if test="${cat.root}">
-																			Type - ${cat.name}
-																		</c:if>
-																	</c:forEach>
-
-																</a>
-															</span>
-															
+													<div class="profile-pic profile-pic-padding">
+														<a href="#!" >
+																<c:forEach items="${complaint.categories}" var="oneCategory">
+																<c:if test="${oneCategory.root}">
+																	<img src = "${oneCategory.imageUrl}" class="complaints_issue_pic" alt="">
+																</c:if>
+																</c:forEach>																
+														</a>				
 													</div>
+													
+													<div class="issue-type-name-adjust">
+														<span>
+															<a href="#" class="issue-scope-type">
+																<c:forEach var="cat" items="${complaint.categories}">
+																	<c:if test="${cat.root}">
+																		Type - ${cat.name}
+																	</c:if>
+																</c:forEach>
 
+															</a>
+														</span>
+													</div>
                                             </div>
 
+											
+											
                                         </div>
 
                                         <div class="col-md-7 col-sm-7">
