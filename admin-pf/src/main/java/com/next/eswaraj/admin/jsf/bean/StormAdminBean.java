@@ -89,11 +89,11 @@ public class StormAdminBean extends BaseBean {
             public void run() {
                 try {
                     List<LocationBoundaryFile> files = adminService.getAllActiveLocationBoundaryFiles();
-                    logger.info("Total Files found = " + files);
+                    logger.info("Total Files found = " + files.size());
                     for (LocationBoundaryFile oneLocationBoundaryFile : files) {
-                        Thread.sleep(40000);
                         queueService.sendLocationFileUploadMessage(null, oneLocationBoundaryFile.getId(), oneLocationBoundaryFile.getLocation().getId());
-                        logger.info("Sleeping for 40 seconds before sending another Location Boundary File");
+                        logger.info("Sleeping for 60 seconds before sending another Location Boundary File");
+                        Thread.sleep(60000);
                     }
                     //
 
