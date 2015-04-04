@@ -9,7 +9,7 @@
                         <!DOCTYPE html>
                         <html lang="en" ng-app="complaintsApp">
                             <head>
-                                <title>e-Swaraj - Complaint ${complaint.id}</title>
+                                <title>e-Swaraj - #${complaint.id}</title>
                                 <jsp:include page="include.jsp" />
                                 <link rel="stylesheet" href="${staticHost}/css/dashboard.css">
                                 <link rel="stylesheet" href="${staticHost}/css/div_list_row.css" />
@@ -47,13 +47,13 @@
                                     <jsp:include page="header.jsp" />
 
                                     <!-- Reference : http://codecanyon.net/item/dasky-timeline-slider/full_screen_preview/5071233 -->
-                                    <div id="issue_timeline" class="issue_timeline_data">
+                                    <!--div id="issue_timeline" class="issue_timeline_data">
                                         <iframe style="width: 100%; zoom: 4; height: 100px; border: none; margin: 0; padding:0; scrolling: no;" src="http://eswaraj.github.io/timebar/issue_timeline.html"></iframe>
-                                    </div>
+                                    </div-->
 
                                     <div class="innerwrapper">
 
-                                        <div class="col-md-3 md3_pad">
+                                        <div class="col-md-3 col-sm-3 md3_pad">
 
                                             <div class="issue_reporters_box_pic">
 
@@ -61,7 +61,7 @@
                                                     <a href="#!" class="text_reporters_anchor_pic">
                                                         <c:forEach var="cat" items="${complaint.categories}">
                                                             <c:if test="${not cat.root}">
-                                                                ${cat.name} Complaints 
+                                                                ${cat.name} Issue 
                                                             </c:if>
                                                         </c:forEach>
 
@@ -70,33 +70,115 @@
 
                                                 <div class="profile-pic profile-pic-padding">
                                                     <a href="#!" ><img src="${staticHost}/images/trafficjam.png" class="complaints_issue_pic" alt=""></a>
-                                                </div>
 
-                                            </div>
+														<span>
+																<a href="#" class="issue-scope-type">
+																	<img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
+																	<c:forEach var="cat" items="${complaint.categories}">
+																		<c:if test="${cat.root}">
+																			Type - ${cat.name}
+																		</c:if>
+																	</c:forEach>
 
-                                            <div class="issue_reporters_box">
-
-                                                <p class="text_reporters_p">
-                                                    <a href="#!" class="text_reporters_anchor">Issue Reported by ${fn:length(complaint.createdBy)}</a>
-                                                </p>
-
-                                                <div class="profile-pic profile-pic-padding">
-													<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
-														<c:forEach items="${complaint.createdBy}" var="oneUser">
-															<a href="#!" ><img class="reporters_profile_pic" src="${oneUser.profilePhoto}" alt=""></a>
-														</c:forEach>
-													</c:if>
-													<c:if test="${empty complaint.createdBy[0].profilePhoto}">
-															<a href="#!" ><img class="reporters_profile_pic" src="http://www.browserstack.com/images/dummy_avatar.png" alt="" style="border: 1px solid #ccc;" ></a>
-													</c:if>
-                                               </div>
+																</a>
+															</span>
+															
+													</div>
 
                                             </div>
 
                                         </div>
 
-                                        <div class="col-md-9 md9_pad">
-                                            <div class="issue-info" >
+                                        <div class="col-md-6 col-sm-6">
+
+											<div class="list-row">
+													<div class="col-sm-1 profile-info profile_pic_adjust">
+														<div class="profile-pic">
+															<c:if test="${!empty oneComplaint.createdBy[0].profilePhoto}">
+																<a href="#!" class="anchorlink" ><img src="${oneComplaint.createdBy[0].profilePhoto}" alt=""></a>
+															</c:if>
+															<c:if test="${empty oneComplaint.createdBy[0].profilePhoto}">
+																<a href="#!" class="anchorlink" ><img src="${staticHost}/images/anonymous_profile_pic.png" alt="" style="width: 50px; max-width: 50px; border: 1px solid #ccc;" ></a>
+															</c:if>
+														</div>
+													</div>
+													<div class="col-sm-11 profile-info profile_info_adjust">
+														<p class="col-sm-12 col-md-12 whom">
+															<span class="username text-limit name_adjust col-sm-4 col-md-4">
+																<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
+																	<a href="#!" class="anchorlink username_adjust" >${onePerson.name}</a>
+																</c:forEach>
+															</span>
+
+															<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
+																<c:forEach items="${oneComplaint.categories}" var="oneCategory">
+																<c:if test="${oneCategory.root}">
+																	<img src = "${oneCategory.imageUrl}" class="issue_type_pic" alt="">
+																</c:if>
+																</c:forEach>
+																
+															</span>
+															
+															<span class="time_info_adjust col-sm-4 col-md-4">
+															<i class="glyphicon glyphicon-time"></i>
+																<a href="#!" class="anchorlink" >
+																<span class="location">
+																	<abbr class="timeago" title="${oneComplaint.complaintTimeIso}">${oneComplaint.complaintTimeIso}</abbr>
+																</span>
+																</a>
+															</span>
+															
+														</p>
+
+														<p class="whenwhere">
+
+															<strong class="issue-id">#${oneComplaint.id}</strong>
+														
+														</p>
+
+														<div class="issue-info" >
+
+														<p class="category_title_adjust">
+															<a href="${location.url}/category/${oneComplaint.subCategoryId}.html?type=${viewType}" class="anchorlink" ><span class="issue-scope">${oneComplaint.categoryTitle}</span></a>
+														</p>
+
+														<c:if test="${!empty oneComplaint.description}">
+															<p class="desc elipsis description_adjust">
+																${oneComplaint.description}
+															</p>
+														</c:if>
+
+														<c:if test="${!empty oneComplaint.photos}">
+															<div class="issue-pic">
+																<img src="${oneComplaint.photos[0].orgUrl}" alt="" align="middle">
+															</div>
+														</c:if>
+
+														<p class="list_row_footer_adjust">
+
+														<span class="col-sm-4 col-md-4 address_adjust">
+															<i class="glyphicon glyphicon-map-marker"></i>
+															<a href="#!" class="anchorlink" ><span class="location">${oneComplaint.locationAddress}</span></a>
+														</span>
+
+														<span class="col-sm-4 col-md-4 comments_adjust">
+															<i class="glyphicon glyphicon-comment"></i>
+															<a href="#!" class="anchorlink" ><span class="comments">Comments(${oneComplaint.totalComments})</span></a>
+														</span>
+
+														<span class="col-sm-4 col-md-4 status_adjust">
+														<i class="glyphicon glyphicon-eye-open"></i>
+															<a href="#!" class="anchorlink" ><span class="issue_status">Pending</span></a>
+														</span>
+														
+														</p>
+														
+													</div>
+												</div>
+											</div>
+										
+
+										<div class="issue-info" >
                                                 <c:forEach var="cat" items="${complaint.categories}">
                                                     <c:if test="${not cat.root}">
                                                         <p>
@@ -105,17 +187,7 @@
                                                     </c:if>
                                                 </c:forEach>
                                                 <p class="whenwhere">
-                                                    <span>
-                                                        <a href="#" class="issue-scope-type">
-                                                            <img src = "${staticHost}/images/potholeissue.jpg" class="issue_type_pic" alt="">
-                                                            <c:forEach var="cat" items="${complaint.categories}">
-                                                                <c:if test="${cat.root}">
-                                                                    Type - ${cat.name}
-                                                                </c:if>
-                                                            </c:forEach>
-
-                                                        </a>
-                                                    </span>
+                                                    
                                                     <span>
                                                         <i class="glyphicon glyphicon-map-marker"></i>
                                                         <a href="#" class="location">Cessna Business Park main road,Keverappa Layout</a>
@@ -177,102 +249,6 @@
 														<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 													</c:if>
                                                 </div>
-
-                                                <div id="myCarousel2" class="carousel slide" data-ride="carousel">
-                                                    <!-- Carousel items -->
-                                                    <div class="carousel-inner">
-                                                        <div class="active item">
-                                                            <ul class="issue_description">
-                                                                <li>
-                                                                    <p class="description_text">
-                                                                        <c:if test="${!empty complaint.description}">
-																			<span class="glyphicon glyphicon-bookmark rightshift"></span>${complaint.description}</p>
-                                                                        </c:if>																	
-                                                                        <c:if test="${empty complaint.description}">
-																			<span class="glyphicon glyphicon-bookmark rightshift"></span>No Description added by '${complaint.createdBy[0].name}'</p>
-                                                                        </c:if>																	
-                                                                    <div class="description_author">
-																	<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
-                                                                        <img src="${complaint.createdBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
-																	</c:if>
-																	<c:if test="${empty complaint.createdBy[0].profilePhoto}">
-																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
-																	</c:if>
-                                                                        <ul class="description_author_info">
-                                                                            <li class="description_author_name">${complaint.createdBy[0].name}</li>
-                                                                            <li class="description_author_area"><span class="glyphicon glyphicon-map-marker"></span>Kadubeesanahalli</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-													<c:if test="${fn:length(complaint.createdBy) > 1}">
-                                                    <!-- Carousel nav -->
-                                                    <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                                                    <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-													</c:if>
-                                                    <a href="#0" style="text-decoration:none;" class="cd-see-all">See all</a>
-                                                </div>								
-
-
-
-                                                <div class="cd-testimonials-all">
-                                                    <div class="cd-testimonials-all-wrapper">
-                                                        <ul>
-                                                            <li class="cd-testimonials-item">
-																<c:if test="${!empty complaint.description}">
-																	<p>${complaint.description}</p>
-																</c:if>																	
-																<c:if test="${empty complaint.description}">
-																	<p>No Description added by '${complaint.createdBy[0].name}'</p>
-																</c:if>																	
-
-                                                                <div class="cd-author">
-																	<c:if test="${!empty complaint.createdBy[0].profilePhoto}">
-																		<img src="${complaint.createdBy[0].profilePhoto}" class="reported_description_pic" alt="Author image">
-																	</c:if>
-																	<c:if test="${empty complaint.createdBy[0].profilePhoto}">
-																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
-																	</c:if>
-                                                                    <ul class="cd-author-info">
-                                                                        <li>${complaint.createdBy[0].name}</li>
-                                                                        <li>Cessna Business Park</li>
-                                                                    </ul>
-                                                                </div> <!-- cd-author -->
-                                                            </li>
-                                                        </ul>
-                                                    </div>	<!-- cd-testimonials-all-wrapper -->
-
-                                                    <a href="#0" class="close-btn">Close</a>
-                                                </div> <!-- cd-testimonials-all -->
-
-
-                                                <!-- cd-testimonials-pics-all -->
-                                                <div class="cd-testimonials-pics-all">
-                                                    <div class="cd-testimonials-pics-all-wrapper">
-                                                        <ul>
-                                                            <c:forEach items="${complaint.createdBy}" var="oneUser">
-                                                                <li class="cd-testimonials-pics-item">
-                                                                    <div class="cd-author">
-																	<c:if test="${!empty oneUser.profilePhoto}">
-                                                                        <img src="${oneUser.profilePhoto}" class="reported_description_pic" alt="Author image">
-																	</c:if>
-																	<c:if test="${empty oneUser.profilePhoto}">
-																		<img src="http://www.browserstack.com/images/dummy_avatar.png" class="reported_description_pic" alt="Author image" style="border: 1px solid #ccc;" />																	
-																	</c:if>
-                                                                        <ul class="cd-author-info">
-                                                                            <li>${oneUser.name}</li>
-                                                                            <li>Cessna Business Park</li>
-                                                                        </ul>
-                                                                    </div> <!-- cd-author -->
-                                                                </li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </div>	<!-- cd-testimonials-pics-all-wrapper -->
-
-                                                    <a href="#0" class="close-btn">Close</a>
-                                                </div> <!-- cd-pics-all -->
 
                                                 <!-- Comments Box -->
 

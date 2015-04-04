@@ -68,12 +68,11 @@ background-color: #F8F8F8;
     font-size: 11px;
 }
 .issue-info .desc.elipsis {
-    overflow: auto;
     white-space: normal;
     max-width: 100%;
 	text-align: justify;
-    text-justify: inter-word;
 	color: #7D7D7D;
+	word-break: break-word;
 }
 .whom {
     font-size: 12px;
@@ -891,4 +890,8 @@ width: 45%;
   width: 165px;
   height: 58px;
   text-indent: -9999px;
+}
+
+.anchorlink{
+text-decoration: none;
 }

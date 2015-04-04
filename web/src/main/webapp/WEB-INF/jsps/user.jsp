@@ -301,9 +301,6 @@
 						</svg>
 					</div>
 
-
-					<hr style="border-top: 1px solid #d2d2d2;">
-
 					<div id="chart_bar_c">
 						<svg>
 						</svg>

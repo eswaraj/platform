@@ -172,9 +172,6 @@ footer .sep {
     font-size: 11px;
 }
 .issue-info .desc.elipsis {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     max-width: 100%;
 }
 .classify .badge{
