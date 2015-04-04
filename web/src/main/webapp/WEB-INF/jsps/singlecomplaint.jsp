@@ -151,15 +151,11 @@
 																${complaint.description}
 															</p>
 														</c:if>
-														
+
 														<c:if test="${!empty complaint.photos}">
-															<c:forEach items="${complaint.photos}" var="onePhoto"  varStatus="counter">
-																<c:choose>
 																<div class="issue-pic">
 																	<img src="${complaint.photos[0].orgUrl}" alt="" align="middle">
 																</div>
-																</c:choose>
-															</c:forEach>
 														</c:if>
 
 														<p class="list_row_footer_adjust">
