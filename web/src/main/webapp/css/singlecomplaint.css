@@ -819,8 +819,8 @@ background: #eeeeee;
 }
 
 .md3_pad {
-  padding-left: 35px;
-  padding-right: 35px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .issue-info  {
@@ -843,4 +843,19 @@ text-align: right;
 
 .issue-type-name-adjust{
 text-align: center;
+}
+
+.share_btn_label{
+color: #9D9D9D !important;
+font-size: 15px;
+margin: 10px 0px 10px 0px;
+}
+
+.first_label_adjust{
+margin: 0px 0px 10px 0px;
+}
+
+.right_pane_padding {
+  padding-left: 25px;
+  padding-right: 25px;
 }
