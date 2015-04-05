@@ -53,8 +53,6 @@ $(document).ready(function(){
   window.scrollTo(x,y-15);
 	});
 	
-comments_counter = parseInt($( ".issue-info .whom a").text().match(/\d+/)[0]);
-
 sub_comments_counter = 3;
   $("#comments_box").fadeIn(500);
 
