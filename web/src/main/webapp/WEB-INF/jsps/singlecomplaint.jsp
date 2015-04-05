@@ -61,7 +61,7 @@
                                                     <a href="#!" class="text_reporters_anchor_pic">
                                                         <c:forEach var="cat" items="${complaint.categories}">
                                                             <c:if test="${not cat.root}">
-                                                                ${cat.name} Issue 
+                                                                Issue - ${cat.name} 
                                                             </c:if>
                                                         </c:forEach>
 
@@ -139,11 +139,7 @@
 														<p class="whenwhere">
 
 															<strong class="col-sm-3 col-md-3 issue-id">#${complaint.id}</strong>
-															<p class="col-sm-9 col-md-9 status_nd_socialmedia">
-																	<!-- social media share buttons -->								
-																	<a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
-																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
-																	<a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+															<p class="col-sm-9 col-md-9 status_button">
 																	<span>
 																		<a href="#"><img src = "${staticHost}/images/status_public_open.png" class="issue_status_pic" alt=""></a>
 																		<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""></a>
@@ -198,7 +194,33 @@
 												</div>
 											
 													<div class="col-sm-1 col-md-1">
-																										
+
+															<p class="social_media_share">Share this Complaint</p>
+																	<!-- social media share buttons -->								
+																	<a class="addspacing" href="javascript:fbShare('http://www.eswaraj.com/', 'Fb Share', 'Facebook share popup', '', 520, 350)"><img src="${staticHost}/images/fbicon.png" alt="" align="middle" class="icon_resize"></a>		
+																	<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"  class="icon_resize"/></a>
+																	<a class="rightshift" href="https://twitter.com/share" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=520,top=200,left=400 ');return false;"><img src="${staticHost}/images/twittericon.png" alt="Share on Twitter"  class="icon_resize"/></a>
+															
+													<p>Get the App:</p>
+													<a href="https://play.google.com/store/apps/details?id=com.next.eswaraj&amp;hl=en" target="blank">
+														<div class="gplay">
+														</div>
+													</a>
+													
+													<p class=""><span>Follow Us: </span></p>
+														<div id="fb-root"></div>
+														<script>(function(d, s, id) {
+														  var js, fjs = d.getElementsByTagName(s)[0];
+														  if (d.getElementById(id)) return;
+														  js = d.createElement(s); js.id = id;
+														  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+														  fjs.parentNode.insertBefore(js, fjs);
+														}(document, 'script', 'facebook-jssdk'));</script>														
+														<div class="fb-like" data-href="https://www.facebook.com/eSwarajApp?ref=hl" data-width="5" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+																												
+														<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/eSwarajApp" data-text="Follow eSwaraj :" data-via="eSwarajApp" data-size="large">Tweet</a>
+														<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+													
 													</div>
 											</div>
 										

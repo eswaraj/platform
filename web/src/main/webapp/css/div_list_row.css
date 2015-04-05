@@ -467,8 +467,7 @@ margin-bottom: 8px;
 .follow_eswaraj_box{
 font-weight: 700;
 width: 100%;
-margin: 0px;
-margin-bottom: 8px;
+margin: 10px 0px 8px 0px;
 }
 
 .social_media_sharing_buttons{
@@ -510,6 +509,7 @@ color: #777;
 
 #twitter-widget-0{
 margin-top: 20px;
+margin-bottom: 20px;
 }
 
 .list-group-item {
@@ -790,6 +790,7 @@ padding: 0px;
   
   a:hover, a:focus {
   color: #6D6D6D;
+  text-decoration: none;
 }
 
 .address_adjust, .comments_adjust, .status_adjust{
