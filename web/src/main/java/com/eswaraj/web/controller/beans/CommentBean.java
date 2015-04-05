@@ -6,5 +6,46 @@ public class CommentBean {
     private String text;
     private Long creationTime;
     private Long id;
-    private String externalId;
+    private boolean adminComment;
+    private PersonBean postedBy;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Long getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Long creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(boolean adminComment) {
+        this.adminComment = adminComment;
+    }
+
+    public PersonBean getPostedBy() {
+        return postedBy;
+    }
+
+    public void setPostedBy(PersonBean postedBy) {
+        this.postedBy = postedBy;
+    }
 }

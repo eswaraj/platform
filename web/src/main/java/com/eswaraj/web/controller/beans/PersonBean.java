@@ -5,6 +5,7 @@ public class PersonBean {
     private Long id;
     private String name;
     private String profilePhoto;
+    private String gender;
 
     public Long getId() {
         return id;
@@ -28,6 +29,14 @@ public class PersonBean {
 
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
 }

@@ -297,26 +297,32 @@
                                                         <!-- Old Comments -->
 
                                                         <div ng-repeat="comment in comments">
+                                                                    <jsp:useBean id="dateValue" class="java.util.Date"/>
+                                                        <c:forEach items="${comments}" var="oneComment">
                                                             <div id="old_comments_block">
 
-                                                                <a href="#" class="profile-pic-comments"><img src="{{comment.postedBy.profilePhoto}}" alt=""></a>
+                                                                <a href="#" class="profile-pic-comments"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
 
                                                                 <p class="comments_whom">
-                                                                    <a href="#" class="username">{{comment.postedBy.name}}</a>
+                                                                    <a href="#" class="username">${oneComment.postedBy.name}</a>
                                                                     <!-- social media share buttons -->								
                                                                     <img src = "${staticHost}/images/time.png" class="posttimestatus" alt="">
-                                                                    <a href="#" class="location">{{comment.creationTime | dateFormatter}}</a>
-                                                                    <img src = "${staticHost}/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"  ng-show="comment.adminComment">
+																	<jsp:setProperty name="dateValue" property="time" value="${oneComment.creationTime}"/>
+																	
+                                                                    <a href="#" class="location"><fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm"/></a>
+                                                                    <img src = "${staticHost}/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"  ng-show="${oneComment.adminComment}">
                                                                 </p>
 
                                                                 <div class="comments-info" >
 
                                                                     <p class="desc elipsis">
-                                                                        {{comment.text}}
+                                                                        ${oneComment.text}
                                                                     </p>
 
                                                                 </div>
                                                             </div>
+                                                            </c:forEach>
+                                                            
                                                         </div>
 
                                                         <div class="collap_show_btn">

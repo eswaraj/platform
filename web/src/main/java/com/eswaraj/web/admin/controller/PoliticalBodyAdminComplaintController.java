@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.controller.beans.CommentBean;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.ComplaintViewdByPoliticalAdminRequestDto;
 import com.eswaraj.web.dto.PoliticalPositionDto;
@@ -71,9 +72,9 @@ public class PoliticalBodyAdminComplaintController extends BaseController {
     }
 
     @RequestMapping(value = "/ajax/complaint/{complaintId}/comments", method = RequestMethod.GET)
-    public @ResponseBody String getComplaintComments(HttpServletRequest httpServletRequest, ModelAndView mv,
+    public @ResponseBody List<CommentBean> getComplaintComments(HttpServletRequest httpServletRequest, ModelAndView mv,
             @PathVariable Long complaintId) throws ApplicationException {
-        String complaints = apiUtil.getComplaintComments(httpServletRequest, complaintId);
+        List<CommentBean> complaints = apiUtil.getComplaintComments(httpServletRequest, complaintId);
         return complaints;
     }
 

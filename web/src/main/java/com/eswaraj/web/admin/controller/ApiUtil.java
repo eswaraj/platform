@@ -30,6 +30,7 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.controller.beans.CommentBean;
 import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
@@ -162,10 +163,12 @@ public class ApiUtil {
         return locationComplaints;
     }
 
-    public String getComplaintComments(HttpServletRequest httpServletRequest, Long complaintId) throws ApplicationException {
+    public List<CommentBean> getComplaintComments(HttpServletRequest httpServletRequest, Long complaintId) throws ApplicationException {
         String urlPath = "/api/v0/complaint/" + complaintId + "/comments";
-        String locationComplaints = getResponseFrom(httpServletRequest, urlPath);
-        return locationComplaints;
+        String comments = getResponseFrom(httpServletRequest, urlPath);
+        List<CommentBean> list = gson.fromJson(comments, new TypeToken<List<CommentBean>>() {
+        }.getType());
+        return list;
     }
 
     public String getLocationCountersFor365Days(HttpServletRequest httpServletRequest, Long locationId) throws ApplicationException {

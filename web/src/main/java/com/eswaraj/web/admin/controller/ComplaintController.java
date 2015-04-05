@@ -27,6 +27,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.SettingService;
+import com.eswaraj.web.controller.beans.CommentBean;
 import com.eswaraj.web.controller.beans.ComplaintBean;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PhotoDto;
@@ -62,7 +63,8 @@ public class ComplaintController extends BaseController{
         addGenericValues(mv, httpServletRequest);
         ComplaintBean complaintBean = apiUtil.getComplaintById(httpServletRequest, complaintId);
         mv.getModel().put("complaint", complaintBean);
-
+        List<CommentBean> comments = apiUtil.getComplaintComments(httpServletRequest, complaintId);
+        mv.getModel().put("comments", comments);
         mv.setViewName("singlecomplaint");
         return mv;
     }
