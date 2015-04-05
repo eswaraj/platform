@@ -201,6 +201,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (complaint.getShortUrl() == null || complaint.getShortUrl().trim().equals("")) {
             String complaintUrl = serverUrl + "/complaint/" + complaint.getId() + ".html";
             complaint.setShortUrl(urlShortenService.getShortUrl(complaintUrl));
+            complaint = complaintRepository.save(complaint);
         }
 
         creatComplaintPersonRelation(complaint, person, saveComplaintRequestDto.isAnonymous());
