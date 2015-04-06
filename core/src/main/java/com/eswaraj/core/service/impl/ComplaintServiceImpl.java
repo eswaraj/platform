@@ -434,6 +434,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             logger.info("Creating DepartmentComplaint for Department {} and Complaint {}", lowestLevelDepartment, complaint);
             DepartmentComplaint departmentComplaint = new DepartmentComplaint(lowestLevelDepartment, complaint);
             departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
+            logger.info("DepartmentComplaint Created : {}", departmentComplaint);
         }
     }
 
