@@ -16,7 +16,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.User;
 import com.next.eswaraj.admin.service.AdminService;
@@ -56,6 +55,7 @@ public class LoginBean extends BaseBean {
         try {
             HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             user = adminService.login(userName, password);
+            logger.info("Logged In User : {}", user);
             if (user != null) {
 
                 sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
@@ -66,8 +66,8 @@ public class LoginBean extends BaseBean {
                 redirectUrl = "/admin/complaints.xhtml";
             }
             redirect(redirectUrl);
-        } catch (ApplicationException e) {
-            sendErrorMessage("Error", e.getMessage());
+        } catch (Exception e) {
+            sendErrorMessage("Error", e.getMessage(), e);
         } finally {
             password = null;
         }

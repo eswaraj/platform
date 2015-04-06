@@ -22,9 +22,22 @@ public class BaseBean {
         sendErrorMessage(null, summary, detail);
     }
 
+    protected void sendErrorMessage(String summary, String detail, Exception ex) {
+        sendErrorMessage(null, summary, detail, ex);
+    }
+
     protected void sendErrorMessage(String clientId, String summary, String detail) {
+        sendErrorMessage(clientId, summary, detail, null);
+    }
+
+    protected void sendErrorMessage(String clientId, String summary, String detail, Exception ex) {
         FacesMessage faceMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
         FacesContext.getCurrentInstance().addMessage(clientId, faceMessage);
+        if (ex == null) {
+            logger.error(detail);
+        } else {
+            logger.error(detail, ex);
+        }
     }
 
     protected void sendWarningMessage(String summary, String detail) {

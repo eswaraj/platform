@@ -37,8 +37,11 @@ public class SpringLoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
-        logger.info("Requested URL " + httpServletRequest.getRequestURL().toString());
-        if (!httpServletRequest.getRequestURI().contains("login.xhtml") && sessionUtil.getLoggedInUserFromSession(httpServletRequest) == null) {
+        String requestedUrl = httpServletRequest.getRequestURL().toString();
+        logger.info("Requested URL " + requestedUrl);
+
+        boolean isLoginOrResource = requestedUrl.contains("javax.faces.resource") || requestedUrl.contains("login.xhtml");
+        if (!isLoginOrResource && sessionUtil.getLoggedInUserFromSession(httpServletRequest) == null) {
             // No user logegd In
             String redirectUrl = "/admin/login.xhtml?redirect_url=" + httpServletRequest.getRequestURI();
             logger.info("User Not logged In Redirecting to {}", redirectUrl);
