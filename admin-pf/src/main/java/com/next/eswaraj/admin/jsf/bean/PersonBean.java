@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.EswarajAccount;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.queue.service.QueueService;
@@ -120,8 +119,10 @@ public class PersonBean extends BaseBean {
         if (selectedPerson != null) {
             try {
                 EswarajAccount eswarajAccount = adminService.getPersonEswarajAccount(selectedPerson);
-                userName = eswarajAccount.getUserName();
-            } catch (ApplicationException e) {
+                if (eswarajAccount != null) {
+                    userName = eswarajAccount.getUserName();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
