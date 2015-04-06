@@ -75,6 +75,13 @@ public class LoginBean extends BaseBean {
 
     }
 
+    public void logout() {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        httpServletRequest.getSession().invalidate();
+        String redirectUrl = "/admin/login.xhtml";
+        redirect(redirectUrl);
+    }
+
     public void refreshLoginRoles() {
         try {
             user = sessionUtil.getLoggedInUserFromSession();
