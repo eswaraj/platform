@@ -59,6 +59,7 @@ public class LoginBean extends BaseBean {
             if (user != null) {
 
                 sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
+                refreshLoginRoles();
             }
             // Move to Redirect page
             String redirectUrl = httpServletRequest.getParameter("redirect_url");
