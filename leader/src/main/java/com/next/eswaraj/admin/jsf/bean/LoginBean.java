@@ -68,6 +68,8 @@ public class LoginBean extends BaseBean {
             redirect(redirectUrl);
         } catch (ApplicationException e) {
             sendErrorMessage("Error", e.getMessage());
+        } finally {
+            password = null;
         }
 
     }
@@ -118,6 +120,22 @@ public class LoginBean extends BaseBean {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
