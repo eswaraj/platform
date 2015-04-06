@@ -14,6 +14,7 @@ import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
 import com.eswaraj.domain.nodes.PoliticalBodyAdminStaff;
+import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.ComplaintSearchResult;
 import com.eswaraj.domain.nodes.extended.PoliticalBodyAdminStaffSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintPoliticalAdmin;
@@ -57,5 +58,7 @@ public interface AdminService {
     void validateJoinRequest(String personId, String requestId, String emailId) throws ApplicationException;
 
     void linkLeaderToFacebookAccount(String personId, String requestId, String emailId, ConnectionData facebookConnectionData) throws ApplicationException;
+
+    User login(String userName, String password) throws ApplicationException;
 
 }

@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -13,9 +14,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.PoliticalBodyAdmin;
-import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.domain.nodes.User;
 import com.next.eswaraj.admin.service.AdminService;
 import com.next.eswaraj.web.session.SessionUtil;
 
@@ -26,6 +29,8 @@ public class LoginBean extends BaseBean {
     @Autowired
     private AdminService adminService;
 
+    private User user;
+
     @Autowired
     private SessionUtil sessionUtil;
 
@@ -33,17 +38,37 @@ public class LoginBean extends BaseBean {
 
     private PoliticalBodyAdmin selectedPoliticalBodyAdmin;
 
-    private UserDto user;
 
     @Autowired
     private ApplicationContext applicationCtx;
     
+    private String userName;
+    private String password;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
     public void init() {
-        refreshLoginRoles();
+    }
+
+    public void login() {
+        System.out.println("Login with " + userName);
+        try {
+            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            user = adminService.login(userName, password);
+            if (user != null) {
+
+                sessionUtil.setLoggedInUserinSession(httpServletRequest, user);
+            }
+            // Move to Redirect page
+            String redirectUrl = httpServletRequest.getParameter("redirect_url");
+            if (StringUtils.isEmpty(redirectUrl)) {
+                redirectUrl = "/admin/complaints.xhtml";
+            }
+            redirect(redirectUrl);
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", e.getMessage());
+        }
 
     }
 
@@ -87,11 +112,11 @@ public class LoginBean extends BaseBean {
         this.selectedPoliticalBodyAdmin = selectedPoliticalBodyAdmin;
     }
 
-    public UserDto getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserDto user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

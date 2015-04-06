@@ -91,7 +91,7 @@ public class SpringFacebookLoginController extends BaseSocialLoginController<Fac
             registerFacebookAccountWebRequest.setToken(facebookConnectionData.getAccessToken());
             UserDto userDto = personService.registerFacebookAccountWebUser(registerFacebookAccountWebRequest);
 
-            sessionUtil.setLoggedInUserinSession(httpServletRequest, userDto);
+            // sessionUtil.setLoggedInUserinSession(httpServletRequest, userDto);
             String redirectUrl = sessionUtil.getAndRemoveRedirectUrlFromSession(httpServletRequest);
             logger.info("redirectUrl= {}", redirectUrl);
             RedirectView rv = new RedirectView(redirectUrl);
