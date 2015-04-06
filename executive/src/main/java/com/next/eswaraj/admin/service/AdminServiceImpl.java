@@ -14,6 +14,7 @@ import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.EswarajAccount;
 import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.ComplaintDepartmentSearchResult;
 import com.eswaraj.domain.nodes.relationships.ComplaintComment;
@@ -24,6 +25,7 @@ import com.eswaraj.domain.repo.ComplaintRepository;
 import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.EswarajAccountRepository;
 import com.eswaraj.domain.repo.PersonRepository;
+import com.eswaraj.domain.repo.PhotoRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -51,6 +53,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PasswordUtil passwordUtil;
+
+    @Autowired
+    private PhotoRepository photoRepository;
 
     @Override
     public List<Department> getUserDepartments(Long userId) throws ApplicationException {
@@ -101,6 +106,26 @@ public class AdminServiceImpl implements AdminService {
         Person person = personRepository.getPersonByUser(user);
         user.setPerson(person);
         return user;
+    }
+
+    @Override
+    public List<Person> getComplaintCreators(Long complaintId) throws ApplicationException {
+        return personRepository.getPersonsLoggedComplaint(complaintId);
+    }
+
+    @Override
+    public List<Photo> getComplaintPhotos(Long complaintId) throws ApplicationException {
+        return photoRepository.getComplaintPhotos(complaintId);
+    }
+
+    @Override
+    public List<Comment> getComplaintComments(Long complaintId) throws ApplicationException {
+        return commentRepository.findAllCommentsByComplaintId(complaintId);
+    }
+
+    @Override
+    public Complaint saveComplaint(Complaint complaint) throws ApplicationException {
+        return complaintRepository.save(complaint);
     }
 
 }

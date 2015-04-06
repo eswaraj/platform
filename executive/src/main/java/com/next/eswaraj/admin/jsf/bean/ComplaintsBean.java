@@ -277,6 +277,17 @@ public class ComplaintsBean extends BaseBean {
         LatLng coord1 = new LatLng(complaintSearchResult.getComplaintSearchResult().getComplaint().getLattitude(), complaintSearchResult.getComplaintSearchResult().getComplaint().getLongitude());
         // Basic marker
         mapModel.addOverlay(new Marker(coord1, complaintSearchResult.getComplaintSearchResult().getComplaint().getTitle()));
+        try {
+            images = new ArrayList<String>();
+            complaintPhotos = adminService.getComplaintPhotos(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
+            complaintCreators = adminService.getComplaintCreators(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
+            complaintComments = adminService.getComplaintComments(complaintSearchResult.getComplaintSearchResult().getComplaint().getId());
+            for (Photo onePhoto : complaintPhotos) {
+                images.add(onePhoto.getOrgUrl());
+            }
+        } catch (ApplicationException e) {
+            sendErrorMessage("Error", "Error while selecting Complaint");
+        }
         /*
         PoliticalBodyAdmin selectedPoliticalBodyAdmin = loginBean.getSelectedPoliticalBodyAdmin();
         if (complaintSearchResult.getComplaintSearchResult().getComplaintPoliticalAdmin().getStatus() != null) {

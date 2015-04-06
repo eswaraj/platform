@@ -7,6 +7,8 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Comment;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.Photo;
 import com.eswaraj.domain.nodes.User;
 import com.eswaraj.domain.nodes.extended.ComplaintDepartmentSearchResult;
 
@@ -21,4 +23,12 @@ public interface AdminService {
     List<ComplaintDepartmentSearchResult> getDepartmentComplaintsAll(Long departmentId) throws ApplicationException;
 
     User login(String userName, String password) throws ApplicationException;
+
+    List<Person> getComplaintCreators(Long complaintId) throws ApplicationException;
+
+    List<Photo> getComplaintPhotos(Long complaintId) throws ApplicationException;
+
+    Complaint saveComplaint(Complaint complaint) throws ApplicationException;
+
+    List<Comment> getComplaintComments(Long complaintId) throws ApplicationException;
 }
