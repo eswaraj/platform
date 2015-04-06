@@ -195,8 +195,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
 
         updateLocationAddress(saveComplaintRequestDto, complaint);
 
+        complaint = complaintRepository.save(complaint);
         ComplaintMessage complaintMessage = updateLocationAndAdmins(complaint);
-		complaint = complaintRepository.save(complaint);
+
 
         if (complaint.getShortUrl() == null || complaint.getShortUrl().trim().equals("")) {
             String complaintUrl = serverUrl + "/complaint/" + complaint.getId() + ".html";
