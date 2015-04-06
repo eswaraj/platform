@@ -53,6 +53,7 @@ body {
                         </f:facet>
 							<h:outputText value="#{oneComplaint.subCategory.name}" />
 						</p:column>
+						<!-- 
 						<p:column headerText="Status" filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
 							filterMatchMode="in">
 							<f:facet name="filter">
@@ -64,6 +65,7 @@ body {
 							</f:facet>
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}" />
 						</p:column>
+						 -->
 						<p:column headerText="Reported">
 							<h:outputText id="dateReported" value="#{oneComplaint.complaintSearchResult.complaint.dateCreated}">
 								<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" />
