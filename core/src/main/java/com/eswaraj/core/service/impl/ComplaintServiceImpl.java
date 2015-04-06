@@ -423,12 +423,14 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         Department lowestLevelDepartment = null;
         int lowest = 0;
         for (Department oneDepartment : departments) {
+            logger.info("oneDepartment : {}", oneDepartment);
             if (oneDepartment.getLevel() > lowest) {
                 lowest = oneDepartment.getLevel();
                 lowestLevelDepartment = oneDepartment;
             }
         }
         if (lowestLevelDepartment != null) {
+            logger.info("Creating DepartmentComplaint for Department {} and Complaint {}", lowestLevelDepartment, complaint);
             DepartmentComplaint departmentComplaint = new DepartmentComplaint(lowestLevelDepartment, complaint);
             departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
         }

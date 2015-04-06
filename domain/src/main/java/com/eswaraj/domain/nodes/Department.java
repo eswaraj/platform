@@ -150,8 +150,8 @@ public class Department extends BaseNode {
     }
     @Override
     public String toString() {
-        return "Department [name=" + name + ", description=" + description + ", parentDepartment=" + parentDepartment + ", address=" + address + ", root=" + root
-                + ", email=" + email + ", fbPage=" + fbPage + ", twitterHandle=" + twitterHandle + ", website=" + website + ", landLine1=" + landLine1 + ", landLine2=" + landLine2 + ", mobile1="
-                + mobile1 + ", mobile2=" + mobile2 + "]";
+        return "Department [name=" + name + ", description=" + description + ", parentDepartment=" + parentDepartment + ", address=" + address + ", root=" + root + ", email=" + email + ", level="
+                + level + ", fbPage=" + fbPage + ", twitterHandle=" + twitterHandle + ", website=" + website + ", landLine1=" + landLine1 + ", landLine2=" + landLine2 + ", mobile1=" + mobile1
+                + ", mobile2=" + mobile2 + "]";
     }
 }

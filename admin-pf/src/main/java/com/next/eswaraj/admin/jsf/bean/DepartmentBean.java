@@ -353,7 +353,7 @@ public class DepartmentBean extends BaseBean {
         System.out.println("selectedLocationNodes= " + selectedLocationNodes);
         try {
             createKmlBoundary(((Document) nodeSelected.getData()).getLocation());
-        } catch (ApplicationException e) {
+        } catch (Exception e) {
             sendErrorMessage("Error", "unable to create Boundary", e);
         }
     }
