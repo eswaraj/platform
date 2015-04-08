@@ -89,7 +89,7 @@ body {
 					</p:dataTable>
 				</p:outputPanel>
 				<p:outputPanel id="formView" rendered="#{!complaintsBean.showList}">
-				<p:tabView style="min-width:800px;min-height:400px;">
+				<p:tabView style="min-width:800px;min-height:400px;" dynamic="true">
 			        <p:tab title="Detail">
 			        <h:panelGrid columns="2" styleClass="topAlignPanelColumns">
                                 <p:panelGrid columns="2">
@@ -177,9 +177,10 @@ body {
                                 zoom="13" type="HYBRID" style="width:700px;height:700px" model="#{complaintsBean.mapModel}" />
 			        </p:tab>
 			        <p:tab title="Photos">
-			        <p:galleria value="#{complaintsBean.images}" var="image" panelWidth="800" panelHeight="513" showCaption="false">
+			        <p:galleria rendered="#{!empty complaintsBean.images}" value="#{complaintsBean.images}" var="image" panelWidth="800" panelHeight="513" showCaption="false">
                                 <p:graphicImage value="#{image}" alt="Image Description for #{image}" title="#{image}" />
                             </p:galleria>
+                            <h:outputText rendered="#{empty complaintsBean.images}" value="No Images provided by user" />
 			        </p:tab>
 			    </p:tabView>
 
