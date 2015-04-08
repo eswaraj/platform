@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.ExecutiveAdminComplaintStatus;
 
 @RelationshipEntity(type = "DEPT_COMPLAINT_REL")
 public class DepartmentComplaint extends BaseRelationship {
@@ -15,6 +16,7 @@ public class DepartmentComplaint extends BaseRelationship {
     private Department department;
     @EndNode
     private Complaint complaint;
+    private ExecutiveAdminComplaintStatus status;
 
     public Department getDepartment() {
         return department;
@@ -40,6 +42,13 @@ public class DepartmentComplaint extends BaseRelationship {
         this.complaint = complaint;
     }
 
+    public ExecutiveAdminComplaintStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ExecutiveAdminComplaintStatus status) {
+        this.status = status;
+    }
 
 	
 }

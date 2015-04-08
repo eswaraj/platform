@@ -69,7 +69,7 @@ body {
 				 -->
 				<p:menuitem value="Complaints" url="./complaints.xhtml" />
 				<p:separator />
-				<p:menuitem value="Quit" url="#" />
+				<p:menuitem value="Logout" actionListener="#{loginBean.logout}"  />
 			</p:submenu>
 			<f:facet name="options">
 				<p:selectOneMenu id="departmentMenu" converter="#{politicalBodyAdminJsfConvertor}"

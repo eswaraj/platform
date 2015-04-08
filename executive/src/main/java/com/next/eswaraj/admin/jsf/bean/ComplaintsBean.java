@@ -210,6 +210,7 @@ public class ComplaintsBean extends BaseBean {
                     categoryPieChartModel.set(oneJsonObject.get("name").getAsString(), oneJsonObject.get("locationCount").getAsLong());
                 }
                 */
+                categoryPieChartModel.set("NA", 0L);
                 categoryPieChartModel.setTitle("Category Wise");
                 categoryPieChartModel.setLegendPosition("w");
                 categoryPieChartModel.setShadow(true);
@@ -238,7 +239,7 @@ public class ComplaintsBean extends BaseBean {
                     }
                 }
                 */
-
+                daily.set("NA", 0L);
                 dailyLineChartModel.getAxis(AxisType.Y).setLabel("Number of Complaints");
                 DateAxis dateAxis = new DateAxis("Dates");
                 dateAxis.setTickAngle(-50);

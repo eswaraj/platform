@@ -61,15 +61,22 @@ body {
 	<h:form>
 		<p:menubar>
 			<p:submenu label="Setup" icon="ui-icon-document">
+			<!-- 
 				<p:submenu label="New" icon="ui-icon-contact">
 					<p:menuitem value="Project" url="./terms.xhtml" />
 					<p:menuitem value="Other" url="#" />
 				</p:submenu>
+				 -->
 				<p:menuitem value="Staff" url="./staff.xhtml" />
-				<p:menuitem value="Complaints" url="./complaints.xhtml" />
+				<p:menuitem value="Profile" url="./profile.xhtml" />
 				<p:separator />
 				<p:menuitem value="Logout"  actionListener="#{loginBean.logout}" />
 			</p:submenu>
+			<p:submenu label="Complaints" icon="ui-icon-document">
+                <p:menuitem value="Complaints" url="./complaints.xhtml" />
+                <p:separator />
+                <p:menuitem value="Logout"  actionListener="#{loginBean.logout}" />
+            </p:submenu>
 			<f:facet name="options">
 				<p:selectOneMenu id="politicalBodyAdminMenu" converter="#{politicalBodyAdminJsfConvertor}"
 					value="#{loginBean.selectedPoliticalBodyAdmin}">
