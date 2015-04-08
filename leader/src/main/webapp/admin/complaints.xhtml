@@ -76,7 +76,7 @@ body {
 							<p:commandLink id="updateAndView" update="@form" title="View">
 								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
 									height="20" />
-								<f:setPropertyActionListener value="#{oneComplaint}" target="#{complaintsBean.selectedComplaint}" />
+								<f:setPropertyActionListener value="#{oneComplaint}" target="#{complaintsBean.selectedComplaint}" update="@form" />
 							</p:commandLink>
 							<p:blockUI block="@form" trigger="updateAndView">Loading...<br />
 								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
