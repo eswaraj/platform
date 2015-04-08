@@ -88,7 +88,7 @@ body {
 							<p:commandButton value="Cancel" id="cancel" ajax="true" process="@this:cancel"
 								actionListener="#{staffBean.cancel}" update="@form" />
 							<p:blockUI block="@form" trigger="removeStaff, addToStaff">Updating...<br />
-								<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 							</p:blockUI>
 						</h:panelGrid>
 						</p:outputPanel>
@@ -111,7 +111,7 @@ body {
 									<f:setPropertyActionListener value="#{oneStaff}" target="#{staffBean.selectedStaff}" />
 								</p:commandLink>
 								<p:blockUI block="@form" trigger="updateAndView">Deleting...<br />
-									<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+									<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
 								</p:blockUI>
 							</p:column>
 						</p:dataTable>
