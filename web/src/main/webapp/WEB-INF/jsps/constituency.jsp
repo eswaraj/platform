@@ -257,13 +257,13 @@
 																		</div>
 																		<div class="col-sm-10 profile-info profile_info_adjust">
 																			<p class="col-sm-12 col-md-12 whom">
-																				<span class="username text-limit name_adjust col-sm-4 col-md-4">
+																				<span class="col-sm-4 col-md-4 username text-limit name_adjust">
 																					<c:forEach items="${oneComplaint.createdBy}" var="onePerson">
 																						<a href="#!" class="anchorlink username_adjust" >${onePerson.name}</a>
 																					</c:forEach>
 																				</span>
 
-																				<span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4">
+																				<span class="col-sm-4 col-md-4 issue-scope-type text-limit type_adjust">
 																				    <c:forEach items="${oneComplaint.categories}" var="oneCategory">
 																				    <c:if test="${oneCategory.root}">
 		                                                                                <img src = "${oneCategory.imageUrl}" class="issue_type_pic" alt="">
@@ -272,7 +272,7 @@
 																					
 																				</span>
 																				
-																				<span class="time_info_adjust col-sm-4 col-md-4">
+																				<span class="col-sm-4 col-md-4 time_info_adjust">
 																				<i class="glyphicon glyphicon-time"></i>
 																					<a href="#!" class="anchorlink" >
 																					<span class="location">
