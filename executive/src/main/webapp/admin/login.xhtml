@@ -26,8 +26,11 @@ body {
                         <p:password id="password" value="#{loginBean.password}"/>
                         <p:commandButton id="login" value="Login" update="@form"
                         actionListener="#{loginBean.login}" styleClass="ui-priority-primary" />
-
+    
 					</h:panelGrid>
+					<p:blockUI block="@form" trigger="login">Saving...<br />
+                                        <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                                    </p:blockUI>
 
 				</p:layoutUnit>
 			</p:layout>
