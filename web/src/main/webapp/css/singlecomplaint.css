@@ -238,6 +238,7 @@ overflow-y: auto;
 	padding-left: 55px;
 	padding-right: 55px;
 	width: 100%;
+	margin-bottom: 20px;
 }
 
 .comments_controller{
@@ -888,4 +889,8 @@ padding:0px;
 
 .comments_time_adjust{
 text-align: center;
+}
+
+.profile_pic_adjust img{
+margin-top: 8px;
 }

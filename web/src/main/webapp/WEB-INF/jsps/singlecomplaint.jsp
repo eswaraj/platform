@@ -189,7 +189,7 @@
 
 								<form id="comment_form">
 
-									<a href="#" class="profile-pic-comments"><img src="${user.person.profilePhoto}" alt=""></a> <input
+									<a href="#" class="profile-pic-comments"><img ng-show="loggedIn" src="${user.person.profilePhoto}" alt=""></a> <input
 										id="user_input" type="text" class="user_input_text" title="Please add your comment here..."
 										ng-model="commentText" ng-disabled="!loggedIn" /> <input id="user_input_button" ng-disabled="!loggedIn" type="button"
 										value="Add Comment" class="comments_controller" ng-click="saveComment()" />
@@ -204,7 +204,7 @@
 								<c:forEach items="${comments}" var="oneComment">
 									<div id="col-sm-12 col-md-12 old_comments_block">
 
-										<a href="#" class="col-sm-1 col-md-1 profile-pic-comments"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
+										<a href="#" class="col-sm-1 col-md-1 profile-pic-comments profile_pic_adjust"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
 
 										<p class="col-sm-11 col-md-11 comments_whom">
 											<a href="#" class="col-sm-6 col-md-6 username comments_name_time_adjust">${oneComment.postedBy.name}</a>
