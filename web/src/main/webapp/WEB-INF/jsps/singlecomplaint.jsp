@@ -191,7 +191,7 @@
 
 									<a href="#" class="profile-pic-comments"><img src="${user.person.profilePhoto}" alt=""></a> <input
 										id="user_input" type="text" class="user_input_text" title="Please add your comment here..."
-										ng-model="commentText" ng-disabled="!loggedIn" /> <input id="user_input_button" type="button"
+										ng-model="commentText" ng-disabled="!loggedIn" /> <input id="user_input_button" ng-disabled="!loggedIn" type="button"
 										value="Add Comment" class="comments_controller" ng-click="saveComment()" />
 
 								</form>
@@ -206,14 +206,17 @@
 
 										<a href="#" class="profile-pic-comments"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
 
-										<p class="comments_whom">
-											<a href="#" class="username">${oneComment.postedBy.name}</a>
+										<p class="col-sm-12 col-md-12 comments_whom">
+											<a href="#" class="col-sm-6 col-md-6 username comments_name_time_adjust">${oneComment.postedBy.name}</a>
 											<!-- social media share buttons -->
-											<img src="${staticHost}/images/time.png" class="posttimestatus" alt="">
 											<jsp:setProperty name="dateValue" property="time" value="${oneComment.creationTime}" />
 
-											<a href="#" class="location"><fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" /></a> <img
-												src="${staticHost}/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"
+											<a href="#" class="col-sm-4 col-md-4 comments_name_time_adjust comments_time_adjust">
+												<i class="glyphicon glyphicon-time"></i> 
+												<fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" />
+											</a> 
+											
+											<img src="${staticHost}/images/admin_ribbon.png" class="col-sm-2 col-md-2 comments_name_time_adjust posttimestatus leftshift" alt="" title="Admin" 
 												ng-show="${oneComment.adminComment}">
 										</p>
 

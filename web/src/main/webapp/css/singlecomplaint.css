@@ -869,3 +869,12 @@ margin: 0px 0px 10px 0px;
 .status_adjust{
 text-align: left;
 }
+
+.comments_name_time_adjust{
+margin: 0px;
+padding:0px;
+}
+
+.comments_time_adjust{
+text-align: center;
+}
