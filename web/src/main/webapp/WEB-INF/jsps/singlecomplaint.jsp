@@ -171,8 +171,8 @@
 								</span> 
 								<span class="col-sm-4 col-md-4 status_adjust"> 
 										<a href="#"><img src = "${staticHost}/images/status_public_closed.png" class="issue_status_pic" alt=""><span class="issue_status">Issue Status : Pending</span></a>
-										<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""><span class="issue_status">Acknowledged By MLA : No Updates</span></a>
-										<a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""><span class="issue_status">Acknowledged By Corporator : No Updates</span></a>		
+										<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from MLA</span></a>
+										<a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from Corporator</span></a>		
 								</span>
 
 							</p>
