@@ -131,14 +131,7 @@
 
 						<p class="whenwhere">
 
-							<strong class="col-sm-3 col-md-3 issue-id">#${complaint.id}</strong>
-						<p class="col-sm-9 col-md-9 status_button">
-							<span> <a href="#"><img src="${staticHost}/images/status_public_open.png" class="issue_status_pic"
-									alt=""></a> <a href="#"><img src="${staticHost}/images/status_politician_closed.png"
-									class="issue_status_pic" alt=""></a> <a href="#"><img src="${staticHost}/images/status_admin_closed.png"
-									class="issue_status_pic" alt=""></a>
-							</span>
-						</p>
+							<strong class="col-sm-12 col-md-12 issue-id">#${complaint.id}</strong>
 
 						</p>
 
@@ -171,8 +164,8 @@
 								</span> 
 								<span class="col-sm-4 col-md-4 status_adjust"> 
 										<a href="#"><img src = "${staticHost}/images/status_public_closed.png" class="issue_status_pic" alt=""><span class="issue_status">Issue Status : Pending</span></a>
-										<a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from MLA</span></a>
-										<a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from Corporator</span></a>		
+										<br><a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from MLA</span></a>
+										<br><a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from Corporator</span></a>		
 								</span>
 
 							</p>
