@@ -202,11 +202,11 @@
 							<div ng-repeat="comment in comments">
 								<jsp:useBean id="dateValue" class="java.util.Date" />
 								<c:forEach items="${comments}" var="oneComment">
-									<div id="old_comments_block">
+									<div id="col-sm-12 col-md-12 old_comments_block">
 
-										<a href="#" class="profile-pic-comments"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
+										<a href="#" class="col-sm-1 col-md-1 profile-pic-comments"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
 
-										<p class="col-sm-12 col-md-12 comments_whom">
+										<p class="col-sm-11 col-md-11 comments_whom">
 											<a href="#" class="col-sm-6 col-md-6 username comments_name_time_adjust">${oneComment.postedBy.name}</a>
 											<!-- social media share buttons -->
 											<jsp:setProperty name="dateValue" property="time" value="${oneComment.creationTime}" />
