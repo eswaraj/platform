@@ -220,7 +220,7 @@
 												ng-show="${oneComment.adminComment}">
 										</p>
 
-										<div class="comments-info">
+										<div class="comments-desc">
 
 											<p class="desc elipsis">${oneComment.text}</p>
 

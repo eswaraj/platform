@@ -175,13 +175,13 @@ overflow-y: auto;
 
 .profile-pic-comments img {
     max-width: 30px;
-    width: auto;
-    height: auto;
+    width: 30px;
+    height: 30px;
     border-radius: 0%;
     border: 0px solid #ccc;
 	float: left;
 	margin: 0px;
-	padding: 0px 10px 0px 10px;
+	padding: 0px;
 }
 
 #old_comments_block{
@@ -228,8 +228,16 @@ overflow-y: auto;
 }
 
 .comments-info{
-	clear: both;
-	padding: 10px;
+	float: left;
+	padding: 0px;
+	width: 100%;
+}
+
+.comments-desc{
+	float: left;
+	padding-left: 55px;
+	padding-right: 55px;
+	width: 100%;
 }
 
 .comments_controller{
@@ -807,6 +815,7 @@ width: 15px;
 padding-top: 15px;
 margin-bottom: 5px;
 border-top: 1px solid #DFDFDF;
+clear: both;
 }
 
 #collapse_comments_box{
