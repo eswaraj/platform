@@ -199,7 +199,6 @@
 
 							<!-- Old Comments -->
 
-							<div ng-repeat="comment in comments">
 								<jsp:useBean id="dateValue" class="java.util.Date" />
 								<c:forEach items="${comments}" var="oneComment">
 									<div id="col-sm-12 col-md-12 old_comments_block">
@@ -216,8 +215,9 @@
 												<fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" />
 											</a> 
 											
-											<img src="${staticHost}/images/admin_ribbon.png" class="col-sm-2 col-md-2 comments_name_time_adjust posttimestatus leftshift" alt="" title="Admin" 
-												ng-show="${oneComment.adminComment}">
+											<c:if test="${oneComment.adminComment}">
+											<img src="${staticHost}/images/admin_ribbon.png" class="col-sm-2 col-md-2 comments_name_time_adjust posttimestatus leftshift" alt="" title="Admin" >
+											</c:if>
 										</p>
 
 										<div class="comments-desc">
@@ -227,8 +227,6 @@
 										</div>
 									</div>
 								</c:forEach>
-
-							</div>
 
 							<div class="collap_show_btn">
 								<a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a> <a
