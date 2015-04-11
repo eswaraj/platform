@@ -16,14 +16,12 @@ body {
 </style>
 	</h:head>
 	<h:body>
-		<f:facet name="last">
-			<h:outputStylesheet library="default" name="css/complaints.css" />
-		</f:facet>
+        <h:outputStylesheet library="css" name="css/complaints.css" />
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
 			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}">
-					<h:outputText id="leaderName" value="#{loginBean.user.person.name}" />
+					<h:outputText id="leaderName" value="&lt;br /&gt;#{loginBean.user.person.name}&lt;br /&gt;#{loginBean.user.person.position}" />
 				</p:graphicImage>
 				<p:chart rendered="#{!empty complaintsBean.categoryPieChartModel}" type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
 				<p:chart rendered="#{!empty complaintsBean.dailyLineChartModel}" type="line" model="#{complaintsBean.dailyLineChartModel}" style="width:600px;height:300px;" />
@@ -52,7 +50,7 @@ body {
 						</p:column>
 						<p:column filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
-                            <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:125px" >
+                            <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:300px" >
                                 <f:selectItems value="#{complaintsBean.subCategoryNames}" />
                             </p:selectCheckboxMenu>
                         </f:facet>
