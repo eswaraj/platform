@@ -216,7 +216,7 @@ public class ComplaintsBean extends BaseBean {
                     JsonObject oneJsonObject = jsonArray.get(i).getAsJsonObject();
                     categoryPieChartModel.set(oneJsonObject.get("name").getAsString(), oneJsonObject.get("locationCount").getAsLong());
                 }
-                categoryPieChartModel.setTitle("Category Wise");
+                categoryPieChartModel.setTitle("Category %age Distribution");
                 categoryPieChartModel.setLegendPosition("w");
                 categoryPieChartModel.setShadow(true);
                 categoryPieChartModel.setShowDataLabels(true);
@@ -242,6 +242,7 @@ public class ComplaintsBean extends BaseBean {
                 }
 
                 dailyLineChartModel.getAxis(AxisType.Y).setLabel("Number of Complaints");
+                dailyLineChartModel.setTitle("Complaints TimeLine");
                 DateAxis dateAxis = new DateAxis("Dates");
                 dateAxis.setTickAngle(-50);
                 Calendar cal = Calendar.getInstance();

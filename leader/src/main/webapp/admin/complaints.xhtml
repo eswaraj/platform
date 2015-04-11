@@ -16,10 +16,15 @@ body {
 </style>
 	</h:head>
 	<h:body>
+		<f:facet name="last">
+			<h:outputStylesheet library="default" name="css/complaints.css" />
+		</f:facet>
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
-			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}" />
+			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}">
+					<h:outputText id="leaderName" value="#{loginBean.user.person.name}" />
+				</p:graphicImage>
 				<p:chart rendered="#{!empty complaintsBean.categoryPieChartModel}" type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
 				<p:chart rendered="#{!empty complaintsBean.dailyLineChartModel}" type="line" model="#{complaintsBean.dailyLineChartModel}" style="width:600px;height:300px;" />
 			</h:panelGrid>
@@ -37,7 +42,7 @@ body {
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 						</p:column>
 
-						<p:column headerText="Category" filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
+						<p:column filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
 			                <p:selectCheckboxMenu label="Category" onchange="PF('complaintTable').filter()" >
 			                    <f:selectItems value="#{complaintsBean.categoryNames}" />
@@ -45,7 +50,7 @@ body {
 			            </f:facet>
 							<h:outputText value="#{oneComplaint.rootCategory.name}" />
 						</p:column>
-						<p:column headerText="Sub Category" filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
+						<p:column filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
                             <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:125px" >
                                 <f:selectItems value="#{complaintsBean.subCategoryNames}" />
@@ -53,7 +58,7 @@ body {
                         </f:facet>
 							<h:outputText value="#{oneComplaint.subCategory.name}" />
 						</p:column>
-						<p:column headerText="Status" filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
+						<p:column filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
 							filterMatchMode="in">
 							<f:facet name="filter">
 								<p:selectCheckboxMenu label="Status" onchange="PF('complaintTable').filter()" panelStyle="width:125px"
@@ -74,7 +79,7 @@ body {
 								<h:outputText value="Update" />
 							</f:facet>
 							<p:commandLink id="updateAndView" update="@form" title="View">
-								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png" 
 									height="20" />
 								<f:setPropertyActionListener value="#{oneComplaint}" target="#{complaintsBean.selectedComplaint}" update="@form" />
 							</p:commandLink>
