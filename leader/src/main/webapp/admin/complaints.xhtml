@@ -16,13 +16,14 @@ body {
 </style>
 	</h:head>
 	<h:body>
-        <h:outputStylesheet library="css" name="css/complaints.css" />
+        <h:outputStylesheet library="css" name="./css/complaints.css" />
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
-			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}">
-					<h:outputText id="leaderName" value="&lt;br /&gt;#{loginBean.user.person.name}&lt;br /&gt;" />
-				</p:graphicImage>
+			    <p:panel id="leaderProfile" style="text-align:center">
+					<p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}"></p:graphicImage>
+					<h:outputText id="leaderName" value="&lt;br /&gt;#{loginBean.user.person.name}&lt;br /&gt;" escape="false" style="font-size: 1em; font-family: &quot;Trebuchet MS&quot;, Arial, Helvetica, sans-serif; color: #666666;"/>
+				</p:panel>
 				<p:chart rendered="#{!empty complaintsBean.categoryPieChartModel}" type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
 				<p:chart rendered="#{!empty complaintsBean.dailyLineChartModel}" type="line" model="#{complaintsBean.dailyLineChartModel}" style="width:600px;height:300px;" />
 			</h:panelGrid>
