@@ -72,15 +72,16 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
 
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
-            /*
+
             if (oldLocationBoundaryFileId != null) {
-                String[] oldCoordinates = getCoordinatesForBoundaryFileId(oldLocationBoundaryFileId);
+                Document oldDoc = getDocument(oldLocationBoundaryFileId);
+                String[] oldCoordinates = getCoordinatesFromHttpFile(oldDoc);
                 // Send all points of old boundary with new Boundary.
                 for (String coordinates : oldCoordinates) {
                     processCoordinates(coordinates, newCoordinates, locationId, totalPointsMissed, totalPointsProcessed, inputTuple);
                 }
             }
-            */
+
 
             for (String coordinates : newCoordinates) {
                 processCoordinates(coordinates, new String[] { coordinates }, locationId, totalPointsMissed, totalPointsProcessed, inputTuple);
