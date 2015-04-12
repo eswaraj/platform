@@ -21,7 +21,7 @@ body {
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
 			    <p:panel id="leaderProfile" style="text-align:center;margin-top: 30px;margin-bottom: 30px;">
-					<p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}"></p:graphicImage>
+					<p:graphicImage width="200" value="#{loginBean.user.person.profilePhoto}"></p:graphicImage>
 					<h:outputText id="leaderName" value="&lt;br /&gt;#{loginBean.user.person.name}&lt;br /&gt;" escape="false" style="font-size: 1em; font-family: &quot;Trebuchet MS&quot;, Arial, Helvetica, sans-serif; color: #666666;"/>
 				</p:panel>
 				<p:chart rendered="#{!empty complaintsBean.categoryPieChartModel}" type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
