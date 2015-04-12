@@ -461,7 +461,7 @@
                                                             <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
                                                         </c:if>
                                                     </div>
-
+<!--
                                                     <div class="platform_constituency_counter">
                                                     <p class="p_c_counter_loc red_orng_clr_text"><span>${location.name}</span></p>
                                                     <p class="total_const_count">
@@ -489,7 +489,7 @@
                                                         <strong class="blue_color_text">5587049</strong>
                                                     </p>
                                                     </div>
-
+-->
                                                     <div class="social_media_sharing_buttons">
 
                                                     <p>Get the App:</p>
