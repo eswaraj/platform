@@ -37,11 +37,11 @@ body {
 					</p:commandButton>
 
 					<p:dataTable id="complaintsDescTable" var="oneComplaint" value="#{complaintsBean.complaints}" widgetVar="complaintTable">
-						<p:column id="complaintsID" filterBy="#{oneComplaint.complaintSearchResult.complaint.id}" filterMatchMode="exact">
+						<p:column width="10%" id="complaintsID" filterBy="#{oneComplaint.complaintSearchResult.complaint.id}" filterMatchMode="exact">
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 						</p:column>
 
-						<p:column filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
+						<p:column width="20%"  filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
 			                <p:selectCheckboxMenu label="Category" onchange="PF('complaintTable').filter()" >
 			                    <f:selectItems value="#{complaintsBean.categoryNames}" />
@@ -49,7 +49,7 @@ body {
 			            </f:facet>
 							<h:outputText value="#{oneComplaint.rootCategory.name}" />
 						</p:column>
-						<p:column filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
+						<p:column width="40%"  filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
                             <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:300px" >
                                 <f:selectItems value="#{complaintsBean.subCategoryNames}" />
@@ -57,7 +57,7 @@ body {
                         </f:facet>
 							<h:outputText value="#{oneComplaint.subCategory.name}" />
 						</p:column>
-						<p:column filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
+						<p:column width="8%"  filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
 							filterMatchMode="in">
 							<f:facet name="filter">
 								<p:selectCheckboxMenu label="Status" onchange="PF('complaintTable').filter()" panelStyle="width:125px"
