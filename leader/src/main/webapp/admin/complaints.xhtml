@@ -20,7 +20,7 @@ body {
 		<ui:include src="admin_menu.xhtml" />
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
-			    <p:panel id="leaderProfile" style="text-align:center">
+			    <p:panel id="leaderProfile" style="text-align:center;margin-top: 30px;margin-bottom: 30px;">
 					<p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}"></p:graphicImage>
 					<h:outputText id="leaderName" value="&lt;br /&gt;#{loginBean.user.person.name}&lt;br /&gt;" escape="false" style="font-size: 1em; font-family: &quot;Trebuchet MS&quot;, Arial, Helvetica, sans-serif; color: #666666;"/>
 				</p:panel>
@@ -36,9 +36,10 @@ body {
 						process="@this:refreshComplaints">
 					</p:commandButton>
 
-					<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}" widgetVar="complaintTable">
-						<p:column headerText="Id" filterBy="#{oneComplaint.complaintSearchResult.complaint.id}" filterMatchMode="exact">
+					<p:dataTable id="complaintsDescTable" var="oneComplaint" value="#{complaintsBean.complaints}" widgetVar="complaintTable">
+						<p:column id="complaintsID" filterBy="#{oneComplaint.complaintSearchResult.complaint.id}" filterMatchMode="exact">
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
+							<p:watermark forElement="tableForm:complaintsDescTable:column1" value="ID"/>
 						</p:column>
 
 						<p:column filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
