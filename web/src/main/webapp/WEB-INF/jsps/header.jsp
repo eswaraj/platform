@@ -21,7 +21,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="/index.html"> <i class="glyphicon glyphicon-home"></i>
+							<a href="http://www.eswaraj.com"> <i class="glyphicon glyphicon-home"></i>
 							</a>
 						</li>
 						<%--<li class="active"> --%>
