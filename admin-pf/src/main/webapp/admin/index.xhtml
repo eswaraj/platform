@@ -13,26 +13,9 @@
 </style>
     </h:head>
     <h:body>
-        <h:form>
-            <prime:panel header="What do you see here?" >
-                <div style="height:50px">
-                    This JSF page demonstrates the difference between JSF scopes. Every line displays a counter in a certain scope.
-                    Each time the counter is read, it is also increased. Every line displays the counter three times.
-                    If a counter is reset (because the scope had reached the end of its life cycle), the counter starts with "1" again.
+    <ui:include src="admin_menu.xhtml" />
+        <div style="height:50px">
+                    Welcome to eswaraj Admin Console
                 </div>
-                termsBean.showList = #{termsBean.showList}
-            </prime:panel>
-            <prime:panel header="JSF 2.2 Scope demo">
-                    <prime:commandButton value="Count! (AJAX)" action="#{termsBean.createTerm}" ajax="true" update="@form" />
-                    <prime:commandButton value="Count! (Non-AJAX)" action="#{termsBean.createTerm}" ajax="false" style="width:150px"/>
-                    <prime:commandButton value="forced reload (F5 key)" onclick="window.location='index.xhtml '" style="width:170px"/>
-                    <prime:commandButton value="leave view scopes" action="secondPage.xhtml" ajax="false" style="width:150px"/>
-                    <prime:outputLabel value=""></prime:outputLabel>
-                    <prime:outputLabel value=""></prime:outputLabel>
-                    <prime:commandButton value="start custom scope" actionListener="#{termsBean.createTerm}" update="@form"  style="width:150px"/>
-                    <prime:commandButton value="destroy custom scope" actionListener="#{termsBean.createTerm}" update="@form" style="width:170px"/>
-                    
-            </prime:panel>
-        </h:form>
     </h:body>
 </f:view>
