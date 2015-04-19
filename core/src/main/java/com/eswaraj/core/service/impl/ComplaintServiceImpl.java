@@ -390,8 +390,9 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
                 if (oneLocationPoliticalBodyAdmins != null && !oneLocationPoliticalBodyAdmins.isEmpty()) {
                     politicalBodyAdmins.addAll(oneLocationPoliticalBodyAdmins);
                 }
-
+                logger.info("subCategoryForComplaint  : {}" + subCategoryForComplaint);
                 if (subCategoryForComplaint != null) {
+                    logger.info("Searching Departments For : {}, {}" + oneLocation, subCategoryForComplaint);
                     List<Department> locationDpartments = departmentLocationRepository.getAllDepartmentOfLocationAndCategory(oneLocation, subCategoryForComplaint);
                     if (locationDpartments != null && !locationDpartments.isEmpty()) {
                         departments.addAll(locationDpartments);
