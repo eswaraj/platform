@@ -39,6 +39,7 @@
 		<property name="initializeRedisServices" value="false" />
 		<property name="initializeQueueServices" value="true" />
 		<property name="initializeDbServices" value="false" />
+		<property name="maxSpoutPending" value="2" />
 
 	</bean>
 

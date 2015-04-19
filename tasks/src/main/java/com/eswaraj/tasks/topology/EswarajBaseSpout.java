@@ -22,6 +22,7 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     private SpoutOutputCollector collector;
     private int retry;
     private List<String> outputStreams;
+    private int maxSpoutPending;
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
@@ -193,6 +194,14 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     public void setOutputStreams(List<String> outputStreams) {
         this.outputStreams = outputStreams;
+    }
+
+    public int getMaxSpoutPending() {
+        return maxSpoutPending;
+    }
+
+    public void setMaxSpoutPending(int maxSpoutPending) {
+        this.maxSpoutPending = maxSpoutPending;
     }
 
 }

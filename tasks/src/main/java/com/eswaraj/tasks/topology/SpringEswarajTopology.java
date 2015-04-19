@@ -12,6 +12,7 @@ import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.BoltDeclarer;
+import backtype.storm.topology.SpoutDeclarer;
 import backtype.storm.topology.TopologyBuilder;
 
 import com.eswaraj.tasks.util.TopologyRunner;
@@ -45,7 +46,10 @@ public class SpringEswarajTopology {
         // Create a Multiple Tree to print in logs
         for (EswarajBaseSpout oneSpout : spoutConfigs) {
             System.out.println("Building Spout id=[" + oneSpout.getComponentId() + "], output stream = [" + oneSpout.getOutputStream() + "]");
-            builder.setSpout(oneSpout.getComponentId(), oneSpout, oneSpout.getParalellism());
+            SpoutDeclarer sd = builder.setSpout(oneSpout.getComponentId(), oneSpout, oneSpout.getParalellism());
+            if (oneSpout.getMaxSpoutPending() > 0) {
+                sd.setMaxSpoutPending(oneSpout.getMaxSpoutPending());
+            }
         }
         BoltDeclarer boltDeclarer;
         for (EswarajBaseBolt oneBolt : boltConfigs) {

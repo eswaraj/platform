@@ -24,7 +24,7 @@ public class KmlFileDisector {
     public static void main(String[] args) throws Exception {
         List<String> files = new ArrayList<>();
         
-        files.add("/usr/local/dev/data/eswaraj/originals/Bangalore_assembly map Urban.kml");
+        files.add("/usr/local/dev/data/eswaraj/originals/Gadag & Bagalkote Taluks.kml");
         /*
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiCityRegion.kml");
         files.add("/usr/local/dev/data/eswaraj/originals/DelhiDistrictRegions.kml");
