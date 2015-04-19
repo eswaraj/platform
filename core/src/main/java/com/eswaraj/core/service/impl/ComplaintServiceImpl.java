@@ -434,10 +434,13 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
         if (lowestLevelDepartment != null) {
             logger.info("Creating DepartmentComplaint for Department {} and Complaint {}", lowestLevelDepartment, complaint);
             DepartmentComplaint departmentComplaint = new DepartmentComplaint(lowestLevelDepartment, complaint);
-            // Somehow We dont need to save it as relations getting created automatically
-            // and if we save manually then two relations gets created
-            // departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
-            logger.info("DepartmentComplaint Created : {}", departmentComplaint);
+            DepartmentComplaint existingDepartmentComplaint = departmentComplaintRepository.getDepartmentComplaintRelation(complaint, lowestLevelDepartment);
+            if (existingDepartmentComplaint == null) {
+                // Somehow We dont need to save it as relations getting created automatically
+                // and if we save manually then two relations gets created
+                departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
+                logger.info("DepartmentComplaint Created : {}", departmentComplaint);
+            }
         }
     }
 
