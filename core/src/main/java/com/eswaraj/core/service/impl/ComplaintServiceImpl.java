@@ -438,7 +438,7 @@ public class ComplaintServiceImpl extends BaseService implements ComplaintServic
             if (existingDepartmentComplaint == null) {
                 // Somehow We dont need to save it as relations getting created automatically
                 // and if we save manually then two relations gets created
-                departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
+                // departmentComplaint = departmentComplaintRepository.save(departmentComplaint);
                 logger.info("DepartmentComplaint Created : {}", departmentComplaint);
             }
         }
