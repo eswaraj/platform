@@ -58,7 +58,7 @@ body {
 }
 </style>
 -->
-	<h:form>
+	<h:form id="menu_form">
 		<p:menubar>
 			<p:submenu label="Setup" icon="ui-icon-document">
 			<!-- 
@@ -85,9 +85,6 @@ body {
 					<p:ajax event="valueChange" listener="#{loginBean.onSelectPoliticalBodyAdmin}" update="@form" />
 
 				</p:selectOneMenu>
-				<p:blockUI block="@form" trigger="politicalBodyAdminMenu">Loading...<br />
-					<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
-				</p:blockUI>
 			</f:facet>
 
 			<!-- 

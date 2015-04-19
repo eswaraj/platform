@@ -17,6 +17,9 @@ body {
 	</h:head>
 	<h:body>
 		<ui:include src="admin_menu.xhtml" />
+		<p:blockUI block=":complaint_form" trigger=":menu_form:politicalBodyAdminMenu">Loading...<br />
+                    <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                </p:blockUI>
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
 			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}" />
