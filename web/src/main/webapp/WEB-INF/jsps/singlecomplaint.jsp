@@ -60,7 +60,7 @@
 			<div class="col-md-3 col-sm-3 md3_pad">
 
 				<div class="issue_reporters_box_pic">
-
+					<!--
 					<p class="text_reporters_p">
 						<a href="#!" class="text_reporters_anchor_pic"> <c:forEach var="cat" items="${complaint.categories}">
 								<c:if test="${not cat.root}">
@@ -70,7 +70,7 @@
 
 						</a>
 					</p>
-
+					-->
 					<div class="profile-pic profile-pic-padding">
 						<a href="#!"> <c:forEach items="${complaint.categories}" var="oneCategory">
 								<c:if test="${oneCategory.root}">
@@ -83,7 +83,7 @@
 					<div class="issue-type-name-adjust">
 						<span> <a href="#" class="issue-scope-type"> <c:forEach var="cat" items="${complaint.categories}">
 									<c:if test="${cat.root}">
-																		Type - ${cat.name}
+																		${cat.name} Complaint
 																	</c:if>
 								</c:forEach>
 
@@ -112,34 +112,26 @@
 					</div>
 					<div class="col-sm-10 col-md-10 profile-info profile_info_adjust">
 						<p class="col-sm-12 col-md-12 whom">
-							<span class="username text-limit name_adjust col-sm-4 col-md-4"> <c:forEach items="${complaint.createdBy}"
+							<span class="col-sm-4 col-md-4 username text-limit name_adjust"> 
+								<c:forEach items="${complaint.createdBy}"
 									var="onePerson">
 									<a href="#!" class="anchorlink username_adjust">${onePerson.name}</a>
 								</c:forEach>
-							</span> <span class="issue-scope-type text-limit type_adjust col-sm-4 col-md-4"> <c:forEach
-									items="${complaint.categories}" var="oneCategory">
-									<c:if test="${oneCategory.root}">
-										<img src="${oneCategory.imageUrl}" class="issue_type_pic" alt="">
-									</c:if>
-								</c:forEach>
-							</span> <span class="time_info_adjust col-sm-4 col-md-4"> <i class="glyphicon glyphicon-time"></i> <a href="#!"
-								class="anchorlink"> <span class="location"> <abbr class="timeago" title="${complaint.complaintTimeIso}">${complaint.complaintTimeIso}</abbr>
-								</span>
-							</a>
+							</span> 
+							<span class="col-sm-4 col-md-4"> 
+							</span> 
+							<span class="col-sm-4 col-md-4 time_info_adjust"> 
+								<i class="glyphicon glyphicon-time"></i> 
+								<a href="#!" class="anchorlink"> 
+									<span class="location"> <abbr class="timeago" title="${complaint.complaintTimeIso}">${complaint.complaintTimeIso}</abbr>
+									</span>
+								</a>
 							</span>
-
 						</p>
 
 						<p class="whenwhere">
 
-							<strong class="col-sm-3 col-md-3 issue-id">#${complaint.id}</strong>
-						<p class="col-sm-9 col-md-9 status_button">
-							<span> <a href="#"><img src="${staticHost}/images/status_public_open.png" class="issue_status_pic"
-									alt=""></a> <a href="#"><img src="${staticHost}/images/status_politician_closed.png"
-									class="issue_status_pic" alt=""></a> <a href="#"><img src="${staticHost}/images/status_admin_closed.png"
-									class="issue_status_pic" alt=""></a>
-							</span>
-						</p>
+							<strong class="col-sm-12 col-md-12 issue-id">#${complaint.id}</strong>
 
 						</p>
 
@@ -167,10 +159,13 @@
 
 								<span class="col-sm-4 col-md-4 address_adjust"> <i class="glyphicon glyphicon-map-marker"></i> <a
 									href="#!" class="anchorlink"><span class="location">${complaint.locationAddress}</span></a>
-								</span> <span class="col-sm-4 col-md-4 comments_adjust"> <i class="glyphicon glyphicon-comment"></i> <a
-									href="#!" class="anchorlink"><span class="comments">Comments(${complaint.totalComments})</span></a>
-								</span> <span class="col-sm-4 col-md-4 status_adjust"> <i class="glyphicon glyphicon-eye-open"></i> <a href="#!"
-									class="anchorlink"><span class="issue_status">Pending</span></a>
+								</span> 
+								<span class="col-sm-4 col-md-4">
+								</span> 
+								<span class="col-sm-4 col-md-4 status_adjust"> 
+										<a href="#"><img src = "${staticHost}/images/status_public_closed.png" class="issue_status_pic" alt=""><span class="issue_status">Issue Status : Pending</span></a>
+										<br><a href="#"><img src = "${staticHost}/images/status_politician_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from MLA</span></a>
+										<br><a href="#"><img src = "${staticHost}/images/status_admin_closed.png" class="issue_status_pic" alt=""><span class="issue_status">No Updates from Corporator</span></a>		
 								</span>
 
 							</p>
@@ -185,8 +180,7 @@
 					<!-- Comments Box -->
 
 					<div id="load_comments_box" style="clear: both;">
-						<a href="#!" id="comments_status" class="comments_controller">Comments from Users ( ${complaint.totalComments}
-							)</a>
+						<a href="#!" id="comments_status" class="comments_controller comments_controller_header">Comments from Users ( ${complaint.totalComments} )</a>
 
 						<div id="comments_box" class="div_comments_box">
 
@@ -195,9 +189,9 @@
 
 								<form id="comment_form">
 
-									<a href="#" class="profile-pic-comments"><img src="${user.person.profilePhoto}" alt=""></a> <input
+									<a href="#" class="profile-pic-comments"><img ng-show="loggedIn" src="${user.person.profilePhoto}" alt=""></a> <input
 										id="user_input" type="text" class="user_input_text" title="Please add your comment here..."
-										ng-model="commentText" ng-disabled="!loggedIn" /> <input id="user_input_button" type="button"
+										ng-model="commentText" ng-disabled="!loggedIn" /> <input id="user_input_button" ng-disabled="!loggedIn" type="button"
 										value="Add Comment" class="comments_controller" ng-click="saveComment()" />
 
 								</form>
@@ -205,33 +199,34 @@
 
 							<!-- Old Comments -->
 
-							<div ng-repeat="comment in comments">
 								<jsp:useBean id="dateValue" class="java.util.Date" />
 								<c:forEach items="${comments}" var="oneComment">
-									<div id="old_comments_block">
+									<div id="col-sm-12 col-md-12 old_comments_block">
 
-										<a href="#" class="profile-pic-comments"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
+										<a href="#" class="col-sm-1 col-md-1 profile-pic-comments profile_pic_adjust"><img src="${oneComment.postedBy.profilePhoto}" alt=""></a>
 
-										<p class="comments_whom">
-											<a href="#" class="username">${oneComment.postedBy.name}</a>
+										<p class="col-sm-11 col-md-11 comments_whom">
+											<a href="#" class="col-sm-6 col-md-6 username comments_name_time_adjust">${oneComment.postedBy.name}</a>
 											<!-- social media share buttons -->
-											<img src="${staticHost}/images/time.png" class="posttimestatus" alt="">
 											<jsp:setProperty name="dateValue" property="time" value="${oneComment.creationTime}" />
 
-											<a href="#" class="location"><fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" /></a> <img
-												src="${staticHost}/images/admin_ribbon.png" class="posttimestatus leftshift" alt="" title="Admin"
-												ng-show="${oneComment.adminComment}">
+											<a href="#" class="col-sm-4 col-md-4 comments_name_time_adjust comments_time_adjust">
+												<i class="glyphicon glyphicon-time"></i> 
+												<fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" />
+											</a> 
+											
+											<c:if test="${oneComment.adminComment}">
+											<img src="${staticHost}/images/admin_ribbon.png" class="col-sm-2 col-md-2 comments_name_time_adjust posttimestatus leftshift" alt="" title="Admin" >
+											</c:if>
 										</p>
 
-										<div class="comments-info">
+										<div class="comments-desc">
 
 											<p class="desc elipsis">${oneComment.text}</p>
 
 										</div>
 									</div>
 								</c:forEach>
-
-							</div>
 
 							<div class="collap_show_btn">
 								<a id="show_full_comments_page" href="#!" class="comments_controller" ng-click="getNext()">Show More...</a> <a

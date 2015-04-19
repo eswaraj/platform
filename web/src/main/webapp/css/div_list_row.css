@@ -115,7 +115,6 @@ background-color: #F8F8F8;
 }
 
 .username_adjust{
-	margin: 0px;
 	font-size: 15px;
 	color: #505050;
 }
@@ -270,17 +269,8 @@ margin-top: 10px;
 	padding-right: 1px;
 	}
 	
-.name_adjust{
-	max-width: 32%;
-	padding: 0px;
-  margin: 0px;
-}
-
 .type_adjust{
-	max-width: 45%;
 	text-align: center;
-  padding: 0px;
-  margin: -7px 0px 0px 0px;
 }
 
 .innerdiv-sharebtn {
@@ -779,8 +769,6 @@ background: #eeeeee;
 
 
 .time_info_adjust{
-padding: 0px;
-  margin: 0px;
   text-align: right;
   }
   
@@ -895,4 +883,9 @@ width: 45%;
 
 .anchorlink{
 text-decoration: none;
+}
+
+.name_adjust, .type_adjust, .time_info_adjust{
+margin: 0px;
+padding: 0px;
 }

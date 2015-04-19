@@ -16,13 +16,17 @@ body {
 </style>
 	</h:head>
 	<h:body>
+        <h:outputStylesheet library="css" name="./css/complaints.css" />
 		<ui:include src="admin_menu.xhtml" />
 		<p:blockUI block=":complaint_form" trigger=":menu_form:politicalBodyAdminMenu">Loading...<br />
                     <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
                 </p:blockUI>
 		<h:form id="complaint_form">
 			<h:panelGrid columns="3" styleClass="topAlignPanelColumns">
-			    <p:graphicImage width="80" value="#{loginBean.user.person.profilePhoto}" />
+			    <p:panel id="leaderProfile" style="text-align:center;margin-top: 30px;margin-bottom: 30px;">
+					<p:graphicImage width="200" value="#{loginBean.user.person.profilePhoto}"></p:graphicImage>
+					<h:outputText id="leaderName" value="&lt;br /&gt;#{loginBean.user.person.name}&lt;br /&gt;" escape="false" style="font-size: 1em; font-family: &quot;Trebuchet MS&quot;, Arial, Helvetica, sans-serif; color: #666666;"/>
+				</p:panel>
 				<p:chart rendered="#{!empty complaintsBean.categoryPieChartModel}" type="pie" model="#{complaintsBean.categoryPieChartModel}" style="width:400px;height:300px" />
 				<p:chart rendered="#{!empty complaintsBean.dailyLineChartModel}" type="line" model="#{complaintsBean.dailyLineChartModel}" style="width:600px;height:300px;" />
 			</h:panelGrid>
@@ -35,12 +39,12 @@ body {
 						process="@this:refreshComplaints">
 					</p:commandButton>
 
-					<p:dataTable var="oneComplaint" value="#{complaintsBean.complaints}" widgetVar="complaintTable">
-						<p:column headerText="Id" filterBy="#{oneComplaint.complaintSearchResult.complaint.id}" filterMatchMode="exact">
+					<p:dataTable id="complaintsDescTable" var="oneComplaint" value="#{complaintsBean.complaints}" widgetVar="complaintTable">
+						<p:column width="10%" id="complaintsID" filterBy="#{oneComplaint.complaintSearchResult.complaint.id}" filterMatchMode="exact">
 							<h:outputText value="#{oneComplaint.complaintSearchResult.complaint.id}" />
 						</p:column>
 
-						<p:column headerText="Category" filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
+						<p:column width="20%"  filterBy="#{oneComplaint.rootCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
 			                <p:selectCheckboxMenu label="Category" onchange="PF('complaintTable').filter()" >
 			                    <f:selectItems value="#{complaintsBean.categoryNames}" />
@@ -48,15 +52,15 @@ body {
 			            </f:facet>
 							<h:outputText value="#{oneComplaint.rootCategory.name}" />
 						</p:column>
-						<p:column headerText="Sub Category" filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
+						<p:column width="40%"  filterBy="#{oneComplaint.subCategory.name}" filterMatchMode="in">
 						<f:facet name="filter">
-                            <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:125px" >
+                            <p:selectCheckboxMenu label="Sub Category" onchange="PF('complaintTable').filter()" panelStyle="width:300px" >
                                 <f:selectItems value="#{complaintsBean.subCategoryNames}" />
                             </p:selectCheckboxMenu>
                         </f:facet>
 							<h:outputText value="#{oneComplaint.subCategory.name}" />
 						</p:column>
-						<p:column headerText="Status" filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
+						<p:column width="8%"  filterBy="#{oneComplaint.complaintSearchResult.complaintPoliticalAdmin.status}"
 							filterMatchMode="in">
 							<f:facet name="filter">
 								<p:selectCheckboxMenu label="Status" onchange="PF('complaintTable').filter()" panelStyle="width:125px"
@@ -77,7 +81,7 @@ body {
 								<h:outputText value="Update" />
 							</f:facet>
 							<p:commandLink id="updateAndView" update="@form" title="View">
-								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png" 
 									height="20" />
 								<f:setPropertyActionListener value="#{oneComplaint}" target="#{complaintsBean.selectedComplaint}" update="@form" />
 							</p:commandLink>

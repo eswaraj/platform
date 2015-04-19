@@ -27,7 +27,7 @@ public interface LocationBoundaryFileRepository extends GraphRepository<Location
     @Query("match (locationBoundaryFile)-[:FOR]->(location) where locationBoundaryFile.__type__='LocationBoundaryFile' and locationBoundaryFile.active = true return locationBoundaryFile ")
     public List<LocationBoundaryFile> getAllActiveLocationBoundaryFiles();
 
-    @Query("match (locationBoundaryFile)-[:FOR]->(location) where locationBoundaryFile.__type__='LocationBoundaryFile' and locationBoundaryFile.status!='Done' and locationBoundaryFile.active = true return locationBoundaryFile ")
+    @Query("match (locationBoundaryFile)-[:FOR]->(location) where locationBoundaryFile.__type__='LocationBoundaryFile' and locationBoundaryFile.status<>'Done' and locationBoundaryFile.active = true return locationBoundaryFile ")
     public List<LocationBoundaryFile> getAllActiveFailedLocationBoundaryFiles();
 
 }
