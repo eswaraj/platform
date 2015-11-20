@@ -30,7 +30,6 @@ public class RepositorySaveAspect {
 	//@Before("execution(* com.rapzzy.domain.repo.*.save(..))")
 	public void beforeRepoSave() {
 	}
-	
 	@Around("execution(* com.eswaraj.domain.repo.*.save(..))")
 	public Object around(ProceedingJoinPoint pjp) throws Throwable {
 		logger.trace("{}, with Argument {}",pjp.getSignature(),pjp.getArgs()[0]);

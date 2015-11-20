@@ -1,0 +1,128 @@
+#profile_show h3 {
+color: #C2C2C2;
+text-align: center;
+border-bottom: 1px solid #D7D7D7;
+padding-bottom: 10px; 
+}
+
+.innerblock img{
+left: 30px;
+}
+
+.profile .profile-pic {
+width: 120px;
+
+margin: 0 50px 10px 50px;
+
+}
+
+.innerblock  .center-align{
+text-align: center;
+border-bottom : 1px solid #D2D2D2;
+padding-bottom: 15px; 
+}
+
+.innerblock  .political_details{
+color: #C2C2C2;
+font-size: 20px;
+}
+
+#profile_edit h3{
+color: #C2C2C2;
+text-align: center;
+border-bottom: 1px solid #D7D7D7;
+padding-bottom: 10px; 
+}
+
+.innerblock .btn_round{
+width: 106px;
+margin-top: 10px;}
+
+.innerblock #rev_geo{
+color: #A2A2A2;
+}
+
+.innerblock  hr {
+border-top: 1px solid #D7D7D7;
+}
+
+#top_slide_notification{
+position: absolute;
+height: 40px;
+width: 100%;
+bottom: 4.7%;
+left: 0px;
+background-color: #000;
+color: #C2C2C2;
+text-align: center;
+display: none;
+border: 1px solid #f0f0f0;
+font-size: 15px;
+}
+
+#top_slide_notification h4{
+position: relative;
+margin: 10px;
+margin-right: 20px;
+}
+
+#notification_close_button{
+padding-left: 75px;
+color: #fff;
+vertical-align: middle;
+}
+
+#gmap_canvas {
+	margin-left: 0px;
+	margin-right: auto;
+	padding: 0;
+	width: 600px;
+	height: 400px;
+}
+
+.controls {
+	margin-top: 16px;
+	border: 1px solid transparent;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 32px;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+	background-color: #fff;
+	padding: 0 11px 0 13px;
+	width: 400px;
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+	text-overflow: ellipsis;
+}
+
+#pac-input:focus {
+	border-color: #4d90fe;
+	margin-left: -1px;
+	padding-left: 14px; /* Regular padding-left + 1. */
+	width: 401px;
+}
+
+.pac-container {
+	font-family: Roboto;
+}
+
+#gmap_canvas img {
+	max-width: none !important;
+	background: none !important
+}
+
+.footer_class {
+position: absolute;
+bottom: 0px;
+width: 100%;
+}
+
+.footer_pos{
+position: absolute;
+}

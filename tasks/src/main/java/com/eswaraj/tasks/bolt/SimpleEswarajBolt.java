@@ -15,7 +15,14 @@ public class SimpleEswarajBolt extends EswarajBaseBolt {
     @Override
     public Result processTuple(Tuple input) {
         BoltProcessor boltprocessor = getBoltProcessor();
-        return boltprocessor.processTuple(input);
+        Result result;
+        try {
+            result = boltprocessor.processTuple(input);
+        } catch (Exception ex) {
+            logError("Unable to process : ", ex);
+            result = Result.Failed;
+        }
+        return result;
     }
 
 }

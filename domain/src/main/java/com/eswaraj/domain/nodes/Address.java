@@ -1,24 +1,31 @@
 package com.eswaraj.domain.nodes;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
 
 @NodeEntity
+@TypeAlias("Address")
 public class Address extends BaseNode {
 
 	private String line1;
 	private String line2;
 	private String line3;
 	private String postalCode;
-	
-	private Location village;
-	private Location ward;
-	private Location city;
-	private Location district;
-	private Location state;
-	private Location country;
-	public String getLine1() {
+    private Double lattitude;
+    private Double longitude;
+    @RelatedTo(elementClass = Location.class, direction = Direction.BOTH)
+    @Fetch
+    Set<Location> locations = new HashSet<>();
+
+    public String getLine1() {
 		return line1;
 	}
 	public void setLine1(String line1) {
@@ -42,40 +49,35 @@ public class Address extends BaseNode {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	public Location getVillage() {
-		return village;
-	}
-	public void setVillage(Location village) {
-		this.village = village;
-	}
-	public Location getWard() {
-		return ward;
-	}
-	public void setWard(Location ward) {
-		this.ward = ward;
-	}
-	public Location getCity() {
-		return city;
-	}
-	public void setCity(Location city) {
-		this.city = city;
-	}
-	public Location getDistrict() {
-		return district;
-	}
-	public void setDistrict(Location district) {
-		this.district = district;
-	}
-	public Location getState() {
-		return state;
-	}
-	public void setState(Location state) {
-		this.state = state;
-	}
-	public Location getCountry() {
-		return country;
-	}
-	public void setCountry(Location country) {
-		this.country = country;
-	}
+
+    public Double getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(Double lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
+    }
+
+    @Override
+    public String toString() {
+        return "Address [line1=" + line1 + ", line2=" + line2 + ", line3=" + line3 + ", postalCode=" + postalCode + ", lattitude=" + lattitude + ", longitude=" + longitude + ", locations="
+                + locations + ", id=" + id + ", externalId=" + externalId + "]";
+    }
+
 }

@@ -1,0 +1,216 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="election_manifesto_form" enctype="multipart/form-data">
+			<p:panel id="mainPanel" header="Election Manifestos">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:outputPanel id="listView" rendered="#{electionManifestoBean.showPage eq 'ElectionManifestoList'}">
+					<p:commandButton value="Create Election Manifesto"
+						actionListener="#{electionManifestoBean.createElectionManifesto}" update="@form" />
+					<p:dataTable var="oneElectionManifesto" value="#{electionManifestoBean.electionManifestos}">
+						<p:column headerText="Id" style="width:100px;">
+							<h:outputText value="#{oneElectionManifesto.id}" />
+						</p:column>
+
+						<p:column headerText="Name">
+							<h:outputText value="#{oneElectionManifesto.name}" />
+						</p:column>
+						<p:column headerText="description">
+							<h:outputText value="#{oneElectionManifesto.description}" />
+						</p:column>
+
+						<p:column style="width:100px;">
+							<f:facet name="header">
+								<h:outputText value="Update" />
+							</f:facet>
+							<p:commandLink update="@form" title="Update" id="updateElectionManifesto">
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+									height="20" />
+								<f:setPropertyActionListener value="#{oneElectionManifesto}"
+									target="#{electionManifestoBean.selectedElectionManifesto}" />
+							</p:commandLink>
+		                     <p:blockUI block="@form" trigger="updateElectionManifesto">Loading<br />
+		                          <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+		                      </p:blockUI>
+						</p:column>
+						<p:column style="width:100px;">
+                            <f:facet name="header">
+                                <h:outputText value="Promises" />
+                            </f:facet>
+                            <p:commandLink update="@form" title="Promises" id="viewPromises" actionListener="#{electionManifestoBean.showPromiseView(oneElectionManifesto)}">
+                                <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+                                    height="20" />
+                            </p:commandLink>
+		                     <p:blockUI block="@form" trigger="viewPromises">Loading<br />
+		                          <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+		                      </p:blockUI>
+                        </p:column>
+
+					</p:dataTable>
+					
+				</p:outputPanel>
+				<p:outputPanel id="formView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifesto'}">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Name" />
+						<p:inputText value="#{electionManifestoBean.selectedElectionManifesto.name}" style="width:600px" />
+						<p:outputLabel value="Description" />
+						<p:inputTextarea rows="6" cols="80" value="#{electionManifestoBean.selectedElectionManifesto.description}" />
+						<p:outputLabel value="Election" />
+						<p:selectOneMenu id="election" converter="#{jsfElectionConvertor}"
+							value="#{electionManifestoBean.selectedElectionManifesto.election}">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItems value="#{electionBean.elections}" var="oneReult" itemLabel="#{oneReult.name}"
+								itemValue="#{oneReult}" />
+
+						</p:selectOneMenu>
+						<p:outputLabel value="Party" />
+						<p:selectOneMenu id="politicalParty" converter="#{jsfPartyConvertor}" required="true"
+							requiredMessage="Please select a Political Party"
+							value="#{electionManifestoBean.selectedElectionManifesto.party}">
+							<f:selectItem itemLabel="Select Party" itemValue="" />
+							<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
+								itemValue="#{oneReult}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Document(PDF Only)"></p:outputLabel>
+						<h:panelGrid columns="1">
+							<h3>PDF</h3>
+							<p:outputPanel id="docViewer">
+							
+							<object type="application/pdf" data="#{electionManifestoBean.selectedElectionManifesto.document.url}"
+								height="600px" width="900px">
+								Your browser can't display pdf, <a href="#{electionManifestoBean.selectedElectionManifesto.document.url}">click</a>
+								to download pdf instead.
+							</object>
+							</p:outputPanel>
+							<p:fileUpload fileUploadListener="#{electionManifestoBean.handleDocFileUpload}" mode="advanced"
+								dragDropSupport="true" auto="true" update="messages, docViewer" sizeLimit="10000000" fileLimit="3"
+								allowTypes="/(\.|\/)(pdf)$/" />
+						</h:panelGrid>
+
+					</p:panelGrid>
+					<p:outputPanel id="buttonView">
+						<p:commandButton value="Cancel" process="@this:cancel" update="@form"
+							actionListener="#{electionManifestoBean.cancel}" ajax="true" styleClass="ui-priority-primary" id="cancel">
+						</p:commandButton>
+						<p:commandButton id="saveElectionManifesto" value="Save Election Manifesto" update="@form" ajax="true"
+							actionListener="#{electionManifestoBean.saveElectionManifesto}" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:blockUI block="@form" trigger="saveElectionManifesto">Saving<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+						<p:blockUI block="@form" trigger="cancel">Loading<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+
+					</p:outputPanel>
+				</p:outputPanel>
+				
+				
+				<p:outputPanel id="promiseListView" rendered="#{electionManifestoBean.showPage eq 'ElectionManifestoPromiseList'}">
+				<p:commandButton value="back"
+                        actionListener="#{electionManifestoBean.back}" update="@form" />
+                    <p:commandButton value="Create Election Manifesto Promise"
+                        actionListener="#{electionManifestoBean.createElectionManifestoPromise}" update="@form" />
+                    <p:dataTable var="oneElectionManifestoPromise" value="#{electionManifestoBean.electionManifestoPromises}">
+                        <p:column headerText="Id" style="width:100px;">
+                            <h:outputText value="#{oneElectionManifestoPromise.id}" />
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            <h:outputText value="#{oneElectionManifestoPromise.title}" />
+                        </p:column>
+                        <p:column headerText="description">
+                            <h:outputText value="#{oneElectionManifestoPromise.description}" />
+                        </p:column>
+
+                        <p:column style="width:100px;">
+                            <f:facet name="header">
+                                <h:outputText value="Update" />
+                            </f:facet>
+                            <p:commandLink update="@form" title="Update">
+                                <p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+                                    height="20" />
+                                <f:setPropertyActionListener value="#{oneElectionManifestoPromise}"
+                                    target="#{electionManifestoBean.selectedElectionManifestoPromise}" />
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+                
+                
+                
+                <p:outputPanel id="promiseFormView" rendered="#{electionManifestoBean.showPage eq 'EditElectionManifestoPromise'}">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Title" />
+                        <p:inputText value="#{electionManifestoBean.selectedElectionManifestoPromise.title}" style="width:600px" />
+                        <p:outputLabel value="Description" />
+                        <p:inputTextarea rows="10" cols="80" value="#{electionManifestoBean.selectedElectionManifestoPromise.description}" />
+                        <p:outputLabel for="status" value="Status" />
+				        <p:selectOneMenu id="status" value="#{electionManifestoBean.selectedElectionManifestoPromise.status}" style="width:125px">
+				            <f:selectItem itemLabel="Select One" itemValue="" />
+				            <f:selectItem itemLabel="Pending" itemValue="Pending" />
+				            <f:selectItem itemLabel="On Going" itemValue="On Going" />
+				            <f:selectItem itemLabel="Delivered" itemValue="Delivered" />
+				        </p:selectOneMenu>
+                        <p:outputLabel value="Delivery Time" />
+                        <p:inputText id="deliveryTime" value="#{electionManifestoBean.selectedElectionManifestoPromise.deliveryTime}" style="width:600px" />
+                        <p:watermark for="deliveryTime" value="e.g. 10 days" id="watermark" />
+                    </p:panelGrid>
+                    <p:outputPanel id="promiseButtonView">
+                        <p:commandButton value="Cancel" process="@this:cancelPromise" update="@form"
+                            actionListener="#{electionManifestoBean.cancelPromise}" ajax="true" styleClass="ui-priority-primary" id="cancelPromise">
+                        </p:commandButton>
+                        <p:commandButton id="saveElectionManifestoPromise" value="Save Election Manifesto Promise" update="@form" ajax="true"
+                            actionListener="#{electionManifestoBean.saveElectionManifestoPromise}" styleClass="ui-priority-primary">
+                        </p:commandButton>
+                        <p:blockUI block="@form" trigger="saveElectionManifestoPromise">Saving<br />
+                            <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                        </p:blockUI>
+                        <p:blockUI block="@form" trigger="cancelPromise">Loading<br />
+                            <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                        </p:blockUI>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+				
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

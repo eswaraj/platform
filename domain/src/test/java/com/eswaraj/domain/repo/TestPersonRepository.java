@@ -17,7 +17,8 @@ import com.eswaraj.domain.nodes.Person;
 
 /**
  * Test for Person repository
- * @author anuj
+ * 
+ * @author Ravi
  * @data Jan 22, 2014
  */
 
@@ -59,7 +60,6 @@ public class TestPersonRepository extends BaseNeo4jEswarajTest{
 	
 	@Test 
 	public void test03_searchByName(){
-		//dontDeleteDbObjects();
 		Person person = new Person();
 		String name="Ravi Sharma";
 		person.setName(name);

@@ -6,7 +6,7 @@ import org.springframework.util.CollectionUtils;
 
 import backtype.storm.tuple.Tuple;
 
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.messaging.dto.ComplaintMessage;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 
@@ -14,7 +14,7 @@ import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 public class LocationWiseComplaintZsetBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
     @Override
     public Result processTuple(Tuple inputTuple) {
         ComplaintMessage complaintCreatedMessage = (ComplaintMessage) inputTuple.getValue(0);
@@ -27,11 +27,11 @@ public class LocationWiseComplaintZsetBoltProcessor extends AbstractBoltProcesso
         String redisKey;
         String locationCategoryKey;
         for (Long locationId : complaintCreatedMessage.getLocationIds()) {
-            redisKey = locationKeyService.getLocationComplaintsKey(locationId);
+            redisKey = appKeyService.getLocationComplaintsKey(locationId);
             writeToMemoryStoreSortedSet(redisKey, complaintCreatedMessage.getId().toString(), complaintCreatedMessage.getComplaintTime());
             if (!CollectionUtils.isEmpty(complaintCreatedMessage.getCategoryIds())) {
                 for (Long oneCategoryId : complaintCreatedMessage.getCategoryIds()) {
-                    locationCategoryKey = locationKeyService.getLocationCategoryComplaintsKey(locationId, oneCategoryId);
+                    locationCategoryKey = appKeyService.getLocationCategoryComplaintsKey(locationId, oneCategoryId);
                     writeToMemoryStoreSortedSet(locationCategoryKey, complaintCreatedMessage.getId().toString(), complaintCreatedMessage.getComplaintTime());
                 }
             }

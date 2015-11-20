@@ -5,22 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.domain.nodes.ExecutiveBodyAdmin;
+import com.eswaraj.domain.nodes.DepartmentAdmin;
 import com.eswaraj.domain.repo.AddressRepository;
-import com.eswaraj.domain.repo.ExecutiveBodyAdminRepository;
-import com.eswaraj.domain.repo.ExecutiveBodyRepository;
+import com.eswaraj.domain.repo.DepartmentAdminRepository;
+import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.repo.PartyRepository;
 import com.eswaraj.domain.repo.PersonRepository;
 import com.eswaraj.domain.repo.PostRepository;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 
 @Component
-public class ExecutiveBodyAdminConvertor extends BaseConvertor<ExecutiveBodyAdmin, ExecutiveBodyAdminDto> {
+public class ExecutiveBodyAdminConvertor extends BaseConvertor<DepartmentAdmin, ExecutiveBodyAdminDto> {
 
 	@Autowired
-	private ExecutiveBodyAdminRepository executiveBodyAdminRepository;
+	private DepartmentAdminRepository executiveBodyAdminRepository;
 	@Autowired
-	private ExecutiveBodyRepository executiveBodyRepository;
+    private DepartmentRepository departmentRepository;
 	@Autowired
 	private PartyRepository partyRepository;
 	@Autowired
@@ -33,13 +33,13 @@ public class ExecutiveBodyAdminConvertor extends BaseConvertor<ExecutiveBodyAdmi
 	private AddressRepository addressRepository;
 
 	@Override
-	protected ExecutiveBodyAdmin convertInternal(ExecutiveBodyAdminDto webDto) throws ApplicationException {
-		ExecutiveBodyAdmin executiveBodyAdmin = getObjectIfExists(webDto, "ExecutiveBodyAdmin", executiveBodyAdminRepository) ;
+	protected DepartmentAdmin convertInternal(ExecutiveBodyAdminDto webDto) throws ApplicationException {
+		DepartmentAdmin executiveBodyAdmin = getObjectIfExists(webDto, "ExecutiveBodyAdmin", executiveBodyAdminRepository) ;
 		if(executiveBodyAdmin == null){
-			executiveBodyAdmin = new ExecutiveBodyAdmin();
+			executiveBodyAdmin = new DepartmentAdmin();
 		}
 		BeanUtils.copyProperties(webDto, executiveBodyAdmin);
-		executiveBodyAdmin.setExecutiveBody(getObjectIfExists(webDto.getExecutiveBodyId(), "Executive Body", executiveBodyRepository));
+        executiveBodyAdmin.setDepartment(getObjectIfExists(webDto.getExecutiveBodyId(), "Executive Body", departmentRepository));
 		executiveBodyAdmin.setManager(getObjectIfExists(webDto.getManagerId(), "Manager", executiveBodyAdminRepository));
 		executiveBodyAdmin.setPerson(getObjectIfExists(webDto.getPersonId(), "Person", personRepository));
 		executiveBodyAdmin.setPost(getObjectIfExists(webDto.getPostId(), "Post", postRepository));
@@ -47,11 +47,11 @@ public class ExecutiveBodyAdminConvertor extends BaseConvertor<ExecutiveBodyAdmi
 	}
 	
 	@Override
-	protected ExecutiveBodyAdminDto convertBeanInternal(ExecutiveBodyAdmin dbDto) throws ApplicationException {
+	protected ExecutiveBodyAdminDto convertBeanInternal(DepartmentAdmin dbDto) throws ApplicationException {
 		ExecutiveBodyAdminDto executiveBodyAdminDto = new ExecutiveBodyAdminDto();
 		BeanUtils.copyProperties(dbDto, executiveBodyAdminDto);
 		
-		executiveBodyAdminDto.setExecutiveBodyId(getNodeId(dbDto.getExecutiveBody()));
+        executiveBodyAdminDto.setExecutiveBodyId(getNodeId(dbDto.getDepartment()));
 		executiveBodyAdminDto.setManagerId(getNodeId(dbDto.getManager()));
 		executiveBodyAdminDto.setPersonId(getNodeId(dbDto.getPerson()));
 		executiveBodyAdminDto.setPostId(getNodeId(dbDto.getPost()));

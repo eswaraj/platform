@@ -22,6 +22,7 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     private SpoutOutputCollector collector;
     private int retry;
     private List<String> outputStreams;
+    private int maxSpoutPending;
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
@@ -134,7 +135,12 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
     @Override
     public final void ack(Object msgId) {
         logInfo("********************************");
-        logInfo("Message {} has been processed", msgId + " , " + msgId.getClass());
+        if (msgId instanceof MessageId) {
+            logInfo("Message {} has been processed", msgId + " , " + msgId.getClass() + ", total time takes is " + ((MessageId) msgId).getTimeSinceStart() + " ms");
+        } else {
+            logInfo("Message {} has been processed", msgId + " , " + msgId.getClass());
+        }
+
         onAck(msgId);
         logInfo("********************************");
 
@@ -188,6 +194,14 @@ public abstract class EswarajBaseSpout extends EswarajBaseComponent implements I
 
     public void setOutputStreams(List<String> outputStreams) {
         this.outputStreams = outputStreams;
+    }
+
+    public int getMaxSpoutPending() {
+        return maxSpoutPending;
+    }
+
+    public void setMaxSpoutPending(int maxSpoutPending) {
+        this.maxSpoutPending = maxSpoutPending;
     }
 
 }

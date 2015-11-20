@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.support.index.IndexType;
@@ -15,6 +16,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Person")
 public class Person extends BaseNode {
 
 	@Indexed(indexName="PersonNameFt", indexType=IndexType.FULLTEXT)
@@ -28,7 +30,9 @@ public class Person extends BaseNode {
 	private String mobileNumber1;
 	private String mobileNumber2;
     private String profilePhoto;
+    private String voterId;
 	private Address address;
+    private Integer complaintLimit;
 	public String getName() {
 		return name;
 	}
@@ -83,7 +87,16 @@ public class Person extends BaseNode {
 	public void setMobileNumber2(String mobileNumber2) {
 		this.mobileNumber2 = mobileNumber2;
 	}
-	public Address getAddress() {
+
+    public String getVoterId() {
+        return voterId;
+    }
+
+    public void setVoterId(String voterId) {
+        this.voterId = voterId;
+    }
+
+    public Address getAddress() {
 		return address;
 	}
 	public void setAddress(Address address) {
@@ -98,12 +111,18 @@ public class Person extends BaseNode {
         this.profilePhoto = profilePhoto;
     }
 
+    public Integer getComplaintLimit() {
+        return complaintLimit;
+    }
+
+    public void setComplaintLimit(Integer complaintLimit) {
+        this.complaintLimit = complaintLimit;
+    }
     @Override
-	public String toString() {
-		return "Person [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="
-				+ landlineNumber1 + ", \nlandlineNumber2=" + landlineNumber2 + ", \nmobileNumber1=" + mobileNumber1 + ", \nmobileNumber2=" + mobileNumber2
-				+ ", \naddress=" + address + ", \nid=" + id + "]";
-	}
+    public String toString() {
+        return "Person [name=" + name + ", biodata=" + biodata + ", dob=" + dob + ", gender=" + gender + ", email=" + email + ", landlineNumber1=" + landlineNumber1 + ", landlineNumber2="
+                + landlineNumber2 + ", mobileNumber1=" + mobileNumber1 + ", mobileNumber2=" + mobileNumber2 + ", profilePhoto=" + profilePhoto + ", address=" + address + ", id=" + id + "]";
+    }
 	
 	
 

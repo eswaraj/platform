@@ -14,10 +14,8 @@ public class AddressValidator extends BaseValidator<Address>{
 		super(Address.class, validationManager);
 	}
 
-	public void validateBeforeSave(Address address) throws ValidationException {
-		
+	@Override
+    public void validateBeforeSave(Address address) throws ValidationException {
 	}
 
-	public void validateBeforeDelete(Address address) throws ValidationException {
-	}
 }

@@ -1,0 +1,123 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+		<style>
+body {
+	font-size: 12px;
+}
+
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="staff_form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:panel id="mainPanel" header="staff">
+				<p:panelGrid columns="2">
+					<p:outputPanel id="listView" rendered="#{staffBean.showList}">
+						<p:outputLabel value="Search Person" />
+						<p:autoComplete id="searchPerson" value="#{personSearchBean.selectedPerson}" minQueryLength="3"
+							completeMethod="#{personSearchBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
+							itemValue="#{onePerson}" converter="#{personJsfConvertor}">
+							<p:ajax event="itemSelect" update="@form" />
+							<p:column>
+								<p:graphicImage value="#{onePerson.profilePhoto}" style="height:60px;" />
+							</p:column>
+
+							<p:column>
+							     <p:panelGrid columns="4">
+							     <h:outputText value="Name" />
+							     <h:outputText value="#{onePerson.name}" />
+                                 <h:outputText value="Email" />
+                                 <h:outputText value="#{onePerson.email}" />
+                                 <h:outputText value="Gender" />
+                                 <h:outputText value="#{onePerson.gender}" />
+                                 <h:outputText value="Date Of Birth" />
+                                 <h:outputText value="#{personSearchBean.selectedPerson.dob}">
+                                    <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                </h:outputText>
+							     </p:panelGrid>
+								
+							</p:column>
+						</p:autoComplete>
+						<p:outputPanel id="personDetail" rendered="#{staffBean.showPersonDetail}">
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:panelGrid columns="4" cellpadding="5">
+								<p:outputLabel value="Name : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.name}" />
+								<p:outputLabel value="Id : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.id}" />
+								<p:outputLabel value="Gender : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.gender}" />
+								<p:outputLabel value="Date Of Birth : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.dob}">
+									<f:convertDateTime pattern="dd-MMM-yyyy" />
+								</h:outputText>
+								<p:outputLabel value="Email : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.email}" />
+								<p:outputLabel value="LandLine 1 : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.landlineNumber1}" />
+								<p:outputLabel value="LandLine 2 : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.landlineNumber2}" />
+								<p:outputLabel value="Mobile 1 : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.mobileNumber1}" />
+								<p:outputLabel value="Mobile 2 : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.mobileNumber2}" />
+								<p:outputLabel value="Voter Id : " />
+								<h:outputText value="#{personSearchBean.selectedPerson.voterId}" />
+							</h:panelGrid>
+
+							<h:panelGrid>
+								<p:graphicImage style="width:200px;" value="#{personSearchBean.selectedPerson.profilePhoto}" />
+							</h:panelGrid>
+
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+
+							<p:commandButton value="Add Staff" id="addToStaff" ajax="true" process="@this:addToStaff"
+								rendered="#{staffBean.showCreateStaffButton}" actionListener="#{staffBean.saveAdminStaff}" update="@form" />
+							<p:commandButton value="Remove Staff" id="removeStaff" ajax="true" rendered="#{staffBean.showRemoveStaffButton}"
+								actionListener="#{staffBean.removeSelectePersonAdminStaff}" update="@form" />
+							<p:commandButton value="Cancel" id="cancel" ajax="true" process="@this:cancel"
+								actionListener="#{staffBean.cancel}" update="@form" />
+							<p:blockUI block="@form" trigger="removeStaff, addToStaff">Updating...<br />
+								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+							</p:blockUI>
+						</h:panelGrid>
+						</p:outputPanel>
+
+						<p:dataTable var="oneStaff" value="#{staffBean.staff}">
+							<p:column headerText="Id">
+								<h:outputText value="#{oneStaff.person.id}" />
+							</p:column>
+
+							<p:column headerText="Name">
+								<h:outputText value="#{oneStaff.person.name}" />
+							</p:column>
+							<p:column style="width:100px;">
+								<f:facet name="header">
+									<h:outputText value="Remove" />
+								</f:facet>
+								<p:commandLink id="updateAndView" update="@form" title="View">
+									<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+										height="20" />
+									<f:setPropertyActionListener value="#{oneStaff}" target="#{staffBean.selectedStaff}" />
+								</p:commandLink>
+								<p:blockUI block="@form" trigger="updateAndView">Deleting...<br />
+									<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+								</p:blockUI>
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

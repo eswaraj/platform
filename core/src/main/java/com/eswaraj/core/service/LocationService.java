@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.extended.LocationSearchResult;
 import com.eswaraj.web.dto.BoundaryDto;
 import com.eswaraj.web.dto.GeoPointDto;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
@@ -21,7 +22,11 @@ public interface LocationService {
 	
 	List<LocationDto> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
 	
+    List<LocationDto> getAllParents(Long locationId) throws ApplicationException;
+
     List<LocationDto> getLocations(Collection<Long> locations) throws ApplicationException;
+
+    List<LocationDto> getLocations(long start, long pageSize) throws ApplicationException;
 
 	LocationTypeDto saveLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;
 	
@@ -45,14 +50,23 @@ public interface LocationService {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException;
+    LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, String originalFilename, InputStream inputStream, FileService fileService) throws ApplicationException;
 	
     LocationBoundaryFileDto getLocationBoundaryFileById(Long locationBoundaryFileId) throws ApplicationException;
+
+    LocationBoundaryFileDto setLocationBoundaryFileStatus(Long locationBoundaryFileId, String status, boolean active, long totalTimeToProcessMs) throws ApplicationException;
 
 	BoundaryDto saveBoundary(BoundaryDto boundaryDto) throws ApplicationException;
 	
 	GeoPointDto saveBoundaryPoint(GeoPointDto geoPointDto) throws ApplicationException;
 	
     void initializeData() throws ApplicationException;
+
+    void updateAllLocationUrls() throws ApplicationException;
+
+    List<LocationBoundaryFileDto> GetLocationAllBoundaryFile(Long locationId) throws ApplicationException;
+
+    
+    List<LocationSearchResult> searchLocationByName(String name) throws ApplicationException;
 
 }

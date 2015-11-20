@@ -1,0 +1,521 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	min-height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="department_form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:panel id="mainPanel" header="Department">
+				<p:blockUI block="@form" trigger="createDepartment">LOADING<br />
+					<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+				</p:blockUI>
+
+				<p:commandButton id="createDepartment" 
+					value="Create Department" update="@form" actionListener="#{departmentBean.createDepartment}"
+					styleClass="ui-priority-primary">
+				</p:commandButton>
+
+				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+					<p:outputPanel id="treeView">
+						<p:scrollPanel mode="native" style="width:300px;height:600px;">
+							<p:tree value="#{departmentBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+								selection="#{departmentBean.selectedDepartmentNode}">
+								<p:ajax event="expand" update=":department_form:messages" listener="#{departmentBean.onNodeExpand}" />
+								<p:ajax event="collapse" update=":department_form:messages" listener="#{departmentBean.onNodeCollapse}" />
+								<p:ajax event="select" update=":department_form:formView,:department_form:tabView:mapPanel"
+									listener="#{departmentBean.onNodeSelect}" />
+								<p:ajax event="unselect" update=":department_form:formView" listener="#{departmentBean.onNodeUnselect}" />
+
+								<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="document" icon="ui-icon-document">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="picture" icon="ui-icon-image">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="mp3" icon="ui-icon-video">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+							</p:tree>
+						</p:scrollPanel>
+						<p:blockUI block="@form" trigger="doc">LOADING<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+					</p:outputPanel>
+					<p:outputPanel id="formView">
+
+						<p:outputPanel rendered="#{not empty departmentBean.selectedDepartmentNode}">
+							<p:tabView id="tabView">
+								<p:tab title="Main">
+									<h:panelGrid columns="4">
+										<p:outputLabel value="Id"></p:outputLabel>
+										<p:inputText disabled="true" id="id" value="#{departmentBean.selectedDepartmentNode.data.department.id}"
+											style="width:200px" />
+
+										<p:outputLabel value="Name"></p:outputLabel>
+										<p:inputText id="name" value="#{departmentBean.selectedDepartmentNode.data.department.name}"
+											style="width:200px" />
+
+										<p:outputLabel value="Description"></p:outputLabel>
+										<p:inputTextarea rows="3" cols="30"
+											value="#{departmentBean.selectedDepartmentNode.data.department.description}" />
+
+										<p:outputLabel value="Email"></p:outputLabel>
+										<p:inputText id="email" value="#{departmentBean.selectedDepartmentNode.data.department.email}"
+											style="width:200px" />
+
+										<p:outputLabel value="Facebook Page"></p:outputLabel>
+										<p:inputText id="fbPage" value="#{departmentBean.selectedDepartmentNode.data.department.fbPage}"
+											style="width:200px" />
+
+										<p:outputLabel value="Twitter Handle"></p:outputLabel>
+										<p:inputText id="twitterHandle" value="#{departmentBean.selectedDepartmentNode.data.department.twitterHandle}"
+											style="width:200px" />
+
+										<p:outputLabel value="Website"></p:outputLabel>
+										<p:inputText id="website" value="#{departmentBean.selectedDepartmentNode.data.department.website}"
+											style="width:200px" />
+
+										<p:outputLabel value="LandLine 1 : " />
+										<p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.landLine1}" />
+										<p:outputLabel value="LandLine 2 : " />
+										<p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.landLine2}" />
+										<p:outputLabel value="Mobile 1 : " />
+										<p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.mobile1}" />
+										<p:outputLabel value="Mobile 2 : " />
+										<p:inputText value="#{departmentBean.selectedDepartmentNode.data.department.mobile2}" />
+
+
+
+									</h:panelGrid>
+									<p:outputPanel id="categoryPanel">
+                                            <p:tree value="#{departmentBean.categoryRoot}" var="oneCategory" id="categoryTree" selectionMode="checkbox"
+                                                selection="#{departmentBean.selectedCategoryNodes}">
+                                                <!-- 
+                                                <p:aj;ax event="select" update=":department_form:tabView:mapPanel"
+                                                    listener="#{departmentBean.onLocationNodeSelect}" />
+                                                     -->
+                                                <p:treeNode>
+                                                    <h:outputText value="#{oneCategory.name}" />
+                                                </p:treeNode>
+                                            </p:tree>
+                                        </p:outputPanel>
+								</p:tab>
+								<p:tab title="Locations">
+									<h:panelGrid columns="2">
+										<p:outputLabel value="Address Line 1"></p:outputLabel>
+										<p:inputText id="line1" value="#{departmentBean.selectedDepartmentNode.data.department.address.line1}"
+											style="width:400px" />
+
+										<p:outputLabel value="Address Line 2"></p:outputLabel>
+										<p:inputText id="line2" value="#{departmentBean.selectedDepartmentNode.data.department.address.line2}"
+											style="width:400px" />
+
+										<p:outputLabel value="Address Line 3"></p:outputLabel>
+										<p:inputText id="line3" value="#{departmentBean.selectedDepartmentNode.data.department.address.line3}"
+											style="width:400px" />
+
+										<p:outputLabel value="Postal Code"></p:outputLabel>
+										<p:inputText id="postalCode"
+											value="#{departmentBean.selectedDepartmentNode.data.department.address.postalCode}" style="width:150px" />
+									</h:panelGrid>
+									<h:panelGrid columns="6">
+										<p:outputLabel value="Latitude"></p:outputLabel>
+										<p:inputText disabled="true" id="latitude"
+											value="#{departmentBean.selectedDepartmentNode.data.department.address.lattitude}" style="width:200px" />
+
+										<p:outputLabel value="Longitude"></p:outputLabel>
+										<p:inputText disabled="true" id="longitude"
+											value="#{departmentBean.selectedDepartmentNode.data.department.address.longitude}" style="width:200px" />
+
+									</h:panelGrid>
+									<h:panelGrid columns="2">
+										<p:outputPanel id="locationPanel">
+											<p:tree value="#{departmentBean.locationRoot}" var="oneLocation" id="checkboxTree" selectionMode="checkbox"
+												selection="#{departmentBean.selectedLocationNodes}">
+												<p:ajax event="select" update=":department_form:tabView:mapPanel"
+													listener="#{departmentBean.onLocationNodeSelect}" />
+												<p:treeNode>
+													<h:outputText value="#{oneLocation.name}-#{oneLocation.location.locationType.name}" />
+												</p:treeNode>
+											</p:tree>
+										</p:outputPanel>
+										<p:outputPanel id="mapPanel">
+											<p:gmap id="gmap" center="#{departmentBean.lat}, #{departmentBean.lng}" zoom="10" type="HYBRID"
+												rendered="#{not empty departmentBean.selectedDepartmentNode}" model="#{departmentBean.draggableModel}"
+												style="width:700px;height:500px">
+												<p:ajax event="markerDrag" listener="#{departmentBean.onMarkerDrag}"
+													update="@form:tabView:longitude,@form:tabView:latitude" />
+												<!-- <p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" /> -->
+												<p:ajax event="stateChange" listener="#{departmentBean.onStateChange}" />
+
+											</p:gmap>
+
+										</p:outputPanel>
+									</h:panelGrid>
+
+								</p:tab>
+								<p:tab title="Staff" rendered="#{!empty departmentBean.selectedDepartmentNode.data.department.id}">
+								<p:outputPanel id="searchPanel" >
+				                    <p:outputLabel value="Search Person" />
+				                    <p:autoComplete id="searchPerson" value="#{departmentBean.selectedStaffMember}" minQueryLength="3"
+				                        completeMethod="#{departmentBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}" itemValue="#{onePerson}"
+				                        converter="#{jsfPersonConvertor}" forceSelection="true">
+				                        <p:ajax event="itemSelect" update="@form:tabView:searchPanel" />
+				                        <p:column>
+				                            <p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
+				                        </p:column>
+				
+				                        <p:column>
+				                            <h:outputText value="#{onePerson.name} - #{onePerson.id}" /> 
+				                        </p:column>
+				                    </p:autoComplete>
+				                    <h:panelGrid columns="2" cellpadding="5" id="formPanel" rendered="#{not empty departmentBean.selectedStaffMember}">
+				                        <h:panelGrid columns="4" cellpadding="5">
+				                            <p:outputLabel value="Name : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.name}" />
+				                            <p:outputLabel value="Id : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.id}" />
+				                            <p:outputLabel value="Gender : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.gender}" />
+				                            <p:outputLabel value="Date Of Birth : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.dob}">
+				                                <f:convertDateTime pattern="dd-MMM-yyyy" />
+				                            </h:outputText>
+				                            <p:outputLabel value="Email : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.email}" />
+				                            <p:outputLabel value="LandLine 1 : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.landlineNumber1}" />
+				                            <p:outputLabel value="LandLine 2 : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.landlineNumber2}" />
+				                            <p:outputLabel value="Mobile 1 : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.mobileNumber1}" />
+				                            <p:outputLabel value="Mobile 2 : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.mobileNumber2}" />
+				                            <p:outputLabel value="Voter Id : " />
+				                            <h:outputText value="#{departmentBean.selectedStaffMember.voterId}" />
+				                        </h:panelGrid>
+				
+				                        <h:panelGrid>
+				                            <p:graphicImage style="width:200px;" value="#{departmentBean.selectedStaffMember.profilePhoto}" />
+				                        </h:panelGrid>
+				
+				                    </h:panelGrid>
+				                    <p:panelGrid columns="1">
+				                        <f:facet name="header">
+				                                         BioData
+				                                         </f:facet>
+				                        <h:outputText value="#{departmentBean.selectedStaffMember.biodata}" escape="false" />
+				                    </p:panelGrid>
+				
+				                    <p:commandButton actionListener="#{departmentBean.addStaffMember}" value="Add Staff" id="addStaffMember"
+				                        process="@this:addStaffMember"  update="@form" disabled="#{empty departmentBean.selectedStaffMember}" ajax="true" />
+				
+				                </p:outputPanel>
+									<p:dataTable var="oneStaff" value="#{departmentBean.staffMembers}">
+										<p:column headerText="Id">
+											<h:outputText value="#{oneStaff.id}" />
+										</p:column>
+
+										<p:column headerText="Name">
+											<h:outputText value="#{oneStaff.name}" />
+										</p:column>
+
+										<p:column style="width:100px;">
+											<f:facet name="header">
+												<h:outputText value="Delete" />
+											</f:facet>
+											<p:commandLink update="@form" title="Delete">
+												<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+													height="20" />
+												<f:setPropertyActionListener value="#{oneStaff}" target="#{departmentBean.deleteStaffMember}" />
+											</p:commandLink>
+										</p:column>
+
+									</p:dataTable>
+								</p:tab>
+							</p:tabView>
+
+
+							<h:panelGrid columns="6" id="saveCancelButtonPanel">
+								<p:commandButton id="saveDepartment" value="Save" update="@form"
+									actionListener="#{departmentBean.saveDepartment}" styleClass="ui-priority-primary">
+								</p:commandButton>
+								<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{departmentBean.cancel}"
+									styleClass="ui-priority-primary">
+								</p:commandButton>
+								<p:commandButton id="refreshDepartment" value="Refresh department" update="@form"
+									actionListener="#{departmentBean.refreshDepartment}" styleClass="ui-priority-primary">
+								</p:commandButton>
+								<p:blockUI block="@form" trigger="saveDepartment">Saving<br />
+									<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+								</p:blockUI>
+								<p:blockUI block="@form" trigger="refreshDepartment">Loading<br />
+									<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+								</p:blockUI>
+
+							</h:panelGrid>
+
+						</p:outputPanel>
+					</p:outputPanel>
+				</h:panelGrid>
+
+				<!--  
+				<h:panelGrid columns="8" id="buttonPanel">
+				</h:panelGrid>
+				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+						<p:outputPanel id="treeView">
+							<p:scrollPanel mode="native" style="width:300px;height:600px;">
+								<p:tree value="#{departmentBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+									selection="#{departmentBean.selectedDepartmentNode}">
+									<p:ajax event="expand" update=":department_form:messages" listener="#{departmentBean.onNodeExpand}" />
+									<p:ajax event="collapse" update=":department_form:messages" listener="#{departmentBean.onNodeCollapse}" />
+									<p:ajax event="select"
+										update=":department_form:formView,:department_form:tabView:mapPanel,:department_form:contextMenu,:department_form:buttonPanel"
+										listener="#{departmentBean.onNodeSelect}" />
+									<p:ajax event="unselect" update=":department_form:formView" listener="#{departmentBean.onNodeUnselect}" />
+
+									<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="document" icon="ui-icon-document">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="picture" icon="ui-icon-image">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="mp3" icon="ui-icon-video">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+								</p:tree>
+							</p:scrollPanel>
+							<p:contextMenu for="doc" id="contextMenu">
+								<p:menuitem value="Create" update="messages" actionListener="#{departmentBean.displaySelectedSingle}"
+									icon="ui-icon-search" />
+								<p:menuitem value="Delete" update="doc" actionListener="#{departmentBean.deleteNode}" icon="ui-icon-close" />
+							</p:contextMenu>
+							<p:blockUI block="@form" trigger="doc">LOADING<br />
+								<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+							</p:blockUI>
+						</p:outputPanel>
+						<p:outputPanel id="formView">
+							<p:outputPanel rendered="#{not empty departmentBean.selectedDepartmentNode}">
+								<p:tabView id="tabView">
+									<p:tab title="Main">
+										<h:panelGrid columns="4">
+											<p:outputLabel value="Id"></p:outputLabel>
+											<p:inputText disabled="true" id="id" value="#{departmentBean.selectedDepartmentNode.data.department.id}"
+												style="width:200px" />
+
+											<p:outputLabel value="Name"></p:outputLabel>
+											<p:inputText id="name" value="#{departmentBean.selectedDepartmentNode.data.department.name}" style="width:200px" />
+
+											<p:outputLabel value="URL Identifier"></p:outputLabel>
+											<p:inputText disabled="true" id="urlId"
+												value="#{departmentBean.selectedDepartmentNode.data.department.urlIdentifier}" style="width:200px" />
+
+											<p:outputLabel value="Total Houses"></p:outputLabel>
+											<p:inputText id="totalNumberOfHouses"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalNumberOfHouses}" style="width:200px" />
+
+											<p:outputLabel value="Total Populations"></p:outputLabel>
+											<p:inputText id="totalPopulation" value="#{departmentBean.selectedDepartmentNode.data.department.totalPopulation}"
+												style="width:200px" />
+
+											<p:outputLabel value="Total Male Populations"></p:outputLabel>
+											<p:inputText id="totalMalePopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalMalePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Female Populations"></p:outputLabel>
+											<p:inputText id="totalFemalePopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalFemalePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Literate Population"></p:outputLabel>
+											<p:inputText id="totalLiteratePopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalLiteratePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Male Literate Population"></p:outputLabel>
+											<p:inputText id="totalMaleLiteratePopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalMaleLiteratePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Female Literate Population"></p:outputLabel>
+											<p:inputText id="totalFemaleLiteratePopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalFemaleLiteratePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Working Population"></p:outputLabel>
+											<p:inputText id="totalWorkingPopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalWorkingPopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Male Working Population"></p:outputLabel>
+											<p:inputText id="totalMaleWorkingPopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalMaleWorkingPopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Female Working Population"></p:outputLabel>
+											<p:inputText id="totalFemaleWorkingPopulation"
+												value="#{departmentBean.selectedDepartmentNode.data.department.totalFemaleWorkingPopulation}" style="width:200px" />
+
+											<p:outputLabel value="Area(Sq Km)"></p:outputLabel>
+											<p:inputText id="area" value="#{departmentBean.selectedDepartmentNode.data.department.area}" style="width:200px" />
+
+											<p:outputLabel value="Perimeter(Km)"></p:outputLabel>
+											<p:inputText id="perimeter" value="#{departmentBean.selectedDepartmentNode.data.department.perimeter}"
+												style="width:200px" />
+
+										</h:panelGrid>
+										<h:panelGrid columns="1">
+											<p:graphicImage style="max-width:200px;" id="mobileHeaderImageUrlPreview"
+												value="#{departmentBean.selectedDepartmentNode.data.department.mobileHeaderImageUrl}" />
+											<p:fileUpload id="mobileHeaderImageUrlUploader" fileUploadListener="#{departmentBean.handleHeaderFileUpload}"
+												mode="advanced" dragDropSupport="true" auto="true"
+												update="@form:messages, @form:tabView:mobileHeaderImageUrlPreview" sizeLimit="200000" fileLimit="3"
+												allowTypes="/(\.|\/)(jpe?g|png)$/" />
+										</h:panelGrid>
+
+									</p:tab>
+									<p:tab title="Map">
+										<h:panelGrid columns="6">
+											<p:outputLabel value="Latitude"></p:outputLabel>
+											<p:inputText disabled="true" id="latitude"
+												value="#{departmentBean.selectedDepartmentNode.data.department.latitude}" style="width:200px" />
+
+											<p:outputLabel value="Longitude"></p:outputLabel>
+											<p:inputText disabled="true" id="longitude"
+												value="#{departmentBean.selectedDepartmentNode.data.department.longitude}" style="width:200px" />
+
+											<p:outputLabel value="Depth"></p:outputLabel>
+											<p:inputText disabled="true" id="depth" value="#{departmentBean.selectedDepartmentNode.data.department.depth}"
+												style="width:200px" />
+										</h:panelGrid>
+										<h:panelGrid columns="2">
+											<p:outputPanel id="mapPanel">
+
+
+												<p:gmap id="gmap" center="#{departmentBean.lat}, #{departmentBean.lng}"
+													zoom="#{departmentBean.selectedDepartmentNode.data.department.depth}" type="HYBRID"
+													rendered="#{not empty departmentBean.selectedDepartmentNode}" model="#{departmentBean.draggableModel}"
+													style="width:500px;height:500px">
+													<p:ajax event="markerDrag" listener="#{departmentBean.onMarkerDrag}"
+														update="@form:tabView:longitude,@form:tabView:latitude" />
+													<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
+													<p:ajax event="stateChange" listener="#{departmentBean.onStateChange}" update="@form:tabView:depth" />
+
+												</p:gmap>
+
+											</p:outputPanel>
+											<h:panelGrid columns="1">
+												<p:fileUpload id="kmlFileUploader" fileUploadListener="#{departmentBean.handleKmlFileUpload}" mode="advanced"
+													dragDropSupport="true" auto="true" update="@form:messages,@form:tabView:kmlTable" sizeLimit="20000000" fileLimit="1"
+													allowTypes="/(\.|\/)(kml)$/" />
+												<p:blockUI block="@form" trigger="kmlFileUploader" update="@form">Uploading<br />
+													<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+												</p:blockUI>
+
+												<p:dataTable id="kmlTable" var="oneBoundaryFile" value="#{departmentBean.departmentBoundaryFiles}"
+													selectionMode="single" selection="#{departmentBean.selectedKml}" rowKey="#{oneBoundaryFile.id}">
+													<p:column style="width:16px">
+											            <p:rowToggler />
+											        </p:column>
+													<p:column headerText="File name">
+														<h:outputText value="#{oneBoundaryFile.originalFileName}" />
+													</p:column>
+													<p:ajax event="rowSelect" listener="#{departmentBean.onKmlRowSelect}" update="@form:tabView:mapPanel" />
+													<p:column headerText="Status">
+														<h:outputText value="#{oneBoundaryFile.status}" />
+													</p:column>
+													<p:column headerText="Active">
+														<h:outputText value="#{oneBoundaryFile.active}" />
+													</p:column>
+													<p:rowExpansion>
+										            <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
+										 
+										                <h:outputText value="Upload Date" />
+                                                        <h:outputText value="#{oneBoundaryFile.uploadDate}">
+                                                            <f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
+                                                        </h:outputText>
+										 
+										                <h:outputText value="Processing Time" />
+										                <h:outputText value="#{oneBoundaryFile.totalTimeToProcessMs} ms" />
+                                                        <h:outputText value="KML" />
+                                                        <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
+
+										            </p:panelGrid>
+										            <p:commandButton value="ReProcess File" action="#{departmentBean.reprocessKmlFile}">
+												    <f:setPropertyActionListener target="#{departmentBean.selectedKml}"
+												        value="#{oneBoundaryFile}" />
+												        </p:commandButton>
+										        </p:rowExpansion>
+												</p:dataTable>
+											</h:panelGrid>
+										</h:panelGrid>
+
+									</p:tab>
+								</p:tabView>
+
+
+								<h:panelGrid columns="6" id="saveCancelButtonPanel">
+									<p:commandButton id="saveDepartment" value="Save" update="@form" actionListener="#{departmentBean.saveDepartment}"
+										styleClass="ui-priority-primary">
+									</p:commandButton>
+									<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{departmentBean.cancel}"
+										styleClass="ui-priority-primary">
+									</p:commandButton>
+                                    <p:commandButton id="refreshDepartment" value="Refresh department" update="@form" actionListener="#{departmentBean.refreshDepartment}"
+                                        styleClass="ui-priority-primary">
+                                    </p:commandButton>
+									<p:blockUI block="@form" trigger="saveDepartment">Saving<br />
+										<p:graphicImage width="80" value="./images/ajax-loader.gif" />
+									</p:blockUI>
+                                    <p:blockUI block="@form" trigger="refreshDepartment">Loading<br />
+                                        <p:graphicImage width="80" value="./images/ajax-loader.gif" />
+                                    </p:blockUI>
+
+								</h:panelGrid>
+
+							</p:outputPanel>
+						</p:outputPanel>
+					</h:panelGrid>
+				</h:panelGrid>
+-->
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

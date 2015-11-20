@@ -30,6 +30,28 @@ public class DataChangeSpout extends EswarajBaseSpout {
             case DataMessageTypes.LOCATION_UPDATE_MESSAGE_TYPE:
                 writeToParticularStream(new Values(message), "LocationUpdatedStream");
                 break;
+            case DataMessageTypes.REFRESH_ALL_LOCATION_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshAllLocationStream");
+                break;
+            case DataMessageTypes.POLITICAL_BODY_ADMIN_UPDATE_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "PoliticalBodyAdminUpdatedStream");
+                break;
+            case DataMessageTypes.POLITICAL_BODY_ADMIN_TYPE_UPDATE_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "PoliticalBodyAdminTypeUpdatedStream");
+                break;
+            case DataMessageTypes.REFRESH_LOCATION_PBA_LIST_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshAllChildLocationPBAListStream");
+                break;
+            case DataMessageTypes.REFRESH_ALL_COMMENT_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshAllCommentStream");
+                break;
+            case DataMessageTypes.REFRESH_ALL_PERSON_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshAllPersonStream");
+                break;
+            case DataMessageTypes.REFRESH_ONE_PERSON_MESSAGE_TYPE:
+                writeToParticularStream(new Values(message), "RefreshPersonStream");
+                break;
+
             }
         } catch (Exception e) {
             logError("Unable to Process Data message from AWS Quque " + message, e);

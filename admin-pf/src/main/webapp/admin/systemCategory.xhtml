@@ -1,0 +1,97 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="system_category_form" enctype="multipart/form-data">
+			<p:panel id="mainPanel" header="System categories">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:outputPanel id="listView" rendered="#{systemCategoryBean.showList}">
+					<p:commandButton value="Create System Category" actionListener="#{systemCategoryBean.createSystemCategory}" update="@form" />
+					<p:dataTable var="oneSystemCategory" value="#{systemCategoryBean.systemCategories}">
+						<p:column headerText="Id">
+							<h:outputText value="#{oneSystemCategory.id}" />
+						</p:column>
+
+						<p:column headerText="Name">
+							<h:outputText value="#{oneSystemCategory.name}" />
+						</p:column>
+						<p:column headerText="Description">
+							<h:outputText value="#{oneSystemCategory.description}" />
+						</p:column>
+
+						<p:column style="width:100px;">
+							<f:facet name="header">
+								<h:outputText value="Update" />
+							</f:facet>
+							<p:commandLink update="@form" title="Update">
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+									height="20" />
+								<f:setPropertyActionListener value="#{oneSystemCategory}" target="#{systemCategoryBean.selectedSystemCategory}" />
+							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+				</p:outputPanel>
+				<p:outputPanel id="formView" rendered="#{!systemCategoryBean.showList}">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Name" />
+						<p:inputText value="#{systemCategoryBean.selectedSystemCategory.name}" style="width:600px" />
+						<p:outputLabel value="Description" />
+						<p:inputText value="#{systemCategoryBean.selectedSystemCategory.description}" style="width:200px" />
+
+					</p:panelGrid>
+					<p:outputPanel id="buttonView">
+						<p:commandButton value="Cancel" process="@this:cancel" update="@form"
+							actionListener="#{systemCategoryBean.cancel}" ajax="true" styleClass="ui-priority-primary" id="cancel">
+						</p:commandButton>
+						<p:commandButton id="saveSystemCategory" value="Save System Category" update="@form" ajax="true"
+							actionListener="#{systemCategoryBean.saveSystemCategory}" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:blockUI block="@form" trigger="saveSystemCategory">Saving<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+                        <p:blockUI block="@form" trigger="cancel">Loading<br />
+                            <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                        </p:blockUI>
+
+					</p:outputPanel>
+				</p:outputPanel>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 
 import backtype.storm.tuple.Tuple;
 
-import com.eswaraj.core.service.LocationKeyService;
-import com.eswaraj.core.service.StormCacheAppServices;
+import com.eswaraj.cache.LocationCache;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,9 +14,8 @@ import com.google.gson.JsonParser;
 public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
-    private LocationKeyService locationKeyService;
-    @Autowired
-    private StormCacheAppServices stormCacheAppServices;
+    private LocationCache locationCache;
+
     private JsonParser jsonParser = new JsonParser();
 
 	@Override
@@ -26,12 +24,9 @@ public class LocationUpdatedBoltProcessor extends AbstractBoltProcessor {
             String message = (String) input.getValue(0);
             JsonObject jsonObject = (JsonObject)jsonParser.parse(message);
             Long locationId = jsonObject.get("locationId").getAsLong();
-            JsonObject outputJsonObject = stormCacheAppServices.getCompleteLocationInfo(locationId);
-            String redisKey = locationKeyService.getLocationInformationKey(locationId);
 
-            String locationInfo = outputJsonObject.toString();
-            logInfo("Writing Key {} to redis with Value as {}", redisKey, locationInfo);
-            writeToMemoryStoreValue(redisKey, locationInfo);
+            locationCache.refreshLocationInfo(locationId);
+
             return Result.Success;
 		}catch(Exception ex){
             logError("Unable to process message " + input.getValue(0), ex);

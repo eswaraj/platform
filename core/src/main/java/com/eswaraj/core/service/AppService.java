@@ -1,17 +1,23 @@
 package com.eswaraj.core.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.DepartmentDto;
+import com.eswaraj.web.dto.DeviceDto;
 import com.eswaraj.web.dto.ExecutiveBodyAdminDto;
 import com.eswaraj.web.dto.ExecutiveBodyDto;
 import com.eswaraj.web.dto.ExecutivePostDto;
 import com.eswaraj.web.dto.PartyDto;
 import com.eswaraj.web.dto.PoliticalBodyAdminDto;
+import com.eswaraj.web.dto.PoliticalBodyAdminStaffDto;
 import com.eswaraj.web.dto.PoliticalBodyTypeDto;
+import com.eswaraj.web.dto.PoliticalPositionDto;
+import com.eswaraj.web.dto.SavePoliticalAdminStaffRequestDto;
 
 public interface AppService {
 
@@ -53,11 +59,16 @@ public interface AppService {
 	
 	PoliticalBodyAdminDto getCurrentPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
+    List<PoliticalBodyAdminDto> getAllCurrentPoliticalBodyAdminByLocationId(Long locationId) throws ApplicationException;
+
 	List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminByLocationId(Long locationId, Long pbTypeId) throws ApplicationException;
 	
     List<PoliticalBodyAdminDto> getAllPoliticalBodyAdminHistoryByPersonId(Long personId) throws ApplicationException;
 
+    List<PoliticalPositionDto> getAllPoliticalPositionsOfPerson(Long personId, boolean activeOnly) throws ApplicationException;
+
 	//Executive Body APIs
+    /*
 	ExecutiveBodyDto saveExecutiveBody(ExecutiveBodyDto executiveBodyDto) throws ApplicationException;
 	
 	ExecutiveBodyDto getExecutiveBodyById(Long executiveBodyId) throws ApplicationException;
@@ -65,7 +76,7 @@ public interface AppService {
 	List<ExecutiveBodyDto> getAllChildExecutiveBodyOfParent(Long parentExecutiveBodyId) throws ApplicationException;
 	
 	List<ExecutiveBodyDto> getAllRootExecutiveBodyOfDepartment(Long departmentId) throws ApplicationException;
-	
+	*/
 	
 	//Executive Post Admin APIs
 	
@@ -90,4 +101,20 @@ public interface AppService {
 	List<DepartmentDto> getAllDepartmentsOfCategory(long categoryId) throws ApplicationException;
 
     void initializeData() throws ApplicationException;
+
+    void updateAllUrls() throws ApplicationException;
+
+    void savePoliticalBodyAdminStaff(SavePoliticalAdminStaffRequestDto savePoliticalAdminStaffRequestDto) throws ApplicationException;
+
+    List<PoliticalBodyAdminStaffDto> getAllStaffOfPoliticalAdmin(Long politicalAdminId) throws ApplicationException;
+
+    PoliticalBodyAdminStaffDto deletePoliticalAdminStaff(Long politicalAdminStaffId) throws ApplicationException;
+
+    List<DeviceDto> getDevicesForComplaint(Long complaintId) throws ApplicationException;
+
+    List<DeviceDto> getAllDevicesForPerson(Long personId) throws ApplicationException;
+
+    Set<String> getAllCurrentPoliticalAdminIdsOfLocation(Long lcoationId) throws ApplicationException;
+
+    List<Person> getAllPersonsForLeaders() throws ApplicationException;
 }

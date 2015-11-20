@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -27,10 +29,11 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 import com.eswaraj.core.exceptions.ApplicationException;
-import com.eswaraj.core.service.LocationKeyService;
+import com.eswaraj.core.service.AppKeyService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -38,9 +41,11 @@ import com.google.gson.JsonParser;
 public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
-    private LocationKeyService locationKeyService;
+    private AppKeyService appKeyService;
     @Autowired
     private LocationService locationService;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Result processTuple(Tuple inputTuple) {
@@ -60,17 +65,23 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
                 oldLocationBoundaryFileId = jsonObject.get("oldLocationBoundaryFileId").getAsLong();
             }
 
-            String[] newCoordinates = getCoordinatesForBoundaryFileId(newLocationBoundaryFileId);
+            Document doc = getDocument(newLocationBoundaryFileId);
+            updatePopulationDataForLocation(doc, locationId);
+
+            String[] newCoordinates = getCoordinatesFromHttpFile(doc);
 
             AtomicLong totalPointsMissed = new AtomicLong(0);
             AtomicLong totalPointsProcessed = new AtomicLong(0);
+
             if (oldLocationBoundaryFileId != null) {
-                String[] oldCoordinates = getCoordinatesForBoundaryFileId(oldLocationBoundaryFileId);
+                Document oldDoc = getDocument(oldLocationBoundaryFileId);
+                String[] oldCoordinates = getCoordinatesFromHttpFile(oldDoc);
                 // Send all points of old boundary with new Boundary.
                 for (String coordinates : oldCoordinates) {
                     processCoordinates(coordinates, newCoordinates, locationId, totalPointsMissed, totalPointsProcessed, inputTuple);
                 }
             }
+
 
             for (String coordinates : newCoordinates) {
                 processCoordinates(coordinates, new String[] { coordinates }, locationId, totalPointsMissed, totalPointsProcessed, inputTuple);
@@ -87,8 +98,59 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
 
     }
 
-    private String[] getCoordinatesFromHttpFile(String s3HttpUrl) throws ApplicationException {
+    private void updatePopulationDataForLocation(Document doc, Long locationId) {
         try {
+            NodeList dataList = doc.getElementsByTagName("SimpleData");
+            logger.info("Got SImple Data {}", dataList.getLength());
+            LocationDto location = locationService.getLocationById(locationId);
+            for (int temp = 0; temp < dataList.getLength(); temp++) {
+                Node nNode = dataList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element node = (Element) nNode;
+                    logger.info(node.getAttribute("name") + " = " + node.getTextContent());
+                    if (node.getAttribute("name").equals("T_NO_HH")) {
+                        location.setTotalNumberOfHouses((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_POP")) {
+                        location.setTotalPopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_POP") || node.getAttribute("name").equals("TOT_POP")) {
+                        location.setTotalPopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_MPOP") || node.getAttribute("name").equals("M_POP")) {
+                        location.setTotalMalePopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_FPOP") || node.getAttribute("name").equals("F_POP")) {
+                        location.setTotalFemalePopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_POP_LIT")) {
+                        location.setTotalLiteratePopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("T_POP_WRKR")) {
+                        location.setTotalWorkingPopulation((long) Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("AREA") || node.getAttribute("name").equals("Area_SqKm")) {
+                        location.setArea(Double.parseDouble(node.getTextContent()));
+                    }
+                    if (node.getAttribute("name").equals("PERIMETER")) {
+                        location.setPerimeter(Double.parseDouble(node.getTextContent()));
+                    }
+
+                }
+            }
+            logger.info("Saving location : {}", location);
+            location = locationService.saveLocation(location);
+            logger.info("Saved location : {}", location);
+        } catch (Exception ex) {
+            logError("unable to update location data", ex);
+        }
+
+    }
+
+    private Document getDocument(Long boundaryFileId) throws ApplicationException {
+        try{
+            LocationBoundaryFileDto locationBoundaryFileDto = locationService.getLocationBoundaryFileById(boundaryFileId);
+            String s3HttpUrl = locationBoundaryFileDto.getFileNameAndPath();
             logInfo("Getting Location file from " + s3HttpUrl);
             URL url = new URL(s3HttpUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -98,6 +160,17 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
             doc.getDocumentElement().normalize();
+            return doc;
+        }catch(Exception ex){
+            if (ex instanceof ApplicationException) {
+                throw (ApplicationException) ex;
+            }
+            throw new ApplicationException(ex);
+        }
+    }
+
+    private String[] getCoordinatesFromHttpFile(Document doc) throws ApplicationException {
+        try {
 
             NodeList coordinateList = doc.getElementsByTagName("coordinates");
             String coordinates = null;
@@ -117,14 +190,6 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
 
     }
 
-    private String[] getCoordinatesForBoundaryFileId(Long boundaryFileId) throws ApplicationException {
-        LocationBoundaryFileDto locationBoundaryFileDto = locationService.getLocationBoundaryFileById(boundaryFileId);
-        String s3HttpUrl = locationBoundaryFileDto.getFileNameAndPath();
-        return getCoordinatesFromHttpFile(s3HttpUrl);
-
-    }
-
-
     private void processCoordinates(String coordinates, String[] boundaryCorrdinates, Long locationId, AtomicLong totalPointsMissed, AtomicLong totalPointsProcessed,
             Tuple inputTuple) throws ApplicationException {
 
@@ -141,6 +206,8 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
         int count = 0;
         boolean first = true;
         int totalDivide = 0;
+        int totalLinesPerBatch = 10;
+        int totalPointsToProcess = 0;
         for (BigDecimal latitude = topLeftLat; latitude.compareTo(bottomRightLat) <= 0; latitude = latitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
             for (BigDecimal longitude = topLeftLong; longitude.compareTo(bottomRightLong) <= 0; longitude = longitude.add(addedValue).setScale(3, RoundingMode.DOWN)) {
                 if (first) {
@@ -153,18 +220,19 @@ public class LocationFileDistributeBoltProcessor extends AbstractBoltProcessor {
                 sb.append(longitude.toString());
                 sb.append(",");
                 sb.append(latitude.toString());
+                totalPointsToProcess++;
             }
             count++;
-            if (count % 10 == 0) {
+            if (count % totalLinesPerBatch == 0) {
+                logInfo("Total Points to process in one batch : {}", totalPointsToProcess);
                 totalDivide++;
-                logInfo("Writing to stream");
                 writeToStream(inputTuple, new Values(boundaryCorrdinates, sb.toString(), locationId));
-                logInfo("Writing Done");
                 sb = new StringBuilder();
                 first = true;
+                totalPointsToProcess = 0;
             }
         }
-        if (count % 10 > 0) {
+        if (count % totalLinesPerBatch > 0) {
             writeToStream(inputTuple, new Values(boundaryCorrdinates, sb.toString(), locationId));
             totalDivide++;
         }

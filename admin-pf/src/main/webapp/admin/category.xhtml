@@ -1,0 +1,139 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="category_form"  enctype="multipart/form-data">
+			<p:panel id="mainPanel" header="Location">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+					<p:outputPanel id="listView">
+						<p:commandButton id="createRootCategory" value="Create Root Category" update="@form"
+							actionListener="#{categoryBean.createRootCategory}" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:commandButton disabled="true" id="createChildCategory" value="Create Child Category" update="@form"
+							actionListener="#{categoryBean.createChildCategory}" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:scrollPanel mode="native" style="width:300px;height:600px;">
+							<p:tree value="#{categoryBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+								selection="#{categoryBean.selectedNode}">
+								<p:ajax event="expand" update=":category_form:messages" listener="#{categoryBean.onNodeExpand}" />
+								<p:ajax event="collapse" update=":category_form:messages" listener="#{categoryBean.onNodeCollapse}" />
+								<p:ajax event="select" update="@form" listener="#{categoryBean.onNodeSelect}" />
+								<p:ajax event="unselect" update=":category_form:formView" listener="#{categoryBean.onNodeUnselect}" />
+
+								<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="document" icon="ui-icon-document">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="picture" icon="ui-icon-image">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+								<p:treeNode type="mp3" icon="ui-icon-video">
+									<h:outputText value="#{doc.name}" />
+								</p:treeNode>
+							</p:tree>
+						</p:scrollPanel>
+						<p:blockUI block="@form" trigger="doc">LOADING<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+						<p:contextMenu for="doc">
+							<p:menuitem value="Create Location Type" update="@form" actionListener="#{categoryBean.createNewLocationType}"
+								icon="ui-icon-search" />
+							<p:menuitem value="Delete" update="doc" actionListener="#{categoryBean.deleteNode}" icon="ui-icon-close" />
+						</p:contextMenu>
+					</p:outputPanel>
+					<p:outputPanel id="formView">
+						<h:panelGrid columns="2" rendered="#{not empty categoryBean.selectedNode}">
+							<p:outputLabel value="Name"></p:outputLabel>
+							<p:inputText id="name" value="#{categoryBean.selectedNode.data.category.name}" style="width:200px" />
+							<p:outputLabel value="Description"></p:outputLabel>
+							<p:inputTextarea rows="6" cols="50" value="#{categoryBean.selectedNode.data.category.description}" />
+							<p:outputLabel value="System Category"></p:outputLabel>
+							<p:selectOneMenu id="systemCategory" converter="#{systemCategoryConvertor}" value="#{categoryBean.selectedNode.data.category.systemCategory}">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{systemCategoryBean.systemCategories}" var="oneReult" itemLabel="#{oneReult.name}"
+                                    itemValue="#{oneReult}" />
+                            </p:selectOneMenu>
+                                    
+							<p:outputLabel value="Image URL" rendered="#{categoryBean.selectedNode.data.category.root}"></p:outputLabel>
+                            <h:panelGrid columns="1"  rendered="#{categoryBean.selectedNode.data.category.root}">
+                                <p:graphicImage style="max-width:200px;" id="imageUrl" value="#{categoryBean.selectedNode.data.category.imageUrl}" />
+                                <p:fileUpload fileUploadListener="#{categoryBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                    auto="true" update="messages, imageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                            </h:panelGrid>
+
+							<p:outputLabel value="Header Image URL"  rendered="#{categoryBean.selectedNode.data.category.root}"></p:outputLabel>
+							<h:panelGrid columns="1"  rendered="#{categoryBean.selectedNode.data.category.root}">
+								<p:graphicImage style="max-width:400px;" id="headerImageUrl" value="#{categoryBean.selectedNode.data.category.headerImageUrl}" />
+								<p:fileUpload fileUploadListener="#{categoryBean.handleHeaderFileUpload}" mode="advanced" dragDropSupport="true"
+									auto="true" update="messages, headerImageUrl" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+							</h:panelGrid>
+
+							<p:outputLabel value="Video URL(Youtube)"  rendered="#{categoryBean.selectedNode.data.category.root}"></p:outputLabel>
+							<p:inputText  rendered="#{categoryBean.selectedNode.data.category.root}" id="videoUrl" value="#{categoryBean.selectedNode.data.category.videoUrl}" style="width:200px" />
+                            <p:outputLabel  rendered="#{categoryBean.selectedNode.data.category.root}" value="Color"></p:outputLabel>
+                            <p:colorPicker  rendered="#{categoryBean.selectedNode.data.category.root}" value="#{categoryBean.selectedNode.data.category.color}" mode="inline" />
+							<p:outputLabel value="URL Identifier"></p:outputLabel>
+							<p:inputText disabled="true" id="urlIdentifier" value="#{categoryBean.selectedNode.data.category.urlIdentifier}"
+								style="width:200px" />
+
+						</h:panelGrid>
+
+						<p:media rendered="#{categoryBean.selectedNode.data.category.root}" value="#{categoryBean.selectedNode.data.category.videoUrl}" width="420" height="315" player="flash" />
+
+						<h:panelGrid columns="6" id="buttonPanel" rendered="#{not empty categoryBean.selectedNode}">
+							<p:commandButton id="saveCategory" value="Save" update="@form" actionListener="#{categoryBean.saveCategory}"
+								ajax="true" styleClass="ui-priority-primary">
+							</p:commandButton>
+							<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{categoryBean.cancel}"
+								ajax="true" styleClass="ui-priority-primary">
+							</p:commandButton>
+							<p:blockUI block="@form" trigger="saveCategory">Saving<br />
+								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+							</p:blockUI>
+
+						</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

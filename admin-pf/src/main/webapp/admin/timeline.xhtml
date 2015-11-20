@@ -1,0 +1,186 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="timeline_item_form" enctype="multipart/form-data">
+			<p:panel id="mainPanel" header="Political Parties">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:outputPanel id="listView" rendered="#{timelineItemBean.showList}">
+					<p:commandButton value="Create Update" actionListener="#{timelineItemBean.createTimelineItem}" update="@form" />
+					<p:dataTable var="oneTimelineItem" value="#{timelineItemBean.timelineItems}">
+						<p:column headerText="Id">
+							<h:outputText value="#{oneTimelineItem.id}" />
+						</p:column>
+
+						<p:column headerText="Title">
+							<h:outputText value="#{oneTimelineItem.title}" />
+						</p:column>
+
+						<p:column style="width:100px;">
+							<f:facet name="header">
+								<h:outputText value="Update" />
+							</f:facet>
+							<p:commandLink update="@form" title="Update" id="update">
+								<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+									height="20" />
+								<f:setPropertyActionListener value="#{oneTimelineItem}" target="#{timelineItemBean.selectedTimelineItem}" />
+							</p:commandLink>
+							<p:blockUI block="@form" trigger="update">Saving<br />
+                            <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                        </p:blockUI>
+						</p:column>
+
+					</p:dataTable>
+				</p:outputPanel>
+				<p:outputPanel id="formView" rendered="#{!timelineItemBean.showList}">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Title" />
+						<p:inputText value="#{timelineItemBean.selectedTimelineItem.title}" style="width:600px" />
+						<p:outputLabel value="Description" />
+						<p:editor id="description" widgetVar="editorWidget" value="#{timelineItemBean.selectedTimelineItem.description}"
+							width="600" />
+						<p:outputLabel value="Update Time" />
+						<p:calendar id="datetime" value="#{timelineItemBean.selectedTimelineItem.updateTime}"
+							pattern="MM/dd/yyyy HH:mm:ss" />
+						<p:outputLabel value="Youtube URL" />
+						<p:inputText value="#{timelineItemBean.selectedTimelineItem.youtubeUrl}" style="width:600px" />
+
+						<p:outputLabel value="Political Admins" for="admins" />
+						<p:autoComplete id="admins" multiple="true" value="#{timelineItemBean.selectedAdmins}"
+							completeMethod="#{timelineItemBean.completeAdmin}" var="oneAdmin" itemLabel="#{oneAdmin.person.name}-#{oneAdmin.politicalBodyType.shortName}-#{oneAdmin.location.name}"
+							itemValue="#{oneAdmin}" converter="#{politicalBodyAdminSearchResultConvertor}" forceSelection="true">
+                           <p:column>
+                              <p:graphicImage value="#{oneAdmin.person.profilePhoto}" style="max-height:80px;" />
+                           </p:column>
+							<p:column>
+								<h:outputText value="#{oneAdmin.person.name}" />
+							</p:column>
+							<p:column>
+                                <h:outputText value="#{oneAdmin.politicalBodyType.shortName}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{oneAdmin.location.name}" />
+                            </p:column>
+						</p:autoComplete>
+						
+						<p:outputLabel value="Location" for="locations" />
+						<h:panelGrid columns="1" >
+						   <p:outputLabel value="locations for admins will be added automatically, add any extra location by searching here" />
+                           <p:autoComplete id="locations" multiple="true" value="#{timelineItemBean.selectedLocations}"
+                            completeMethod="#{timelineItemBean.completeLocation}" var="oneLocation" itemLabel="#{oneLocation.location.name}-#{oneLocation.locationType.name}"
+                            itemValue="#{oneLocation}" converter="#{locationSearchResultConvertor}" forceSelection="true">
+                            <p:column>
+                                <h:outputText value="#{oneLocation.location.name}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{oneLocation.locationType.name}" />
+                            </p:column>
+                        </p:autoComplete>
+                        </h:panelGrid>
+                        
+                        <h:outputLabel for="promises" value="Election Promises" />
+				        <p:selectCheckboxMenu id="promises" value="#{timelineItemBean.selectedPromises}" label="Election Promises" converter="#{jsfElectionPromiseConvertor}"
+				                              filter="true" filterMatchMode="contains" panelStyle="width:250px">
+				            <f:selectItems value="#{timelineItemBean.promises}" var="onePromise" itemLabel="#{onePromise.title}" itemValue="#{onePromise}" />
+ 
+				        </p:selectCheckboxMenu>
+
+						<p:outputLabel value="Image 1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
+						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
+							<p:graphicImage style="max-width:400px;" id="imageUrl1" value="#{timelineItemBean.selectedTimelineItem.image1}" />
+							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload1}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, imageUrl1" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+						</h:panelGrid>
+
+						<p:outputLabel value="Image 2" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
+						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
+							<p:graphicImage style="max-width:400px;" id="imageUrl2" value="#{timelineItemBean.selectedTimelineItem.image2}" />
+							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload2}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, imageUrl2" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+						</h:panelGrid>
+
+						<p:outputLabel value="Image 3" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
+						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
+							<p:graphicImage style="max-width:400px;" id="imageUrl3" value="#{timelineItemBean.selectedTimelineItem.image3}" />
+							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload3}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, imageUrl3" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+						</h:panelGrid>
+
+						<p:outputLabel value="Image 4" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
+						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
+							<p:graphicImage style="max-width:400px;" id="imageUrl4" value="#{timelineItemBean.selectedTimelineItem.image4}" />
+							<p:fileUpload fileUploadListener="#{timelineItemBean.handleFileUpload4}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, imageUrl4" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+						</h:panelGrid>
+
+						<p:outputLabel value="Document(PDF Only)" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}"></p:outputLabel>
+						<h:panelGrid columns="1" rendered="#{!empty timelineItemBean.selectedTimelineItem.id}">
+							<h3>PDF</h3>
+							<p:outputPanel id="docViewer">
+
+								<object type="application/pdf" data="#{timelineItemBean.selectedTimelineItem.document.url}" height="600px"
+									width="900px">
+									Your browser can't display pdf, <a href="#{timelineItemBean.selectedTimelineItem.document.url}">click</a> to
+									download pdf instead.
+								</object>
+							</p:outputPanel>
+							<p:fileUpload fileUploadListener="#{timelineItemBean.handleDocFileUpload}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, docViewer" sizeLimit="10000000" fileLimit="3" allowTypes="/(\.|\/)(pdf)$/" />
+						</h:panelGrid>
+
+					</p:panelGrid>
+					<p:outputPanel id="buttonView">
+						<p:commandButton value="Cancel" process="@this:cancel" update="@form" actionListener="#{timelineItemBean.cancel}"
+							ajax="true" styleClass="ui-priority-primary" id="cancel">
+						</p:commandButton>
+						<p:commandButton id="saveTimelineItem" value="Save Update" update="@form" ajax="true"
+							actionListener="#{timelineItemBean.saveTimelineItem}" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:blockUI block="@form" trigger="saveTimelineItem">Saving<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+						<p:blockUI block="@form" trigger="cancel">Loading<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+
+					</p:outputPanel>
+				</p:outputPanel>
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

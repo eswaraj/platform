@@ -1,5 +1,7 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -12,6 +14,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Category")
 public class Category extends BaseNode{
 
 	private String name;
@@ -22,6 +25,11 @@ public class Category extends BaseNode{
 	private boolean root;
 	private String headerImageUrl;
 	private String videoUrl;
+    private String urlIdentifier;
+    private String color;
+    @RelatedTo(type = "SYSTEM_CATEGORY")
+    @Fetch
+    private SystemCategory systemCategory;
 	    
     public Category() {}
     public Category(String name) {
@@ -71,7 +79,31 @@ public class Category extends BaseNode{
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
-	@Override
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public SystemCategory getSystemCategory() {
+        return systemCategory;
+    }
+
+    public void setSystemCategory(SystemCategory systemCategory) {
+        this.systemCategory = systemCategory;
+    }
+    @Override
 	public String toString() {
 		return "Category [name=" + name + ", description=" + description
 				+ ", parentCategory=" + parentCategory + ", imageUrl="

@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<link rel="shortcut icon" href="https://s3.amazonaws.com/myaap/favicon.ico" />
+	<!-- 
+	<style type="text/css">
+body {
+	background:
+		url(http://www.primefaces.org/showcase/images/macosx/macback.png);
+	margin: 0;
+	padding: 0;
+	font-family: geneva, arial, helvetica, sans-serif;
+}
+
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.ui-menuitem-icon.ui-icon.appleIcon {
+	background:
+		url(https://lh3.googleusercontent.com/-jQDzpNyxxOU/Ug07-VnIYUI/AAAAAAAANeM/eEweAqJp0Tw/s16/aamaadmi.png)
+		no-repeat;
+	width: 16px;
+	height: 16px;
+	border-radius: 0px;
+}
+
+.ui-dialog .ui-terminal {
+	border: 0;
+}
+
+.ui-dialog.terminalDialog .ui-dialog-content {
+	padding: 0;
+}
+
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+</style>
+-->
+	<h:form>
+		<p:menubar>
+			<p:submenu label="Setup" icon="ui-icon-document">
+			 <!-- 
+				<p:submenu label="New" icon="ui-icon-contact">
+					<p:menuitem value="Project" url="./terms.xhtml" />
+					<p:menuitem value="Other" url="#" />
+				</p:submenu>
+				 -->
+				<p:menuitem value="Complaints" url="./complaints.xhtml" />
+				<p:separator />
+				<p:menuitem value="Logout" actionListener="#{loginBean.logout}"  />
+			</p:submenu>
+			<f:facet name="options">
+				<p:selectOneMenu id="departmentMenu" converter="#{politicalBodyAdminJsfConvertor}"
+					value="#{loginBean.selectedDepartment}">
+					<f:selectItems value="#{loginBean.userDepartments}" var="oneReult"
+						itemLabel="#{oneReult.name}" itemValue="#{oneReult}" />
+					<p:ajax event="valueChange" listener="#{loginBean.onSelectDepartment}" update="@form" />
+
+				</p:selectOneMenu>
+				<p:blockUI block="@form" trigger="departmentMenu">Loading...<br />
+					<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+				</p:blockUI>
+			</f:facet>
+
+			<!-- 
+        <p:submenu label="HashTags" icon="ui-icon-pencil">
+            <p:menuitem value="Related HashTags" url="./related_hashtags.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+            <p:menuitem value="Top Users" url="./hashtag_user.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+        </p:submenu>
+        
+        <p:submenu label="Tweet" icon="ui-icon-pencil">
+            <p:menuitem value="Moderate" url="./tweet_moderation.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+        </p:submenu>
+ 
+        <p:submenu label="Help" icon="ui-icon-help">
+            <p:menuitem value="Contents" url="#" />
+            <p:submenu label="Search" icon="ui-icon-search">
+                <p:submenu label="Text">
+                    <p:menuitem value="Workspace" url="#" />
+                </p:submenu>
+                <p:menuitem value="File" url="#" />
+            </p:submenu>
+        </p:submenu>
+ 
+        <p:submenu label="Actions" icon="ui-icon-gear">
+            <p:submenu label="Ajax" icon="ui-icon-refresh">
+                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" />
+                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" />
+            </p:submenu>
+            <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+                <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close"  ajax="false"/>
+            </p:submenu>
+        </p:submenu>
+ 
+        <p:menuitem value="Quit" url="http://www.primefaces.org" icon="ui-icon-close" />
+ 
+        <f:facet name="options">
+            <p:inputText style="margin-right:10px" placeholder="Search"/>
+            <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+        </f:facet>
+         -->
+		</p:menubar>
+	</h:form>
+
+
+</ui:composition>

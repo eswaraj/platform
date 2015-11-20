@@ -1,0 +1,264 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	min-height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="location_form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:panel id="mainPanel" header="Location">
+				<h:panelGrid columns="8" id="buttonPanel">
+				</h:panelGrid>
+				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+						<p:outputPanel id="treeView">
+							<p:scrollPanel mode="native" style="width:300px;height:600px;">
+								<p:tree value="#{locationBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+									selection="#{locationBean.selectedNode}">
+									<p:ajax event="expand" update=":location_form:messages" listener="#{locationBean.onNodeExpand}" />
+									<p:ajax event="collapse" update=":location_form:messages" listener="#{locationBean.onNodeCollapse}" />
+									<p:ajax event="select"
+										update=":location_form:formView,:location_form:tabView:mapPanel,:location_form:contextMenu,:location_form:buttonPanel"
+										listener="#{locationBean.onNodeSelect}" />
+									<p:ajax event="unselect" update=":location_form:formView" listener="#{locationBean.onNodeUnselect}" />
+
+									<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="document" icon="ui-icon-document">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="picture" icon="ui-icon-image">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+									<p:treeNode type="mp3" icon="ui-icon-video">
+										<h:outputText value="#{doc.name}" />
+									</p:treeNode>
+								</p:tree>
+							</p:scrollPanel>
+							<p:contextMenu for="doc" id="contextMenu">
+								<p:menuitem value="Create" update="messages" actionListener="#{locationBean.displaySelectedSingle}"
+									icon="ui-icon-search" />
+								<p:menuitem value="Delete" update="doc" actionListener="#{locationBean.deleteNode}" icon="ui-icon-close" />
+							</p:contextMenu>
+							<p:blockUI block="@form" trigger="doc">LOADING<br />
+								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+							</p:blockUI>
+						</p:outputPanel>
+						<p:outputPanel id="formView">
+							<p:outputPanel rendered="#{not empty locationBean.selectedNode}">
+								<p:tabView id="tabView">
+									<p:tab title="Main">
+										<h:panelGrid columns="4">
+											<p:outputLabel value="Id"></p:outputLabel>
+											<p:inputText disabled="true" id="id" value="#{locationBean.selectedLocationNode.data.location.id}"
+												style="width:200px" />
+
+											<p:outputLabel value="Name"></p:outputLabel>
+											<p:inputText id="name" value="#{locationBean.selectedLocationNode.data.location.name}" style="width:200px" />
+
+											<p:outputLabel value="URL Identifier"></p:outputLabel>
+											<p:inputText disabled="true" id="urlId"
+												value="#{locationBean.selectedLocationNode.data.location.urlIdentifier}" style="width:200px" />
+
+											<p:outputLabel value="Total Houses"></p:outputLabel>
+											<p:inputText id="totalNumberOfHouses"
+												value="#{locationBean.selectedLocationNode.data.location.totalNumberOfHouses}" style="width:200px" />
+
+											<p:outputLabel value="Total Populations"></p:outputLabel>
+											<p:inputText id="totalPopulation" value="#{locationBean.selectedLocationNode.data.location.totalPopulation}"
+												style="width:200px" />
+
+											<p:outputLabel value="Total Male Populations"></p:outputLabel>
+											<p:inputText id="totalMalePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalMalePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Female Populations"></p:outputLabel>
+											<p:inputText id="totalFemalePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalFemalePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Literate Population"></p:outputLabel>
+											<p:inputText id="totalLiteratePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalLiteratePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Male Literate Population"></p:outputLabel>
+											<p:inputText id="totalMaleLiteratePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalMaleLiteratePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Female Literate Population"></p:outputLabel>
+											<p:inputText id="totalFemaleLiteratePopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalFemaleLiteratePopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Working Population"></p:outputLabel>
+											<p:inputText id="totalWorkingPopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalWorkingPopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Male Working Population"></p:outputLabel>
+											<p:inputText id="totalMaleWorkingPopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalMaleWorkingPopulation}" style="width:200px" />
+
+											<p:outputLabel value="Total Female Working Population"></p:outputLabel>
+											<p:inputText id="totalFemaleWorkingPopulation"
+												value="#{locationBean.selectedLocationNode.data.location.totalFemaleWorkingPopulation}" style="width:200px" />
+
+											<p:outputLabel value="Area(Sq Km)"></p:outputLabel>
+											<p:inputText id="area" value="#{locationBean.selectedLocationNode.data.location.area}" style="width:200px" />
+
+											<p:outputLabel value="Perimeter(Km)"></p:outputLabel>
+											<p:inputText id="perimeter" value="#{locationBean.selectedLocationNode.data.location.perimeter}"
+												style="width:200px" />
+
+										</h:panelGrid>
+										<h:panelGrid columns="1">
+											<p:graphicImage style="max-width:200px;" id="mobileHeaderImageUrlPreview"
+												value="#{locationBean.selectedLocationNode.data.location.mobileHeaderImageUrl}" />
+											<p:fileUpload id="mobileHeaderImageUrlUploader" fileUploadListener="#{locationBean.handleHeaderFileUpload}"
+												mode="advanced" dragDropSupport="true" auto="true"
+												update="@form:messages, @form:tabView:mobileHeaderImageUrlPreview" sizeLimit="200000" fileLimit="3"
+												allowTypes="/(\.|\/)(jpe?g|png)$/" />
+										</h:panelGrid>
+
+									</p:tab>
+									<p:tab title="Map">
+										<h:panelGrid columns="6">
+											<p:outputLabel value="Latitude"></p:outputLabel>
+											<p:inputText disabled="true" id="latitude"
+												value="#{locationBean.selectedLocationNode.data.location.latitude}" style="width:200px" />
+
+											<p:outputLabel value="Longitude"></p:outputLabel>
+											<p:inputText disabled="true" id="longitude"
+												value="#{locationBean.selectedLocationNode.data.location.longitude}" style="width:200px" />
+
+											<p:outputLabel value="Depth"></p:outputLabel>
+											<p:inputText disabled="true" id="depth" value="#{locationBean.selectedLocationNode.data.location.depth}"
+												style="width:200px" />
+										</h:panelGrid>
+										<h:panelGrid columns="2">
+											<p:outputPanel id="mapPanel">
+
+
+												<p:gmap id="gmap" center="#{locationBean.lat}, #{locationBean.lng}"
+													zoom="#{locationBean.selectedLocationNode.data.location.depth}" type="HYBRID"
+													rendered="#{not empty locationBean.selectedNode}" model="#{locationBean.draggableModel}"
+													style="width:500px;height:500px">
+													<p:ajax event="markerDrag" listener="#{locationBean.onMarkerDrag}"
+														update="@form:tabView:longitude,@form:tabView:latitude" />
+													<p:ajax event="overlaySelect" listener="#{polygonsView.onPolygonSelect}" />
+													<p:ajax event="stateChange" listener="#{locationBean.onStateChange}" update="@form:tabView:depth" />
+
+												</p:gmap>
+
+											</p:outputPanel>
+											<h:panelGrid columns="1">
+												<p:fileUpload id="kmlFileUploader" fileUploadListener="#{locationBean.handleKmlFileUpload}" mode="advanced"
+													dragDropSupport="true" auto="true" update="@form:messages,@form:tabView:kmlTable" sizeLimit="20000000" fileLimit="1"
+													allowTypes="/(\.|\/)(kml)$/" />
+												<p:blockUI block="@form" trigger="kmlFileUploader" update="@form">Uploading<br />
+													<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+												</p:blockUI>
+
+												<p:dataTable id="kmlTable" var="oneBoundaryFile" value="#{locationBean.locationBoundaryFiles}"
+													selectionMode="single" selection="#{locationBean.selectedKml}" rowKey="#{oneBoundaryFile.id}">
+													<p:column style="width:16px">
+											            <p:rowToggler />
+											        </p:column>
+													<p:column headerText="File name">
+														<h:outputText value="#{oneBoundaryFile.originalFileName}" />
+													</p:column>
+													<p:ajax event="rowSelect" listener="#{locationBean.onKmlRowSelect}" update="@form:tabView:mapPanel" />
+													<p:column headerText="Status">
+														<h:outputText value="#{oneBoundaryFile.status}" />
+													</p:column>
+													<p:column headerText="Active">
+														<h:outputText value="#{oneBoundaryFile.active}" />
+													</p:column>
+													<p:rowExpansion>
+										            <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
+										 
+										                <h:outputText value="Upload Date" />
+                                                        <h:outputText value="#{oneBoundaryFile.uploadDate}">
+                                                            <f:convertDateTime pattern="dd.MMM.yyyy HH:mm" />
+                                                        </h:outputText>
+										 
+										                <h:outputText value="Processing Time" />
+										                <h:outputText value="#{oneBoundaryFile.totalTimeToProcessMs} ms" />
+                                                        <h:outputText value="KML" />
+                                                        <h:outputText value="#{oneBoundaryFile.fileNameAndPath}" />
+
+										            </p:panelGrid>
+										            <p:commandButton value="ReProcess File" action="#{locationBean.reprocessKmlFile}">
+												    <f:setPropertyActionListener target="#{locationBean.selectedKml}"
+												        value="#{oneBoundaryFile}" />
+												        </p:commandButton>
+										        </p:rowExpansion>
+												</p:dataTable>
+											</h:panelGrid>
+										</h:panelGrid>
+
+									</p:tab>
+								</p:tabView>
+
+
+								<h:panelGrid columns="6" id="saveCancelButtonPanel">
+									<p:commandButton id="saveLocation" value="Save" update="@form" actionListener="#{locationBean.saveLocation}"
+										styleClass="ui-priority-primary">
+									</p:commandButton>
+									<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{locationBean.cancel}"
+										styleClass="ui-priority-primary">
+									</p:commandButton>
+                                    <p:commandButton id="refreshLocation" value="Refresh location" update="@form" actionListener="#{locationBean.refreshLocation}"
+                                        styleClass="ui-priority-primary">
+                                    </p:commandButton>
+									<p:blockUI block="@form" trigger="saveLocation">Saving<br />
+										<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+									</p:blockUI>
+                                    <p:blockUI block="@form" trigger="refreshLocation">Loading<br />
+                                        <p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+                                    </p:blockUI>
+
+								</h:panelGrid>
+
+							</p:outputPanel>
+						</p:outputPanel>
+					</h:panelGrid>
+				</h:panelGrid>
+
+			</p:panel>
+		</h:form>
+	</h:body>
+</f:view>

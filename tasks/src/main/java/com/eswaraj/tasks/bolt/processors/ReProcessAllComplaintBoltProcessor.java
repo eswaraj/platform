@@ -11,21 +11,40 @@ import backtype.storm.tuple.Values;
 import com.eswaraj.core.service.ComplaintService;
 import com.eswaraj.tasks.topology.EswarajBaseBolt.Result;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Component
 public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
 
     @Autowired
     private ComplaintService complaintService;
+    private JsonParser jsonParser = new JsonParser();
 
 	@Override
     public Result processTuple(Tuple input) {
 		try{
+            String jsonMessage = input.getString(0);
+            JsonObject jsonObject = getJsonObject(jsonMessage);
+
+            boolean processAllComplaints = false;
+            Long locationId = 0L;
+            if (jsonObject == null) {
+                // Means process all complaints
+                processAllComplaints = true;
+            } else {
+                locationId = jsonObject.get("locationId").getAsLong();
+            }
             Long start = 0L;
             Long pageSize = 100L;
             List<ComplaintDto> complaints;
             while (true) {
-                complaints = complaintService.getAllComplaints(start, pageSize);
+                if (processAllComplaints) {
+                    complaints = complaintService.getAllComplaints(start, pageSize);
+                } else {
+                    complaints = complaintService.getAllComplaintsOfLocation(locationId, start, pageSize);
+                }
+
                 if (complaints == null || complaints.isEmpty()) {
                     break;
                 }
@@ -44,5 +63,13 @@ public class ReProcessAllComplaintBoltProcessor extends AbstractBoltProcessor {
         return Result.Failed;
 	}
 
+    private JsonObject getJsonObject(String jsonString) {
+        try {
+            return (JsonObject) jsonParser.parse(jsonString);
+        } catch (Exception ex) {
+            logError("Not a valid Json :" + jsonString, ex);
+        }
+        return null;
+    }
 
 }

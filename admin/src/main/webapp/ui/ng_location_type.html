@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html ng-app="locationTypeApp">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Location Type Manager</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+        <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+        <link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+        <link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
+        <link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+
+
+        <!-- Script -->
+        <script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+        <script type="text/javascript" src="js/script.js"></script><!-- Script -->
+        <script src="js/angular.min.js"></script>
+        <script src="js/custom_directives.js"></script>
+        <script type="text/javascript" src="js/ng_loc_type.js"></script><!-- Script -->
+
+        <!-- 2 load the theme CSS file -->
+        <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+        <!-- 4 include the jQuery library -->
+
+        <!-- 5 include the minified jstree source -->
+        <script src="dist/jstree.min.js"></script>
+    </head>
+    <body ng-controller="locationTypeController">
+
+        <header id="headerul" class="header headerbox">
+            <ul>
+                <li class="header fa-3x ">eSwaraj</li>
+                <li class="subscript">Location Type</li>
+            </ul>
+        </header>
+
+        <div id="menu_new" class="menu_new">
+        </div><!-- Right Menu -->
+
+
+        <div id="instruction_hover">
+            <h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+            <span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+                <br> 2. We can update this page as needed
+                <br> 3. What are you doing?
+                <br> 4. You can follow these steps to understand the functionality of this page	
+                <br> 5. Please ask the admin if there are any doubts</span>	
+        </div>
+
+        <div aria-hidden="true" role="dialog"  class="modal fade" id="add-location-type" style="display: none;">
+            <div class="modal-dialog" style="top:30px;">
+                <div class="modal-content">
+                    <div class="modal-header blue">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+                        <h4 class="modal-title">Add Child Location Type</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="child_location_type_id" placeholder="Node ID" disabled ng-model="child.id"/> 
+                        <input type="text" id="child_location_type_name" placeholder="Node Title" ng-model="child.name"/>
+                        <input type="text" id="child_location_type_parent" placeholder="Node Parent" disabled ng-model="child.parentLocationTypeId"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default black" type="button">Close</button>
+                    <button class="btn btn-primary blue" type="button" ng-click="addChildNode();" >Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+
+        </div>
+
+        <div class="wrapper">
+            <div class="container">	
+                <div class="row">
+                    <div class="col-md-12 profile-margin">
+                        <div class="col-md-4">
+                            <h3 class="text-footer-extended">Location Type</h3> 
+                            <!-- the tree is populated via ajax -->
+                            <div jstree id="js_tree" class="scrollcontainer" root-url="/ajax/locationtype/get" child-url="/ajax/locationtype/getchild"  selected-node="selectedNode" display-function="showName(obj)"></div>
+
+                        </div>
+
+                        <div class="col-md-8 border-left">		
+                            <div id="loc_type">
+                                <h3 class="text-footer">Location</h3>
+                                <p>
+                                    Location ID <input type="text" name="location_type_id" id="location_type_id" value="" disabled="disabled" ng-model="loc.id">
+                                    Location Name <input type="text" name="location_type_name" id="location_type_name" value="" ng-model="loc.name" ng-disabled="!editMode">
+                                    Parent Location Type <input type="text" name="location_type_parent" id="location_type_parent" value="" disabled="disabled" ng-model="loc.parentLocationTypeId">
+                                </p>
+                                <br>
+
+                                <a id="location_type_btn" class="btn btn-primary blue btn_round" href="#add-location-type" data-toggle="modal" ng-show="!editMode">Add Child Node</a></td>
+                            <!--td><a id="delete_btn" class="btn pink" href="#" ng-click="deleteNode()">Delete Node</a></td-->
+                            <a id="save_btn" class="btn btn-primary blue btn_round" href="#" ng-click="updateNode()" ng-show="editMode">Update Node</a>
+                            <a id="edit_btn" class="btn btn-primary blue btn_round" href="#" ng-click="editNode()" ng-show="!editMode">Edit Node</a>
+                            <a id="cancel_btn" class="btn btn-primary blue btn_round" href="#" ng-click="cancel()" ng-show="editMode">Cancel</a>
+                            <!--button id="edit_btn" class="edit btn btn-primary blue btn_round"-->
+
+                        </div>					
+
+                        <div class="">
+                            <div id="map-canvas" style="padding-top: 80px;"></div>	
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        </div><!-- Container -->
+    </div><!-- Wrapper -->
+
+
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Person Manager</title>
+
+		<!-- Styles -->
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+		<link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.css" type="text/css" /><!-- Font Awesome -->
+		<link rel="stylesheet" href="css/style.css" type="text/css" /><!-- Style -->	
+		<link rel="stylesheet" href="css/admin.css" type="text/css" /><!-- Style -->	
+		<link rel="stylesheet" href="css/responsive.css" type="text/css" /><!-- Responsive -->	
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+
+			#map-canvas {
+				margin-left: 0px;
+				margin-right: auto;
+				padding: 0;
+				width: 600px;
+				height: 400px;
+			}
+			.controls {
+				margin-top: 16px;
+				border: 1px solid transparent;
+				border-radius: 2px 0 0 2px;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				height: 32px;
+				outline: none;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+			}
+
+			#pac-input {
+			background-color: #fff;
+			padding: 0 11px 0 13px;
+			width: 400px;
+			font-family: Roboto;
+			font-size: 15px;
+			font-weight: 300;
+			text-overflow: ellipsis;
+			}
+
+			#pac-input:focus {
+			border-color: #4d90fe;
+			margin-left: -1px;
+			padding-left: 14px;  /* Regular padding-left + 1. */
+			width: 401px;
+			}
+
+			.pac-container {
+			font-family: Roboto;
+			}
+		</style>
+
+		<!-- Script -->
+		<script src="js/jquery-1.10.2.js"></script><!-- Jquery -->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap -->
+		<script type="text/javascript" src="js/script.js"></script><!-- Script -->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+
+		<!-- 2 load the theme CSS file -->
+		<link rel="stylesheet" href="dist/themes/default/style.min.css" />
+		<!-- 4 include the jQuery library -->
+
+		<!-- 5 include the minified jstree source -->
+		<script src="dist/jstree.min.js"></script>
+		<link rel="stylesheet" href="css/jquery-ui.min.css" />
+		<script src="js/jquery-ui.min.js"></script>
+
+	</head>
+	<body>
+
+	
+		<header id="headerul" class="header headerbox">
+		<ul>
+			<li class="header fa-3x ">eSwaraj</li>
+			<li class="subscript">Person Database</li>
+		</ul>
+		</header>
+		
+		<div id="menu_new" class="menu_new">
+		</div><!-- Right Menu -->
+		
+		
+		<div id="instruction_hover">
+			<h6 class="btn btn-primary blue btn_round" style="float: right">User Guidelines</h6>
+			<span id="guidelines_span" style="float: right">1. These titles are shown only using CSS, no JavaScript is used! 
+			<br> 2. We can update this page as needed
+			<br> 3. What are you doing?
+			<br> 4. You can follow these steps to understand the functionality of this page	
+			<br> 5. Please ask the admin if there are any doubts</span>	
+		</div>
+
+				<div aria-hidden="true" role="dialog"  class="modal fade" id="new-person" style="display: none;">
+					<div class="modal-dialog" style="top:30px;">
+						<div class="modal-content">
+							<div class="modal-header blue">
+								<button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-minus"></i></button>
+								<h4 class="modal-title">Add New Person</h4>
+							</div>
+							<div class="modal-body">
+
+								<input type="text" id="new_person_id" placeholder="Person ID" disabled="disabled" />
+								<input type="text" id="new_person_name" placeholder="Name" />
+								<input type="text" id="new_person_biodata" placeholder="Biodata" />
+								<input type="text" id="new_person_dob" placeholder="Date of Birth" />
+								<input type="text" id="new_person_photo" placeholder="Profile Photo" />
+								<select type="text" id="new_person_gender"><option value="Male">Male</option><option value="Female">Female</option></select>
+								<input type="text" id="new_person_email" placeholder="Email" />
+								<input type="date" id="new_person_ll1" placeholder="Landline1" />
+								<input type="date" id="new_person_ll2" placeholder="Landline2" />
+								<input type="text" id="new_person_mobile1" placeholder="Mobile1" />
+								<input type="text" id="new_person_mobile2" placeholder="Mobile2" />
+								<input type="text" id="new_person_addressId" placeholder="Address Id" disabled="disabled"/>
+								<input type="text" id="new_person_line1" placeholder="Address Line 1" />
+								<input type="text" id="new_person_line2" placeholder="Address Line 2" />
+								<input type="text" id="new_person_line3" placeholder="Address Line 3" />
+								<input type="text" id="new_person_postal" placeholder="Postal Code" />
+
+								<input type="text" id='village-list' placeholder="Village ID"/>
+								<input type="text" id='ward-list' placeholder="Ward ID"/>
+								<input type="text" id='city-list' placeholder="City ID"/>
+								<input type="text" id='district-list' placeholder="District ID"/>
+								<input type="text" id='state-list' placeholder="State ID"/>
+								<input type="text" id='country-list' placeholder="Country ID"/>
+
+
+							</div>					 				  
+							<div class="modal-footer">
+								<button data-dismiss="modal" id="form-close" class="btn btn-default black close" type="button">Close</button>
+								<button data-dismiss="modal" id="form-save" class="btn btn-primary blue" type="button" >Save changes</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div>	
+				</div>	
+
+<div class="wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 profile-margin">
+			<div class="col-md-4">
+								<h3 class="text-footer-extended">Database Search</h3>
+				<input type="text" id="person_search" placeholder="Person Name" class="left_float"/>
+				<button class="btn btn-primary blue btn_round" style="margin-left:10px; margin-top: -5px;" type="button" id="searchButton" >Search Person</button>
+				<div id="searchResults">
+					<br><h3 class="text-footer-extended">Existing Persons:</h3>
+
+					<table id="users">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Update</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+
+				<br><a id="addPerson" class="btn btn-primary blue btn_round" href="#new-person" data-toggle="modal" onClick="setNodeId(event)">Add Person</a>
+				</div>
+
+			</div>
+			<div class="col-md-8">
+				<b style="color: #FF9933">Latitude : <b/><input type="text" name="node_lat" id="node_lat" value="" readonly>
+				<b style="color: #FF9933">Longitude : </b><input type="text" name="node_long" id="node_long" value="" readonly>
+				<p name="rev_geo" id="rev_geo"></p>
+				<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+				<div id="map-canvas" width="400px;" height="400px;"></div>
+				<br><button type="button" id="pick" class="btn btn-primary blue btn_round">Pick location</button>
+				<button type="button" id="submit" class="btn btn-primary blue btn_round">Save Person</button>
+				</div>
+			</div>	
+		</div>
+	</div><!-- Container -->
+</div><!-- Wrapper -->
+
+
+
+		<script type="text/javascript" src="js/person.js"></script><!-- Script -->
+	</body>
+</html>

@@ -1,0 +1,293 @@
+body {
+	min-width: 750px;
+}
+.thumb {
+	width: 30px;
+	height: 30px;
+}
+
+.btn_round{
+	width: 150px; !important;
+	border-radius: 30px; 
+	-moz-border-radius: 30px; 
+	-webkit-border-radius: 30px;
+	margin-bottom:4px;
+	margin-top:4px;
+	margin-left: 5px;
+ }
+
+.btn_round_half{
+	width: 75px; !important;
+	border-radius: 30px; 
+	-moz-border-radius: 30px; 
+	-webkit-border-radius: 30px;
+	margin-bottom:4px;
+	margin-top:4px;
+	margin-left: 4px;
+ }
+
+ .wrapper {
+	 float: left;
+	 margin-top: 7.5%;
+	 padding-left: 10px;
+	 padding-top: 3px;
+	 width: 100%;
+}
+
+#menu_new {
+	top-padding: 55px;
+}
+
+.text_margin_bottom{
+	margin-bottom:5px;
+}
+
+.box_shadow_dim{
+	box-shadow: 2px 2px 5px #CCC
+}	
+
+.text-footer{
+	padding-bottom:9px;
+	width:180px;
+	margin:0px 0 10px;
+	border-bottom:2px solid #ccc;
+	color:#FF9933;
+}
+
+.text-footer-extended{
+	padding-bottom:9px;
+	width:250px;
+	margin:0px 0 20px;
+	border-bottom:2px solid #ccc;
+	color:#FF9933;
+}
+
+.saffron_text{
+	color:#FF9933;
+	font-size: 18px;
+}
+
+.border-lr {
+	border-left: 1px solid #D2D2D2 ;
+	border-right: 1px solid #D2D2D2 ;
+  }
+
+  .border-right{
+	  border-right: 1px solid #D2D2D2 ;
+}
+.border-left{
+	border-left: 1px solid #D2D2D2 ;
+}
+
+.shift_right {
+	left: 15px;
+}
+
+.shift-bottom{
+	padding-top: 100px;
+}
+
+.headerbox{
+	margin-top:0px;
+	margin-bottom:5px;
+	border: 1px solid black;
+	border-left:0;
+	border-right:0;
+	border-top: 0;
+	box-shadow: 0px 1px 1px #FF9933;
+	/*background-color: #EEEEE2;*/
+	background-color: #FF9933;
+	border-radius: 0px;
+	border-color: #FF9933;
+	color: #D2D2D2;
+	text-decoration: none;
+	position:relative;
+	height: 50px;
+}
+
+.header_font_size{
+font-size: 32px;
+}
+
+#headerul ul
+{
+margin: 0;
+padding: 0;
+list-style-type: none;
+}
+
+#headerul ul li { display: inline; }
+
+
+.header{
+	position:relative;
+	padding-left: 20px;
+}
+
+.textbox { 
+	background: #FFF url(http://html-generator.weebly.com/files/theme/input-text-9.png) no-repeat 4px 4px; 
+	border: 1px solid #999; 
+	outline:0; 
+	padding-left: 25px;
+	height:26px; 
+	width: 174px !important;
+ } 
+
+ table, th, td {
+	 border-collapse: collapse;
+	 table-layout: fixed;
+	 text-overflow: ellipsis;
+	 overflow: hidden;
+	 width:100%
+}
+
+table td, table th {
+border: 1px solid #D2D2D2;
+}
+	 
+table tr:first-child th {
+  border-top: 0;
+}
+table tr:last-child td {
+  border-bottom: 0;
+}
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+}
+
+ .container{
+ margin: 0px 30px 0px 30px;
+ width: auto;
+ }
+  
+th, td {
+	padding: 5px;
+	text-align: center;
+	overflow-x: hidden;
+}
+
+#staff_admin_type_div{
+	position: absolute;
+	padding-left: 0px;
+	width: 800px;
+	
+}
+
+table.table_topdown_border tr:last-child td {
+    border-style: solid;
+    border-bottom-width: 2px;
+}
+
+table.table_topdown_border tr:first-child th{
+    border-style: solid;
+    border-top-width: 2px;
+}
+
+.profile-margin {
+margin-top: 1px;
+padding-left: 0px;
+padding-right: 0px;
+}
+
+.left_float{
+float:left;
+}
+
+.right_float{
+float:right;
+}
+
+.instruction_hover span{
+    float:right;
+	text-align: right;
+	padding:2px 6px;
+	background-color:#78CCD2;
+	color:#186C72;
+	border-radius:30px;
+	margin:3px;
+	cursor:default;
+}
+
+/* Pseudo elements can even access attributes of their parent element */
+
+#guidelines_span {
+  display: none;
+  font-size: 12px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+#instruction_hover:hover #guidelines_span {
+  display: block;
+}
+
+.subscript {
+/*    vertical-align:bottom; */
+    font-size:1.6em;
+	color: #C5C5C5;
+}
+
+#person_details{
+width: 100%;
+font-size: 18px;
+color: #A2A2A2;
+background-color: #F2F2F2;
+margin-bottom: 25px;
+text-align: middle;
+padding: 10px;
+cursor: pointer;
+}
+
+.member_pic{
+width: 150px;
+height: 150px;
+max-width: 150px;
+max-height: 150px;
+border-radius: 8px;
+margin-left: 45px;
+}
+
+#mla_staff_page{
+margin: 100px;
+}
+
+#add_edit_admin_page{
+margin: 0px 100px 0px 100px;
+}
+
+#add_edit_admin_page table, #add_edit_admin_page th, #add_edit_admin_page td {
+text-align: left;
+width: auto;
+}
+
+#add_edit_admin_page input{
+border: 1px solid #F2F2F2;
+}
+ 
+ #staffadmin_haLine1, #staffadmin_haLine2, #staffadmin_haLine3{
+ width: 100%;
+ }
+ 
+#search_by_email {
+margin-left: 380px;
+}
+
+.dropdownlist{
+width: 220px;
+height: 30px;
+}
+
+.taitems{
+margin-left: 8.25%;
+}
+
+.footer_pos{
+position: absolute;
+bottom: 0px; 
+width: 100%; 
+}

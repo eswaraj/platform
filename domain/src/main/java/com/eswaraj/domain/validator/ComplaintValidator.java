@@ -19,7 +19,6 @@ public class ComplaintValidator extends BaseValidator<Complaint>{
         // checkIfEmpty("Title", complaint.getTitle(),
         // "Complaint title cannot be empty or null");
         checkIfNullOrEmpty("Category", complaint.getCategories(), "Complaint needs to belong to a category and can't be null.");
-		checkIfNull("Person", complaint.getPerson(), "Complaint needs to be lodged by a Person and person can't be null.");
 	}
 
 	@Override

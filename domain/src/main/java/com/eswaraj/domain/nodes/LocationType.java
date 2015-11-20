@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -13,6 +14,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("LocationType")
 public class LocationType extends BaseNode {
 
 	@Indexed
@@ -24,6 +26,8 @@ public class LocationType extends BaseNode {
 	@RelatedTo(type="BELONGS_TO")
 	private DataClient dataClient;
 	
+    private String urlIdentifier;
+
 	private boolean root;
 	
 	public String getName() {
@@ -58,11 +62,18 @@ public class LocationType extends BaseNode {
 		this.root = root;
 	}
 
-	@Override
-	public String toString() {
-		return "LocationType [name=" + name + ", parentLocationType=" + parentLocationType + ", dataClient=" + dataClient + ", root=" + root + ", id=" + id
-				+ "]";
-	}
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
+    @Override
+    public String toString() {
+        return "LocationType [name=" + name + ", parentLocationType=" + parentLocationType + ", dataClient=" + dataClient + ", urlIdentifier=" + urlIdentifier + ", root=" + root + ", id=" + id + "]";
+    }
 
 	
 }

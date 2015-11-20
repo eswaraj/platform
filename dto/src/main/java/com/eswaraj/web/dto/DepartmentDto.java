@@ -17,7 +17,6 @@ public class DepartmentDto extends BaseDto{
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String description;
-    private Long categoryId;
 	public String getName() {
 		return name;
 	}
@@ -30,15 +29,9 @@ public class DepartmentDto extends BaseDto{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Long getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
 	@Override
 	public String toString() {
-		return "DepartmentDto [name=" + name + ", description=" + description + ", categoryId=" + categoryId + ", id=" + id + "]";
+        return "DepartmentDto [name=" + name + ", description=" + description + ", id=" + id + "]";
 	}
 
 	

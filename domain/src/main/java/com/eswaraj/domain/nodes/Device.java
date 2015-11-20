@@ -1,8 +1,8 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
 
@@ -14,13 +14,13 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Device")
 public class Device extends BaseNode {
 
 	private DeviceType deviceType;
 	@Indexed(unique=true)
 	private String deviceId;
-	@RelatedTo(type = "OF_USER")
-	private User user;
+    private String gcmId;
 
 	public DeviceType getDeviceType() {
 		return deviceType;
@@ -38,21 +38,21 @@ public class Device extends BaseNode {
 		this.deviceId = deviceId;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public enum DeviceType {
 		Android, Iphone;
 	}
 
+    public String getGcmId() {
+        return gcmId;
+    }
+
+    public void setGcmId(String gcmId) {
+        this.gcmId = gcmId;
+    }
+
     @Override
     public String toString() {
-        return "Device [deviceType=" + deviceType + ", deviceId=" + deviceId + ", user=" + user + ", id=" + id + "]";
+        return "Device [deviceType=" + deviceType + ", deviceId=" + deviceId + ", id=" + id + "]";
     }
 
 }

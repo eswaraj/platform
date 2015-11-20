@@ -10,6 +10,9 @@ public class LocationDto extends BaseDto {
 	private Double latitude;
 	private Double longitude;
     private String boundaryFile;
+    private String urlIdentifier;
+
+    private String mobileHeaderImageUrl;
 	
 	private Long totalNumberOfHouses;
 	
@@ -31,6 +34,10 @@ public class LocationDto extends BaseDto {
 	
 	private Long totalFemaleWorkingPopulation;
 	
+    private Double area;
+
+    private Double perimeter;
+
 	public String getName() {
 		return name;
 	}
@@ -130,11 +137,46 @@ public class LocationDto extends BaseDto {
         this.boundaryFile = boundaryFile;
     }
 
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public Double getPerimeter() {
+        return perimeter;
+    }
+
+    public void setPerimeter(Double perimeter) {
+        this.perimeter = perimeter;
+    }
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
+    public String getMobileHeaderImageUrl() {
+        return mobileHeaderImageUrl;
+    }
+
+    public void setMobileHeaderImageUrl(String mobileHeaderImageUrl) {
+        this.mobileHeaderImageUrl = mobileHeaderImageUrl;
+    }
     @Override
-	public String toString() {
-		return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", latitude=" + latitude
-				+ ", longitude=" + longitude + ", getId()=" + getId() + "]";
-	}
+    public String toString() {
+        return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", latitude=" + latitude + ", longitude=" + longitude
+                + ", boundaryFile=" + boundaryFile + ", urlIdentifier=" + urlIdentifier + ", mobileHeaderImageUrl=" + mobileHeaderImageUrl + ", totalNumberOfHouses=" + totalNumberOfHouses
+                + ", totalPopulation=" + totalPopulation + ", totalMalePopulation=" + totalMalePopulation + ", totalFemalePopulation=" + totalFemalePopulation + ", totalLiteratePopulation="
+                + totalLiteratePopulation + ", totalMaleLiteratePopulation=" + totalMaleLiteratePopulation + ", totalFemaleLiteratePopulation=" + totalFemaleLiteratePopulation
+                + ", totalWorkingPopulation=" + totalWorkingPopulation + ", totalMaleWorkingPopulation=" + totalMaleWorkingPopulation + ", totalFemaleWorkingPopulation="
+                + totalFemaleWorkingPopulation + ", area=" + area + ", perimeter=" + perimeter + ", id=" + id + "]";
+    }
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -20,6 +20,7 @@
 	    <module>domain</module>
 	    <module>core</module>
 	    <module>web</module>
+            <module>admin</module>
             <module>cache</module>
 	</modules>
 </project>

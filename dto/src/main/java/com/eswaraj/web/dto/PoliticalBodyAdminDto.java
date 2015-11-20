@@ -32,6 +32,10 @@ public class PoliticalBodyAdminDto extends BaseDto {
 	private Date startDate;
 	private Date endDate;
 	private boolean active;
+    private String fbPage;
+    private String fbAccount;
+    private String twitterHandle;
+    private String urlIdentifier;
 	
 	public Long getPoliticalBodyTypeId() {
 		return politicalBodyTypeId;
@@ -117,13 +121,45 @@ public class PoliticalBodyAdminDto extends BaseDto {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	@Override
-	public String toString() {
-		return "PoliticalBodyAdminDto [politicalBodyTypeId=" + politicalBodyTypeId + ", \nlocationId=" + locationId + ", \npersonId=" + personId
-				+ ", \npartyId=" + partyId + ", \nofficeAddressDto=" + officeAddressDto + ", \nhomeAddressDto=" + homeAddressDto + ", \nemail=" + email
-				+ ", \nlandLine1=" + landLine1 + ", \nlandLine2=" + landLine2 + ", \nmobile1=" + mobile1 + ", \nmobile2=" + mobile2 + ", \nstartDate="
-				+ startDate + ", \nendDate=" + endDate + ", \nactive=" + active + ", \nid=" + id + "]";
-	}
+
+    public String getFbPage() {
+        return fbPage;
+    }
+
+    public void setFbPage(String fbPage) {
+        this.fbPage = fbPage;
+    }
+
+    public String getFbAccount() {
+        return fbAccount;
+    }
+
+    public void setFbAccount(String fbAccount) {
+        this.fbAccount = fbAccount;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
+    }
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+    @Override
+    public String toString() {
+        return "PoliticalBodyAdminDto [politicalBodyTypeId=" + politicalBodyTypeId + ", locationId=" + locationId + ", personId=" + personId + ", partyId=" + partyId + ", officeAddressDto="
+                + officeAddressDto + ", homeAddressDto=" + homeAddressDto + ", email=" + email + ", landLine1=" + landLine1 + ", landLine2=" + landLine2 + ", mobile1=" + mobile1 + ", mobile2="
+                + mobile2 + ", startDate=" + startDate + ", endDate=" + endDate + ", active=" + active + ", fbPage=" + fbPage + ", fbAccount=" + fbAccount + ", twitterHandle=" + twitterHandle
+                + ", id=" + id + "]";
+    }
 	
 
 }

@@ -12,16 +12,19 @@
 	</organization>
 	<inceptionYear>2014</inceptionYear>
 
-
 	<modules>
             <module>parent</module>
             <module>test</module>
 	    <module>dto</module>
 	    <module>domain</module>
 	    <module>core</module>
+            <module>admin</module>
+            <module>admin-pf</module>
 	    <module>api</module>
 	    <module>web</module>
             <module>cache</module>
             <module>tasks</module>
+            <module>leader</module>
+            <module>executive</module>
 	</modules>
 </project>

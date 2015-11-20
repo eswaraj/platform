@@ -2,6 +2,8 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -16,6 +18,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Complaint")
 public class Complaint extends BaseNode {
 
     private String title;
@@ -23,34 +26,27 @@ public class Complaint extends BaseNode {
     private double lattitude;
     private double longitude;
     @RelatedTo(type = "BELONGS_TO")
+    @Fetch
     private Set<Category> categories;
-    @RelatedTo(type = "LODGED_BY")
-    private Person person;
     @RelatedTo(type = "SERVED_BY")
-    private ExecutiveBodyAdmin administrator;
-    // @RelatedTo(type="IS_IN")
-    // @Fetch
+    private DepartmentAdmin administrator;
     private Status status;
-    @RelatedTo(type = "ENDORSED_BY", elementClass = Person.class)
-    private Set<Person> endorsements;
-    @RelatedTo(type = "SERVED_BY")
-    private Set<PoliticalBodyAdmin> servants;
-    private Set<Photo> photos;
-    private Set<Video> videos;
     @RelatedTo(type = "AT")
     private Set<Location> locations;
     @Indexed
     private Long complaintTime;
     @Indexed
     private String nearByKey;
+    private String locationAddress;
+    private String shortUrl;
 
     public Complaint() {
-        this.status = Status.PENDING;
+        this.status = Status.Pending;
     }
 
     public Complaint(String title) {
         this.title = title;
-        this.status = Status.PENDING;
+        this.status = Status.Pending;
     }
 
     public String getTitle() {
@@ -69,19 +65,11 @@ public class Complaint extends BaseNode {
         this.description = description;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public ExecutiveBodyAdmin getAdministrator() {
+    public DepartmentAdmin getAdministrator() {
         return administrator;
     }
 
-    public void setAdministrator(ExecutiveBodyAdmin administrator) {
+    public void setAdministrator(DepartmentAdmin administrator) {
         this.administrator = administrator;
     }
 
@@ -93,45 +81,12 @@ public class Complaint extends BaseNode {
         this.status = status;
     }
 
-    public Set<Person> getEndorsements() {
-        return endorsements;
-    }
-
-    public void setEndorsements(Set<Person> endorsements) {
-        this.endorsements = endorsements;
-    }
-
-    public Set<PoliticalBodyAdmin> getServants() {
-        return servants;
-    }
-
-    public void setServants(Set<PoliticalBodyAdmin> servants) {
-        this.servants = servants;
-    }
-
-    public Set<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(Set<Photo> photos) {
-        this.photos = photos;
-    }
-
-    public Set<Video> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(Set<Video> videos) {
-        this.videos = videos;
-    }
-
     public enum Status {
 
-        PENDING("Complaint has not been looked upon by an Administrator yet"), ACKNOWLEDGED("Complaint has been looked upon and understood by an Administrator"), QUERY(
-                "An Administrator has a query about this complaint"), DUPLICATE("Administrator thinks this is a duplicate of another complaint"), ASSIGNED(
-                "Administrator has assigned a task force to this complaint"), IN_PROGRESS("Your complaint is being worked upon"), IN_REVIEW(
-                "Your complaint has been worked upon waiting for your review."), DONE("This complaint has been resolved!"), UNFINISHED(
-                "This complaint has been neglected far too long. Name and shame time!"), ESCLATED("Your complaint has been escalated");
+        Pending("Complaint has not been looked upon by an Administrator yet"),  
+        Duplicate("Administrator thinks this is a duplicate of another complaint"), 
+        Merged("This complaint has one or more Complaint merged into"), 
+        Done("This complaint has been resolved!");
 
         private String description;
 
@@ -186,9 +141,9 @@ public class Complaint extends BaseNode {
 
     @Override
     public String toString() {
-        return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories + ", person=" + person
-                + ", administrator=" + administrator + ", status=" + status + ", endorsements=" + endorsements + ", servants=" + servants + ", photos=" + photos + ", videos=" + videos + ", id=" + id
-                + "]";
+        return "Complaint [title=" + title + ", description=" + description + ", lattitude=" + lattitude + ", longitude=" + longitude + ", categories=" + categories + ", administrator="
+                + administrator + ", status=" + status + ", locations=" + locations + ", complaintTime=" + complaintTime + ", nearByKey=" + nearByKey + ", id=" + id
+                + ", externalId=" + externalId + "]";
     }
 
     public Set<Category> getCategories() {
@@ -197,6 +152,22 @@ public class Complaint extends BaseNode {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getLocationAddress() {
+        return locationAddress;
+    }
+
+    public void setLocationAddress(String locationAddress) {
+        this.locationAddress = locationAddress;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
 }

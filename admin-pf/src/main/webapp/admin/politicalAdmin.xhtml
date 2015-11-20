@@ -1,0 +1,430 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ng="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+		<style>
+.topAlignPanelColumns td {
+	vertical-align: top;
+}
+
+.pf-dock-container-top {
+	background-image: none;
+	background-color: white;
+}
+
+.ui-dock-item-top {
+	color: black;
+}
+
+.ui-dock-container-top {
+	color: black;
+}
+
+.ui-selectonemenu {
+	width: 100px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.ui-tree {
+	min-height: 595px;
+}
+</style>
+	</h:head>
+	<h:body>
+		<ui:include src="admin_menu.xhtml" />
+		<h:form id="political_admin_form" enctype="multipart/form-data">
+			<p:panel id="mainPanel" header="Political Admin">
+				<p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+
+
+				<h:panelGrid columns="8" id="buttonPanel">
+				</h:panelGrid>
+				<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+					<h:panelGrid columns="2" styleClass="topAlignPanelColumns">
+						<p:outputPanel id="treeView">
+							<p:tabView id="leftTabPanel">
+								<p:tab title="Browse">
+									<p:scrollPanel mode="native" style="width:300px;height:600px;">
+										<p:tree value="#{politicalAdminBean.root}" id="doc" var="doc" dynamic="true" selectionMode="single"
+											selection="#{politicalAdminBean.selectedNode}">
+											<p:ajax event="expand" update=":political_admin_form:messages" listener="#{politicalAdminBean.onNodeExpand}" />
+											<p:ajax event="collapse" update=":political_admin_form:messages"
+												listener="#{politicalAdminBean.onNodeCollapse}" />
+											<p:ajax event="select" update=":political_admin_form:formView,:political_admin_form:buttonPanel"
+												listener="#{politicalAdminBean.onNodeSelect}" />
+											<p:ajax event="unselect" update=":political_admin_form:formView"
+												listener="#{politicalAdminBean.onNodeUnselect}" />
+
+											<p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+												<h:outputText value="#{doc.name}" />
+											</p:treeNode>
+											<p:treeNode type="document" icon="ui-icon-document">
+												<h:outputText value="#{doc.name}" />
+											</p:treeNode>
+											<p:treeNode type="picture" icon="ui-icon-image">
+												<h:outputText value="#{doc.name}" />
+											</p:treeNode>
+											<p:treeNode type="mp3" icon="ui-icon-video">
+												<h:outputText value="#{doc.name}" />
+											</p:treeNode>
+										</p:tree>
+									</p:scrollPanel>
+								</p:tab>
+								<p:tab title="Search">
+									<p:outputLabel value="Search Location : " for="searchLocation" />
+									<p:autoComplete id="searchLocation" value="#{politicalAdminBean.selectedLocationSearchResult}"
+										completeMethod="#{politicalAdminBean.searchLocation}" var="oneLocation"
+										itemLabel="#{oneLocation.location.name}" itemValue="#{oneLocation}"
+										converter="#{locationSearchResultConvertor}" forceSelection="true">
+										<p:column>
+											<h:outputText value="#{oneLocation.location.name}" />
+										</p:column>
+
+										<p:column>
+											<h:outputText value="#{oneLocation.locationType.name}" />
+										</p:column>
+										<p:ajax event="itemSelect" listener="#{politicalAdminBean.onItemSelect}" update="@form" />
+									</p:autoComplete>
+
+								</p:tab>
+							</p:tabView>
+
+							<p:blockUI block="@form" trigger="@form:leftTabPanel:doc">LOADING<br />
+								<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+							</p:blockUI>
+						</p:outputPanel>
+						<p:outputPanel id="formView">
+							<p:outputPanel rendered="#{not empty politicalAdminBean.selectedNode}">
+
+								<p:outputPanel id="listPanel" rendered="#{politicalAdminBean.showListPanel}">
+									<p:selectOneMenu id="adminType" converter="#{jsfPoliticalBodyTypeConvertor}"
+										disabled="#{!politicalAdminBean.enableRightSidePanel}" value="#{politicalAdminBean.selectedPoliticalBodyType}">
+										<f:selectItem itemLabel="Select One" itemValue="" />
+										<f:selectItems value="#{politicalAdminBean.politicalBodyTypes}" var="oneReult" itemLabel="#{oneReult.name}"
+											itemValue="#{oneReult}" />
+										<p:ajax event="valueChange" listener="#{politicalAdminBean.onSelectPoliticalBodyType}" update="@form" />
+
+									</p:selectOneMenu>
+									<p:blockUI block="@form" trigger="adminType">Loading...<br />
+										<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+									</p:blockUI>
+									<p:commandButton id="createAdmin" value="#{politicalAdminBean.createAdminButtonTitle}" update="@form"
+										ajax="true" disabled="#{politicalAdminBean.disableCreateAdminButton}"
+										actionListener="#{politicalAdminBean.createAdmin}" styleClass="ui-priority-primary"
+										process="@this:createAdmin">
+									</p:commandButton>
+									<p:dataTable var="onePoliticalAdmin" value="#{politicalAdminBean.politicalBodyAdmins}">
+										<p:column headerText="Id">
+											<h:outputText value="#{onePoliticalAdmin.politicalBodyAdmin.id}" />
+										</p:column>
+
+										<p:column headerText="Name">
+											<h:outputText value="#{onePoliticalAdmin.person.name}" />
+										</p:column>
+										<p:column headerText="Active">
+											<h:outputText value="#{onePoliticalAdmin.politicalBodyAdmin.active}" />
+										</p:column>
+										<p:column headerText="Party">
+											<h:outputText value="#{onePoliticalAdmin.party.name}" />
+										</p:column>
+										<p:column headerText="Start">
+											<h:outputText value="#{onePoliticalAdmin.politicalBodyAdmin.startDate}">
+												<f:convertDateTime pattern="dd-MMM-yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="End">
+											<h:outputText value="#{onePoliticalAdmin.politicalBodyAdmin.endDate}">
+												<f:convertDateTime pattern="dd-MMM-yyyy" />
+											</h:outputText>
+										</p:column>
+
+										<p:column style="width:100px;">
+											<f:facet name="header">
+												<h:outputText value="Update" />
+											</f:facet>
+											<p:commandLink update="@form" title="Update" id="updateAdmin" process="@this:updateAdmin">
+												<p:graphicImage value="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-redo-48.png"
+													height="20" />
+												<f:setPropertyActionListener value="#{onePoliticalAdmin.politicalBodyAdmin}"
+													target="#{politicalAdminBean.selectedPoliticalBodyAdmin}" update="@form" />
+											</p:commandLink>
+											<p:blockUI block="@form" trigger="updateAdmin">Loading Admin<br />
+												<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+											</p:blockUI>
+										</p:column>
+									</p:dataTable>
+								</p:outputPanel>
+								<p:outputPanel id="formPanel" rendered="#{!politicalAdminBean.showListPanel}">
+
+									<p:fieldset legend="Person" style="margin-bottom:20px">
+										<p:outputLabel value="Search Person" />
+										<p:autoComplete id="searchPerson" value="#{politicalAdminBean.selectedPerson}" minQueryLength="3"
+											completeMethod="#{politicalAdminBean.searchPerson}" var="onePerson" itemLabel="#{onePerson.name}"
+											itemValue="#{onePerson}" converter="#{jsfPersonConvertor}" forceSelection="true">
+											<p:ajax event="itemSelect" update="@this:formPanel" disabled="#{politicalAdminBean.updateMode}" />
+											<p:column>
+												<p:graphicImage value="#{onePerson.profilePhoto}" style="height:80px;" />
+											</p:column>
+
+											<p:column>
+												<h:outputText value="#{onePerson.name}" />
+											</p:column>
+										</p:autoComplete>
+										<p:commandButton actionListener="#{politicalAdminBean.createPerson}" value="Create Person" id="createPerson"
+											process="@this:createPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel"
+											disabled="#{politicalAdminBean.updateMode}" ajax="true" />
+										<h:panelGrid columns="2" cellpadding="5">
+											<h:panelGrid columns="4" cellpadding="5">
+												<p:outputLabel value="Name : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.name}" />
+												<p:outputLabel value="Id : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.id}" />
+												<p:outputLabel value="Gender : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.gender}" />
+												<p:outputLabel value="Date Of Birth : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.dob}">
+													<f:convertDateTime pattern="dd-MMM-yyyy" />
+												</h:outputText>
+												<p:outputLabel value="Email : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.email}" />
+												<p:outputLabel value="LandLine 1 : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.landlineNumber1}" />
+												<p:outputLabel value="LandLine 2 : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.landlineNumber2}" />
+												<p:outputLabel value="Mobile 1 : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.mobileNumber1}" />
+												<p:outputLabel value="Mobile 2 : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.mobileNumber2}" />
+												<p:outputLabel value="Voter Id : " />
+												<h:outputText value="#{politicalAdminBean.selectedPerson.voterId}" />
+											</h:panelGrid>
+
+											<h:panelGrid>
+												<p:graphicImage style="width:200px;" value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
+											</h:panelGrid>
+
+										</h:panelGrid>
+										<p:panelGrid columns="1">
+											<f:facet name="header">
+                                         BioData
+                                         </f:facet>
+											<h:outputText value="#{politicalAdminBean.selectedPerson.biodata}" escape="false" />
+										</p:panelGrid>
+
+										<p:commandButton value="Edit Person" id="editPerson" disabled="#{!politicalAdminBean.editPersonAllowed}"
+											ajax="true" process="@this:editPerson" onclick="PF('personDialog').show();" update="@this:personDialogPanel" />
+
+									</p:fieldset>
+
+
+									<p:fieldset legend="Admin Detail" style="margin-bottom:20px">
+										<p:message for="startDate" display="text" />
+										<p:message for="officeEmail" display="text" />
+										<h:panelGrid columns="4" cellpadding="5">
+											<p:outputLabel value="Id : " />
+											<h:outputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.id}" />
+											<p:outputLabel value="Political Body Type " />
+											<h:outputText value="#{politicalAdminBean.selectedPoliticalBodyType.name}" />
+											<p:outputLabel value="Location" />
+											<h:outputText value="#{politicalAdminBean.selectedLocationNode.data.location.name}" />
+											<p:outputLabel value="Office Email" />
+											<p:inputText id="officeEmail" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.email}"
+												validatorMessage="Not a valid email">
+												<f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
+											</p:inputText>
+											<p:outputLabel value="Facebook Page" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbPage}" />
+											<p:outputLabel value="Facebook Account" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.fbAccount}" />
+											<p:outputLabel value="Twitter Handle" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.twitterHandle}" />
+											<p:outputLabel value="Office Landline1" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.landLine1}" />
+											<p:outputLabel value="Office Landline2" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.landLine2}" />
+											<p:outputLabel value="Office Mobile1" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile1}" />
+											<p:outputLabel value="Office Mobile2" />
+											<p:inputText value="#{politicalAdminBean.selectedPoliticalBodyAdmin.mobile2}" />
+											<p:outputLabel value="Start Date" />
+											<p:calendar id="startDate" value="#{politicalAdminBean.selectedPoliticalBodyAdmin.startDate}"
+												pattern="dd-MMM-yyyy" required="true" requiredMessage="Start date can not be empty" />
+											<p:outputLabel value="End Date" />
+											<p:calendar value="#{politicalAdminBean.selectedPoliticalBodyAdmin.endDate}" pattern="dd-MMM-yyyy" />
+											<p:outputLabel value="URL Identifier" />
+											<p:outputLabel value="#{politicalAdminBean.selectedPoliticalBodyAdmin.urlIdentifier}" />
+
+
+										</h:panelGrid>
+									</p:fieldset>
+									<h:panelGrid columns="2">
+										<p:fieldset legend="Political party Detail" style="margin-bottom:20px">
+											<p:selectOneMenu id="politicalParty" converter="#{jsfPartyConvertor}" required="true"
+												requiredMessage="Please select a Political Party" value="#{politicalAdminBean.selectedPoliticalParty}"
+												disabled="#{politicalAdminBean.updateMode and !empty politicalAdminBean.selectedPoliticalParty}">
+												<f:selectItem itemLabel="Select Party" itemValue="" />
+												<f:selectItems value="#{politicalPartyBean.parties}" var="oneReult" itemLabel="#{oneReult.name}"
+													itemValue="#{oneReult}" />
+											</p:selectOneMenu>
+											<p:message for="politicalParty" display="text" />
+
+										</p:fieldset>
+										<p:fieldset legend="Election" style="margin-bottom:20px">
+											<p:selectOneMenu id="election" converter="#{jsfElectionConvertor}"
+												value="#{politicalAdminBean.selectedElection}">
+												<f:selectItem itemLabel="Select One" itemValue="" />
+												<f:selectItems value="#{politicalAdminBean.politicalBodyTypeElections}" var="oneReult" itemLabel="#{oneReult.name}"
+													itemValue="#{oneReult}" />
+
+											</p:selectOneMenu>
+											<p:message for="election" display="text" />
+										</p:fieldset>
+									</h:panelGrid>
+									<h:panelGrid columns="1">
+                                        <p:fieldset legend="FB login Details" style="margin-bottom:20px">
+                                        <h:panelGrid columns="4" rendered="#{!empty politicalAdminBean.selectedFacebookAccount}">
+                                            <p:outputLabel value="Facebook User Name" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.userName}" />
+                                            <p:outputLabel value="Facebook User ID" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.facebookUserId}" />
+                                            <p:outputLabel value="Name" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.name}" />
+                                            <p:outputLabel value="Gender" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.gender}" />
+                                            <p:outputLabel value="Email" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedFacebookAccount.email}" />
+                                        </h:panelGrid>
+                                        <p:dataTable var="oneAppPermission" rendered="#{!empty politicalAdminBean.selectedFacebookAccount}" value="#{politicalAdminBean.selectedFacebookAccountPermissions}">
+                                        <p:column headerText="Id">
+                                            <h:outputText value="#{oneAppPermission.id}" />
+                                        </p:column>
+                                        <p:column headerText="App Name">
+                                            <h:outputText value="#{oneAppPermission.facebookApp.appName}" />
+                                        </p:column>
+                                        <p:column headerText="App Id">
+                                            <h:outputText value="#{oneAppPermission.facebookApp.appId}" />
+                                        </p:column>
+                                        <p:column headerText="Last Login time">
+                                            <h:outputText value="#{oneAppPermission.lastLoginTime}" />
+                                        </p:column>
+
+                                        </p:dataTable>
+                                        
+                                        <h:panelGrid columns="2" rendered="#{empty politicalAdminBean.selectedFacebookAccount}">
+                                        <f:facet name="header">
+									        <p:outputLabel value="Add Email Id of MLA/MP's Facebook account" />
+									    </f:facet>
+                                            <p:outputLabel value="Email" />
+                                            <p:inputText value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.email}" />
+                                            <p:outputLabel value="URL" />
+                                            <p:outputLabel value="#{politicalAdminBean.selectedLeaderTempFacebookAccount.url}" />
+                                            <p:commandButton id="addPoliticalAdminEmail" value="Add Email" process="@this:formPanel" update="@form"
+                                            ajax="true" actionListener="#{politicalAdminBean.addPoliticalAdminEmail}" styleClass="ui-priority-primary">
+                                        </p:commandButton>
+                                        </h:panelGrid>
+                                        </p:fieldset>
+                                    </h:panelGrid>
+
+									<h:panelGrid columns="2" id="saveCancelButtonPanelForAdmin">
+										<p:commandButton id="savePoliticalAdmin" value="Save Admin" process="@this:formPanel" update="@form"
+											ajax="true" actionListener="#{politicalAdminBean.saveAdmin}" styleClass="ui-priority-primary">
+										</p:commandButton>
+										<p:commandButton id="cancelAdmin" value="Cancel" update="@form" ajax="true"
+											actionListener="#{politicalAdminBean.cancelAdmin}" styleClass="ui-priority-primary"
+											process="@this:cancelAdmin">
+										</p:commandButton>
+										<p:blockUI block="@form" trigger="savePoliticalAdmin">Saving Admin<br />
+											<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+										</p:blockUI>
+
+									</h:panelGrid>
+
+								</p:outputPanel>
+
+
+
+							</p:outputPanel>
+						</p:outputPanel>
+					</h:panelGrid>
+				</h:panelGrid>
+
+			</p:panel>
+			<p:dialog header="Save Person" widgetVar="personDialog" modal="true" showEffect="fade" hideEffect="fade"
+				position="centre top">
+				<p:outputPanel id="personDialogPanel">
+					<p:messages id="dialogMessages" showDetail="false" autoUpdate="true" closable="true" />
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="4" id="personPanelGrid">
+							<p:outputLabel value="Name" />
+							<p:inputText id="name" value="#{politicalAdminBean.selectedPerson.name}" required="true"
+								requiredMessage="Name can not be empty" style="width:200px" />
+							<p:outputLabel value="Email" />
+							<p:inputText id="email" value="#{politicalAdminBean.selectedPerson.email}" style="width:200px"
+								validatorMessage="Not a valid email">
+								<f:validateRegex pattern="^$|^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,6}$" />
+							</p:inputText>
+							<p:outputLabel value="Date of Birth" />
+							<p:calendar value="#{politicalAdminBean.selectedPerson.dob}" pattern="dd-MMM-yyyy" style="width:200px" />
+							<p:outputLabel value="Gender" />
+							<p:selectOneMenu id="console" value="#{politicalAdminBean.selectedPerson.gender}" style="width:125px">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItem itemLabel="Male" itemValue="male" />
+								<f:selectItem itemLabel="Female" itemValue="female" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Voter Id" />
+							<p:inputText id="volterId" value="#{politicalAdminBean.selectedPerson.voterId}" style="width:200px" />
+							<p:outputLabel value="LandLine 1" />
+							<p:inputText id="landline1" value="#{politicalAdminBean.selectedPerson.landlineNumber1}" style="width:200px" />
+							<p:outputLabel value="LandLine 2" />
+							<p:inputText id="landline2" value="#{politicalAdminBean.selectedPerson.landlineNumber2}" style="width:200px" />
+							<p:outputLabel value="Mobile 1" />
+							<p:inputMask id="mobile1" value="#{politicalAdminBean.selectedPerson.mobileNumber1}" mask="9999999999"
+								style="width:200px" />
+							<p:outputLabel value="Mobile 2" />
+							<p:inputMask id="mobile2" value="#{politicalAdminBean.selectedPerson.mobileNumber2}" mask="9999999999"
+								style="width:200px" />
+
+						</h:panelGrid>
+						<h:panelGrid columns="1">
+							<p:graphicImage style="width:200px;" id="profilePic" value="#{politicalAdminBean.selectedPerson.profilePhoto}" />
+							<p:fileUpload fileUploadListener="#{politicalAdminBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+								auto="true" update="messages, profilePic" sizeLimit="200000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g)$/" />
+						</h:panelGrid>
+
+					</h:panelGrid>
+
+					<p:panelGrid columns="1">
+						<f:facet name="header">
+							<p:outputLabel value="Bio Data" />
+						</f:facet>
+
+						<p:editor id="biodataEditor" widgetVar="biodataEditorWidget" value="#{politicalAdminBean.selectedPerson.biodata}"
+							width="600" />
+					</p:panelGrid>
+
+					<h:panelGrid columns="2" id="saveCancelButtonPanel">
+						<p:commandButton id="savePerson" value="Save" process="@this:personDialogPanel" update="@form:formPanel"
+							ajax="true" actionListener="#{politicalAdminBean.savePerson}"
+							oncomplete="if(!args.validationFailed) PF('personDialog').hide();" styleClass="ui-priority-primary">
+						</p:commandButton>
+						<p:commandButton id="cancel" value="Cancel" update="@form" actionListener="#{politicalAdminBean.cancel}"
+							ajax="true" styleClass="ui-priority-primary" process="@this:cancel">
+						</p:commandButton>
+						<p:blockUI block="@form" trigger="savePerson">Saving<br />
+							<p:graphicImage width="80" value="http://static.eswaraj.com/admin/images/ajax-loader.gif" />
+						</p:blockUI>
+
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

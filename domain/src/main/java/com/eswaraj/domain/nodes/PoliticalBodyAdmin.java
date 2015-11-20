@@ -2,6 +2,8 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -14,9 +16,11 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("PoliticalBodyAdmin")
 public class PoliticalBodyAdmin extends BaseNode {
-	
+
 	@RelatedTo(type="OF_TYPE")
+    @Fetch
 	private PoliticalBodyType politicalBodyType;
 
 	@RelatedTo(type="BELONGS_TO")
@@ -28,11 +32,18 @@ public class PoliticalBodyAdmin extends BaseNode {
 	@RelatedTo(type="OF")
 	private Party party;
 
-	private Address officeAddress;
+    @RelatedTo(type = "ELECTED_BY")
+    private Election election;
+
+    private Address officeAddress;
 	private Address homeAddress;
 	
 	private String email;
 	
+    private String fbPage;
+    private String fbAccount;
+    private String twitterHandle;
+
 	private String landLine1;
 	private String landLine2;
 	private String mobile1;
@@ -40,6 +51,7 @@ public class PoliticalBodyAdmin extends BaseNode {
 	private Date startDate;
 	private Date endDate;
 	private boolean active;
+    private String urlIdentifier;
 	
 	public PoliticalBodyType getPoliticalBodyType() {
 		return politicalBodyType;
@@ -125,6 +137,53 @@ public class PoliticalBodyAdmin extends BaseNode {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+    public String getFbPage() {
+        return fbPage;
+    }
+
+    public void setFbPage(String fbPage) {
+        this.fbPage = fbPage;
+    }
+
+    public String getFbAccount() {
+        return fbAccount;
+    }
+
+    public void setFbAccount(String fbAccount) {
+        this.fbAccount = fbAccount;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
+    }
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
+    public Election getElection() {
+        return election;
+    }
+
+    public void setElection(Election election) {
+        this.election = election;
+    }
+    @Override
+    public String toString() {
+        return "PoliticalBodyAdmin [politicalBodyType=" + politicalBodyType + ", location=" + location + ", person=" + person + ", party=" + party + ", officeAddress=" + officeAddress
+                + ", homeAddress=" + homeAddress + ", email=" + email + ", fbPage=" + fbPage + ", fbAccount=" + fbAccount + ", twitterHandle=" + twitterHandle + ", landLine1=" + landLine1
+                + ", landLine2=" + landLine2 + ", mobile1=" + mobile1 + ", mobile2=" + mobile2 + ", startDate=" + startDate + ", endDate=" + endDate + ", active=" + active + ", urlIdentifier="
+                + urlIdentifier + ", id=" + id + "]";
+    }
 	
 	
 }

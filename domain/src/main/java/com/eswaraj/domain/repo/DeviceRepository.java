@@ -1,6 +1,6 @@
 package com.eswaraj.domain.repo;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -16,10 +16,13 @@ import com.eswaraj.domain.nodes.User;
  */
 public interface DeviceRepository extends GraphRepository<Device> {
 
-    @Query("start Device=node:Device(deviceId={0}) return Device")
-    public Device getDeviceByDeviceId(String deviceId);
+    @Query("start user=node({0}) match (user)-[:USER_DEVICE]->(device) where device.__type__ = 'Device' return device")
+    public List<Device> getAllDevicesOfUser(User user);
 
-    @Query("start user=node({0}) match (user)<-[:OF_USER]-(device) where device.__type__ = 'com.eswaraj.domain.nodes.Device' return device")
-    public Collection<Device> getAllDevicesOfUser(User user);
+    @Query("start complaint=node({0}) match (complaint)-[:LODGED_BY]->(person)-[:ATTACHED_TO]-(user)-[:USER_DEVICE]-(device) where device.__type__ = 'Device' return device")
+    public List<Device> getDevicesForComplaint(Long complaintId);
+
+    @Query("start person=node({0}) match (person)-[:ATTACHED_TO]-(user)-[:USER_DEVICE]->(device) where device.__type__ = 'Device' return device")
+    public List<Device> getAllDevicesOfPerson(Long personId);
 
 }

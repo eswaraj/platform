@@ -23,6 +23,7 @@ import backtype.storm.tuple.Tuple;
 
 import com.eswaraj.core.service.AppService;
 import com.eswaraj.core.service.ComplaintService;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.queue.service.QueueService;
 import com.eswaraj.queue.service.aws.impl.AwsQueueManager;
 import com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl;
@@ -46,6 +47,7 @@ public abstract class EswarajBaseComponent implements Serializable {
     private static ClassPathXmlApplicationContext applicationContext;
     private ComplaintService complaintService;
     private AppService appService;
+    private LocationService locationService;
 
     private GraphDatabaseService graphDatabaseService;
     private Neo4jTemplate neo4jTemplate;
@@ -67,6 +69,8 @@ public abstract class EswarajBaseComponent implements Serializable {
     private String awsCategoryUpdateQueueName;
     private String awsComplaintCreatedQueueName;
     private String awsReprocessAllComplaintQueueName;
+    private String awsComplaintViewedByPoliticalAdminQueueName;
+    private String awsCommentSavedQueueName;
 
     private void initConfigs() {
         dbUrl = System.getenv("db_url");
@@ -79,6 +83,8 @@ public abstract class EswarajBaseComponent implements Serializable {
         awsCategoryUpdateQueueName = System.getenv("aws_category_queue_name");
         awsComplaintCreatedQueueName = System.getenv("aws_complaint_created_queue_name");
         awsReprocessAllComplaintQueueName = System.getenv("aws_reprocess_all_complaint_queue_name");
+        awsComplaintViewedByPoliticalAdminQueueName = System.getenv("aws_complaint_viewed_by_political_admin_queue_name");
+        awsCommentSavedQueueName = System.getenv("aws_comment_saved_queue_name");
         
 
         logInfo("SYSTEM : dbUrl= {}", dbUrl);
@@ -90,6 +96,8 @@ public abstract class EswarajBaseComponent implements Serializable {
         logInfo("SYSTEM : awsCategoryUpdateQueueName={}", awsCategoryUpdateQueueName);
         logInfo("SYSTEM : awsComplaintCreatedQueueName={}", awsComplaintCreatedQueueName);
         logInfo("SYSTEM : awsReprocessAllComplaintQueueName={}", awsReprocessAllComplaintQueueName);
+        logInfo("SYSTEM : awsComplaintViewedByPoliticalAdminQueueName={}", awsComplaintViewedByPoliticalAdminQueueName);
+        logInfo("SYSTEM : awsCommentSavedQueueName={}", awsCommentSavedQueueName);
 
     }
 
@@ -150,7 +158,8 @@ public abstract class EswarajBaseComponent implements Serializable {
 
     private void initializeQueueService(String regions, String accessKey, String secretKey) {
         AwsQueueManager awsQueueManager = new AwsQueueManager(regions, accessKey, secretKey);
-        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName);
+        queueService = new AwsQueueServiceImpl(awsQueueManager, awsLocationQueueName, awsCategoryUpdateQueueName, awsComplaintCreatedQueueName, awsReprocessAllComplaintQueueName,
+                awsComplaintViewedByPoliticalAdminQueueName, awsCommentSavedQueueName);
     }
 
     // Neo4j related functions
@@ -457,6 +466,17 @@ public abstract class EswarajBaseComponent implements Serializable {
             }
         }
         return appService;
+    }
+
+    protected LocationService getLocationService() {
+        if (locationService == null) {
+            synchronized (this) {
+                if (locationService == null) {
+                    locationService = getApplicationContext().getBean(LocationService.class);
+                }
+            }
+        }
+        return locationService;
     }
 
     protected ComplaintService getComplaintService() {

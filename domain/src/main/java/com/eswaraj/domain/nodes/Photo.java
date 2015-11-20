@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -11,6 +12,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Photo")
 public class Photo extends BaseNode {
 
 	private String orgUrl;
@@ -22,6 +24,8 @@ public class Photo extends BaseNode {
 	private String mediumUrl;
 	private String largeUrl;
 	
+    private String status;
+
 	public String getOrgUrl() {
 		return orgUrl;
 	}
@@ -64,8 +68,18 @@ public class Photo extends BaseNode {
 	public void setLargeUrl(String largeUrl) {
 		this.largeUrl = largeUrl;
 	}
-	@Override
-	public String toString() {
-		return "Photo [orgUrl=" + orgUrl + "]";
-	}
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Photo [orgUrl=" + orgUrl + ", orgWidth=" + orgWidth + ", orgHeight=" + orgHeight + ", squareUrl=" + squareUrl + ", smallUrl=" + smallUrl + ", mediumUrl=" + mediumUrl + ", largeUrl="
+                + largeUrl + ", status=" + status + ", id=" + id + "]";
+    }
 }

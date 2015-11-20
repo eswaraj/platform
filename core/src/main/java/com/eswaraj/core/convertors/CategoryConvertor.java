@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.core.exceptions.ApplicationException;
@@ -64,7 +63,7 @@ public class CategoryConvertor extends BaseConvertor<Category, CategoryDto> {
 		return categoryWithChildCategoryDto;
 	}
 	
-	public List<CategoryWithChildCategoryDto> convertCategoryWithChildren(EndResult<Category> categories){
+    public List<CategoryWithChildCategoryDto> convertCategoryWithChildren(List<Category> categories) {
 		List<CategoryWithChildCategoryDto> list = new ArrayList<>();
 		List<CategoryWithChildCategoryDto> tempList = new ArrayList<>();
 		Map<Long, List<CategoryWithChildCategoryDto>> childCategoryMap = new HashMap<>();

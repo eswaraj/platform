@@ -2,6 +2,7 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -15,6 +16,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("LocationBoundaryFile")
 public class LocationBoundaryFile extends BaseNode {
 
 	@Indexed
@@ -24,6 +26,8 @@ public class LocationBoundaryFile extends BaseNode {
 	private Date uploadDate;
 	private String status;
     private boolean active;
+    private String originalFileName;
+    private Long totalTimeToProcessMs;
 
 	public String getFileNameAndPath() {
 		return fileNameAndPath;
@@ -58,6 +62,21 @@ public class LocationBoundaryFile extends BaseNode {
         this.active = active;
     }
 
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
+
+    public void setOriginalFileName(String originalFileName) {
+        this.originalFileName = originalFileName;
+    }
+
+    public Long getTotalTimeToProcessMs() {
+        return totalTimeToProcessMs;
+    }
+
+    public void setTotalTimeToProcessMs(Long totalTimeToProcessMs) {
+        this.totalTimeToProcessMs = totalTimeToProcessMs;
+    }
     @Override
     public String toString() {
         return "LocationBoundaryFile [fileNameAndPath=" + fileNameAndPath + ", location=" + location + ", uploadDate=" + uploadDate + ", status=" + status + ", active=" + active + ", id=" + id + "]";

@@ -1,8 +1,11 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.eswaraj.domain.base.BaseNode;
 
@@ -13,22 +16,30 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
+@TypeAlias("Location")
 public class Location extends BaseNode {
 
-	@Indexed
+    @Indexed(indexName = "LocationNameFt", indexType = IndexType.FULLTEXT)
 	private String name;
 	
 	@RelatedTo(type="OF_TYPE")
+    @Fetch
 	private LocationType locationType;
 	
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
+    private String mobileHeaderImageUrl;
+
+    private String urlIdentifier;
+
     private String boundaryFile;
 
 	private Double latitude;
 	
 	private Double longitude;
+	
+    private Integer depth = 13;
 	
 	private Long totalNumberOfHouses;
 	
@@ -50,6 +61,10 @@ public class Location extends BaseNode {
 	
 	private Long totalFemaleWorkingPopulation;
 	
+    private Double area;
+
+    private Double perimeter;
+
 	public String getName() {
 		return name;
 	}
@@ -74,7 +89,15 @@ public class Location extends BaseNode {
 		this.parentLocation = parentLocation;
 	}
 
-	public Double getLongitude() {
+    public String getMobileHeaderImageUrl() {
+        return mobileHeaderImageUrl;
+    }
+
+    public void setMobileHeaderImageUrl(String mobileHeaderImageUrl) {
+        this.mobileHeaderImageUrl = mobileHeaderImageUrl;
+    }
+
+    public Double getLongitude() {
 		return longitude;
 	}
 
@@ -90,7 +113,18 @@ public class Location extends BaseNode {
 		this.latitude = latitude;
 	}
 
-	public Long getTotalNumberOfHouses() {
+    public Integer getDepth() {
+        if (depth == null) {
+            depth = 13;
+        }
+        return depth;
+    }
+
+    public void setDepth(Integer depth) {
+        this.depth = depth;
+    }
+
+    public Long getTotalNumberOfHouses() {
 		return totalNumberOfHouses;
 	}
 
@@ -170,6 +204,22 @@ public class Location extends BaseNode {
 		this.totalFemaleWorkingPopulation = totalFemaleWorkingPopulation;
 	}
 
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public Double getPerimeter() {
+        return perimeter;
+    }
+
+    public void setPerimeter(Double perimeter) {
+        this.perimeter = perimeter;
+    }
+
     public String getBoundaryFile() {
         return boundaryFile;
     }
@@ -178,11 +228,23 @@ public class Location extends BaseNode {
         this.boundaryFile = boundaryFile;
     }
 
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
+
+    public void setUrlIdentifier(String urlIdentifier) {
+        this.urlIdentifier = urlIdentifier;
+    }
+
     @Override
-	public String toString() {
-		return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", latitude=" + latitude + ", longitude="
-				+ longitude + ", id=" + id + "]";
-	}
+    public String toString() {
+        return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", urlIdentifier=" + urlIdentifier + ", boundaryFile=" + boundaryFile
+                + ", latitude=" + latitude + ", longitude=" + longitude + ", totalNumberOfHouses=" + totalNumberOfHouses + ", totalPopulation=" + totalPopulation + ", totalMalePopulation="
+                + totalMalePopulation + ", totalFemalePopulation=" + totalFemalePopulation + ", totalLiteratePopulation=" + totalLiteratePopulation + ", totalMaleLiteratePopulation="
+                + totalMaleLiteratePopulation + ", totalFemaleLiteratePopulation=" + totalFemaleLiteratePopulation + ", totalWorkingPopulation=" + totalWorkingPopulation
+                + ", totalMaleWorkingPopulation=" + totalMaleWorkingPopulation + ", totalFemaleWorkingPopulation=" + totalFemaleWorkingPopulation + ", area=" + area + ", perimeter=" + perimeter
+                + ", id=" + id + "]";
+    }
 
 	
 }

@@ -49,6 +49,7 @@ public class PoliticalBodyAdminConvertor extends BaseConvertor<PoliticalBodyAdmi
 		politicalBodyAdmin.setOfficeAddress(processAddress(webDto.getOfficeAddressDto(), politicalBodyAdmin.getOfficeAddress()));
 		return politicalBodyAdmin;
 	}
+
 	
 	private Address processAddress(AddressDto addressDto, Address dbAddress) throws ApplicationException{
 		Address address = null;

@@ -1,6 +1,7 @@
 package com.eswaraj.domain.repo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 import java.util.Date;
@@ -53,9 +54,11 @@ public class TestPoliticalAdminRepository extends BaseNeo4jEswarajTest{
 		Date endDateForCountryAdmin = randomDateInFuture();
 		
 		PoliticalBodyAdmin politicalBodyAdminAtCountry = createPoliticalBodyAdmin(politicalBodyAdminRepository, true, randomEmailAddress(), 
-				startDateForCountryAdmin, endDateForCountryAdmin, null, null, null, null, country, null, null, party, person, politicalBodyTypeAtCountry);
+ startDateForCountryAdmin, endDateForCountryAdmin, null,
+                null, null, null, country, null, null, party, person, politicalBodyTypeAtCountry, "/leader1");
 		PoliticalBodyAdmin politicalBodyAdminAtState = createPoliticalBodyAdmin(politicalBodyAdminRepository, true, randomEmailAddress(), 
-				startDateForCountryAdmin, endDateForCountryAdmin, null, null, null, null, state, null, null, party, person, politicalBodyTypeAtState);
+ startDateForCountryAdmin, endDateForCountryAdmin, null, null,
+                null, null, state, null, null, party, person, politicalBodyTypeAtState, "/leader2");
 
 		//Now search country admin and state admin seprately
 		Collection<PoliticalBodyAdmin> dbPoliticalBodyAdminAtCountry = politicalBodyAdminRepository.getAllPoliticalAdminByLocationAndPoliticalBodyType(country, politicalBodyTypeAtCountry);

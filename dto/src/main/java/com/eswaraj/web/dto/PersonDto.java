@@ -21,6 +21,7 @@ public class PersonDto extends BaseDto {
 	private String mobileNumber1;
 	private String mobileNumber2;
     private String profilePhoto;
+    private String voterId;
 	private AddressDto personAddress;
 	public String getName() {
 		return name;
@@ -91,6 +92,13 @@ public class PersonDto extends BaseDto {
         this.profilePhoto = profilePhoto;
     }
 
+    public String getVoterId() {
+        return voterId;
+    }
+
+    public void setVoterId(String voterId) {
+        this.voterId = voterId;
+    }
     @Override
 	public String toString() {
 		return "PersonDto [name=" + name + ", \nbiodata=" + biodata + ", \ndob=" + dob + ", \ngender=" + gender + ", \nemail=" + email + ", \nlandlineNumber1="

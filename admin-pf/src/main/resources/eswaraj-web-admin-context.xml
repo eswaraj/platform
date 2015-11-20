@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task" xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.eswaraj.queue.service.aws.impl" />
+	<context:component-scan base-package="com.eswaraj.core.util" />
+	
+	<context:component-scan base-package="com.eswaraj.domain.validator" />
+	<context:component-scan base-package="com.next.eswaraj.admin.login.controller" />
+	
+	
+	<bean class="com.eswaraj.core.service.impl.AwsS3FileServiceImpl" autowire-candidate="default" autowire="byName" id="fileService" name="fileService" scope="singleton">
+	</bean>
+	
+	<bean class="com.eswaraj.queue.service.aws.impl.AwsQueueServiceImpl" autowire-candidate="default" autowire="byName" id="queueService" name="queueService" scope="singleton">
+	</bean>
+	
+    <bean class="com.eswaraj.core.service.impl.SettingServiceImpl" autowire-candidate="default" autowire="byName" id="settingService" name="settingService" scope="singleton">
+    </bean>
+		
+    
+    <bean id="propertyPlaceholderConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="searchSystemEnvironment" value="true" />
+        <property name="properties">
+        <util:properties>
+            <prop key="design">stylenew</prop>
+        </util:properties>
+    </property>
+    </bean>
+    
+    <bean 
+    id="stringRedisSerializer" 
+    class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <!-- Redis related -->
+    <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
+        p:host-name="${redis_server}" p:port="${redis_port}" 
+        />
+    <bean id="redisTemplate" 
+        class="org.springframework.data.redis.core.RedisTemplate" 
+        p:connection-factory-ref="jedisConnFactory" 
+        p:keySerializer-ref="stringRedisSerializer"
+        />
+    
+    <bean id="stringRedisTemplate" 
+        class="org.springframework.data.redis.core.StringRedisTemplate" 
+        p:connection-factory-ref="jedisConnFactory" 
+        />
+
+	<!-- JSF View Scope -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.next.eswaraj.admin.jsf.scope.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
