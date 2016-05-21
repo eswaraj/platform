@@ -8,11 +8,11 @@
 
 	<bean class="com.eswaraj.tasks.topology.SpringEswarajTopology">
 		<property name="name" value="Eswaraj-Location" />
-		<property name="maxSpoutPending" value="5000" />
+		<property name="maxSpoutPending" value="10" />
 		<property name="messageTimeoutSeconds" value="3600" />
 		
-		<property name="numWorkers" value="4" />
-		<property name="numParallel" value="4" />
+		<property name="numWorkers" value="1" />
+		<property name="numParallel" value="1" />
 		
 		<property name="topologyProperties">
             <map>
